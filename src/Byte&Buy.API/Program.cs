@@ -1,3 +1,4 @@
+using Byte_Buy.API.Extensions;
 using Byte_Buy.API.Middleware;
 using Byte_Buy.Core.Extensions;
 using Byte_Buy.Infrastructure;
@@ -16,6 +17,11 @@ builder.Services.AddControllers();
 builder.Services
     .AddCoreLayer()
     .AddInfrastructureLayer(builder.Configuration);
+
+// -----------------------------
+// Add Identity
+// -----------------------------
+builder.Services.AddIdentity();
 
 // -----------------------------
 // Swagger & OpenApi

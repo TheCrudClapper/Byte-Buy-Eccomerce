@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Entities\" />
-    <Folder Include="Domain\EntityContracts\" />
     <Folder Include="Domain\RepositoryContracts\" />
     <Folder Include="Mappings\" />
     <Folder Include="DTO\" />
@@ -19,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.10" />
   </ItemGroup>
 
 </Project>
