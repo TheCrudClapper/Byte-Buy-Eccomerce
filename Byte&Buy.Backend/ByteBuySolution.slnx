@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ByteBuy.API/ByteBuy.API.csproj" />
+    <Project Path="src/ByteBuy.Core/ByteBuy.Core.csproj" />
+    <Project Path="src/ByteBuy.Infrastructure/ByteBuy.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
