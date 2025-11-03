@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="src/Byte&amp;Buy.API/Byte&amp;Buy.API.csproj" />
+  <Project Path="src/Byte&amp;Buy.API/Byte&amp;Buy.API.csproj" Id="290213ca-8493-44c0-8931-60185a08599a" />
   <Project Path="src/Byte&amp;Buy.Core/Byte&amp;Buy.Core.csproj" />
   <Project Path="src/Byte&amp;Buy.Infrastructure/Byte&amp;Buy.Infrastructure.csproj" />
 </Solution>
