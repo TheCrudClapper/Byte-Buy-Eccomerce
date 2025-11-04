@@ -9,7 +9,7 @@ public static class IdentityExtension
 {
     public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
-        services.AddIdentity<User, Role>(options =>
+        services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         {
             options.Password.RequiredLength = 8;
             options.Password.RequireUppercase = true;
@@ -18,8 +18,8 @@ public static class IdentityExtension
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
-            .AddUserStore<UserStore<User, Role, ApplicationDbContext, Guid>>()
-            .AddRoleStore<RoleStore<Role, ApplicationDbContext, Guid>>();
+            .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+            .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
 
         return services;
     }

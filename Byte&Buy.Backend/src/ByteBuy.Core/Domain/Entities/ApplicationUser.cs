@@ -1,15 +1,14 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class User : IdentityUser<Guid>, ISoftDelete
+public class ApplicationUser : IdentityUser<Guid>, ISoftDelete
 {
-    [MaxLength(50)]
     public string FirstName { get; set; } = null!;
-    [MaxLength(50)]
     public string LastName { get; set; } = null!;
+    public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
+    public ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
     public bool IsActive { get; set; }
     public DateTime DateCreated { get; set; }
     public DateTime? DateEdited { get; set; }

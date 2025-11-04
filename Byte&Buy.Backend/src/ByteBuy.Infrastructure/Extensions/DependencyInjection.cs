@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Infrastructure.DbContexts;
+﻿using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,7 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
         {
             options.UseNpgsql(configuration.GetConnectionString("Default"),
-                x => x.MigrationsAssembly("Byte_Buy.Infrastructure"));
+                x => x.MigrationsAssembly("ByteBuy.Infrastructure"));
         });
         return services;
     }
