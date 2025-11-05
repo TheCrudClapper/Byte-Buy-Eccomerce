@@ -12,9 +12,9 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
         builder.Property(u => u.FirstName).IsRequired().HasMaxLength(50);
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(50);
 
-        builder.HasMany(u => u.Offers)
+        builder.HasMany(u => u.Items)
             .WithOne(o => o.Owner)
             .HasForeignKey(o => o.OwnerId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 }

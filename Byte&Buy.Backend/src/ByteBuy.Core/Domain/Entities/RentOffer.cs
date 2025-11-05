@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class RentOffer : Offer, ISoftDelete
+public class RentOffer : Offer
 {
     public decimal PricePerDay { get; set; }
     public int MaxRentalDays { get; set;  }

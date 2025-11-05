@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ByteBuy.Core.Domain.EntityContracts;
 
 namespace ByteBuy.Core.Domain.Entities
 {
-    internal class Cart
+    public class Cart : AuditableEntity, ISoftDelete
     {
+        public bool IsActive { get; set; }
+        public DateTime? DateDeleted { get; set; }
     }
 }
