@@ -9,6 +9,8 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDelete
     public string LastName { get; set; } = null!;
     public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
+    public ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     public bool IsActive { get; set; }
     public DateTime DateCreated { get; set; }
     public DateTime? DateEdited { get; set; }
