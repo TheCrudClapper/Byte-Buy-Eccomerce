@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Domain\Enums\" />
-    <Folder Include="Domain\ValueObjects\" />
     <Folder Include="Domain\RepositoryContracts\" />
     <Folder Include="Mappings\" />
   </ItemGroup>

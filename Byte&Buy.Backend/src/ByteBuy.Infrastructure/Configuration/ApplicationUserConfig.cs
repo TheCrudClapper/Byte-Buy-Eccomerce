@@ -16,5 +16,6 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
             .WithOne(o => o.Owner)
             .HasForeignKey(o => o.OwnerId)
             .OnDelete(DeleteBehavior.NoAction);
+
     }
 }
