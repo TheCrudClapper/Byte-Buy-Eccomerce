@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 namespace ByteBuy.Infrastructure.DbContexts;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
@@ -24,6 +23,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Delivery> Delivery { get; set; }
     public DbSet<OfferDelivery> OfferDelivery { get; set; }
+    public DbSet<RentCartOffer> RentCartOffers { get; set; }
+    public DbSet<RentOrderItem> RentOrderItem { get; set; }
+    public DbSet<SaleCartOffer> SaleCartOffers { get; set; }
+    public DbSet<SaleOrderItem> SaleOrderItem { get; set; }
+    
+
+
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
     public ApplicationDbContext(){ }
@@ -32,24 +38,20 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
         base.OnModelCreating(builder);
 
-        //Scan current assembly for entities confi and apply
+        //Scan current assembly for entities config and apply
         builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
+        //TPT Mapping
         builder.Entity<Offer>().ToTable("Offers");
-        builder.Entity<SaleOffer>().ToTable("SaleOffers").OwnsOne(so => so.PricePerItem);
+        builder.Entity<SaleOffer>().ToTable("SaleOffers");
+        builder.Entity<RentOffer>().ToTable("RentOffers");
 
-        builder.Entity<RentOffer>().ToTable("RentOffers").OwnsOne(ro => ro.PricePerDay);
-        builder.Entity<Delivery>().OwnsOne(d => d.Price);
+        builder.Entity<CartOffer>().ToTable("CartOffers");
+        builder.Entity<SaleCartOffer>().ToTable("SaleCartOffers");
+        builder.Entity<RentCartOffer>().ToTable("RentCartOffers");
 
-        builder.Entity<Cart>().OwnsOne(c => c.TotalCartValue, c => {
-            c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount");
-            c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency");
-        });
-
-        builder.Entity<Cart>().OwnsOne(c => c.TotalItemsValue, c =>
-        {
-            c.Property(prop => prop.Amount).HasColumnName("TotalItemsValue_Amount");
-            c.Property(prop => prop.Currency).HasColumnName("TotalItemsValue_Currency");
-        });
+        builder.Entity<OrderItem>().ToTable("OrderItems");
+        builder.Entity<SaleOrderItem>().ToTable("SaleOrderItems");
+        builder.Entity<RentOrderItem>().ToTable("RentOrderItems");
     }
 }

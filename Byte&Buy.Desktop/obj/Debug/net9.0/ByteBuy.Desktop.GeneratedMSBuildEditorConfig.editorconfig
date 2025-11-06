@@ -26,5 +26,11 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/Styles/AppDefaultStyles.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/Views/LoginWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

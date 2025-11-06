@@ -17,5 +17,18 @@ public class OrderItemConfig : IEntityTypeConfiguration<OrderItem>
             .WithMany(o => o.OrderItems)
             .HasForeignKey(oi => oi.OfferId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.OwnsOne(oi => oi.UnitPrice, oi =>
+        {
+            oi.Property(prop => prop.Amount).HasColumnName("OrderItem_UnitPrice").HasPrecision(18, 3);
+            oi.Property(prop => prop.Currency).HasColumnName("OrderItem_UnitPriceCurrency").HasMaxLength(3);
+        });
+
+        builder.OwnsOne(oi => oi.TotalPrice, oi =>
+        {
+            oi.Property(prop => prop.Amount).HasColumnName("OrderItem_TotalPrice").HasPrecision(18, 3);
+            oi.Property(prop => prop.Currency).HasColumnName("OrderItem_TotalPriceCurrency").HasMaxLength(3);
+        });
+
     }
 }

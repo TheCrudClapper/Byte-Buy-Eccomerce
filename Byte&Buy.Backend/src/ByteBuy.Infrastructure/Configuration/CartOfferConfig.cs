@@ -17,5 +17,7 @@ public class CartOfferConfig : IEntityTypeConfiguration<CartOffer>
             .WithMany(o => o.CartOffers)
             .HasForeignKey(co => co.CartId)
             .OnDelete(DeleteBehavior.NoAction);
+
+
     }
 }

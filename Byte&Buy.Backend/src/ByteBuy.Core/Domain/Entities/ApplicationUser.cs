@@ -11,6 +11,8 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDelete
     public ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
     public ICollection<Address> Addresses { get; set; } = new List<Address>();
     public ICollection<Item> Items { get; set; } = new List<Item>();
+
+    public ICollection<Order> Orders { get; set; } = new List<Order>();
     public Cart Cart { get; set; } = null!;
     public bool IsActive { get; set; }
     public DateTime DateCreated { get; set; }

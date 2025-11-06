@@ -12,5 +12,16 @@ public class CartConfig : IEntityTypeConfiguration<Cart>
             .WithOne(u => u.Cart)
             .HasForeignKey<Cart>(c => c.UserId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.OwnsOne(c => c.TotalItemsValue, c =>
+        {
+            c.Property(prop => prop.Amount).HasColumnName("TotalItemsValue_Amount").HasPrecision(18, 3);
+            c.Property(prop => prop.Currency).HasColumnName("TotalItemsValue_Currency").HasMaxLength(3);
+        });
+
+        builder.OwnsOne(c => c.TotalCartValue, c => {
+            c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount").HasPrecision(18, 3);
+            c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency").HasMaxLength(3);
+        });
     }
 }
