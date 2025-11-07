@@ -13,8 +13,8 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(50);
 
         builder.HasMany(u => u.Items)
-            .WithOne(o => o.Owner)
-            .HasForeignKey(o => o.OwnerId)
+            .WithOne(o => o.CreatedBy)
+            .HasForeignKey(o => o.CreatedByUserId)
             .OnDelete(DeleteBehavior.NoAction);
 
     }

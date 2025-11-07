@@ -11,8 +11,8 @@ public class Item : AuditableEntity, ISoftDelete
     public Guid ConditionId { get; set;  }
     public Condition Condition { get; set; } = null!;
     public int StockQuantity { get; set;  }
-    public Guid OwnerId { get; set; }
-    public ApplicationUser Owner { get; set; } = null!;
+    public Guid CreatedByUserId { get; set; }
+    public ApplicationUser CreatedBy { get; set; } = null!;
     public ICollection<Image> Images { get; set; } = new List<Image>();
     public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     public bool IsActive { get; set; }

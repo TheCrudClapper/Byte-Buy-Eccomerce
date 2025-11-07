@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 namespace ByteBuy.Infrastructure.DbContexts;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
@@ -27,8 +28,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<RentOrderItem> RentOrderItem { get; set; }
     public DbSet<SaleCartOffer> SaleCartOffers { get; set; }
     public DbSet<SaleOrderItem> SaleOrderItem { get; set; }
+    public DbSet<CompanyInfo> CompanyInfo { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<PortalUser> PortalUsers { get; set; }
     
-
 
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
@@ -53,5 +56,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.Entity<OrderItem>().ToTable("OrderItems");
         builder.Entity<SaleOrderItem>().ToTable("SaleOrderItems");
         builder.Entity<RentOrderItem>().ToTable("RentOrderItems");
+
+        //TPH Mapping
+        builder.Entity<ApplicationUser>()
+           .HasDiscriminator<string>("UserType")
+           .HasValue<PortalUser>("PortalUser")
+           .HasValue<Employee>("Employee");
     }
 }

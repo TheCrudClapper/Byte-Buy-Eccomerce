@@ -28,6 +28,11 @@ namespace ByteBuy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<Guid>("CountryId")
                         .HasColumnType("uuid");
 
@@ -40,28 +45,37 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<DateTime?>("DateEdited")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("FlatNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
                     b.Property<string>("HouseNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PlaceName")
+                    b.Property<string>("Label")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("PostalCity")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
@@ -189,6 +203,11 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -199,6 +218,10 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("UserType").HasValue("ApplicationUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Cart", b =>
@@ -296,6 +319,43 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CompanyInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateEdited")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("NIP")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanyInfo");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Condition", b =>
@@ -439,6 +499,9 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("ConditionId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -461,9 +524,6 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(75)
                         .HasColumnType("character varying(75)");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer");
 
@@ -473,7 +533,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("ConditionId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Items");
                 });
@@ -564,7 +624,8 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -823,6 +884,25 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Employee", b =>
+                {
+                    b.HasBaseType("ByteBuy.Core.Domain.Entities.ApplicationUser");
+
+                    b.Property<Guid>("CompanyInfoId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("CompanyInfoId");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PortalUser", b =>
+                {
+                    b.HasBaseType("ByteBuy.Core.Domain.Entities.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("PortalUser");
+                });
+
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentCartOffer", b =>
                 {
                     b.HasBaseType("ByteBuy.Core.Domain.Entities.CartOffer");
@@ -863,12 +943,6 @@ namespace ByteBuy.Infrastructure.Migrations
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderItem", b =>
                 {
                     b.HasBaseType("ByteBuy.Core.Domain.Entities.OrderItem");
-
-                    b.Property<DateTime?>("DateReturned")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsReturned")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("RentalEndDate")
                         .HasColumnType("timestamp with time zone");
@@ -918,7 +992,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "User")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -930,7 +1004,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Cart", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "User")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "User")
                         .WithOne("Cart")
                         .HasForeignKey("ByteBuy.Core.Domain.Entities.Cart", "UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1012,6 +1086,53 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Navigation("Offer");
                 });
 
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CompanyInfo", b =>
+                {
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("CompanyInfoId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("FlatNumber")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("HouseNumber")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.HasKey("CompanyInfoId");
+
+                            b1.ToTable("CompanyInfo");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CompanyInfoId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Delivery", b =>
                 {
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "Price", b1 =>
@@ -1064,9 +1185,9 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "Owner")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "CreatedBy")
                         .WithMany("Items")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("CreatedByUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1074,7 +1195,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Navigation("Condition");
 
-                    b.Navigation("Owner");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Offer", b =>
@@ -1109,11 +1230,53 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "User")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "ShippingAddress", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("FlatNumber")
+                                .HasMaxLength(10)
+                                .HasColumnType("character varying(10)");
+
+                            b1.Property<string>("HouseNumber")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("character varying(10)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
 
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "TotalAmount", b1 =>
                         {
@@ -1136,6 +1299,9 @@ namespace ByteBuy.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
                         });
+
+                    b.Navigation("ShippingAddress")
+                        .IsRequired();
 
                     b.Navigation("TotalAmount")
                         .IsRequired();
@@ -1290,6 +1456,62 @@ namespace ByteBuy.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Employee", b =>
+                {
+                    b.HasOne("ByteBuy.Core.Domain.Entities.CompanyInfo", "CompanyInfo")
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyInfoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "HomeAddress", b1 =>
+                        {
+                            b1.Property<Guid>("EmployeeId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("FlatNumber")
+                                .HasMaxLength(10)
+                                .HasColumnType("character varying(10)");
+
+                            b1.Property<string>("HouseNumber")
+                                .IsRequired()
+                                .HasMaxLength(10)
+                                .HasColumnType("character varying(10)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("AspNetUsers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+                        });
+
+                    b.Navigation("CompanyInfo");
+
+                    b.Navigation("HomeAddress")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentCartOffer", b =>
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.CartOffer", null)
@@ -1422,14 +1644,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Cart")
-                        .IsRequired();
-
                     b.Navigation("Items");
-
-                    b.Navigation("Orders");
 
                     b.Navigation("UserPermissions");
 
@@ -1444,6 +1659,11 @@ namespace ByteBuy.Infrastructure.Migrations
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CompanyInfo", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Condition", b =>
@@ -1487,6 +1707,16 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Navigation("RolePermissions");
 
                     b.Navigation("UserPermissions");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PortalUser", b =>
+                {
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Cart")
+                        .IsRequired();
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,6 +12,11 @@ public class ItemConfig : IEntityTypeConfiguration<Item>
         builder.Property(i => i.Name).IsRequired().HasMaxLength(75);
         builder.Property(i => i.Description).IsRequired().HasMaxLength(2000);
 
+        builder.HasOne(i => i.CreatedBy)
+            .WithMany(u => u.Items)
+            .HasForeignKey(i => i.CreatedByUserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.HasOne(i => i.Condition)
             .WithMany(i => i.Products)
             .HasForeignKey(p => p.ConditionId)

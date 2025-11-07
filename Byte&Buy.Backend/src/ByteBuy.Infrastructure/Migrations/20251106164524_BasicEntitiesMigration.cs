@@ -488,7 +488,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Items_OwnerId",
                 table: "Items",
-                column: "OwnerId");
+                column: "CreatedByUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfferDelivery_DeliveryId",

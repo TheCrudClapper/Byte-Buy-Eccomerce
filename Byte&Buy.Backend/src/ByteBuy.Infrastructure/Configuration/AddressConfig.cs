@@ -19,5 +19,33 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
             .WithMany(u => u.Addresses)
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Property(a => a.Label)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(a => a.City)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(a => a.Street)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(a => a.HouseNumber)
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(a => a.PostalCity)
+            .HasMaxLength(50)
+            .IsRequired();
+
+        builder.Property(a => a.PostalCode)
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(a => a.FlatNumber)
+            .HasMaxLength(10);
+
     }
 }

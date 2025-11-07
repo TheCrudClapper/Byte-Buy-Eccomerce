@@ -6,11 +6,14 @@ namespace ByteBuy.Core.Domain.Entities
     public class Cart : AuditableEntity, ISoftDelete
     {
         public Guid UserId { get; set; }
-        public ApplicationUser User { get; set; } = null!;
+        public PortalUser User { get; set; } = null!;
         public Money TotalCartValue { get; set; } = null!;
         public Money TotalItemsValue { get; set; } = null!;
         public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
         public bool IsActive { get; set; }
         public DateTime? DateDeleted { get; set; }
+        private Cart() { }
     }
+
+    
 }
