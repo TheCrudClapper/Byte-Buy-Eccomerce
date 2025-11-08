@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { Login } from './components/auth/login/login';
 import { Navbar } from "./components/navbar/navbar";
 import { Footer } from "./components/footer/footer";
+import { Register } from "./components/auth/register/register";
 
 @Component({
   selector: 'app-root',
-  imports: [Login, Navbar, Footer],
+  imports: [Navbar, Footer, Register],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
