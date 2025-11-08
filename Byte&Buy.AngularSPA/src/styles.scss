@@ -12,6 +12,7 @@
   --success: #22C55E;
   --error: #EF4444;
   --outline-color: rgba(96, 17, 140, 0.35);
+  --test: #181226;
 }
 
 //Dark Theme
@@ -35,8 +36,8 @@ body{
   background-color: var(--bg);
 }
 
-//Buttons
 
+//Buttons
 .btn {
   color: var(--text);
   background: linear-gradient(80deg, var(--cta-gradient-start), var(--cta-gradient-end));
@@ -65,4 +66,24 @@ body{
   background: linear-gradient(90deg, var(--cta-gradient-start), var(--cta-gradient-end));
   color: var(--text);
   box-shadow: 0 0 8px var(--outline-color);
+}
+
+//Inputs
+input:focus{
+    outline: none;
+    box-shadow: 0 0 5px var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+input:checked {
+    background-color: var(--secondary) !important;
+    outline: none;
+    box-shadow: 0 0 5px var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+//Validation Errors
+.validation-errors{
+    color: var(--error);
+    font-weight: 450;
 }
