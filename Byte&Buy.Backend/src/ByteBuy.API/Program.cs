@@ -2,6 +2,7 @@ using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure;
+using EquipmentService.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,11 @@ builder.Services.AddControllers();
 builder.Services
     .AddCoreLayer()
     .AddInfrastructureLayer(builder.Configuration);
+
+// -----------------------------
+// Custom Services & Handlers
+// -----------------------------
+builder.Services.AddJwtTokenAuth(builder.Configuration);
 
 // -----------------------------
 // Add Identity
@@ -57,6 +63,7 @@ app.UseHttpsRedirection();
 // --------------------------------
 // Authentication && Authorization
 // --------------------------------
+app.UseAuthentication();
 app.UseAuthorization();
 
 // --------------------------------

@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+//Light Theme
+.theme-modern-light {
+  --bg: #FFFFFF;
+  --primary: #60118C;
+  --secondary: #8B5CF6;
+  --text: #1E1E1E;
+  --text-muted: #6B7280;
+  --card-bg: #F9FAFB;
+  --cta-gradient-start: #60118C;
+  --cta-gradient-end: #8B5CF6;;
+  --hover: #7B29B3;
+  --success: #22C55E;
+  --error: #EF4444;
+  --outline-color: rgba(96, 17, 140, 0.35);
+}
+
+//Dark Theme
+.theme-modern-dark {
+  --bg: #121212;
+  --primary: #60118C;
+  --secondary: #00FFC6;
+  --accent: #8B5CF6;
+  --text: #E5E7EB;
+  --text-muted: #9CA3AF;
+  --card-bg: #181226;
+  --cta-gradient-start: #60118C;
+  --cta-gradient-end: #00FFC6;
+  --hover: #7B2CBF;
+  --success: #22C55E;
+  --error: #EF4444;
+  --outline-color: rgba(0, 255, 198, 0.4);
+}
+
+body{
+  background-color: var(--bg);
+}
+
+//Buttons
+
+.btn {
+  color: var(--text);
+  background: linear-gradient(80deg, var(--cta-gradient-start), var(--cta-gradient-end));
+  border: 1px solid;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.25s ease !important;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--bg) !important;
+  color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--outline-color);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background: linear-gradient(90deg, var(--cta-gradient-start), var(--cta-gradient-end));
+  color: var(--text);
+  box-shadow: 0 0 8px var(--outline-color);
+}

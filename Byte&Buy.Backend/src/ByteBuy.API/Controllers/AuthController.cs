@@ -1,18 +1,26 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Infrastructure.DbContexts;
+﻿using ByteBuy.Core.DTO.Auth;
+using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController(ApplicationDbContext context) : ControllerBase
+    public class AuthController : BaseApiController
     {
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApplicationUser>>> Get()
+        private readonly IAuthService _authService;
+        public AuthController(IAuthService authService)
         {
-            return await context.Users.ToListAsync();
+            _authService = authService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TokenResponse>> Login(LoginRequest request,CancellationToken cancellationToken)
+            => HandleResult(await _authService.Login(request, cancellationToken));
+
+        [HttpPost]
+        public async Task<ActionResult<TokenResponse>> Register(RegisterRequest request,CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
     }
