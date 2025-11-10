@@ -1,9 +1,10 @@
 ﻿namespace ByteBuy.Core.Domain.Enums;
-public enum OrderStatus
+
+public enum PaymentStatus
 {
     Created = 0,
-    AwaitingPayment,
-    Paid,
-    PartiallyPaid,
+    Pending,
+    Completed,
+    Failed,
     Cancelled
 }

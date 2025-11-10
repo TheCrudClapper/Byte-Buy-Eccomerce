@@ -14,11 +14,11 @@ namespace ByteBuy.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TokenResponse>> Login(LoginRequest request,CancellationToken cancellationToken)
+        public async Task<ActionResult<TokenResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
             => HandleResult(await _authService.Login(request, cancellationToken));
 
         [HttpPost]
-        public async Task<ActionResult<TokenResponse>> Register(RegisterRequest request,CancellationToken cancellationToken)
+        public async Task<ActionResult<TokenResponse>> Register(RegisterRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

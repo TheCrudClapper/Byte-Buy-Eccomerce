@@ -12,6 +12,7 @@ public class Order : AuditableEntity, ISoftDelete
     public OrderStatus Status { get; set; }
     public AddressValueObj ShippingAddress { get; set; } = null!;
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public ICollection<PaymentOrder> PaymentOrders { get; set; } = new List<PaymentOrder>();
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 }
