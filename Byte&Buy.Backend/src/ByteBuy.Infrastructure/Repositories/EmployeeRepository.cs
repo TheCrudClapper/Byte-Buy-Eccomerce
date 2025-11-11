@@ -12,39 +12,47 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
 
     public async Task<Employee> AddAsync(Employee employee, CancellationToken cancellationToken = default)
     {
-        await _context.Employees.AddAsync(employee);
-        await _context.SaveChangesAsync();
+        await _context.Employees.AddAsync(employee, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return employee;
     }
 
-    public Task DeleteAsync(Employee employee, CancellationToken cancellationToken = default)
+    public async Task DeleteAsync(Employee employee, CancellationToken cancellationToken = default)
     {
-        
+        _context.Update(employee);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Employees.ToListAsync();
+        return await _context.Employees
+            .Where(e => e.IsActive)
+            .ToListAsync(cancellationToken);
     }
 
-    public Task<IEnumerable<Employee>> GetAllByCondition(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _context.Employees.Where(expression)
+            .ToListAsync(cancellationToken);    
     }
 
-    public Task<Employee> GetAsync(Guid employeeId, CancellationToken cancellationToken = default)
+    public async Task<Employee?> GetAsync(Guid employeeId, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _context.Employees
+            .FirstOrDefaultAsync(e => e.Id == employeeId && e.IsActive, cancellationToken);
     }
 
-    public Task<Employee> GetByCondition(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
+    public async Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _context.Employees
+            .FirstOrDefaultAsync(expression, cancellationToken);
     }
 
-    public Task<Employee> UpdateAsync(Guid employeeId, Employee employee, CancellationToken cancellationToken = default)
+    public async Task<Employee> UpdateAsync(Employee employee, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.Employees.Update(employee);
+        await _context.SaveChangesAsync(cancellationToken);
+        return employee;
     }
 }

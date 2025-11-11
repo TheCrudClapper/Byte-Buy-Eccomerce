@@ -4,6 +4,7 @@
 /// Represents the response data for an employee, including personal and address information.
 /// </summary>
 public record EmployeeResponse(
+    Guid Id,
     string FirstName,
     string LastName,
     string Email,

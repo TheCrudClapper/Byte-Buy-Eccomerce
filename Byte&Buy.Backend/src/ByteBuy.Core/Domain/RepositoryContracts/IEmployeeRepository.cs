@@ -14,10 +14,10 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 public interface IEmployeeRepository
 {
     Task<Employee> AddAsync(Employee employee, CancellationToken cancellationToken = default);
-    Task<Employee> UpdateAsync(Guid employeeId, Employee employee, CancellationToken cancellationToken = default);
-    Task<Employee> GetAsync(Guid employeeId, CancellationToken cancellationToken = default);
+    Task<Employee> UpdateAsync(Employee employee, CancellationToken cancellationToken = default);
+    Task<Employee?> GetAsync(Guid employeeId, CancellationToken cancellationToken = default);
     Task DeleteAsync(Employee employee, CancellationToken cancellationToken = default);
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<Employee>> GetAllByCondition(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
-    Task<Employee> GetByCondition(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
+    Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
 }

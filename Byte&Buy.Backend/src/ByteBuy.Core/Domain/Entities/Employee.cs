@@ -1,35 +1,68 @@
 ﻿using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
 public class Employee : ApplicationUser
 {
-    public AddressValueObj HomeAddress { get; set; } = null!;
-    public Guid CompanyInfoId { get; set; }
-    public CompanyInfo CompanyInfo { get; set; } = null!;
+    public AddressValueObj HomeAddress { get; private set; } = null!;
+    private Employee(string firstName, string lastName, string email)
+        : base(firstName, lastName, email) {}
 
-    private Employee(string firstName, string lastName, string email) : base(firstName, lastName, email)
+    public static Result<Employee> Create(string firstName,
+        string lastName,
+        string email,
+        string street,
+        string houseNumber,
+        string postalCode,
+        string city,
+        string country,
+        string? flatNumber)
     {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-    }
 
-    public static Result<Employee> CreateEmployee(EmployeeAddRequest request)
-    {
-        var result = AddressValueObj
-            .Create(request.Street, request.HouseNumber, request.PostalCode, request.City, request.Country, request.FlatNumber);
+        var addressResult = AddressValueObj
+            .Create(street, houseNumber, postalCode, city, country, flatNumber);
 
-        if (result.IsFailure)
-            return Result.Failure<Employee>(Error.DummyError);
+        if (addressResult.IsFailure)
+            return Result.Failure<Employee>(addressResult.Error);
 
-        var employee = new Employee(request.FirstName, request.LastName, request.Email);
+        var employee = new Employee(firstName, lastName, email);
 
-        employee.HomeAddress = result.Value;
+        employee.HomeAddress = addressResult.Value;
 
         return employee;
     }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+    }
+
+    public Result Update(
+        string firstName,
+        string lastName,
+        string email,
+        string street,
+        string houseNumber,
+        string postalCode,
+        string city,
+        string country,
+        string? flatNumber)
+    {
+        var addressResult = AddressValueObj.Create(
+            street, houseNumber, postalCode, city, country, flatNumber);
+
+        if (addressResult.IsFailure)
+            return Result.Failure(addressResult.Error);
+
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        HomeAddress = addressResult.Value;
+
+        return Result.Success();
+    }
+
 }
 

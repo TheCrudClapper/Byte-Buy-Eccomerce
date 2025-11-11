@@ -8,6 +8,7 @@ public static class EmployeeMappings
     public static EmployeeResponse ToEmployeeResponse(this Employee employee)
     {
         return new EmployeeResponse(
+            employee.Id,
             employee.FirstName,
             employee.LastName,
             employee.Email!,

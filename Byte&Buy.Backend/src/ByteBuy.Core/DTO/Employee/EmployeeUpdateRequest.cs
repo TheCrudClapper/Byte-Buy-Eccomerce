@@ -9,7 +9,6 @@ public record EmployeeUpdateRequest(
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,
-    [Required] string Password,
     [Required, MaxLength(50)] string Street,
     [Required, MaxLength(10)] string HouseNumber,
     [Required, MaxLength(20)] string PostalCode,

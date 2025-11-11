@@ -18,7 +18,8 @@ public class CompanyInfoConfig : IEntityTypeConfiguration<CompanyInfo>
         });
 
         builder.Property(ci => ci.CompanyName).HasMaxLength(50).IsRequired();
-        builder.Property(ci => ci.NIP).HasMaxLength(20).IsRequired();
+        builder.Property(ci => ci.TIN).HasMaxLength(20).IsRequired();
+        builder.Property(ci => ci.Slogan).HasMaxLength(30);
         builder.Property(ci => ci.Phone).HasMaxLength(16).IsRequired();
         builder.Property(ci => ci.Email).HasMaxLength(50).IsRequired();
     }

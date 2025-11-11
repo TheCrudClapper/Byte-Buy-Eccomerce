@@ -8,11 +8,6 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.HasOne(e => e.CompanyInfo)
-            .WithMany(c => c.Employees)
-            .HasForeignKey(e => e.CompanyInfoId)
-            .OnDelete(DeleteBehavior.NoAction);
-
         builder.OwnsOne(e => e.HomeAddress, a =>
         {
             a.Property(p => p.City).HasMaxLength(50);

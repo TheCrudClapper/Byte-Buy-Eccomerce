@@ -1,4 +1,6 @@
-﻿using ByteBuy.Infrastructure.DbContexts;
+﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,10 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("ByteBuy.Infrastructure"));
         });
+
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<ICartRepository, CartRepository>();
+        services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
         return services;
     }
 }
