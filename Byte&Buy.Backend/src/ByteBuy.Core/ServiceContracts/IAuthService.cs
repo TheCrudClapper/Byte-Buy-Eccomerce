@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Auth;
 using ByteBuy.Core.ResultTypes;
-using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.ServiceContracts;
 
@@ -22,13 +21,14 @@ public interface IAuthService
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see
     /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
     /// includes the token response; otherwise, it contains error information.</returns>
-    Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken ct = default);
+    Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken cancelationToken = default);
+    
     /// <summary>
-    /// Registers a new user account using the specified registration details.
+    /// Registers a new portal user with the specified registration details.
     /// </summary>
-    /// <param name="request">An object containing the user's registration information. Cannot be null.</param>
-    /// <param name="ct">A cancellation token that can be used to cancel the registration operation.</param>
-    /// <returns>A task that represents the asynchronous registration operation. The task result contains an IdentityResult
-    /// indicating whether the registration succeeded.</returns>
-    Task<IdentityResult> Register(RegisterRequest request, CancellationToken ct = default);
+    /// <param name="request">The registration information for the new user. Cannot be null.</param>
+    /// <param name="cancelationToken">A cancellation token that can be used to cancel the registration operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="Result"/> indicating
+    /// the outcome of the registration.</returns>
+    Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken cancelationToken = default);
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ByteBuy.Core.Extensions;
 
@@ -6,6 +8,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddCoreLayer(this IServiceCollection services)
     {
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IEmployeeService, EmployeeService>();
         return services;
     }
 }

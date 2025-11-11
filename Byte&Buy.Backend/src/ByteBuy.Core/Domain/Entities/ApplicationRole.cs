@@ -11,4 +11,16 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDelete
     public DateTime DateCreated { get; set; }
     public DateTime? DateEdited { get; set; }
     public DateTime? DateDeleted { get; set; }
+
+    private ApplicationRole() { }
+    private ApplicationRole(string name)
+    {
+        Name = name;
+        NormalizedName = name.ToUpper();
+        IsActive = true;
+        DateCreated = DateTime.UtcNow;
+    }
+
+    public static ApplicationRole Create(string name) 
+        => new ApplicationRole(name);
 }

@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.Domain.ValueObjects
+﻿using ByteBuy.Core.ResultTypes;
+
+namespace ByteBuy.Core.Domain.ValueObjects
 {
     public class AddressValueObj
     {
@@ -11,7 +13,7 @@
 
         private AddressValueObj() { }
 
-        public AddressValueObj(
+        private AddressValueObj(
             string street,
             string houseNumber,
             string postalCode,
@@ -29,6 +31,12 @@
 
         public override string ToString()
             => $"{Street} {HouseNumber}{(FlatNumber != null ? $"/{FlatNumber}" : "")}, {PostalCode} {City}, {Country}";
+
+        public static Result<AddressValueObj> Create(string street, string houseNumber,string postalCode, string city, string country, string? flatNumber = null)
+        {
+            //walidation
+            return new AddressValueObj(street, houseNumber, postalCode, city, country, flatNumber);
+        }
 
         public static AddressValueObj FromEntity(Entities.Address address)
             => new AddressValueObj(

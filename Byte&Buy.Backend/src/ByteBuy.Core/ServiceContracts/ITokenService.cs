@@ -15,7 +15,7 @@ public interface ITokenService
     /// </summary>
     /// <param name="user">The user for whom the JWT will be generated. Must not be null.</param>
     /// <returns>A string containing the generated JWT for the specified user.</returns>
-    string GenerateJwtToken(ApplicationUser user);
+    string GenerateJwtToken(ApplicationUser user, IList<string> roles);
     /// <summary>
     /// Generates a new refresh token for the specified user.
     /// </summary>

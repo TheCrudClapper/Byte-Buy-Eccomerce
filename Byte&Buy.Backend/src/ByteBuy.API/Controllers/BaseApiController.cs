@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ByteBuy.API.Extensions;
 namespace ByteBuy.API.Controllers;
-
-[ApiController]
 public class BaseApiController : ControllerBase
 {
     protected Guid CurrentUserId => this.GetLoggedUserId();
 
+    [NonAction]
     public ActionResult HandleResult<T>(Result<T> result)
     {
         return result.IsFailure
@@ -15,6 +14,7 @@ public class BaseApiController : ControllerBase
             : Ok(result.Value);
     }
 
+    [NonAction]
     public ActionResult HandleResult(Result result)
     {
         return result.IsFailure
