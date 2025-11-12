@@ -1,10 +1,11 @@
 ﻿using ByteBuy.Core.DTO.CompanyInfo;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
 
 public interface ICompanyInfoService
 {
-    Task<CompanyInfoResponse> AddCompanyInfo(CompanyInfoAddRequest request, CancellationToken cancellationToken = default);
-    Task<CompanyInfoResponse> UpdateCompanyInfo(Guid companyInfoId,  CompanyInfoAddRequest request, CancellationToken cancellationToken = default);
-    Task<CompanyInfoResponse> GetCompanyInfo(Guid companyInfoId, CancellationToken cancellationToken = default);
+    Task<Result<CompanyInfoResponse>> AddCompanyInfo(CompanyInfoAddRequest request, CancellationToken ct = default);
+    Task<Result<CompanyInfoResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request, CancellationToken ct = default);
+    Task<Result<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct = default);
 }

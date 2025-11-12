@@ -3,7 +3,6 @@
 namespace ByteBuy.Core.DTO.CompanyInfo;
 
 public record CompanyInfoResponse(
-    Guid Id,
     string CompanyName,
     string TIN,
     string Email,

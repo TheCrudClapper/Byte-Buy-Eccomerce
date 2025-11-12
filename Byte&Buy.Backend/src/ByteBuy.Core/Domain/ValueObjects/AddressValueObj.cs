@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.ResultTypes;
+using System.Collections.Immutable;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
