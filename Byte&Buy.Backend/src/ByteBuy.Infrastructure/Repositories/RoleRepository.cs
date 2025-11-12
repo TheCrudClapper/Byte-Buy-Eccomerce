@@ -36,7 +36,7 @@ public class RoleRepository : BaseRepository, IRoleRepository
     public async Task<ApplicationRole?> GetByIdAsync(Guid roleId, CancellationToken ct)
     {
         return await _roleManager.Roles
-            .FirstOrDefaultAsync(r => r.Id == roleId && r.IsActive);
+            .FirstOrDefaultAsync(r => r.Id == roleId && r.IsActive,ct);
     }
 
     public async Task UpdateAsync(ApplicationRole role, CancellationToken ct)

@@ -13,6 +13,7 @@ public static class DependencyInjection
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ICompanyInfoService, CompanyInfoService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IPermissionService, PermissionService>();
         return services;
     }
 }

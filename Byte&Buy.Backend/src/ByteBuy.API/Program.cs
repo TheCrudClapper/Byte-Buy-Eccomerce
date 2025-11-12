@@ -1,8 +1,12 @@
+using ByteBuy.API.Authorization;
 using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure;
+using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Seeding;
 using EquipmentService.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +23,13 @@ builder.Services
     .AddCoreLayer()
     .AddInfrastructureLayer(builder.Configuration);
 
-// -----------------------------
-// Custom Services & Handlers
-// -----------------------------
-builder.Services.AddJwtTokenAuth(builder.Configuration);
+builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // -----------------------------
 // Add Identity
 // -----------------------------
 builder.Services.AddIdentity();
+
 
 // -----------------------------
 // Swagger & OpenApi
@@ -35,6 +37,12 @@ builder.Services.AddIdentity();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// -----------------------------
+// Authorization & Permissions
+// -----------------------------
+builder.Services.AddJwtTokenAuth(builder.Configuration);
+builder.Services.LoadAuthorizationPolicies();
 #endregion
 #region Middleware Pipeline
 var app = builder.Build();

@@ -1,11 +1,14 @@
-﻿using ByteBuy.Core.DTO.CompanyInfo;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.Core.DTO.CompanyInfo;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CompanyInfoController : BaseApiController
 {
     private readonly ICompanyInfoService _companyInfoService;
@@ -15,14 +18,17 @@ public class CompanyInfoController : BaseApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct)
         => HandleResult(await _companyInfoService.GetCompanyInfo());
 
     [HttpPost]
+    [HasPermission("companyinfo:create")]
     public async Task<ActionResult<CompanyInfoAddRequest>> PostCompanyInfo(CompanyInfoAddRequest request, CancellationToken ct)
         => HandleResult(await _companyInfoService.AddCompanyInfo(request, ct));
 
     [HttpPut]
+    [HasPermission("companyinfo:update")]
     public async Task<ActionResult<CompanyInfoResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request, CancellationToken ct)
         => HandleResult(await _companyInfoService.UpdateCompanyInfo(request, ct));
 }

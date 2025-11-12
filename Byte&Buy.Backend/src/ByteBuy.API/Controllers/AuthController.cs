@@ -27,22 +27,5 @@ public class AuthController : BaseApiController
     [Route("Register")]
     public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
         => HandleResult(await _authService.RegisterPortalUser(request, cancellationToken));
-    //{
-    //    var result = await _authService.RegisterPortalUser(request, cancellationToken);
-    //    if (!result.Succeeded)
-    //    {
-    //        var errors = result.Errors
-    //       .GroupBy(e => e.Code)
-    //       .ToDictionary(
-    //           g => g.Key,
-    //           g => g.Select(e => e.Description).ToArray()
-    //       );
-
-    //        return ValidationProblem(new ValidationProblemDetails(errors));
-    //    }
-
-    //    return NoContent();
-
-    //}
 
 }
