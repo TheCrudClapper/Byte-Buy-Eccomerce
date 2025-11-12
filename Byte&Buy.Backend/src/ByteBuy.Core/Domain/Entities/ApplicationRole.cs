@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Domain.Entities;
@@ -21,6 +22,38 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDelete
         DateCreated = DateTime.UtcNow;
     }
 
-    public static ApplicationRole Create(string name) 
-        => new ApplicationRole(name);
+    private static Result Validate(string Name)
+    {
+        if (string.IsNullOrWhiteSpace(Name) || Name.Length > 20)
+            return Result.Failure(Error.Validation("Name is required and must be at most 20 characters."));
+
+        return Result.Success();
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;  
+    }
+
+    public static Result<ApplicationRole> Create(string name)
+    {
+        var validationResult = Validate(name);
+        if (validationResult.IsFailure)
+            return Result.Failure<ApplicationRole>(validationResult.Error);
+
+        return new ApplicationRole(name);
+    }
+
+    public Result Update(string name)
+    {
+        var validationResult = Validate(name);
+        if (validationResult.IsFailure)
+            return Result.Failure(validationResult.Error);
+
+        Name = name;
+        DateEdited = DateTime.UtcNow;
+
+        return Result.Success();
+    }
 }

@@ -46,7 +46,7 @@ public class AuthService : IAuthService
     public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken cancelationToken = default)
     {
         if (await _userManager.FindByEmailAsync(request.Email) is not null)
-            return Result.Failure<PortalUser>(AuthErrors.AccountExists);
+            return Result.Failure(AuthErrors.AccountExists);
 
         var userResult = PortalUser
             .Create(request.FirstName, request.LastName, request.Email);
@@ -71,8 +71,13 @@ public class AuthService : IAuthService
 
         const string defaultRoleName = "PortalUser";
 
+        var roleResult = ApplicationRole.Create(defaultRoleName);
+
+        if(roleResult.IsFailure)
+            return roleResult;
+
         if (!await _roleManager.RoleExistsAsync(defaultRoleName))
-            await _roleManager.CreateAsync(ApplicationRole.Create(defaultRoleName));
+            await _roleManager.CreateAsync(roleResult.Value);
 
         await _userManager.AddToRoleAsync(user, defaultRoleName);
 

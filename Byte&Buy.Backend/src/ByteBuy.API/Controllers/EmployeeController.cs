@@ -15,12 +15,12 @@ public class EmployeeController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<EmployeeResponse>> PostEmployee(EmployeeAddRequest request, CancellationToken cancellationToken)
-        => HandleResult(await _employeeService.AddEmployee(request, cancellationToken));
+    public async Task<ActionResult<EmployeeResponse>> PostEmployee(EmployeeAddRequest request, CancellationToken ct)
+        => HandleResult(await _employeeService.AddEmployee(request, ct));
 
     [HttpGet("{employeeId}")]
-    public async Task<ActionResult<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken cancellationToken)
-        => HandleResult(await _employeeService.GetEmployee(employeeId, cancellationToken));
+    public async Task<ActionResult<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
+        => HandleResult(await _employeeService.GetEmployee(employeeId, ct));
 
     [HttpGet]
     public async Task<ActionResult<EmployeeResponse>> GetEmployees()
@@ -30,7 +30,11 @@ public class EmployeeController : BaseApiController
     public async Task<ActionResult<EmployeeResponse>> PutEmployee(
     Guid employeeId,
     EmployeeUpdateRequest request,
-    CancellationToken cancellationToken)
-        => HandleResult(await _employeeService.UpdateEmployee(employeeId, request, cancellationToken));
+    CancellationToken ct)
+        => HandleResult(await _employeeService.UpdateEmployee(employeeId, request, ct));
 
+    [HttpDelete("{employeeId}")]
+    public async Task<IActionResult> DeleteEmployee(Guid employeeId, CancellationToken ct)
+        => HandleResult(await _employeeService.DeleteEmployee(employeeId, ct));
+   
 }
