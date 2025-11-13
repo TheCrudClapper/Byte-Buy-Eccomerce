@@ -47,8 +47,11 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
     public async Task<Guid?> GetUserRoleId(Guid userId, CancellationToken ct = default)
     {
         return await _context.UserRoles
-            .Where(r => r.UserId == userId)
-            .Select(r => r.RoleId)
-            .FirstOrDefaultAsync(ct);
+      .Include(ur => ur.Role)
+      .Where(ur => ur.UserId == userId
+                   && ur.IsActive
+                   && ur.Role.IsActive)
+      .Select(ur => ur.RoleId)
+      .FirstOrDefaultAsync(ct);
     }
 }

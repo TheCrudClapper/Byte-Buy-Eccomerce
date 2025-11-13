@@ -15,7 +15,7 @@ public class CompanyInfo : AuditableEntity
     public AddressValueObj Address { get; private set; } = null!;
     public string Email { get; private set; } = null!;
     public string Phone { get; private set; } = null!;
-    public string? Slogan { get; private set; }
+    public string Slogan { get; private set; } = null!;
 
     private CompanyInfo() { }
 
@@ -24,7 +24,7 @@ public class CompanyInfo : AuditableEntity
         string tin,
         string email,
         string phone,
-        string? slogan,
+        string slogan,
         AddressValueObj address)
     {
         Address = address;
@@ -40,7 +40,7 @@ public class CompanyInfo : AuditableEntity
        string tin,
        string email,
        string phone,
-       string? slogan)
+       string slogan)
     {
         if (string.IsNullOrWhiteSpace(companyName) || companyName.Length > 50)
             return Result.Failure(Error.Validation("Company name is required and must be at most 50 characters."));
@@ -65,7 +65,7 @@ public class CompanyInfo : AuditableEntity
     string tin,
     string email,
     string phone,
-    string? slogan,
+    string slogan,
     string street,
     string houseNumber,
     string postalCode,
@@ -89,7 +89,7 @@ public class CompanyInfo : AuditableEntity
     string tin,
     string email,
     string phone,
-    string? slogan,
+    string slogan,
     string street,
     string houseNumber,
     string postalCode,

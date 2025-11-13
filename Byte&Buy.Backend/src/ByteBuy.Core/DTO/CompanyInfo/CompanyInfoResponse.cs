@@ -7,6 +7,6 @@ public record CompanyInfoResponse(
     string TIN,
     string Email,
     string Phone,
-    string? Slogan,
+    string Slogan,
     AddressDto Address
 );

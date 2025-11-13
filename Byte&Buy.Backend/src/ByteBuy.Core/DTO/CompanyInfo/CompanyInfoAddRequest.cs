@@ -8,6 +8,6 @@ public record CompanyInfoAddRequest(
 [Required, MaxLength(20)] string TIN,
 [Required, MaxLength(50)] string Email,
 [Required, MaxLength(16)] string Phone,
-[MaxLength(30)] string? Slogan,
+[MaxLength(30)] string Slogan,
 [Required] AddressDto Address
 );

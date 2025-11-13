@@ -6,6 +6,6 @@ public static class DatabaseSeeder
 {
     public static void SeedDatabase(ApplicationDbContext context)
     {
-        return;
+        
     }
 }

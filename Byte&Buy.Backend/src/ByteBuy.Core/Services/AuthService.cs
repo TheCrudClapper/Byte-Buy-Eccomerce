@@ -39,7 +39,6 @@ public class AuthService : IAuthService
         IList<string> roles = await _userManager.GetRolesAsync(user);
 
         var token = _tokenService.GenerateJwtToken(user, roles);
-
         return new TokenResponse(token);
     }
 
