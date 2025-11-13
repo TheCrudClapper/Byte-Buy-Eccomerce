@@ -1,4 +1,4 @@
-export interface addressValueObj{
+export interface AddressValueObj{
     street: string;
     houseNumber :string;
     postalCode :string;

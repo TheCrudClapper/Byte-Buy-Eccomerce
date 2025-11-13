@@ -1,10 +1,10 @@
-import { addressValueObj } from "../address/addressValueObj";
+import { AddressValueObj } from "../address/AddressValueObj";
 
-export interface companyInfoResponse{
+export interface CompanyInfoResponse {
    companyName :string;
    slogan :string;
    TIN :string;
    email :string;
    phone :string;
-   address :addressValueObj;
+   address :AddressValueObj;
 }

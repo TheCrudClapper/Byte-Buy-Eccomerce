@@ -28,7 +28,7 @@ public class CompanyInfoController : BaseApiController
         => HandleResult(await _companyInfoService.AddCompanyInfo(request, ct));
 
     [HttpPut]
-    [HasPermission("companyinfo:update")]
+    [HasPermission("companyinfo:upsdate")]
     public async Task<ActionResult<CompanyInfoResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request, CancellationToken ct)
         => HandleResult(await _companyInfoService.UpdateCompanyInfo(request, ct));
 }

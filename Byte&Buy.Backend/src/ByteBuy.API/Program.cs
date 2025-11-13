@@ -28,6 +28,10 @@ builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 // -----------------------------
 builder.Services.AddIdentity();
 
+// -----------------------------
+// Configure Cors Policies
+// -----------------------------
+builder.Services.ConfigureCors();
 
 // -----------------------------
 // Swagger & OpenApi
@@ -65,6 +69,11 @@ if (app.Environment.IsDevelopment())
 // Https
 // -----------------------------
 app.UseHttpsRedirection();
+
+// --------------------------------
+// Cors
+// --------------------------------
+app.UseCors("AllowAll");
 
 // --------------------------------
 // Authentication && Authorization
