@@ -9,5 +9,5 @@ public interface IPermissionRepository
     Task<bool> CheckUserPermissionGrant(Guid userId, Guid permissionId, CancellationToken ct = default);
     Task<bool> CheckUserPermissionNotGrant(Guid userId, Guid permissionId, CancellationToken ct = default);
     Task<bool> CheckIfRoleHasPermission(Guid roleId, Guid permissionId, CancellationToken ct = default);
-    Task<Guid?> GetUserRolesId(Guid userId, CancellationToken ct = default);
+    Task<Guid?> GetUserRoleId(Guid userId, CancellationToken ct = default);
 }

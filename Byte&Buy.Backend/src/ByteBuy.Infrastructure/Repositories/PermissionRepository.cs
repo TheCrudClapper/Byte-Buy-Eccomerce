@@ -44,7 +44,7 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .FirstOrDefaultAsync(p => p.Name == name && p.IsActive, ct);
     }
 
-    public async Task<Guid?> GetUserRolesId(Guid userId, CancellationToken ct = default)
+    public async Task<Guid?> GetUserRoleId(Guid userId, CancellationToken ct = default)
     {
         return await _context.UserRoles
             .Where(r => r.UserId == userId)

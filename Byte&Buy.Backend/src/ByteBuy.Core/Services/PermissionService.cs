@@ -37,7 +37,7 @@ public class PermissionService : IPermissionService
             return false;
 
         //get user role ids
-        var userRoleId = await _permissionRepository.GetUserRolesId(userId);
+        var userRoleId = await _permissionRepository.GetUserRoleId(userId);
         if (userRoleId is null) return false;
 
         //check if role of user has access
