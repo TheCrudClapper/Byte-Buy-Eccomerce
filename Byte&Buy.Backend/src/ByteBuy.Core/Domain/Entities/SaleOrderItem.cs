@@ -1,3 +1,3 @@
 ﻿namespace ByteBuy.Core.Domain.Entities;
 
-public class SaleOrderItem : OrderItem{}
+public class SaleOrderItem : OrderItem {}

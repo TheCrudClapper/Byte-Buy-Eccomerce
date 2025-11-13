@@ -18,6 +18,8 @@ public class RolePermissionConfig : IEntityTypeConfiguration<RolePermission>
             .WithMany(r => r.RolePermissions)
             .HasForeignKey(rp => rp.PermissionId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }
 

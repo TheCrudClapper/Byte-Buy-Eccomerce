@@ -23,20 +23,19 @@ public class RoleRepository : BaseRepository, IRoleRepository
     public async Task<bool> ExistsAsync(string roleName, CancellationToken ct)
     {
         return await _roleManager.Roles
-            .AnyAsync(r => r.IsActive && r.Name == roleName, ct);
+            .AnyAsync(r => r.Name == roleName, ct);
     }
 
     public async Task<IEnumerable<ApplicationRole>> GetAllAsync(CancellationToken ct)
     {
         return await _roleManager.Roles
-            .Where(r => r.IsActive)
             .ToListAsync(ct);
     }
 
     public async Task<ApplicationRole?> GetByIdAsync(Guid roleId, CancellationToken ct)
     {
         return await _roleManager.Roles
-            .FirstOrDefaultAsync(r => r.Id == roleId && r.IsActive,ct);
+            .FirstOrDefaultAsync(r => r.Id == roleId, ct);
     }
 
     public async Task UpdateAsync(ApplicationRole role, CancellationToken ct)

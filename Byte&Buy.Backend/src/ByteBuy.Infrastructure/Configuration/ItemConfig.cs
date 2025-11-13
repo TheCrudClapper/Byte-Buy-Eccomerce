@@ -36,5 +36,7 @@ public class ItemConfig : IEntityTypeConfiguration<Item>
             .WithOne(o => o.Item)
             .HasForeignKey(i => i.ItemId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

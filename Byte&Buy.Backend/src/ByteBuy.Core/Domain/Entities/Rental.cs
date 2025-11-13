@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Rental : AuditableEntity, ISoftDelete
+public class Rental : AuditableEntity, ISoftDeletable
 {
     public Guid RentOrderItemId { get; set; }
     public RentOrderItem RentOrderItem { get; set; } = null!;

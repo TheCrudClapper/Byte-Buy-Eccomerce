@@ -1,15 +1,13 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
 namespace ByteBuy.Infrastructure.Configuration
 {
-    public class CountryConfig : IEntityTypeConfiguration<Country>
+    public class CategoryConfig : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Country> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.Property(c => c.Code).HasMaxLength(3);
-            builder.Property(c => c.Name).HasMaxLength(50);
-
             builder.HasQueryFilter(item => item.IsActive);
         }
     }

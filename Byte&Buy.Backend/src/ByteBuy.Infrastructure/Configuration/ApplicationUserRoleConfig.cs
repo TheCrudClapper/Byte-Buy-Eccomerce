@@ -21,5 +21,7 @@ public class ApplicationUserRoleConfig : IEntityTypeConfiguration<ApplicationUse
 
         builder.HasIndex(ur => new { ur.UserId, ur.RoleId })
             .IsUnique();
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

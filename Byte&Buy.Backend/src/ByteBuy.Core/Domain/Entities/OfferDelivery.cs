@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class OfferDelivery : AuditableEntity, ISoftDelete
+public class OfferDelivery : AuditableEntity, ISoftDeletable
 {
     public Guid OfferId { get; set; }
     public Offer Offer { get; set; } = null!;

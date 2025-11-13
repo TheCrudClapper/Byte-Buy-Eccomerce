@@ -18,6 +18,6 @@ public class CartOfferConfig : IEntityTypeConfiguration<CartOffer>
             .HasForeignKey(co => co.CartId)
             .OnDelete(DeleteBehavior.NoAction);
 
-
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

@@ -19,5 +19,7 @@ public class UserPermissionConfig : IEntityTypeConfiguration<UserPermission>
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.ToTable("UserPermissions");
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

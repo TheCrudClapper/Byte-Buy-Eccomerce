@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class CartOffer : AuditableEntity, ISoftDelete
+public class CartOffer : AuditableEntity, ISoftDeletable
 {
     public int Quantity { get; set; }
     public Guid CartId { get; set; }

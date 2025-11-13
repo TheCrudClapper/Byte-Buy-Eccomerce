@@ -47,5 +47,6 @@ public class AddressConfig : IEntityTypeConfiguration<Address>
         builder.Property(a => a.FlatNumber)
             .HasMaxLength(10);
 
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

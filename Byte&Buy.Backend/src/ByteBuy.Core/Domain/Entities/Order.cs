@@ -3,7 +3,7 @@ using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Entities;
-public class Order : AuditableEntity, ISoftDelete
+public class Order : AuditableEntity, ISoftDeletable
 {
     public Guid UserId { get; set; }
     public PortalUser User { get; set; } = null!;

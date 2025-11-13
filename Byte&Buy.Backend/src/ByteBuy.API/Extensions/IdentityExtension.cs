@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ByteBuy.API.Extensions;
 
@@ -17,10 +16,7 @@ public static class IdentityExtension
             options.User.RequireUniqueEmail = true;
         })
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders()
-            .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
-            .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
-
+            .AddDefaultTokenProviders();
         return services;
     }
 }

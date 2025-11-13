@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Image : AuditableEntity, ISoftDelete
+public class Image : AuditableEntity, ISoftDeletable
 {
     public string ImagePath { get; set; } = null!;
     public Guid ItemId { get; set; }

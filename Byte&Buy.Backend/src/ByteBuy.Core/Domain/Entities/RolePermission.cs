@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class RolePermission : AuditableEntity, ISoftDelete
+public class RolePermission : AuditableEntity, ISoftDeletable
 {
     public Guid RoleId { get; set; }
     public ApplicationRole Role { get; set; } = null!;

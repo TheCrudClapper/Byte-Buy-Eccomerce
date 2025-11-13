@@ -86,7 +86,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationRole", b =>
@@ -280,7 +280,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CartOffer", b =>
@@ -348,7 +348,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CompanyInfo", b =>
@@ -390,7 +390,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyInfo");
+                    b.ToTable("CompanyInfo", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Condition", b =>
@@ -420,7 +420,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Condition");
+                    b.ToTable("Condition", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Country", b =>
@@ -453,7 +453,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Delivery", b =>
@@ -483,7 +483,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Delivery");
+                    b.ToTable("Delivery", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Image", b =>
@@ -519,7 +519,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Item", b =>
@@ -570,7 +570,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("CreatedByUserId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Offer", b =>
@@ -633,7 +633,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("OfferId");
 
-                    b.ToTable("OfferDelivery");
+                    b.ToTable("OfferDelivery", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
@@ -669,7 +669,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderItem", b =>
@@ -748,7 +748,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
@@ -784,7 +784,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("PaymentOrder");
+                    b.ToTable("PaymentOrder", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Permission", b =>
@@ -814,7 +814,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Rental", b =>
@@ -852,7 +852,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.HasIndex("RentOrderItemId")
                         .IsUnique();
 
-                    b.ToTable("Rental");
+                    b.ToTable("Rental", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RolePermission", b =>
@@ -885,7 +885,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolePermissions");
+                    b.ToTable("RolePermissions", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.UserPermission", b =>
@@ -1146,7 +1146,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("CartId");
 
-                            b1.ToTable("Carts");
+                            b1.ToTable("Carts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CartId");
@@ -1170,7 +1170,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("CartId");
 
-                            b1.ToTable("Carts");
+                            b1.ToTable("Carts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CartId");
@@ -1241,7 +1241,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("CompanyInfoId");
 
-                            b1.ToTable("CompanyInfo");
+                            b1.ToTable("CompanyInfo", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("CompanyInfoId");
@@ -1269,7 +1269,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("DeliveryId");
 
-                            b1.ToTable("Delivery");
+                            b1.ToTable("Delivery", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("DeliveryId");
@@ -1390,7 +1390,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -1412,7 +1412,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -1459,7 +1459,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItems", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");
@@ -1483,7 +1483,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItems", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");
@@ -1642,7 +1642,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("EmployeeId");
 
-                            b1.ToTable("AspNetUsers");
+                            b1.ToTable("AspNetUsers", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("EmployeeId");
@@ -1694,7 +1694,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("RentOfferId");
 
-                            b1.ToTable("RentOffers");
+                            b1.ToTable("RentOffers", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("RentOfferId");
@@ -1728,7 +1728,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                             b1.HasKey("SaleOfferId");
 
-                            b1.ToTable("SaleOffers");
+                            b1.ToTable("SaleOffers", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("SaleOfferId");

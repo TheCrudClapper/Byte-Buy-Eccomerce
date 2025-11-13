@@ -9,19 +9,19 @@ namespace ByteBuy.Core.Domain.Entities;
 /// </summary>
 /// <remarks>This class extends <see cref="IdentityUser{Guid}"/> to provide additional properties for user profile
 /// data, permissions, roles, and soft deletion support. It is typically used to manage authentication, authorization,
-/// and user-related data within the application. The <see cref="ISoftDelete"/> interface enables tracking of deleted
+/// and user-related data within the application. The <see cref="ISoftDeletable"/> interface enables tracking of deleted
 /// users without permanently removing their records.</remarks>
-public class ApplicationUser : IdentityUser<Guid>, ISoftDelete
+public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
 {
     public string FirstName { get; protected set; } = null!;
     public string LastName { get; protected set; } = null!;
     public ICollection<UserPermission> UserPermissions { get; protected set; } = new List<UserPermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; protected set; } = new List<ApplicationUserRole>();
     public ICollection<Item> Items { get; protected set; } = new List<Item>();
-    public bool IsActive { get; set; }
-    public DateTime DateCreated { get; set; }
-    public DateTime? DateEdited { get; set; }
-    public DateTime? DateDeleted { get;  set; } 
+    public bool IsActive { get; protected set; }
+    public DateTime DateCreated { get; protected set; }
+    public DateTime? DateEdited { get; protected set; }
+    public DateTime? DateDeleted { get; protected set; } 
 
     private ApplicationUser() { }
     protected ApplicationUser(string firstName, string lastName, string email)

@@ -23,5 +23,7 @@ public class CartConfig : IEntityTypeConfiguration<Cart>
             c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount").HasPrecision(18, 3);
             c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency").HasMaxLength(3);
         });
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

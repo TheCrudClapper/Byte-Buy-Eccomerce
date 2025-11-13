@@ -12,5 +12,7 @@ public class RentalConfiguration : IEntityTypeConfiguration<Rental>
                .WithOne(roi => roi.Rental)
                .HasForeignKey<Rental>(r => r.RentOrderItemId)
                .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

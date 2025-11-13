@@ -3,7 +3,7 @@ using ByteBuy.Core.Domain.Enums;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Payment : AuditableEntity, ISoftDelete
+public class Payment : AuditableEntity, ISoftDeletable
 {
     public PaymentStatus Status { get; set; }
     public string Currency { get; set; } = null!;

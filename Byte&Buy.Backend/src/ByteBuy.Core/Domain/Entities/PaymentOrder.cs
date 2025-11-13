@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class PaymentOrder : AuditableEntity, ISoftDelete
+public class PaymentOrder : AuditableEntity, ISoftDeletable
 {
     public Guid PaymentId { get; set; }
     public Guid OrderId { get; set; }

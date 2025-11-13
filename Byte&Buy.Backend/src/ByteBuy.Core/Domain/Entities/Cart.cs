@@ -4,7 +4,7 @@ using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Cart : AuditableEntity, ISoftDelete
+public class Cart : AuditableEntity, ISoftDeletable
 {
     public Guid UserId { get; private set; }
     public PortalUser User { get; private set; } = null!;

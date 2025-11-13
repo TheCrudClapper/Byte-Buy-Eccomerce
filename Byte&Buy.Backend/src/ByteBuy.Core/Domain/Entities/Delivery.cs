@@ -2,7 +2,7 @@
 using ByteBuy.Core.Domain.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Entities;
-public class Delivery : AuditableEntity, ISoftDelete
+public class Delivery : AuditableEntity, ISoftDeletable
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

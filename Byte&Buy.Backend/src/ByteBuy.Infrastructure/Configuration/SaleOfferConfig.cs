@@ -13,5 +13,6 @@ public class SaleOfferConfig : IEntityTypeConfiguration<SaleOffer>
              so.Property(prop => prop.Currency).HasMaxLength(3);
              so.Property(prop => prop.Amount).HasPrecision(18, 3);
          });
+
     }
 }

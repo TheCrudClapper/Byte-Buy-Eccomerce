@@ -17,5 +17,6 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
             .HasForeignKey(o => o.CreatedByUserId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Address : AuditableEntity, ISoftDelete
+public class Address : AuditableEntity, ISoftDeletable
 {
     public string Label { get; set; } = null!;
     public string City { get; set; } = null!;
@@ -15,6 +15,6 @@ public class Address : AuditableEntity, ISoftDelete
     public PortalUser? User { get; set; }
     public Guid CountryId { get; set; }
     public Country Country { get; set; } = null!;
-    public bool IsActive { get; set; }
+    public bool IsActive { get;  set; }
     public DateTime? DateDeleted { get; set; }
 }

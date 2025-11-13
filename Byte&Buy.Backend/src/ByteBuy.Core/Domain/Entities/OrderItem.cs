@@ -3,7 +3,7 @@ using ByteBuy.Core.Domain.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class OrderItem : AuditableEntity, ISoftDelete
+public class OrderItem : AuditableEntity, ISoftDeletable
 {
     public Guid OrderId { get; set; }
     public Guid OfferId { get; set; }

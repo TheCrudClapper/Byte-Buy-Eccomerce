@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class ApplicationRole : IdentityRole<Guid>, ISoftDelete
+public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
 {
-    public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
-    public ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
-    public bool IsActive { get; set; }
-    public DateTime DateCreated { get; set; }
-    public DateTime? DateEdited { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public ICollection<RolePermission> RolePermissions { get; private set; } = new List<RolePermission>();
+    public ICollection<ApplicationUserRole> UserRoles { get; private set; } = new List<ApplicationUserRole>();
+    public bool IsActive { get; private set; }
+    public DateTime DateCreated { get; private set; }
+    public DateTime? DateEdited { get; private set; }
+    public DateTime? DateDeleted { get; private set; }
 
     private ApplicationRole() { }
     private ApplicationRole(string name)

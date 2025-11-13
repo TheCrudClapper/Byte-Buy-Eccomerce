@@ -27,25 +27,27 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
     public async Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Employees
-            .Where(e => e.IsActive)
             .ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
     {
-        return await _context.Employees.Where(expression)
+        return await _context.Employees
+            .IgnoreQueryFilters()
+            .Where(expression)
             .ToListAsync(cancellationToken);    
     }
 
     public async Task<Employee?> GetAsync(Guid employeeId, CancellationToken cancellationToken = default)
     {
         return await _context.Employees
-            .FirstOrDefaultAsync(e => e.Id == employeeId && e.IsActive, cancellationToken);
+            .FirstOrDefaultAsync(e => e.Id == employeeId, cancellationToken);
     }
 
     public async Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default)
     {
         return await _context.Employees
+            .IgnoreQueryFilters()
             .FirstOrDefaultAsync(expression, cancellationToken);
     }
 

@@ -7,18 +7,18 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class PermissionRepository : BaseRepository, IPermissionRepository
 {
-    public PermissionRepository(ApplicationDbContext context) : base(context){}
+    public PermissionRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<bool> CheckIfRoleHasPermission(Guid roleId, Guid permissionId, CancellationToken ct)
     {
         return await _context.RolePermissions
-            .AnyAsync(ur => ur.RoleId == roleId && ur.PermissionId == permissionId && ur.IsActive, ct);
+            .AnyAsync(ur => ur.RoleId == roleId && ur.PermissionId == permissionId, ct);
     }
 
     public async Task<bool> CheckUserPermissionGrant(Guid userId, Guid permissionId, CancellationToken ct)
     {
         return await _context.UserPermissions
-            .Where(up => up.UserId == userId && up.PermissionId == permissionId && up.IsActive)
+            .Where(up => up.UserId == userId && up.PermissionId == permissionId)
             .Select(up => up.IsGranted)
             .FirstOrDefaultAsync(ct);
     }
@@ -26,32 +26,29 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
     public async Task<bool> CheckUserPermissionNotGrant(Guid userId, Guid permissionId, CancellationToken ct)
     {
         return await _context.UserPermissions
-            .AnyAsync(up => up.UserId == userId 
-            && up.PermissionId == permissionId 
-            && up.IsGranted == false 
-            && up.IsActive, ct);
+            .AnyAsync(up => up.UserId == userId
+            && up.PermissionId == permissionId
+            && up.IsGranted == false, ct);
     }
 
     public async Task<Permission?> GetByIdAsync(Guid permissionId, CancellationToken ct)
     {
         return await _context.Permissions
-            .FirstOrDefaultAsync(p => p.Id == permissionId && p.IsActive, ct);
+            .FirstOrDefaultAsync(p => p.Id == permissionId, ct);
     }
 
     public async Task<Permission?> GetByNameAsync(string name, CancellationToken ct)
     {
         return await _context.Permissions
-            .FirstOrDefaultAsync(p => p.Name == name && p.IsActive, ct);
+            .FirstOrDefaultAsync(p => p.Name == name, ct);
     }
 
     public async Task<Guid?> GetUserRoleId(Guid userId, CancellationToken ct = default)
     {
         return await _context.UserRoles
-      .Include(ur => ur.Role)
-      .Where(ur => ur.UserId == userId
-                   && ur.IsActive
-                   && ur.Role.IsActive)
-      .Select(ur => ur.RoleId)
+          .Include(ur => ur.Role)
+          .Where(ur => ur.UserId == userId)
+          .Select(ur => ur.RoleId)
       .FirstOrDefaultAsync(ct);
     }
 }

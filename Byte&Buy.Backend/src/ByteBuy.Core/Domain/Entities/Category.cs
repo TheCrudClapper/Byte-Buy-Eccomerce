@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Category : AuditableEntity, ISoftDelete
+public class Category : AuditableEntity, ISoftDeletable
 {
     public string Name { get; set; } = null!;
     public string? Description { get; set; }

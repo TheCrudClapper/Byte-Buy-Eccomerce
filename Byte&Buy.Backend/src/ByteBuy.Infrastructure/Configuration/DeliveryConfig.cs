@@ -12,6 +12,8 @@ public class DeliveryConfig : IEntityTypeConfiguration<Delivery>
         {
             d.Property(prop => prop.Currency).HasMaxLength(3);
             d.Property(prop => prop.Amount).HasPrecision(18, 3);
+
+            builder.HasQueryFilter(item => item.IsActive);
         });
     }
 }

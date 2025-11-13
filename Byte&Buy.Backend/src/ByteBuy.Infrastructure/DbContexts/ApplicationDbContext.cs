@@ -70,6 +70,6 @@ public class ApplicationDbContext : IdentityDbContext<
         builder.Entity<ApplicationUser>()
            .HasDiscriminator<string>("UserType")
            .HasValue<PortalUser>("PortalUser")
-           .HasValue<Employee>("Employee");
+           .HasValue<Employee>("Employee");    
     }
 }

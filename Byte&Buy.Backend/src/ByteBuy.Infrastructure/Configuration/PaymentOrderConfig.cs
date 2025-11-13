@@ -17,5 +17,7 @@ public class PaymentOrderConfig : IEntityTypeConfiguration<PaymentOrder>
             .WithMany(o => o.PaymentOrders)
             .HasForeignKey(po => po.PaymentId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }

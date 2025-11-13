@@ -13,5 +13,6 @@ public class RentOfferConfig : IEntityTypeConfiguration<RentOffer>
              ro.Property(prop => prop.Currency).HasMaxLength(3);
              ro.Property(prop => prop.Amount).HasPrecision(18, 3);
         });
+
     }
 }

@@ -30,5 +30,7 @@ public class OrderItemConfig : IEntityTypeConfiguration<OrderItem>
             oi.Property(prop => prop.Currency).HasColumnName("OrderItem_TotalPriceCurrency").HasMaxLength(3);
         });
 
+        builder.HasQueryFilter(item => item.IsActive);
+
     }
 }

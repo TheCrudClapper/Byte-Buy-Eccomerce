@@ -37,5 +37,7 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             o.Property(p => p.Country).HasMaxLength(50);
             o.Property(p => p.FlatNumber).HasMaxLength(10);
         });
+
+        builder.HasQueryFilter(item => item.IsActive);
     }
 }
