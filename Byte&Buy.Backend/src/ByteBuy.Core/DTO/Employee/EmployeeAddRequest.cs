@@ -5,6 +5,7 @@ namespace ByteBuy.Core.DTO.Employee;
 /// Represents a request to add a new employee, including personal, contact, and address information required for
 /// registration.
 public record EmployeeAddRequest(
+    [Required] Guid RoleId,
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,

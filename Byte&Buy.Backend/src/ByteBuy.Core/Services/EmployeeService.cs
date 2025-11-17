@@ -23,10 +23,14 @@ public class EmployeeService : IEmployeeService
         _userManager = userManager;
         _employeeRepository = employeeRepository;
     }
-    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request, CancellationToken cancellationToken)
+    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request, CancellationToken ct)
     {
         if (await _userManager.FindByEmailAsync(request.Email) is not null)
             return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
+
+        var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
+        if (applicationRole is null)
+            return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
 
         var employeeResult = Employee.Create(
             request.FirstName,
@@ -50,26 +54,30 @@ public class EmployeeService : IEmployeeService
         if (!identityResult.Succeeded)
             return identityResult.ToResult<EmployeeResponse>();
 
+        var roleResult = await _userManager.AddToRoleAsync(employee, applicationRole.Name!);
+        if(!roleResult.Succeeded)
+            return roleResult.ToResult<EmployeeResponse>();
+
         return employee.ToEmployeeResponse();
     }
 
-    public async Task<Result> DeleteEmployee(Guid employeeId, CancellationToken cancellationToken = default)
+    public async Task<Result> DeleteEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, cancellationToken);
+        var employee = await _employeeRepository.GetAsync(employeeId, ct);
 
         if (employee is null)
             return Result.Failure(Error.NotFound);
 
         employee.Deactivate();
 
-        await _employeeRepository.DeleteAsync(employee, cancellationToken);
+        await _employeeRepository.DeleteAsync(employee, ct);
 
         return Result.Success();
     }
 
-    public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken cancellationToken)
+    public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, cancellationToken);
+        var employee = await _employeeRepository.GetAsync(employeeId, ct);
 
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
@@ -77,19 +85,26 @@ public class EmployeeService : IEmployeeService
         return employee.ToEmployeeResponse();
     }
 
-    public async Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct)
     {
-        var employees = await _employeeRepository.GetAllAsync(cancellationToken);
+        var employees = await _employeeRepository.GetAllAsync(ct);
 
         return employees.Select(e => e.ToEmployeeResponse())
             .ToList();
     }
 
-    public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request, CancellationToken cancellationToken)
+    public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, cancellationToken);
+        var employee = await _employeeRepository.GetAsync(employeeId, ct);
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
+
+        var newRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
+        if (newRole is null)
+            return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
+
+        if (employee.Email != request.Email && await _userManager.FindByEmailAsync(request.Email) is not null)
+            return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
 
         var updateResult = employee.Update(
             request.FirstName,
@@ -105,9 +120,35 @@ public class EmployeeService : IEmployeeService
         if (updateResult.IsFailure)
             return Result.Failure<EmployeeResponse>(updateResult.Error);
 
-        var updatedEmployee = await _employeeRepository.UpdateAsync(employee, cancellationToken);
+        var roleChange = await UpdateEmployeeRole(employee, newRole);
+        if (roleChange.IsFailure)
+            return Result.Failure<EmployeeResponse>(roleChange.Error);
+
+        var updatedEmployee = await _employeeRepository.UpdateAsync(employee, ct);
 
         return Result.Success(updatedEmployee.ToEmployeeResponse());
+    }
+
+    private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)
+    {
+        var currentRoles = await _userManager.GetRolesAsync(employee);
+        var currentRole = currentRoles.SingleOrDefault();
+
+        if (currentRole == newRole.Name)
+            return Result.Success();
+
+        if (currentRole is not null)
+        {
+            var remove = await _userManager.RemoveFromRoleAsync(employee, currentRole);
+            if (!remove.Succeeded)
+                return remove.ToResult();
+        }
+
+        var add = await _userManager.AddToRoleAsync(employee, newRole.Name!);
+        if (!add.Succeeded)
+            return add.ToResult();
+
+        return Result.Success();
     }
 }
 

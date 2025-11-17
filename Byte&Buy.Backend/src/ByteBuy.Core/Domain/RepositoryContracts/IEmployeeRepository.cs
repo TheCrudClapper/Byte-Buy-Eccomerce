@@ -13,11 +13,11 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository
 {
-    Task<Employee> AddAsync(Employee employee, CancellationToken cancellationToken = default);
-    Task<Employee> UpdateAsync(Employee employee, CancellationToken cancellationToken = default);
-    Task<Employee?> GetAsync(Guid employeeId, CancellationToken cancellationToken = default);
-    Task DeleteAsync(Employee employee, CancellationToken cancellationToken = default);
-    Task<IEnumerable<Employee>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
-    Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken cancellationToken = default);
+    Task<Employee> AddAsync(Employee employee, CancellationToken ct = default);
+    Task<Employee> UpdateAsync(Employee employee, CancellationToken ct = default);
+    Task<Employee?> GetAsync(Guid employeeId, CancellationToken ct = default);
+    Task DeleteAsync(Employee employee, CancellationToken ct = default);
+    Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);
+    Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
+    Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
 }

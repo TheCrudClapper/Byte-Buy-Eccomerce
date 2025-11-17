@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ByteBuy.API.Controllers;
 
+[ApiController, Authorize]
 [Route("api/[controller]")]
-[ApiController]
-[Authorize]
 public class RoleController : BaseApiController
 {
     private readonly IRoleService _roleService;

@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[ApiController, Authorize]
 [Route("api/[controller]")]
-[ApiController]
-[Authorize]
 public class EmployeeController : BaseApiController
 {
     private readonly IEmployeeService _employeeService;

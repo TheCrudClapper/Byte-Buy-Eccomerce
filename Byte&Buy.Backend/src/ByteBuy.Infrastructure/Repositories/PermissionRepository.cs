@@ -49,6 +49,6 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
           .Include(ur => ur.Role)
           .Where(ur => ur.UserId == userId)
           .Select(ur => ur.RoleId)
-      .FirstOrDefaultAsync(ct);
+        .FirstOrDefaultAsync(ct);
     }
 }
