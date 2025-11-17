@@ -2,18 +2,23 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
+using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Services;
 
 public class RoleService : IRoleService
 {
     private readonly IRoleRepository _roleRepository;
-    public RoleService(IRoleRepository roleRepository)
+    private readonly RoleManager<ApplicationRole> _roleManager;
+    public RoleService(IRoleRepository roleRepository,
+        RoleManager<ApplicationRole> roleManager)
     {
         _roleRepository = roleRepository;
+        _roleManager = roleManager;
     }
 
     public async Task<Result<RoleResponse>> AddRole(RoleAddRequest request, CancellationToken ct = default)
@@ -28,7 +33,9 @@ public class RoleService : IRoleService
 
         var role = roleResult.Value;
 
-        await _roleRepository.AddAsync(role, ct);
+        var roleCreation =  await _roleManager.CreateAsync(role);
+        if (!roleCreation.Succeeded)
+            return roleCreation.ToResult<RoleResponse>();
 
         return role.ToRoleResponse();
     }
@@ -42,7 +49,9 @@ public class RoleService : IRoleService
 
         role.Deactivate();
 
-        await _roleRepository.UpdateAsync(role);
+        var updationResult = await _roleManager.UpdateAsync(role);
+        if(!updationResult.Succeeded)
+            return updationResult.ToResult<RoleResponse>();
 
         return Result.Success();
     }
@@ -82,7 +91,9 @@ public class RoleService : IRoleService
         if(roleResult.IsFailure)
             return Result.Failure<RoleResponse>(roleResult.Error);
 
-        await _roleRepository.UpdateAsync(role);
+        var updationResult = await _roleManager.UpdateAsync(role);
+        if (!updationResult.Succeeded)
+            return updationResult.ToResult<RoleResponse>();
 
         return role.ToRoleResponse();
     }

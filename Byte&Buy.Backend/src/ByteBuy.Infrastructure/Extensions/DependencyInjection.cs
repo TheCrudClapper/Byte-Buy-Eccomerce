@@ -22,7 +22,7 @@ public static class DependencyInjection
         services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IPermissionRepository, PermissionRepository>();
-        services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         return services;
     }
 }

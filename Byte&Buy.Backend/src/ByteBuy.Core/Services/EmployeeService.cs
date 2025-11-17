@@ -11,12 +11,13 @@ namespace ByteBuy.Core.Services;
 
 public class EmployeeService : IEmployeeService
 {
-    private readonly IApplicationUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public EmployeeService(IApplicationUserRepository applicationUserRepository,
+    public EmployeeService(
+        IUserRepository applicationUserRepository,
         IEmployeeRepository employeeRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager)
@@ -28,7 +29,7 @@ public class EmployeeService : IEmployeeService
     }
     public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request, CancellationToken ct)
     {
-        if (await _userManager.FindByEmailAsync(request.Email) is not null)
+        if (await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
 
         var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
@@ -129,7 +130,7 @@ public class EmployeeService : IEmployeeService
 
         var updatedEmployee = await _employeeRepository.UpdateAsync(employee, ct);
 
-        return Result.Success(updatedEmployee.ToEmployeeResponse());
+        return updatedEmployee.ToEmployeeResponse();
     }
 
     private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)

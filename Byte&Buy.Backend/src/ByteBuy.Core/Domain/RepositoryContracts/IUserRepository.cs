@@ -2,9 +2,9 @@
 
 /// <summary>
 /// This repository is used to work with user manager but
-/// methods provided are faster and better suited for this application
+/// methods provided here are faster and better suited for this application
 /// </summary>
-public interface IApplicationUserRepository
+public interface IUserRepository
 {
     Task<bool> ExistByEmailAsync(string email, CancellationToken ct = default);
 }

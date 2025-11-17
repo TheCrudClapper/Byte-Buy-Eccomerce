@@ -10,7 +10,7 @@ namespace ByteBuy.Core.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IApplicationUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly ICartRepository _cartRepository;
@@ -20,7 +20,7 @@ public class AuthService : IAuthService
         RoleManager<ApplicationRole> roleManager,
         ICartRepository cartRepository,
         ITokenService tokenService,
-        IApplicationUserRepository userRepository)
+        IUserRepository userRepository)
     {
         _cartRepository = cartRepository;
         _roleManager = roleManager;
