@@ -36,6 +36,7 @@ public class PermissionServiceTests
         //Assert
         result.Should().BeFalse();
     }
+
     [Fact]
     public async Task HasPermissionAsync_UserPermissionDenyOrAbsentInRole_ReturnsFalse()
     {

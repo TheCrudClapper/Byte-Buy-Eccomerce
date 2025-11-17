@@ -5,6 +5,7 @@
     <Project Path="src/ByteBuy.Infrastructure/ByteBuy.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/ByteBuy.RepositoryTests/ByteBuy.RepositoryTests.csproj" Id="cde60f04-e533-4ee7-8d5f-671c7b68a6cd" />
     <Project Path="tests/ByteBuy.ServiceTests/ByteBuy.ServiceTests.csproj" Id="9b692f2f-7508-4967-8e05-b56aa31bd8cc" />
   </Folder>
 </Solution>
