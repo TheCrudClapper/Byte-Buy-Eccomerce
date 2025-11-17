@@ -1,21 +1,32 @@
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using ByteBuy.Desktop.ViewModels;
 using ByteBuy.Desktop.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace ByteBuy.Desktop
 {
     public partial class App : Application
     {
+        public static IHost Host { get; private set; }
+
+        public App()
+        {
+            
+        }
+        public App(IHost host)
+        {
+            Host = host;
+        }
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
-
+        
+        
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -23,12 +34,8 @@ namespace ByteBuy.Desktop
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
                 // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
                 DisableAvaloniaDataAnnotationValidation();
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
+                desktop.MainWindow = Host.Services.GetRequiredService<LoginWindow>();
             }
-
             base.OnFrameworkInitializationCompleted();
         }
 

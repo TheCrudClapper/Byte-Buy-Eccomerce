@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Desktop.ViewModels;
 
-public class LoginWindowViewModel
+public class LoginWindowViewModel : ViewModelBase
 {
     
 }
