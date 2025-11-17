@@ -1,5 +1,6 @@
 using System.Linq;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
@@ -13,10 +14,8 @@ namespace ByteBuy.Desktop
     {
         public static IHost Host { get; private set; }
 
-        public App()
-        {
-            
-        }
+        public App(){}
+
         public App(IHost host)
         {
             Host = host;
@@ -29,6 +28,7 @@ namespace ByteBuy.Desktop
         
         public override void OnFrameworkInitializationCompleted()
         {
+            if (Design.IsDesignMode) return;
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -36,6 +36,7 @@ namespace ByteBuy.Desktop
                 DisableAvaloniaDataAnnotationValidation();
                 desktop.MainWindow = Host.Services.GetRequiredService<LoginWindow>();
             }
+            
             base.OnFrameworkInitializationCompleted();
         }
 

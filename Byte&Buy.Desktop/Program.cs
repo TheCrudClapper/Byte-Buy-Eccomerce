@@ -1,9 +1,6 @@
 ﻿using System;
 using Avalonia;
 using ByteBuy.Desktop.Extensions;
-using ByteBuy.Desktop.ViewModels;
-using ByteBuy.Desktop.Views;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace ByteBuy.Desktop

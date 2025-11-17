@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ByteBuy.Desktop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38720b0f0123abe06c2752e93b4b687dea7d0e22")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe14d0d504ccf4966c901b6d7a752abd5d9717d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("ByteBuy.Desktop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ByteBuy.Desktop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

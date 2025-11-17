@@ -3,12 +3,35 @@
   "WorkspaceRootPath": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\bytebuy.desktop.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:bytebuy.desktop.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\views\\loginwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:views\\loginwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\LoginWindowsViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ViewModels\\LoginWindowsViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\styles\\appdefaultstyles.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:styles\\appdefaultstyles.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,14 +44,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\views\\loginwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:views\\loginwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\viewmodels\\loginwindowsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:viewmodels\\loginwindowsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|c:\\users\\wojciech mucha\\desktop\\enginerringproject\\byte\u0026buy.desktop\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{34667607-E6F0-E7F2-BDFD-B92936BA312D}|ByteBuy.Desktop.csproj|solutionrelative:viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +53,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 890,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,20 +77,96 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ByteBuy.Desktop",
+              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ByteBuy.Desktop.csproj",
+              "RelativeDocumentMoniker": "ByteBuy.Desktop.csproj",
+              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ByteBuy.Desktop.csproj",
+              "RelativeToolTip": "ByteBuy.Desktop.csproj",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAcwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-17T13:23:53.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Microsoft.Common.CurrentVersion.targets",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\18\\Insiders\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
+              "ViewState": "AgIAABETAAAAAAAAAADgvyYTAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-11-17T13:23:42.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppDefaultStyles.axaml",
+              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Styles\\AppDefaultStyles.axaml",
+              "RelativeDocumentMoniker": "Styles\\AppDefaultStyles.axaml",
+              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Styles\\AppDefaultStyles.axaml",
+              "RelativeToolTip": "Styles\\AppDefaultStyles.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-06T11:52:13.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "ViewModels\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\ViewModelBase.cs",
+              "RelativeToolTip": "ViewModels\\ViewModelBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-06T11:46:27.955Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "LoginWindow.axaml",
               "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\LoginWindow.axaml",
               "RelativeDocumentMoniker": "Views\\LoginWindow.axaml",
               "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\LoginWindow.axaml",
               "RelativeToolTip": "Views\\LoginWindow.axaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-11-06T11:44:23.819Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
+              "Title": "LoginWindowsViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\LoginWindowsViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\LoginWindowsViewModel.cs",
+              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\LoginWindowsViewModel.cs",
+              "RelativeToolTip": "ViewModels\\LoginWindowsViewModel.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-06T11:43:45.92Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.axaml",
+              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\MainWindow.axaml",
+              "RelativeDocumentMoniker": "Views\\MainWindow.axaml",
+              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\MainWindow.axaml",
+              "RelativeToolTip": "Views\\MainWindow.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-03T19:11:59.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "LoginWindow.axaml.cs",
               "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\LoginWindow.axaml.cs",
               "RelativeDocumentMoniker": "Views\\LoginWindow.axaml.cs",
@@ -83,25 +174,11 @@
               "RelativeToolTip": "Views\\LoginWindow.axaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T11:44:23.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-06T11:44:23.666Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginWindowsViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\LoginWindowsViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\LoginWindowsViewModel.cs",
-              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\LoginWindowsViewModel.cs",
-              "RelativeToolTip": "ViewModels\\LoginWindowsViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T11:43:45.92Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -109,12 +186,11 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T11:43:16.348Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-06T11:43:16.348Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "ViewLocator.cs",
               "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewLocator.cs",
               "RelativeDocumentMoniker": "ViewLocator.cs",
@@ -122,25 +198,11 @@
               "RelativeToolTip": "ViewLocator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T11:43:03.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-06T11:43:03.713Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.axaml",
-              "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\MainWindow.axaml",
-              "RelativeDocumentMoniker": "Views\\MainWindow.axaml",
-              "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\Views\\MainWindow.axaml",
-              "RelativeToolTip": "Views\\MainWindow.axaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-03T19:11:59.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "MainWindowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\ViewModels\\MainWindowViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\MainWindowViewModel.cs",
@@ -148,8 +210,7 @@
               "RelativeToolTip": "ViewModels\\MainWindowViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-03T19:11:58.71Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-03T19:11:58.71Z"
             }
           ]
         }
