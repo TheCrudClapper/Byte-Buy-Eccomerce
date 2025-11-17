@@ -10,6 +10,7 @@ namespace ByteBuy.Core.Services;
 
 public class AuthService : IAuthService
 {
+    private readonly IApplicationUserRepository _userRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly ICartRepository _cartRepository;
@@ -18,15 +19,17 @@ public class AuthService : IAuthService
     public AuthService(UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
         ICartRepository cartRepository,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        IApplicationUserRepository userRepository)
     {
         _cartRepository = cartRepository;
         _roleManager = roleManager;
         _userManager = userManager;
         _tokenService = tokenService;
+        _userRepository = userRepository;
     }
 
-    public async Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken cancelationToken = default)
+    public async Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken ct = default)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
@@ -42,9 +45,9 @@ public class AuthService : IAuthService
         return new TokenResponse(token);
     }
 
-    public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken cancelationToken = default)
+    public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct = default)
     {
-        if (await _userManager.FindByEmailAsync(request.Email) is not null)
+        if (await _userRepository.ExistByEmailAsync(request.Email, ct))
             return Result.Failure(AuthErrors.AccountExists);
 
         var userResult = PortalUser
@@ -66,7 +69,7 @@ public class AuthService : IAuthService
             return cartResult;
 
         user.AssignCart(cartResult.Value);
-        await _cartRepository.AddCart(cartResult.Value, cancelationToken);
+        await _cartRepository.AddCart(cartResult.Value, ct);
 
         const string defaultRoleName = "PortalUser";
 

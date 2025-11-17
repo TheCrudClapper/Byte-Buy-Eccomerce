@@ -11,14 +11,17 @@ namespace ByteBuy.Core.Services;
 
 public class EmployeeService : IEmployeeService
 {
+    private readonly IApplicationUserRepository _userRepository;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
 
-    public EmployeeService(IEmployeeRepository employeeRepository,
+    public EmployeeService(IApplicationUserRepository applicationUserRepository,
+        IEmployeeRepository employeeRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager)
     {
+        _userRepository = applicationUserRepository;
         _roleManager = roleManager;
         _userManager = userManager;
         _employeeRepository = employeeRepository;
@@ -103,7 +106,7 @@ public class EmployeeService : IEmployeeService
         if (newRole is null)
             return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
 
-        if (employee.Email != request.Email && await _userManager.FindByEmailAsync(request.Email) is not null)
+        if (employee.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email, ct))
             return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
 
         var updateResult = employee.Update(

@@ -21,14 +21,14 @@ public interface IAuthService
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see
     /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
     /// includes the token response; otherwise, it contains error information.</returns>
-    Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken cancelationToken = default);
+    Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken ct = default);
     
     /// <summary>
     /// Registers a new portal user with the specified registration details.
     /// </summary>
     /// <param name="request">The registration information for the new user. Cannot be null.</param>
-    /// <param name="cancelationToken">A cancellation token that can be used to cancel the registration operation.</param>
+    /// <param name="ct">A cancellation token that can be used to cancel the registration operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="Result"/> indicating
     /// the outcome of the registration.</returns>
-    Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken cancelationToken = default);
+    Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct = default);
 }
