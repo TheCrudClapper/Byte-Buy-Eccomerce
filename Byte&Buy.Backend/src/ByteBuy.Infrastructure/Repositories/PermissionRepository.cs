@@ -15,6 +15,29 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .AnyAsync(ur => ur.RoleId == roleId && ur.PermissionId == permissionId, ct);
     }
 
+    public async Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId, CancellationToken ct = default)
+    {
+        //true -> grant
+        //false -> deny
+        //null -> not found, check roles instead
+        var userPermission = await _context.UserPermissions
+            .AsNoTracking()
+            .Where(up => up.UserId == userId && up.PermissionId == permissionId)
+            .Select(up => (bool?)up.IsGranted)
+            .FirstOrDefaultAsync(ct);
+
+        if(userPermission.HasValue)
+            return userPermission.Value;
+
+        var hasRolePermission = await _context.UserRoles
+            .AsNoTracking()
+            .Where(ur => ur.UserId == userId)
+            .SelectMany(ur => ur.Role.RolePermissions)
+            .AnyAsync(rp => rp.PermissionId == permissionId, ct);
+
+        return hasRolePermission;
+    }
+
     public async Task<bool> CheckUserPermissionGrant(Guid userId, Guid permissionId, CancellationToken ct)
     {
         return await _context.UserPermissions
@@ -41,6 +64,12 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
     {
         return await _context.Permissions
             .FirstOrDefaultAsync(p => p.Name == name, ct);
+    }
+
+    public async Task<UserPermission?> GetUserPermissionAsync(Guid userId, Guid permissionId, CancellationToken ct = default)
+    {
+        return await _context.UserPermissions.AsNoTracking()
+            .FirstOrDefaultAsync(up => up.UserId == userId && up.PermissionId == permissionId, ct);
     }
 
     public async Task<Guid?> GetUserRoleId(Guid userId, CancellationToken ct = default)

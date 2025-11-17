@@ -1,5 +1,4 @@
-﻿using Xunit;
-using Moq;
+﻿using Moq;
 using AutoFixture;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
@@ -37,122 +36,45 @@ public class PermissionServiceTests
         //Assert
         result.Should().BeFalse();
     }
-
     [Fact]
-    public async Task HasPermission_UserPermissionGranted_ReturnsTrue()
+    public async Task HasPermissionAsync_UserPermissionDenyOrAbsentInRole_ReturnsFalse()
     {
         //Arrange
-        Guid permissionId = Guid.NewGuid();
-        Permission permission = _fixture
-            .Build<Permission>()
-            .With(p => p.Id, permissionId)
+        Permission? returnedPermission = _fixture.Build<Permission>()
             .Without(p => p.RolePermissions)
             .Without(p => p.UserPermissions)
             .Create();
 
         _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
-            .ReturnsAsync(permission);
+            .ReturnsAsync(returnedPermission);
 
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(true);
-
-        //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), permission.Name);
-
-        //Assert
-        result.Should().BeTrue();
-    }
-
-    [Fact]
-    public async Task HasPermission_UserPermissionNotGranted_ReturnsFalse()
-    {
-        //Arrange
-        Guid permissionId = Guid.NewGuid();
-        Permission permission = _fixture
-            .Build<Permission>()
-            .With(p => p.Id, permissionId)
-            .Without(p => p.RolePermissions)
-            .Without(p => p.UserPermissions)
-            .Create();
-
-        _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
-            .ReturnsAsync(permission);
-
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
+        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id, CancellationToken.None))
             .ReturnsAsync(false);
 
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionNotGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(true);
-
         //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), permission.Name);
+        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
 
         //Assert
         result.Should().BeFalse();
     }
 
     [Fact]
-    public async Task HasPermission_RoleIdNotFound_ReturnFalse()
+    public async Task HasPermissionAsync_UserPermissionGrantOrInRole_ReturnsTrue()
     {
         //Arrange
-        Guid? userRoleId = null;
-        Guid permissionId = Guid.NewGuid();
-        Permission permission = _fixture
-            .Build<Permission>()
-            .With(p => p.Id, permissionId)
+        Permission? returnedPermission = _fixture.Build<Permission>()
             .Without(p => p.RolePermissions)
             .Without(p => p.UserPermissions)
             .Create();
 
         _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
-            .ReturnsAsync(permission);
+            .ReturnsAsync(returnedPermission);
 
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(false);
-
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionNotGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(false);
-
-        _permissionRepositoryMock.Setup(item => item.GetUserRoleId(It.IsAny<Guid>(), CancellationToken.None))
-            .ReturnsAsync(userRoleId);
-
-        //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), permission.Name);
-
-        //Assert
-        result.Should().BeFalse();
-    }
-
-    [Fact]
-    public async Task HasPermission_RoleHasPermission_ReturnTrue()
-    {
-        //Arrange
-        Guid? userRoleId = Guid.NewGuid();
-        Guid permissionId = Guid.NewGuid();
-        Permission permission = _fixture
-            .Build<Permission>()
-            .With(p => p.Id, permissionId)
-            .Without(p => p.RolePermissions)
-            .Without(p => p.UserPermissions)
-            .Create();
-
-        _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
-            .ReturnsAsync(permission);
-
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(false);
-
-        _permissionRepositoryMock.Setup(item => item.CheckUserPermissionNotGrant(It.IsAny<Guid>(), permissionId, CancellationToken.None))
-            .ReturnsAsync(false);
-
-        _permissionRepositoryMock.Setup(item => item.GetUserRoleId(It.IsAny<Guid>(), CancellationToken.None))
-            .ReturnsAsync(userRoleId);
-
-        _permissionRepositoryMock.Setup(item => item.CheckIfRoleHasPermission(userRoleId.Value, permissionId, CancellationToken.None))
+        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id, CancellationToken.None))
             .ReturnsAsync(true);
 
         //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), permission.Name);
+        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
 
         //Assert
         result.Should().BeTrue();
