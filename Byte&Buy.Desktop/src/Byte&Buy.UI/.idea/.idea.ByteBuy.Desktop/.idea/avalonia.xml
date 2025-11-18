@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="App.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Styles/AppDefaultStyles.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Styles/Colors.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/LoginWindow.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/MainWindow.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/UserControl1.axaml" value="ByteBuy.Desktop.csproj" />
+        <entry key="src/Byte&amp;Buy.Desktop/App.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="src/Byte&amp;Buy.Desktop/Views/MainWindow.axaml" value="ByteBuy.UI.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

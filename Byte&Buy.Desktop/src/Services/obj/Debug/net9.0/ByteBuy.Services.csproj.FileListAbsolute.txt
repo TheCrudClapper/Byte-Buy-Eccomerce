@@ -1,0 +1,13 @@
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\bin\Debug\net9.0\ByteBuy.Services.deps.json
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\bin\Debug\net9.0\ByteBuy.Services.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\bin\Debug\net9.0\ByteBuy.Services.pdb
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.csproj.AssemblyReference.cache
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.AssemblyInfoInputs.cache
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.AssemblyInfo.cs
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.csproj.CoreCompileInputs.cache
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.sourcelink.json
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\refint\ByteBuy.Services.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ByteBuy.Services.pdb
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Services\obj\Debug\net9.0\ref\ByteBuy.Services.dll

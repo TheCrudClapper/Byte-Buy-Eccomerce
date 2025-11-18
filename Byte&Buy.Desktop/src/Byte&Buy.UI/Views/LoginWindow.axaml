@@ -1,0 +1,82 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+        Height="700" Width="1200"
+        CanResize="False"
+        FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
+        x:Class="ByteBuy.Desktop.Views.LoginWindow"
+        x:DataType="viewModels:LoginWindowViewModel"
+        Title="Login">
+
+
+    <Grid ColumnDefinitions="*">
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0%, 90%" EndPoint="30%, 0%">
+                <GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
+                <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid Column="0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                <Border BorderBrush="Black" BorderThickness="1" Background="#FFFFFF" CornerRadius="5" Padding="40"
+                        Width="400" Height="400" Margin="0,30">
+                    <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="20">
+
+                        <!-- Row 0: Header -->
+                        <StackPanel Grid.Row="0">
+                            <TextBlock Text="Welcome Back !" FontWeight="Bold" FontSize="30" Foreground="#1E1E1E" />
+                            <TextBlock Text="Enter your credentials to access your account." FontSize="15"
+                                       Foreground="#1E1E1E" TextWrapping="Wrap" FontWeight="600" />
+                        </StackPanel>
+
+                        <!-- Row 1: Input Fields -->
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+
+                            <TextBlock Text="Email"
+                                       Margin="0,4"
+                                       FontWeight="700"
+                                       FontSize="15"
+                                       Foreground="{DynamicResource TextLight}" />
+
+                            <TextBox Watermark="Enter your email"
+                                     Margin="0,0,0,10"
+                                     Text="{Binding Email}"
+                                     Height="35" />
+
+                            <TextBlock Text="Password"
+                                       Margin="0,4"
+                                       FontWeight="700"
+                                       FontSize="15"
+                                       Foreground="{DynamicResource TextLight}" />
+
+                            <TextBox Watermark="Enter your password"
+                                     PasswordChar="*"
+                                     Text="{Binding Password}"
+                                     Height="35" />
+
+                            <TextBlock
+                                Padding="0,15,0,0"
+                                Text="{Binding Error}"
+                                FontWeight="700"
+                                Foreground="{DynamicResource ErrorBrush}"
+                                />
+
+                        </StackPanel>
+
+                        <!-- Row 2: Action Button -->
+                        <StackPanel Grid.Row="2">
+                            <Button Content="Log In"
+                                    Command="{Binding LoginCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    Height="40" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <TextBlock HorizontalAlignment="Center" FontWeight="600" Foreground="#FFFFFF">Forgot Password ?</TextBlock>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -4,6 +4,8 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.RepositoryTests;
@@ -12,6 +14,8 @@ public class PermissionRepositoryTests
 {
     private readonly ApplicationDbContext _context;
     private readonly IPermissionRepository _permissionRepository;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly Fixture _fixture;
     public PermissionRepositoryTests()
     {
@@ -22,6 +26,7 @@ public class PermissionRepositoryTests
         _context = new ApplicationDbContext(options);
         _permissionRepository = new PermissionRepository(_context);
         _fixture = new Fixture();
+
     }
 
 

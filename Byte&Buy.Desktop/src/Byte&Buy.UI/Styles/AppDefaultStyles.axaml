@@ -1,0 +1,46 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Add Styles Here -->
+
+    <!-- Button Styles -->
+    <Style Selector="Button">
+        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"></Setter>
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="FontWeight" Value="600"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderBrush" Value="Black"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+    </Style>
+
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"></Setter>
+    </Style>
+
+    <!-- Text Box Styles -->
+    <Style Selector="TextBox">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
+    </Style>
+
+    <Style Selector="TextBox:pointerover /template/ ContentPresenter">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+    </Style>
+
+    <Style Selector="TextBox:focus /template/ ContentPresenter">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+    </Style>
+</Styles>
