@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,12 +10,13 @@ namespace ByteBuy.UI.ViewModels;
 public partial class LoginWindowViewModel(IAuthService authService) : ViewModelBase
 {
 
-    [ObservableProperty] private string _email = "test";
+    [ObservableProperty] private string _email = string.Empty;
 
-    [ObservableProperty] private string _password = null!;
+    [ObservableProperty] private string _password = string.Empty;
 
-    [ObservableProperty] private string _error = null!;
-    
+    [ObservableProperty] private string _error = string.Empty;
+
+    public event Action? LoginSucceded;
 
     [RelayCommand]
     private async Task Login()
@@ -24,9 +26,11 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
 
         if (!result.Success)
         {
-            Error = result.Error!.Detail;
+            Error = result.Error!.Description;
+            return;
         }
-        //run main window here
+        
+        LoginSucceded?.Invoke();
     }
 }
     

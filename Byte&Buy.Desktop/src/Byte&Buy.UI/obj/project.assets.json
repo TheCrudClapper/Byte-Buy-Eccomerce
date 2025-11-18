@@ -341,6 +341,15 @@
           "buildTransitive/CommunityToolkit.Mvvm.targets": {}
         }
       },
+      "ExCSS/4.3.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/ExCSS.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/ExCSS.dll": {}
+        }
+      },
       "HarfBuzzSharp/8.3.1.1": {
         "type": "package",
         "dependencies": {
@@ -1533,6 +1542,15 @@
           "lib/netstandard1.0/_._": {}
         }
       },
+      "ShimSkiaSharp/3.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/ShimSkiaSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/ShimSkiaSharp.dll": {}
+        }
+      },
       "SkiaSharp/2.88.9": {
         "type": "package",
         "dependencies": {
@@ -1629,6 +1647,58 @@
             "assetType": "native",
             "rid": "win-x86"
           }
+        }
+      },
+      "Svg.Controls.Skia.Avalonia/11.3.6.2": {
+        "type": "package",
+        "dependencies": {
+          "Avalonia.Skia": "11.3.6",
+          "Svg.Skia": "3.2.1"
+        },
+        "compile": {
+          "lib/net8.0/Svg.Controls.Skia.Avalonia.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Svg.Controls.Skia.Avalonia.dll": {}
+        }
+      },
+      "Svg.Custom/3.2.1": {
+        "type": "package",
+        "dependencies": {
+          "ExCSS": "4.3.1"
+        },
+        "compile": {
+          "lib/net8.0/Svg.Custom.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Svg.Custom.dll": {}
+        }
+      },
+      "Svg.Model/3.2.1": {
+        "type": "package",
+        "dependencies": {
+          "ShimSkiaSharp": "3.2.1",
+          "Svg.Custom": "3.2.1"
+        },
+        "compile": {
+          "lib/net8.0/Svg.Model.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Svg.Model.dll": {}
+        }
+      },
+      "Svg.Skia/3.2.1": {
+        "type": "package",
+        "dependencies": {
+          "SkiaSharp": "2.88.9",
+          "Svg.Custom": "3.2.1",
+          "Svg.Model": "3.2.1"
+        },
+        "compile": {
+          "lib/net8.0/Svg.Skia.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Svg.Skia.dll": {}
         }
       },
       "System.AppContext/4.1.0": {
@@ -2802,6 +2872,25 @@
         "lib/netstandard2.1/CommunityToolkit.Mvvm.dll",
         "lib/netstandard2.1/CommunityToolkit.Mvvm.pdb",
         "lib/netstandard2.1/CommunityToolkit.Mvvm.xml"
+      ]
+    },
+    "ExCSS/4.3.1": {
+      "sha512": "A8UtcghHQlWxPJhJF5bsfEYO7068JHGTuJ7tzyyMjd5fE/N/xY1cVOUhzuLLFwMOCJVnM4mqSQc93W9fGfZ1kA==",
+      "type": "package",
+      "path": "excss/4.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "excss.4.3.1.nupkg.sha512",
+        "excss.nuspec",
+        "lib/net48/ExCSS.dll",
+        "lib/net6.0/ExCSS.dll",
+        "lib/net7.0/ExCSS.dll",
+        "lib/net8.0/ExCSS.dll",
+        "lib/netcoreapp3.1/ExCSS.dll",
+        "lib/netstandard2.0/ExCSS.dll",
+        "lib/netstandard2.1/ExCSS.dll",
+        "readme.md"
       ]
     },
     "HarfBuzzSharp/8.3.1.1": {
@@ -4270,6 +4359,21 @@
         "runtime.native.system.nuspec"
       ]
     },
+    "ShimSkiaSharp/3.2.1": {
+      "sha512": "WyMf+0aj5IJcHkG/t89WApGFg756oXB30ehu9kYu9hjdfS0snkXHoAiTJZqVlqyLOvzC6eA+nOQ2hI84g//5Pg==",
+      "type": "package",
+      "path": "shimskiasharp/3.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/ShimSkiaSharp.dll",
+        "lib/net6.0/ShimSkiaSharp.dll",
+        "lib/net8.0/ShimSkiaSharp.dll",
+        "lib/netstandard2.0/ShimSkiaSharp.dll",
+        "shimskiasharp.3.2.1.nupkg.sha512",
+        "shimskiasharp.nuspec"
+      ]
+    },
     "SkiaSharp/2.88.9": {
       "sha512": "3MD5VHjXXieSHCleRLuaTXmL2pD0mB7CcOB1x2kA1I4bhptf4e3R27iM93264ZYuAq6mkUyX5XbcxnZvMJYc1Q==",
       "type": "package",
@@ -4446,6 +4550,65 @@
         "runtimes/win-x86/native/libSkiaSharp.dll",
         "skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
         "skiasharp.nativeassets.win32.nuspec"
+      ]
+    },
+    "Svg.Controls.Skia.Avalonia/11.3.6.2": {
+      "sha512": "0+ZQVMoKgd1VNWZCC8LCchQdeZ155aR9w71BfobtwYES7R3vVuisVq791nTQr4cmXspMFcJZe+WiwiXhVhI6Jw==",
+      "type": "package",
+      "path": "svg.controls.skia.avalonia/11.3.6.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/Svg.Controls.Skia.Avalonia.dll",
+        "lib/net6.0/Svg.Controls.Skia.Avalonia.dll",
+        "lib/net8.0/Svg.Controls.Skia.Avalonia.dll",
+        "lib/netstandard2.0/Svg.Controls.Skia.Avalonia.dll",
+        "svg.controls.skia.avalonia.11.3.6.2.nupkg.sha512",
+        "svg.controls.skia.avalonia.nuspec"
+      ]
+    },
+    "Svg.Custom/3.2.1": {
+      "sha512": "Wu0+Il+SZfY5+AT25b2PMlSbBrzGIo/6vMMMdOK8jd25I9tdJJbxOFJNG87gFgo9UY9OmpIFzVobGOHzFdJYeQ==",
+      "type": "package",
+      "path": "svg.custom/3.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Svg.Custom.dll",
+        "lib/net8.0/Svg.Custom.dll",
+        "lib/netstandard2.0/Svg.Custom.dll",
+        "svg.custom.3.2.1.nupkg.sha512",
+        "svg.custom.nuspec"
+      ]
+    },
+    "Svg.Model/3.2.1": {
+      "sha512": "N4yWlvqv1XWZ+VvI29lT4HkEgtiP3rS/poMfWiVzz6Ao/3IjQCfmo2qrKphq77IqTdMYyh7wGDknMId7YrQY5Q==",
+      "type": "package",
+      "path": "svg.model/3.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/Svg.Model.dll",
+        "lib/net6.0/Svg.Model.dll",
+        "lib/net8.0/Svg.Model.dll",
+        "lib/netstandard2.0/Svg.Model.dll",
+        "svg.model.3.2.1.nupkg.sha512",
+        "svg.model.nuspec"
+      ]
+    },
+    "Svg.Skia/3.2.1": {
+      "sha512": "pRJtMOc2hTcnxSu7cx6lf806S+2VrQ0eqUpGMBUQQ/pIIvzrtn0+lUjdABTvjr5rsdQF9OxE+r9npq2+3c6T4A==",
+      "type": "package",
+      "path": "svg.skia/3.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/Svg.Skia.dll",
+        "lib/net6.0/Svg.Skia.dll",
+        "lib/net8.0/Svg.Skia.dll",
+        "lib/netstandard2.0/Svg.Skia.dll",
+        "svg.skia.3.2.1.nupkg.sha512",
+        "svg.skia.nuspec"
       ]
     },
     "System.AppContext/4.1.0": {
@@ -6805,7 +6968,8 @@
       "CommunityToolkit.Mvvm >= 8.4.0",
       "Microsoft.Extensions.DependencyInjection >= 10.0.0",
       "Microsoft.Extensions.Hosting >= 10.0.0",
-      "Microsoft.Extensions.Hosting.Abstractions >= 10.0.0"
+      "Microsoft.Extensions.Hosting.Abstractions >= 10.0.0",
+      "Svg.Controls.Skia.Avalonia >= 11.3.6.2"
     ]
   },
   "packageFolders": {
@@ -6898,6 +7062,10 @@
           "Microsoft.Extensions.Hosting.Abstractions": {
             "target": "Package",
             "version": "[10.0.0, )"
+          },
+          "Svg.Controls.Skia.Avalonia": {
+            "target": "Package",
+            "version": "[11.3.6.2, )"
           }
         },
         "imports": [

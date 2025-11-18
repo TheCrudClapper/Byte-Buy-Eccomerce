@@ -135,3 +135,9 @@ C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy
 C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
 C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Microsoft.Extensions.ObjectPool.dll
 C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Newtonsoft.Json.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\ExCSS.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\ShimSkiaSharp.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Svg.Controls.Skia.Avalonia.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Svg.Custom.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Svg.Model.dll
+C:\Users\Wojciech Mucha\Desktop\EnginerringProject\Byte&Buy.Desktop\src\Byte&Buy.UI\bin\Debug\net9.0\Svg.Skia.dll

@@ -90,6 +90,10 @@
             "Microsoft.Extensions.Hosting.Abstractions": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Svg.Controls.Skia.Avalonia": {
+              "target": "Package",
+              "version": "[11.3.6.2, )"
             }
           },
           "imports": [

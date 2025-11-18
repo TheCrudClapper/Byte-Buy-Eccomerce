@@ -7,7 +7,7 @@
         Height="700" Width="1200"
         CanResize="False"
         FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
-        x:Class="ByteBuy.Desktop.Views.LoginWindow"
+        x:Class="ByteBuy.UI.Views.LoginWindow"
         x:DataType="viewModels:LoginWindowViewModel"
         Title="Login">
 

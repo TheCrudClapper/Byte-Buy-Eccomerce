@@ -1,7 +1,8 @@
 ﻿using Avalonia.Controls;
+using ByteBuy.Desktop.Views;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 
-namespace ByteBuy.Desktop.Views;
+namespace ByteBuy.UI.Views;
 
 public partial class LoginWindow : Window
 {
@@ -13,5 +14,15 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
         DataContext = vm;
+
+        vm.LoginSucceded += OnLoginSucceded;
+    }
+
+    private void OnLoginSucceded()
+    {
+        var mainWindow = new MainWindow();
+        mainWindow.Show();
+        
+        this.Close();
     }
 }

@@ -7,8 +7,9 @@ using Avalonia.Markup.Xaml;
 using ByteBuy.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using LoginWindow = ByteBuy.UI.Views.LoginWindow;
 
-namespace ByteBuy.Desktop
+namespace ByteBuy.UI
 {
     public partial class App : Application
     {
@@ -34,7 +35,7 @@ namespace ByteBuy.Desktop
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
                 // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
                 DisableAvaloniaDataAnnotationValidation();
-                desktop.MainWindow = Host.Services.GetRequiredService<LoginWindow>();
+                desktop.MainWindow = Host.Services.GetRequiredService<MainWindow>();
             }
             
             base.OnFrameworkInitializationCompleted();

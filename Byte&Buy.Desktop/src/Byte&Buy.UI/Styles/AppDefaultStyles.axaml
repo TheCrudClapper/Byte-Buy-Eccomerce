@@ -26,6 +26,13 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"></Setter>
     </Style>
 
+    <Style Selector="Button.menu">
+        <Setter Property="Margin" Value="0,5" />
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+    </Style>
+    
     <!-- Text Box Styles -->
     <Style Selector="TextBox">
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
@@ -43,4 +50,6 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
     </Style>
+    
+    
 </Styles>

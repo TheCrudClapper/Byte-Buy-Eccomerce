@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Images\" />
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaXaml Remove="Styles\Colors.axaml" />
@@ -29,6 +30,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.6.2" />
   </ItemGroup>
 
   <ItemGroup>

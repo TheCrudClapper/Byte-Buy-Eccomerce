@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Desktop.Views;
 using ByteBuy.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using LoginWindow = ByteBuy.UI.Views.LoginWindow;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 
 namespace ByteBuy.UI.Extensions;

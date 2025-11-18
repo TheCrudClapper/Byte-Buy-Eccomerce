@@ -57,7 +57,7 @@
               "RelativeDocumentMoniker": "ViewModels\\LoginWindowViewModel.cs",
               "ToolTip": "C:\\Users\\Wojciech Mucha\\Desktop\\EnginerringProject\\Byte\u0026Buy.Desktop\\src\\Byte\u0026Buy.UI\\ViewModels\\LoginWindowViewModel.cs",
               "RelativeToolTip": "ViewModels\\LoginWindowViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-18T15:28:41.066Z",
               "EditorCaption": ""
@@ -72,8 +72,7 @@
               "RelativeToolTip": "..\\Services\\Services\\AuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T15:25:02.809Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T15:25:02.809Z"
             },
             {
               "$type": "Document",
@@ -85,8 +84,7 @@
               "RelativeToolTip": "..\\Services\\HttpClients\\Implementations\\AuthHttpClient.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAMwBgAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T15:11:44.286Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T15:11:44.286Z"
             },
             {
               "$type": "Document",
@@ -98,8 +96,7 @@
               "RelativeToolTip": "..\\Services\\HttpClients\\Abstractions\\IAuthHttpClient.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T15:11:40.8Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-18T15:11:40.8Z"
             }
           ]
         }
