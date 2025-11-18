@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia;
-using ByteBuy.Desktop;
 using ByteBuy.Services.Extensions;
 using ByteBuy.UI.Extensions;
 using Microsoft.Extensions.Hosting;

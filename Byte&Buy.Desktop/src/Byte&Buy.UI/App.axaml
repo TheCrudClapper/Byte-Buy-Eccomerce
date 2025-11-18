@@ -52,7 +52,6 @@
         <SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
         <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
         <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
-
         <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
             <GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
             <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>

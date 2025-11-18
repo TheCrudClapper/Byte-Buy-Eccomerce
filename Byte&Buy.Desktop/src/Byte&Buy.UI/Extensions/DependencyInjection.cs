@@ -1,8 +1,8 @@
-﻿using ByteBuy.Desktop.Views;
-using ByteBuy.UI.ViewModels;
+﻿using ByteBuy.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using LoginWindow = ByteBuy.UI.Views.LoginWindow;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
+using MainWindow = ByteBuy.UI.Views.MainWindow;
 
 namespace ByteBuy.UI.Extensions;
 
@@ -19,6 +19,8 @@ public static class DependencyInjection
         services.AddSingleton<MainWindow>();
         services.AddTransient<LoginWindowViewModel>();
         services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<DashboardPageViewModel>();
+        services.AddTransient<EmployeesPageViewModel>();
         return services;
     }
 }

@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using ByteBuy.UI.ViewModels;
 
-namespace ByteBuy.Desktop.Views
+namespace ByteBuy.UI.Views
 {
     public partial class MainWindow : Window
     {
@@ -9,6 +9,7 @@ namespace ByteBuy.Desktop.Views
         {
             InitializeComponent();
         }
+        
         public MainWindow(MainWindowViewModel vm)
         {
             InitializeComponent();

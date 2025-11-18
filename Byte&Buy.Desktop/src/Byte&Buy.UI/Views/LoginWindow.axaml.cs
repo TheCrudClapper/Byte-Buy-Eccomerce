@@ -1,5 +1,4 @@
 ﻿using Avalonia.Controls;
-using ByteBuy.Desktop.Views;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 
 namespace ByteBuy.UI.Views;
@@ -10,6 +9,7 @@ public partial class LoginWindow : Window
     {
         InitializeComponent();
     }
+    
     public LoginWindow(LoginWindowViewModel vm)
     {
         InitializeComponent();

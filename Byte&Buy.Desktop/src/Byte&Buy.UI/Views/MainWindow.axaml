@@ -3,34 +3,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
+        xmlns:views="clr-namespace:ByteBuy.UI.Views"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
         Height="700" Width="1200"
-        x:Class="ByteBuy.Desktop.Views.MainWindow"
+        x:Class="ByteBuy.UI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="ByteBuy.Desktop">
 
     <Grid ColumnDefinitions="220, *">
-        <Grid Column="0" Background="{DynamicResource SidebarGradient}">
-            <StackPanel Margin="5,0">
+
+        <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
+          
+            <!-- Stack Panel With Menu Buttons -->
+            <StackPanel Margin="5,0" Grid.Row="0">
                 <Label
                     FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
                     FontSize="20"
                     FontWeight="700"
-                    Foreground="{DynamicResource TextLightBrush}"
-                   >
+                    Foreground="{DynamicResource TextLightBrush}">
                     Management Panel
                 </Label>
 
                 <Border
-                    
                     HorizontalAlignment="Stretch"
-                        BorderBrush="{DynamicResource TextLightBrush}"
-                        CornerRadius="5"
-                        BorderThickness="1"
-                        Margin="0,0,0,10"/>
-                
+                    BorderBrush="{DynamicResource TextLightBrush}"
+                    CornerRadius="5"
+                    BorderThickness="1"
+                    Margin="0,0,0,10" />
+
                 <Button
+                    Command="{Binding GoToDashboardCommand}"
                     Classes="menu">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{SvgImage /Assets/Images/regular/list-alt.svg}"
@@ -40,6 +43,7 @@
                 </Button>
 
                 <Button
+                    Command="{Binding GoToEmployeesCommand}"
                     Classes="menu">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
@@ -77,19 +81,20 @@
                 </Button>
 
             </StackPanel>
-            <Grid RowDefinitions="*, 50">
-                <Grid Row="1">
-                    <Button
-                        Margin="5,5"
-                        Background="{DynamicResource ButtonGradient}">
-                        <Image Source="{SvgImage /Assets/Images/regular/soccer-ball.svg}"
-                               Height="20" Width="20" />
-                    </Button>
-                </Grid>
+            
+            <!-- Settings Button -->
+            <Grid Row="1">
+                <Button
+                    Margin="5,5"
+                    Background="{DynamicResource ButtonGradient}">
+                    <Image Source="{SvgImage /Assets/Images/regular/soccer-ball.svg}"
+                           Height="20" Width="20" />
+                </Button>
             </Grid>
         </Grid>
-        <Grid Column="1" Background="{DynamicResource BackgroundLight}">
-        </Grid>
+
+        <!-- Area for pages -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentPage}"/>
     </Grid>
 
 </Window>

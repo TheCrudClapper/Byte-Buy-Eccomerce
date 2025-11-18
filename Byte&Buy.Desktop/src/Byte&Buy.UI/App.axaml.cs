@@ -4,10 +4,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using ByteBuy.Desktop.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using LoginWindow = ByteBuy.UI.Views.LoginWindow;
+using MainWindow = ByteBuy.UI.Views.MainWindow;
 
 namespace ByteBuy.UI
 {
