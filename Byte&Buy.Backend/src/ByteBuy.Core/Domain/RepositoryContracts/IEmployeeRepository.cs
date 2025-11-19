@@ -13,8 +13,7 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository
 {
-    Task<Employee> AddAsync(Employee employee, CancellationToken ct = default);
-    Task<Employee> UpdateAsync(Employee employee, CancellationToken ct = default);
+    Task UpdateAsync(Employee employee, CancellationToken ct = default);
     Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
     Task SoftDeleteAsync(Employee employee, CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);

@@ -128,9 +128,9 @@ public class EmployeeService : IEmployeeService
         if (roleChange.IsFailure)
             return Result.Failure<EmployeeResponse>(roleChange.Error);
 
-        var updatedEmployee = await _employeeRepository.UpdateAsync(employee, ct);
+        await _employeeRepository.UpdateAsync(employee, ct);
 
-        return updatedEmployee.ToEmployeeResponse();
+        return employee.ToEmployeeResponse();
     }
 
     private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)
