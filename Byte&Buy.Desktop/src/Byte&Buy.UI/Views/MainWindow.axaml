@@ -8,8 +8,8 @@
         Height="700" Width="1200"
         x:Class="ByteBuy.UI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="ByteBuy.Desktop">
+        Icon="/Assets/logo.ico"
+        Title="ByteBuy MP v.0.1">
 
     <Grid ColumnDefinitions="220, *">
 
