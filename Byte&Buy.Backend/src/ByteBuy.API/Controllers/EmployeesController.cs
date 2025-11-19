@@ -8,10 +8,10 @@ namespace ByteBuy.API.Controllers;
 
 [ApiController, Authorize]
 [Route("api/[controller]")]
-public class EmployeeController : BaseApiController
+public class EmployeesController : BaseApiController
 {
     private readonly IEmployeeService _employeeService;
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeesController(IEmployeeService employeeService)
     {
         _employeeService = employeeService;
     }

@@ -22,8 +22,8 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Offer> Offers { get; set; }
     public DbSet<SaleOffer> SaleOffers { get; set; }
     public DbSet<RentOffer> RentOffers { get; set; }
-    public DbSet<Category> Category { get; set; }
-    public DbSet<Condition> Condition { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Condition> Conditions { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartOffer> CartOffers { get; set; }
@@ -32,11 +32,11 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Delivery> Delivery { get; set; }
-    public DbSet<OfferDelivery> OfferDelivery { get; set; }
+    public DbSet<OfferDelivery> OfferDeliveries { get; set; }
     public DbSet<RentCartOffer> RentCartOffers { get; set; }
-    public DbSet<RentOrderItem> RentOrderItem { get; set; }
+    public DbSet<RentOrderItem> RentOrderItems { get; set; }
     public DbSet<SaleCartOffer> SaleCartOffers { get; set; }
-    public DbSet<SaleOrderItem> SaleOrderItem { get; set; }
+    public DbSet<SaleOrderItem> SaleOrderItems { get; set; }
     public DbSet<CompanyInfo> CompanyInfo { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }

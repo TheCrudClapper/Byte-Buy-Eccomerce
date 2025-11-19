@@ -34,6 +34,7 @@
 
                 <Button
                     Command="{Binding GoToDashboardCommand}"
+                    Classes.active="{Binding IsDashboardPageActive}"
                     Classes="menu">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{SvgImage /Assets/Images/regular/list-alt.svg}"
@@ -44,6 +45,7 @@
 
                 <Button
                     Command="{Binding GoToEmployeesCommand}"
+                    Classes.active="{Binding IsEmployeesPageActive}"
                     Classes="menu">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"

@@ -6,11 +6,15 @@ namespace ByteBuy.UI.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
+        [NotifyPropertyChangedFor(nameof(IsEmployeesPageActive))]
         private ViewModelBase _currentPage;
         
         private readonly DashboardPageViewModel _dashboardPage;
         private readonly EmployeesPageViewModel _employeesPage;
-
+        public bool IsDashboardPageActive => CurrentPage == _dashboardPage;
+        public bool IsEmployeesPageActive => CurrentPage == _employeesPage;
+        
         public MainWindowViewModel(DashboardPageViewModel dashboardPage,
             EmployeesPageViewModel employeesPage)
         {

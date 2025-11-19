@@ -9,16 +9,17 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// </summary>
 /// <remarks>Implementations of this interface should provide asynchronous access to employee data and support
 /// querying by identifier or custom conditions. Methods accept a <see cref="CancellationToken"/> to support
-/// cancellation of long-running operations. This interface is typically used in repository patterns to abstract data
+/// cancellation of long-running operations. This interface is used in repository patterns to abstract data
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository
 {
     Task<Employee> AddAsync(Employee employee, CancellationToken ct = default);
     Task<Employee> UpdateAsync(Employee employee, CancellationToken ct = default);
-    Task<Employee?> GetAsync(Guid employeeId, CancellationToken ct = default);
-    Task DeleteAsync(Employee employee, CancellationToken ct = default);
+    Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
+    Task SoftDeleteAsync(Employee employee, CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     
 }
+ 

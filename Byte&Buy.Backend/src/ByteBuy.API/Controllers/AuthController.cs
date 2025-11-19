@@ -2,7 +2,6 @@
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ByteBuy.API.Controllers;
 

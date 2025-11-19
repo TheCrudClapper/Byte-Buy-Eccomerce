@@ -67,21 +67,21 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result> DeleteEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
 
         if (employee is null)
             return Result.Failure(Error.NotFound);
 
         employee.Deactivate();
 
-        await _employeeRepository.DeleteAsync(employee, ct);
+        await _employeeRepository.SoftDeleteAsync(employee, ct);
 
         return Result.Success();
     }
 
     public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
 
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
@@ -99,7 +99,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
 

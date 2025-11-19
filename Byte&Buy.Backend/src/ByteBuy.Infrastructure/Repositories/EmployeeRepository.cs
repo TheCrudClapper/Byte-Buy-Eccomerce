@@ -18,7 +18,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
         return employee;
     }
 
-    public async Task DeleteAsync(Employee employee, CancellationToken ct)
+    public async Task SoftDeleteAsync(Employee employee, CancellationToken ct)
     {
         _context.Update(employee);
         await _context.SaveChangesAsync(ct);
@@ -39,7 +39,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
             .ToListAsync(ct);    
     }
 
-    public async Task<Employee?> GetAsync(Guid employeeId, CancellationToken ct)
+    public async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
     {
         return await _context.Employees
             .FirstOrDefaultAsync(e => e.Id == employeeId, ct);

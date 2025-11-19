@@ -33,6 +33,12 @@
         <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
     </Style>
     
+    <Style Selector="Button.active /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"></Setter>
+    </Style>
+    
     <!-- Text Box Styles -->
     <Style Selector="TextBox">
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />

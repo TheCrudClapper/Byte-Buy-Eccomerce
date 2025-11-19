@@ -24,7 +24,7 @@ builder.Services
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // -----------------------------
-// Add Identity
+// AddAsync Identity
 // -----------------------------
 builder.Services.AddIdentity();
 
