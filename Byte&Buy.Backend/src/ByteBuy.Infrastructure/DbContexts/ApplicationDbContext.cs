@@ -31,7 +31,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Image> Images { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
-    public DbSet<Delivery> Delivery { get; set; }
+    public DbSet<Delivery> Deliveries { get; set; }
     public DbSet<OfferDelivery> OfferDeliveries { get; set; }
     public DbSet<RentCartOffer> RentCartOffers { get; set; }
     public DbSet<RentOrderItem> RentOrderItems { get; set; }

@@ -46,10 +46,10 @@ public class ConditionRepository : IConditionRepository
             .FirstOrDefaultAsync(ct);
     }
 
-    public async Task<Condition?> GetByIdAsync(Guid id, CancellationToken ct)
+    public async Task<Condition?> GetByIdAsync(Guid conditionId, CancellationToken ct)
     {
         return await _context.Conditions
-            .FirstOrDefaultAsync(c => c.Id == id, ct);
+            .FirstOrDefaultAsync(c => c.Id == conditionId, ct);
     }
 
     public async Task UpdateAsync(Condition condition, CancellationToken ct)

@@ -22,6 +22,9 @@ public class Condition : AuditableEntity, ISoftDeletable
 
     public void Deactivate()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
     }

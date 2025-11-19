@@ -35,6 +35,9 @@ public class Employee : ApplicationUser
 
     public void Deactivate()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
     }
@@ -60,6 +63,7 @@ public class Employee : ApplicationUser
         LastName = lastName;
         Email = email;
         HomeAddress = addressResult.Value;
+        DateEdited = DateTime.UtcNow;
 
         return Result.Success();
     }

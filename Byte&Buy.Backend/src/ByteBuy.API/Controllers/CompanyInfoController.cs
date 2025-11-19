@@ -13,9 +13,7 @@ public class CompanyInfoController : BaseApiController
 {
     private readonly ICompanyInfoService _companyInfoService;
     public CompanyInfoController(ICompanyInfoService companyInfoService)
-    {
-        _companyInfoService = companyInfoService;
-    }
+        => _companyInfoService = companyInfoService;
 
     [HttpGet]
     [AllowAnonymous]

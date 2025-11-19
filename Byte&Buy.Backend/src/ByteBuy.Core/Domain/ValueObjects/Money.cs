@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
-public class Money
+public sealed class Money
 {
     public decimal Amount { get; private set; } = 0;
     public string Currency { get; private set; } = "PLN";

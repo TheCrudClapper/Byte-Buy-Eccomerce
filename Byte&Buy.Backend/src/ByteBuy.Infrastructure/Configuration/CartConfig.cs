@@ -15,13 +15,13 @@ public class CartConfig : IEntityTypeConfiguration<Cart>
 
         builder.OwnsOne(c => c.TotalItemsValue, c =>
         {
-            c.Property(prop => prop.Amount).HasColumnName("TotalItemsValue_Amount").HasPrecision(18, 3);
-            c.Property(prop => prop.Currency).HasColumnName("TotalItemsValue_Currency").HasMaxLength(3);
+            c.Property(prop => prop.Amount).HasColumnName("TotalItemsValue_Amount").HasPrecision(18, 3).IsRequired();
+            c.Property(prop => prop.Currency).HasColumnName("TotalItemsValue_Currency").HasMaxLength(3).IsRequired();
         });
 
         builder.OwnsOne(c => c.TotalCartValue, c => {
-            c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount").HasPrecision(18, 3);
-            c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency").HasMaxLength(3);
+            c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount").HasPrecision(18, 3).IsRequired();
+            c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency").HasMaxLength(3).IsRequired();
         });
 
         builder.HasQueryFilter(item => item.IsActive);

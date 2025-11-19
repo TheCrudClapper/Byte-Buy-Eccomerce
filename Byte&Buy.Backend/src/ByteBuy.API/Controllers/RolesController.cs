@@ -13,9 +13,7 @@ public class RolesController : BaseApiController
 {
     private readonly IRoleService _roleService;
     public RolesController(IRoleService roleService)
-    {
-        _roleService = roleService;
-    }
+        => _roleService = roleService;
 
     [HttpPost]
     [HasPermission("role:create")]
@@ -28,7 +26,7 @@ public class RolesController : BaseApiController
         => HandleResult(await _roleService.UpdateRole(roleId, request, ct));
 
     [HttpGet("Options")]
-    [HasPermission("role:read:many")]
+    [HasPermission("role:read:options")]
     public async Task<ActionResult<IEnumerable<SelectListItem>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectList(ct));
 

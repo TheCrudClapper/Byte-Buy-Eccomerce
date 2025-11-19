@@ -8,6 +8,8 @@ namespace ByteBuy.Infrastructure.Configuration
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+            builder.Property(c => c.Name).HasMaxLength(20).IsRequired();
+            builder.Property(c => c.Description).HasMaxLength(50);
             builder.HasQueryFilter(item => item.IsActive);
         }
     }

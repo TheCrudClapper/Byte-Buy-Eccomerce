@@ -12,9 +12,7 @@ public class EmployeesController : BaseApiController
 {
     private readonly IEmployeeService _employeeService;
     public EmployeesController(IEmployeeService employeeService)
-    {
-        _employeeService = employeeService;
-    }
+        => _employeeService = employeeService;
 
     [HttpPost]
     [HasPermission("employee:create")]

@@ -16,6 +16,9 @@ public static class DependencyInjection
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<ICountryService, CountryService>();
         services.AddScoped<IConditionService, ConditionService>();
+        services.AddScoped<IDeliveryService, DeliveryService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        
         return services;
     }
 }

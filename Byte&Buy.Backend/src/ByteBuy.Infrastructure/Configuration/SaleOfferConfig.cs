@@ -10,8 +10,8 @@ public class SaleOfferConfig : IEntityTypeConfiguration<SaleOffer>
     {
         builder.OwnsOne(so => so.PricePerItem, so =>
          {
-             so.Property(prop => prop.Currency).HasMaxLength(3);
-             so.Property(prop => prop.Amount).HasPrecision(18, 3);
+             so.Property(prop => prop.Currency).HasMaxLength(3).IsRequired();
+             so.Property(prop => prop.Amount).HasPrecision(18, 3).IsRequired();
          });
 
     }

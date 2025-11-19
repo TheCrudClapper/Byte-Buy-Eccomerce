@@ -16,8 +16,8 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
 
         builder.OwnsOne(o => o.TotalAmount, o =>
         {
-            o.Property(prop => prop.Amount).HasPrecision(18, 3);
-            o.Property(prop => prop.Currency).HasMaxLength(3);
+            o.Property(prop => prop.Amount).HasPrecision(18, 3).IsRequired();
+            o.Property(prop => prop.Currency).HasMaxLength(3).IsRequired();
         });
 
         builder.HasOne(o => o.User)
