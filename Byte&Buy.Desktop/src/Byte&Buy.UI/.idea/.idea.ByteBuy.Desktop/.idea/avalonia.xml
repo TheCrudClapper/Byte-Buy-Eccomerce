@@ -10,6 +10,7 @@
         <entry key="Views/EmployeesViewPage.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/LoginWindow.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/MainWindow.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/SettingsPageView.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/UserControl1.axaml" value="ByteBuy.Desktop.csproj" />
         <entry key="src/Byte&amp;Buy.Desktop/App.axaml" value="ByteBuy.UI.csproj" />
         <entry key="src/Byte&amp;Buy.Desktop/Views/MainWindow.axaml" value="ByteBuy.UI.csproj" />

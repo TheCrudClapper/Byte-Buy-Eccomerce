@@ -4,6 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using ByteBuy.UI.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MainWindow = ByteBuy.UI.Views.MainWindow;
@@ -34,7 +35,7 @@ namespace ByteBuy.UI
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
                 // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
                 DisableAvaloniaDataAnnotationValidation();
-                desktop.MainWindow = Host.Services.GetRequiredService<MainWindow>();
+                desktop.MainWindow = Host.Services.GetRequiredService<LoginWindow>();
             }
             
             base.OnFrameworkInitializationCompleted();

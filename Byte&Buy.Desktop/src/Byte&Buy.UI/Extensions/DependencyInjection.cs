@@ -17,10 +17,11 @@ public static class DependencyInjection
     {
         services.AddSingleton<LoginWindow>();
         services.AddSingleton<MainWindow>();
-        services.AddTransient<LoginWindowViewModel>();
         services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();
         services.AddTransient<EmployeesPageViewModel>();
+        services.AddTransient<SettingsPageViewModel>();
         return services;
     }
 }

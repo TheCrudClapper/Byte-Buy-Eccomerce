@@ -30,6 +30,8 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
             return;
         }
         
+        Email = string.Empty;
+        Password = string.Empty;
         LoginSucceded?.Invoke();
     }
 }

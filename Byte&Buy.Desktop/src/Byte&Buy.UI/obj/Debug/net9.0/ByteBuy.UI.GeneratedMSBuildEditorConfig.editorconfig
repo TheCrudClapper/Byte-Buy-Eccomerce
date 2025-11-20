@@ -45,3 +45,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/src/Byte&Buy.UI/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Wojciech Mucha/Desktop/EnginerringProject/Byte&Buy.Desktop/src/Byte&Buy.UI/Views/SettingsPageView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

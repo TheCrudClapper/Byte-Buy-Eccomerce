@@ -81,17 +81,28 @@
                         <Label Content="Employees"></Label>
                     </StackPanel>
                 </Button>
-
             </StackPanel>
             
             <!-- Settings Button -->
-            <Grid Row="1">
-                <Button
-                    Margin="5,5"
-                    Background="{DynamicResource ButtonGradient}">
-                    <Image Source="{SvgImage /Assets/Images/regular/soccer-ball.svg}"
-                           Height="20" Width="20" />
-                </Button>
+            <Grid Row="1" Margin="5">
+                <Grid ColumnDefinitions="*,*">
+                    <Button
+                        Grid.Column="0"
+                        Classes.active="{Binding IsSettingPageActive}"
+                        Command="{Binding GoToSettingsCommand}"
+                        Background="{DynamicResource ButtonGradient}">
+                        <Image Source="{SvgImage /Assets/Images/regular/gear-solid-full.svg}"
+                               Height="20" Width="20" />
+                    </Button>
+                    <Button
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Command="{Binding LogOutCommand}"
+                        Background="{DynamicResource ButtonGradient}">
+                        <Image Source="{SvgImage /Assets/Images/regular/arrow-right-from-bracket-solid-full.svg }"
+                               Height="20" Width="20" />
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
 
