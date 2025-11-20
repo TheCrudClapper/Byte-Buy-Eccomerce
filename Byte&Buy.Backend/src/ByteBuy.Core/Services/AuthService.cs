@@ -29,12 +29,21 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public async Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken ct = default)
+    public Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request, CancellationToken ct)
+      => LoginInternal<PortalUser>(request, ct);
+
+    public Task<Result<TokenResponse>> LoginEmployee(LoginRequest request, CancellationToken ct)
+        => LoginInternal<Employee>(request, ct);
+
+    private async Task<Result<TokenResponse>> LoginInternal<TUser>(LoginRequest request, CancellationToken ct)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
             return Result.Failure<TokenResponse>(AuthErrors.LoginFailed);
+
+        if (user is not TUser)
+            return Result.Failure<TokenResponse>(AuthErrors.AccessDenied);
 
         if (!await _userManager.CheckPasswordAsync(user, request.Password))
             return Result.Failure<TokenResponse>(AuthErrors.LoginFailed);
@@ -45,7 +54,7 @@ public class AuthService : IAuthService
         return new TokenResponse(token);
     }
 
-    public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct = default)
+    public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email, ct))
             return Result.Failure(AuthErrors.AccountExists);

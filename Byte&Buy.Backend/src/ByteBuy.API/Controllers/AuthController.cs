@@ -18,13 +18,18 @@ public class AuthController : BaseApiController
     }
 
     [HttpPost]
-    [Route("Login")]
-    public async Task<ActionResult<TokenResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
-        => HandleResult(await _authService.Login(request, cancellationToken));
+    [Route("login-employee")]
+    public async Task<ActionResult<TokenResponse>> LoginEmployee(LoginRequest request, CancellationToken ct)
+        => HandleResult(await _authService.LoginEmployee(request, ct));
 
     [HttpPost]
-    [Route("Register")]
-    public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
-        => HandleResult(await _authService.RegisterPortalUser(request, cancellationToken));
+    [Route("login")]
+    public async Task<ActionResult<TokenResponse>> LoginPortalUser(LoginRequest request, CancellationToken ct)
+        => HandleResult(await _authService.LoginPortalUser(request, ct));
+
+    [HttpPost]
+    [Route("register")]
+    public async Task<IActionResult> Register(RegisterRequest request, CancellationToken ct)
+        => HandleResult(await _authService.RegisterPortalUser(request, ct));
 
 }

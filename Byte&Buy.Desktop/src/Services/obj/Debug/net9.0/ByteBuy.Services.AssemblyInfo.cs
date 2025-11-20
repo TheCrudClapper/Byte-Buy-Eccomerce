@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ByteBuy.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a6ffa6be1896a66a1e828e2ec0db0c9e4543345d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcf4b0cab8945f6f15c1a64b72ca6f110b53a78c")]
 [assembly: System.Reflection.AssemblyProductAttribute("ByteBuy.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ByteBuy.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

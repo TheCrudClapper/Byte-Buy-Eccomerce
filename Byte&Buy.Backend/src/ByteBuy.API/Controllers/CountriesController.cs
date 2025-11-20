@@ -39,7 +39,7 @@ public class CountriesController : BaseApiController
     public async Task<ActionResult> GetCountries(CancellationToken ct)
         => HandleResult(await _countryService.GetCountries(ct));
 
-    [HttpGet("Options")]
+    [HttpGet("options")]
     //[HasPermission("country:selectlist")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectList(ct));

@@ -57,5 +57,4 @@
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
     </Style>
     
-    
 </Styles>

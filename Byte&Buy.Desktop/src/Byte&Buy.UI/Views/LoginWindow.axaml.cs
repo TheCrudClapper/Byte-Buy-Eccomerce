@@ -1,6 +1,5 @@
 ﻿using System;
 using Avalonia.Controls;
-using ByteBuy.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 

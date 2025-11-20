@@ -3,7 +3,7 @@ using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Employee : ApplicationUser
+public sealed class Employee : ApplicationUser
 {
     public AddressValueObj HomeAddress { get; private set; } = null!;
     private Employee(string firstName, string lastName, string email)

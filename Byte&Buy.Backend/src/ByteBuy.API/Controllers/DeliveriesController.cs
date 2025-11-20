@@ -39,7 +39,7 @@ public class DeliveriesController : BaseApiController
     public async Task<ActionResult> GetDeliveries(CancellationToken ct)
         => HandleResult(await _deliveryService.GetDeliveries(ct));
 
-    [HttpGet("Options")]
+    [HttpGet("options")]
     //[HasPermission("delivery:read:options")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectList(ct));

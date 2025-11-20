@@ -13,7 +13,7 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IAuthService
 {
     /// <summary>
-    /// Authenticates a user with the provided credentials and returns a token response if successful.
+    /// Authenticates a webiste user with the provided credentials and returns a token response if successful.
     /// </summary>
     /// <param name="request">The login request containing the user's credentials and any additional authentication parameters. Cannot be
     /// null.</param>
@@ -21,7 +21,19 @@ public interface IAuthService
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see
     /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
     /// includes the token response; otherwise, it contains error information.</returns>
-    Task<Result<TokenResponse>> Login(LoginRequest request, CancellationToken ct = default);
+    Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request, CancellationToken ct = default);
+
+
+    /// <summary>
+    ///  Authenticates a desktop app user -> employee, owner etc with the provided credentials and returns a token response if successful.
+    /// </summary>
+    /// <param name="request">The login request containing the user's credentials and any additional authentication parameters. Cannot be
+    /// null</param>
+    /// <param name="ct">A cancellation token that can be used to cancel the login operation.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a <see
+    /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
+    /// includes the token response; otherwise, it contains error information.</returns>
+    Task<Result<TokenResponse>> LoginEmployee(LoginRequest request, CancellationToken ct = default);
     
     /// <summary>
     /// Registers a new portal user with the specified registration details.

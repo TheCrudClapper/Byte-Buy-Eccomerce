@@ -16,7 +16,7 @@ public class AuthHttpClient(HttpClient httpClient) : IAuthHttpClient
         HttpResponseMessage response;
         try
         {
-            response = await httpClient.PostAsync("/api/Auth/Login", payload);
+            response = await httpClient.PostAsync("/api/Auth/Login-Employee", payload);
         }
         catch (Exception)
         {

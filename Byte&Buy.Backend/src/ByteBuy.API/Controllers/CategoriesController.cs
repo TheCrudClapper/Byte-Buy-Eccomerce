@@ -38,7 +38,7 @@ public class CategoriesController : BaseApiController
     public async Task<ActionResult> GetCategories(CancellationToken ct)
         => HandleResult(await _categoryService.GetCategories(ct));
 
-    [HttpGet("Options")]
+    [HttpGet("options")]
     //[HasPermission("category:read:options")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
         => HandleResult(await _categoryService.GetSelectList(ct));

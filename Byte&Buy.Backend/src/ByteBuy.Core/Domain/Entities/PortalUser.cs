@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class PortalUser : ApplicationUser
+public sealed class PortalUser : ApplicationUser
 {
     public ICollection<Address> Addresses { get; private set; } = new List<Address>();
     public ICollection<Order> Orders { get; private set; } = new List<Order>();

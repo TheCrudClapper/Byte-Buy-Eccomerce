@@ -25,7 +25,7 @@ public class RolesController : BaseApiController
     public async Task<ActionResult<RoleResponse>> PutRole(Guid roleId, RoleUpdateRequest request, CancellationToken ct)
         => HandleResult(await _roleService.UpdateRole(roleId, request, ct));
 
-    [HttpGet("Options")]
+    [HttpGet("options")]
     //[HasPermission("role:read:options")]
     public async Task<ActionResult<IEnumerable<SelectListItem>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectList(ct));
