@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/ByteBuy.Services/ByteBuy.Services.csproj" />
+  <Project Path="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+</Solution>
