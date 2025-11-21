@@ -43,7 +43,7 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
              return;
          }
         
-        //Clean
+        //Clean fields
          Email = string.Empty;
          Password = string.Empty;
          Error = string.Empty;

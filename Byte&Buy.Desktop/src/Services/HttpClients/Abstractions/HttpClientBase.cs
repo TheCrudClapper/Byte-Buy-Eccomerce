@@ -1,0 +1,175 @@
+﻿using ByteBuy.Services.ResultTypes;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+
+namespace ByteBuy.Services.HttpClients.Abstractions;
+
+public abstract class HttpClientBase
+{
+    private readonly HttpClient _client;
+    private readonly JsonSerializerOptions _jsonOptions;
+    protected HttpClientBase(HttpClient httpClient)
+    {
+        _client = httpClient;
+        _client.BaseAddress = new Uri("http://localhost:5099/api/");
+
+        _jsonOptions = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+    }
+
+    protected async Task<Result> GetAsync(string url)
+    {
+        try
+        {
+            var response = await _client.GetAsync(url);
+            return await HandleResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return Result.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result<T>> GetAsync<T>(string url)
+    {
+        try
+        {
+            var response = await _client.GetAsync(url);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result> PostAsync(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await _client.PostAsync(resource, serialized);
+            return await HandleResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return Result.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result<T>> PostAsync<T>(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await _client.PostAsync(resource, serialized);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result> PutAsync(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await _client.PutAsync(resource, serialized);
+            return await HandleResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return Result.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result<T>> PutAsync<T>(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await _client.PutAsync(resource, serialized);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result> DeleteAsync(string resource)
+    {
+        try
+        {
+            var response = await _client.DeleteAsync(resource);
+            return await HandleResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return Result.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+
+    private async Task<Result<T>> HandleResponseAsync<T>(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+        {
+            try
+            {
+                var payload = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+
+                if (payload is null)
+                    return Result<T>.Fail(ApiErrors.FetchedResourceIsNull);
+
+                return Result<T>.Ok(payload);
+            }
+            catch(Exception ex)
+            {
+                return Result<T>.Fail(new Error($"Invalid JSON: {ex.Message}"));
+            }
+        }
+
+        var error = await ExtractErrorAsync(response);
+        return Result<T>.Fail(error);
+
+    }
+
+
+    private async Task<Result> HandleResponseAsync(HttpResponseMessage response)
+    {
+        if (response.IsSuccessStatusCode)
+            return Result.Ok();
+
+        Error error = await ExtractErrorAsync(response);
+        return Result.Fail(error);
+    }
+
+    private StringContent CreateJsonContent(object payload)
+    {
+        var json = JsonSerializer.Serialize(payload, _jsonOptions);
+        return new StringContent(json, Encoding.UTF8, "application/json");
+    }
+
+    private async Task<Error> ExtractErrorAsync(HttpResponseMessage response)
+    {
+        try
+        {
+            var body = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(body))
+                return ApiErrors.UnknownError;
+
+            return new Error(body);
+        }
+        catch
+        {
+            return ApiErrors.UnknownError;
+        }
+    }
+}
