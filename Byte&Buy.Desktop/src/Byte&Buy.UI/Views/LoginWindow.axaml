@@ -44,7 +44,7 @@
 
                             <TextBox Watermark="Enter your email"
                                      Margin="0,0,0,10"
-                                     Text="{Binding Email}"
+                                     Text="{Binding Email}" 
                                      Height="35" />
 
                             <TextBlock Text="Password"

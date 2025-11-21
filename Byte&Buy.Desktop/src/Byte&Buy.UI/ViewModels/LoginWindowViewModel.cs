@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
@@ -9,10 +11,17 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class LoginWindowViewModel(IAuthService authService) : ViewModelBase
 {
+    [ObservableProperty] 
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Email is required")]
+    [EmailAddress(ErrorMessage = "Invalid email format")]
+    private string _email = string.Empty;
 
-    [ObservableProperty] private string _email = string.Empty;
-
-    [ObservableProperty] private string _password = string.Empty;
+    [ObservableProperty] 
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Password is required")]
+    [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
+    private string _password = string.Empty;
 
     [ObservableProperty] private string _error = string.Empty;
 
@@ -21,20 +30,23 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
     [RelayCommand]
     private async Task Login()
     {
-        LoginRequest request = new(Email, Password);
-        var result = await authService.Login(request);
-
-        if (!result.Success)
-        {
-            Error = result.Error!.Description;
-            return;
-        }
+        // ValidateAllProperties();
+        // if(HasErrors)
+        //     return;
+        //
+        // LoginRequest request = new(Email, Password);
+        // var result = await authService.Login(request);
+        //
+        // if (!result.Success)
+        // {
+        //     Error = result.Error!.Description;
+        //     return;
+        // }
         
         //Clean
-        Email = string.Empty;
-        Password = string.Empty;
-        Error = string.Empty;
+        // Email = string.Empty;
+        // Password = string.Empty;
+        // Error = string.Empty;
         LoginSucceded?.Invoke();
     }
 }
-    

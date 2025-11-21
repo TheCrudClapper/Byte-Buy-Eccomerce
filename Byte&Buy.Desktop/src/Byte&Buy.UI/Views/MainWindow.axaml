@@ -4,111 +4,102 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
         xmlns:views="clr-namespace:ByteBuy.UI.Views"
-        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
-        Height="700" Width="1200"
+        mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="800"
+        Height="800" Width="1300"
         x:Class="ByteBuy.UI.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
         FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
         Icon="/Assets/logo.ico"
         Title="ByteBuy MP v.0.1">
-
-    <Grid ColumnDefinitions="220, *">
-
-        <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
-          
-            <!-- Stack Panel With Menu Buttons -->
-            <StackPanel Margin="5,0" Grid.Row="0">
-                <Label
-                    FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
-                    FontSize="20"
-                    FontWeight="700"
-                    Foreground="{DynamicResource TextLightBrush}">
-                    Management Panel
-                </Label>
-
-                <Border
-                    HorizontalAlignment="Stretch"
-                    BorderBrush="{DynamicResource TextLightBrush}"
-                    CornerRadius="5"
-                    BorderThickness="1"
-                    Margin="0,0,0,10" />
-
-                <Button
-                    Command="{Binding GoToDashboardCommand}"
-                    Classes.active="{Binding IsDashboardPageActive}"
-                    Classes="menu">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/list-alt.svg}"
-                               Width="20" Height="20" />
-                        <Label Content="Dashboard"></Label>
-                    </StackPanel>
-                </Button>
-
-                <Button
-                    Command="{Binding GoToEmployeesCommand}"
-                    Classes.active="{Binding IsEmployeesPageActive}"
-                    Classes="menu">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-                               Width="20" Height="20" />
-                        <Label Content="Employees"></Label>
-                    </StackPanel>
-                </Button>
-
-
-                <Button
-                    Classes="menu">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-                               Width="20" Height="20" />
-                        <Label Content="Orders"></Label>
-                    </StackPanel>
-                </Button>
-
-                <Button
-                    Classes="menu">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-                               Width="20" Height="20" />
-                        <Label Content="Documents"></Label>
-                    </StackPanel>
-                </Button>
-
-                <Button
-                    Classes="menu">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-                               Width="20" Height="20" />
-                        <Label Content="Employees"></Label>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+    
+    
+    <Grid RowDefinitions="50, *">
+        <!-- Top Bar -->
+        <StackPanel Grid.Row="0" Background="{DynamicResource SidebarGradient}">
             
-            <!-- Settings Button -->
-            <Grid Row="1" Margin="5">
-                <Grid ColumnDefinitions="*,*">
-                    <Button
-                        Grid.Column="0"
-                        Classes.active="{Binding IsSettingPageActive}"
-                        Command="{Binding GoToSettingsCommand}"
-                        Background="{DynamicResource ButtonGradient}">
-                        <Image Source="{SvgImage /Assets/Images/regular/gear-solid-full.svg}"
-                               Height="20" Width="20" />
-                    </Button>
-                    <Button
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        Command="{Binding LogOutCommand}"
-                        Background="{DynamicResource ButtonGradient}">
-                        <Image Source="{SvgImage /Assets/Images/regular/arrow-right-from-bracket-solid-full.svg }"
-                               Height="20" Width="20" />
-                    </Button>
-                </Grid>
-            </Grid>
-        </Grid>
+        </StackPanel>
+        <Grid ColumnDefinitions="220, *" Grid.Row="1">
+                <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SecondaryLightBrush}">
 
-        <!-- Area for pages -->
-        <ContentControl Grid.Column="1" Content="{Binding CurrentPage}"/>
+                    <!-- Stack Panel With Menu Buttons -->
+                    <StackPanel Margin="5,0" Grid.Row="0">
+                        <Button
+                            Command="{Binding GoToDashboardCommand}"
+                            Classes.active="{Binding IsDashboardPageActive}"
+                            Classes="sidebarMenuButton">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"
+                                       Width="20" Height="20" />
+                                <Label Content="Dashboard" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button
+                            Command="{Binding GoToEmployeesCommand}"
+                            Classes.active="{Binding IsEmployeesPageActive}"
+                            Classes="sidebarMenuButton">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{SvgImage /Assets/Images/regular/address-book-solid-full-white.svg}"
+                                       Width="20" Height="20" />
+                                <Label Content="Employees" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button
+                            Classes="sidebarMenuButton">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
+                                       Width="20" Height="20" />
+                                <Label Content="Orders" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button
+                            Classes="sidebarMenuButton">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
+                                       Width="20" Height="20" />
+                                <Label Content="Documents" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button
+                            Classes="sidebarMenuButton">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
+                                       Width="20" Height="20" />
+                                <Label Content="Employees" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Settings Button -->
+                    <Grid Row="1" Margin="5">
+                        <Grid ColumnDefinitions="*,*">
+                            <Button
+                                Grid.Column="0"
+                                Classes="menuButton"
+                                Classes.active="{Binding IsSettingPageActive}"
+                                Command="{Binding GoToSettingsCommand}">
+                                <Image Source="{SvgImage /Assets/Images/regular/gear-solid-full-white.svg}"
+                                       Height="20" Width="20" />
+                            </Button>
+                            <Button
+                                Grid.Column="1"
+                                Classes="menuButton"
+                                HorizontalAlignment="Right"
+                                Command="{Binding LogOutCommand}">
+                                <Image
+                                    Source="{SvgImage /Assets/Images/regular/right-from-bracket-solid-full-white.svg}"
+                                    Height="20" Width="20" />
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            <!-- Area for pages -->
+            <ContentControl Grid.Column="1" Content="{Binding CurrentPage}" />
+        </Grid>
     </Grid>
+
 
 </Window>

@@ -16,7 +16,7 @@ public class AuthHttpClient(HttpClient httpClient) : IAuthHttpClient
         HttpResponseMessage response;
         try
         {
-            response = await httpClient.PostAsync("/api/Auth/Login-Employee", payload);
+            response = await httpClient.PostAsync("/api/auth/login-employee", payload);
         }
         catch (Exception)
         {
@@ -30,7 +30,9 @@ public class AuthHttpClient(HttpClient httpClient) : IAuthHttpClient
         }
 
         var problem = await response.Content.ReadFromJsonAsync<ProblemDetails>();
-        return problem is null ? Result<TokenResponse>.Fail(ApiErrors.UnknownError) : Result<TokenResponse>.Fail(new Error(problem!.Detail));
+        return problem is null 
+            ? Result<TokenResponse>.Fail(ApiErrors.UnknownError) 
+            : Result<TokenResponse>.Fail(new Error(problem!.Detail));
         
     }
 }

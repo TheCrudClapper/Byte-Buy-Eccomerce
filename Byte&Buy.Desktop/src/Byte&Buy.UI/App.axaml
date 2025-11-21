@@ -12,6 +12,7 @@
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
+        <StyleInclude Source="Styles/MainWindowStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>
@@ -57,9 +58,15 @@
             <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="SidebarGradient" StartPoint="0%, 0%" EndPoint="50%, 0%">
-            <GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
-            <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
+        <LinearGradientBrush x:Key="SidebarGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 0%">
+
+            <GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
+            <GradientStop Offset="0.3" Color="{DynamicResource SecondaryLight}" />
+            
+            <GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+
         </LinearGradientBrush>
 
         <!-- Fonts -->
