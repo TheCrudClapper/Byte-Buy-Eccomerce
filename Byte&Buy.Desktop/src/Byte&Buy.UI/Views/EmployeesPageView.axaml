@@ -7,4 +7,5 @@
              x:DataType="vm:EmployeesPageViewModel"
              x:Class="ByteBuy.UI.Views.EmployeesPageView">
     <Label Content="{Binding Test}"></Label>
+    
 </UserControl>

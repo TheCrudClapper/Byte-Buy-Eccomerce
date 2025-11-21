@@ -18,7 +18,7 @@ public static class DependencyInjection
         services.AddScoped<IConditionService, ConditionService>();
         services.AddScoped<IDeliveryService, DeliveryService>();
         services.AddScoped<ICategoryService, CategoryService>();
-        
+        services.AddScoped<IApplicationUserService, ApplicationUserService>();
         return services;
     }
 }

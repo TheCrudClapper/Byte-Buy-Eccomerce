@@ -15,13 +15,18 @@ public static class DependencyInjection
     /// <returns></returns>
     public static IServiceCollection RegisterViewModels(this IServiceCollection services)
     {
+        //Singletons
         services.AddSingleton<LoginWindow>();
         services.AddSingleton<MainWindow>();
         services.AddSingleton<MainWindowViewModel>();
+        
+        //Transients
         services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();
         services.AddTransient<EmployeesPageViewModel>();
         services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<AccountPageViewModel>();
+        
         return services;
     }
 }

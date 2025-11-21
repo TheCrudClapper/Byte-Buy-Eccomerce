@@ -7,7 +7,9 @@
         <entry key="Styles/AppDefaultStyles.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Styles/Colors.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Styles/MainWindowStyles.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/AccountPageView.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/DashboardPageView.axaml" value="ByteBuy.UI.csproj" />
+        <entry key="Views/EmployeesPageView.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/EmployeesViewPage.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/LoginWindow.axaml" value="ByteBuy.UI.csproj" />
         <entry key="Views/MainWindow.axaml" value="ByteBuy.UI.csproj" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using Avalonia;
 using ByteBuy.Services.Extensions;
+using ByteBuy.Services.Handlers;
 using ByteBuy.UI.Extensions;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +19,7 @@ namespace ByteBuy.UI
 
             builder.Services.AddServiceLayer();
             builder.Services.RegisterViewModels();
+            builder.Services.AddAuthHeaderHandler();
             var host = builder.Build();
             
             BuildAvaloniaAppWithDi(host)

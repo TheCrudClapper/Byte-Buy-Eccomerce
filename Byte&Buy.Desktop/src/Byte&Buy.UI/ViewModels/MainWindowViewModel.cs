@@ -10,6 +10,7 @@ namespace ByteBuy.UI.ViewModels
         [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
         [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
         [NotifyPropertyChangedFor(nameof(IsSettingPageActive))]
+        [NotifyPropertyChangedFor(nameof(IsAccountPageActive))]
         private ViewModelBase _currentPage;
 
         public Action? Logout { get; set; }
@@ -17,6 +18,9 @@ namespace ByteBuy.UI.ViewModels
         private readonly DashboardPageViewModel _dashboardPage;
         private readonly EmployeesPageViewModel _employeesPage;
         private readonly SettingsPageViewModel _settingsPage;
+        private readonly AccountPageViewModel _accountPage;
+        
+        public bool IsAccountPageActive => CurrentPage == _accountPage;
         public bool IsDashboardPageActive => CurrentPage == _dashboardPage;
         public bool IsEmployeesPageActive => CurrentPage == _employeesPage;
         public bool IsSettingPageActive => CurrentPage == _settingsPage;
@@ -24,11 +28,13 @@ namespace ByteBuy.UI.ViewModels
         public MainWindowViewModel(
             DashboardPageViewModel dashboardPage,
             EmployeesPageViewModel employeesPage,
-            SettingsPageViewModel settingsPage)
+            SettingsPageViewModel settingsPage,
+            AccountPageViewModel accountPage)
         {
             _settingsPage = settingsPage;
             _dashboardPage = dashboardPage;
             _employeesPage = employeesPage;
+            _accountPage = accountPage;
             _currentPage = _dashboardPage;
         }
 
@@ -40,6 +46,9 @@ namespace ByteBuy.UI.ViewModels
         
         [RelayCommand]
         private void GoToSettings() => CurrentPage = _settingsPage;
+        
+        [RelayCommand]
+        private void GoToAccount() => CurrentPage = _accountPage;
 
         [RelayCommand]
         private void LogOut() =>  Logout?.Invoke();

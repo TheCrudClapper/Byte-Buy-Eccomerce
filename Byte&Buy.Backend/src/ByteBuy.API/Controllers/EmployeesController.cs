@@ -1,7 +1,5 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.DTO.Employee;
+﻿using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
@@ -23,6 +21,11 @@ public class EmployeesController : BaseApiController
     //[HasPermission("employee:read")]
     public async Task<ActionResult<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployee(employeeId, ct));
+
+    [HttpGet("me")]
+    //[HasPermission("employee:read:self")]
+    public async Task<ActionResult<EmployeeResponse>> GetEmployee(CancellationToken ct)
+        => HandleResult(await _employeeService.GetEmployee(CurrentUserId, ct));
 
     [HttpGet]
     //[HasPermission("employee:read:many")]

@@ -30,23 +30,23 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
     [RelayCommand]
     private async Task Login()
     {
-        // ValidateAllProperties();
-        // if(HasErrors)
-        //     return;
-        //
-        // LoginRequest request = new(Email, Password);
-        // var result = await authService.Login(request);
-        //
-        // if (!result.Success)
-        // {
-        //     Error = result.Error!.Description;
-        //     return;
-        // }
+         ValidateAllProperties();
+         if(HasErrors)
+             return;
+        
+         LoginRequest request = new(Email, Password);
+         var result = await authService.Login(request);
+        
+         if (!result.Success)
+         {
+             Error = result.Error!.Description;
+             return;
+         }
         
         //Clean
-        // Email = string.Empty;
-        // Password = string.Empty;
-        // Error = string.Empty;
+         Email = string.Empty;
+         Password = string.Empty;
+         Error = string.Empty;
         LoginSucceded?.Invoke();
     }
 }
