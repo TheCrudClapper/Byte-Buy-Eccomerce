@@ -27,7 +27,7 @@ public class EmployeeService : IEmployeeService
         _userManager = userManager;
         _employeeRepository = employeeRepository;
     }
-    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request, CancellationToken ct)
+    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
@@ -97,9 +97,9 @@ public class EmployeeService : IEmployeeService
             .ToList();
     }
 
-    public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request, CancellationToken ct)
+    public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
     {
-        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetByIdAsync(employeeId);
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
 
@@ -107,7 +107,7 @@ public class EmployeeService : IEmployeeService
         if (newRole is null)
             return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
 
-        if (employee.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email, ct))
+        if (employee.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
 
         var updateResult = employee.Update(
@@ -128,7 +128,7 @@ public class EmployeeService : IEmployeeService
         if (roleChange.IsFailure)
             return Result.Failure<EmployeeResponse>(roleChange.Error);
 
-        await _employeeRepository.UpdateAsync(employee, ct);
+        await _employeeRepository.UpdateAsync(employee);
 
         return employee.ToEmployeeResponse();
     }

@@ -54,9 +54,9 @@ public class AuthService : IAuthService
         return new TokenResponse(token);
     }
 
-    public async Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct)
+    public async Task<Result> RegisterPortalUser(RegisterRequest request)
     {
-        if (await _userRepository.ExistByEmailAsync(request.Email, ct))
+        if (await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure(AuthErrors.AccountExists);
 
         var userResult = PortalUser
@@ -78,7 +78,7 @@ public class AuthService : IAuthService
             return cartResult;
 
         user.AssignCart(cartResult.Value);
-        await _cartRepository.AddCart(cartResult.Value, ct);
+        await _cartRepository.AddCart(cartResult.Value);
 
         const string defaultRoleName = "PortalUser";
 

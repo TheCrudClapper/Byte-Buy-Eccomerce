@@ -42,5 +42,5 @@ public interface IAuthService
     /// <param name="ct">A cancellation token that can be used to cancel the registration operation.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="Result"/> indicating
     /// the outcome of the registration.</returns>
-    Task<Result> RegisterPortalUser(RegisterRequest request, CancellationToken ct = default);
+    Task<Result> RegisterPortalUser(RegisterRequest request);
 }

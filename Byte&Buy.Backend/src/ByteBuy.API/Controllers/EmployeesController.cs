@@ -14,8 +14,8 @@ public class EmployeesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("employee:create")]
-    public async Task<ActionResult<EmployeeResponse>> PostEmployee(EmployeeAddRequest request, CancellationToken ct)
-        => HandleResult(await _employeeService.AddEmployee(request, ct));
+    public async Task<ActionResult<EmployeeResponse>> PostEmployee(EmployeeAddRequest request)
+        => HandleResult(await _employeeService.AddEmployee(request));
 
     [HttpGet("{employeeId}")]
     //[HasPermission("employee:read")]
@@ -36,9 +36,8 @@ public class EmployeesController : BaseApiController
     //[HasPermission("employee:update")]
     public async Task<ActionResult<EmployeeResponse>> PutEmployee(
     Guid employeeId,
-    EmployeeUpdateRequest request,
-    CancellationToken ct)
-        => HandleResult(await _employeeService.UpdateEmployee(employeeId, request, ct));
+    EmployeeUpdateRequest request)
+        => HandleResult(await _employeeService.UpdateEmployee(employeeId, request));
 
     [HttpDelete("{employeeId}")]
     //[HasPermission("employee:delete")]

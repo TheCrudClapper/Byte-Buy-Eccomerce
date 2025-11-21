@@ -29,7 +29,7 @@ public class AuthController : BaseApiController
 
     [HttpPost]
     [Route("register")]
-    public async Task<IActionResult> Register(RegisterRequest request, CancellationToken ct)
-        => HandleResult(await _authService.RegisterPortalUser(request, ct));
+    public async Task<IActionResult> Register(RegisterRequest request)
+        => HandleResult(await _authService.RegisterPortalUser(request));
 
 }
