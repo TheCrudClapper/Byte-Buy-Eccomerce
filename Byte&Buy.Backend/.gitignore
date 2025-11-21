@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Obj and Vs files from particular projects
+.src/ByteBuy.Core/obj
+.src/ByteBuy.API/obj
+.src/ByteBuy.Infrastructure/obj
+.src/ByteBuy.Infrastructure/.vs
