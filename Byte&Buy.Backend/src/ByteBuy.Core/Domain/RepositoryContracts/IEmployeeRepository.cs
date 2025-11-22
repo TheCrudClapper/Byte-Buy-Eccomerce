@@ -13,9 +13,9 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository
 {
-    Task UpdateAsync(Employee employee, CancellationToken ct = default);
+    Task UpdateAsync(Employee employee);
     Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
-    Task SoftDeleteAsync(Employee employee, CancellationToken ct = default);
+    Task SoftDeleteAsync(Employee employee);
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);

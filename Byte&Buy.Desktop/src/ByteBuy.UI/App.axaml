@@ -13,6 +13,7 @@
         <FluentTheme />
         <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
         <StyleInclude Source="Styles/MainWindowStyles.axaml"/>
+        <StyleInclude Source="Styles/EmployeeStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>

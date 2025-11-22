@@ -33,17 +33,17 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
         ValidateAllProperties();
         if (HasErrors)
             return;
-
+        
         LoginRequest request = new(Email, Password);
         var result = await authService.Login(request);
-
+        
         if (!result.Success)
         {
             Error = result.Error!.Description;
             return;
         }
-
-        //Clean fields
+        
+        // //Clean fields
         Email = string.Empty;
         Password = string.Empty;
         Error = string.Empty;

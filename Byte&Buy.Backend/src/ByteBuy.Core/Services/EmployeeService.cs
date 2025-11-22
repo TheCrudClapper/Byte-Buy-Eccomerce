@@ -65,16 +65,16 @@ public class EmployeeService : IEmployeeService
         return employee.ToEmployeeResponse();
     }
 
-    public async Task<Result> DeleteEmployee(Guid employeeId, CancellationToken ct)
+    public async Task<Result> DeleteEmployee(Guid employeeId)
     {
-        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetByIdAsync(employeeId);
 
         if (employee is null)
             return Result.Failure(Error.NotFound);
 
         employee.Deactivate();
 
-        await _employeeRepository.SoftDeleteAsync(employee, ct);
+        await _employeeRepository.SoftDeleteAsync(employee);
 
         return Result.Success();
     }

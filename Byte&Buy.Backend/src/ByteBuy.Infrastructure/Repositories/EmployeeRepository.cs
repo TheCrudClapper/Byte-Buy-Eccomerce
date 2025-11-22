@@ -11,10 +11,10 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
     public EmployeeRepository(ApplicationDbContext context) : base(context){}
 
 
-    public async Task SoftDeleteAsync(Employee employee, CancellationToken ct)
+    public async Task SoftDeleteAsync(Employee employee)
     {
         _context.Update(employee);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct)
@@ -44,9 +44,9 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
             .FirstOrDefaultAsync(expression, ct);
     }
 
-    public async Task UpdateAsync(Employee employee, CancellationToken ct)
+    public async Task UpdateAsync(Employee employee)
     {
         _context.Employees.Update(employee);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
     }
 }

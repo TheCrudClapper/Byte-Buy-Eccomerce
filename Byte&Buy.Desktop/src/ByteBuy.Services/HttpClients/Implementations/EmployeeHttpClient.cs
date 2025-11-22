@@ -7,5 +7,5 @@ namespace ByteBuy.Services.HttpClients.Implementations;
 public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEmployeeHttpClient
 {
     public async Task<Result<EmployeeResponse>> GetSelfAsync()
-        => await GetAsync<EmployeeResponse>("/employees/me");
+        => await GetAsync<EmployeeResponse>("employees/me");
 }

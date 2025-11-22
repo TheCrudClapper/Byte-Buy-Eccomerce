@@ -14,7 +14,7 @@
 
     <Grid RowDefinitions="50, *">
         <!-- Top Bar -->
-        <Grid Grid.Row="0" ColumnDefinitions="220, *, 220" Background="{DynamicResource SidebarGradient}">
+        <Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource SidebarGradient}">
 
             <!-- Image -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -134,7 +134,7 @@
                 </Grid>
             </Grid>
             <!-- Area for pages -->
-            <ContentControl Grid.Column="1"
+            <ContentControl Grid.Column="1" Padding="30" Background="{DynamicResource BackgroundLightBrush}"
                             Content="{Binding CurrentPage}" />
         </Grid>
     </Grid>

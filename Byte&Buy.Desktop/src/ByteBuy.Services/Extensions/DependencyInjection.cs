@@ -14,11 +14,8 @@ public static class DependencyInjection
     public static IServiceCollection AddServiceLayer(this IServiceCollection services)
     {
         //Add Http Clients
-        services.AddHttpClient<IAuthHttpClient, AuthHttpClient>(client 
-            => client.BaseAddress = new Uri("http://localhost:5099"));
-        
-        services.AddHttpClient<IEmployeeHttpClient, EmployeeHttpClient>(client 
-            => client.BaseAddress = new Uri("http://localhost:5099"))
+        services.AddHttpClient<IAuthHttpClient, AuthHttpClient>();
+        services.AddHttpClient<IEmployeeHttpClient, EmployeeHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>(); 
         
         //Add Services
