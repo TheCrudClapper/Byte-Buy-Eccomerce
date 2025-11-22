@@ -13,6 +13,6 @@ public interface IPermissionRepository
     /// <param name="permissionId"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId, CancellationToken ct = default);
+    Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId);
 
 }

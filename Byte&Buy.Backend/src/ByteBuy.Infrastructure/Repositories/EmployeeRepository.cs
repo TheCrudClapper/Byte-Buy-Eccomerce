@@ -10,7 +10,11 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
 {
     public EmployeeRepository(ApplicationDbContext context) : base(context){}
 
-
+    public async Task UpdateAsync(Employee employee)
+    {
+        _context.Employees.Update(employee);
+        await _context.SaveChangesAsync();
+    }
     public async Task SoftDeleteAsync(Employee employee)
     {
         _context.Update(employee);
@@ -44,9 +48,5 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
             .FirstOrDefaultAsync(expression, ct);
     }
 
-    public async Task UpdateAsync(Employee employee)
-    {
-        _context.Employees.Update(employee);
-        await _context.SaveChangesAsync();
-    }
+    
 }

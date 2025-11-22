@@ -22,11 +22,11 @@ public class CompanyInfoController : BaseApiController
 
     [HttpPost]
     [HasPermission("companyinfo:create")]
-    public async Task<ActionResult<CompanyInfoAddRequest>> PostCompanyInfo(CompanyInfoAddRequest request, CancellationToken ct)
-        => HandleResult(await _companyInfoService.AddCompanyInfo(request, ct));
+    public async Task<ActionResult<CompanyInfoAddRequest>> PostCompanyInfo(CompanyInfoAddRequest request)
+        => HandleResult(await _companyInfoService.AddCompanyInfo(request));
 
     [HttpPut]
     [HasPermission("companyinfo:update")]
-    public async Task<ActionResult<CompanyInfoResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _companyInfoService.UpdateCompanyInfo(request, ct));
+    public async Task<ActionResult<CompanyInfoResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request)
+        => HandleResult(await _companyInfoService.UpdateCompanyInfo(request));
 }

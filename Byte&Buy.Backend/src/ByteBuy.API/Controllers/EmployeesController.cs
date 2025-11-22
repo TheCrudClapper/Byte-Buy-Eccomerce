@@ -29,8 +29,8 @@ public class EmployeesController : BaseApiController
 
     [HttpGet]
     //[HasPermission("employee:read:many")]
-    public async Task<ActionResult<EmployeeResponse>> GetEmployees()
-        => HandleResult(await _employeeService.GetEmployees());
+    public async Task<ActionResult<EmployeeResponse>> GetEmployees(CancellationToken ct)
+        => HandleResult(await _employeeService.GetEmployees(ct));
 
     [HttpPut("{employeeId}")]
     //[HasPermission("employee:update")]

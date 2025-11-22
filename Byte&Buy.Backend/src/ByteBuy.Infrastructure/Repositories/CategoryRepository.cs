@@ -15,16 +15,22 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task AddAsync(Category category, CancellationToken ct)
+    public async Task AddAsync(Category category)
     {
-        await _context.Categories.AddAsync(category, ct);
-        await _context.SaveChangesAsync(ct);
+        await _context.Categories.AddAsync(category);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task SoftDeleteAsync(Category category, CancellationToken ct)
+    public async Task SoftDeleteAsync(Category category)
     {
         _context.Categories.Update(category);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Category category)
+    {
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken ct)
@@ -54,9 +60,4 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(c => c.Id == id, ct);
     }
 
-    public async Task UpdateAsync(Category category, CancellationToken ct)
-    {
-        _context.Categories.Update(category);
-        await _context.SaveChangesAsync(ct);
-    }
 }

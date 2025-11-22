@@ -15,16 +15,21 @@ public class DeliveryRepository : IDeliveryRepository
         _context = context;
     }
 
-    public async Task AddAsync(Delivery delivery, CancellationToken ct)
+    public async Task AddAsync(Delivery delivery)
     {
-        await _context.Deliveries.AddAsync(delivery, ct);
-        await _context.SaveChangesAsync(ct);
+        await _context.Deliveries.AddAsync(delivery);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task SoftDeleteAsync(Delivery delivery, CancellationToken ct)
+    public async Task SoftDeleteAsync(Delivery delivery)
     {
         _context.Deliveries.Update(delivery);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
+    }
+    public async Task UpdateAsync(Delivery delivery)
+    {
+        _context.Deliveries.Update(delivery);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct)
@@ -54,9 +59,5 @@ public class DeliveryRepository : IDeliveryRepository
             .FirstOrDefaultAsync(d => d.Id == id, ct);
     }
 
-    public async Task UpdateAsync(Delivery delivery, CancellationToken ct)
-    {
-        _context.Deliveries.Update(delivery);
-        await _context.SaveChangesAsync(ct);
-    }
+   
 }

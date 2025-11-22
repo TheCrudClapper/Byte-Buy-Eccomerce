@@ -5,5 +5,5 @@ namespace ByteBuy.Core.ServiceContracts;
 
 public interface IApplicationUserService
 {
-    Task<Result> ChangePassword(Guid userId, PasswordChangeRequest request, CancellationToken ct = default);
+    Task<Result> ChangePassword(Guid userId, PasswordChangeRequest request);
 }

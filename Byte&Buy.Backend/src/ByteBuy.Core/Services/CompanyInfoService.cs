@@ -14,7 +14,7 @@ public class CompanyInfoService : ICompanyInfoService
     {
         _companyInfoRepository = companyInfo;
     }
-    public async Task<Result<CompanyInfoResponse>> AddCompanyInfo(CompanyInfoAddRequest request, CancellationToken ct)
+    public async Task<Result<CompanyInfoResponse>> AddCompanyInfo(CompanyInfoAddRequest request)
     {
         if (await _companyInfoRepository.ExistAsync())
             return Result.Failure<CompanyInfoResponse>(CompanyInfoErrors.MultipleCompanyInfos);
@@ -49,9 +49,9 @@ public class CompanyInfoService : ICompanyInfoService
             : companyInfo.ToCompanyInfoResponse();
     }
 
-    public async Task<Result<CompanyInfoResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request, CancellationToken ct)
+    public async Task<Result<CompanyInfoResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
     {
-        var companyInfo = await _companyInfoRepository.GetAsync(ct);
+        var companyInfo = await _companyInfoRepository.GetAsync();
         if (companyInfo is null)
             return Result.Failure<CompanyInfoResponse>(Error.NotFound);
 

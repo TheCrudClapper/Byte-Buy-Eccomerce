@@ -16,18 +16,18 @@ public class CountriesController : BaseApiController
 
     //[HasPermission("country:write")]
     [HttpPost]
-    public async Task<ActionResult> PostCountry(CountryAddRequest request, CancellationToken ct)
-        => HandleResult(await _countryService.AddCountry(request, ct));
+    public async Task<ActionResult> PostCountry(CountryAddRequest request)
+        => HandleResult(await _countryService.AddCountry(request));
 
     [HttpPut("{countryId}")]
     //[HasPermission("country:update")]
-    public async Task<ActionResult> PutCountry(Guid countryId, CountryUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _countryService.UpdateCountry(countryId, request, ct));
+    public async Task<ActionResult> PutCountry(Guid countryId, CountryUpdateRequest request)
+        => HandleResult(await _countryService.UpdateCountry(countryId, request));
 
     [HttpDelete("{countryId}")]
     //[HasPermission("country:delete")]
-    public async Task<IActionResult> DeleteCountry(Guid countryId, CancellationToken cr)
-        => HandleResult(await _countryService.DeleteCountry(countryId, cr));
+    public async Task<IActionResult> DeleteCountry(Guid countryId)
+        => HandleResult(await _countryService.DeleteCountry(countryId));
 
     [HttpGet("{countryId}")]
     //[HasPermission("country:read")]

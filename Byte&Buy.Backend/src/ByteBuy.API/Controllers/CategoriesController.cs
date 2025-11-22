@@ -15,18 +15,18 @@ public class CategoriesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("category:create")]
-    public async Task<ActionResult> PostCategory(CategoryAddRequest request, CancellationToken ct)
-        => HandleResult(await _categoryService.AddCategory(request, ct));
+    public async Task<ActionResult> PostCategory(CategoryAddRequest request)
+        => HandleResult(await _categoryService.AddCategory(request));
 
     [HttpPut("{categoryId}")]
     //[HasPermission("category:update")]
     public async Task<ActionResult> PutCategory(Guid categoryId, CategoryUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _categoryService.UpdateCategory(categoryId, request, ct));
+        => HandleResult(await _categoryService.UpdateCategory(categoryId, request));
 
     [HttpDelete("{categoryId}")]
     //[HasPermission("category:delete")]
     public async Task<ActionResult> DeleteCategory(Guid categoryId, CancellationToken ct)
-        => HandleResult(await _categoryService.DeleteCategory(categoryId, ct));
+        => HandleResult(await _categoryService.DeleteCategory(categoryId));
 
     [HttpGet("{categoryId}")]
     //[HasPermission("category:read")]

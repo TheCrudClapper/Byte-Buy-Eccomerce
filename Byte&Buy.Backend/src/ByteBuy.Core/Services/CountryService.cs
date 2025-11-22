@@ -16,7 +16,7 @@ public class CountryService : ICountryService
     {
         _countryRepository = countryRepository;
     }
-    public async Task<Result<CountryResponse>> AddCountry(CountryAddRequest request, CancellationToken ct = default)
+    public async Task<Result<CountryResponse>> AddCountry(CountryAddRequest request)
     {
         var countryResult = Country.Create(request.Name, request.Code);
         if (countryResult.IsFailure)
@@ -28,7 +28,7 @@ public class CountryService : ICountryService
         return country.ToCountryResponse();
     }
 
-    public async Task<Result> DeleteCountry(Guid countryId, CancellationToken ct = default)
+    public async Task<Result> DeleteCountry(Guid countryId)
     {
         var country = await _countryRepository.GetByIdAsync(countryId);
         if (country is null)
@@ -36,11 +36,24 @@ public class CountryService : ICountryService
 
         country.Deactivate();
 
-        await _countryRepository.SoftDeleteAsync(country, ct);
+        await _countryRepository.SoftDeleteAsync(country);
 
         return Result.Success();
     }
+    public async Task<Result<CountryResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
+    {
+        var country = await _countryRepository.GetByIdAsync(countryId);
+        if (country is null)
+            return Result.Failure<CountryResponse>(Error.NotFound);
 
+        country.Update(
+            request.Name,
+            request.Code);
+
+        await _countryRepository.UpdateAsync(country);
+
+        return country.ToCountryResponse();
+    }
     public async Task<Result<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct = default)
     {
         var countries = await _countryRepository.GetAllAsync(ct);
@@ -62,18 +75,5 @@ public class CountryService : ICountryService
             .ToList();
     }
 
-    public async Task<Result<CountryResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request, CancellationToken ct = default)
-    {
-        var country = await _countryRepository.GetByIdAsync(countryId);
-        if (country is null)
-            return Result.Failure<CountryResponse>(Error.NotFound);
-
-        country.Update(
-            request.Name,
-            request.Code);
-
-        await _countryRepository.UpdateAsync(country);
-
-        return country.ToCountryResponse();
-    }
+   
 }

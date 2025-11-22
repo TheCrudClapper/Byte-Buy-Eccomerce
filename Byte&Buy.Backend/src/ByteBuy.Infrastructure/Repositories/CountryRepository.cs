@@ -14,16 +14,22 @@ public class CountryRepository : ICountryRepository
        _context = context;
     }
 
-    public async Task AddAsync(Country country, CancellationToken ct = default)
+    public async Task AddAsync(Country country)
     {
-        await _context.Countries.AddAsync(country, ct);
-        await _context.SaveChangesAsync(ct);
+        await _context.Countries.AddAsync(country);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task SoftDeleteAsync(Country country, CancellationToken ct = default)
+    public async Task SoftDeleteAsync(Country country)
     {
         _context.Countries.Update(country);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Country country)
+    {
+        _context.Countries.Update(country);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default)
@@ -52,9 +58,5 @@ public class CountryRepository : ICountryRepository
             .FirstOrDefaultAsync(c => c.Id == countryId, ct);
     }
 
-    public async Task UpdateAsync(Country country, CancellationToken ct = default)
-    {
-        _context.Countries.Update(country);
-        await _context.SaveChangesAsync(ct);
-    }
+    
 }

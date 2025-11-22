@@ -9,10 +9,10 @@ public class CompanyInfoRepository : BaseRepository, ICompanyInfoRepository
 {
     public CompanyInfoRepository(ApplicationDbContext context) : base(context){}
 
-    public async Task AddAsync(CompanyInfo companyInfo, CancellationToken ct)
+    public async Task AddAsync(CompanyInfo companyInfo)
     {
-        await _context.CompanyInfo.AddAsync(companyInfo, ct);
-        await _context.SaveChangesAsync(ct);
+        await _context.CompanyInfo.AddAsync(companyInfo);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<bool> ExistAsync(CancellationToken ct = default)
@@ -27,9 +27,9 @@ public class CompanyInfoRepository : BaseRepository, ICompanyInfoRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task UpdateAsync(CompanyInfo companyInfo, CancellationToken ct)
+    public async Task UpdateAsync(CompanyInfo companyInfo)
     {
         _context.CompanyInfo.Update(companyInfo);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
     }
 }

@@ -21,7 +21,7 @@ public class RoleService : IRoleService
         _roleManager = roleManager;
     }
 
-    public async Task<Result<RoleResponse>> AddRole(RoleAddRequest request, CancellationToken ct = default)
+    public async Task<Result<RoleResponse>> AddRole(RoleAddRequest request)
     {
         if (await _roleRepository.ExistsAsync(request.Name))
             return Result.Failure<RoleResponse>(RoleErrors.RoleAlreadyExist);
@@ -40,7 +40,7 @@ public class RoleService : IRoleService
         return role.ToRoleResponse();
     }
 
-    public async Task<Result> DeleteRole(Guid roleId, CancellationToken ct = default)
+    public async Task<Result> DeleteRole(Guid roleId)
     {
         var role = await _roleRepository.GetByIdAsync(roleId);
 
@@ -81,9 +81,9 @@ public class RoleService : IRoleService
             .ToList();
     }
 
-    public async Task<Result<RoleResponse>> UpdateRole(Guid roleId, RoleUpdateRequest request, CancellationToken ct = default)
+    public async Task<Result<RoleResponse>> UpdateRole(Guid roleId, RoleUpdateRequest request)
     {
-        var role = await _roleRepository.GetByIdAsync(roleId, ct);
+        var role = await _roleRepository.GetByIdAsync(roleId);
         if (role is null)
             return Result.Failure<RoleResponse>(Error.NotFound);
 

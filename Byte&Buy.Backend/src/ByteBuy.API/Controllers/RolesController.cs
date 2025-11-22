@@ -17,13 +17,13 @@ public class RolesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("role:create")]
-    public async Task<ActionResult<RoleResponse>> PostRole(RoleAddRequest request, CancellationToken ct)
-       => HandleResult(await _roleService.AddRole(request, ct));
+    public async Task<ActionResult<RoleResponse>> PostRole(RoleAddRequest request)
+       => HandleResult(await _roleService.AddRole(request));
 
     [HttpPut("{roleId}")]
     //[HasPermission("role:update")]
-    public async Task<ActionResult<RoleResponse>> PutRole(Guid roleId, RoleUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _roleService.UpdateRole(roleId, request, ct));
+    public async Task<ActionResult<RoleResponse>> PutRole(Guid roleId, RoleUpdateRequest request)
+        => HandleResult(await _roleService.UpdateRole(roleId, request));
 
     [HttpGet("options")]
     //[HasPermission("role:read:options")]
@@ -42,7 +42,7 @@ public class RolesController : BaseApiController
 
     [HttpDelete("{roleId}")]
     //[HasPermission("role:delete")]
-    public async Task<IActionResult> DeleteRole(Guid roleId, CancellationToken ct)
-        => HandleResult(await _roleService.DeleteRole(roleId, ct));
+    public async Task<IActionResult> DeleteRole(Guid roleId)
+        => HandleResult(await _roleService.DeleteRole(roleId));
 
 }

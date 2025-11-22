@@ -16,18 +16,18 @@ public class DeliveriesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("delivery:create")]
-    public async Task<ActionResult> PostDelivery(DeliveryAddRequest request, CancellationToken ct)
-        => HandleResult(await _deliveryService.AddDelivery(request, ct));
+    public async Task<ActionResult> PostDelivery(DeliveryAddRequest request)
+        => HandleResult(await _deliveryService.AddDelivery(request));
 
     [HttpPut("{deliveryId}")]
     //[HasPermission("delivery:update")]
-    public async Task<ActionResult> PutDelivery(Guid deliveryId, DeliveryUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _deliveryService.UpdateDelivery(deliveryId, request, ct));
+    public async Task<ActionResult> PutDelivery(Guid deliveryId, DeliveryUpdateRequest request)
+        => HandleResult(await _deliveryService.UpdateDelivery(deliveryId, request));
 
     [HttpDelete("{deliveryId}")]
     //[HasPermission("delivery:delete")]
-    public async Task<ActionResult> DeleteDelivery(Guid deliveryId, CancellationToken ct)
-        => HandleResult(await _deliveryService.DeleteDelivery(deliveryId, ct));
+    public async Task<ActionResult> DeleteDelivery(Guid deliveryId)
+        => HandleResult(await _deliveryService.DeleteDelivery(deliveryId));
 
     [HttpGet("{deliveryId}")]
     //[HasPermission("delivery:read")]

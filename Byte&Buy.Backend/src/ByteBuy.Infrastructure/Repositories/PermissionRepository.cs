@@ -9,7 +9,7 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
 {
     public PermissionRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId, CancellationToken ct = default)
+    public async Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId)
     {
         //true -> grant
         //false -> deny
@@ -18,7 +18,7 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .AsNoTracking()
             .Where(up => up.UserId == userId && up.PermissionId == permissionId)
             .Select(up => (bool?)up.IsGranted)
-            .FirstOrDefaultAsync(ct);
+            .FirstOrDefaultAsync();
 
         if(userPermission.HasValue)
             return userPermission.Value;
@@ -27,7 +27,7 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .AsNoTracking()
             .Where(ur => ur.UserId == userId)
             .SelectMany(ur => ur.Role.RolePermissions)
-            .AnyAsync(rp => rp.PermissionId == permissionId, ct);
+            .AnyAsync(rp => rp.PermissionId == permissionId);
 
         return hasRolePermission;
     }

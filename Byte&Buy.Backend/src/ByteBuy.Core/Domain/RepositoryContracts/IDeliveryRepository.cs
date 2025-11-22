@@ -5,9 +5,9 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IDeliveryRepository
 {
-    Task AddAsync(Delivery delivery, CancellationToken ct = default);
-    Task UpdateAsync(Delivery delivery, CancellationToken ct = default);
-    Task SoftDeleteAsync(Delivery delivery, CancellationToken ct = default);
+    Task AddAsync(Delivery delivery);
+    Task UpdateAsync(Delivery delivery);
+    Task SoftDeleteAsync(Delivery delivery);
     Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct = default);
     /// <summary>

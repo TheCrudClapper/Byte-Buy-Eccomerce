@@ -8,9 +8,9 @@ public class CartRepository : BaseRepository, ICartRepository
 {
     public CartRepository(ApplicationDbContext context) : base(context){}
 
-    public async Task AddCart(Cart cart, CancellationToken ct)
+    public async Task AddCart(Cart cart)
     {
-        await _context.Carts.AddAsync(cart, ct);
+        await _context.Carts.AddAsync(cart);
         await _context.SaveChangesAsync();
     }
 }

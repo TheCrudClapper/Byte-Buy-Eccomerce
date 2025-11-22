@@ -15,16 +15,21 @@ public class ConditionRepository : IConditionRepository
         _context = context;
     }
 
-    public async Task AddAsync(Condition condition, CancellationToken ct)
+    public async Task AddAsync(Condition condition)
     {
-        await _context.Conditions.AddAsync(condition, ct);
-        await _context.SaveChangesAsync(ct);
+        await _context.Conditions.AddAsync(condition);
+        await _context.SaveChangesAsync();
     }
-
-    public async Task SoftDeleteAsync(Condition condition, CancellationToken ct)
+    public async Task UpdateAsync(Condition condition)
     {
         _context.Conditions.Update(condition);
-        await _context.SaveChangesAsync(ct);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SoftDeleteAsync(Condition condition)
+    {
+        _context.Conditions.Update(condition);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct)
@@ -52,9 +57,4 @@ public class ConditionRepository : IConditionRepository
             .FirstOrDefaultAsync(c => c.Id == conditionId, ct);
     }
 
-    public async Task UpdateAsync(Condition condition, CancellationToken ct)
-    {
-        _context.Conditions.Update(condition);
-        await _context.SaveChangesAsync(ct);
-    }
 }

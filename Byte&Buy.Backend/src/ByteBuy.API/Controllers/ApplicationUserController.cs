@@ -13,6 +13,6 @@ public class ApplicationUserController : BaseApiController
         => _userService = userService;
 
     [HttpPut("password")]
-    public async Task<IActionResult> ChangeUserPassword(PasswordChangeRequest request, CancellationToken ct)
-        => HandleResult(await _userService.ChangePassword(CurrentUserId, request, ct));
+    public async Task<IActionResult> ChangeUserPassword(PasswordChangeRequest request)
+        => HandleResult(await _userService.ChangePassword(CurrentUserId, request));
 }

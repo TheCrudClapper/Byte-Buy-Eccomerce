@@ -3,5 +3,5 @@
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 public interface ICartRepository
 {
-    Task AddCart(Cart cart, CancellationToken cancellationToken = default);
+    Task AddCart(Cart cart);
 }

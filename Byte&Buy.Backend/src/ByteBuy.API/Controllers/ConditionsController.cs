@@ -14,18 +14,18 @@ public class ConditionsController : BaseApiController
 
     //[HasPermission("condition:write")]
     [HttpPost]
-    public async Task<ActionResult> PostCondition(ConditionAddRequest request, CancellationToken ct)
-        => HandleResult(await _conditionService.AddCondition(request, ct));
+    public async Task<ActionResult> PostCondition(ConditionAddRequest request)
+        => HandleResult(await _conditionService.AddCondition(request));
 
     [HttpPut("{conditionId}")]
     //[HasPermission("condition:update")]
-    public async Task<ActionResult> PutCondition(Guid conditionId, ConditionUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _conditionService.UpdateCondition(conditionId, request, ct));
+    public async Task<ActionResult> PutCondition(Guid conditionId, ConditionUpdateRequest request)
+        => HandleResult(await _conditionService.UpdateCondition(conditionId, request));
 
     [HttpDelete("{conditionId}")]
     //[HasPermission("condition:delete")]
-    public async Task<IActionResult> DeleteCondition(Guid conditionId, CancellationToken ct)
-        => HandleResult(await _conditionService.DeleteCondition(conditionId, ct));
+    public async Task<IActionResult> DeleteCondition(Guid conditionId)
+        => HandleResult(await _conditionService.DeleteCondition(conditionId));
 
     [HttpGet("{conditionId}")]
     //[HasPermission("condition:read")]

@@ -33,7 +33,7 @@ public class Country : AuditableEntity, ISoftDeletable
 
     public static Result<Country> Create(string name, string code)
     {
-        var validationResult = Country.Validate(name, code);
+        var validationResult = Validate(name, code);
 
         return validationResult.IsFailure
             ? Result.Failure<Country>(validationResult.Error)

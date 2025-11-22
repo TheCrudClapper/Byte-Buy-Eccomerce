@@ -17,26 +17,26 @@ public class ConditionService : IConditionService
         _conditionRepository = conditionRepository;
     }
 
-    public async Task<Result<ConditionResponse>> AddCondition(ConditionAddRequest request, CancellationToken ct = default)
+    public async Task<Result<ConditionResponse>> AddCondition(ConditionAddRequest request)
     {
         var result = Condition.Create(request.Name, request.Description);
         if (result.IsFailure)
             return Result.Failure<ConditionResponse>(result.Error);
 
         var condition = result.Value;
-        await _conditionRepository.AddAsync(condition, ct);
+        await _conditionRepository.AddAsync(condition);
 
         return condition.ToConditionResponse();
     }
 
-    public async Task<Result> DeleteCondition(Guid conditionId, CancellationToken ct = default)
+    public async Task<Result> DeleteCondition(Guid conditionId)
     {
-        var condition = await _conditionRepository.GetByIdAsync(conditionId, ct);
+        var condition = await _conditionRepository.GetByIdAsync(conditionId);
         if (condition is null)
             return Result.Failure(Error.NotFound);
 
         condition.Deactivate();
-        await _conditionRepository.SoftDeleteAsync(condition, ct);
+        await _conditionRepository.SoftDeleteAsync(condition);
 
         return Result.Success();
     }
@@ -62,14 +62,14 @@ public class ConditionService : IConditionService
         return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
     }
 
-    public async Task<Result<ConditionResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request, CancellationToken ct = default)
+    public async Task<Result<ConditionResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request)
     {
-        var condition = await _conditionRepository.GetByIdAsync(conditionId, ct);
+        var condition = await _conditionRepository.GetByIdAsync(conditionId);
         if (condition is null)
             return Result.Failure<ConditionResponse>(Error.NotFound);
 
         condition.Update(request.Name, request.Description);
-        await _conditionRepository.UpdateAsync(condition, ct);
+        await _conditionRepository.UpdateAsync(condition);
 
         return condition.ToConditionResponse();
     }
