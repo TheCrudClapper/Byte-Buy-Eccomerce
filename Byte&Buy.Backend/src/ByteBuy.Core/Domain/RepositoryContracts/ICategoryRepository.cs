@@ -7,7 +7,6 @@ public interface ICategoryRepository
 {
     Task AddAsync(Category category);
     Task UpdateAsync(Category category);
-    Task SoftDeleteAsync(Category category);
     Task<Category?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<IEnumerable<Category>> GetAllAsync(CancellationToken ct = default);
     Task<IEnumerable<Category>> GetAllByCondition(Expression<Func<Category, bool>> expression, CancellationToken ct = default);

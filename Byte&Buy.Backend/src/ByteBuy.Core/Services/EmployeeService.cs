@@ -74,7 +74,7 @@ public class EmployeeService : IEmployeeService
 
         employee.Deactivate();
 
-        await _employeeRepository.SoftDeleteAsync(employee);
+        await _employeeRepository.UpdateAsync(employee);
 
         return Result.Success();
     }

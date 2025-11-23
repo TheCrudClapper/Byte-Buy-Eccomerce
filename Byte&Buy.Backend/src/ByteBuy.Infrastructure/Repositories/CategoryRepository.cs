@@ -6,24 +6,13 @@ using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : BaseRepository, ICategoryRepository
 {
-    private readonly ApplicationDbContext _context;
-
-    public CategoryRepository(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public CategoryRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(Category category)
     {
         await _context.Categories.AddAsync(category);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task SoftDeleteAsync(Category category)
-    {
-        _context.Categories.Update(category);
         await _context.SaveChangesAsync();
     }
 

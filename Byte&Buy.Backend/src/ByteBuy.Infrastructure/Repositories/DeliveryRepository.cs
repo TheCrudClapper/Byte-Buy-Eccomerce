@@ -6,24 +6,13 @@ using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class DeliveryRepository : IDeliveryRepository
+public class DeliveryRepository : BaseRepository, IDeliveryRepository
 {
-    private readonly ApplicationDbContext _context;
-
-    public DeliveryRepository(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public DeliveryRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(Delivery delivery)
     {
         await _context.Deliveries.AddAsync(delivery);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task SoftDeleteAsync(Delivery delivery)
-    {
-        _context.Deliveries.Update(delivery);
         await _context.SaveChangesAsync();
     }
     public async Task UpdateAsync(Delivery delivery)

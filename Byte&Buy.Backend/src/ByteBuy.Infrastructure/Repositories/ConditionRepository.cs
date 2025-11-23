@@ -6,14 +6,9 @@ using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class ConditionRepository : IConditionRepository
+public class ConditionRepository : BaseRepository, IConditionRepository
 {
-    private readonly ApplicationDbContext _context;
-
-    public ConditionRepository(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public ConditionRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(Condition condition)
     {
@@ -21,12 +16,6 @@ public class ConditionRepository : IConditionRepository
         await _context.SaveChangesAsync();
     }
     public async Task UpdateAsync(Condition condition)
-    {
-        _context.Conditions.Update(condition);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task SoftDeleteAsync(Condition condition)
     {
         _context.Conditions.Update(condition);
         await _context.SaveChangesAsync();

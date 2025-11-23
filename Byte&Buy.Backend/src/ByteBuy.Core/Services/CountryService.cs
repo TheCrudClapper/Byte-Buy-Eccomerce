@@ -36,7 +36,7 @@ public class CountryService : ICountryService
 
         country.Deactivate();
 
-        await _countryRepository.SoftDeleteAsync(country);
+        await _countryRepository.UpdateAsync(country);
 
         return Result.Success();
     }

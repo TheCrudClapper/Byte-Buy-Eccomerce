@@ -40,7 +40,7 @@ public class DeliveryService : IDeliveryService
             return Result.Failure(Error.NotFound);
 
         delivery.Deactivate();
-        await _deliveryRepository.SoftDeleteAsync(delivery);
+        await _deliveryRepository.UpdateAsync(delivery);
 
         return Result.Success();
     }

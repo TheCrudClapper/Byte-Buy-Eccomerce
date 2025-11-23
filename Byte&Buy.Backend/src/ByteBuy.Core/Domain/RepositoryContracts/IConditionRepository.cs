@@ -7,7 +7,6 @@ public interface IConditionRepository
 {
     Task AddAsync(Condition condition);
     Task UpdateAsync(Condition condition);
-    Task SoftDeleteAsync(Condition condition);
     Task<Condition?> GetByIdAsync(Guid conditionId, CancellationToken ct = default);
     Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct = default);
     Task<IEnumerable<Condition>> GetAllByCondition(Expression<Func<Condition, bool>> expression, CancellationToken ct = default);

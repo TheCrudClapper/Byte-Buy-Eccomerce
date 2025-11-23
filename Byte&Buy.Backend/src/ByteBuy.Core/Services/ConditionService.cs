@@ -36,7 +36,7 @@ public class ConditionService : IConditionService
             return Result.Failure(Error.NotFound);
 
         condition.Deactivate();
-        await _conditionRepository.SoftDeleteAsync(condition);
+        await _conditionRepository.UpdateAsync(condition);
 
         return Result.Success();
     }

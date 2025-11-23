@@ -6,23 +6,13 @@ using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CountryRepository : ICountryRepository
+public class CountryRepository : BaseRepository, ICountryRepository
 {
-    private readonly ApplicationDbContext _context;
-    public CountryRepository(ApplicationDbContext context)
-    {
-       _context = context;
-    }
+    public CountryRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(Country country)
     {
         await _context.Countries.AddAsync(country);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task SoftDeleteAsync(Country country)
-    {
-        _context.Countries.Update(country);
         await _context.SaveChangesAsync();
     }
 

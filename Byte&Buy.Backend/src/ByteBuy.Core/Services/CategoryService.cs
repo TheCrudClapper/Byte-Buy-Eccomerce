@@ -50,7 +50,7 @@ public class CategoryService : ICategoryService
             return Result.Failure(Error.NotFound);
 
         category.Deactivate();
-        await _categoryRepository.SoftDeleteAsync(category);
+        await _categoryRepository.UpdateAsync(category);
 
         return Result.Success();
     }

@@ -7,7 +7,6 @@ public interface IDeliveryRepository
 {
     Task AddAsync(Delivery delivery);
     Task UpdateAsync(Delivery delivery);
-    Task SoftDeleteAsync(Delivery delivery);
     Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct = default);
     /// <summary>
