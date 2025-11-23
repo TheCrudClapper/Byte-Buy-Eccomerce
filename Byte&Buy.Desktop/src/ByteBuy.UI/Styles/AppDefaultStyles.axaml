@@ -53,6 +53,13 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
     </Style>
 
+    <!-- Text Box Label -->
+    <Style Selector="Label.textBoxLabel">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="600"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+    </Style>
+    
     <!-- ComboBox Styles -->
     <Style Selector="ComboBox">
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
@@ -70,6 +77,12 @@
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
     </Style>
     
+    <Style Selector="Label.sectionLabel">
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="700"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+    </Style>
     <!-- Default error styles used from documentation -->
     <!-- Source:  https://docs.avaloniaui.net/docs/guides/development-guides/data-validation -->
     <Style Selector="DataValidationErrors">

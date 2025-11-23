@@ -13,7 +13,6 @@
         <FluentTheme />
         <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
         <StyleInclude Source="Styles/MainWindowStyles.axaml"/>
-        <StyleInclude Source="Styles/EmployeeStyles.axaml"/>
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
     </Application.Styles>
 
@@ -21,7 +20,8 @@
         <!-- Colors -->
         <Color x:Key="BackgroundLight">#FFFFFF</Color>
         <Color x:Key="BackgroundDark">#121212</Color>
-
+        <Color x:Key="BackgroundLightDarker">#fcfafb</Color>
+        
         <Color x:Key="Primary">#60118C</Color>
 
         <Color x:Key="SecondaryLight">#8B5CF6</Color>
@@ -47,6 +47,7 @@
 
         <!-- Brushes -->
         <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
+        <SolidColorBrush x:Key="BackgroundLightDarkerBrush" Color="{StaticResource BackgroundLightDarker}" />
         <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
         <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
         <SolidColorBrush x:Key="SecondaryLightBrush" Color="{StaticResource SecondaryLight}" />

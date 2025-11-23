@@ -1,0 +1,192 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
+             x:Class="ByteBuy.UI.Views.ProfilePageView"
+             Background="{DynamicResource BackgroundLightDarkerBrush}"
+             x:DataType="vm:ProfilePageViewModel">
+
+    <Grid RowDefinitions="50,*"
+          ColumnDefinitions="25*, 5*, 70*">
+        <Label Grid.Row="0" Grid.Column="0" Classes="pageTitle" Content="Profile" />
+        <Border Grid.Row="1"
+                Height="250"
+                VerticalAlignment="Top"
+                Padding="20"
+                Grid.Column="0"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                CornerRadius="10">
+            <StackPanel>
+                <Border Background="{DynamicResource ButtonGradient}"
+                        CornerRadius="10"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+                    <Image Source="{SvgImage /Assets/Images/regular/user-regular-full.svg}"
+                           Height="150"
+                           Width="150" />
+                </Border>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
+                    <Label Foreground="{DynamicResource TextLightBrush}"
+                           FontSize="20"
+                           FontWeight="700"
+                           Content="Jan" />
+                    <Label Foreground="{DynamicResource TextLightBrush}"
+                           FontSize="20"
+                           FontWeight="700"
+                           Content="Kowalski" />
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1"
+                Padding="20"
+                Grid.Column="2"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                CornerRadius="10">
+            <ScrollViewer Padding="0,0,20,0">
+            <StackPanel>
+                    <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <Image VerticalAlignment="Center"
+                           Margin="0,0,0,5"
+                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                           Height="10"
+                           Width="10" />
+                    <Label Content="Personal Info"
+                           Classes="sectionLabel" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Label Content="First Name" Classes="textBoxLabel"/>
+                    <TextBox Text="Jan"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="2">
+                    <Label Content="Last Name" Classes="textBoxLabel"/>
+                    <TextBox Text="Jan" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="0">
+                    <Label Content="Email" Classes="textBoxLabel"/>
+                    <TextBox Text="jankowalski12@gmail.com" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="2">
+                    <Label Content="Role" Classes="textBoxLabel"/>
+                    <TextBox Text="Storage Worker" />
+                </StackPanel>
+            </Grid>
+            
+            <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <Image VerticalAlignment="Center"
+                           Margin="0,0,0,5"
+                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                           Height="10"
+                           Width="10" />
+                    <Label Content="Address Info"
+                           Classes="sectionLabel" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Label Content="City" Classes="textBoxLabel"/>
+                    <TextBox Text="Nowy Sącz"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="2">
+                    <Label Content="Street" Classes="textBoxLabel"/>
+                    <TextBox Text="Kilińskiego" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="0">
+                    <Label Content="House Number" Classes="textBoxLabel"/>
+                    <TextBox Text="24" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="2">
+                    <Label Content="Flat Number" Classes="textBoxLabel"/>
+                    <TextBox Text="" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Grid.Column="0">
+                    <Label Content="Postal Code" Classes="textBoxLabel"/>
+                    <TextBox Text="" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="3" Grid.Column="2">
+                    <Label Content="Country" Classes="textBoxLabel"/>
+                    <TextBox Text="" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="4" Grid.Column="0">
+                    <Label Content="Phone Number" Classes="textBoxLabel"/>
+                    <TextBox Text="" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="4"
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+                    <Button 
+                        VerticalAlignment="Bottom"
+                        Margin="5,0"
+                        Content="Clear"/>
+                    <Button 
+                        VerticalAlignment="Bottom"
+                        Content="Save Changes"/>
+                </StackPanel>
+            
+            </Grid>
+                 <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <Image VerticalAlignment="Center"
+                           Margin="0,0,0,5"
+                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                           Height="10"
+                           Width="10" />
+                    <Label Content="Password"
+                           Classes="sectionLabel" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Label Content="Current Password" Classes="textBoxLabel"/>
+                    <TextBox Text="Nowy Sącz" PasswordChar="*"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Row="1" Grid.Column="2">
+                    <Label Content="New Password" Classes="textBoxLabel"/>
+                    <TextBox Text="Kilińskiego" PasswordChar="*" />
+                </StackPanel>
+                
+                <StackPanel Grid.Row="2" Grid.Column="0">
+                    <Label Content="Confirm Password" Classes="textBoxLabel"/>
+                    <TextBox Text="24" PasswordChar="*" />
+                </StackPanel>
+                     
+                <StackPanel Grid.Row="2"
+                            Grid.Column="2"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+                    <Button 
+                        VerticalAlignment="Bottom"
+                        Margin="5,0"
+                        Content="Clear"/>
+                    <Button 
+                        VerticalAlignment="Bottom"
+                        Content="Change Password"/>
+                </StackPanel>
+            </Grid>
+            </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+    </Grid>
+</UserControl>

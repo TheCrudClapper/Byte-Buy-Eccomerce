@@ -1,8 +1,11 @@
 ﻿using ByteBuy.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using DashboardPageViewModel = ByteBuy.UI.ViewModels.DashboardPageViewModel;
+using EmployeePageViewModel = ByteBuy.UI.ViewModels.EmployeePageViewModel;
 using LoginWindow = ByteBuy.UI.Views.LoginWindow;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 using MainWindow = ByteBuy.UI.Views.MainWindow;
+using ProfilePageViewModel = ByteBuy.UI.ViewModels.ProfilePageViewModel;
 
 namespace ByteBuy.UI.Extensions;
 
@@ -25,7 +28,8 @@ public static class DependencyInjection
         services.AddTransient<DashboardPageViewModel>();
         services.AddTransient<EmployeesPageViewModel>();
         services.AddTransient<SettingsPageViewModel>();
-        services.AddTransient<AccountPageViewModel>();
+        services.AddTransient<EmployeePageViewModel>();
+        services.AddTransient<ProfilePageViewModel>();
         
         return services;
     }

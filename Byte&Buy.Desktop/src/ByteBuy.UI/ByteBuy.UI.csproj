@@ -16,8 +16,6 @@
     <AvaloniaResource Include="Styles\Colors.axaml" />
     <AvaloniaXaml Remove="App.axaml" />
     <AvaloniaResource Include="App.axaml" />
-    <Folder Include="ViewModels\Many\" />
-    <Folder Include="ViewModels\Single\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,5 +38,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ByteBuy.Services\ByteBuy.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\EmployeePageView.axaml.cs">
+      <DependentUpon>EmployeePageView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

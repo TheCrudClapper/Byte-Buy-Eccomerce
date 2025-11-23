@@ -39,7 +39,7 @@
             <StackPanel
                 Margin="0,0,5,0"
                 Orientation="Horizontal"
-                Grid.Column="2"
+                Grid.Column="1"
                 HorizontalAlignment="Right">
                 <Button
                     Classes="menuButton"
@@ -49,11 +49,12 @@
                 </Button>
                 <Button
                     Classes="menuButton"
-                    Command="{Binding GoToAccountCommand}">
+                    Command="{Binding GoToProfileCommand}">
                     <Image Source="{SvgImage /Assets/Images/regular/user-solid-full-white.svg}"
                            Width="20" Height="20" />
                 </Button>
             </StackPanel>
+            
         </Grid>
         <Grid ColumnDefinitions="220, *" Grid.Row="1">
             <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SecondaryLight}">
@@ -101,11 +102,12 @@
                     </Button>
 
                     <Button
+                        Command="{Binding GoToEmployeeCommand}"
                         Classes="sidebarMenuButton">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
                                    Width="20" Height="20" />
-                            <Label Content="Employees" />
+                            <Label Content="Employee" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -133,8 +135,9 @@
                     </Grid>
                 </Grid>
             </Grid>
+            
             <!-- Area for pages -->
-            <ContentControl Grid.Column="1" Padding="30" Background="{DynamicResource BackgroundLightBrush}"
+            <ContentControl Grid.Column="1" Padding="30" Background="{DynamicResource BackgroundLightDarkerBrush}"
                             Content="{Binding CurrentPage}" />
         </Grid>
     </Grid>

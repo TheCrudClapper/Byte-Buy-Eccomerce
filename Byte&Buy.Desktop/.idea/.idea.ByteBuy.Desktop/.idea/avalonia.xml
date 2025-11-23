@@ -11,9 +11,13 @@
         <entry key="src/ByteBuy.UI/Styles/MainWindowStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/AccountPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/DashboardPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/EmployeesPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/LoginWindow.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/MainWindow.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/ProfilePageViewModel.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/SettingsPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/Single/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
       </map>
     </option>
   </component>

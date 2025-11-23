@@ -7,6 +7,10 @@
              x:DataType="vm:EmployeesPageViewModel"
              x:Class="ByteBuy.UI.Views.EmployeesPageView">
 
+    <UserControl.Styles>
+        <StyleInclude Source="../Styles/EmployeeStyles.axaml"/>
+    </UserControl.Styles>
+    
     <Grid RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightBrush}">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
             <Label Grid.Column="0" Classes="pageTitle" Content="Employees" />

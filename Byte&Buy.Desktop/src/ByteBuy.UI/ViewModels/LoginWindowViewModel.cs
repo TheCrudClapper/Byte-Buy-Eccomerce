@@ -1,13 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
+
 
 public partial class LoginWindowViewModel(IAuthService authService) : ViewModelBase
 {
