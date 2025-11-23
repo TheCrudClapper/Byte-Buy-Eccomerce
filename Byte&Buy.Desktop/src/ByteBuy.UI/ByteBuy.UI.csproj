@@ -9,14 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Controls\" />
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaXaml Remove="Styles\Colors.axaml" />
     <AvaloniaResource Include="Styles\Colors.axaml" />
+    <AvaloniaXaml Remove="App.axaml" />
+    <AvaloniaResource Include="App.axaml" />
+    <Folder Include="ViewModels\Many\" />
+    <Folder Include="ViewModels\Single\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />

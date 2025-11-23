@@ -4,12 +4,15 @@
     <option name="projectPerEditor">
       <map>
         <entry key="src/ByteBuy.UI/App.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Controls/CheckBox.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Styles/AppDefaultStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Styles/Colors.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Styles/EmployeeStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Styles/MainWindowStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/AccountPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/DashboardPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/EmployeesPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/LoginWindow.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/MainWindow.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
       </map>
     </option>

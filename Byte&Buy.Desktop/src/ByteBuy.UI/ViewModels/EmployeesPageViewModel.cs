@@ -1,6 +1,28 @@
-﻿namespace ByteBuy.UI.ViewModels;
+﻿using System;
+using System.Collections.ObjectModel;
+using ByteBuy.Services.DTO.Employee;
+
+namespace ByteBuy.UI.ViewModels;
 
 public partial class EmployeesPageViewModel : ViewModelBase
 {
-    public string Test { get; set; } = "test";
+    public ObservableCollection<EmployeeResponse> Employees { get; set; } = new();
+
+    public EmployeesPageViewModel()
+    {
+        Employees.Add(
+            new EmployeeResponse(
+                new Guid(),
+                "Test",
+                "Test",
+                "Test",
+                "Test",
+                "Test",
+                "Test",
+                "Test",
+                "Test",
+                "Test"
+                )
+            );
+    }
 }

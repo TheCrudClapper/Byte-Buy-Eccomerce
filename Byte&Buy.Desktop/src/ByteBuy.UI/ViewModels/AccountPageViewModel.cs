@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using ByteBuy.Services.ServiceContracts;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -38,6 +39,9 @@ public partial class AccountPageViewModel : ViewModelBase
     
     [ObservableProperty]
     private string _error = null!;
+    
+    [ObservableProperty]
+    private Guid selectedRoleId = Guid.Empty;
     
     #endregion
     private readonly IEmployeeService _employeeService;

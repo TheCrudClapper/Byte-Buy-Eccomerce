@@ -56,7 +56,7 @@
             </StackPanel>
         </Grid>
         <Grid ColumnDefinitions="220, *" Grid.Row="1">
-            <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SecondaryLightBrush}">
+            <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SecondaryLight}">
 
                 <!-- Stack Panel With Menu Buttons -->
                 <StackPanel Margin="5,0" Grid.Row="0">

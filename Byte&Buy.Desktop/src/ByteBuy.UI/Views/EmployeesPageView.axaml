@@ -6,6 +6,65 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:EmployeesPageViewModel"
              x:Class="ByteBuy.UI.Views.EmployeesPageView">
-    <Label Content="{Binding Test}"></Label>
-    
+
+    <Grid RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightBrush}">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+            <Label Grid.Column="0" Classes="pageTitle" Content="Employees" />
+            <Button
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Grid.Column="2"
+                Content="Add Employee" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Label Content="Filters" />
+        </Grid>
+        <StackPanel Grid.Row="2">
+            <Label Content="Records fetched: 999" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Right"/>
+            <DataGrid
+                ItemsSource="{Binding Employees}"
+                AutoGenerateColumns="False"
+                GridLinesVisibility="All"
+                HeadersVisibility="All"
+                CanUserSortColumns="True"
+                CanUserResizeColumns="True"
+                CanUserReorderColumns="True"
+                RowHeight="36">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
+                    <DataGridTextColumn Header="Street" Binding="{Binding Street}" Width="*" />
+                    <DataGridTextColumn Header="Postal Code" Binding="{Binding PostalCode}" Width="*" />
+                    <DataGridTextColumn Header="House Number" Binding="{Binding HouseNumber}" Width="*" />
+                    <DataGridTextColumn Header="Flat Number" Binding="{Binding FlatNumber}" Width="*" />
+                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" />
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button>
+                <Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+                       Height="15"
+                       Width="15" />
+            </Button>
+            <Label Content="1 of 32"
+                   FontSize="15"
+                   Foreground="{DynamicResource TextLightBrush}"
+                   FontWeight="600"
+                   VerticalAlignment="Center" />
+            <Button>
+                <Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+                       Height="15"
+                       Width="15" />
+            </Button>
+        </StackPanel>
+
+    </Grid>
+
 </UserControl>

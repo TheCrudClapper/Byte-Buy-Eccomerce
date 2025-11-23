@@ -10,20 +10,20 @@
 
     <!-- Button Styles -->
     <Style Selector="Button">
-        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"></Setter>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
         <Setter Property="CornerRadius" Value="8" />
-        <Setter Property="FontWeight" Value="600"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderBrush" Value="Black"></Setter>
-        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
-        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="FontWeight" Value="600"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
 
     <Style Selector="Button:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
     </Style>
 
     <Style Selector="Button.menu">
@@ -38,20 +38,40 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
-        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource TextLightBrush}" />
     </Style>
 
-    <Style Selector="TextBox:pointerover /template/ ContentPresenter">
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+    <Style Selector="TextBox:pointerover, TextBox:focus">
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
     </Style>
 
-    <Style Selector="TextBox:focus /template/ ContentPresenter">
+    <Style
+        Selector="TextBox:pointerover /template/ Border#PART_BorderElement,
+     TextBox:focus /template/ Border#PART_BorderElement">
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
     </Style>
 
+    <!-- ComboBox Styles -->
+    <Style Selector="ComboBox">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
+    </Style>
 
+    <Style Selector="ComboBox:pointerover, ComboBox:focus">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+    </Style>
+
+    <Style Selector="Label.pageTitle">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="700"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+    </Style>
+    
+    <!-- Default error styles used from documentation -->
+    <!-- Source:  https://docs.avaloniaui.net/docs/guides/development-guides/data-validation -->
     <Style Selector="DataValidationErrors">
         <Setter Property="Template">
             <ControlTemplate>
@@ -91,5 +111,9 @@
                 </Canvas>
             </DataTemplate>
         </Setter>
+    </Style>
+    
+    <Style Selector="TextBox:has-errors /template/ Border#PART_BorderElement">
+        <Setter Property="BorderThickness" Value="2" />
     </Style>
 </Styles>
