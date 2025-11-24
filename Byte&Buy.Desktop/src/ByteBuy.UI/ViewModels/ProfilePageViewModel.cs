@@ -1,11 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Auth;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MsBox.Avalonia;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -22,55 +20,67 @@ public partial class ProfilePageViewModel : ViewModelBase
     [ObservableProperty]
     private string _email = string.Empty;
 
-    [Required]
     [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _street = string.Empty;
 
-    [ObservableProperty] private string _houseNumber = string.Empty;
-
-    [ObservableProperty] private string _postalCode = string.Empty;
-
-    [ObservableProperty] private string _city = string.Empty;
-
-    [ObservableProperty] private string _country = string.Empty;
-
-    [ObservableProperty] private string? _flatNumber = string.Empty;
-
-    [ObservableProperty] private string? _phoneNumber = string.Empty;
+    [ObservableProperty]
+    [Required]
+    [MaxLength(10)]
+    private string _houseNumber = string.Empty;
 
     [ObservableProperty]
-    [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-    private string? _currentPassword = string.Empty;
+    [Required]
+    [MaxLength(20)]
+    private string _postalCode = string.Empty;
 
     [ObservableProperty]
-    [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-    private string? _confirmPassword = string.Empty;
+    [Required]
+    [MaxLength(50)]
+    private string _city = string.Empty;
 
     [ObservableProperty]
-    [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-    private string? _newPassword = string.Empty;
+    [Required]
+    [MaxLength(50)]
+    private string _country = string.Empty;
 
-    [ObservableProperty] private string _error = string.Empty;
+    [ObservableProperty] 
+    [MaxLength(10)]
+    private string? _flatNumber = string.Empty;
+    
+    [ObservableProperty]
+    [DataType(DataType.PhoneNumber)]
+    [MaxLength(15)]
+    private string? _phoneNumber = string.Empty;
 
-    [ObservableProperty] private Guid _selectedRoleId = Guid.Empty;
+    [ObservableProperty]
+    private string _error = string.Empty;
     #endregion
 
     private readonly IEmployeeService _employeeService;
-
-    public ProfilePageViewModel(IEmployeeService employeeService)
+    
+    public PasswordChangeViewModel PasswordComponent { get; }
+    public ProfilePageViewModel(IEmployeeService employeeService, PasswordChangeViewModel passwordComponent)
     {
         _employeeService = employeeService;
+        PasswordComponent  = passwordComponent;
         _ = LoadData();
     }
 
     [RelayCommand]
-    private async Task ChangePassword()
+    private void ClearFields()
     {
-        throw new NotImplementedException();
-        // var request = new PasswordChangeRequest(NewPassword, CurrentPassword, ConfirmPassword);
+        Street = string.Empty;
+        HouseNumber = string.Empty;
+        FlatNumber = string.Empty;
+        City = string.Empty;
+        PhoneNumber = string.Empty;
+        Country = string.Empty;
+        PostalCode = string.Empty;
     }
-
-
+    
+    
     [RelayCommand]
     private async Task LoadData()
     {
@@ -86,7 +96,9 @@ public partial class ProfilePageViewModel : ViewModelBase
         HouseNumber = employeeResponse.HouseNumber;
         PostalCode = employeeResponse.PostalCode;
         FlatNumber = employeeResponse.FlatNumber;
+        Country = employeeResponse.Country;
         Email = employeeResponse.Email;
         Street = employeeResponse.Street;
+        PhoneNumber = employeeResponse.PhoneNumber;
     }
 }

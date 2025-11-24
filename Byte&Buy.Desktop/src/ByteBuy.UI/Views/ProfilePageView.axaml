@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
+             xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
              x:Class="ByteBuy.UI.Views.ProfilePageView"
              Background="{DynamicResource BackgroundLightDarkerBrush}"
              x:DataType="vm:ProfilePageViewModel">
@@ -76,12 +77,12 @@
 
                         <StackPanel Grid.Row="2" Grid.Column="0">
                             <Label Content="Email" Classes="textBoxLabel" />
-                            <TextBox IsEnabled="False"  Text="{Binding Email}" />
+                            <TextBox IsEnabled="False" Text="{Binding Email}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="2">
                             <Label Content="Role" Classes="textBoxLabel" />
-                            <TextBox IsEnabled="False"  Text="Storage Worker" />
+                            <TextBox IsEnabled="False" Text="Storage Worker" />
                         </StackPanel>
                     </Grid>
 
@@ -138,6 +139,7 @@
                                     Margin="0,0,0,10">
                             <Button
                                 VerticalAlignment="Bottom"
+                                Command="{Binding ClearFieldsCommand}"
                                 Margin="5,0"
                                 Content="Clear" />
                             <Button
@@ -146,47 +148,8 @@
                         </StackPanel>
 
                     </Grid>
-                    <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
-                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                            <Image VerticalAlignment="Center"
-                                   Margin="0,0,0,5"
-                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                                   Height="10"
-                                   Width="10" />
-                            <Label Content="Password"
-                                   Classes="sectionLabel" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <Label Content="Current Password" Classes="textBoxLabel" />
-                            <TextBox Text="{Binding CurrentPassword}" PasswordChar="*" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="1" Grid.Column="2">
-                            <Label Content="New Password" Classes="textBoxLabel" />
-                            <TextBox Text="{Binding NewPassword}"
-                                     PasswordChar="*" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="2" Grid.Column="0">
-                            <Label Content="Confirm Password" Classes="textBoxLabel" />
-                            <TextBox Text="{Binding ConfirmPassword}" PasswordChar="*" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="2"
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Right"
-                                    Orientation="Horizontal"
-                                    Margin="0,0,0,10">
-                            <Button
-                                VerticalAlignment="Bottom"
-                                Margin="5,0"
-                                Content="Clear" />
-                            <Button
-                                VerticalAlignment="Bottom"
-                                Content="Change Password" />
-                        </StackPanel>
-                    </Grid>
+                    <!-- Password Change Component -->
+                    <views:PasswordChangeView DataContext="{Binding PasswordComponent}" />
                 </StackPanel>
             </ScrollViewer>
         </Border>

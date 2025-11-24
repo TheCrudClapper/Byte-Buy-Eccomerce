@@ -1,4 +1,5 @@
 ﻿using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using DashboardPageViewModel = ByteBuy.UI.ViewModels.DashboardPageViewModel;
 using EmployeePageViewModel = ByteBuy.UI.ViewModels.EmployeePageViewModel;
@@ -32,6 +33,7 @@ public static class DependencyInjection
         services.AddTransient<ProfilePageViewModel>();
         services.AddTransient<RolesPageViewModel>();
         services.AddTransient<RolePageViewModel>();
+        services.AddTransient<PasswordChangeViewModel>();
         
         return services;
     }

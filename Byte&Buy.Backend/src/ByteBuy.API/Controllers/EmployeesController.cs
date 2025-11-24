@@ -22,6 +22,10 @@ public class EmployeesController : BaseApiController
     public async Task<ActionResult<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployee(employeeId, ct));
 
+    [HttpPut("address")]
+    public async Task<ActionResult<EmployeeAddressResponse>> PutEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+        => HandleResult(await _employeeService.UpdateEmployeeAddress(CurrentUserId, request));
+
     [HttpGet("me")]
     //[HasPermission("employee:read:self")]
     public async Task<ActionResult<EmployeeResponse>> GetEmployee(CancellationToken ct)

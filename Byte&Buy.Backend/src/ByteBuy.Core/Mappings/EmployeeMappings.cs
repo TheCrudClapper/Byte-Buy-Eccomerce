@@ -17,7 +17,21 @@ public static class EmployeeMappings
             employee.HomeAddress.PostalCode,
             employee.HomeAddress.City,
             employee.HomeAddress.Country,
-            employee.HomeAddress.FlatNumber
+            employee.HomeAddress.FlatNumber,
+            employee.PhoneNumber
+            );
+    }
+
+    public static EmployeeAddressResponse ToEmployeAddressResponse(this Employee employee)
+    {
+        return new EmployeeAddressResponse(
+            employee.HomeAddress.Street,
+            employee.HomeAddress.HouseNumber,
+            employee.HomeAddress.PostalCode,
+            employee.HomeAddress.City,
+            employee.HomeAddress.Country,
+            employee.HomeAddress.FlatNumber,
+            employee.PhoneNumber
             );
     }
 }

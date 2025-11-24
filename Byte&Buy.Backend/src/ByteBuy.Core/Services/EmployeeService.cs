@@ -59,7 +59,7 @@ public class EmployeeService : IEmployeeService
             return identityResult.ToResult<EmployeeResponse>();
 
         var roleResult = await _userManager.AddToRoleAsync(employee, applicationRole.Name!);
-        if(!roleResult.Succeeded)
+        if (!roleResult.Succeeded)
             return roleResult.ToResult<EmployeeResponse>();
 
         return employee.ToEmployeeResponse();
@@ -131,6 +131,28 @@ public class EmployeeService : IEmployeeService
         await _employeeRepository.UpdateAsync(employee);
 
         return employee.ToEmployeeResponse();
+    }
+
+    public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+    {
+        var employee = await _employeeRepository.GetByIdAsync(employeeId);
+        if (employee is null)
+            return Result.Failure<EmployeeAddressResponse>(Error.NotFound);
+
+        var updateResult = employee.ChangeAddress(
+                                request.Street,
+                                request.HouseNumber,
+                                request.PostalCode,
+                                request.City,
+                                request.Country,
+                                request.FlatNumber,
+                                request.PhoneNumber);
+
+        if(updateResult.IsFailure)
+            return Result.Failure<EmployeeAddressResponse>(updateResult.Error);
+
+        await _employeeRepository.UpdateAsync(employee);
+        return employee.ToEmployeAddressResponse();
     }
 
     private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)

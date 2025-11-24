@@ -20,6 +20,7 @@
         <entry key="src/ByteBuy.UI/Views/RolePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/RolesPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/SettingsPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/Shared/PasswordChangeView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Single/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
       </map>
     </option>

@@ -14,6 +14,6 @@ namespace ByteBuy.Services.HttpClients.Implementations
         public UserHttpClient(HttpClient httpClient) : base(httpClient){}
 
         public async Task<Result> ChangePassword(PasswordChangeRequest request)
-            => await PostAsync("users/password", request);
+            => await PutAsync("users/password", request);
     }
 }

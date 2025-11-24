@@ -10,5 +10,6 @@ public record EmployeeResponse(
     string PostalCode,
     string City,
     string Country,
-    string? FlatNumber
+    string? FlatNumber,
+    string? PhoneNumber
 );

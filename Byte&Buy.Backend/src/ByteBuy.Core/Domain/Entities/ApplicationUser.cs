@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.DTO.Auth;
+using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics.Eventing.Reader;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -34,5 +36,20 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         UserName = email;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
+    }
+
+    protected Result ChangePhoneNumber(string? phoneNumber)
+    {
+        if (phoneNumber is not null)
+        {
+            if(string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15){
+                return Result.Failure(Error.Validation("Phone number can't be a whitespace and not longer that 15 characters"));
+            }
+            else
+            {
+                PhoneNumber = phoneNumber;
+            }
+        }
+        return Result.Success();
     }
 }

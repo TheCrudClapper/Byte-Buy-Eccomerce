@@ -21,7 +21,8 @@ public partial class EmployeesPageViewModel : ViewModelBase
                 "Test",
                 "Test",
                 "Test",
-                "Test"
+                "Test",
+                "725766544"
                 )
             );
     }

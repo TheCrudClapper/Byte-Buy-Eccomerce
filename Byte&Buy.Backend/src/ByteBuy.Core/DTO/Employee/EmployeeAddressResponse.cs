@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Services.DTO.Employee;
+﻿namespace ByteBuy.Core.DTO.Employee;
 
 public record EmployeeAddressResponse(
     string Street,

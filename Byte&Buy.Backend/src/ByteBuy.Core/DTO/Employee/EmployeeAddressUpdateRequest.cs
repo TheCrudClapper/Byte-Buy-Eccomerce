@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ByteBuy.Services.DTO.Employee;
+namespace ByteBuy.Core.DTO.Employee;
 
 public record EmployeeAddressUpdateRequest(
     [Required, MaxLength(50)] string Street,

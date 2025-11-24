@@ -16,7 +16,6 @@
     <AvaloniaResource Include="Styles\Colors.axaml" />
     <AvaloniaXaml Remove="App.axaml" />
     <AvaloniaResource Include="App.axaml" />
-    <Folder Include="ViewModels\ComponentViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
