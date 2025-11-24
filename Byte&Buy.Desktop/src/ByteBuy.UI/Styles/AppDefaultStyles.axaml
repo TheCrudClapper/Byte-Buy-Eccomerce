@@ -53,6 +53,16 @@
         <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
     </Style>
 
+    <Style Selector="TextBox:disabled">
+        <Setter Property="Background" Value="Gray"/>
+        <Setter Property="Foreground" Value="DarkGray"/>
+    </Style>
+    
+    <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+        <Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    
     <!-- Text Box Label -->
     <Style Selector="Label.textBoxLabel">
         <Setter Property="FontSize" Value="14"/>

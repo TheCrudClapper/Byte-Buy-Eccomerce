@@ -1,4 +1,7 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO;
+using ByteBuy.Core.Mappings;
+using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;
@@ -11,6 +14,13 @@ public class PermissionService : IPermissionService
         _permissionRepository = permissionRepository;
     }
 
+    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default)
+    {
+        var permissions = await _permissionRepository.GetAllAsync(ct);
+        return permissions.Select(p => p.ToSelectListItemResponse())
+            .ToList();
+    }
+
     public async Task<bool> HasPermissionAsync(Guid userId, string permissionName)
     { 
         var permission = await _permissionRepository.GetByNameAsync(permissionName);
@@ -20,4 +30,5 @@ public class PermissionService : IPermissionService
         return await _permissionRepository
             .HasUserOrRolePermissionAsync(userId, permission.Id);
     }
+
 }

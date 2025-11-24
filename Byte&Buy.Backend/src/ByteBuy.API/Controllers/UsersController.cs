@@ -6,10 +6,10 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ApplicationUserController : BaseApiController
+public class UsersController : BaseApiController
 {
     private readonly IApplicationUserService _userService;
-    public ApplicationUserController(IApplicationUserService userService)
+    public UsersController(IApplicationUserService userService)
         => _userService = userService;
 
     [HttpPut("password")]

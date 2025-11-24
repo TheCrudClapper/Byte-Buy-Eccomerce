@@ -15,12 +15,21 @@ public static class DependencyInjection
     {
         //Add Http Clients
         services.AddHttpClient<IAuthHttpClient, AuthHttpClient>();
+
         services.AddHttpClient<IEmployeeHttpClient, EmployeeHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>(); 
+
+        services.AddHttpClient<IPermissionHttpClient, PermissionHttpClient>()
+            .AddHttpMessageHandler<BearerTokenHandler>();
+
+        services.AddHttpClient<IUserHttpClient, UserHttpClient>()
+            .AddHttpMessageHandler<BearerTokenHandler>();
         
         //Add Services
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IEmployeeService, EmployeeService>();
+        services.AddSingleton<IRoleService, RoleService>();
+        services.AddSingleton<IPermissionService, PermissionService>();
         
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();

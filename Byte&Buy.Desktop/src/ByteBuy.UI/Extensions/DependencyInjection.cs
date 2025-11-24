@@ -30,6 +30,8 @@ public static class DependencyInjection
         services.AddTransient<SettingsPageViewModel>();
         services.AddTransient<EmployeePageViewModel>();
         services.AddTransient<ProfilePageViewModel>();
+        services.AddTransient<RolesPageViewModel>();
+        services.AddTransient<RolePageViewModel>();
         
         return services;
     }

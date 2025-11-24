@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Auth;
+using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.HttpClients.Abstractions;
 using ByteBuy.Services.ResultTypes;
 

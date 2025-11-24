@@ -20,7 +20,7 @@
         <!-- Colors -->
         <Color x:Key="BackgroundLight">#FFFFFF</Color>
         <Color x:Key="BackgroundDark">#121212</Color>
-        <Color x:Key="BackgroundLightDarker">#fcfafb</Color>
+        <Color x:Key="BackgroundLightDarker">#ededed</Color>
         
         <Color x:Key="Primary">#60118C</Color>
 
@@ -56,17 +56,29 @@
         <SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
         <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
         <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+        
         <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
             <GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
             <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
         </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="SidebarGradient"
+        <LinearGradientBrush x:Key="TopbarGradient"
                              StartPoint="0%, 0%"
                              EndPoint="100%, 0%">
 
             <GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
             <GradientStop Offset="0.3" Color="{DynamicResource SecondaryLight}" />
+            
+            <GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+
+        </LinearGradientBrush>
+        
+        <LinearGradientBrush x:Key="SidebarGradient"
+                             StartPoint="0%, 0%"
+                             EndPoint="100%, 100%">
+
+            <GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
+            <GradientStop Offset="0.6" Color="{DynamicResource SecondaryLight}" />
             
             <GradientStop Offset="1"   Color="{DynamicResource Primary}" />
 

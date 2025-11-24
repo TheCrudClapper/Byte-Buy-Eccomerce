@@ -6,6 +6,7 @@ public interface IPermissionRepository
 {
     Task<Permission?> GetByIdAsync(Guid permissionId, CancellationToken ct = default);
     Task<Permission?> GetByNameAsync(string name, CancellationToken ct = default);
+    Task<IEnumerable<Permission>> GetAllAsync(CancellationToken ct = default); 
     /// <summary>
     /// Check wheter user has access to permission (user explicit grant/deny or role)
     /// </summary>

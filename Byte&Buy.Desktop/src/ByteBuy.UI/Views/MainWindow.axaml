@@ -14,7 +14,7 @@
 
     <Grid RowDefinitions="50, *">
         <!-- Top Bar -->
-        <Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource SidebarGradient}">
+        <Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource TopbarGradient}">
 
             <!-- Image -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -57,7 +57,7 @@
             
         </Grid>
         <Grid ColumnDefinitions="220, *" Grid.Row="1">
-            <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SecondaryLight}">
+            <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
 
                 <!-- Stack Panel With Menu Buttons -->
                 <StackPanel Margin="5,0" Grid.Row="0">
@@ -77,12 +77,23 @@
                         Classes.active="{Binding IsEmployeesPageActive}"
                         Classes="sidebarMenuButton">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{SvgImage /Assets/Images/regular/address-book-solid-full-white.svg}"
+                            <Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
                                    Width="20" Height="20" />
                             <Label Content="Employees" />
                         </StackPanel>
                     </Button>
 
+                    <Button
+                        Command="{Binding GoToRolesCommand}"
+                        Classes.active="{Binding IsRolesPageActive}"
+                        Classes="sidebarMenuButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"
+                                   Width="20" Height="20" />
+                            <Label Content="Roles" />
+                        </StackPanel>
+                    </Button>
+                    
                     <Button
                         Classes="sidebarMenuButton">
                         <StackPanel Orientation="Horizontal">
@@ -110,6 +121,8 @@
                             <Label Content="Employee" />
                         </StackPanel>
                     </Button>
+                    
+                    
                 </StackPanel>
 
                 <!-- Settings Button -->

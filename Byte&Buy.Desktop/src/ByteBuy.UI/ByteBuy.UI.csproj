@@ -16,6 +16,7 @@
     <AvaloniaResource Include="Styles\Colors.axaml" />
     <AvaloniaXaml Remove="App.axaml" />
     <AvaloniaResource Include="App.axaml" />
+    <Folder Include="ViewModels\ComponentViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />

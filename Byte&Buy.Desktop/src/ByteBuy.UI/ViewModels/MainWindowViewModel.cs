@@ -8,9 +8,9 @@ namespace ByteBuy.UI.ViewModels
     {
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
-        [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
         [NotifyPropertyChangedFor(nameof(IsSettingPageActive))]
         [NotifyPropertyChangedFor(nameof(IsProfilePageActive))]
+        [NotifyPropertyChangedFor(nameof(IsRolesPageActive))]
         private ViewModelBase _currentPage;
 
         public Action? Logout { get; set; }
@@ -20,19 +20,23 @@ namespace ByteBuy.UI.ViewModels
         private readonly SettingsPageViewModel _settingsPage;
         private readonly ProfilePageViewModel _profilePage;
         private readonly EmployeePageViewModel _employeePage;
+        private readonly RolesPageViewModel _rolesPage;
         
         public bool IsProfilePageActive => CurrentPage == _profilePage;
         public bool IsDashboardPageActive => CurrentPage == _dashboardPage;
         public bool IsEmployeesPageActive => CurrentPage == _employeesPage;
         public bool IsSettingPageActive => CurrentPage == _settingsPage;
         public bool IsEmployeePageActive => CurrentPage == _employeePage;
+        public bool IsRolesPageActive => CurrentPage == _employeePage;
+        
         
         public MainWindowViewModel(
             DashboardPageViewModel dashboardPage,
             EmployeesPageViewModel employeesPage,
             SettingsPageViewModel settingsPage,
             ProfilePageViewModel profilePage,
-            EmployeePageViewModel employeePage)
+            EmployeePageViewModel employeePage,
+            RolesPageViewModel rolesPage)
         {
             _settingsPage = settingsPage;
             _dashboardPage = dashboardPage;
@@ -40,6 +44,7 @@ namespace ByteBuy.UI.ViewModels
             _profilePage = profilePage;
             _employeePage = employeePage;
             _currentPage = _dashboardPage;
+            _rolesPage = rolesPage;
         }
 
         [RelayCommand]
@@ -56,6 +61,9 @@ namespace ByteBuy.UI.ViewModels
 
         [RelayCommand]
         private void GoToEmployee() => CurrentPage = _employeePage;
+        
+        [RelayCommand]
+        private void GoToRoles() => CurrentPage = _rolesPage;
         
         [RelayCommand]
         private void LogOut() =>  Logout?.Invoke();

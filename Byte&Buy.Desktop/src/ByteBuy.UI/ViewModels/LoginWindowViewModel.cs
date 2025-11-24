@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -29,23 +30,23 @@ public partial class LoginWindowViewModel(IAuthService authService) : ViewModelB
     [RelayCommand]
     private async Task Login()
     {
-        // ValidateAllProperties();
-        // if (HasErrors)
-        //     return;
-        //
-        // LoginRequest request = new(Email, Password);
-        // var result = await authService.Login(request);
-        //
-        // if (!result.Success)
-        // {
-        //     Error = result.Error!.Description;
-        //     return;
-        // }
-        //
-        // // //Clean fields
-        // Email = string.Empty;
-        // Password = string.Empty;
-        // Error = string.Empty;
+        ValidateAllProperties();
+        if (HasErrors)
+            return;
+
+        LoginRequest request = new(Email, Password);
+        var result = await authService.Login(request);
+
+        if (!result.Success)
+        {
+            Error = result.Error!.Description;
+            return;
+        }
+
+        // //Clean fields
+        Email = string.Empty;
+        Password = string.Empty;
+        Error = string.Empty;
         LoginSucceded?.Invoke();
     }
 }

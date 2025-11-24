@@ -43,4 +43,10 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
         return await _context.Permissions
             .FirstOrDefaultAsync(p => p.Name == name, ct);
     }
+
+    public async Task<IEnumerable<Permission>> GetAllAsync(CancellationToken ct)
+    {
+        return await _context.Permissions
+            .ToListAsync(ct);
+    }
 }

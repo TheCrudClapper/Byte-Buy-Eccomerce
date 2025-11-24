@@ -17,6 +17,7 @@
                 Padding="20"
                 Grid.Column="0"
                 BorderThickness="1"
+                Background="{DynamicResource BackgroundLightBrush}"
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 CornerRadius="10">
             <StackPanel>
@@ -33,11 +34,11 @@
                     <Label Foreground="{DynamicResource TextLightBrush}"
                            FontSize="20"
                            FontWeight="700"
-                           Content="Jan" />
+                           Content="{Binding FirstName}" />
                     <Label Foreground="{DynamicResource TextLightBrush}"
                            FontSize="20"
                            FontWeight="700"
-                           Content="Kowalski" />
+                           Content="{Binding LastName}" />
                 </StackPanel>
 
             </StackPanel>
@@ -45,146 +46,148 @@
 
         <Border Grid.Row="1"
                 Padding="20"
+                Background="{DynamicResource BackgroundLightBrush}"
                 Grid.Column="2"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 CornerRadius="10">
             <ScrollViewer Padding="0,0,20,0">
-            <StackPanel>
+                <StackPanel>
                     <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70">
-                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Image VerticalAlignment="Center"
-                           Margin="0,0,0,5"
-                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                           Height="10"
-                           Width="10" />
-                    <Label Content="Personal Info"
-                           Classes="sectionLabel" />
-                </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Image VerticalAlignment="Center"
+                                   Margin="0,0,0,5"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                                   Height="10"
+                                   Width="10" />
+                            <Label Content="Personal Info"
+                                   Classes="sectionLabel" />
+                        </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="0">
-                    <Label Content="First Name" Classes="textBoxLabel"/>
-                    <TextBox Text="Jan"/>
-                </StackPanel>
-                
-                <StackPanel Grid.Row="1" Grid.Column="2">
-                    <Label Content="Last Name" Classes="textBoxLabel"/>
-                    <TextBox Text="Jan" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="2" Grid.Column="0">
-                    <Label Content="Email" Classes="textBoxLabel"/>
-                    <TextBox Text="jankowalski12@gmail.com" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="2" Grid.Column="2">
-                    <Label Content="Role" Classes="textBoxLabel"/>
-                    <TextBox Text="Storage Worker" />
-                </StackPanel>
-            </Grid>
-            
-            <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
-                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Image VerticalAlignment="Center"
-                           Margin="0,0,0,5"
-                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                           Height="10"
-                           Width="10" />
-                    <Label Content="Address Info"
-                           Classes="sectionLabel" />
-                </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <Label Content="First Name" Classes="textBoxLabel" />
+                            <TextBox IsEnabled="False" Text="{Binding FirstName}" />
+                        </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="0">
-                    <Label Content="City" Classes="textBoxLabel"/>
-                    <TextBox Text="Nowy Sącz"/>
-                </StackPanel>
-                
-                <StackPanel Grid.Row="1" Grid.Column="2">
-                    <Label Content="Street" Classes="textBoxLabel"/>
-                    <TextBox Text="Kilińskiego" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="2" Grid.Column="0">
-                    <Label Content="House Number" Classes="textBoxLabel"/>
-                    <TextBox Text="24" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="2" Grid.Column="2">
-                    <Label Content="Flat Number" Classes="textBoxLabel"/>
-                    <TextBox Text="" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="3" Grid.Column="0">
-                    <Label Content="Postal Code" Classes="textBoxLabel"/>
-                    <TextBox Text="" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="3" Grid.Column="2">
-                    <Label Content="Country" Classes="textBoxLabel"/>
-                    <TextBox Text="" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="4" Grid.Column="0">
-                    <Label Content="Phone Number" Classes="textBoxLabel"/>
-                    <TextBox Text="" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="4"
-                            Grid.Column="2"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal"
-                            Margin="0,0,0,10">
-                    <Button 
-                        VerticalAlignment="Bottom"
-                        Margin="5,0"
-                        Content="Clear"/>
-                    <Button 
-                        VerticalAlignment="Bottom"
-                        Content="Save Changes"/>
-                </StackPanel>
-            
-            </Grid>
-                 <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
-                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Image VerticalAlignment="Center"
-                           Margin="0,0,0,5"
-                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                           Height="10"
-                           Width="10" />
-                    <Label Content="Password"
-                           Classes="sectionLabel" />
-                </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2">
+                            <Label Content="Last Name" Classes="textBoxLabel" />
+                            <TextBox IsEnabled="False" Text="{Binding LastName}" />
+                        </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="0">
-                    <Label Content="Current Password" Classes="textBoxLabel"/>
-                    <TextBox Text="Nowy Sącz" PasswordChar="*"/>
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <Label Content="Email" Classes="textBoxLabel" />
+                            <TextBox IsEnabled="False"  Text="{Binding Email}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="2">
+                            <Label Content="Role" Classes="textBoxLabel" />
+                            <TextBox IsEnabled="False"  Text="Storage Worker" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
+                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Image VerticalAlignment="Center"
+                                   Margin="0,0,0,5"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                                   Height="10"
+                                   Width="10" />
+                            <Label Content="Address Info"
+                                   Classes="sectionLabel" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <Label Content="City" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding City}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2">
+                            <Label Content="Street" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding Street}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <Label Content="House Number" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding HouseNumber}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="2">
+                            <Label Content="Flat Number" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding FlatNumber}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="0">
+                            <Label Content="Postal Code" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding PostalCode}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="2">
+                            <Label Content="Country" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding Country}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0">
+                            <Label Content="Phone Number" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding PhoneNumber}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,10">
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Margin="5,0"
+                                Content="Clear" />
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Content="Save Changes" />
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
+                        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Image VerticalAlignment="Center"
+                                   Margin="0,0,0,5"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                                   Height="10"
+                                   Width="10" />
+                            <Label Content="Password"
+                                   Classes="sectionLabel" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <Label Content="Current Password" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding CurrentPassword}" PasswordChar="*" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2">
+                            <Label Content="New Password" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding NewPassword}"
+                                     PasswordChar="*" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <Label Content="Confirm Password" Classes="textBoxLabel" />
+                            <TextBox Text="{Binding ConfirmPassword}" PasswordChar="*" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Margin="0,0,0,10">
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Margin="5,0"
+                                Content="Clear" />
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Content="Change Password" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-                
-                <StackPanel Grid.Row="1" Grid.Column="2">
-                    <Label Content="New Password" Classes="textBoxLabel"/>
-                    <TextBox Text="Kilińskiego" PasswordChar="*" />
-                </StackPanel>
-                
-                <StackPanel Grid.Row="2" Grid.Column="0">
-                    <Label Content="Confirm Password" Classes="textBoxLabel"/>
-                    <TextBox Text="24" PasswordChar="*" />
-                </StackPanel>
-                     
-                <StackPanel Grid.Row="2"
-                            Grid.Column="2"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal"
-                            Margin="0,0,0,10">
-                    <Button 
-                        VerticalAlignment="Bottom"
-                        Margin="5,0"
-                        Content="Clear"/>
-                    <Button 
-                        VerticalAlignment="Bottom"
-                        Content="Change Password"/>
-                </StackPanel>
-            </Grid>
-            </StackPanel>
             </ScrollViewer>
         </Border>
 

@@ -4,21 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:EmployeesPageViewModel"
-             x:Class="ByteBuy.UI.Views.EmployeesPageView">
-
-    <UserControl.Styles>
-        <StyleInclude Source="../Styles/EmployeeStyles.axaml"/>
-    </UserControl.Styles>
+             x:Class="ByteBuy.UI.Views.RolesPageView"
+             x:DataType="vm:RolesPageViewModel">
     
     <Grid RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
-            <Label Grid.Column="0" Classes="pageTitle" Content="Employees" />
+            <Label Grid.Column="0" Classes="pageTitle" Content="Roles" />
             <Button
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
                 Grid.Column="2"
-                Content="Add Employee" />
+                Content="Add Role" />
         </Grid>
         <Grid Grid.Row="1">
             <Label Content="Filters" />
@@ -26,7 +22,6 @@
         <StackPanel Grid.Row="2">
             <Label Content="Records fetched: 999" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Right"/>
             <DataGrid
-                ItemsSource="{Binding Employees}"
                 AutoGenerateColumns="False"
                 GridLinesVisibility="All"
                 HeadersVisibility="All"
@@ -36,16 +31,16 @@
                 RowHeight="36">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                    <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
-                    <DataGridTextColumn Header="Street" Binding="{Binding Street}" Width="*" />
-                    <DataGridTextColumn Header="Postal Code" Binding="{Binding PostalCode}" Width="*" />
-                    <DataGridTextColumn Header="House Number" Binding="{Binding HouseNumber}" Width="*" />
-                    <DataGridTextColumn Header="Flat Number" Binding="{Binding FlatNumber}" Width="*" />
-                    <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" />
+                    <!-- <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" /> -->
+                    <!-- <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Street" Binding="{Binding Street}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Postal Code" Binding="{Binding PostalCode}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="House Number" Binding="{Binding HouseNumber}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Flat Number" Binding="{Binding FlatNumber}" Width="*" /> -->
+                    <!-- <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" /> -->
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -70,5 +65,4 @@
         </StackPanel>
 
     </Grid>
-
 </UserControl>

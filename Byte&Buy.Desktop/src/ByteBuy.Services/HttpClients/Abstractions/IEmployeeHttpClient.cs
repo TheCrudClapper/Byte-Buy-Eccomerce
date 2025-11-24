@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Auth;
+using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.HttpClients.Abstractions;
@@ -6,4 +7,5 @@ namespace ByteBuy.Services.HttpClients.Abstractions;
 public interface IEmployeeHttpClient
 {
     Task<Result<EmployeeResponse>> GetSelfAsync();
+   
 }
