@@ -1,9 +1,11 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using System.ComponentModel;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using ByteBuy.Services.DTO.Employee;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -59,12 +61,15 @@ public partial class ProfilePageViewModel : ViewModelBase
     #endregion
 
     private readonly IEmployeeService _employeeService;
-    
+    public AlertViewModel Alert { get; }
     public PasswordChangeViewModel PasswordComponent { get; }
-    public ProfilePageViewModel(IEmployeeService employeeService, PasswordChangeViewModel passwordComponent)
+    public ProfilePageViewModel(IEmployeeService employeeService,
+        PasswordChangeViewModel passwordComponent,
+        AlertViewModel alert)
     {
         _employeeService = employeeService;
         PasswordComponent  = passwordComponent;
+        Alert = alert;
         _ = LoadData();
     }
 
@@ -79,7 +84,31 @@ public partial class ProfilePageViewModel : ViewModelBase
         Country = string.Empty;
         PostalCode = string.Empty;
     }
-    
+
+    [RelayCommand]
+    private async Task UpdateAddress()
+    {
+        ValidateAllProperties();
+        if(HasErrors)
+            return; 
+        
+        var request = new EmployeeAddressUpdateRequest(
+            Street, HouseNumber, PostalCode, City, Country, FlatNumber, PhoneNumber
+        );
+        
+        var result = await _employeeService.UpdateEmployeeAddress(request);
+
+        if (!result.Success)
+        {
+            Error = result.Error!.Description;
+            await Alert.Show(AlertType.Error, Error);
+        }
+        else
+        {
+            await Alert.Show(AlertType.Success, "Address Updated Successfully");
+        }
+            
+    }
     
     [RelayCommand]
     private async Task LoadData()

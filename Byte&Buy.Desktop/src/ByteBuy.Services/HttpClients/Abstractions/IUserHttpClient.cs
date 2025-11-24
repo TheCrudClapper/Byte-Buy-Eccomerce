@@ -5,5 +5,5 @@ namespace ByteBuy.Services.HttpClients.Abstractions;
 
 public interface IUserHttpClient
 {
-    Task<Result> ChangePassword(PasswordChangeRequest request);
+    Task<Result> ChangePasswordAsync(PasswordChangeRequest request);
 }

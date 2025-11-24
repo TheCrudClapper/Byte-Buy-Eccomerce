@@ -34,7 +34,7 @@ public static class DependencyInjection
         services.AddTransient<RolesPageViewModel>();
         services.AddTransient<RolePageViewModel>();
         services.AddTransient<PasswordChangeViewModel>();
-        
+        services.AddTransient<AlertViewModel>();
         return services;
     }
 }

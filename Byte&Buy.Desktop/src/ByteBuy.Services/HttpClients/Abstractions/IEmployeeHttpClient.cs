@@ -7,5 +7,6 @@ namespace ByteBuy.Services.HttpClients.Abstractions;
 public interface IEmployeeHttpClient
 {
     Task<Result<EmployeeResponse>> GetSelfAsync();
+    Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
    
 }

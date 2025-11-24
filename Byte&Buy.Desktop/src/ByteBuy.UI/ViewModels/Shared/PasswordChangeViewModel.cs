@@ -5,11 +5,13 @@ using CommunityToolkit.Mvvm.Input;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Threading.Tasks;
+using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class PasswordChangeViewModel(IUserHttpClient userHttpClient)
+public partial class PasswordChangeViewModel(IEmployeeService employeeService)
     : ViewModelBase
 {
     [ObservableProperty]
@@ -26,6 +28,9 @@ public partial class PasswordChangeViewModel(IUserHttpClient userHttpClient)
     [Required(ErrorMessage = "New Password is required")]
     [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
     private string _newPassword = string.Empty;
+    
+    [ObservableProperty]
+    private string _error = string.Empty;
 
     partial void OnNewPasswordChanged(string value)
         => ValidateProperty(ConfirmPassword, nameof(ConfirmPassword));
@@ -41,11 +46,9 @@ public partial class PasswordChangeViewModel(IUserHttpClient userHttpClient)
             return;
 
         var request = new PasswordChangeRequest(NewPassword!, CurrentPassword!, ConfirmPassword!);
-        var response = await userHttpClient.ChangePassword(request);
+        var response = await employeeService.ChangePassword(request);
         if (!response.Success)
-            await MessageBoxManager.GetMessageBoxStandard("Error", $"{response.Error!.Description}", ButtonEnum.OkCancel)
-                .ShowAsync();
-        
+           Error =  response.Error!.Description;
     }
 
     [RelayCommand]

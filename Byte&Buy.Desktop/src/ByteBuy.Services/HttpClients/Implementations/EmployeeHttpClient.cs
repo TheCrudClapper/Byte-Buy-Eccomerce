@@ -9,4 +9,7 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
 {
     public async Task<Result<EmployeeResponse>> GetSelfAsync()
         => await GetAsync<EmployeeResponse>("employees/me");
+
+    public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
+        => await PutAsync<EmployeeAddressResponse>("employees/address", request);
 }

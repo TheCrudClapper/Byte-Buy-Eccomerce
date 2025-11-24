@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ByteBuy.Services.ServiceContracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.Services.ResultTypes;
 
@@ -33,4 +34,13 @@ public class Result<T>
 
     public static Result<T> Ok(T value) => new(value);
     public static Result<T> Fail(Error error) => new(error);
+}
+
+public static class ResultExtensions
+{
+    public static Result<T> Map<T>(this Result<T> result)
+        => result.Success ? Result<T>.Ok(result.Value!) : Result<T>.Fail(result.Error!);
+    
+    public static Result Map(this Result result)
+        => result.Success ? Result.Ok() : Result.Fail(result.Error!);
 }

@@ -19,7 +19,7 @@ public class ApplicationUserService : IApplicationUserService
         if (user == null)
             return Result.Failure(Error.NotFound);
 
-        if (string.Equals(request.ConfirmPassword, request.NewPassword, StringComparison.Ordinal))
+        if (!string.Equals(request.ConfirmPassword, request.NewPassword, StringComparison.Ordinal))
             return Result.Failure(ApplicationUserErrors.PasswordsDontMatch);
 
         var identityResult = await _userManager

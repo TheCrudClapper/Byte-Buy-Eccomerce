@@ -1,26 +1,30 @@
-﻿using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Auth;
+using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.HttpClients.Abstractions;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class EmployeeService : IEmployeeService
+public class EmployeeService(IEmployeeHttpClient employeeHttpClient,
+    IUserHttpClient userHttpClient) : IEmployeeService
 {
-    private readonly IEmployeeHttpClient _employeeHttpClient;
-
-    public EmployeeService(IEmployeeHttpClient employeeHttpClient)
-    {
-        _employeeHttpClient = employeeHttpClient;
-    }
-    
     public async Task<Result<EmployeeResponse>> GetSelf()
     {
-        var result = await _employeeHttpClient.GetSelfAsync();
+        var result = await employeeHttpClient.GetSelfAsync();
+        return result.Map();
+    }
 
-        if (!result.Success)
-            return Result<EmployeeResponse>.Fail(result.Error!);
+    public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)
+    {
+        var result = await employeeHttpClient.UpdateEmployeeAddressAsync(request);
+        return result.Map();
+    }
 
-        return Result<EmployeeResponse>.Ok(result.Value!);
+    public async Task<Result> ChangePassword(PasswordChangeRequest request)
+    {
+        var result = await userHttpClient.ChangePasswordAsync(request);
+        return result.Map();
+    
     }
 }
