@@ -9,4 +9,5 @@ public interface IEmployeeService
     Task<Result<EmployeeResponse>> GetSelf();
     Task<Result> ChangePassword(PasswordChangeRequest request);
     Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request);
+    Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request);
 }

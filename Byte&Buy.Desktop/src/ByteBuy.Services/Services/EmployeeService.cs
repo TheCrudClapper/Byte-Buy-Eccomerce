@@ -9,6 +9,12 @@ namespace ByteBuy.Services.Services;
 public class EmployeeService(IEmployeeHttpClient employeeHttpClient,
     IUserHttpClient userHttpClient) : IEmployeeService
 {
+    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request)
+    {
+        var result = await employeeHttpClient.AddEmployeeAsync(request);
+        return result.Map();
+    }
+    
     public async Task<Result<EmployeeResponse>> GetSelf()
     {
         var result = await employeeHttpClient.GetSelfAsync();

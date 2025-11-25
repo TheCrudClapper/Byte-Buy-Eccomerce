@@ -8,5 +8,5 @@ public interface IEmployeeHttpClient
 {
     Task<Result<EmployeeResponse>> GetSelfAsync();
     Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
-   
+    Task<Result<EmployeeResponse>> AddEmployeeAsync(EmployeeAddRequest request);
 }

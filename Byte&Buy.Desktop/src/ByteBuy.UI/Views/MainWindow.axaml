@@ -111,17 +111,6 @@
                             <Label Content="Documents" />
                         </StackPanel>
                     </Button>
-
-                    <Button
-                        Command="{Binding GoToEmployeeCommand}"
-                        Classes="sidebarMenuButton">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-                                   Width="20" Height="20" />
-                            <Label Content="Employee" />
-                        </StackPanel>
-                    </Button>
-                    
                     
                 </StackPanel>
 

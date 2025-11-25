@@ -45,9 +45,6 @@ namespace ByteBuy.UI.ViewModels
         
         [RelayCommand]
         private void GoToProfile() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Profile);
-
-        [RelayCommand]
-        private void GoToEmployee() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Employee);
         
         [RelayCommand]
         private void GoToRoles() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Roles);

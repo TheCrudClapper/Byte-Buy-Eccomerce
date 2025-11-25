@@ -7,8 +7,8 @@ namespace ByteBuy.Services.Services;
 
 public class PermissionService(IPermissionHttpClient permissionHttpClient) : IPermissionService
 {
-    public Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
     {
-        return permissionHttpClient.GetSelectListAsync();
+        return await permissionHttpClient.GetSelectListAsync();
     }
 }

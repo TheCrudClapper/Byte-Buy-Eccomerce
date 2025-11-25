@@ -25,6 +25,9 @@ public static class DependencyInjection
         services.AddHttpClient<IUserHttpClient, UserHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
         
+        services.AddHttpClient<IRoleHttpClient, RoleHttpClient>()
+            .AddHttpMessageHandler<BearerTokenHandler>();
+        
         //Add Services
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IEmployeeService, EmployeeService>();

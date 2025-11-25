@@ -1,5 +1,4 @@
-﻿using ByteBuy.Services.DTO.Auth;
-using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.HttpClients.Abstractions;
 using ByteBuy.Services.ResultTypes;
 
@@ -12,4 +11,7 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
 
     public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<EmployeeAddressResponse>("employees/address", request);
+
+    public async Task<Result<EmployeeResponse>> AddEmployeeAsync(EmployeeAddRequest request)
+        => await PostAsync<EmployeeResponse>("employees", request);
 }

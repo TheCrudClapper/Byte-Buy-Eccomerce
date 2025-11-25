@@ -39,7 +39,7 @@ namespace ByteBuy.UI
             {
                 ApplicationPageNames.Dashboard => x.GetRequiredService<DashboardPageViewModel>(),
                 ApplicationPageNames.Employee => x.GetRequiredService<EmployeePageViewModel>(),
-                ApplicationPageNames.Employees => x.GetRequiredService<EmployeePageViewModel>(),
+                ApplicationPageNames.Employees => x.GetRequiredService<EmployeesPageViewModel>(),
                 ApplicationPageNames.Role => x.GetRequiredService<RolePageViewModel>(),
                 ApplicationPageNames.Roles => x.GetRequiredService<RolesPageViewModel>(),
                 ApplicationPageNames.Profile => x.GetRequiredService<ProfilePageViewModel>(),

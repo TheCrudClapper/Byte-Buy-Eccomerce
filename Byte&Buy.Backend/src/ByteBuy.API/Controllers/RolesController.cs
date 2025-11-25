@@ -1,4 +1,4 @@
-﻿using ByteBuy.API.Attributes;
+﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
@@ -27,17 +27,17 @@ public class RolesController : BaseApiController
 
     [HttpGet("options")]
     //[HasPermission("role:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItem>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectList(ct));
 
     [HttpGet("{roleId}")]
     //[HasPermission("role:read")]
-    public async Task<ActionResult<IEnumerable<SelectListItem>>> GetRole(Guid roleId, CancellationToken ct)
+    public async Task<ActionResult<RoleResponse>> GetRole(Guid roleId, CancellationToken ct)
         => HandleResult(await _roleService.GetRole(roleId, ct));
 
     [HttpGet]
     //[HasPermission("role:read:many")]
-    public async Task<ActionResult<IEnumerable<SelectListItem>>> GetRoles(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<RoleResponse>>> GetRoles(CancellationToken ct)
         => HandleResult(await _roleService.GetAllRoles(ct));
 
     [HttpDelete("{roleId}")]
