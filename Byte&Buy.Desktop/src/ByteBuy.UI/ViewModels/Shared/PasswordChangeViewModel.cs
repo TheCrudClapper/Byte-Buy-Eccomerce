@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.ViewModels.Base;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 

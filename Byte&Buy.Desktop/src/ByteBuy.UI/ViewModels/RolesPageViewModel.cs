@@ -1,9 +1,12 @@
-﻿namespace ByteBuy.UI.ViewModels;
+﻿using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 
-public partial class RolesPageViewModel : ViewModelBase
+namespace ByteBuy.UI.ViewModels;
+
+public partial class RolesPageViewModel : PageViewModel
 {
     public RolesPageViewModel()
     {
-        
+        PageName = ApplicationPageNames.Roles;
     }
 }

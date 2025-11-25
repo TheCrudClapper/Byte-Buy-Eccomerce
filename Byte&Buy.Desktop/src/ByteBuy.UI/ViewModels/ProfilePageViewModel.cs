@@ -6,10 +6,12 @@ using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO.Employee;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ProfilePageViewModel : ViewModelBase
+public partial class ProfilePageViewModel : PageViewModel
 {
     #region Fields
 
@@ -67,6 +69,7 @@ public partial class ProfilePageViewModel : ViewModelBase
         PasswordChangeViewModel passwordComponent,
         AlertViewModel alert)
     {
+        PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
         PasswordComponent  = passwordComponent;
         Alert = alert;

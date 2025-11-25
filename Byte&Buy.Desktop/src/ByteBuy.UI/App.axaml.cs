@@ -1,41 +1,77 @@
+using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using ByteBuy.Services.Extensions;
+using ByteBuy.Services.Handlers;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.Extensions;
+using ByteBuy.UI.Factories;
+using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using MainWindow = ByteBuy.UI.Views.MainWindow;
+using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
+
 
 namespace ByteBuy.UI
 {
     public partial class App : Application
     {
-        public static IHost Host { get; private set; }
-
-        public App(){}
-
-        public App(IHost host)
-        {
-            Host = host;
-        }
+        
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
         
-        
         public override void OnFrameworkInitializationCompleted()
         {
-            if (Design.IsDesignMode) return;
+            //Registering Services
+            var services = new ServiceCollection();
+            services.RegisterViewModels();
+            services.AddServiceLayer();
+            services.AddAuthHeaderHandler();
+            
+            services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
+            {
+                ApplicationPageNames.Dashboard => x.GetRequiredService<DashboardPageViewModel>(),
+                ApplicationPageNames.Employee => x.GetRequiredService<EmployeePageViewModel>(),
+                ApplicationPageNames.Employees => x.GetRequiredService<EmployeePageViewModel>(),
+                ApplicationPageNames.Role => x.GetRequiredService<RolePageViewModel>(),
+                ApplicationPageNames.Roles => x.GetRequiredService<RolesPageViewModel>(),
+                ApplicationPageNames.Profile => x.GetRequiredService<ProfilePageViewModel>(),
+                ApplicationPageNames.Settings => x.GetRequiredService<SettingsPageViewModel>(),
+                _ => throw new InvalidOperationException(),
+            });
+
+            services.AddSingleton<Func<ApplicationWindowNames, WindowViewModel>>(x => name => name switch
+            {  
+                ApplicationWindowNames.Login => x.GetRequiredService<LoginWindowViewModel>(),
+                ApplicationWindowNames.Main => x.GetRequiredService<MainWindowViewModel>(),
+                _ => throw new InvalidOperationException(),
+            });
+            
+            services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
+            {
+                ApplicationWindowNames.Login => x.GetRequiredService<LoginWindow>(),
+                ApplicationWindowNames.Main => x.GetRequiredService<MainWindow>(),
+                 _ => throw new InvalidOperationException(),
+            });
+            
+            //Register factories
+            services.AddSingleton<PageFactory>();
+            services.AddSingleton<WindowFactory>();
+            
+            var provider = services.BuildServiceProvider();
+            
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-                // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
                 DisableAvaloniaDataAnnotationValidation();
-                desktop.MainWindow = Host.Services.GetRequiredService<LoginWindow>();
+
+                desktop.MainWindow = provider.GetRequiredService<LoginWindow>();
             }
             
             base.OnFrameworkInitializationCompleted();

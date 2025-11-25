@@ -1,69 +1,56 @@
 ﻿using System;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.Factories;
+using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : WindowViewModel
     {
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
         [NotifyPropertyChangedFor(nameof(IsSettingPageActive))]
+        [NotifyPropertyChangedFor(nameof(IsEmployeesPageActive))]
         [NotifyPropertyChangedFor(nameof(IsProfilePageActive))]
         [NotifyPropertyChangedFor(nameof(IsRolesPageActive))]
-        private ViewModelBase _currentPage;
-
+        private PageViewModel _currentPage;
+        
+        //Factory For Pages
+        private readonly PageFactory _pageFactory;
+       
         public Action? Logout { get; set; }
-        
-        private readonly DashboardPageViewModel _dashboardPage;
-        private readonly EmployeesPageViewModel _employeesPage;
-        private readonly SettingsPageViewModel _settingsPage;
-        private readonly ProfilePageViewModel _profilePage;
-        private readonly EmployeePageViewModel _employeePage;
-        private readonly RolesPageViewModel _rolesPage;
-        
-        public bool IsProfilePageActive => CurrentPage == _profilePage;
-        public bool IsDashboardPageActive => CurrentPage == _dashboardPage;
-        public bool IsEmployeesPageActive => CurrentPage == _employeesPage;
-        public bool IsSettingPageActive => CurrentPage == _settingsPage;
-        public bool IsEmployeePageActive => CurrentPage == _employeePage;
-        public bool IsRolesPageActive => CurrentPage == _employeePage;
-        
-        
-        public MainWindowViewModel(
-            DashboardPageViewModel dashboardPage,
-            EmployeesPageViewModel employeesPage,
-            SettingsPageViewModel settingsPage,
-            ProfilePageViewModel profilePage,
-            EmployeePageViewModel employeePage,
-            RolesPageViewModel rolesPage)
+
+        public bool IsProfilePageActive => CurrentPage.PageName == ApplicationPageNames.Profile;
+        public bool IsDashboardPageActive => CurrentPage.PageName == ApplicationPageNames.Dashboard;
+        public bool IsEmployeesPageActive => CurrentPage.PageName == ApplicationPageNames.Employees;
+        public bool IsSettingPageActive => CurrentPage.PageName == ApplicationPageNames.Settings;
+        public bool IsRolesPageActive => CurrentPage.PageName == ApplicationPageNames.Roles;
+
+        public MainWindowViewModel(PageFactory pageFactory)
         {
-            _settingsPage = settingsPage;
-            _dashboardPage = dashboardPage;
-            _employeesPage = employeesPage;
-            _profilePage = profilePage;
-            _employeePage = employeePage;
-            _currentPage = _dashboardPage;
-            _rolesPage = rolesPage;
+            _pageFactory = pageFactory;
+            CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Dashboard);
         }
+        
+        [RelayCommand]
+        private void GoToDashboard() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Dashboard);
+        
+        [RelayCommand]
+        private void GoToEmployees() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Employees);
+        
+        [RelayCommand]
+        private void GoToSettings() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Settings);
+        
+        [RelayCommand]
+        private void GoToProfile() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Profile);
 
         [RelayCommand]
-        private void GoToDashboard() => CurrentPage = _dashboardPage;
+        private void GoToEmployee() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Employee);
         
         [RelayCommand]
-        private void GoToEmployees() => CurrentPage = _employeesPage;
-        
-        [RelayCommand]
-        private void GoToSettings() => CurrentPage = _settingsPage;
-        
-        [RelayCommand]
-        private void GoToProfile() => CurrentPage = _profilePage;
-
-        [RelayCommand]
-        private void GoToEmployee() => CurrentPage = _employeePage;
-        
-        [RelayCommand]
-        private void GoToRoles() => CurrentPage = _rolesPage;
+        private void GoToRoles() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Roles);
         
         [RelayCommand]
         private void LogOut() =>  Logout?.Invoke();

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using ByteBuy.Services.DTO.Employee;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel : ViewModelBase
+public partial class EmployeesPageViewModel : PageViewModel
 {
-    public ObservableCollection<EmployeeResponse> Employees { get; set; } = new();
+    public ObservableCollection<EmployeeResponse> Employees { get; set; } = [];
 
     public EmployeesPageViewModel()
     {
+        PageName = ApplicationPageNames.Employees;
         Employees.Add(
             new EmployeeResponse(
-                new Guid(),
+                Guid.NewGuid(),
                 "Test",
                 "Test",
                 "Test",
@@ -23,7 +26,7 @@ public partial class EmployeesPageViewModel : ViewModelBase
                 "Test",
                 "Test",
                 "725766544"
-                )
-            );
+            )
+        );
     }
 }

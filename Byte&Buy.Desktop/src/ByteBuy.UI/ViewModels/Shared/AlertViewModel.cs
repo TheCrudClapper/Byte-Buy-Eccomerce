@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

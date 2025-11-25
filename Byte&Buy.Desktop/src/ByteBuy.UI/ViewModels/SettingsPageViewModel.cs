@@ -1,6 +1,12 @@
-﻿namespace ByteBuy.UI.ViewModels;
+﻿using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 
-public class SettingsPageViewModel : ViewModelBase
+namespace ByteBuy.UI.ViewModels;
+
+public class SettingsPageViewModel : PageViewModel
 {
-    
+    public SettingsPageViewModel()
+    {
+        PageName = ApplicationPageNames.Settings;
+    }
 }

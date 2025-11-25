@@ -20,9 +20,11 @@ public static class DependencyInjection
     public static IServiceCollection RegisterViewModels(this IServiceCollection services)
     {
         //Singletons
-        services.AddSingleton<LoginWindow>();
-        services.AddSingleton<MainWindow>();
         services.AddSingleton<MainWindowViewModel>();
+        
+        //Windows
+        services.AddTransient<LoginWindow>();
+        services.AddSingleton<MainWindow>();
         
         //Transients
         services.AddTransient<LoginWindowViewModel>();

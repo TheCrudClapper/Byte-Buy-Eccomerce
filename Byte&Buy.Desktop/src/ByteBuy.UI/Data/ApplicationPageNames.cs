@@ -1,7 +1,10 @@
-﻿namespace ByteBuy.UI.Helpers;
+﻿namespace ByteBuy.UI.Data;
 
 public enum ApplicationPageNames
 {
+    Unknown,
+    Role,
+    Roles,
     Employee,
     Employees,
     Profile,

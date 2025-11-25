@@ -1,32 +1,31 @@
-﻿using System;
-using Avalonia.Controls;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Avalonia.Controls;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.Factories;
 using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
 
 namespace ByteBuy.UI.Views;
 
 public partial class LoginWindow : Window
 {
-    private readonly IServiceProvider _serviceProvider = null!;
-    
+    private readonly WindowFactory _windowFactory = null!;
+
     public LoginWindow()
     {
-        InitializeComponent();
+        InitializeComponent(); 
     }
     
-    public LoginWindow(LoginWindowViewModel vm, IServiceProvider serviceProvider)
+    public LoginWindow(LoginWindowViewModel vm, WindowFactory windowFactory)
     {
         InitializeComponent();
-        
         DataContext = vm;
-        _serviceProvider = serviceProvider;
-        vm.LoginSucceded += OnLoginSucceded;
+        _windowFactory = windowFactory;
+        vm.LoginSuccess += OnLoginSuccess;
     }
 
-    private void OnLoginSucceded()
+    private void OnLoginSuccess()
     {
-        var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+        var mainWindow = _windowFactory.GetWindow(ApplicationWindowNames.Main);
         mainWindow.Show(); 
-        Hide();
+        Close();
     }
 }

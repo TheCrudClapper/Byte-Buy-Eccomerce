@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO.Permission;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeePageViewModel : ViewModelBase
+public partial class EmployeePageViewModel : PageViewModel
 {
     #region Fields
     [ObservableProperty]
@@ -60,6 +62,7 @@ public partial class EmployeePageViewModel : ViewModelBase
     public EmployeePageViewModel(IEmployeeService employeeService,
         IPermissionService permissionService)
     {
+        PageName = ApplicationPageNames.Employee;
         _employeeService = employeeService;
         _permissionService = permissionService;
         _ = LoadData();
