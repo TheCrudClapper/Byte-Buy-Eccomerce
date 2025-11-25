@@ -32,6 +32,7 @@ namespace ByteBuy.UI
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
+                .UseSkia()  
                 .LogToTrace();
 
         //Runtime
@@ -39,6 +40,7 @@ namespace ByteBuy.UI
             AppBuilder
                 .Configure(() => new App(host))
                 .UsePlatformDetect()
+                .UseSkia()  
                 .LogToTrace();
     }
 }

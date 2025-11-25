@@ -1,37 +1,69 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
 public partial class AlertViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string _title = null!;
-    
-    [ObservableProperty]
-    private string _message = null!;
-    
-    [ObservableProperty]
-    private bool _isVisible;
+    [ObservableProperty] private string _title = null!;
 
-    public async Task Show(AlertType alertType, string message)
+    [ObservableProperty] private string _message = null!;
+
+    [ObservableProperty] private string _imagePath = null!;
+
+    [ObservableProperty] private string _backgroundColor = null!;
+
+    [ObservableProperty] private bool _isVisible;
+
+    public Task Show(AlertType alertType, string message)
     {
         Message = message;
         Title = alertType.ToString();
-        IsVisible = true;
 
-        await Task.Delay(2000);
-        IsVisible = false;
+        switch (alertType)
+        {
+            case AlertType.Info:
+                BackgroundColor = "#5394fc";
+                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/circle-info-solid-full.svg";
+                break;
+
+            case AlertType.Error:
+                BackgroundColor = "#EF4444";
+                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/triangle-exclamation-solid-full.svg";
+                break;
+
+            case AlertType.Success:
+                BackgroundColor = "#22C55E";
+                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/check-solid-full.svg";
+                break;
+
+            case AlertType.Warning:
+                BackgroundColor = "#f7e963";
+                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/exclamation-solid-full.svg";
+                break;
+        }
+
+        _ = AutoHide();
+        return Task.CompletedTask;
     }
 
-    public void Hide()
+    [RelayCommand]
+    private void Hide()
     {
         IsVisible = false;
     }
-    
+
+    private async Task AutoHide()
+    {
+        IsVisible = true;
+        await Task.Delay(2000);
+        IsVisible = false;
+    }
 }
 
-public enum  AlertType
+public enum AlertType
 {
     Info = 0,
     Warning = 1,

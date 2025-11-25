@@ -100,7 +100,7 @@ public partial class ProfilePageViewModel : ViewModelBase
 
         if (!result.Success)
         {
-            Error = result.Error!.Description;
+            Error = result.Error!.Description; 
             await Alert.Show(AlertType.Error, Error);
         }
         else

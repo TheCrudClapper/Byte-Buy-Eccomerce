@@ -6,29 +6,50 @@
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="60"
              x:Class="ByteBuy.UI.Views.Shared.AlertView"
              x:DataType="vm:AlertViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Button.alertHideButton">
+            <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        </Style>
+    </UserControl.Styles>
+    
+    <Grid>
+        
+    
     <Border CornerRadius="10"
-            Background="{DynamicResource BackgroundLightBrush}"
+            Background="{Binding BackgroundColor}"
             BorderThickness="1"
             Padding="10"
             BorderBrush="Black">
         <Grid RowDefinitions="20,20" ColumnDefinitions="40,*,30">
-            <Button Grid.Column="2" HorizontalAlignment="Right">
-                <Image Grid.RowSpan="2"  Source="{SvgImage /Assets/Images/regular/xmark-solid-full.svg}"
+            <Button Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Command="{Binding HideCommand}"
+                    Classes="alertHideButton">
+                <Image Source="{SvgImage /Assets/Images/regular/xmark-solid-full.svg}"
                        Height="15"
                        Width="15" />
+
             </Button>
-            <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"  Source="{SvgImage /Assets/Images/regular/check-solid-full.svg}"
+            <Image Grid.Column="0"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
                    Height="30"
-                   Width="30" />
+                   Width="30">
+                <Image.Source>
+                    <SvgImage Source="{Binding ImagePath}" />
+                </Image.Source>
+            </Image>
             <TextBlock Grid.Row="0" Grid.Column="1"
                        FontSize="15"
                        Foreground="{DynamicResource TextLightBrush}"
                        FontWeight="700"
-                       Text="Success" />
+                       Text="{Binding Title}" />
             <TextBlock Grid.Row="1" Grid.Column="1"
                        Foreground="{DynamicResource TextLightBrush}"
                        FontSize="15"
-                       Text="Address Updated Succesfully!" />
+                       Text="{Binding Message}" />
         </Grid>
     </Border>
+    </Grid>
 </UserControl>
