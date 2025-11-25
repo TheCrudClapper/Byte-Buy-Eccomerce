@@ -1,9 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
-using ByteBuy.Core.DTO.Auth;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
-using System.Diagnostics.Eventing.Reader;
-
 namespace ByteBuy.Core.Domain.Entities;
 
 /// <summary>
@@ -26,16 +23,34 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
     public DateTime? DateDeleted { get; protected set; } 
 
     private ApplicationUser() { }
-    protected ApplicationUser(string firstName, string lastName, string email)
+    protected ApplicationUser(string firstName, string lastName, string email, string? phoneNumber)
     {
         FirstName = firstName;  
         LastName = lastName;
         Email = email;
-
+        PhoneNumber = phoneNumber;
         //Username is email within app
         UserName = email;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
+    }
+
+    protected static Result ValidateBasicInfo(string firstName, string lastName, string email, string? phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            return Result.Failure(Error.Validation("First name cannot be empty!"));
+        if (string.IsNullOrWhiteSpace(lastName))
+            return Result.Failure(Error.Validation("Last name cannot be empty!"));
+        if (string.IsNullOrWhiteSpace(email) || !email.Contains('@'))
+            return Result.Failure(Error.Validation("Email is in invalid format!"));
+        if(phoneNumber is not null)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
+            {
+                return Result.Failure(Error.Validation("Phone number can't be a whitespace and not longer that 15 characters"));
+            }
+        }
+        return Result.Success();
     }
 
     protected Result ChangePhoneNumber(string? phoneNumber)

@@ -38,9 +38,7 @@ public class EmployeesController : BaseApiController
 
     [HttpPut("{employeeId}")]
     //[HasPermission("employee:update")]
-    public async Task<ActionResult<EmployeeResponse>> PutEmployee(
-    Guid employeeId,
-    EmployeeUpdateRequest request)
+    public async Task<ActionResult<EmployeeResponse>> PutEmployee(Guid employeeId, EmployeeUpdateRequest request)
         => HandleResult(await _employeeService.UpdateEmployee(employeeId, request));
 
     [HttpDelete("{employeeId}")]

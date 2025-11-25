@@ -14,6 +14,7 @@ public record EmployeeUpdateRequest(
     [Required, MaxLength(10)] string HouseNumber,
     [Required, MaxLength(20)] string PostalCode,
     [Required, MaxLength(50)] string City,
-    [Required, MaxLength(50)] string Country,
+    [Required, MaxLength(50)] string Country, 
+    [MaxLength(15)] string PhoneNumber,
     [MaxLength(10)] string? FlatNumber
     );

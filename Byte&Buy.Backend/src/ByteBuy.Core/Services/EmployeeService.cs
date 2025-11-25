@@ -45,8 +45,8 @@ public class EmployeeService : IEmployeeService
             request.PostalCode,
             request.City,
             request.Country,
-            request.FlatNumber
-            );
+            request.FlatNumber,
+            request.PhoneNumber);
 
         if (employeeResult.IsFailure)
             return Result.Failure<EmployeeResponse>(employeeResult.Error);
@@ -119,7 +119,8 @@ public class EmployeeService : IEmployeeService
             request.PostalCode,
             request.City,
             request.Country,
-            request.FlatNumber);
+            request.FlatNumber,
+            request.PhoneNumber);
 
         if (updateResult.IsFailure)
             return Result.Failure<EmployeeResponse>(updateResult.Error);

@@ -9,16 +9,13 @@ public sealed class PortalUser : ApplicationUser
     public Cart Cart { get; private set; } = null!;
 
     private PortalUser(string firstName, string lastName, string email) 
-        : base(firstName, lastName, email) { }
+        : base(firstName, lastName, email, null) { }
 
     public static Result<PortalUser> Create(string firstName, string lastName, string email)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            return Result.Failure<PortalUser>(Error.Validation("First name cannot be empty"));
-        if (string.IsNullOrWhiteSpace(lastName))
-            return Result.Failure<PortalUser>(Error.Validation("Last name cannot be empty"));
-        if (string.IsNullOrWhiteSpace(email))
-            return Result.Failure<PortalUser>(Error.Validation("Email cannot be empty"));
+        var validationResult = ValidateBasicInfo(firstName, lastName, email, null);
+        if (validationResult.IsFailure)
+            return Result.Failure<PortalUser>(validationResult.Error);
 
         return Result.Success(new PortalUser(firstName, lastName, email));
     }

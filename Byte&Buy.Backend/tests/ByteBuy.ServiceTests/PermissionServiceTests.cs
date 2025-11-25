@@ -49,7 +49,7 @@ public class PermissionServiceTests
         _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
             .ReturnsAsync(returnedPermission);
 
-        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id, CancellationToken.None))
+        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id))
             .ReturnsAsync(false);
 
         //Act
@@ -71,7 +71,7 @@ public class PermissionServiceTests
         _permissionRepositoryMock.Setup(item => item.GetByNameAsync(It.IsAny<string>(), CancellationToken.None))
             .ReturnsAsync(returnedPermission);
 
-        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id, CancellationToken.None))
+        _permissionRepositoryMock.Setup(item => item.HasUserOrRolePermissionAsync(It.IsAny<Guid>(), returnedPermission.Id))
             .ReturnsAsync(true);
 
         //Act
