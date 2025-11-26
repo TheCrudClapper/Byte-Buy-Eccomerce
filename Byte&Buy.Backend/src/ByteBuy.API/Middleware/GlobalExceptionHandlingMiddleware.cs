@@ -29,8 +29,6 @@ public class GlobalExceptionHandlingMiddleware
             if(ex is TaskCanceledException or OperationCanceledException)
             {
                 _logger.LogInformation("Request canceled by user");
-                httpContext.Response.StatusCode = 499;
-                return;
             }
 
             if(ex.InnerException is not null)
@@ -39,7 +37,8 @@ public class GlobalExceptionHandlingMiddleware
                     $" {ex.InnerException.Message}");
             }
 
-            _logger.LogError($"{ex.GetType().ToString()}: {ex.Message}");
+            string message = $"{ex.GetType()}: {ex.Message}";
+            _logger.LogError(message);
 
             httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 

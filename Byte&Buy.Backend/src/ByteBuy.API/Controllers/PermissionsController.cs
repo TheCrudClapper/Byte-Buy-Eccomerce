@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace ByteBuy.API.Controllers
         }
 
         [HttpGet("options")]
+        //[HasPermission("permission:read:options")]
         public async Task<ActionResult<SelectListItemResponse>> GetSelectList()
             => HandleResult(await _permissionService.GetSelectList());
     }

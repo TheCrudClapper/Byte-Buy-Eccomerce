@@ -29,13 +29,13 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request, CancellationToken ct)
-      => LoginInternal<PortalUser>(request, ct);
+    public Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request)
+      => LoginInternal<PortalUser>(request);
 
-    public Task<Result<TokenResponse>> LoginEmployee(LoginRequest request, CancellationToken ct)
-        => LoginInternal<Employee>(request, ct);
+    public Task<Result<TokenResponse>> LoginEmployee(LoginRequest request)
+        => LoginInternal<Employee>(request);
 
-    private async Task<Result<TokenResponse>> LoginInternal<TUser>(LoginRequest request, CancellationToken ct)
+    private async Task<Result<TokenResponse>> LoginInternal<TUser>(LoginRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 

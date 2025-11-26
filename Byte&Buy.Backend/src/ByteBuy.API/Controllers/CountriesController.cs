@@ -1,7 +1,5 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.DTO.Country;
+﻿using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
@@ -40,7 +38,7 @@ public class CountriesController : BaseApiController
         => HandleResult(await _countryService.GetCountries(ct));
 
     [HttpGet("options")]
-    //[HasPermission("country:selectlist")]
+    //[HasPermission("country:read:options")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectList(ct));
 }

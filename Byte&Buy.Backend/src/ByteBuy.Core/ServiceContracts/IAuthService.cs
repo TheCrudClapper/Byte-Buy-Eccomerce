@@ -21,7 +21,7 @@ public interface IAuthService
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see
     /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
     /// includes the token response; otherwise, it contains error information.</returns>
-    Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request, CancellationToken ct = default);
+    Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request);
 
 
     /// <summary>
@@ -33,7 +33,7 @@ public interface IAuthService
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see
     /// cref="Result{TokenResponse}"/> indicating the outcome of the authentication attempt. If successful, the result
     /// includes the token response; otherwise, it contains error information.</returns>
-    Task<Result<TokenResponse>> LoginEmployee(LoginRequest request, CancellationToken ct = default);
+    Task<Result<TokenResponse>> LoginEmployee(LoginRequest request);
     
     /// <summary>
     /// Registers a new portal user with the specified registration details.

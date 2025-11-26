@@ -27,7 +27,7 @@ public class EmployeesController : BaseApiController
         => HandleResult(await _employeeService.UpdateEmployeeAddress(CurrentUserId, request));
 
     [HttpGet("me")]
-    //[HasPermission("employee:read:self")]
+    //[HasPermission("employee:read:me")]
     public async Task<ActionResult<EmployeeResponse>> GetEmployee(CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployee(CurrentUserId, ct));
 
