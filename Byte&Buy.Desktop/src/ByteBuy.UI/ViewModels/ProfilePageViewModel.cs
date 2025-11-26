@@ -63,16 +63,14 @@ public partial class ProfilePageViewModel : PageViewModel
     #endregion
 
     private readonly IEmployeeService _employeeService;
-    public AlertViewModel Alert { get; }
     public PasswordChangeViewModel PasswordComponent { get; }
     public ProfilePageViewModel(IEmployeeService employeeService,
         PasswordChangeViewModel passwordComponent,
-        AlertViewModel alert)
+        AlertViewModel alert) : base(alert)
     {
         PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
-        PasswordComponent  = passwordComponent;
-        Alert = alert;
+        PasswordComponent  = passwordComponent; ;
         _ = LoadData();
     }
 

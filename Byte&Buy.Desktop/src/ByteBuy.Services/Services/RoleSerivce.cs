@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.DTO;
+using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.HttpClients.Abstractions;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
@@ -10,6 +11,12 @@ public class RoleService(IRoleHttpClient roleClient) : IRoleService
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetRolesAsSelectList()
     {
         var rolesResult = await roleClient.GetSelectListItemsAsync();
+        return rolesResult.Map();
+    }
+
+    public async Task<Result<IEnumerable<RoleResponse>>> GetAll()
+    {
+        var rolesResult = await roleClient.GetAllAsync();
         return rolesResult.Map();
     }
 }

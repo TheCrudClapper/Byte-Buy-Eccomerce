@@ -10,6 +10,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -19,12 +20,16 @@ public partial class EmployeePageViewModel : PageViewModel
 {
     #region Fields
     [ObservableProperty]
+    [Required]
     private string _firstName = string.Empty;
 
     [ObservableProperty]
+    [Required]
     private string _lastName = string.Empty;
 
     [ObservableProperty]
+    [Required]
+    [EmailAddress]
     private string _email = string.Empty;
 
     [ObservableProperty]
@@ -62,12 +67,11 @@ public partial class EmployeePageViewModel : PageViewModel
     
     [ObservableProperty]
     [Required]
+    [MinLength(8)]
     private string _password = string.Empty;
 
-    [ObservableProperty]
-    private Guid _selectedRoleId = Guid.Empty;
-
     [ObservableProperty] 
+    [Required(ErrorMessage = "Choose employee's role")]
     private SelectListItemResponse? _selectedRole;
     #endregion
 
@@ -77,16 +81,17 @@ public partial class EmployeePageViewModel : PageViewModel
     private PageFactory _pageFactory;
     
     [ObservableProperty]
-    private ObservableCollection<PermissionItem> _permissions;
+    private ObservableCollection<PermissionItem> _permissions = [];
     
     [ObservableProperty]
-    private ObservableCollection<SelectListItemResponse> _roles;
+    private ObservableCollection<SelectListItemResponse> _roles = [];
     
     public EmployeePageViewModel(
         IRoleService roleService,
         IEmployeeService employeeService,
         IPermissionService permissionService,
-        PageFactory pageFactory)
+        PageFactory pageFactory,
+        AlertViewModel alert) : base(alert)
     {
         _employeeService = employeeService;
         _permissionService = permissionService;
@@ -94,36 +99,40 @@ public partial class EmployeePageViewModel : PageViewModel
         _pageFactory = pageFactory;
         
         PageName = ApplicationPageNames.Employee;
-        _ = LoadData();
         _ = LoadPermissions();
         _ = LoadRoles();
     }
-    
-    private async Task LoadData()
+
+    [RelayCommand]
+    private void Clear()
     {
-        //var result = await _employeeService.GetSelf();
-        //if (!result.Success)
-        //    Error = result.Error!.Description;
-
-        //var employeeResponse = result.Value;
-
-        //FirstName = employeeResponse!.FirstName;
-        //LastName = employeeResponse.LastName;
-        //City = employeeResponse.City;
-        //HouseNumber = employeeResponse.HouseNumber;
-        //PostalCode = employeeResponse.PostalCode;
-        //FlatNumber = employeeResponse.FlatNumber;
-        //Email = employeeResponse.Email;
-        //Street = employeeResponse.Street;
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        SelectedRole = null;
+        HouseNumber =  string.Empty;
+        Email = string.Empty;
+        PostalCode = string.Empty;
+        City = string.Empty;
+        Street = string.Empty;
+        Password = string.Empty;
+        FlatNumber = string.Empty;   
     }
 
     [RelayCommand]
     private async Task Save()
     {
-        var request = new EmployeeAddRequest(SelectedRoleId, FirstName, LastName, Email, Password, PhoneNumber, Street,
+        ValidateAllProperties();
+        if(HasErrors)
+            return;
+        
+        var request = new EmployeeAddRequest(SelectedRole!.Id, FirstName, LastName, Email, Password, PhoneNumber, Street,
             HouseNumber, PostalCode, City, Country, FlatNumber);
         
         var result = await _employeeService.AddEmployee(request);
+        if(!result.Success)
+            await Alert.Show(AlertType.Error, result.Error!.Description);
+        else
+            await Alert.Show(AlertType.Success, "Employee Added Successfully");
     }
     
     private async Task LoadPermissions()

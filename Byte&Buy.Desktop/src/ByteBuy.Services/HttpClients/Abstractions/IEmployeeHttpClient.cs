@@ -8,5 +8,6 @@ public interface IEmployeeHttpClient
 {
     Task<Result<EmployeeResponse>> GetSelfAsync();
     Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
+    Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync();
     Task<Result<EmployeeResponse>> AddEmployeeAsync(EmployeeAddRequest request);
 }

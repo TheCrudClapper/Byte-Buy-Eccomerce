@@ -6,7 +6,7 @@ public record EmployeeAddRequest(
     string LastName,
     string Email,
     string Password,
-    string PhoneNumber,
+    string? PhoneNumber,
     string Street,
     string HouseNumber,
     string PostalCode,

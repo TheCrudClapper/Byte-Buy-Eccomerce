@@ -12,6 +12,9 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
     public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<EmployeeAddressResponse>("employees/address", request);
 
+    public Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync()
+        => GetAsync<IEnumerable<EmployeeResponse>>("employees");
+
     public async Task<Result<EmployeeResponse>> AddEmployeeAsync(EmployeeAddRequest request)
         => await PostAsync<EmployeeResponse>("employees", request);
 }

@@ -21,6 +21,12 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient,
         return result.Map();
     }
 
+    public async Task<Result<IEnumerable<EmployeeResponse>>> GetAll()
+    {
+        var result = await employeeHttpClient.GetAllAsync();
+        return result.Map();
+    }
+
     public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)
     {
         var result = await employeeHttpClient.UpdateEmployeeAddressAsync(request);
