@@ -15,6 +15,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
         _context.Employees.Update(employee);
         await _context.SaveChangesAsync();
     }
+
     public async Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct)
     {
         return await _context.Employees
@@ -35,6 +36,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
         return await _context.Employees
             .FirstOrDefaultAsync(e => e.Id == employeeId, ct);
     }
+
     public async Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct)
     {
         return await _context.Employees

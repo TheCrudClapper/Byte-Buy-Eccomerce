@@ -12,7 +12,7 @@
             <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
                 <Label Grid.Column="0" Classes="pageTitle" Content="Roles" />
                 <Button
-                    Command="{Binding OpenRolePageCommand}"
+                    Command="{Binding OpenAddPageCommand}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
                     Grid.Column="2">

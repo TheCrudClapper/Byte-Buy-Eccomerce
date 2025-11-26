@@ -11,7 +11,7 @@ public partial class PageViewModel : ViewModelBase
     
     public AlertViewModel Alert { get; }
 
-    public PageViewModel(AlertViewModel alert)
+    protected PageViewModel(AlertViewModel alert)
     {
         Alert = alert;
     }

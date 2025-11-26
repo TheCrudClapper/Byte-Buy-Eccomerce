@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using ByteBuy.Services.DTO;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Permission;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
@@ -75,8 +75,8 @@ public partial class EmployeePageViewModel : PageViewModel
     private SelectListItemResponse? _selectedRole;
     #endregion
 
-    private readonly IEmployeeService _employeeService;
-    private readonly IRoleService _roleService;
+    private readonly EmployeeService _employeeService;
+    private readonly RoleService _roleService;
     private readonly IPermissionService _permissionService;
     private PageFactory _pageFactory;
     
@@ -87,8 +87,8 @@ public partial class EmployeePageViewModel : PageViewModel
     private ObservableCollection<SelectListItemResponse> _roles = [];
     
     public EmployeePageViewModel(
-        IRoleService roleService,
-        IEmployeeService employeeService,
+        RoleService roleService,
+        EmployeeService employeeService,
         IPermissionService permissionService,
         PageFactory pageFactory,
         AlertViewModel alert) : base(alert)
@@ -122,13 +122,13 @@ public partial class EmployeePageViewModel : PageViewModel
     private async Task Save()
     {
         ValidateAllProperties();
-        if(HasErrors)
-            return;
-        
+                if(HasErrors)
+                    return;
+                
         var request = new EmployeeAddRequest(SelectedRole!.Id, FirstName, LastName, Email, Password, PhoneNumber, Street,
             HouseNumber, PostalCode, City, Country, FlatNumber);
         
-        var result = await _employeeService.AddEmployee(request);
+        var result = await _employeeService.Add(request);
         if(!result.Success)
             await Alert.Show(AlertType.Error, result.Error!.Description);
         else
@@ -141,13 +141,12 @@ public partial class EmployeePageViewModel : PageViewModel
         var permissionItems = result.Value!
             .Select(p => new PermissionItem(p.Id, p.Title, false))
             .ToList();
-        
         Permissions = new ObservableCollection<PermissionItem>(permissionItems);
     }
     
     private async Task LoadRoles()
     {
-        var result = await _roleService.GetRolesAsSelectList();
+        var result = await _roleService.GetSelectList();
         Roles = new ObservableCollection<SelectListItemResponse>(result.Value!);
     }
 }
