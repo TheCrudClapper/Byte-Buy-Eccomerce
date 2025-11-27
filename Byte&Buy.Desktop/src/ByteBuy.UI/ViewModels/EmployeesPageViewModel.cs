@@ -1,35 +1,52 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.ModelsUI.Employee;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class EmployeesPageViewModel(
+public partial class EmployeesPageViewModel(
     MainWindowViewModel main,
     PageFactory pageFactory,
     AlertViewModel alert, 
     EmployeeService employeeService)
-    : ViewModelMany<EmployeeResponse>(alert, main, pageFactory)
+    : ViewModelMany<EmployeeListItem>(alert, main, pageFactory)
 {
     protected override async Task LoadData()
     {
-        var result = await employeeService.GetAll();
+        var result = await employeeService.GetList();
         if (!result.Success)
             await Alert.Show(AlertType.Error, result.Error!.Description);
-
-        Items = new ObservableCollection<EmployeeResponse>(result.Value!);
+        Items = new ObservableCollection<EmployeeListItem>(result.Value!);
     }
-
-    protected override Task Delete()
-        => throw new NotImplementedException();
     
+    protected override async Task Delete(EmployeeListItem employee)
+    {
+        var result = await employeeService.DeleteById(employee.Id);
+        if (!result.Success)
+        {
+            await Alert.Show(AlertType.Error, result.Error!.Description);
+            return;
+        }
+        
+        Items.Remove(employee);
+        await Alert.Show(AlertType.Success, "Employee deleted successfully");
+    }
+    
+    protected override async Task Edit(EmployeeListItem employee)
+    {
+        var vm = PageFactory.GetPageViewModel(ApplicationPageNames.Employee)
+            as EmployeePageViewModel;
+
+        await vm!.InitializeForEdit(employee.Id);
+        Main.CurrentPage = vm;
+    }
+   
     protected override void OpenAddPage()
-        => _main.CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Employee);
+        => Main.CurrentPage = PageFactory.GetPageViewModel(ApplicationPageNames.Employee);
     
 }

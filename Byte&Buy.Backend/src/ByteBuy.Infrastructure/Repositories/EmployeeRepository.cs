@@ -8,7 +8,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class EmployeeRepository : BaseRepository, IEmployeeRepository
 {
-    public EmployeeRepository(ApplicationDbContext context) : base(context){}
+    public EmployeeRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task UpdateAsync(Employee employee)
     {
@@ -28,7 +28,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
         return await _context.Employees
             .IgnoreQueryFilters()
             .Where(expression)
-            .ToListAsync(ct);    
+            .ToListAsync(ct);
     }
 
     public async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
@@ -44,5 +44,12 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
             .FirstOrDefaultAsync(expression, ct);
     }
 
-    
+    public async Task<IEnumerable<Employee>> GetAllWithRolesAsync(CancellationToken ct = default)
+    {
+        return await _context.Employees
+            .AsNoTracking()
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .ToListAsync(ct);
+    }
 }

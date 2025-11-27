@@ -34,4 +34,15 @@ public static class EmployeeMappings
             employee.PhoneNumber
             );
     }
+
+    public static EmployeeListResponse ToEmployeeListResponse(this Employee employee)
+    {
+        return new EmployeeListResponse(
+            employee.Id,
+            employee.FirstName,
+            employee.LastName,
+            employee.Email!,
+            employee.UserRoles?.FirstOrDefault()?.Role.Name ?? "No Role"
+            );
+    }
 }

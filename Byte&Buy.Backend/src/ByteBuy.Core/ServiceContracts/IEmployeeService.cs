@@ -11,9 +11,10 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IEmployeeService
 {
     Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request);
-    Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct = default);
-    Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct = default);
     Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request);
     Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request);
     Task<Result> DeleteEmployee(Guid employeeId);
+    Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct = default);
+    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default); 
+    Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct = default);
 }

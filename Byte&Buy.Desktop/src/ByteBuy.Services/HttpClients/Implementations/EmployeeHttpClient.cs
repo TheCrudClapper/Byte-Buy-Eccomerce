@@ -17,4 +17,16 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
 
     public async Task<Result<EmployeeResponse>> AddEmployeeAsync(EmployeeAddRequest request)
         => await PostAsync<EmployeeResponse>("employees", request);
+
+    public Task<Result<EmployeeResponse>> GetById(Guid id)
+        => GetAsync<EmployeeResponse>($"employees/{id}");
+
+    public Task<Result<EmployeeResponse>> UpdateEmployeeAsync(Guid id, EmployeeUpdateRequest request)
+        => PutAsync<EmployeeResponse>("employees/{id}", request);
+
+    public Task<Result> DeleteEmployeeByIdAsync(Guid id)
+        => DeleteAsync($"employees/{id}");
+
+    public Task<Result<IEnumerable<EmployeeListResponse>>> GetListAsync()
+        => GetAsync<IEnumerable<EmployeeListResponse>>("employees/list");
 }

@@ -97,6 +97,13 @@ public class EmployeeService : IEmployeeService
             .ToList();
     }
 
+    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default)
+    {
+        var employees = await _employeeRepository.GetAllWithRolesAsync(ct);
+        return employees
+            .Select(e => e.ToEmployeeListResponse()).ToList();
+    }
+
     public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);

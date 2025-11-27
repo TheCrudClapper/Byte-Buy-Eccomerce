@@ -5,6 +5,7 @@
              xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:local="clr-namespace:ByteBuy.UI.Views"
              x:DataType="vm:EmployeesPageViewModel"
              x:Class="ByteBuy.UI.Views.EmployeesPageView">
 
@@ -13,7 +14,7 @@
     </UserControl.Styles>
     <Grid>
 
-        <Grid RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+        <Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
             <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
                 <Label Grid.Column="0" Classes="pageTitle" Content="Employees" />
                 <Button
@@ -30,9 +31,13 @@
                 </Button>
                     
             </Grid>
+            
+            <!-- Filters -->
             <Grid Grid.Row="1">
                 <Label Content="Filters" />
             </Grid>
+            
+            <!-- Fetched items count -->
             <StackPanel Grid.Row="2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Label Content="Records fetched:"
@@ -45,40 +50,47 @@
                            HorizontalAlignment="Right" />
                 </StackPanel>
 
+                <!-- Data Grid Containing All Items -->
                 <DataGrid
+                    x:Name="ItemsGrid"
                     ItemsSource="{Binding Items}"
                     AutoGenerateColumns="False"
+                    SelectedItem="{Binding SelectedItem}"
                     GridLinesVisibility="All"
                     IsReadOnly="True"
                     HeadersVisibility="All"
                     CanUserSortColumns="True"
                     CanUserResizeColumns="True"
-                    CanUserReorderColumns="True"
                     RowHeight="36">
-
+                    
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
+                        <DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
                         <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
                         <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
                         <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                        <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
-                        <DataGridTextColumn Header="Street" Binding="{Binding Street}" Width="*" />
-                        <DataGridTextColumn Header="Postal Code" Binding="{Binding PostalCode}" Width="*" />
-                        <DataGridTextColumn Header="House Number" Binding="{Binding HouseNumber}" Width="*" />
-                        <DataGridTextColumn Header="Flat Number" Binding="{Binding FlatNumber}" Width="*" />
-                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" />
+                        <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
                         <DataGridTemplateColumn Header="Actions">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
-                                                Margin="0,0,5,0">
-                                            <Image Source="{SvgImage /Assets/Images/regular/edit.svg}" Width="16"
-                                                   Height="16" />
+                                        <Button
+                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+                                            Margin="0,0,5,0">
+
+                                            <Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+                                                   Width="16" Height="16"/>
                                         </Button>
-                                        <Button FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}">
+                                        
+                                        <Button
+                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource BackgroundLightBrush}">
+
                                             <Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-                                                   Width="16" Height="16" />
+                                                   Width="16" Height="16"/>
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>

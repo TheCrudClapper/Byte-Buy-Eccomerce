@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO.Role;
+using ByteBuy.Services.ModelsUI.Employee;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
@@ -15,22 +16,29 @@ public class RolesPageViewModel(
     MainWindowViewModel main,
     PageFactory pageFactory,
     RoleService roleService)
-    : ViewModelMany<RoleResponse>(alert, main, pageFactory)
+    : ViewModelMany<RoleListItem>(alert, main, pageFactory)
 {
-    
-    protected override async Task LoadData()
+    protected override Task Delete(RoleListItem item)
     {
-        var result = await roleService.GetAll();
-        if(!result.Success)
-            await Alert.Show(AlertType.Error, result.Error!.Description);
-
-        Items = new ObservableCollection<RoleResponse>(result.Value!);
+        throw new NotImplementedException();
     }
 
-    protected override Task Delete()
-        => throw new NotImplementedException();
+    protected override Task Edit(RoleListItem item)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override async Task LoadData()
+    {
+        // var result = await roleService.GetAll();
+        // if(!result.Success)
+        //     await Alert.Show(AlertType.Error, result.Error!.Description);
+        //
+        // Items = new ObservableCollection<RoleListItem>(result.Value!);
+    }
+    
 
     protected override void OpenAddPage()
-        => _main.CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Role);
+        => Main.CurrentPage = PageFactory.GetPageViewModel(ApplicationPageNames.Role);
 
 }
