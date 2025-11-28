@@ -102,6 +102,16 @@
                             <Label Content="Orders" />
                         </StackPanel>
                     </Button>
+                    
+                    <Button
+                        Command="{Binding GoToCompanyDetailsCommand}"
+                        Classes="sidebarMenuButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/regular/company.svg}"
+                                   Width="20" Height="20" />
+                            <Label Content="Company Details" />
+                        </StackPanel>
+                    </Button>
 
                     <Button
                         Classes="sidebarMenuButton">

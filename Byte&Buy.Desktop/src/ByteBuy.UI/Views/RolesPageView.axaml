@@ -8,7 +8,7 @@
              x:Class="ByteBuy.UI.Views.RolesPageView"
              x:DataType="vm:RolesPageViewModel">
     <Grid>
-        <Grid RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+        <Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
             <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
                 <Label Grid.Column="0" Classes="pageTitle" Content="Roles" />
                 <Button
@@ -50,20 +50,30 @@
                     RowHeight="36">
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" />
-                        <DataGridTextColumn Header="ID" Binding="{Binding Name}" Width="60" />
-                        <DataGridTemplateColumn Header="Actions">
+                        <DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                        <DataGridTemplateColumn Header="Actions" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
-                                                Margin="0,0,5,0">
-                                            <Image Source="{SvgImage /Assets/Images/regular/edit.svg}" Width="16"
-                                                   Height="16" />
+                                        <Button
+                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+                                            Margin="0,0,5,0">
+
+                                            <Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+                                                   Width="16" Height="16"/>
                                         </Button>
-                                        <Button FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}">
+                                        
+                                        <Button
+                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+                                            CommandParameter="{Binding}"
+                                            FontSize="10"
+                                            Foreground="{DynamicResource BackgroundLightBrush}">
+
                                             <Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-                                                   Width="16" Height="16" />
+                                                   Width="16" Height="16"/>
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>

@@ -44,6 +44,7 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Roles => x.GetRequiredService<RolesPageViewModel>(),
                 ApplicationPageNames.Profile => x.GetRequiredService<ProfilePageViewModel>(),
                 ApplicationPageNames.Settings => x.GetRequiredService<SettingsPageViewModel>(),
+                ApplicationPageNames.CompanyInfo => x.GetRequiredService<CompanyInfoPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

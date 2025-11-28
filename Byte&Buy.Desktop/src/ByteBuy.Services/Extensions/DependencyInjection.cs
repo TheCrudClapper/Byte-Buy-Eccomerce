@@ -28,13 +28,16 @@ public static class DependencyInjection
         services.AddHttpClient<IRoleHttpClient, RoleHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
         
+        services.AddHttpClient<ICompanyInfoHttpClient, CompanyInfoHttpClient>()
+            .AddHttpMessageHandler<BearerTokenHandler>();
+        
         //Add Services
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<EmployeeService>();
         services.AddSingleton<IEmployeeService, EmployeeService>();
         services.AddSingleton<RoleService>();
         services.AddSingleton<IRoleService, RoleService>();
-        
+        services.AddSingleton<ICompanyInfoService, CompanyInfoService>();
         services.AddSingleton<IPermissionService, PermissionService>();
         
         //Add Token Store

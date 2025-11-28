@@ -8,7 +8,7 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class CompanyInfoController : BaseApiController
 {
     private readonly ICompanyInfoService _companyInfoService;
@@ -21,12 +21,12 @@ public class CompanyInfoController : BaseApiController
         => HandleResult(await _companyInfoService.GetCompanyInfo());
 
     [HttpPost]
-    [HasPermission("companyinfo:create")]
-    public async Task<ActionResult<CompanyInfoAddRequest>> PostCompanyInfo(CompanyInfoAddRequest request)
+    //[HasPermission("companyinfo:create")]
+    public async Task<ActionResult<CompanyInfoResponse>> PostCompanyInfo(CompanyInfoAddRequest request)
         => HandleResult(await _companyInfoService.AddCompanyInfo(request));
 
     [HttpPut]
-    [HasPermission("companyinfo:update")]
+    //[HasPermission("companyinfo:update")]
     public async Task<ActionResult<CompanyInfoResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request)
         => HandleResult(await _companyInfoService.UpdateCompanyInfo(request));
 }

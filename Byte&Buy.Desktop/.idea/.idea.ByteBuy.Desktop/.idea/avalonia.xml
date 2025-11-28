@@ -10,6 +10,8 @@
         <entry key="src/ByteBuy.UI/Styles/EmployeeStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Styles/MainWindowStyles.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/AccountPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/CompanyInfoPage.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/CompanyInfoPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/DashboardPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/EmployeesPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
@@ -23,6 +25,8 @@
         <entry key="src/ByteBuy.UI/Views/Shared/AlertView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Shared/PasswordChangeView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Single/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/Test.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/sex.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
       </map>
     </option>
   </component>

@@ -1,6 +1,5 @@
 ﻿using Avalonia.Controls;
 using ByteBuy.UI.ViewModels;
-using DashboardPageViewModel = ByteBuy.UI.ViewModels.DashboardPageViewModel;
 
 namespace ByteBuy.UI.Views;
 

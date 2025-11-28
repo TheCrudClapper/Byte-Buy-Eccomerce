@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.DTO.AddressValueObj;
+﻿using ByteBuy.Services.DTO.Address;
 
-namespace ByteBuy.Core.DTO.CompanyInfo;
+namespace ByteBuy.Services.DTO.CompanyInfo;
 
 public record CompanyInfoResponse(
     string CompanyName,

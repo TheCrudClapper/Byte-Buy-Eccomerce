@@ -10,4 +10,5 @@ public enum ApplicationPageNames
     Profile,
     Dashboard,
     Settings,
+    CompanyInfo,
 }

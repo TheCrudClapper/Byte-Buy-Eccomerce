@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.ModelsUI.Employee;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
@@ -18,9 +17,17 @@ public class RolesPageViewModel(
     RoleService roleService)
     : ViewModelMany<RoleListItem>(alert, main, pageFactory)
 {
-    protected override Task Delete(RoleListItem item)
+    protected override async Task Delete(RoleListItem item)
     {
-        throw new NotImplementedException();
+        var result = await roleService.DeleteById(item.Id);
+        if (!result.Success)
+        {
+            await Alert.Show(AlertType.Error, result.Error!.Description);
+            return;
+        }
+        
+        Items.Remove(item);
+        await Alert.Show(AlertType.Success, "Role deleted successfully");
     }
 
     protected override Task Edit(RoleListItem item)
@@ -30,11 +37,11 @@ public class RolesPageViewModel(
 
     protected override async Task LoadData()
     {
-        // var result = await roleService.GetAll();
-        // if(!result.Success)
-        //     await Alert.Show(AlertType.Error, result.Error!.Description);
-        //
-        // Items = new ObservableCollection<RoleListItem>(result.Value!);
+        var result = await roleService.GetList();
+        if(!result.Success)
+            await Alert.Show(AlertType.Error, result.Error!.Description);
+        
+        Items = new ObservableCollection<RoleListItem>(result.Value!);
     }
     
 
