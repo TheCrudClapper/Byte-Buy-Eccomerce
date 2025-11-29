@@ -47,6 +47,9 @@ public class RoleService : IRoleService
         if (role is null)
             return Result.Failure(Error.NotFound);
 
+        if(await _roleRepository.DoesRoleHaveActiveUsers(roleId))
+            return Result.Failure(RoleErrors.RoleHasActiveUsers);
+
         role.Deactivate();
 
         var updationResult = await _roleManager.UpdateAsync(role);

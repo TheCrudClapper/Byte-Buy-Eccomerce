@@ -7,4 +7,7 @@ public class RoleErrors
 
     public static readonly Error NotFound = new Error(
        404, "Role provided doesnt exists");
+
+    public static readonly Error RoleHasActiveUsers = new Error(
+        400, "Can't delete role with active users!");
 }

@@ -24,6 +24,6 @@ public class RoleService(IRoleHttpClient roleClient)
     public override Task<Result<RoleResponse>> GetById(Guid id)
         => throw new NotImplementedException();
 
-    public override Task<Result> DeleteById(Guid id)
-        => throw new NotImplementedException();
+    public override async Task<Result> DeleteById(Guid id)
+        => await roleClient.DeleteByIdAsync(id);
 }

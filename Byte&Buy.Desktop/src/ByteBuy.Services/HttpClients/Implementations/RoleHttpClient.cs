@@ -12,5 +12,7 @@ public class RoleHttpClient(HttpClient httpClient) : HttpClientBase(httpClient),
 
     public async Task<Result<IEnumerable<RoleResponse>>> GetAllAsync()
         => await GetAsync<IEnumerable<RoleResponse>>("roles");
-    
+
+    public async Task<Result> DeleteByIdAsync(Guid id)
+        => await DeleteAsync($"roles/{id}");
 }

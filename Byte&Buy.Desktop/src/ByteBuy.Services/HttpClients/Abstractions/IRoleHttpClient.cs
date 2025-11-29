@@ -8,4 +8,5 @@ public interface IRoleHttpClient
 {
     Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListItemsAsync();
     Task<Result<IEnumerable<RoleResponse>>> GetAllAsync();
+    Task<Result> DeleteByIdAsync(Guid id);
 }
