@@ -60,21 +60,20 @@
                     BorderThickness="1"
                     BorderBrush="{DynamicResource PrimaryBrush}"
                     CornerRadius="10">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Image VerticalAlignment="Center"
-                               Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                               Height="10"
-                               Width="10" />
-                        <Label Content="Permissions:"
-                               Classes="sectionLabel" />
-                        <Label Content="{Binding PermissionListBox}"
-                               Classes="sectionLabel" />
-                    </StackPanel>
-
-                    <!-- Permission List Box -->
-                    <views:PermissionListBoxView DataContext="{Binding }" />
-                </StackPanel>
+                <Grid RowDefinitions="50, *" ColumnDefinitions="5*, 1*, 94*">
+                    <Image Grid.Row="0" Grid.Column="0"
+                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                           Height="10"
+                           Width="10" />
+                    <Label Grid.Row="0" Grid.Column="2" Content="Permissions:"
+                           VerticalContentAlignment="Center"
+                           Classes="sectionLabel" />
+                    <views:PermissionListBoxView
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        DataContext="{Binding PermissionListBox}" />
+                </Grid>
             </Border>
 
             <!-- Form Section -->

@@ -6,22 +6,24 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ByteBuy.UI.Views.Shared.PermissionListBoxView"
              x:DataType="vm:PermissionListBoxViewModel">
-    
+
     <UserControl.Styles>
         <StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
     </UserControl.Styles>
-    
-    <ListBox SelectionMode="Multiple"
-             SelectedItems="{Binding SelectedPermission}"
-             ItemsSource="{Binding Permissions}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <Grid ColumnDefinitions="10*, 80*, 10*">
-                    <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding RowNumber}" />
-                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" />
-                    <CheckBox Grid.Column="2" IsChecked="{Binding IsSelected}" />
-                </Grid>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+
+    <Grid>
+        <ListBox SelectionMode="Multiple"
+                 SelectedItems="{Binding SelectedPermission}"
+                 ItemsSource="{Binding Permissions}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="10*, 80*, 10*">
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding RowNumber}" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" />
+                        <CheckBox Grid.Column="2" IsChecked="{Binding IsSelected}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </UserControl>
