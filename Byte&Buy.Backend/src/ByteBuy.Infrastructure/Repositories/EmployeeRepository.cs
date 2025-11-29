@@ -44,12 +44,20 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
             .FirstOrDefaultAsync(expression, ct);
     }
 
-    public async Task<IEnumerable<Employee>> GetAllWithRolesAsync(CancellationToken ct = default)
+    public async Task<IEnumerable<Employee>> GetAllWithRolesAsync(CancellationToken ct)
     {
         return await _context.Employees
             .AsNoTracking()
             .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .ToListAsync(ct);
+    }
+
+    public async Task<Employee?> GetWithRolesById(Guid employeeId, CancellationToken ct)
+    {
+        return await _context.Employees
+             .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync(e => e.Id == employeeId, ct);
     }
 }

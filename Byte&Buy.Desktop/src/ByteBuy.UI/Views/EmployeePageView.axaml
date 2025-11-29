@@ -51,6 +51,7 @@
                 </StackPanel>
             </Border>
 
+            <!-- Permissions Section -->
             <Border Grid.Row="2"
                     VerticalAlignment="Top"
                     Padding="10"
@@ -65,16 +66,18 @@
                                Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
                                Height="10"
                                Width="10" />
-                        <Label Content="Permissions"
+                        <Label Content="Permissions:"
                                Classes="sectionLabel" />
-                        <ListBox>
-
-                        </ListBox>
+                        <Label Content="{Binding PermissionListBox}"
+                               Classes="sectionLabel" />
                     </StackPanel>
+
+                    <!-- Permission List Box -->
+                    <views:PermissionListBoxView DataContext="{Binding }" />
                 </StackPanel>
             </Border>
 
-
+            <!-- Form Section -->
             <Border Grid.Row="1"
                     Grid.RowSpan="2"
                     Padding="20"
@@ -126,6 +129,7 @@
 
                         </Grid>
 
+                        <!-- Address Section -->
                         <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
                             <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                                 <Image VerticalAlignment="Center"

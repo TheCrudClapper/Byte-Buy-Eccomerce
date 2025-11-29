@@ -1,8 +1,9 @@
-﻿using ByteBuy.Services.ModelsUI.Abstractions;
+﻿using System;
+using ByteBuy.Services.ModelsUI.Abstractions;
 
-namespace ByteBuy.Services.ModelsUI.Employee;
+namespace ByteBuy.UI.ModelsUI.Employee;
 
-public class EmployeeListItem : IDataGridItem
+public class EmployeeListItem : IListItem
 {
     public int RowNumber { get; set; }
     public Guid Id { get; set; }

@@ -2,6 +2,7 @@
 
 public record EmployeeResponse(
     Guid Id,
+    Guid RoleId,
     string FirstName,
     string LastName,
     string Email,

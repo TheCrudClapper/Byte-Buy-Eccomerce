@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddTransient<PasswordChangeViewModel>();
         services.AddTransient<AlertViewModel>();
         services.AddTransient<CompanyInfoPageViewModel>();
+        services.AddTransient<PermissionListBoxViewModel>();
         return services;
     }
 }

@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 namespace ByteBuy.UI.ViewModels.Base;
 
 public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel 
-    where TDataGridItem: IDataGridItem
+    where TDataGridItem: IListItem
 {
     #region MVVM Field
     

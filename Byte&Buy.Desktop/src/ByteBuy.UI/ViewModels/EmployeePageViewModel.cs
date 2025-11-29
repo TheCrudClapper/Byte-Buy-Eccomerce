@@ -5,21 +5,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO;
 using ByteBuy.Services.DTO.Employee;
-using ByteBuy.Services.DTO.Permission;
-using ByteBuy.Services.ServiceContracts;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
-using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeePageViewModel : PageViewModel
+public sealed partial class EmployeePageViewModel : ViewModelSingle
 {
-    #region Fields
+    #region MVVM Fields
 
     [ObservableProperty] [Required] private string _firstName = string.Empty;
 
@@ -47,46 +43,32 @@ public partial class EmployeePageViewModel : PageViewModel
 
     [ObservableProperty] [MaxLength(15)] private string? _phoneNumber = string.Empty;
 
-    [ObservableProperty] [Required] [MinLength(8)]
-    private string _password = string.Empty;
+    [ObservableProperty] private string _password = string.Empty;
 
     [ObservableProperty] [Required(ErrorMessage = "Choose employee's role")]
     private SelectListItemResponse? _selectedRole;
-
+    
+    [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
     #endregion
 
-    private bool _isEditMode = false;
-    public Guid? _editingItemId = Guid.Empty;
-    private readonly MainWindowViewModel _mainWindowViewModel;
     private readonly EmployeeService _employeeService;
     private readonly RoleService _roleService;
-    private readonly IPermissionService _permissionService;
-    private PageFactory _pageFactory;
-
-    [ObservableProperty] private ObservableCollection<PermissionItem> _permissions = [];
-
-    [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
-
+    public PermissionListBoxViewModel  PermissionListBox { get; }
+    
     public EmployeePageViewModel(
         RoleService roleService,
-        MainWindowViewModel main,
         EmployeeService employeeService,
-        IPermissionService permissionService,
-        PageFactory pageFactory,
+        PermissionListBoxViewModel permissionListBox,
         AlertViewModel alert) : base(alert)
     {
         _employeeService = employeeService;
-        _permissionService = permissionService;
+        PermissionListBox = permissionListBox;
         _roleService = roleService;
-        _pageFactory = pageFactory;
-        _mainWindowViewModel = main;
         PageName = ApplicationPageNames.Employee;
-        _ = LoadPermissions();
         _ = LoadRoles();
     }
 
-    [RelayCommand]
-    private void Clear()
+    protected override void Clear()
     {
         FirstName = string.Empty;
         LastName = string.Empty;
@@ -102,16 +84,16 @@ public partial class EmployeePageViewModel : PageViewModel
 
     public void InitializeForAdd()
     {
-        _isEditMode = false;
-        _editingItemId = null;
+        IsEditMode = false;
+        EditingItemId = null;
 
         Clear();
     }
 
     public async Task InitializeForEdit(Guid id)
     {
-        _isEditMode = true;
-        _editingItemId = id;
+        IsEditMode = true;
+        EditingItemId = id;
 
         var result = await _employeeService.GetById(id);
         if (!result.Success)
@@ -131,20 +113,26 @@ public partial class EmployeePageViewModel : PageViewModel
         PostalCode = item.PostalCode;
         City = item.City;
         Country = item.Country;
+        SelectedRole = Roles.FirstOrDefault(r => r.Id == item.RoleId);
     }
 
-    [RelayCommand]
-    private async Task Save()
+    protected override async Task Save()
     {
         ValidateAllProperties();
         if (HasErrors)
             return;
-        if (_isEditMode)
+        if (IsEditMode)
         {
             await UpdateItem();
         }
         else
         {
+            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
+            {
+                await Alert.Show(AlertType.Error, "Password is required for new employees.");
+                return;
+            }
+
             await AddItem();
         }
     }
@@ -164,7 +152,7 @@ public partial class EmployeePageViewModel : PageViewModel
 
     private async Task UpdateItem()
     {
-        if(_editingItemId is null)
+        if (EditingItemId is null)
             return;
 
         var request = new EmployeeUpdateRequest(
@@ -175,25 +163,19 @@ public partial class EmployeePageViewModel : PageViewModel
             PostalCode,
             City,
             Country,
-            PhoneNumber!,
-            FlatNumber
-            );
+            PhoneNumber,
+            FlatNumber,
+            Password
+        );
 
-        var result = await _employeeService.Update(_editingItemId.Value,  request);
+        var result = await _employeeService.Update(EditingItemId.Value, request);
         if (!result.Success)
+        {
             await Alert.Show(AlertType.Error, result.Error!.Description);
-        
-        await Alert.Show(AlertType.Success, "Employee updated successfully");
-        
-    }
+            return;
+        }
 
-    private async Task LoadPermissions()
-    {
-        var result = await _permissionService.GetSelectList();
-        var permissionItems = result.Value!
-            .Select(p => new PermissionItem(p.Id, p.Title, false))
-            .ToList();
-        Permissions = new ObservableCollection<PermissionItem>(permissionItems);
+        await Alert.Show(AlertType.Success, "Employee updated successfully");
     }
 
     private async Task LoadRoles()

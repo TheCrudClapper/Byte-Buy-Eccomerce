@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Services.ModelsUI.Abstractions;
 
-public interface IDataGridItem
+public interface IListItem
 {
     int RowNumber { get; set; }
 }

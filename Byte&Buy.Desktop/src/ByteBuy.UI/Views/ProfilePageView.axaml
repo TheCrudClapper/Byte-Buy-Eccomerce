@@ -139,11 +139,11 @@
                                     Margin="0,0,0,10">
                             <Button
                                 VerticalAlignment="Bottom"
-                                Command="{Binding ClearFieldsCommand}"
+                                Command="{Binding ClearCommand}"
                                 Margin="5,0"
                                 Content="Clear" />
                             <Button
-                                Command="{Binding UpdateAddressCommand}"
+                                Command="{Binding SaveCommand}"
                                 VerticalAlignment="Bottom"
                                 Content="Save Changes" />
                         </StackPanel>

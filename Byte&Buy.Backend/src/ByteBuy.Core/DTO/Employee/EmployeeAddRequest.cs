@@ -9,7 +9,7 @@ public record EmployeeAddRequest(
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,
-    [Required] string Password,
+    [Required, MinLength(8)] string Password,
     [MaxLength(15)] string? PhoneNumber,
     [Required, MaxLength(50)] string Street,
     [Required, MaxLength(10)] string HouseNumber,

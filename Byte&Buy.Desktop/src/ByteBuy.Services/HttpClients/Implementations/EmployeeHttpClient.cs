@@ -22,7 +22,7 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
         => GetAsync<EmployeeResponse>($"employees/{id}");
 
     public Task<Result<EmployeeResponse>> UpdateEmployeeAsync(Guid id, EmployeeUpdateRequest request)
-        => PutAsync<EmployeeResponse>("employees/{id}", request);
+        => PutAsync<EmployeeResponse>($"employees/{id}", request);
 
     public Task<Result> DeleteEmployeeByIdAsync(Guid id)
         => DeleteAsync($"employees/{id}");

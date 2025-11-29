@@ -15,19 +15,6 @@ namespace ByteBuy.UI
         [STAThread]
         public static void Main(string[] args) => BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
-        // public static void Main(string[] args)
-        // {
-        //     var builder = Host.CreateApplicationBuilder();
-        //
-        //     builder.Services.AddServiceLayer();
-        //     builder.Services.RegisterViewModels();
-        //     builder.Services.AddAuthHeaderHandler();
-        //     var host = builder.Build();
-        //     
-        //     BuildAvaloniaAppWithDi(host)
-        //         .StartWithClassicDesktopLifetime(args);
-        // }
-
        
         // Avalonia configuration, don't remove; also used by visual designer.
         //Designer

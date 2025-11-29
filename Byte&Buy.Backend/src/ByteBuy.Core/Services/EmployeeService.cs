@@ -13,6 +13,7 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IUserRepository _userRepository;
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IPasswordService _passwordService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
 
@@ -20,12 +21,14 @@ public class EmployeeService : IEmployeeService
         IUserRepository applicationUserRepository,
         IEmployeeRepository employeeRepository,
         UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager)
+        RoleManager<ApplicationRole> roleManager,
+        IPasswordService passwordService)
     {
         _userRepository = applicationUserRepository;
         _roleManager = roleManager;
         _userManager = userManager;
         _employeeRepository = employeeRepository;
+        _passwordService = passwordService;
     }
     public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request)
     {
@@ -81,7 +84,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetByIdAsync(employeeId, ct);
+        var employee = await _employeeRepository.GetWithRolesById(employeeId, ct);
 
         if (employee is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
@@ -91,7 +94,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct)
     {
-        var employees = await _employeeRepository.GetAllAsync(ct);
+        var employees = await _employeeRepository.GetAllWithRolesAsync(ct);
 
         return employees.Select(e => e.ToEmployeeResponse())
             .ToList();
@@ -132,6 +135,17 @@ public class EmployeeService : IEmployeeService
         if (updateResult.IsFailure)
             return Result.Failure<EmployeeResponse>(updateResult.Error);
 
+        if (!string.IsNullOrWhiteSpace(request.Password))
+        {
+            var validation = await _passwordService.ValdiateAsync(employee, request.Password);
+            if (!validation.Succeeded)
+                return validation.ToResult<EmployeeResponse>();
+
+            var change = await _passwordService.ChangePasswordAsync(employee, request.Password);
+            if(!validation.Succeeded)
+                return change.ToResult<EmployeeResponse>();
+        }
+
         var roleChange = await UpdateEmployeeRole(employee, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<EmployeeResponse>(roleChange.Error);
@@ -156,7 +170,7 @@ public class EmployeeService : IEmployeeService
                                 request.FlatNumber,
                                 request.PhoneNumber);
 
-        if(updateResult.IsFailure)
+        if (updateResult.IsFailure)
             return Result.Failure<EmployeeAddressResponse>(updateResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);

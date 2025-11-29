@@ -19,6 +19,7 @@ public interface IEmployeeRepository
     Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllWithRolesAsync(CancellationToken ct = default);
-    
+    Task<Employee?> GetWithRolesById(Guid employeeId, CancellationToken ct = default);
+
 }
  

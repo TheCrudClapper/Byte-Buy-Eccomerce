@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
-using ByteBuy.Services.ModelsUI.Employee;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
+using ByteBuy.UI.ModelsUI.Employee;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 
@@ -25,7 +26,7 @@ public class RolesPageViewModel(
             await Alert.Show(AlertType.Error, result.Error!.Description);
             return;
         }
-        
+
         Items.Remove(item);
         await Alert.Show(AlertType.Success, "Role deleted successfully");
     }
@@ -37,15 +38,22 @@ public class RolesPageViewModel(
 
     protected override async Task LoadData()
     {
-        var result = await roleService.GetList();
-        if(!result.Success)
+        var result = await roleService.GetAll();
+        if (!result.Success)
             await Alert.Show(AlertType.Error, result.Error!.Description);
+
+        var list = result.Value.Select((r, index) => new RoleListItem
+            {
+                Id = r.Id,
+                Name = r.Name,
+                RowNumber = index + 1
+            })
+            .ToList();
         
-        Items = new ObservableCollection<RoleListItem>(result.Value!);
+        Items = new ObservableCollection<RoleListItem>(list);
     }
-    
+
 
     protected override void OpenAddPage()
         => Main.CurrentPage = PageFactory.GetPageViewModel(ApplicationPageNames.Role);
-
 }

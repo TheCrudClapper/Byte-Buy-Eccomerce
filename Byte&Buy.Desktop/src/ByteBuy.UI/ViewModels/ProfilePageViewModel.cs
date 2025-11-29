@@ -11,7 +11,7 @@ using ByteBuy.UI.ViewModels.Base;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ProfilePageViewModel : PageViewModel
+public partial class ProfilePageViewModel : ViewModelSingle
 {
     #region Fields
 
@@ -73,21 +73,8 @@ public partial class ProfilePageViewModel : PageViewModel
         PasswordComponent  = passwordComponent; ;
         _ = LoadData();
     }
-
-    [RelayCommand]
-    private void ClearFields()
-    {
-        Street = string.Empty;
-        HouseNumber = string.Empty;
-        FlatNumber = string.Empty;
-        City = string.Empty;
-        PhoneNumber = string.Empty;
-        Country = string.Empty;
-        PostalCode = string.Empty;
-    }
-
-    [RelayCommand]
-    private async Task UpdateAddress()
+    
+    protected override async Task Save()
     {
         ValidateAllProperties();
         if(HasErrors)
@@ -110,7 +97,18 @@ public partial class ProfilePageViewModel : PageViewModel
         }
             
     }
-    
+
+    protected override void Clear()
+    {
+        Street = string.Empty;
+        HouseNumber = string.Empty;
+        FlatNumber = string.Empty;
+        City = string.Empty;
+        PhoneNumber = string.Empty;
+        Country = string.Empty;
+        PostalCode = string.Empty;
+    }
+
     [RelayCommand]
     private async Task LoadData()
     {

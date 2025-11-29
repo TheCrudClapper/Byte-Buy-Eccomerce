@@ -15,6 +15,7 @@ public record EmployeeUpdateRequest(
     string PostalCode,
     string City,
     string Country, 
-    string PhoneNumber,
-    string? FlatNumber
+    string? PhoneNumber,
+    string? FlatNumber,
+    string Password
     );

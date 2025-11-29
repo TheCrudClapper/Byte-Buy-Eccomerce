@@ -9,6 +9,7 @@ public static class EmployeeMappings
     {
         return new EmployeeResponse(
             employee.Id,
+            employee.UserRoles?.FirstOrDefault()?.Role.Id ?? Guid.Empty,
             employee.FirstName,
             employee.LastName,
             employee.Email!,
@@ -18,8 +19,7 @@ public static class EmployeeMappings
             employee.HomeAddress.City,
             employee.HomeAddress.Country,
             employee.HomeAddress.FlatNumber,
-            employee.PhoneNumber
-            );
+            employee.PhoneNumber);
     }
 
     public static EmployeeAddressResponse ToEmployeAddressResponse(this Employee employee)

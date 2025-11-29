@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IDeliveryService, DeliveryService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IApplicationUserService, ApplicationUserService>();
+        services.AddScoped<IPasswordService, PasswordService>();
         return services;
     }
 }

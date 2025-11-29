@@ -2,12 +2,39 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
+            <StackPanel>
+                <CheckBox/>
+                <CheckBox Content="Content"/>
+                <CheckBox IsChecked="True"/>
+                <CheckBox IsEnabled="False"/>
+                <CheckBox IsEnabled="False"/>
+            </StackPanel>
         </Border>
     </Design.PreviewWith>
 
     <!-- Add Styles Here -->
 
+    <!-- Checkbox Styles -->
+    <Style Selector="CheckBox /template/ Border#NormalRectangle">
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+    </Style>
+    
+    <Style Selector="CheckBox:pointerover /template/ Border#NormalRectangle">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+    </Style>
+    
+    <Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
+        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+    </Style>
+    
+    <Style Selector="CheckBox:disabled /template/ Border#NormalRectangle">
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="Background" Value="DarkGray"/>
+    </Style>
+    
     <!-- Button Styles -->
     <Style Selector="Button">
         <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>

@@ -2,8 +2,6 @@
 using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.HttpClients.Abstractions;
-using ByteBuy.Services.Mappings;
-using ByteBuy.Services.ModelsUI.Employee;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -30,20 +28,9 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     public override async Task<Result> DeleteById(Guid id)
         => await employeeHttpClient.DeleteEmployeeByIdAsync(id);
 
-    public async Task<Result<IEnumerable<EmployeeListItem>>> GetList()
-    {
-        var response = await employeeHttpClient.GetListAsync();
-        if (!response.Success)
-            return Result<IEnumerable<EmployeeListItem>>.Fail(response.Error!);
-
-        var list = response.Value!
-            .Select(e => e.ToEmployeeListItem())
-            .ToList();
-
-        return Result<IEnumerable<EmployeeListItem>>.Ok(list);
-    }
-
-
+    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
+        => await employeeHttpClient.GetListAsync();
+    
     public async Task<Result<EmployeeResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();
 

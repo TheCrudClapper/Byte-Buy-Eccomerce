@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CompanyInfoPageViewModel : PageViewModel
+public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
@@ -56,9 +56,8 @@ public partial class CompanyInfoPageViewModel : PageViewModel
         _companyInfoService = companyInfoService;
         _ = LoadData();
     }
-
-    [RelayCommand]
-    private void Clear()
+    
+    protected override void Clear()
     {
         CompanyName = string.Empty;
         Slogan = string.Empty;
@@ -95,9 +94,8 @@ public partial class CompanyInfoPageViewModel : PageViewModel
         Country = companyInfo.Address.Country;
         PhoneNumber = companyInfo.PhoneNumber;
     }
-
-    [RelayCommand]
-    private async Task Save()
+    
+    protected override async Task Save()
     {
         ValidateAllProperties();
 
