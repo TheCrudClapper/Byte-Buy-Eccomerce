@@ -1,3 +1,5 @@
-﻿namespace ByteBuy.Core.DTO.Role;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record RoleResponse(Guid Id, string Name);
+namespace ByteBuy.Core.DTO.Role;
+
+public record RoleResponse(Guid Id, string Name, [Required] IEnumerable<Guid> PermissionIds);

@@ -49,4 +49,24 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
         return await _context.Permissions
             .ToListAsync(ct);
     }
+
+    public async Task<IEnumerable<Guid>> GetPermissionIdsByRoleIdAsync(Guid roleId, CancellationToken ct = default)
+    {
+        return await _context.RolePermissions
+            .Where(rp => rp.RoleId == roleId).Select(rp => rp.Id)
+            .ToListAsync(ct);
+    }
+
+    public async Task<IEnumerable<Guid>> GetAllPermissionIdsAsync(CancellationToken ct = default)
+    {
+        return await _context.RolePermissions
+            .Select(rp => rp.Id)
+            .ToListAsync(ct);
+    }
+
+    public async Task<IEnumerable<RolePermission>> GetAllRolePermissionsAsync(CancellationToken ct = default)
+    {
+        return await _context.RolePermissions
+            .ToListAsync(ct);
+    }
 }

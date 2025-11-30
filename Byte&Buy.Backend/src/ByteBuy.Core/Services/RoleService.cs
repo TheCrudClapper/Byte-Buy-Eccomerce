@@ -13,12 +13,15 @@ namespace ByteBuy.Core.Services;
 public class RoleService : IRoleService
 {
     private readonly IRoleRepository _roleRepository;
+    private readonly IPermissionRepository _permissionRepository;
     private readonly RoleManager<ApplicationRole> _roleManager;
     public RoleService(IRoleRepository roleRepository,
-        RoleManager<ApplicationRole> roleManager)
+        RoleManager<ApplicationRole> roleManager,
+        IPermissionRepository permissionRepository)
     {
         _roleRepository = roleRepository;
         _roleManager = roleManager;
+        _permissionRepository = permissionRepository;
     }
 
     public async Task<Result<RoleResponse>> AddRole(RoleAddRequest request)
@@ -36,8 +39,9 @@ public class RoleService : IRoleService
         var roleCreation =  await _roleManager.CreateAsync(role);
         if (!roleCreation.Succeeded)
             return roleCreation.ToResult<RoleResponse>();
-
-        return role.ToRoleResponse();
+        
+        //temporary
+        return role.ToRoleResponse(Enumerable.Empty<Guid>());
     }
 
     public async Task<Result> DeleteRole(Guid roleId)
@@ -62,9 +66,20 @@ public class RoleService : IRoleService
     public async Task<Result<IEnumerable<RoleResponse>>> GetAllRoles(CancellationToken ct = default)
     {
         var roles = await _roleRepository.GetAllAsync(ct);
+        var rolePermissions = await _permissionRepository.GetAllRolePermissionsAsync(ct);
 
-        return roles.Select(r => r.ToRoleResponse())
-            .ToList();
+        List<RoleResponse> roleDtos = []; 
+        foreach (var role in roles)
+        {
+            var permissionsIds = rolePermissions
+                .Where(rp => rp.RoleId == role.Id)
+                .Select(rp => rp.PermissionId)
+                .ToList();
+
+            roleDtos.Add(role.ToRoleResponse(permissionsIds));
+        }
+
+        return Result.Success(roleDtos.AsEnumerable());
     }
 
     public async Task<Result<RoleResponse>> GetRole(Guid roleId, CancellationToken ct = default)
@@ -73,7 +88,9 @@ public class RoleService : IRoleService
         if (role is null)
             return Result.Failure<RoleResponse>(Error.NotFound);
 
-        return role.ToRoleResponse();
+        var permissionIds = await _permissionRepository.GetPermissionIdsByRoleIdAsync(roleId);
+
+        return role.ToRoleResponse(permissionIds);
     }
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
@@ -97,7 +114,7 @@ public class RoleService : IRoleService
         var updationResult = await _roleManager.UpdateAsync(role);
         if (!updationResult.Succeeded)
             return updationResult.ToResult<RoleResponse>();
-
-        return role.ToRoleResponse();
+        //temporary
+        return role.ToRoleResponse(Enumerable.Empty<Guid>());
     }
 }

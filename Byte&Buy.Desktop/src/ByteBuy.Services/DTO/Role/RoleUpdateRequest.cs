@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace ByteBuy.Services.DTO.Role;
 
-namespace ByteBuy.Services.DTO.Role;
+public record RoleUpdateRequest(string Name, IList<Guid> PermissionIds);
 
-public record RoleUpdateRequest(string Name);

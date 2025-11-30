@@ -8,4 +8,5 @@ public interface IRoleRepository
     Task<ApplicationRole?> GetByIdAsync(Guid roleId, CancellationToken ct = default);
     Task<bool> ExistsAsync(string roleName, CancellationToken ct = default);
     Task<bool> DoesRoleHaveActiveUsers(Guid roleId);
+
 }

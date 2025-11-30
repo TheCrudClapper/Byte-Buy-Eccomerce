@@ -1,13 +1,10 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
 namespace ByteBuy.API.Controllers;
 
-[ApiController, Authorize]
+[ApiController]
 [Route("api/[controller]")]
 public class RolesController : BaseApiController
 {
