@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Services.Stores.Abstractions;
+﻿namespace ByteBuy.Services.InfraContracts.Stores;
 
 //runtime service that stores user auth token
 public interface ITokenStore

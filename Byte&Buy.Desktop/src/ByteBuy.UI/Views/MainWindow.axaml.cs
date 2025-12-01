@@ -15,7 +15,7 @@ namespace ByteBuy.UI.Views
         {
             InitializeComponent();
         }
-        
+
         public MainWindow(MainWindowViewModel vm, WindowFactory factory)
         {
             InitializeComponent();

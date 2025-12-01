@@ -1,4 +1,3 @@
-﻿namespace ByteBuy.Services.DTO;
+﻿namespace ByteBuy.Services.DTO.Shared;
 
 public record SelectListItemResponse(Guid Id, string Title);
- 

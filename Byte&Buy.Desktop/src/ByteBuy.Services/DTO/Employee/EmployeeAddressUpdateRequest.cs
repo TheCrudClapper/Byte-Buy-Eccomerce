@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Services.DTO.Employee;
+﻿namespace ByteBuy.Services.DTO.Employee;
 
 public record EmployeeAddressUpdateRequest(
     string Street,

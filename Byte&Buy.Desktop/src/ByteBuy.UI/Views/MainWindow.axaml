@@ -77,12 +77,23 @@
                         Classes.active="{Binding IsEmployeesPageActive}"
                         Classes="sidebarMenuButton">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
+                            <Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
                                    Width="20" Height="20" />
                             <Label Content="Employees" />
                         </StackPanel>
                     </Button>
 
+                    <Button
+                        Command="{Binding GoToRolesCommand}"
+                        Classes.active="{Binding IsRolesPageActive}"
+                        Classes="sidebarMenuButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
+                                   Width="20" Height="20" />
+                            <Label Content="Users" />
+                        </StackPanel>
+                    </Button>
+                    
                     <Button
                         Command="{Binding GoToRolesCommand}"
                         Classes.active="{Binding IsRolesPageActive}"

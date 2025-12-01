@@ -21,11 +21,11 @@ public static class DependencyInjection
     {
         //Singletons
         services.AddSingleton<MainWindowViewModel>();
-        
+
         //Windows
         services.AddTransient<LoginWindow>();
         services.AddSingleton<MainWindow>();
-        
+
         //Transients
         services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();

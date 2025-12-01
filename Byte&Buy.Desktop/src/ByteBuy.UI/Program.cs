@@ -1,9 +1,5 @@
-﻿using System;
-using Avalonia;
-using ByteBuy.Services.Extensions;
-using ByteBuy.Services.Handlers;
-using ByteBuy.UI.Extensions;
-using Microsoft.Extensions.Hosting;
+﻿using Avalonia;
+using System;
 
 namespace ByteBuy.UI
 {
@@ -15,14 +11,14 @@ namespace ByteBuy.UI
         [STAThread]
         public static void Main(string[] args) => BuildAvaloniaApp()
             .StartWithClassicDesktopLifetime(args);
-       
+
         // Avalonia configuration, don't remove; also used by visual designer.
         //Designer
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .UseSkia()  
+                .UseSkia()
                 .LogToTrace();
-        
+
     }
 }

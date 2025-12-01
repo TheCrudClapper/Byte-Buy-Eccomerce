@@ -1,9 +1,9 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Employee;
-using ByteBuy.Services.HttpClients.Abstractions;
+﻿using ByteBuy.Services.DTO.Employee;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.HttpClients.Implementations;
+namespace ByteBuy.Infrastructure.HttpClients;
 
 public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEmployeeHttpClient
 {

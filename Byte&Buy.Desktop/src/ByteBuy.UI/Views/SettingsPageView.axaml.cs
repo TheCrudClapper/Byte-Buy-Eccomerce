@@ -9,7 +9,7 @@ public partial class SettingsPageView : UserControl
     {
         InitializeComponent();
     }
-    
+
     public SettingsPageView(SettingsPageViewModel vm)
     {
         InitializeComponent();

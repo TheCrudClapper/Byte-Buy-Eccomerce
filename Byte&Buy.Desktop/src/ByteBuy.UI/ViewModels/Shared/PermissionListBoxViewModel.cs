@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Permission;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
@@ -14,7 +14,7 @@ public partial class PermissionListBoxViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<PermissionListItem> _permissions = [];
     [ObservableProperty] private ObservableCollection<PermissionListItem> _selectedPermission = [];
     #endregion
-    
+
     private readonly IPermissionService _permissionService;
 
     public PermissionListBoxViewModel(IPermissionService permissionService)
@@ -22,12 +22,12 @@ public partial class PermissionListBoxViewModel : ViewModelBase
         _permissionService = permissionService;
         _ = LoadPermissions();
     }
-    
+
     private async Task LoadPermissions()
     {
         var result = await _permissionService.GetSelectList();
         if (!result.Success || result.Value is null)
-           return;
+            return;
 
         var list = result.Value.Select((p, index) => new PermissionListItem()
         {
@@ -36,7 +36,7 @@ public partial class PermissionListBoxViewModel : ViewModelBase
             IsSelected = false,
             Name = p.Title,
         });
-        
+
         Permissions = new ObservableCollection<PermissionListItem>(list);
         foreach (var perm in Permissions)
         {

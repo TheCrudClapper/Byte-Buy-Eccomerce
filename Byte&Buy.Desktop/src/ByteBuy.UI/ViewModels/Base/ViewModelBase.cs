@@ -4,6 +4,6 @@ namespace ByteBuy.UI.ViewModels.Base
 {
     public class ViewModelBase : ObservableValidator
     {
-        
+
     }
 }

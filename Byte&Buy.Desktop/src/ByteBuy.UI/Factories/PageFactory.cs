@@ -1,6 +1,5 @@
-﻿using System;
-using ByteBuy.UI.Data;
-using ByteBuy.UI.ViewModels;
+﻿using ByteBuy.UI.Data;
+using System;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 
 namespace ByteBuy.UI.Factories;

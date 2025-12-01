@@ -1,9 +1,9 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Role;
-using ByteBuy.Services.HttpClients.Abstractions;
+﻿using ByteBuy.Services.DTO.Role;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.HttpClients.Implementations;
+namespace ByteBuy.Infrastructure.HttpClients;
 
 public class RoleHttpClient(HttpClient httpClient) : HttpClientBase(httpClient), IRoleHttpClient
 {

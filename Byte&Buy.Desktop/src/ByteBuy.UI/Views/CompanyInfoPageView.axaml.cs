@@ -1,7 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using ByteBuy.UI.ViewModels;
+﻿using Avalonia.Controls;
 
 namespace ByteBuy.UI.Views;
 

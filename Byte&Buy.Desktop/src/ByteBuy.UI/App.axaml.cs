@@ -1,10 +1,9 @@
-using System;
-using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Services.Extensions;
 using ByteBuy.Services.Handlers;
 using ByteBuy.UI.Data;
@@ -14,6 +13,8 @@ using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 
 
@@ -21,20 +22,21 @@ namespace ByteBuy.UI
 {
     public partial class App : Application
     {
-        
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
         }
-        
+
         public override void OnFrameworkInitializationCompleted()
         {
             //Registering Services
             var services = new ServiceCollection();
             services.RegisterViewModels();
             services.AddServiceLayer();
+            services.AddInfrastructureLayer();
             services.AddAuthHeaderHandler();
-            
+
             services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
             {
                 ApplicationPageNames.Dashboard => x.GetRequiredService<DashboardPageViewModel>(),
@@ -49,32 +51,32 @@ namespace ByteBuy.UI
             });
 
             services.AddSingleton<Func<ApplicationWindowNames, WindowViewModel>>(x => name => name switch
-            {  
+            {
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindowViewModel>(),
                 ApplicationWindowNames.Main => x.GetRequiredService<MainWindowViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
-            
+
             services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
             {
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindow>(),
                 ApplicationWindowNames.Main => x.GetRequiredService<MainWindow>(),
-                 _ => throw new InvalidOperationException(),
+                _ => throw new InvalidOperationException(),
             });
-            
+
             //Register factories
             services.AddSingleton<PageFactory>();
             services.AddSingleton<WindowFactory>();
-            
+
             var provider = services.BuildServiceProvider();
-            
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 DisableAvaloniaDataAnnotationValidation();
 
                 desktop.MainWindow = provider.GetRequiredService<LoginWindow>();
             }
-            
+
             base.OnFrameworkInitializationCompleted();
         }
 

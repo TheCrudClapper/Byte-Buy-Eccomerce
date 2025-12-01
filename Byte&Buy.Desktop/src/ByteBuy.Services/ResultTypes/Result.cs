@@ -1,13 +1,10 @@
-﻿using ByteBuy.Services.ServiceContracts;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ByteBuy.Services.ResultTypes;
+﻿namespace ByteBuy.Services.ResultTypes;
 
 public class Result
 {
     public bool Success { get; private set; }
     public Error? Error { get; private set; }
-    
+
     public static Result Ok() => new Result { Success = true };
     public static Result Fail(Error error) =>
         new Result { Success = false, Error = error };

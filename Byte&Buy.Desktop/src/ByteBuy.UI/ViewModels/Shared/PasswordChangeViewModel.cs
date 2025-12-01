@@ -25,7 +25,7 @@ public partial class PasswordChangeViewModel(IEmployeeService employeeService)
     [Required(ErrorMessage = "New Password is required")]
     [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
     private string _newPassword = string.Empty;
-    
+
     [ObservableProperty]
     private string _error = string.Empty;
 
@@ -45,7 +45,7 @@ public partial class PasswordChangeViewModel(IEmployeeService employeeService)
         var request = new PasswordChangeRequest(NewPassword!, CurrentPassword!, ConfirmPassword!);
         var response = await employeeService.ChangePassword(request);
         if (!response.Success)
-           Error =  response.Error!.Description;
+            Error = response.Error!.Description;
     }
 
     [RelayCommand]

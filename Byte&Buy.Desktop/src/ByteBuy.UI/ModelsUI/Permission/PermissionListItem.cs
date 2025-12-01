@@ -1,6 +1,6 @@
-﻿using System;
-using ByteBuy.Services.ModelsUI.Abstractions;
+﻿using ByteBuy.UI.ModelsUI.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 
 namespace ByteBuy.UI.ModelsUI.Permission;
 

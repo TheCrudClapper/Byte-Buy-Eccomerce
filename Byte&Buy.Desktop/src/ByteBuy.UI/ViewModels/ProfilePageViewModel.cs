@@ -1,13 +1,12 @@
-﻿using System.ComponentModel;
+﻿using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Employee;
-using ByteBuy.UI.Data;
-using ByteBuy.UI.ViewModels.Base;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -49,10 +48,10 @@ public partial class ProfilePageViewModel : ViewModelSingle
     [MaxLength(50)]
     private string _country = string.Empty;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     [MaxLength(10)]
     private string? _flatNumber = string.Empty;
-    
+
     [ObservableProperty]
     [DataType(DataType.PhoneNumber)]
     [MaxLength(15)]
@@ -70,32 +69,32 @@ public partial class ProfilePageViewModel : ViewModelSingle
     {
         PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
-        PasswordComponent  = passwordComponent; ;
+        PasswordComponent = passwordComponent; ;
         _ = LoadData();
     }
-    
+
     protected override async Task Save()
     {
         ValidateAllProperties();
-        if(HasErrors)
-            return; 
-        
+        if (HasErrors)
+            return;
+
         var request = new EmployeeAddressUpdateRequest(
             Street, HouseNumber, PostalCode, City, Country, FlatNumber, PhoneNumber
         );
-        
+
         var result = await _employeeService.UpdateEmployeeAddress(request);
 
         if (!result.Success)
         {
-            Error = result.Error!.Description; 
+            Error = result.Error!.Description;
             await Alert.Show(AlertType.Error, Error);
         }
         else
         {
             await Alert.Show(AlertType.Success, "Address Updated Successfully");
         }
-            
+
     }
 
     protected override void Clear()

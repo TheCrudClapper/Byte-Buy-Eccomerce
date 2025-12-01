@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Role;
+﻿using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -15,6 +15,7 @@ public partial class RolePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
     [ObservableProperty]
+    [Required]
     private string _roleName = string.Empty;
     #endregion
     public PermissionListBoxViewModel PermissionListBox { get; }
@@ -23,7 +24,7 @@ public partial class RolePageViewModel : ViewModelSingle
         PermissionListBoxViewModel permissionListBox,
         IRoleService roleService) : base(alert)
     {
-        _roleService = roleService; 
+        _roleService = roleService;
         PageName = ApplicationPageNames.Role;
         PermissionListBox = permissionListBox;
     }
@@ -33,7 +34,7 @@ public partial class RolePageViewModel : ViewModelSingle
         ValidateAllProperties();
         if (HasErrors)
             return;
-        
+
         if (IsEditMode)
         {
             await UpdateItem();
@@ -57,8 +58,9 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var permissionIds = result.Value.PermissionIds;
         PermissionListBox.SelectedPermission.Clear();
-        
-        var matchingPerms = PermissionListBox.Permissions.Where(p => permissionIds.Contains(p.Id));
+
+        var matchingPerms = PermissionListBox.Permissions
+            .Where(p => permissionIds.Contains(p.Id));
 
         foreach (var perm in matchingPerms)
         {
@@ -69,7 +71,7 @@ public partial class RolePageViewModel : ViewModelSingle
 
     public void InitializeForAdd()
     {
-        EditingItemId =  Guid.Empty;
+        EditingItemId = Guid.Empty;
         IsEditMode = false;
         PermissionListBox.SelectedPermission.Clear();
         Clear();
@@ -82,7 +84,7 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var selectedPermissionIds = PermissionListBox.SelectedPermission.Select(p => p.Id);
         var request = new RoleUpdateRequest(RoleName, selectedPermissionIds);
-        
+
         var response = await _roleService.Update(EditingItemId.Value, request);
         if (!response.Success)
         {
@@ -97,10 +99,13 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         var selectedPermissionIds = PermissionListBox.SelectedPermission.Select(p => p.Id);
         var request = new RoleAddRequest(RoleName, selectedPermissionIds);
-        
+
         var response = await _roleService.Add(request);
         if (!response.Success)
+        {
             await Alert.Show(AlertType.Error, response.Error!.Description);
+            return;
+        }
 
         await Alert.Show(AlertType.Success, "Successfully added role");
     }
@@ -108,5 +113,9 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         RoleName = string.Empty;
         PermissionListBox.SelectedPermission.Clear();
+        foreach (var perm in PermissionListBox.Permissions)
+        {
+            perm.IsSelected = false;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Services.ModelsUI.Abstractions;
+﻿namespace ByteBuy.UI.ModelsUI.Abstractions;
 
 public interface IListItem
 {

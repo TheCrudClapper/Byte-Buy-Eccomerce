@@ -1,4 +1,4 @@
-﻿using ByteBuy.Services.Stores.Abstractions;
+﻿using ByteBuy.Services.InfraContracts.Stores;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ByteBuy.Services.Handlers;

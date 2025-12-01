@@ -1,7 +1,7 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Auth;
+﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.DTO.Employee;
-using ByteBuy.Services.HttpClients.Abstractions;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -27,7 +27,7 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
 
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
         => await employeeHttpClient.GetListAsync();
-    
+
     public async Task<Result<EmployeeResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();
 
@@ -35,5 +35,5 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
         => await employeeHttpClient.UpdateEmployeeAddressAsync(request);
 
     public async Task<Result> ChangePassword(PasswordChangeRequest request)
-        => await userHttpClient.ChangePasswordAsync(request);    
+        => await userHttpClient.ChangePasswordAsync(request);
 }

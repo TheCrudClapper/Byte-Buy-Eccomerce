@@ -1,8 +1,7 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
+using System;
 
 namespace ByteBuy.UI
 {

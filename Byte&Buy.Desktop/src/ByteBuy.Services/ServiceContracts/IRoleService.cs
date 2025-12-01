@@ -1,5 +1,5 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Role;
+﻿using ByteBuy.Services.DTO.Role;
+using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;

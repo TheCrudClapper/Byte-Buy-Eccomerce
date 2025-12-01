@@ -1,21 +1,21 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using ByteBuy.Services.ModelsUI.Abstractions;
-using ByteBuy.UI.Factories;
+﻿using ByteBuy.UI.Factories;
+using ByteBuy.UI.ModelsUI.Abstractions;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
 
-public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel 
-    where TDataGridItem: IListItem
+public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
+    where TDataGridItem : IListItem
 {
     #region MVVM Field
-    
+
     [ObservableProperty]
     private int _itemsCount;
-    
+
     [ObservableProperty]
     private TDataGridItem? _selectedItem;
 
@@ -25,9 +25,9 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
 
     protected readonly MainWindowViewModel Main;
     protected readonly PageFactory PageFactory;
-    
+
     protected ViewModelMany(AlertViewModel alert,
-        MainWindowViewModel main, 
+        MainWindowViewModel main,
         PageFactory factory) : base(alert)
     {
         Main = main;
@@ -44,9 +44,9 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     //Updates Row Numbers everytime list gets updated
     private void UpdateRowNumbers()
     {
-        if(Items.Count == 0) return;
+        if (Items.Count == 0) return;
 
-        for(var i = 0; i < Items.Count; i++)
+        for (var i = 0; i < Items.Count; i++)
         {
             var prop = typeof(TDataGridItem).GetProperty("RowNumber");
             if (prop != null && prop.CanWrite)
@@ -56,7 +56,7 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
 
     [RelayCommand]
     protected abstract Task Delete(TDataGridItem item);
-    
+
     [RelayCommand]
     protected abstract Task Edit(TDataGridItem item);
 

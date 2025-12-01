@@ -8,5 +8,5 @@ public partial class PasswordChangeView : UserControl
     {
         InitializeComponent();
     }
-    
+
 }

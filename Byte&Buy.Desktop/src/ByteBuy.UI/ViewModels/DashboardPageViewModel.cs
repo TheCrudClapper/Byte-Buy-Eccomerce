@@ -10,7 +10,7 @@ public partial class DashboardPageViewModel : Base.PageViewModel
     {
         PageName = ApplicationPageNames.Dashboard;
     }
-    
+
     [ObservableProperty]
-    private string _test= "Just a test";
+    private string _test = "Just a test";
 }

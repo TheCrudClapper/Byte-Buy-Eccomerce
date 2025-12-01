@@ -1,11 +1,10 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.HttpClients.Abstractions;
+﻿using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
-using System.Collections.Generic;
 
-namespace ByteBuy.Services.HttpClients.Implementations;
+namespace ByteBuy.Infrastructure.HttpClients;
 
-public class PermissionHttpClient(HttpClient httpClient) 
+public class PermissionHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IPermissionHttpClient
 {
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()

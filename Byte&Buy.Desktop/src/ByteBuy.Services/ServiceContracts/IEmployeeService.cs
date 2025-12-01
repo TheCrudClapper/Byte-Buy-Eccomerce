@@ -1,7 +1,6 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Auth;
+﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.DTO.Employee;
-using ByteBuy.Services.HttpClients.Implementations;
+using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;

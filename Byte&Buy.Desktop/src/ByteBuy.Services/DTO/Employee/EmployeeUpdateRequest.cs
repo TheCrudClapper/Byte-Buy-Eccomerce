@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Services.DTO.Employee;
+﻿namespace ByteBuy.Services.DTO.Employee;
 
 /// <summary>
 /// Represents a request to update an employee's personal and contact information.
@@ -14,7 +12,7 @@ public record EmployeeUpdateRequest(
     string HouseNumber,
     string PostalCode,
     string City,
-    string Country, 
+    string Country,
     string? PhoneNumber,
     string? FlatNumber,
     string Password

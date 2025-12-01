@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
-namespace ByteBuy.Services.HttpClients.Abstractions;
+namespace ByteBuy.Infrastructure.HttpClients;
 
 public abstract class HttpClientBase
 {
@@ -132,7 +132,7 @@ public abstract class HttpClientBase
 
                 return Result<T>.Ok(payload);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Result<T>.Fail(new Error($"Invalid JSON: {ex.Message}"));
             }

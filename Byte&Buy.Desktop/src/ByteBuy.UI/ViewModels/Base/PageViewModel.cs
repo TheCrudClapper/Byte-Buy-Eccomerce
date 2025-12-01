@@ -8,7 +8,7 @@ public partial class PageViewModel : ViewModelBase
 {
     [ObservableProperty]
     private ApplicationPageNames _pageName;
-    
+
     public AlertViewModel Alert { get; }
 
     protected PageViewModel(AlertViewModel alert)

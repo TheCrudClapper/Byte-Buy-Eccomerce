@@ -1,13 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using ByteBuy.Services.DTO.Address;
+﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -15,35 +14,52 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty] [Required] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _companyName = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(20)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(20)]
     private string _tin = string.Empty;
 
-    [ObservableProperty] [Required] [EmailAddress] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [EmailAddress]
+    [MaxLength(50)]
     private string _email = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(30)] private string _slogan = string.Empty;
+    [ObservableProperty][Required][MaxLength(30)] private string _slogan = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _street = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(20)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(20)]
     private string _houseNumber = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _postalCode = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _city = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(50)]
+    [ObservableProperty]
+    [Required]
+    [MaxLength(50)]
     private string _country = string.Empty;
 
-    [ObservableProperty] [MaxLength(10)] private string? _flatNumber = string.Empty;
+    [ObservableProperty][MaxLength(10)] private string? _flatNumber = string.Empty;
 
-    [ObservableProperty] [Required] [MaxLength(16)] private string _phoneNumber = string.Empty;
+    [ObservableProperty][Required][MaxLength(16)] private string _phoneNumber = string.Empty;
 
     #endregion
 
@@ -56,7 +72,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         _companyInfoService = companyInfoService;
         _ = LoadData();
     }
-    
+
     protected override void Clear()
     {
         CompanyName = string.Empty;
@@ -69,7 +85,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         Street = string.Empty;
         FlatNumber = string.Empty;
         Country = string.Empty;
-        PhoneNumber =  string.Empty;
+        PhoneNumber = string.Empty;
     }
 
     private async Task LoadData()
@@ -94,7 +110,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         Country = companyInfo.Address.Country;
         PhoneNumber = companyInfo.PhoneNumber;
     }
-    
+
     protected override async Task Save()
     {
         ValidateAllProperties();
@@ -119,7 +135,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
                 HouseNumber = HouseNumber
             }
         };
-        
+
         var response = await _companyInfoService.UpdateCompanyInfo(request);
         if (!response.Success)
             await Alert.Show(AlertType.Error, response.Error!.Description);

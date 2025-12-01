@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using ByteBuy.UI.ViewModels.Base;
+﻿using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 

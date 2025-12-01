@@ -11,9 +11,9 @@ public partial class LoginWindow : Window
 
     public LoginWindow()
     {
-        InitializeComponent(); 
+        InitializeComponent();
     }
-    
+
     public LoginWindow(LoginWindowViewModel vm, WindowFactory windowFactory)
     {
         InitializeComponent();
@@ -25,7 +25,7 @@ public partial class LoginWindow : Window
     private void OnLoginSuccess()
     {
         var mainWindow = _windowFactory.GetWindow(ApplicationWindowNames.Main);
-        mainWindow.Show(); 
+        mainWindow.Show();
         Close();
     }
 }

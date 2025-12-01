@@ -1,6 +1,6 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.Role;
-using ByteBuy.Services.HttpClients.Abstractions;
+﻿using ByteBuy.Services.DTO.Role;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -10,10 +10,10 @@ public class RoleService(IRoleHttpClient roleClient) : IRoleService
 {
     public async Task<Result<CreatedResponse>> Add(RoleAddRequest request)
         => await roleClient.AddAsync(request);
-    
+
     public async Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request)
         => await roleClient.UpdateAsync(id, request);
-    
+
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
         => await roleClient.GetSelectListItemsAsync();
 

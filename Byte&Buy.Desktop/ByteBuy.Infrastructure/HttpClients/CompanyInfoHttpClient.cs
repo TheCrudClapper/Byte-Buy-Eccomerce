@@ -1,11 +1,11 @@
-﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.DTO.CompanyInfo;
-using ByteBuy.Services.HttpClients.Abstractions;
+﻿using ByteBuy.Services.DTO.CompanyInfo;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.HttpClients.Implementations;
+namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyInfoHttpClient(HttpClient httpClient) 
+public class CompanyInfoHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), ICompanyInfoHttpClient
 {
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()
