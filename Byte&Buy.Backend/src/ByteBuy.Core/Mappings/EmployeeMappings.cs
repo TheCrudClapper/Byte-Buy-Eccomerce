@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Employee;
 
 namespace ByteBuy.Core.Mappings;
@@ -22,19 +23,6 @@ public static class EmployeeMappings
             employee.PhoneNumber);
     }
 
-    public static EmployeeAddressResponse ToEmployeAddressResponse(this Employee employee)
-    {
-        return new EmployeeAddressResponse(
-            employee.HomeAddress.Street,
-            employee.HomeAddress.HouseNumber,
-            employee.HomeAddress.PostalCode,
-            employee.HomeAddress.City,
-            employee.HomeAddress.Country,
-            employee.HomeAddress.FlatNumber,
-            employee.PhoneNumber
-            );
-    }
-
     public static EmployeeListResponse ToEmployeeListResponse(this Employee employee)
     {
         return new EmployeeListResponse(
@@ -45,4 +33,10 @@ public static class EmployeeMappings
             employee.UserRoles?.FirstOrDefault()?.Role.Name ?? "No Role"
             );
     }
+
+    public static UpdatedResponse ToUpdatedResponse(this Employee employee)
+        => new UpdatedResponse(employee.Id, employee.DateEdited!.Value);
+
+    public static CreatedResponse ToCreatedResponse(this Employee employee)
+        => new CreatedResponse(employee.Id, employee.DateCreated);
 }

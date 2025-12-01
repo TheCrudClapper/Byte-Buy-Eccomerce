@@ -18,10 +18,10 @@ public partial class RolePageViewModel : ViewModelSingle
     private string _roleName = string.Empty;
     #endregion
     public PermissionListBoxViewModel PermissionListBox { get; }
-    private readonly RoleService _roleService;
+    private readonly IRoleService _roleService;
     public RolePageViewModel(AlertViewModel alert,
         PermissionListBoxViewModel permissionListBox,
-        RoleService roleService) : base(alert)
+        IRoleService roleService) : base(alert)
     {
         _roleService = roleService; 
         PageName = ApplicationPageNames.Role;

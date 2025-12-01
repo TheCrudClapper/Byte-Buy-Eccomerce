@@ -8,24 +8,21 @@ using ByteBuy.Services.ServiceContracts;
 namespace ByteBuy.Services.Services;
 
 public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpClient userHttpClient)
-    : CrudServiceBase<EmployeeResponse, EmployeeAddRequest, EmployeeUpdateRequest>, IEmployeeService
+    : IEmployeeService
 {
-    public override async Task<Result<EmployeeResponse>> Add(EmployeeAddRequest request)
+    public async Task<Result<CreatedResponse>> Add(EmployeeAddRequest request)
         => await employeeHttpClient.AddEmployeeAsync(request);
 
-    public override async Task<Result<EmployeeResponse>> Update(Guid id, EmployeeUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> Update(Guid id, EmployeeUpdateRequest request)
         => await employeeHttpClient.UpdateEmployeeAsync(id, request);
 
-    public override async Task<Result<IEnumerable<EmployeeResponse>>> GetAll()
+    public async Task<Result<IEnumerable<EmployeeResponse>>> GetAll()
         => await employeeHttpClient.GetAllAsync();
 
-    public override Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
-        => throw new NotImplementedException();
-
-    public override async Task<Result<EmployeeResponse>> GetById(Guid id)
+    public async Task<Result<EmployeeResponse>> GetById(Guid id)
         => await employeeHttpClient.GetById(id);
 
-    public override async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteById(Guid id)
         => await employeeHttpClient.DeleteEmployeeByIdAsync(id);
 
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
@@ -34,9 +31,9 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     public async Task<Result<EmployeeResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();
 
-    public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)
         => await employeeHttpClient.UpdateEmployeeAddressAsync(request);
 
     public async Task<Result> ChangePassword(PasswordChangeRequest request)
-        => await userHttpClient.ChangePasswordAsync(request);
+        => await userHttpClient.ChangePasswordAsync(request);    
 }

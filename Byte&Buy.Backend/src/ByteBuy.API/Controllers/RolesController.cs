@@ -14,12 +14,12 @@ public class RolesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("role:create")]
-    public async Task<ActionResult<RoleResponse>> PostRole(RoleAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostRole(RoleAddRequest request)
        => HandleResult(await _roleService.AddRole(request));
 
     [HttpPut("{roleId}")]
     //[HasPermission("role:update")]
-    public async Task<ActionResult<RoleResponse>> PutRole(Guid roleId, RoleUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutRole(Guid roleId, RoleUpdateRequest request)
         => HandleResult(await _roleService.UpdateRole(roleId, request));
 
     [HttpGet("options")]

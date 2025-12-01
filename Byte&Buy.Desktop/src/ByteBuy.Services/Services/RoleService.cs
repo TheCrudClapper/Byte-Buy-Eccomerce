@@ -1,0 +1,31 @@
+﻿using ByteBuy.Services.DTO;
+using ByteBuy.Services.DTO.Role;
+using ByteBuy.Services.HttpClients.Abstractions;
+using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
+
+namespace ByteBuy.Services.Services;
+
+public class RoleService(IRoleHttpClient roleClient) : IRoleService
+{
+    public async Task<Result<CreatedResponse>> Add(RoleAddRequest request)
+        => await roleClient.AddAsync(request);
+    
+    public async Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request)
+        => await roleClient.UpdateAsync(id, request);
+    
+    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+        => await roleClient.GetSelectListItemsAsync();
+
+    public async Task<Result<RoleResponse>> GetById(Guid id)
+        => await roleClient.GetByIdAsync(id);
+
+    public async Task<Result<IEnumerable<RoleResponse>>> GetAll()
+        => await roleClient.GetAllAsync();
+
+    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(Guid id)
+        => await roleClient.GetSelectListItemsAsync();
+
+    public async Task<Result> DeleteById(Guid id)
+        => await roleClient.DeleteByIdAsync(id);
+}

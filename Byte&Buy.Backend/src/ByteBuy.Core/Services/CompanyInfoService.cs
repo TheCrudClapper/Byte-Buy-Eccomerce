@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.CompanyInfo;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -14,10 +15,10 @@ public class CompanyInfoService : ICompanyInfoService
     {
         _companyInfoRepository = companyInfo;
     }
-    public async Task<Result<CompanyInfoResponse>> AddCompanyInfo(CompanyInfoAddRequest request)
+    public async Task<Result<CreatedResponse>> AddCompanyInfo(CompanyInfoAddRequest request)
     {
         if (await _companyInfoRepository.ExistAsync())
-            return Result.Failure<CompanyInfoResponse>(CompanyInfoErrors.MultipleCompanyInfos);
+            return Result.Failure<CreatedResponse>(CompanyInfoErrors.MultipleCompanyInfos);
 
         var createResult = CompanyInfo.Create(
             request.CompanyName,
@@ -34,11 +35,11 @@ public class CompanyInfoService : ICompanyInfoService
             );
 
         if(createResult.IsFailure)
-            return Result.Failure<CompanyInfoResponse>(createResult.Error);
+            return Result.Failure<CreatedResponse>(createResult.Error);
 
         await _companyInfoRepository.AddAsync(createResult.Value);
 
-        return createResult.Value.ToCompanyInfoResponse();
+        return createResult.Value.ToCreatedResponse();
     }
 
     public async Task<Result<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct)
@@ -49,11 +50,11 @@ public class CompanyInfoService : ICompanyInfoService
             : companyInfo.ToCompanyInfoResponse();
     }
 
-    public async Task<Result<CompanyInfoResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
     {
         var companyInfo = await _companyInfoRepository.GetAsync();
         if (companyInfo is null)
-            return Result.Failure<CompanyInfoResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var updateResult = companyInfo.Update(
             request.CompanyName,
@@ -69,9 +70,9 @@ public class CompanyInfoService : ICompanyInfoService
             request.Address.FlatNumber);
 
         if (updateResult.IsFailure)
-            return Result.Failure<CompanyInfoResponse>(updateResult.Error);
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _companyInfoRepository.UpdateAsync(companyInfo);
-        return companyInfo.ToCompanyInfoResponse();
+        return companyInfo.ToUpdatedResponse();
     }
 }

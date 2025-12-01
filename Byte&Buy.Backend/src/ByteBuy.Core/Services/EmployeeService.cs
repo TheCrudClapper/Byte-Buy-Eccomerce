@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Mappings;
@@ -30,14 +31,14 @@ public class EmployeeService : IEmployeeService
         _employeeRepository = employeeRepository;
         _passwordService = passwordService;
     }
-    public async Task<Result<EmployeeResponse>> AddEmployee(EmployeeAddRequest request)
+    public async Task<Result<CreatedResponse>> AddEmployee(EmployeeAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
+            return Result.Failure<CreatedResponse>(AuthErrors.AccountExists);
 
         var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (applicationRole is null)
-            return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
+            return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
 
         var employeeResult = Employee.Create(
             request.FirstName,
@@ -52,20 +53,20 @@ public class EmployeeService : IEmployeeService
             request.PhoneNumber);
 
         if (employeeResult.IsFailure)
-            return Result.Failure<EmployeeResponse>(employeeResult.Error);
+            return Result.Failure<CreatedResponse>(employeeResult.Error);
 
         var employee = employeeResult.Value;
 
         var identityResult = await _userManager.CreateAsync(employee, request.Password);
 
         if (!identityResult.Succeeded)
-            return identityResult.ToResult<EmployeeResponse>();
+            return identityResult.ToResult<CreatedResponse>();
 
         var roleResult = await _userManager.AddToRoleAsync(employee, applicationRole.Name!);
         if (!roleResult.Succeeded)
-            return roleResult.ToResult<EmployeeResponse>();
+            return roleResult.ToResult<CreatedResponse>();
 
-        return employee.ToEmployeeResponse();
+        return employee.ToCreatedResponse();
     }
 
     public async Task<Result> DeleteEmployee(Guid employeeId)
@@ -107,18 +108,18 @@ public class EmployeeService : IEmployeeService
             .Select(e => e.ToEmployeeListResponse()).ToList();
     }
 
-    public async Task<Result<EmployeeResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);
         if (employee is null)
-            return Result.Failure<EmployeeResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var newRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (newRole is null)
-            return Result.Failure<EmployeeResponse>(RoleErrors.NotFound);
+            return Result.Failure<UpdatedResponse>(RoleErrors.NotFound);
 
         if (employee.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<EmployeeResponse>(AuthErrors.AccountExists);
+            return Result.Failure<UpdatedResponse>(AuthErrors.AccountExists);
 
         var updateResult = employee.Update(
             request.FirstName,
@@ -133,33 +134,33 @@ public class EmployeeService : IEmployeeService
             request.PhoneNumber);
 
         if (updateResult.IsFailure)
-            return Result.Failure<EmployeeResponse>(updateResult.Error);
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         if (!string.IsNullOrWhiteSpace(request.Password))
         {
             var validation = await _passwordService.ValdiateAsync(employee, request.Password);
             if (!validation.Succeeded)
-                return validation.ToResult<EmployeeResponse>();
+                return validation.ToResult<UpdatedResponse>();
 
             var change = await _passwordService.ChangePasswordAsync(employee, request.Password);
-            if(!validation.Succeeded)
-                return change.ToResult<EmployeeResponse>();
+            if (!validation.Succeeded)
+                return change.ToResult<UpdatedResponse>();
         }
 
         var roleChange = await UpdateEmployeeRole(employee, newRole);
         if (roleChange.IsFailure)
-            return Result.Failure<EmployeeResponse>(roleChange.Error);
+            return Result.Failure<UpdatedResponse>(roleChange.Error);
 
         await _employeeRepository.UpdateAsync(employee);
 
-        return employee.ToEmployeeResponse();
+        return employee.ToUpdatedResponse();
     }
 
-    public async Task<Result<EmployeeAddressResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);
         if (employee is null)
-            return Result.Failure<EmployeeAddressResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var updateResult = employee.ChangeAddress(
                                 request.Street,
@@ -171,10 +172,10 @@ public class EmployeeService : IEmployeeService
                                 request.PhoneNumber);
 
         if (updateResult.IsFailure)
-            return Result.Failure<EmployeeAddressResponse>(updateResult.Error);
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
-        return employee.ToEmployeAddressResponse();
+        return employee.ToUpdatedResponse();
     }
 
     private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)

@@ -7,11 +7,11 @@ namespace ByteBuy.Services.HttpClients.Implementations;
 
 public class RoleHttpClient(HttpClient httpClient) : HttpClientBase(httpClient), IRoleHttpClient
 {
-    public async Task<Result<RoleResponse>> UpdateAsync(Guid id, RoleUpdateRequest request)
-        => await PutAsync<RoleResponse>($"roles/{id}", request);
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RoleUpdateRequest request)
+        => await PutAsync<UpdatedResponse>($"roles/{id}", request);
 
-    public async Task<Result<RoleResponse>> AddAsync(RoleAddRequest request)
-        => await PostAsync<RoleResponse>("roles",request);
+    public async Task<Result<CreatedResponse>> AddAsync(RoleAddRequest request)
+        => await PostAsync<CreatedResponse>("roles", request);
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListItemsAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse>>("roles/options");

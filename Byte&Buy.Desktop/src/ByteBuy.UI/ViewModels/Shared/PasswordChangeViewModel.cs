@@ -1,14 +1,10 @@
 ﻿using ByteBuy.Services.DTO.Auth;
-using ByteBuy.Services.HttpClients.Abstractions;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Threading.Tasks;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.CompanyInfo;
+﻿using ByteBuy.Services.DTO;
+using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.HttpClients.Abstractions;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
@@ -10,6 +11,6 @@ public class CompanyInfoService(ICompanyInfoHttpClient companyInfoClient) : ICom
     public Task<Result<CompanyInfoResponse>> GetCompanyInfo()
         => companyInfoClient.GetCompanyInfoAsync();
 
-    public Task<Result<CompanyInfoResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
+    public Task<Result<UpdatedResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
         => companyInfoClient.UpdateCompanyInfoAsync(request);
 }

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Employee;
+﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ public class EmployeesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("employee:create")]
-    public async Task<ActionResult<EmployeeResponse>> PostEmployee(EmployeeAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostEmployee(EmployeeAddRequest request)
         => HandleResult(await _employeeService.AddEmployee(request));
 
     [HttpGet("{employeeId}")]
@@ -23,7 +24,7 @@ public class EmployeesController : BaseApiController
         => HandleResult(await _employeeService.GetEmployee(employeeId, ct));
 
     [HttpPut("address")]
-    public async Task<ActionResult<EmployeeAddressResponse>> PutEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
         => HandleResult(await _employeeService.UpdateEmployeeAddress(CurrentUserId, request));
 
     [HttpGet("list")]
@@ -42,7 +43,7 @@ public class EmployeesController : BaseApiController
 
     [HttpPut("{employeeId}")]
     //[HasPermission("employee:update")]
-    public async Task<ActionResult<EmployeeResponse>> PutEmployee(Guid employeeId, EmployeeUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutEmployee(Guid employeeId, EmployeeUpdateRequest request)
         => HandleResult(await _employeeService.UpdateEmployee(employeeId, request));
 
     [HttpDelete("{employeeId}")]
