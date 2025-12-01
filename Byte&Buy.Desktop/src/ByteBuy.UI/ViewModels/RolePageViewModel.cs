@@ -8,18 +8,23 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
 
 public partial class RolePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
-    [ObservableProperty]
-    [Required]
-    private string _roleName = string.Empty;
+
+    [ObservableProperty] [Required] private string _roleName = string.Empty;
+
+    [ObservableProperty] private bool _isTutorialExpanded = false;
+
     #endregion
+
     public PermissionListBoxViewModel PermissionListBox { get; }
     private readonly IRoleService _roleService;
+
     public RolePageViewModel(AlertViewModel alert,
         PermissionListBoxViewModel permissionListBox,
         IRoleService roleService) : base(alert)
@@ -109,6 +114,7 @@ public partial class RolePageViewModel : ViewModelSingle
 
         await Alert.Show(AlertType.Success, "Successfully added role");
     }
+
     protected override void Clear()
     {
         RoleName = string.Empty;
@@ -118,4 +124,8 @@ public partial class RolePageViewModel : ViewModelSingle
             perm.IsSelected = false;
         }
     }
+
+    [RelayCommand]
+    private void ToggleTutorial()
+        => IsTutorialExpanded = !IsTutorialExpanded;
 }

@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
-using LoginWindowViewModel = ByteBuy.UI.ViewModels.LoginWindowViewModel;
+using ByteBuy.UI.ViewModels;
 
 namespace ByteBuy.UI.Views;
 

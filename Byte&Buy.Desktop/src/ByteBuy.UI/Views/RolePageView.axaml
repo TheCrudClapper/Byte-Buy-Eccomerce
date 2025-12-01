@@ -7,129 +7,172 @@
              mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="1000"
              x:Class="ByteBuy.UI.Views.RolePageView"
              x:DataType="vm:RolePageViewModel">
-    
+
     <UserControl.Styles>
-        <StyleInclude Source="../Styles/EmployeeStyles.axaml"/>
+        <StyleInclude Source="../Styles/EmployeeStyles.axaml" />
     </UserControl.Styles>
-    
+
     <Grid>
         <ScrollViewer>
-        <Grid RowDefinitions="50,*,20,*,*" ColumnDefinitions="45*,10*, 45*">
-            <Label Grid.Row="0" Grid.Column="0" Classes="pageTitle" Content="Role" />
-            <Border Grid.Row="1"
-                    VerticalAlignment="Top"
-                    Grid.ColumnSpan="3"
-                    HorizontalAlignment="Stretch"
-                    Grid.Column="0"
-                    Classes="sectionBorder">
-                <StackPanel Spacing="12">
-        
-                    <Label Content="Role System Guide"
-                           Classes="sectionLabel"
-                           HorizontalAlignment="Left" />
+            <Grid RowDefinitions="50, Auto,20,Auto,*"
+                  ColumnDefinitions="45*,10*, 45*">
 
-                    <TextBlock TextWrapping="Wrap">
-                        In order to efficiently and securely use our system, you need to familiarize yourself 
-                        with roles and permissions.
-                    </TextBlock>
+                <!-- Title -->
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Classes="pageTitle"
+                       Content="Role" />
 
-                    <TextBlock TextWrapping="Wrap">
-                        Each role is composed of a unique set of permissions. Permissions define which resources 
-                        in our system a specific role has access to and what actions can be taken.
-                    </TextBlock>
-
-                    <TextBlock TextAlignment="Center" Margin="0,8,0,0">
-                        In the ByteBuy system, permissions follow this structure:
-                    </TextBlock>
-
-                    <TextBlock TextAlignment="Center">
-                        <Bold>[resource]:[action]:[scope?]</Bold>
-                    </TextBlock>
-
-                    <StackPanel Spacing="6" Margin="0,8,0,0">
-
-                        <TextBlock TextWrapping="Wrap">
-                            • <Bold>[resource]</Bold> – defines the global resource, such as roles, users, orders, etc.
-                        </TextBlock>
-
-                        <TextBlock TextWrapping="Wrap">
-                            • <Bold>[action]</Bold> – defines what the permission owner can do with the resource, 
-                            such as read, write, update, delete.
-                        </TextBlock>
-
-                        <TextBlock TextWrapping="Wrap">
-                            • <Bold>[scope]</Bold> – refines the action, e.g.:
-                            <LineBreak/>
-                            <Italic>many</Italic> – refers to collections
-                            <LineBreak/>
-                            <Italic>self</Italic> – e.g. “users can read info only about themselves”
-                        </TextBlock>
-
-                    </StackPanel>
-
-                </StackPanel>
-
-            </Border>
-            <!-- Permissions Section -->
-            <Border Grid.Row="3"
-                    VerticalAlignment="Top"
-                    Classes="sectionBorder"
-                    Grid.Column="0">
-                <Grid RowDefinitions="50, *" ColumnDefinitions="5*, 1*, 94*">
-                    <Image Grid.Row="0" Grid.Column="0"
-                           Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                           Height="10"
-                           Width="10" />
-                    <Label Grid.Row="0" Grid.Column="2" Content="Permissions:"
-                           VerticalContentAlignment="Center"
-                           Classes="sectionLabel" />
-                    <views:PermissionListBoxView
-                        Grid.Column="0"
-                        Grid.Row="1"
+                <!-- Role System Tutorial -->
+                <Border Grid.Row="1"
                         Grid.ColumnSpan="3"
-                        DataContext="{Binding PermissionListBox}" />
-                </Grid>
-            </Border>
+                        Classes="sectionBorder">
 
-            <!-- Form Section -->
-            <Border Grid.Row="3"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Top"
-                    Height="200"
-                    Classes="sectionBorder"
-                    Grid.Column="2">
+                    <Grid RowDefinitions="Auto, Auto">
+                        
+                        <!-- Header -->
+                        <Grid ColumnDefinitions="*,Auto,*">
+                            <Label Grid.Column="0"
+                                   Content="Role System Guide"
+                                   Classes="sectionLabel"
+                                   HorizontalAlignment="Left" />
+
+                            <Button Grid.Column="2"
+                                    Command="{Binding ToggleTutorialCommand}"
+                                    HorizontalAlignment="Right">
+                                <Image Source="{SvgImage /Assets/Images/regular/up-down-solid-full.svg}"
+                                       Width="20" Height="20" />
+                            </Button>
+                        </Grid>
+
+                        <!-- Collapsible content -->
+                        <StackPanel Grid.Row="1"
+                                    IsVisible="{Binding IsTutorialExpanded}">
+                            
+                            <TextBlock TextWrapping="Wrap">
+                                In order to efficiently and securely use our system, you need to familiarize yourself
+                                with roles and permissions.
+                            </TextBlock>
+
+                            <TextBlock TextWrapping="Wrap">
+                                Each role is composed of a unique set of permissions. Permissions define which resources
+                                in our system a specific role has access to and what actions can be taken.
+                            </TextBlock>
+
+                            <TextBlock TextAlignment="Center" Margin="0,8,0,0">
+                                In the ByteBuy system, permissions follow this structure:
+                            </TextBlock>
+
+                            <TextBlock TextAlignment="Center">
+                                <Bold>[resource]:[action]:[scope?]</Bold>
+                            </TextBlock>
+
+                            <StackPanel Spacing="6" Margin="0,8,0,0">
+
+                                <TextBlock TextWrapping="Wrap">
+                                    • <Bold>[resource]</Bold> – defines the global resource, such as roles, users, orders, etc.
+                                </TextBlock>
+
+                                <TextBlock TextWrapping="Wrap">
+                                    • <Bold>[action]</Bold> – defines what the permission owner can do with the resource,
+                                    such as read, write, update, delete.
+                                </TextBlock>
+
+                                <TextBlock TextWrapping="Wrap">
+                                    • <Bold>[scope]</Bold> – refines the action, e.g.:
+                                    <LineBreak />
+                                    <Italic>many</Italic> – refers to collections
+                                    <LineBreak />
+                                    <Italic>self</Italic> – e.g. “users can read info only about themselves”
+                                </TextBlock>
+
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- Permission List -->
+                <Border Grid.Row="3"
+                        Grid.Column="0"
+                        Classes="sectionBorder">
+
+                    <Grid RowDefinitions="50, *"
+                          ColumnDefinitions="5*, 1*, 94*">
+
+                        <Image Grid.Row="0" Grid.Column="0"
+                               Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+                               Height="10" Width="10" />
+
+                        <Label Grid.Row="0" Grid.Column="2"
+                               Content="Permissions:"
+                               VerticalContentAlignment="Center"
+                               Classes="sectionLabel" />
+
+                        <views:PermissionListBoxView
+                            Grid.Column="0"
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            DataContext="{Binding PermissionListBox}" />
+
+                    </Grid>
+
+                </Border>
+
+                <!-- Form-->
+                <Border Grid.Row="3"
+                        Grid.Column="2"
+                        Grid.RowSpan="2"
+                        VerticalAlignment="Top"
+                        Height="200"
+                        Classes="sectionBorder">
+                    
                     <StackPanel>
-                        <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70">
-                            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <Grid ColumnDefinitions="*,20,*"
+                              RowDefinitions="40,70,70">
+
+                            <StackPanel Grid.Row="0"
+                                        Grid.ColumnSpan="2"
+                                        Orientation="Horizontal">
                                 <Image VerticalAlignment="Center"
                                        Margin="0,0,0,5"
                                        Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-                                       Height="10"
-                                       Width="10" />
+                                       Height="10" Width="10" />
                                 <Label Content="General Info"
                                        Classes="sectionLabel" />
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
-                                <Label Content="Role Name" Classes="textBoxLabel" />
-                                <TextBox Text="{Binding RoleName}"/>
+                            <StackPanel Grid.Row="1"
+                                        Grid.ColumnSpan="3">
+                                <Label Content="Role Name"
+                                       Classes="textBoxLabel" />
+                                <TextBox Text="{Binding RoleName}" />
                             </StackPanel>
-                            
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0">
-                               <Button 
-                                   Command="{Binding ClearCommand}"
-                                   Content="Clear"
-                                   Margin="0,0,5,0"/>
-                               <Button
-                                   Content="Save"
-                                   Command="{Binding SaveCommand}"/>
+
+                            <StackPanel HorizontalAlignment="Right"
+                                        Orientation="Horizontal"
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="3">
+
+                                <Button Command="{Binding ClearCommand}"
+                                        Content="Clear"
+                                        Margin="0,0,5,0" />
+
+                                <Button Command="{Binding SaveCommand}"
+                                        Content="Save" />
+
                             </StackPanel>
+
                         </Grid>
                     </StackPanel>
-            </Border>
-       
-        </Grid>
+
+                </Border>
+
+            </Grid>
         </ScrollViewer>
+
+        <!-- ALERT -->
         <views:AlertView
             DataContext="{Binding Alert}"
             IsVisible="{Binding IsVisible}"
@@ -137,8 +180,8 @@
             VerticalAlignment="Bottom"
             Height="70"
             Width="400"
-            Margin="0,
-            20,20,40"
+            Margin="0,20,20,40"
             ZIndex="10" />
+
     </Grid>
 </UserControl>
