@@ -17,7 +17,7 @@ public class RolesPageViewModel(
     PageFactory pageFactory,
     RoleService roleService)
     : ViewModelMany<RoleListItem>(alert, main, pageFactory)
-{
+{       
     protected override async Task Delete(RoleListItem item)
     {
         var result = await roleService.DeleteById(item.Id);
@@ -31,9 +31,13 @@ public class RolesPageViewModel(
         await Alert.Show(AlertType.Success, "Role deleted successfully");
     }
 
-    protected override Task Edit(RoleListItem item)
+    protected override async Task Edit(RoleListItem item)
     {
-        throw new NotImplementedException();
+        var page = PageFactory.GetPageViewModel(ApplicationPageNames.Role)
+            as RolePageViewModel;
+        
+        await page!.InitializeForEdit(item.Id);
+        Main.CurrentPage  = page;
     }
 
     protected override async Task LoadData()
@@ -55,5 +59,10 @@ public class RolesPageViewModel(
 
 
     protected override void OpenAddPage()
-        => Main.CurrentPage = PageFactory.GetPageViewModel(ApplicationPageNames.Role);
+    {
+        var page = PageFactory.GetPageViewModel(ApplicationPageNames.Role) as RolePageViewModel;
+        page!.InitializeForAdd();
+        Main.CurrentPage = page;
+    }
+       
 }

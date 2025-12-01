@@ -121,6 +121,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         ValidateAllProperties();
         if (HasErrors)
             return;
+        
         if (IsEditMode)
         {
             await UpdateItem();

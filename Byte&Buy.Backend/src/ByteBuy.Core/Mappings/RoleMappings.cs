@@ -7,12 +7,15 @@ namespace ByteBuy.Core.Mappings;
 public static class RoleMappings
 {
     public static SelectListItemResponse ToSelectListItemResponse(this ApplicationRole role)
-    {
-        return new SelectListItemResponse(role.Id, role.Name!);
-    }
+        => new SelectListItemResponse(role.Id, role.Name!);
 
     public static RoleResponse ToRoleResponse(this ApplicationRole role, IEnumerable<Guid> permissionIds)
-    {
-        return new RoleResponse(role.Id, role.Name!, permissionIds);
-    }
+        => new RoleResponse(role.Id, role.Name!, permissionIds);
+
+    public static CreatedResponse ToCreatedResponse(this ApplicationRole role)
+        => new CreatedResponse(role.Id, role.DateCreated);
+
+    public static UpdatedResponse ToUpdatedResponse(this ApplicationRole role)
+        => new UpdatedResponse(role.Id, role.DateEdited!.Value);
+
 }

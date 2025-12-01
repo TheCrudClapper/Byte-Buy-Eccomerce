@@ -12,4 +12,21 @@ public class RolePermission : AuditableEntity, ISoftDeletable
 
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
+
+    public RolePermission(Guid roleId, Guid permissionId)
+    {
+        RoleId = roleId;
+        PermissionId = permissionId;
+        IsActive = true;
+        DateCreated = DateTime.UtcNow;
+    }
+
+    public static RolePermission Create(Guid roleId, Guid permissionId)
+        => new RolePermission(roleId, permissionId);
+
+    public void Deactivate()
+    {
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+    }
 }

@@ -82,13 +82,13 @@ public class AuthService : IAuthService
 
         const string defaultRoleName = "PortalUser";
 
-        var roleResult = ApplicationRole.Create(defaultRoleName);
+        //var roleResult = ApplicationRole.Create(defaultRoleName);
 
-        if(roleResult.IsFailure)
-            return roleResult;
+        //if(roleResult.IsFailure)
+        //    return roleResult;
 
-        if (!await _roleManager.RoleExistsAsync(defaultRoleName))
-            await _roleManager.CreateAsync(roleResult.Value);
+        //if (!await _roleManager.RoleExistsAsync(defaultRoleName))
+        //    await _roleManager.CreateAsync(roleResult.Value);
 
         await _userManager.AddToRoleAsync(user, defaultRoleName);
 

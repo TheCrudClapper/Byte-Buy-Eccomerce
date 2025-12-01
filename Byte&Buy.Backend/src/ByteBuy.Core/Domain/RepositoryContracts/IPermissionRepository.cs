@@ -15,8 +15,5 @@ public interface IPermissionRepository
     Task<Permission?> GetByIdAsync(Guid permissionId, CancellationToken ct = default);
     Task<Permission?> GetByNameAsync(string name, CancellationToken ct = default);
     Task<IEnumerable<Permission>> GetAllAsync(CancellationToken ct = default);
-    Task<IEnumerable<RolePermission>> GetAllRolePermissionsAsync(CancellationToken ct = default);
-    Task<IEnumerable<Guid>> GetPermissionIdsByRoleIdAsync(Guid roleId, CancellationToken ct = default);
-    Task<IEnumerable<Guid>> GetAllPermissionIdsAsync(CancellationToken ct = default);
 
 }
