@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
@@ -15,7 +16,7 @@ public class RolesPageViewModel(
     AlertViewModel alert,
     MainWindowViewModel main,
     PageFactory pageFactory,
-    RoleService roleService)
+    IRoleService roleService)
     : ViewModelMany<RoleListItem>(alert, main, pageFactory)
 {       
     protected override async Task Delete(RoleListItem item)

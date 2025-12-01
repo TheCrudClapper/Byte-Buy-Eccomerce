@@ -10,6 +10,6 @@ public interface IRoleService
     Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request);
     Task<Result<RoleResponse>> GetById(Guid id);
     Task<Result<IEnumerable<RoleResponse>>> GetAll();
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(Guid id);
+    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList();
     Task<Result> DeleteById(Guid id);
 }

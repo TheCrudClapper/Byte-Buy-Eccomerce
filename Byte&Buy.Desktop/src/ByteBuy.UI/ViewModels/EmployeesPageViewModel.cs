@@ -6,6 +6,7 @@ using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Employee;
 
 namespace ByteBuy.UI.ViewModels;
@@ -14,7 +15,7 @@ public partial class EmployeesPageViewModel(
     MainWindowViewModel main,
     PageFactory pageFactory,
     AlertViewModel alert, 
-    EmployeeService employeeService)
+    IEmployeeService employeeService)
     : ViewModelMany<EmployeeListItem>(alert, main, pageFactory)
 {
     protected override async Task LoadData()

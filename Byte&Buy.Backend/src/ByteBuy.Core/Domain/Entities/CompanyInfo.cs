@@ -111,6 +111,7 @@ public class CompanyInfo : AuditableEntity
         Phone = phone;
         Slogan = slogan;
         Address = addressResult.Value;
+        DateEdited = DateTime.UtcNow;
 
         return Result.Success();
     }

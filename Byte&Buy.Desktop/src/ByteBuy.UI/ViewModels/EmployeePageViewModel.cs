@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ByteBuy.Services.DTO;
 using ByteBuy.Services.DTO.Employee;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.Services.Services;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
@@ -51,13 +52,13 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
     #endregion
 
-    private readonly EmployeeService _employeeService;
-    private readonly RoleService _roleService;
+    private readonly IEmployeeService _employeeService;
+    private readonly IRoleService _roleService;
     public PermissionListBoxViewModel  PermissionListBox { get; }
     
     public EmployeePageViewModel(
-        RoleService roleService,
-        EmployeeService employeeService,
+        IRoleService roleService,
+        IEmployeeService employeeService,
         PermissionListBoxViewModel permissionListBox,
         AlertViewModel alert) : base(alert)
     {
