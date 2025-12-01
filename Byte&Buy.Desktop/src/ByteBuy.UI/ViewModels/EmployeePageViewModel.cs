@@ -93,13 +93,13 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         Street = string.Empty;
         Password = string.Empty;
         FlatNumber = string.Empty;
+        PermissionListBox.ClearSelectedPermissions();
     }
 
     public void InitializeForAdd()
     {
         IsEditMode = false;
         EditingItemId = null;
-
         Clear();
     }
 
@@ -112,8 +112,9 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         if (!result.Success)
         {
             await Alert.Show(AlertType.Error, result.Error!.Description);
+            return;
         }
-
+        
         var item = result.Value!;
 
         FirstName = item.FirstName;
@@ -127,6 +128,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         City = item.City;
         Country = item.Country;
         SelectedRole = Roles.FirstOrDefault(r => r.Id == item.RoleId);
+        PermissionListBox.SetSelectedPermissions(item.PermissionIds);
     }
 
     protected override async Task Save()
@@ -153,9 +155,15 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
     private async Task AddItem()
     {
-        var request = new EmployeeAddRequest(SelectedRole!.Id, FirstName, LastName, Email, Password, PhoneNumber,
-            Street,
-            HouseNumber, PostalCode, City, Country, FlatNumber);
+        var request = new EmployeeAddRequest(
+            SelectedRole!.Id,
+            FirstName, LastName,
+            Email, Password,
+            PhoneNumber, Street,
+            HouseNumber, PostalCode,
+            City, Country,
+            FlatNumber,
+            PermissionListBox.ExtractSelectedPermissions());
 
         var result = await _employeeService.Add(request);
         if (!result.Success)
@@ -168,7 +176,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         if (EditingItemId is null)
             return;
-
+        
         var request = new EmployeeUpdateRequest(
             SelectedRole!.Id,
             FirstName, LastName,
@@ -179,17 +187,14 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
             Country,
             PhoneNumber,
             FlatNumber,
-            Password
-        );
+            Password,
+            PermissionListBox.ExtractSelectedPermissions());
 
         var result = await _employeeService.Update(EditingItemId.Value, request);
         if (!result.Success)
-        {
             await Alert.Show(AlertType.Error, result.Error!.Description);
-            return;
-        }
-
-        await Alert.Show(AlertType.Success, "Employee updated successfully");
+        else
+            await Alert.Show(AlertType.Success, "Employee updated successfully");
     }
 
     private async Task LoadRoles()

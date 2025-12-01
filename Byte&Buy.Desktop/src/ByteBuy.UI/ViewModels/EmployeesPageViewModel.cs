@@ -7,6 +7,7 @@ using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ByteBuy.UI.Mappings;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -23,15 +24,10 @@ public partial class EmployeesPageViewModel(
         if (!result.Success)
             await Alert.Show(AlertType.Error, result.Error!.Description);
 
-        var list = result.Value.Select((e, index) => new EmployeeListItem()
-        {
-            Id = e.Id,
-            LastName = e.LastName,
-            Email = e.Email,
-            Role = e.Role,
-            FirstName = e.FirstName,
-            RowNumber = index + 1,
-        }).ToList();
+        var list = result.Value!
+            .Select((e, index) => e.ToListItem(index))
+            .ToList();
+        
         Items = new ObservableCollection<EmployeeListItem>(list);
     }
 

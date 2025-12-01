@@ -57,28 +57,22 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var result = await _roleService.GetById(id);
         if (!result.Success)
+        {
             await Alert.Show(AlertType.Error, result.Error!.Description);
-
+            return;
+        }
+        
         RoleName = result.Value!.Name;
 
         var permissionIds = result.Value.PermissionIds;
-        PermissionListBox.SelectedPermission.Clear();
-
-        var matchingPerms = PermissionListBox.Permissions
-            .Where(p => permissionIds.Contains(p.Id));
-
-        foreach (var perm in matchingPerms)
-        {
-            perm.IsSelected = true;
-            PermissionListBox.SelectedPermission.Add(perm);
-        }
+        PermissionListBox.SetSelectedPermissions(permissionIds);
     }
 
     public void InitializeForAdd()
     {
         EditingItemId = Guid.Empty;
         IsEditMode = false;
-        PermissionListBox.SelectedPermission.Clear();
+        PermissionListBox.ClearSelectedPermissions();
         Clear();
     }
 
@@ -86,43 +80,32 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         if (EditingItemId is null)
             return;
-
-        var selectedPermissionIds = PermissionListBox.SelectedPermission.Select(p => p.Id);
-        var request = new RoleUpdateRequest(RoleName, selectedPermissionIds);
+        
+        var request = new RoleUpdateRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
         var response = await _roleService.Update(EditingItemId.Value, request);
         if (!response.Success)
-        {
             await Alert.Show(AlertType.Error, response.Error!.Description);
-            return;
-        }
-
-        await Alert.Show(AlertType.Success, "Successfully updated role");
+        else
+            await Alert.Show(AlertType.Success, "Successfully added role");
     }
 
     private async Task AddItem()
     {
-        var selectedPermissionIds = PermissionListBox.SelectedPermission.Select(p => p.Id);
-        var request = new RoleAddRequest(RoleName, selectedPermissionIds);
+        var request = new RoleAddRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
         var response = await _roleService.Add(request);
         if (!response.Success)
-        {
             await Alert.Show(AlertType.Error, response.Error!.Description);
-            return;
-        }
-
-        await Alert.Show(AlertType.Success, "Successfully added role");
+        else
+            await Alert.Show(AlertType.Success, "Successfully added role");
+        
     }
 
     protected override void Clear()
     {
         RoleName = string.Empty;
-        PermissionListBox.SelectedPermission.Clear();
-        foreach (var perm in PermissionListBox.Permissions)
-        {
-            perm.IsSelected = false;
-        }
+        PermissionListBox.ClearSelectedPermissions();
     }
 
     [RelayCommand]

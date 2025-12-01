@@ -13,7 +13,7 @@
 
     <Grid>
         <ListBox SelectionMode="Multiple"
-                 SelectedItems="{Binding SelectedPermission}"
+                 SelectedItems="{Binding SelectedPermissions}"
                  ItemsSource="{Binding Permissions}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

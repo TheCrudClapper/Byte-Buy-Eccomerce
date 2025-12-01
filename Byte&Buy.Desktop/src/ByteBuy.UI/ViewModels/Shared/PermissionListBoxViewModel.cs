@@ -1,4 +1,6 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using System;
+using System.Collections.Generic;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Permission;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,7 +14,7 @@ public partial class PermissionListBoxViewModel : ViewModelBase
 {
     #region Mvvm Fields
     [ObservableProperty] private ObservableCollection<PermissionListItem> _permissions = [];
-    [ObservableProperty] private ObservableCollection<PermissionListItem> _selectedPermission = [];
+    [ObservableProperty] private ObservableCollection<PermissionListItem> _selectedPermissions = [];
     #endregion
 
     private readonly IPermissionService _permissionService;
@@ -47,8 +49,42 @@ public partial class PermissionListBoxViewModel : ViewModelBase
             };
         }
     }
-    private void UpdateSelectedPermissions()
+    
+    private void UpdateSelectedPermissions() 
+        => SelectedPermissions = new ObservableCollection<PermissionListItem>(Permissions.Where(p => p.IsSelected));
+
+    public IEnumerable<Guid> ExtractSelectedPermissions()
     {
-        SelectedPermission = new ObservableCollection<PermissionListItem>(Permissions.Where(p => p.IsSelected));
+        return SelectedPermissions
+            .Where(sp => sp.IsSelected)
+            .Select(sp => sp.Id)
+            .ToList();
+    }
+
+    public void SetSelectedPermissions(IEnumerable<Guid>? selectedPermissions)
+    {
+        if (selectedPermissions is null)
+            return;
+        
+        SelectedPermissions.Clear();
+        
+        var matchingPerms = Permissions
+            .Where(p => selectedPermissions
+                .Contains(p.Id));
+
+        foreach (var perm in matchingPerms)
+        {
+            perm.IsSelected = true;
+            SelectedPermissions.Add(perm);
+        }
+    }
+
+    public void ClearSelectedPermissions()
+    {
+        SelectedPermissions.Clear();
+        foreach (var perm in SelectedPermissions)
+        {
+            perm.IsSelected = false;
+        }
     }
 }

@@ -15,5 +15,6 @@ public record EmployeeUpdateRequest(
     string Country,
     string? PhoneNumber,
     string? FlatNumber,
-    string Password
+    string Password,
+    IEnumerable<Guid>? PermissionIds
     );

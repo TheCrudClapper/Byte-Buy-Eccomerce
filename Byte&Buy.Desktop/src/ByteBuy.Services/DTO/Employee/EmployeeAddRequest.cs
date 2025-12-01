@@ -12,5 +12,6 @@ public record EmployeeAddRequest(
     string PostalCode,
     string City,
     string Country,
-    string? FlatNumber
+    string? FlatNumber,
+    IEnumerable<Guid>? PermissionIds
 );

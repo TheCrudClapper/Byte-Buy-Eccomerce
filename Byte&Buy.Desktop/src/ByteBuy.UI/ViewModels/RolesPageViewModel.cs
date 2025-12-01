@@ -7,6 +7,7 @@ using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using ByteBuy.UI.Mappings;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -44,13 +45,9 @@ public class RolesPageViewModel(
         var result = await roleService.GetAll();
         if (!result.Success)
             await Alert.Show(AlertType.Error, result.Error!.Description);
-
-        var list = result.Value.Select((r, index) => new RoleListItem
-        {
-            Id = r.Id,
-            Name = r.Name,
-            RowNumber = index + 1
-        })
+        
+        var list = result.Value!
+            .Select((r, index) => r.ToListItem(index))
             .ToList();
 
         Items = new ObservableCollection<RoleListItem>(list);

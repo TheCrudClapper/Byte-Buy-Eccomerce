@@ -12,6 +12,7 @@ public record EmployeeResponse(
     string City,
     string Country,
     string? FlatNumber,
-    string? PhoneNumber
+    string? PhoneNumber,
+    IEnumerable<Guid>? PermissionIds
 );
 
