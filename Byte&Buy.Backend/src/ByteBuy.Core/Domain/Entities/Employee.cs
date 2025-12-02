@@ -18,7 +18,9 @@ public sealed class Employee : ApplicationUser
         string city,
         string country,
         string? flatNumber,
-        string? phoneNumber)
+        string? phoneNumber,
+        IEnumerable<Guid> revokedPermissions,
+        IEnumerable<Guid> grantedPermissions)
     {
         var validatioResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
         if (validatioResult.IsFailure)
@@ -33,6 +35,9 @@ public sealed class Employee : ApplicationUser
         var employee = new Employee(firstName, lastName, email, phoneNumber);
 
         employee.HomeAddress = addressResult.Value;
+
+        employee.AssignPermissionsToUser(revokedPermissions, grantedPermissions);
+
         return employee;
     }
 
@@ -65,8 +70,11 @@ public sealed class Employee : ApplicationUser
         if (!IsActive)
             return;
 
+        var suffix = "_DELETED_" + Guid.NewGuid();
+        NormalizedUserName += suffix.ToUpper();
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
+        DeactivateAllUserPermissions();
     }
 
     public Result Update(

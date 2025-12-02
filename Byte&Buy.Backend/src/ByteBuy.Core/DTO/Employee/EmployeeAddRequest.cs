@@ -17,5 +17,6 @@ public record EmployeeAddRequest(
     [Required, MaxLength(50)] string City,
     [Required, MaxLength(50)] string Country,
     [MaxLength(10)] string? FlatNumber,
-    IEnumerable<Guid>? PermissionIds
+    IEnumerable<Guid>? GrantedPermissionIds,
+    IEnumerable<Guid>? RevokedPermissionIds
     );

@@ -52,8 +52,7 @@ public class RolesPageViewModel(
 
         Items = new ObservableCollection<RoleListItem>(list);
     }
-
-
+    
     protected override void OpenAddPage()
     {
         var page = PageFactory.GetPageViewModel(ApplicationPageNames.Role) as RolePageViewModel;

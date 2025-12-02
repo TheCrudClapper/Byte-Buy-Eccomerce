@@ -29,7 +29,7 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         LastName = lastName;
         Email = email;
         PhoneNumber = phoneNumber;
-        //Username is email within app
+        //Username == email within app
         UserName = email;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
@@ -66,5 +66,28 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
             }
         }
         return Result.Success();
+    }
+
+    protected void AssignPermissionsToUser(IEnumerable<Guid> revokedPermissions,
+        IEnumerable<Guid> grantedPermissions)
+    {
+        foreach (var id in revokedPermissions)
+        {
+            UserPermissions
+                .Add(UserPermission.Create(Id, id, false));
+        }
+        foreach (var id in grantedPermissions)
+        {
+            UserPermissions
+                .Add(UserPermission.Create(Id, id, true));
+        }
+    }
+    
+    protected void DeactivateAllUserPermissions()
+    {
+        foreach (var perm in UserPermissions)
+        {
+           perm.Deactivate();
+        }
     }
 }

@@ -39,6 +39,7 @@ public static class DependencyInjection
         services.AddTransient<AlertViewModel>();
         services.AddTransient<CompanyInfoPageViewModel>();
         services.AddTransient<PermissionListBoxViewModel>();
+        services.AddTransient<PermissionGrantRevokeViewModel>();
         return services;
     }
 }

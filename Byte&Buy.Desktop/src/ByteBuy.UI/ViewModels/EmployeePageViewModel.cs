@@ -6,6 +6,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,61 +18,50 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty][Required] private string _firstName = string.Empty;
+    [ObservableProperty] [Required] private string _firstName = string.Empty;
 
-    [ObservableProperty][Required] private string _lastName = string.Empty;
+    [ObservableProperty] [Required] private string _lastName = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [EmailAddress]
+    [ObservableProperty] [Required] [EmailAddress]
     private string _email = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [MaxLength(50)]
+    [ObservableProperty] [Required] [MaxLength(50)]
     private string _street = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [MaxLength(10)]
+    [ObservableProperty] [Required] [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [MaxLength(20)]
+    [ObservableProperty] [Required] [MaxLength(20)]
     private string _postalCode = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [MaxLength(50)]
+    [ObservableProperty] [Required] [MaxLength(50)]
     private string _city = string.Empty;
 
-    [ObservableProperty]
-    [Required]
-    [MaxLength(50)]
+    [ObservableProperty] [Required] [MaxLength(50)]
     private string _country = string.Empty;
 
-    [ObservableProperty][MaxLength(10)] private string? _flatNumber = string.Empty;
+    [ObservableProperty] [MaxLength(10)] private string? _flatNumber = string.Empty;
 
-    [ObservableProperty][MaxLength(15)] private string? _phoneNumber = string.Empty;
+    [ObservableProperty] [MaxLength(15)] private string? _phoneNumber = string.Empty;
 
     [ObservableProperty] private string _password = string.Empty;
 
-    [ObservableProperty]
-    [Required(ErrorMessage = "Choose employee's role")]
+    [ObservableProperty] [Required(ErrorMessage = "Choose employee's role")]
     private SelectListItemResponse? _selectedRole;
 
     [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
+
     #endregion
 
     private readonly IEmployeeService _employeeService;
     private readonly IRoleService _roleService;
-    public PermissionListBoxViewModel PermissionListBox { get; }
+
+    public PermissionGrantRevokeViewModel PermissionListBox { get; }
 
     public EmployeePageViewModel(
         IRoleService roleService,
         IEmployeeService employeeService,
-        PermissionListBoxViewModel permissionListBox,
+        PermissionGrantRevokeViewModel permissionListBox,
         AlertViewModel alert) : base(alert)
     {
         _employeeService = employeeService;
@@ -114,7 +104,6 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
             await Alert.Show(AlertType.Error, result.Error!.Description);
             return;
         }
-        
         var item = result.Value!;
 
         FirstName = item.FirstName;
@@ -128,7 +117,9 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         City = item.City;
         Country = item.Country;
         SelectedRole = Roles.FirstOrDefault(r => r.Id == item.RoleId);
-        PermissionListBox.SetSelectedPermissions(item.PermissionIds);
+        
+        PermissionListBox.SetSelectedPermissions(item.RevokedPermissionIds.ToList(),
+            item.GrantedPermissionIds.ToList());
     }
 
     protected override async Task Save()
@@ -157,13 +148,20 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         var request = new EmployeeAddRequest(
             SelectedRole!.Id,
-            FirstName, LastName,
-            Email, Password,
-            PhoneNumber, Street,
-            HouseNumber, PostalCode,
-            City, Country,
+            FirstName,
+            LastName,
+            Email,
+            Password,
+            PhoneNumber,
+            Street,
+            HouseNumber,
+            PostalCode,
+            City,
+            Country,
             FlatNumber,
-            PermissionListBox.ExtractSelectedPermissions());
+            PermissionListBox.ExtractGrantedPermissions(),
+            PermissionListBox.ExtractRevokedPermissions()
+        );
 
         var result = await _employeeService.Add(request);
         if (!result.Success)
@@ -176,7 +174,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         if (EditingItemId is null)
             return;
-        
+
         var request = new EmployeeUpdateRequest(
             SelectedRole!.Id,
             FirstName, LastName,
@@ -188,7 +186,8 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
             PhoneNumber,
             FlatNumber,
             Password,
-            PermissionListBox.ExtractSelectedPermissions());
+            PermissionListBox.ExtractGrantedPermissions(),
+            PermissionListBox.ExtractRevokedPermissions());
 
         var result = await _employeeService.Update(EditingItemId.Value, request);
         if (!result.Success)

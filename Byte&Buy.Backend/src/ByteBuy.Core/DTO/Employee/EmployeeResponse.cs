@@ -16,5 +16,6 @@ public record EmployeeResponse(
     string Country,
     string? FlatNumber,
     string? PhoneNumber,
-    IEnumerable<Guid>? PermissionIds
+    IEnumerable<Guid> GrantedPermissionIds,
+    IEnumerable<Guid> RevokedPermissionIds
 );

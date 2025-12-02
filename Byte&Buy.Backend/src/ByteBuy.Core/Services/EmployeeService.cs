@@ -40,6 +40,9 @@ public class EmployeeService : IEmployeeService
         if (applicationRole is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
 
+        var grantedPerms = request.GrantedPermissionIds ?? [];
+        var revokedPerms = request.RevokedPermissionIds ?? [];
+
         var employeeResult = Employee.Create(
             request.FirstName,
             request.LastName,
@@ -50,7 +53,10 @@ public class EmployeeService : IEmployeeService
             request.City,
             request.Country,
             request.FlatNumber,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            revokedPerms, 
+            grantedPerms
+            );
 
         if (employeeResult.IsFailure)
             return Result.Failure<CreatedResponse>(employeeResult.Error);

@@ -10,7 +10,46 @@ public partial class PermissionListItem : ObservableObject, IListItem
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
 
+    [ObservableProperty] private bool _isSelected;
 
-    [ObservableProperty]
-    private bool _isSelected;
+    private bool _isGranted;
+    private bool _isRevoked;
+
+    public bool IsGranted
+    {
+        get => _isGranted;
+        set
+        {
+            if (value != _isGranted)
+            {
+                if (value)
+                {
+                    _isRevoked = false;
+                    OnPropertyChanged(nameof(IsRevoked));
+                }
+
+                _isGranted = value;
+                OnPropertyChanged(nameof(IsGranted));
+            }
+        }
+    }
+
+    public bool IsRevoked
+    {
+        get => _isRevoked;
+        set
+        {
+            if (value != _isRevoked)
+            {
+                if (value)
+                {
+                    _isGranted = false;
+                    OnPropertyChanged(nameof(IsGranted));
+                }
+
+                _isRevoked = value;
+                OnPropertyChanged(nameof(IsRevoked));
+            }
+        }
+    }
 }

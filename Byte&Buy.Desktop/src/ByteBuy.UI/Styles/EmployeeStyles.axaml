@@ -58,7 +58,7 @@
     
     <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
     </Style>
     
     <Style Selector="Border.sectionBorder">

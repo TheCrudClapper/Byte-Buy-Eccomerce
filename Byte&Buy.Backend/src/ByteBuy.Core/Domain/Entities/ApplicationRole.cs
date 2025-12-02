@@ -17,7 +17,6 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
     private ApplicationRole(string name)
     {
         Name = name;
-        NormalizedName = name.ToUpper();
         IsActive = true;
         DateCreated = DateTime.UtcNow;
     }
@@ -32,8 +31,17 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
 
     public void Deactivate()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
+
+        //Marking deactivated role with suffix to avoid hitting NormalizedName constraint
+        var suffix = "_DELETED_" + Guid.NewGuid();
+        Name += suffix;
+        NormalizedName += suffix.ToUpper();
+
         DeactiveAllRolePermissions();
     }
 
@@ -45,7 +53,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
 
         var role =  new ApplicationRole(name);
 
-        if(!permissionIds.Any() || permissionIds is null)
+        if (permissionIds is null ||!permissionIds.Any())
             return Result.Failure<ApplicationRole>(Error.Validation("Role need to have at least one Permission"));
 
         role.AssignPermissionsToRole(permissionIds);
@@ -53,7 +61,11 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
         return role;
     }
 
-    //Method used only in adding new role
+    /// <summary>
+    /// Method that assigns permission to newly created role.
+    /// Used ONLY in role create actions.
+    /// </summary>
+    /// <param name="PermissionIds"></param>
     private void AssignPermissionsToRole(IEnumerable<Guid> PermissionIds)
     {
         foreach(var id in PermissionIds)

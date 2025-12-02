@@ -16,5 +16,6 @@ public record EmployeeUpdateRequest(
     string? PhoneNumber,
     string? FlatNumber,
     string Password,
-    IEnumerable<Guid>? PermissionIds
+    IEnumerable<Guid>? GrantedPermissionIds,
+    IEnumerable<Guid>? RevokedPermissionIds
     );

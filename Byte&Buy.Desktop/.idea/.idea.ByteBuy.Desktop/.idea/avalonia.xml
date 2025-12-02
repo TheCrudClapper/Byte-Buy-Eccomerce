@@ -26,7 +26,9 @@
         <entry key="src/ByteBuy.UI/Views/Shared/AlertView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Shared/PasswordChangeView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Shared/PermisionListBoxView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/Shared/PermissionGrantRevokeView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Shared/PermissionListBoxView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
+        <entry key="src/ByteBuy.UI/Views/Shared/PermissionRevokeGrantListBoxView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Single/EmployeePageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/Test.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />
         <entry key="src/ByteBuy.UI/Views/UsersPageView.axaml" value="src/ByteBuy.UI/ByteBuy.UI.csproj" />

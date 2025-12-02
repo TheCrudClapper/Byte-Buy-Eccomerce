@@ -52,7 +52,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                        <DataGridTemplateColumn Header="Actions" Width="*">
+                        <DataGridTemplateColumn Header="Actions" Width="100">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

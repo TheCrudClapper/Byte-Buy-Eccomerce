@@ -20,7 +20,15 @@ public static class EmployeeMappings
             employee.HomeAddress.City,
             employee.HomeAddress.Country,
             employee.HomeAddress.FlatNumber,
-            employee.PhoneNumber,null);
+            employee.PhoneNumber,
+            employee.UserPermissions
+                .Where(up => up.IsGranted)
+                .Select(up => up.PermissionId)
+                .ToList(),
+            employee.UserPermissions
+                .Where(up => !up.IsGranted)
+                .Select(up => up.PermissionId)
+                .ToList());
     }
 
     public static EmployeeListResponse ToEmployeeListResponse(this Employee employee)
