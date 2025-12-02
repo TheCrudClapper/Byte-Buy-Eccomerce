@@ -31,6 +31,23 @@ public static class EmployeeMappings
                 .ToList() ?? []);
     }
 
+    public static EmployeeProfileResponse ToEmployeeProfileResponse(this Employee employee)
+    {
+        return new EmployeeProfileResponse(
+            employee.Id,
+            employee.UserRoles?.FirstOrDefault()?.Role.Name ?? "Unknown",
+            employee.FirstName,
+            employee.LastName,
+            employee.Email!,
+            employee.HomeAddress.Street,
+            employee.HomeAddress.HouseNumber,
+            employee.HomeAddress.PostalCode,
+            employee.HomeAddress.City,
+            employee.HomeAddress.Country,
+            employee.HomeAddress.FlatNumber,
+            employee.PhoneNumber
+            );
+    }
     public static EmployeeListResponse ToEmployeeListResponse(this Employee employee)
     {
         return new EmployeeListResponse(

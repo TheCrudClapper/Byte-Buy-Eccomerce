@@ -8,7 +8,7 @@ namespace ByteBuy.Services.ServiceContracts;
 public interface IEmployeeService
 {
     Task<Result<IEnumerable<EmployeeListResponse>>> GetList();
-    Task<Result<EmployeeResponse>> GetSelf();
+    Task<Result<EmployeeProfileResponse>> GetSelf();
     Task<Result> ChangePassword(PasswordChangeRequest request);
     Task<Result<UpdatedResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request);
     Task<Result<CreatedResponse>> Add(EmployeeAddRequest request);

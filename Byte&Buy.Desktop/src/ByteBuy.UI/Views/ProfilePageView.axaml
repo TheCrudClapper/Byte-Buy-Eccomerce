@@ -82,7 +82,7 @@
 
                         <StackPanel Grid.Row="2" Grid.Column="2">
                             <Label Content="Role" Classes="textBoxLabel" />
-                            <TextBox IsEnabled="False" Text="Storage Worker" />
+                            <TextBox IsEnabled="False" Text="{Binding RoleName}" />
                         </StackPanel>
                     </Grid>
 

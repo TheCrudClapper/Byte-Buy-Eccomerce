@@ -28,7 +28,7 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
         => await employeeHttpClient.GetListAsync();
 
-    public async Task<Result<EmployeeResponse>> GetSelf()
+    public async Task<Result<EmployeeProfileResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();
 
     public async Task<Result<UpdatedResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)

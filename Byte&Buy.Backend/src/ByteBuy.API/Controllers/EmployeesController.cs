@@ -34,7 +34,7 @@ public class EmployeesController : BaseApiController
     [HttpGet("me")]
     //[HasPermission("employee:read:me")]
     public async Task<ActionResult<EmployeeResponse>> GetEmployee(CancellationToken ct)
-        => HandleResult(await _employeeService.GetEmployee(CurrentUserId, ct));
+        => HandleResult(await _employeeService.GetEmployeeProfileInfo(CurrentUserId, ct));
 
     [HttpGet]
     //[HasPermission("employee:read:many")]

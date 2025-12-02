@@ -99,6 +99,15 @@ public class EmployeeService : IEmployeeService
         return employee.ToEmployeeResponse();
     }
 
+    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default)
+    {
+        var employee = await _employeeRepository.GetWithRolesById(employeeId, ct);
+        if(employee is null)
+            return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
+
+        return employee.ToEmployeeProfileResponse();
+    }
+
     public async Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct)
     {
         var employees = await _employeeRepository.GetAllWithRolesAsync(ct);

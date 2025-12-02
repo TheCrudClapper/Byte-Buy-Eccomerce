@@ -24,6 +24,9 @@ public partial class ProfilePageViewModel : ViewModelSingle
     private string _email = string.Empty;
 
     [ObservableProperty]
+    private string _roleName = string.Empty;
+    
+    [ObservableProperty]
     [Required]
     [MaxLength(50)]
     private string _street = string.Empty;
@@ -119,6 +122,7 @@ public partial class ProfilePageViewModel : ViewModelSingle
 
         FirstName = employeeResponse!.FirstName;
         LastName = employeeResponse.LastName;
+        RoleName = employeeResponse.RoleName;
         City = employeeResponse.City;
         HouseNumber = employeeResponse.HouseNumber;
         PostalCode = employeeResponse.PostalCode;

@@ -7,8 +7,8 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEmployeeHttpClient
 {
-    public async Task<Result<EmployeeResponse>> GetSelfAsync()
-        => await GetAsync<EmployeeResponse>("employees/me");
+    public async Task<Result<EmployeeProfileResponse>> GetSelfAsync()
+        => await GetAsync<EmployeeProfileResponse>("employees/me");
 
     public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>("employees/address", request);

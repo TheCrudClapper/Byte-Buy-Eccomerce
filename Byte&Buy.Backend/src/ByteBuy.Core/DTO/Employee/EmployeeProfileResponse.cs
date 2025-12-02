@@ -1,6 +1,11 @@
 ﻿namespace ByteBuy.Core.DTO.Employee;
 
-public record EmployeeAddressResponse(
+public record EmployeeProfileResponse(
+    Guid Id,
+    string RoleName,
+    string FirstName,
+    string LastName,
+    string Email,
     string Street,
     string HouseNumber,
     string PostalCode,
@@ -8,4 +13,5 @@ public record EmployeeAddressResponse(
     string Country,
     string? FlatNumber,
     string? PhoneNumber
-    );
+);
+

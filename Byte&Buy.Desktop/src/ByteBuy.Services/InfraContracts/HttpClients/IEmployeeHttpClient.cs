@@ -6,7 +6,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 
 public interface IEmployeeHttpClient
 {
-    Task<Result<EmployeeResponse>> GetSelfAsync();
+    Task<Result<EmployeeProfileResponse>> GetSelfAsync();
     Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
     Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync();
     Task<Result<CreatedResponse>> AddEmployeeAsync(EmployeeAddRequest request);

@@ -34,7 +34,7 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
     public async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
     {
         return await _context.Employees
-            .Include(e => e.UserRoles)
+            .Include(e => e.UserPermissions)
             .FirstOrDefaultAsync(e => e.Id == employeeId, ct);
     }
 

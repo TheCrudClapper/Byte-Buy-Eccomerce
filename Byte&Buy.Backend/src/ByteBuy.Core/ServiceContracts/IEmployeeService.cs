@@ -11,6 +11,7 @@ namespace ByteBuy.Core.ServiceContracts;
 /// employee data. Cancellation tokens allow callers to cancel ongoing operations as needed.</remarks>
 public interface IEmployeeService
 {
+    Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default);
     Task<Result<CreatedResponse>> AddEmployee(EmployeeAddRequest request);
     Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request);
     Task<Result<UpdatedResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request);
