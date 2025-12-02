@@ -114,8 +114,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
             {
                 if (!existing.IsActive)
                 {
-                    existing.IsActive = true;
-                    existing.DateDeleted = null;
+                    existing.Reactivate();
                 }
             }
             else

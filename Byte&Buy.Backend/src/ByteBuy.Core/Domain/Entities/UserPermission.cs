@@ -3,13 +3,13 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class UserPermission : AuditableEntity, ISoftDeletable
 {
-    public Guid UserId { get; set; }
-    public ApplicationUser User { get; set; } = null!;
-    public Guid PermissionId { get; set;  }
-    public Permission Permission { get; set; } = null!;
-    public bool IsGranted { get; set; }
-    public bool IsActive { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public Guid UserId { get; private set; }
+    public ApplicationUser User { get; private set; } = null!;
+    public Guid PermissionId { get; private set;  }
+    public Permission Permission { get; private set; } = null!;
+    public bool IsGranted { get; private set; }
+    public bool IsActive { get; private set; }
+    public DateTime? DateDeleted { get; private set; }
 
     private UserPermission(Guid userId, Guid permissionId, bool isGranted)
     {
@@ -29,5 +29,12 @@ public class UserPermission : AuditableEntity, ISoftDeletable
     {
         DateDeleted = DateTime.UtcNow;
         IsActive = false;
+    }
+
+    public void Reactivate(bool isGranted)
+    {
+        IsActive = true;
+        DateDeleted = null;
+        IsGranted = isGranted;
     }
 }

@@ -4,14 +4,14 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class RolePermission : AuditableEntity, ISoftDeletable
 {
-    public Guid RoleId { get; set; }
-    public ApplicationRole Role { get; set; } = null!;
+    public Guid RoleId { get; private set; }
+    public ApplicationRole Role { get; private set; } = null!;
   
-    public Guid PermissionId { get; set; }
-    public Permission Permission { get; set; } = null!;
+    public Guid PermissionId { get; private set; }
+    public Permission Permission { get; private set; } = null!;
 
-    public bool IsActive { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public bool IsActive { get; private set; }
+    public DateTime? DateDeleted { get; private set; }
 
     public RolePermission(Guid roleId, Guid permissionId)
     {
@@ -28,5 +28,11 @@ public class RolePermission : AuditableEntity, ISoftDeletable
     {
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
+    }
+
+    public void Reactivate()
+    {
+        IsActive = true;
+        DateDeleted = null;
     }
 }
