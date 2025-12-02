@@ -111,12 +111,13 @@ public class EmployeeService : IEmployeeService
     {
         var employees = await _employeeRepository.GetAllWithRolesAsync(ct);
         return employees
-            .Select(e => e.ToEmployeeListResponse()).ToList();
+            .Select(e => e.ToEmployeeListResponse())
+            .ToList();
     }
 
     public async Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
     {
-        var employee = await _employeeRepository.GetByIdAsync(employeeId);
+        var employee = await _employeeRepository.GetAggregateAsync(employeeId);
         if (employee is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -156,6 +157,14 @@ public class EmployeeService : IEmployeeService
         var roleChange = await UpdateEmployeeRole(employee, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
+
+        //permission assigmnets
+        var grantedPerms = request.GrantedPermissionIds ?? [];
+        var revokedPerms = request.RevokedPermissionIds ?? [];
+
+        var permissionResult = employee.SetPermissionOverrides(revokedPerms, grantedPerms);
+        if (permissionResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
 

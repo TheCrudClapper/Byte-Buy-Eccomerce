@@ -120,7 +120,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
             }
             else
             {
-                RolePermissions.Add(RolePermission.Create(this.Id, permissionId));
+                RolePermissions.Add(RolePermission.Create(Id, permissionId));
             }
         }
 

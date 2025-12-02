@@ -15,6 +15,7 @@ public interface IEmployeeRepository
 {
     Task UpdateAsync(Employee employee);
     Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
+    Task<Employee?> GetAggregateAsync(Guid employeeId, CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);
     Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
     Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);

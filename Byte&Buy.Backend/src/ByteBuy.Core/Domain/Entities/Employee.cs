@@ -71,6 +71,7 @@ public sealed class Employee : ApplicationUser
             return;
 
         var suffix = "_DELETED_" + Guid.NewGuid();
+        UserName += suffix;
         NormalizedUserName += suffix.ToUpper();
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
@@ -109,6 +110,5 @@ public sealed class Employee : ApplicationUser
 
         return Result.Success();
     }
-
 }
 

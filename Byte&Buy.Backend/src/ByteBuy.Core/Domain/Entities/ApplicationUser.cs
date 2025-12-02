@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 namespace ByteBuy.Core.Domain.Entities;
 
 /// <summary>
@@ -89,5 +90,60 @@ public class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         {
            perm.Deactivate();
         }
+    }
+
+    public Result SetPermissionOverrides(IEnumerable<Guid> revokedPermissions,
+        IEnumerable<Guid> grantedPermissions)
+    {
+        //deactivate permissions that are not in given parameters
+        var merge = revokedPermissions
+            .Concat(grantedPermissions);
+
+        foreach (var up in UserPermissions.Where(up => up.IsActive && !merge.Contains(up.PermissionId)))
+        {
+            up.Deactivate();
+        }
+
+        foreach (var permissionId in grantedPermissions)
+        {
+            var existing = UserPermissions
+                .FirstOrDefault(up  => up.PermissionId == permissionId);
+
+            if (existing != null)
+            {
+                if (!existing.IsActive || existing.IsGranted == false)
+                {
+                    existing.IsActive = true;
+                    existing.DateDeleted = null;
+                    existing.IsGranted = true;
+                }
+            }
+            else
+            {
+                UserPermissions.Add(UserPermission.Create(Id, permissionId, true));
+            }
+        }
+
+        foreach (var permissionId in revokedPermissions)
+        {
+            var existing = UserPermissions
+                .FirstOrDefault(up => up.PermissionId == permissionId);
+
+            if (existing != null)
+            {
+                if (!existing.IsActive || existing.IsGranted)
+                {
+                    existing.IsActive = true;
+                    existing.DateDeleted = null;
+                    existing.IsGranted = false;
+                }
+            }
+            else
+            {
+                UserPermissions.Add(UserPermission.Create(Id, permissionId, false));
+            }
+        }
+
+        return Result.Success();
     }
 }

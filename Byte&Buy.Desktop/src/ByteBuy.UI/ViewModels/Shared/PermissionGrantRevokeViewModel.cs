@@ -30,9 +30,6 @@ public class PermissionGrantRevokeViewModel(IPermissionService permissionService
     public void SetSelectedPermissions(IList<Guid> revokedPermissions,
         IList<Guid> grantedPermissions)
     {
-        if (revokedPermissions.Any() && grantedPermissions.Any())
-            return;
-
         foreach (var perm in Permissions)
         {
             if (revokedPermissions.Contains(perm.Id))

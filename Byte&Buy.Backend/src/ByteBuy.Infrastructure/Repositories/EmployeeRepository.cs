@@ -34,8 +34,17 @@ public class EmployeeRepository : BaseRepository, IEmployeeRepository
     public async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
     {
         return await _context.Employees
+            .Include(e => e.UserRoles)
+            .FirstOrDefaultAsync(e => e.Id == employeeId, ct);
+    }
+
+    public async Task<Employee?> GetAggregateAsync(Guid employeeId, CancellationToken ct)
+    {
+        return await _context.Employees
+            .IgnoreQueryFilters()
             .Include(e => e.UserPermissions)
             .FirstOrDefaultAsync(e => e.Id == employeeId, ct);
+
     }
 
     public async Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct)
