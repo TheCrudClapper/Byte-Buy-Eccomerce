@@ -22,13 +22,13 @@ public static class EmployeeMappings
             employee.HomeAddress.FlatNumber,
             employee.PhoneNumber,
             employee.UserPermissions
-                .Where(up => up.IsGranted)
+                ?.Where(up => up.IsGranted)
                 .Select(up => up.PermissionId)
-                .ToList(),
+                .ToList() ?? [],
             employee.UserPermissions
-                .Where(up => !up.IsGranted)
+                ?.Where(up => !up.IsGranted)
                 .Select(up => up.PermissionId)
-                .ToList());
+                .ToList() ?? []);
     }
 
     public static EmployeeListResponse ToEmployeeListResponse(this Employee employee)
@@ -38,7 +38,7 @@ public static class EmployeeMappings
             employee.FirstName,
             employee.LastName,
             employee.Email!,
-            employee.UserRoles?.FirstOrDefault()?.Role.Name ?? "No Role"
+            employee.UserRoles?.FirstOrDefault()?.Role.Name ?? "Unknown"
             );
     }
 

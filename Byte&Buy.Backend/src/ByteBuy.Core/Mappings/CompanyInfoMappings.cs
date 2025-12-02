@@ -1,6 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.EntityContracts;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.CompanyInfo;
 
