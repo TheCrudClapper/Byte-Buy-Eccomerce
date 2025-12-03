@@ -14,7 +14,8 @@ public static class DependencyInjection
         services.AddSingleton<IRoleService, RoleService>();
         services.AddSingleton<ICompanyInfoService, CompanyInfoService>();
         services.AddSingleton<IPermissionService, PermissionService>();
-
+        services.AddSingleton<IPortalUserService, PortalUserService>();
+        services.AddSingleton<ICountryService, CountryService>();
         return services;
     }
 }

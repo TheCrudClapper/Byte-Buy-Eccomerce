@@ -28,7 +28,7 @@ public class EmployeesController : BaseApiController
         => HandleResult(await _employeeService.UpdateEmployeeAddress(CurrentUserId, request));
 
     [HttpGet("list")]
-    public async Task<ActionResult<EmployeeListResponse>> GetEmployeesListResponse(CancellationToken ct)
+    public async Task<ActionResult<EmployeeListResponse>> GetEmployeesList(CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployeesList(ct));
 
     [HttpGet("me")]

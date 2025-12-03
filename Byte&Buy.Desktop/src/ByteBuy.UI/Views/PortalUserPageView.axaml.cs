@@ -3,14 +3,13 @@ using ByteBuy.UI.ViewModels;
 
 namespace ByteBuy.UI.Views;
 
-public partial class UsersPageView : UserControl
+public partial class PortalUserPageView : UserControl
 {
-    public UsersPageView()
+    public PortalUserPageView()
     {
         InitializeComponent();
     }
-
-    public UsersPageView(UsersPageViewModel vm)
+    public PortalUserPageView(PortalUserPageViewModel vm)
     {
         InitializeComponent();
         DataContext = vm;

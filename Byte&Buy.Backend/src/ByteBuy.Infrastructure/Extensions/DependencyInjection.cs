@@ -27,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IConditionRepository, ConditionRepository>();
         services.AddScoped<IDeliveryRepository, DeliveryRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IPortalUserRepository, PortalUserRepository>();
         return services;
     }
 }

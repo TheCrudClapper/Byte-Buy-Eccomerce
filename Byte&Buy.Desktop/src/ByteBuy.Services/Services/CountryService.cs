@@ -1,0 +1,12 @@
+﻿using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
+
+namespace ByteBuy.Services.Services;
+
+public class CountryService(ICountryHttpClient httpClient) : ICountryService
+{
+    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+        => await httpClient.GetSelectListAsync();
+}

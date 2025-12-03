@@ -32,10 +32,10 @@ namespace ByteBuy.UI
         {
             //Registering Services
             var services = new ServiceCollection();
+            services.AddAuthHeaderHandler();
             services.RegisterViewModels();
             services.AddServiceLayer();
             services.AddInfrastructureLayer();
-            services.AddAuthHeaderHandler();
 
             services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
             {
@@ -47,6 +47,8 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Profile => x.GetRequiredService<ProfilePageViewModel>(),
                 ApplicationPageNames.Settings => x.GetRequiredService<SettingsPageViewModel>(),
                 ApplicationPageNames.CompanyInfo => x.GetRequiredService<CompanyInfoPageViewModel>(),
+                ApplicationPageNames.PortalUsers => x.GetRequiredService<PortalUsersPageViewModel>(),
+                ApplicationPageNames.PortalUser => x.GetRequiredService<PortalUserPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

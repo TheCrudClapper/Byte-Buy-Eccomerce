@@ -40,6 +40,7 @@ public static class DependencyInjection
         services.AddTransient<CompanyInfoPageViewModel>();
         services.AddTransient<PermissionListBoxViewModel>();
         services.AddTransient<PermissionGrantRevokeViewModel>();
+        services.AddTransient<PortalUsersPageViewModel>();
         return services;
     }
 }

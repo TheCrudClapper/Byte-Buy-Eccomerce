@@ -84,8 +84,8 @@
                     </Button>
 
                     <Button
-                        Command="{Binding GoToRolesCommand}"
-                        Classes.active="{Binding IsRolesPageActive}"
+                        Command="{Binding GoToPortalUsersCommand}"
+                        Classes.active="{Binding IsPortalUsersActive}"
                         Classes="sidebarMenuButton">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"

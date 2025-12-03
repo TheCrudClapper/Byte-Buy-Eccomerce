@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.EntityContracts;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
@@ -71,13 +72,14 @@ public class CompanyInfo : AuditableEntity
     string postalCode,
     string city,
     string country,
-    string? flatNumber)
+    string? flatNumber,
+    IAddressValidationService validator)
     {
         var validationResult = ValidateBasicInfo(companyName, tin, email, phone, slogan);
         if (validationResult.IsFailure)
             return Result.Failure<CompanyInfo>(validationResult.Error);
 
-        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber);
+        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
             return Result.Failure<CompanyInfo>(addressResult.Error);
 
@@ -95,13 +97,14 @@ public class CompanyInfo : AuditableEntity
     string postalCode,
     string city,
     string country,
-    string? flatNumber)
+    string? flatNumber,
+    IAddressValidationService validator)
     {
         var validationResult = ValidateBasicInfo(companyName, tin, email, phone, slogan);
         if (validationResult.IsFailure)
             return Result.Failure<CompanyInfo>(validationResult.Error);
 
-        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber);
+        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
             return Result.Failure<CompanyInfo>(addressResult.Error);
 

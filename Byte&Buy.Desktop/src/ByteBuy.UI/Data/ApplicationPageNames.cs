@@ -11,4 +11,6 @@ public enum ApplicationPageNames
     Dashboard,
     Settings,
     CompanyInfo,
+    PortalUsers,
+    PortalUser
 }

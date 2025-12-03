@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.CompanyInfo;
@@ -11,9 +12,12 @@ namespace ByteBuy.Core.Services;
 public class CompanyInfoService : ICompanyInfoService
 {
     private readonly ICompanyInfoRepository _companyInfoRepository;
-    public CompanyInfoService(ICompanyInfoRepository companyInfo)
+    private readonly IAddressValidationService _addressValidator;
+    public CompanyInfoService(ICompanyInfoRepository companyInfo,
+        IAddressValidationService addressValidator)
     {
         _companyInfoRepository = companyInfo;
+        _addressValidator = addressValidator;
     }
     public async Task<Result<CreatedResponse>> AddCompanyInfo(CompanyInfoAddRequest request)
     {
@@ -31,7 +35,8 @@ public class CompanyInfoService : ICompanyInfoService
             request.Address.PostalCode,
             request.Address.City,
             request.Address.Country,
-            request.Address.FlatNumber
+            request.Address.FlatNumber,
+            _addressValidator
             );
 
         if(createResult.IsFailure)
@@ -67,7 +72,9 @@ public class CompanyInfoService : ICompanyInfoService
             request.Address.PostalCode,
             request.Address.City,
             request.Address.Country,
-            request.Address.FlatNumber);
+            request.Address.FlatNumber,
+            _addressValidator
+            );
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);

@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 namespace ByteBuy.Core.Domain.Entities;
 
 /// <summary>

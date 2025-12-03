@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
@@ -30,37 +30,27 @@ public class AddressValueObj
         FlatNumber = flatNumber;
     }
 
-    public static Result<AddressValueObj> Create(string street, string houseNumber,string postalCode, string city, string country, string? flatNumber = null)
+    public static Result Validate(string street, string houseNumber, string postalCode,
+        string city, string country, string? flatNumber, IAddressValidationService validator)
     {
-        if (string.IsNullOrWhiteSpace(street) || street.Length > 50)
-            return Result.Failure<AddressValueObj>(Error.Validation("Street is required and must be at most 50 characters."));
-
-        if (string.IsNullOrWhiteSpace(houseNumber) || houseNumber.Length > 20)
-            return Result.Failure<AddressValueObj>(Error.Validation("House number is required and must be at most 20 characters."));
-
-        if (string.IsNullOrWhiteSpace(postalCode) || postalCode.Length > 50)
-            return Result.Failure<AddressValueObj>(Error.Validation("Postal code is required and must be at most 50 characters."));
-
-        if (string.IsNullOrWhiteSpace(city) || city.Length > 50)
-            return Result.Failure<AddressValueObj>(Error.Validation("City is required and must be at most 50 characters."));
+        var validatorResult = validator.Validate(street, houseNumber, postalCode, city, flatNumber);
+        if (validatorResult.IsFailure)
+            return validatorResult;
 
         if (string.IsNullOrWhiteSpace(country) || country.Length > 50)
-            return Result.Failure<AddressValueObj>(Error.Validation("Country is required and must be at most 50 characters."));
+            return Result.Failure(Error.Validation("Country is required and must be at most 50 characters."));
 
-        if (flatNumber is not null && flatNumber.Length > 10)
-            return Result.Failure<AddressValueObj>(Error.Validation("Flat number must be at most 10 characters."));
+        return Result.Success();
+    }
+
+    public static Result<AddressValueObj> Create(
+        string street, string houseNumber,string postalCode, string city, string country, string? flatNumber, IAddressValidationService validator)
+    {
+        var validationResult = Validate(street, houseNumber, postalCode, city, country, flatNumber, validator);
+        if (validationResult.IsFailure)
+            return Result.Failure<AddressValueObj>(validationResult.Error);
 
         return new AddressValueObj(street, houseNumber, postalCode, city, country, flatNumber);
     }
-
-    public static AddressValueObj FromEntity(Address address)
-        => new AddressValueObj(
-            address.Street,
-            address.HouseNumber,
-            address.PostalCode,
-            address.City,
-            address.Country.Name,
-            address.FlatNumber
-        );
 }
 

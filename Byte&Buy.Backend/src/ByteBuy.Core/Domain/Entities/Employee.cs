@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
@@ -19,15 +20,16 @@ public sealed class Employee : ApplicationUser
         string country,
         string? flatNumber,
         string? phoneNumber,
-        IEnumerable<Guid> revokedPermissions,
-        IEnumerable<Guid> grantedPermissions)
+        IEnumerable<Guid>? revokedPermissions,
+        IEnumerable<Guid>? grantedPermissions,
+        IAddressValidationService validator)
     {
         var validatioResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
         if (validatioResult.IsFailure)
             return Result.Failure<Employee>(validatioResult.Error);
 
         var addressResult = AddressValueObj
-            .Create(street, houseNumber, postalCode, city, country, flatNumber);
+            .Create(street, houseNumber, postalCode, city, country, flatNumber,validator);
 
         if (addressResult.IsFailure)
             return Result.Failure<Employee>(addressResult.Error);
@@ -36,7 +38,7 @@ public sealed class Employee : ApplicationUser
 
         employee.HomeAddress = addressResult.Value;
 
-        employee.AssignPermissionsToUser(revokedPermissions, grantedPermissions);
+        employee.AssignPermissionsToUser(revokedPermissions ?? [], grantedPermissions ?? []);
 
         return employee;
     }
@@ -48,10 +50,11 @@ public sealed class Employee : ApplicationUser
         string city,
         string country,
         string? flatNumber,
-        string? phoneNumber)
+        string? phoneNumber,
+        IAddressValidationService validator)
     {
         var addressResult = AddressValueObj.Create(
-            street, houseNumber, postalCode, city, country, flatNumber);
+            street, houseNumber, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure(addressResult.Error);
@@ -88,7 +91,8 @@ public sealed class Employee : ApplicationUser
         string city,
         string country,
         string? flatNumber,
-        string? phoneNumber)
+        string? phoneNumber,
+        IAddressValidationService validator)
     {
 
         var validatioResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
@@ -96,7 +100,7 @@ public sealed class Employee : ApplicationUser
             return Result.Failure(validatioResult.Error);
 
         var addressResult = AddressValueObj.Create(
-            street, houseNumber, postalCode, city, country, flatNumber);
+            street, houseNumber, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure(addressResult.Error);

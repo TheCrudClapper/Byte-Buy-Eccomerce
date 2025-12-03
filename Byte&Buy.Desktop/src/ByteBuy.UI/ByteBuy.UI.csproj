@@ -50,5 +50,9 @@
       <DependentUpon>PermissionRevokeGrantListBoxView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PortalUsersPageView.axaml.cs">
+      <DependentUpon>PortalUsersPageView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

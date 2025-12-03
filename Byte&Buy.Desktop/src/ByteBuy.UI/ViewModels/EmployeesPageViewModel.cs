@@ -22,8 +22,11 @@ public partial class EmployeesPageViewModel(
     {
         var result = await employeeService.GetList();
         if (!result.Success)
+        {
             await Alert.Show(AlertType.Error, result.Error!.Description);
-
+            return;
+        }
+        
         var list = result.Value!
             .Select((e, index) => e.ToListItem(index))
             .ToList();

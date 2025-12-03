@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Employee;
@@ -17,19 +18,22 @@ public class EmployeeService : IEmployeeService
     private readonly IPasswordService _passwordService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
+    private readonly IAddressValidationService _addressValidator;
 
     public EmployeeService(
         IUserRepository applicationUserRepository,
         IEmployeeRepository employeeRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
-        IPasswordService passwordService)
+        IPasswordService passwordService,
+        IAddressValidationService addressValidator)
     {
         _userRepository = applicationUserRepository;
         _roleManager = roleManager;
         _userManager = userManager;
         _employeeRepository = employeeRepository;
         _passwordService = passwordService;
+        _addressValidator = addressValidator;
     }
     public async Task<Result<CreatedResponse>> AddEmployee(EmployeeAddRequest request)
     {
@@ -39,9 +43,6 @@ public class EmployeeService : IEmployeeService
         var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (applicationRole is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
-
-        var grantedPerms = request.GrantedPermissionIds ?? [];
-        var revokedPerms = request.RevokedPermissionIds ?? [];
 
         var employeeResult = Employee.Create(
             request.FirstName,
@@ -54,8 +55,9 @@ public class EmployeeService : IEmployeeService
             request.Country,
             request.FlatNumber,
             request.PhoneNumber,
-            revokedPerms, 
-            grantedPerms
+            request.RevokedPermissionIds,
+            request.GrantedPermissionIds,
+            _addressValidator
             );
 
         if (employeeResult.IsFailure)
@@ -102,7 +104,7 @@ public class EmployeeService : IEmployeeService
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default)
     {
         var employee = await _employeeRepository.GetWithRolesById(employeeId, ct);
-        if(employee is null)
+        if (employee is null)
             return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
 
         return employee.ToEmployeeProfileResponse();
@@ -147,7 +149,8 @@ public class EmployeeService : IEmployeeService
             request.City,
             request.Country,
             request.FlatNumber,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            _addressValidator);
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
@@ -193,7 +196,8 @@ public class EmployeeService : IEmployeeService
                                 request.City,
                                 request.Country,
                                 request.FlatNumber,
-                                request.PhoneNumber);
+                                request.PhoneNumber,
+                                _addressValidator);
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
