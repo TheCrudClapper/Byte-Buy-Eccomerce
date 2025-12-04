@@ -49,6 +49,12 @@ public partial class AlertViewModel : ViewModelBase
         return Task.CompletedTask;
     }
 
+    public async Task ShowErrorAlert(string message)
+        => await Show(AlertType.Error, message);
+
+    public async Task ShowSuccessAlert(string message)
+        => await Show(AlertType.Success, message);
+
     [RelayCommand]
     private void Hide()
     {

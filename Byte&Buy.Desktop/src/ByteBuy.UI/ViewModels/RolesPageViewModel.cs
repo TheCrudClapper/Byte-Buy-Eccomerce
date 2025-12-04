@@ -23,12 +23,12 @@ public class RolesPageViewModel(
         var result = await roleService.DeleteById(item.Id);
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
         Items.Remove(item);
-        await Alert.Show(AlertType.Success, "Role deleted successfully");
+        await Alert.ShowSuccessAlert("Role deleted successfully");
     }
 
     protected override async Task Edit(RoleListItem item)
@@ -44,8 +44,11 @@ public class RolesPageViewModel(
     {
         var result = await roleService.GetAll();
         if (!result.Success)
-            await Alert.Show(AlertType.Error, result.Error!.Description);
-        
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+            
         var list = result.Value!
             .Select((r, index) => r.ToListItem(index))
             .ToList();

@@ -17,9 +17,7 @@ namespace ByteBuy.UI.ViewModels
         [NotifyPropertyChangedFor(nameof(IsRolesPageActive))]
         private PageViewModel _currentPage;
 
-        //Factory For Pages
         private readonly PageFactory _pageFactory;
-
         public Action? Logout { get; set; }
 
         public bool IsProfilePageActive => CurrentPage.PageName == ApplicationPageNames.Profile;

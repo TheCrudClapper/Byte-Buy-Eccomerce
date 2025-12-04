@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
+
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -91,11 +91,11 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
     {
         var response = await _companyInfoService.GetCompanyInfo();
         if (!response.Success)
+        {
             await Alert.Show(AlertType.Error, response.Error!.Description);
-
-        if (response.Value is null)
             return;
-
+        }
+            
         var companyInfo = response.Value;
         CompanyName = companyInfo.CompanyName;
         Slogan = companyInfo.Slogan;
@@ -137,8 +137,10 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
 
         var response = await _companyInfoService.Update(request);
         if (!response.Success)
-            await Alert.Show(AlertType.Error, response.Error!.Description);
-
-        await Alert.Show(AlertType.Success, "Updated Details Successfully");
+        {
+            await Alert.ShowErrorAlert(response.Error.Description);
+            return;
+        }
+        await Alert.ShowSuccessAlert("Successfully Updated Company Info!");
     }
 }

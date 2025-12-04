@@ -1,14 +1,12 @@
 ﻿using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Input;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -16,7 +14,7 @@ public partial class RolePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty] [Required] private string _roleName = string.Empty;
+    [ObservableProperty][Required] private string _roleName = string.Empty;
 
     [ObservableProperty] private bool _isTutorialExpanded = false;
 
@@ -57,11 +55,11 @@ public partial class RolePageViewModel : ViewModelSingle
         var result = await _roleService.GetById(id);
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-        
-        RoleName = result.Value!.Name;
+
+        RoleName = result.Value.Name;
 
         var permissionIds = result.Value.PermissionIds;
         PermissionListBox.SetSelectedPermissions(permissionIds);
@@ -79,14 +77,14 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         if (EditingItemId is null)
             return;
-        
+
         var request = new RoleUpdateRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
         var response = await _roleService.Update(EditingItemId.Value, request);
         if (!response.Success)
-            await Alert.Show(AlertType.Error, response.Error!.Description);
+            await Alert.ShowErrorAlert(response.Error!.Description);
         else
-            await Alert.Show(AlertType.Success, "Successfully added role");
+            await Alert.ShowSuccessAlert("Successfully added role");
     }
 
     private async Task AddItem()
@@ -95,10 +93,10 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var response = await _roleService.Add(request);
         if (!response.Success)
-            await Alert.Show(AlertType.Error, response.Error!.Description);
+            await Alert.ShowErrorAlert(response.Error!.Description);
         else
-            await Alert.Show(AlertType.Success, "Successfully added role");
-        
+            await Alert.ShowSuccessAlert("Successfully added role");
+
     }
 
     protected override void Clear()

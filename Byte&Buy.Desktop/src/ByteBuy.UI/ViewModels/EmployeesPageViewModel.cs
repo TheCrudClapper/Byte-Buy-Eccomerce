@@ -22,11 +22,11 @@ public partial class EmployeesPageViewModel(
         var result = await employeeService.GetList();
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        var list = result.Value!
+        var list = result.Value
             .Select((e, index) => e.ToListItem(index))
             .ToList();
 
@@ -38,12 +38,12 @@ public partial class EmployeesPageViewModel(
         var result = await employeeService.DeleteById(employee.Id);
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowSuccessAlert(result.Error!.Description);
             return;
         }
 
         Items.Remove(employee);
-        await Alert.Show(AlertType.Success, "Employee deleted successfully");
+        await Alert.ShowErrorAlert("Employee deleted successfully");
     }
 
     protected override async Task Edit(EmployeeListItem employee)

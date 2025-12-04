@@ -25,7 +25,7 @@ public partial class ProfilePageViewModel : ViewModelSingle
 
     [ObservableProperty]
     private string _roleName = string.Empty;
-    
+
     [ObservableProperty]
     [Required]
     [MaxLength(50)]
@@ -59,9 +59,6 @@ public partial class ProfilePageViewModel : ViewModelSingle
     [DataType(DataType.PhoneNumber)]
     [MaxLength(15)]
     private string? _phoneNumber = string.Empty;
-
-    [ObservableProperty]
-    private string _error = string.Empty;
     #endregion
 
     private readonly IEmployeeService _employeeService;
@@ -89,13 +86,10 @@ public partial class ProfilePageViewModel : ViewModelSingle
 
         if (!result.Success)
         {
-            Error = result.Error!.Description;
-            await Alert.Show(AlertType.Error, Error);
+            await Alert.Show(AlertType.Error, result.Error!.Description);
+            return;
         }
-        else
-        {
-            await Alert.Show(AlertType.Success, "Address Updated Successfully");
-        }
+        await Alert.Show(AlertType.Success, "Address Updated Successfully");
 
     }
 
@@ -115,7 +109,10 @@ public partial class ProfilePageViewModel : ViewModelSingle
     {
         var result = await _employeeService.GetSelf();
         if (!result.Success)
-            Error = result.Error!.Description;
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
 
         var employeeResponse = result.Value;
 

@@ -85,6 +85,8 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         _roleService = roleService;
         _countryService = countryService;
         _portalUserService = userService;
+        _ = LoadCountries();
+        _ = LoadRoles();
     }
 
     protected override async Task Save()

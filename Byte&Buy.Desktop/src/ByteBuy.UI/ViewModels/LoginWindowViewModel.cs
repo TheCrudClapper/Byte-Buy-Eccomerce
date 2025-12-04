@@ -13,6 +13,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class LoginWindowViewModel : WindowViewModel
 {
+    #region MVVM Properties
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Email is required")]
@@ -28,11 +29,10 @@ public partial class LoginWindowViewModel : WindowViewModel
     [ObservableProperty]
     private string _error = string.Empty;
 
+    #endregion
     private readonly IAuthService _authService;
     public LoginWindowViewModel(IAuthService authService)
-    {
-        _authService = authService;
-    }
+        => _authService = authService;
 
     public event Action? LoginSuccess;
 

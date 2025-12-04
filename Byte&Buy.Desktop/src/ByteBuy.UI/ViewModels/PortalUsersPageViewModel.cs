@@ -38,11 +38,11 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
 
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        var list = result!.Value
+        var list = result.Value
             .Select((item, index) => item.ToListItem(index))
             .ToList();
 

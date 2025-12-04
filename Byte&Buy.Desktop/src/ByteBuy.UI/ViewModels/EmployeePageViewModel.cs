@@ -51,11 +51,16 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     [MaxLength(50)]
     private string _country = string.Empty;
 
-    [ObservableProperty][MaxLength(10)] private string? _flatNumber = string.Empty;
+    [ObservableProperty]
+    [MaxLength(10)]
+    private string? _flatNumber = string.Empty;
 
-    [ObservableProperty][MaxLength(15)] private string? _phoneNumber = string.Empty;
+    [ObservableProperty]
+    [MaxLength(15)]
+    private string? _phoneNumber = string.Empty;
 
-    [ObservableProperty] private string _password = string.Empty;
+    [ObservableProperty]
+    private string _password = string.Empty;
 
     [ObservableProperty]
     [Required(ErrorMessage = "Choose employee's role")]
@@ -79,7 +84,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
         _roleService = roleService;
-       
+
         _ = LoadRoles();
     }
 
@@ -113,10 +118,11 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         var result = await _employeeService.GetById(id);
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-        var item = result.Value!;
+
+        var item = result.Value;
 
         FirstName = item.FirstName;
         LastName = item.LastName;
@@ -177,9 +183,11 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
         var result = await _employeeService.Add(request);
         if (!result.Success)
-            await Alert.Show(AlertType.Error, result.Error!.Description);
-        else
-            await Alert.Show(AlertType.Success, "Employee Added Successfully");
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+        await Alert.ShowSuccessAlert("Employee Added Successfully");
     }
 
     private async Task UpdateItem()
@@ -203,9 +211,11 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
         var result = await _employeeService.Update(EditingItemId.Value, request);
         if (!result.Success)
-            await Alert.Show(AlertType.Error, result.Error!.Description);
-        else
-            await Alert.Show(AlertType.Success, "Employee updated successfully");
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+        await Alert.Show(AlertType.Success, "Employee updated successfully");
     }
 
     private async Task LoadRoles()
