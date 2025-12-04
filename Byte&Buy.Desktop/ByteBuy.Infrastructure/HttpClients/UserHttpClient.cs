@@ -6,6 +6,6 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public class UserHttpClient(HttpClient httpClient) : HttpClientBase(httpClient), IUserHttpClient
 {
-    public async Task<Result> ChangePasswordAsync(PasswordChangeRequest request)
+    public async Task<Result> PutPasswordAsync(PasswordChangeRequest request)
         => await PutAsync("users/password", request);
 }

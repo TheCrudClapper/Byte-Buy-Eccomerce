@@ -1,5 +1,5 @@
-﻿using ByteBuy.UI.Factories;
-using ByteBuy.UI.ModelsUI.Abstractions;
+﻿using ByteBuy.UI.ModelsUI.Abstractions;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -23,15 +23,12 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     private ObservableCollection<TDataGridItem> _items = [];
     #endregion
 
-    protected readonly MainWindowViewModel Main;
-    protected readonly PageFactory PageFactory;
+    protected INavigationService Navigation;
 
     protected ViewModelMany(AlertViewModel alert,
-        MainWindowViewModel main,
-        PageFactory factory) : base(alert)
+        INavigationService navigation) : base(alert)
     {
-        Main = main;
-        PageFactory = factory;
+        Navigation = navigation;
         _ = LoadData();
     }
 

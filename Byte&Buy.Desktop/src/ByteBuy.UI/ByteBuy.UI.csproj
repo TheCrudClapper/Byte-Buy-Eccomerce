@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaXaml Remove="Styles\Colors.axaml" />
     <AvaloniaResource Include="Styles\Colors.axaml" />

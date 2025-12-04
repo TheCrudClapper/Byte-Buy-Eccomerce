@@ -70,7 +70,6 @@ public partial class ProfilePageViewModel : ViewModelSingle
         PasswordChangeViewModel passwordComponent,
         AlertViewModel alert) : base(alert)
     {
-        PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
         PasswordComponent = passwordComponent; ;
         _ = LoadData();
@@ -86,7 +85,7 @@ public partial class ProfilePageViewModel : ViewModelSingle
             Street, HouseNumber, PostalCode, City, Country, FlatNumber, PhoneNumber
         );
 
-        var result = await _employeeService.UpdateEmployeeAddress(request);
+        var result = await _employeeService.UpdateAddress(request);
 
         if (!result.Success)
         {

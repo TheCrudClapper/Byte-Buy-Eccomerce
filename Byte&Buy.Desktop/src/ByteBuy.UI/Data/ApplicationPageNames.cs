@@ -12,5 +12,14 @@ public enum ApplicationPageNames
     Settings,
     CompanyInfo,
     PortalUsers,
-    PortalUser
+    PortalUser,
+    Countries,
+    Country,
+    Deliveries,
+    Delivery,
+    Categories,
+    Category,
+    Conditions,
+    Condition,
+
 }

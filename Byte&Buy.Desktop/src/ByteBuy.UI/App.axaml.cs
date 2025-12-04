@@ -9,6 +9,7 @@ using ByteBuy.Services.Handlers;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Extensions;
 using ByteBuy.UI.Factories;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.Views;
@@ -59,6 +60,7 @@ namespace ByteBuy.UI
                 _ => throw new InvalidOperationException(),
             });
 
+            
             services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
             {
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindow>(),
@@ -69,6 +71,13 @@ namespace ByteBuy.UI
             //Register factories
             services.AddSingleton<PageFactory>();
             services.AddSingleton<WindowFactory>();
+
+            //Register Navigation
+            services.AddSingleton<INavigationService>(sp => new NavigationService(
+                sp.GetRequiredService<MainWindowViewModel>(),
+                sp.GetRequiredService<PageFactory>(),
+                sp.GetRequiredService<WindowFactory>()
+                ));
 
             var provider = services.BuildServiceProvider();
 

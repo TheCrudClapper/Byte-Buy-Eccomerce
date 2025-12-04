@@ -68,7 +68,6 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
     public CompanyInfoPageViewModel(AlertViewModel alert,
         ICompanyInfoService companyInfoService) : base(alert)
     {
-        PageName = ApplicationPageNames.CompanyInfo;
         _companyInfoService = companyInfoService;
         _ = LoadData();
     }
@@ -136,7 +135,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
             }
         };
 
-        var response = await _companyInfoService.UpdateCompanyInfo(request);
+        var response = await _companyInfoService.Update(request);
         if (!response.Success)
             await Alert.Show(AlertType.Error, response.Error!.Description);
 

@@ -1,26 +1,24 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
-using ByteBuy.UI.Factories;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.PortalUser;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
 public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
 {
-    private readonly IPortalUserService  _portalUserService;
-    
+    private readonly IPortalUserService _portalUserService;
+
     public PortalUsersPageViewModel(AlertViewModel alert,
-        MainWindowViewModel main,
-        PageFactory factory,
-        IPortalUserService portalUserService) : base(alert, main, factory)
+        INavigationService navigationService,
+        IPortalUserService portalUserService) : base(alert, navigationService)
     {
-        PageName = ApplicationPageNames.PortalUsers;
         _portalUserService = portalUserService;
     }
 
@@ -43,16 +41,16 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
             await Alert.Show(AlertType.Error, result.Error!.Description);
             return;
         }
-        
+
         var list = result!.Value
-            .Select((item ,index )=> item.ToListItem(index))
+            .Select((item, index) => item.ToListItem(index))
             .ToList();
-        
+
         Items = new ObservableCollection<PortalUserListItem>(list);
     }
 
     protected override void OpenAddPage()
     {
-        throw new System.NotImplementedException();
+        Navigation.NavigateTo(ApplicationPageNames.PortalUser);
     }
 }

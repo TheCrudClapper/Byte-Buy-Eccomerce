@@ -8,7 +8,6 @@ public partial class DashboardPageViewModel : Base.PageViewModel
 {
     public DashboardPageViewModel(AlertViewModel alert) : base(alert)
     {
-        PageName = ApplicationPageNames.Dashboard;
     }
 
     [ObservableProperty]

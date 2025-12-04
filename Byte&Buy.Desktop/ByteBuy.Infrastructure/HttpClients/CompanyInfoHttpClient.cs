@@ -11,6 +11,6 @@ public class CompanyInfoHttpClient(HttpClient httpClient)
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()
         => GetAsync<CompanyInfoResponse>("companyInfo");
 
-    public Task<Result<UpdatedResponse>> UpdateCompanyInfoAsync(CompanyInfoUpdateRequest request)
+    public Task<Result<UpdatedResponse>> PutCompanyInfoAsync(CompanyInfoUpdateRequest request)
         => PutAsync<UpdatedResponse>("companyInfo", request);
 }

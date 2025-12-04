@@ -11,6 +11,6 @@ public class CompanyInfoService(ICompanyInfoHttpClient companyInfoClient) : ICom
     public Task<Result<CompanyInfoResponse>> GetCompanyInfo()
         => companyInfoClient.GetCompanyInfoAsync();
 
-    public Task<Result<UpdatedResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
-        => companyInfoClient.UpdateCompanyInfoAsync(request);
+    public Task<Result<UpdatedResponse>> Update(CompanyInfoUpdateRequest request)
+        => companyInfoClient.PutCompanyInfoAsync(request);
 }

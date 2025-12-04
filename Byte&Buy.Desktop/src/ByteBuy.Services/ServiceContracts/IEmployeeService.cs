@@ -10,7 +10,7 @@ public interface IEmployeeService
     Task<Result<IEnumerable<EmployeeListResponse>>> GetList();
     Task<Result<EmployeeProfileResponse>> GetSelf();
     Task<Result> ChangePassword(PasswordChangeRequest request);
-    Task<Result<UpdatedResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request);
+    Task<Result<UpdatedResponse>> UpdateAddress(EmployeeAddressUpdateRequest request);
     Task<Result<CreatedResponse>> Add(EmployeeAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, EmployeeUpdateRequest request);
     Task<Result<IEnumerable<EmployeeResponse>>> GetAll();

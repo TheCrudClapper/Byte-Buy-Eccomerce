@@ -60,7 +60,7 @@ public class AuthService : IAuthService
             return Result.Failure(AuthErrors.AccountExists);
 
         var userResult = PortalUser
-            .Create(request.FirstName, request.LastName, request.Email);
+            .Create(request.FirstName, request.LastName, request.Email, null);
 
         if (userResult.IsFailure)
             return userResult;

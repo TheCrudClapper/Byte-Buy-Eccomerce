@@ -7,11 +7,11 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 public interface IEmployeeHttpClient
 {
     Task<Result<EmployeeProfileResponse>> GetSelfAsync();
-    Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
+    Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request);
     Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync();
-    Task<Result<CreatedResponse>> AddEmployeeAsync(EmployeeAddRequest request);
-    Task<Result<EmployeeResponse>> GetById(Guid id);
-    Task<Result<UpdatedResponse>> UpdateEmployeeAsync(Guid id, EmployeeUpdateRequest request);
-    Task<Result> DeleteEmployeeByIdAsync(Guid id);
+    Task<Result<CreatedResponse>> PostEmployeeAsync(EmployeeAddRequest request);
+    Task<Result<EmployeeResponse>> GetByIdAsync(Guid id);
+    Task<Result<UpdatedResponse>> PutEmployeeAsync(Guid id, EmployeeUpdateRequest request);
+    Task<Result> DeleteByIdAsync(Guid id);
     Task<Result<IEnumerable<EmployeeListResponse>>> GetListAsync();
 }

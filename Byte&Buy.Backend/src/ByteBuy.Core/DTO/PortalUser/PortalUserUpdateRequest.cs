@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ByteBuy.Core.DTO.Address;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ByteBuy.Core.DTO.PortalUser;
 
@@ -15,12 +11,7 @@ public record PortalUserUpdateRequest(
     [Required, EmailAddress] string Email,
     string? Password,
     [MaxLength(15)] string? PhoneNumber,
-    [Required, MaxLength(50)] string Street,
-    [Required, MaxLength(10)] string HouseNumber,
-    [Required, MaxLength(20)] string PostalCode,
-    [Required, MaxLength(50)] string City,
-    [Required, MaxLength(50)] string Country,
-    [MaxLength(10)] string? FlatNumber,
+    [Required] AddressAddRequest Address,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
     );

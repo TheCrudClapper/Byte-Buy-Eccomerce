@@ -10,22 +10,22 @@ public class EmployeeHttpClient(HttpClient client) : HttpClientBase(client), IEm
     public async Task<Result<EmployeeProfileResponse>> GetSelfAsync()
         => await GetAsync<EmployeeProfileResponse>("employees/me");
 
-    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>("employees/address", request);
 
     public Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync()
         => GetAsync<IEnumerable<EmployeeResponse>>("employees");
 
-    public async Task<Result<CreatedResponse>> AddEmployeeAsync(EmployeeAddRequest request)
+    public async Task<Result<CreatedResponse>> PostEmployeeAsync(EmployeeAddRequest request)
         => await PostAsync<CreatedResponse>("employees", request);
 
-    public Task<Result<EmployeeResponse>> GetById(Guid id)
+    public Task<Result<EmployeeResponse>> GetByIdAsync(Guid id)
         => GetAsync<EmployeeResponse>($"employees/{id}");
 
-    public Task<Result<UpdatedResponse>> UpdateEmployeeAsync(Guid id, EmployeeUpdateRequest request)
+    public Task<Result<UpdatedResponse>> PutEmployeeAsync(Guid id, EmployeeUpdateRequest request)
         => PutAsync<UpdatedResponse>($"employees/{id}", request);
 
-    public Task<Result> DeleteEmployeeByIdAsync(Guid id)
+    public Task<Result> DeleteByIdAsync(Guid id)
         => DeleteAsync($"employees/{id}");
 
     public Task<Result<IEnumerable<EmployeeListResponse>>> GetListAsync()

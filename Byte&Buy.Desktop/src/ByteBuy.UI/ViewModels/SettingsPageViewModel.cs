@@ -8,6 +8,5 @@ public class SettingsPageViewModel : PageViewModel
 {
     public SettingsPageViewModel(AlertViewModel alert) : base(alert)
     {
-        PageName = ApplicationPageNames.Settings;
     }
 }

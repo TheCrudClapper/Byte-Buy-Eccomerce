@@ -9,10 +9,10 @@ namespace ByteBuy.Services.Services;
 public class RoleService(IRoleHttpClient roleClient) : IRoleService
 {
     public async Task<Result<CreatedResponse>> Add(RoleAddRequest request)
-        => await roleClient.AddAsync(request);
+        => await roleClient.PostAsync(request);
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request)
-        => await roleClient.UpdateAsync(id, request);
+        => await roleClient.PutAsync(id, request);
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
         => await roleClient.GetSelectListItemsAsync();

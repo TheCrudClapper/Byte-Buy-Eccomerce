@@ -11,19 +11,19 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     : IEmployeeService
 {
     public async Task<Result<CreatedResponse>> Add(EmployeeAddRequest request)
-        => await employeeHttpClient.AddEmployeeAsync(request);
+        => await employeeHttpClient.PostEmployeeAsync(request);
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, EmployeeUpdateRequest request)
-        => await employeeHttpClient.UpdateEmployeeAsync(id, request);
+        => await employeeHttpClient.PutEmployeeAsync(id, request);
 
     public async Task<Result<IEnumerable<EmployeeResponse>>> GetAll()
         => await employeeHttpClient.GetAllAsync();
 
     public async Task<Result<EmployeeResponse>> GetById(Guid id)
-        => await employeeHttpClient.GetById(id);
+        => await employeeHttpClient.GetByIdAsync(id);
 
     public async Task<Result> DeleteById(Guid id)
-        => await employeeHttpClient.DeleteEmployeeByIdAsync(id);
+        => await employeeHttpClient.DeleteByIdAsync(id);
 
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
         => await employeeHttpClient.GetListAsync();
@@ -31,9 +31,9 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     public async Task<Result<EmployeeProfileResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();
 
-    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddress(EmployeeAddressUpdateRequest request)
-        => await employeeHttpClient.UpdateEmployeeAddressAsync(request);
+    public async Task<Result<UpdatedResponse>> UpdateAddress(EmployeeAddressUpdateRequest request)
+        => await employeeHttpClient.PutEmployeeAddressAsync(request);
 
     public async Task<Result> ChangePassword(PasswordChangeRequest request)
-        => await userHttpClient.ChangePasswordAsync(request);
+        => await userHttpClient.PutPasswordAsync(request);
 }

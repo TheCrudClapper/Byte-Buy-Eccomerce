@@ -32,7 +32,6 @@ public partial class LoginWindowViewModel : WindowViewModel
     public LoginWindowViewModel(IAuthService authService)
     {
         _authService = authService;
-        WindowName = ApplicationWindowNames.Login;
     }
 
     public event Action? LoginSuccess;

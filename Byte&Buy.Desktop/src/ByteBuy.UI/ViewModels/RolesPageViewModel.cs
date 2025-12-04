@@ -8,15 +8,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Navigation;
 
 namespace ByteBuy.UI.ViewModels;
 
 public class RolesPageViewModel(
     AlertViewModel alert,
-    MainWindowViewModel main,
-    PageFactory pageFactory,
+    INavigationService navigationService,
     IRoleService roleService)
-    : ViewModelMany<RoleListItem>(alert, main, pageFactory)
+    : ViewModelMany<RoleListItem>(alert, navigationService)
 {
     protected override async Task Delete(RoleListItem item)
     {
@@ -33,11 +33,11 @@ public class RolesPageViewModel(
 
     protected override async Task Edit(RoleListItem item)
     {
-        var page = PageFactory.GetPageViewModel(ApplicationPageNames.Role)
-            as RolePageViewModel;
-
-        await page!.InitializeForEdit(item.Id);
-        Main.CurrentPage = page;
+        await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
+        {
+            if (vm is RolePageViewModel roleVm)
+                await roleVm.InitializeForEdit(item.Id);
+        });
     }
 
     protected override async Task LoadData()
@@ -55,9 +55,11 @@ public class RolesPageViewModel(
     
     protected override void OpenAddPage()
     {
-        var page = PageFactory.GetPageViewModel(ApplicationPageNames.Role) as RolePageViewModel;
-        page!.InitializeForAdd();
-        Main.CurrentPage = page;
+        Navigation.NavigateTo(ApplicationPageNames.Role, vm =>
+        {
+            if (vm is RolePageViewModel roleVm)
+                roleVm.InitializeForAdd();
+        });
     }
 
 }

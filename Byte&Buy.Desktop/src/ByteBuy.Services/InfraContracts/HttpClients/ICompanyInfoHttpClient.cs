@@ -7,5 +7,5 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 public interface ICompanyInfoHttpClient
 {
     Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync();
-    Task<Result<UpdatedResponse>> UpdateCompanyInfoAsync(CompanyInfoUpdateRequest request);
+    Task<Result<UpdatedResponse>> PutCompanyInfoAsync(CompanyInfoUpdateRequest request);
 }

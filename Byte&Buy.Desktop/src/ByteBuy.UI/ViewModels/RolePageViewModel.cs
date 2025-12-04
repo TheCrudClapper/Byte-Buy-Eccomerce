@@ -30,7 +30,6 @@ public partial class RolePageViewModel : ViewModelSingle
         IRoleService roleService) : base(alert)
     {
         _roleService = roleService;
-        PageName = ApplicationPageNames.Role;
         PermissionListBox = permissionListBox;
     }
 
