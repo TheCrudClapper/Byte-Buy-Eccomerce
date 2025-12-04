@@ -12,9 +12,9 @@ public sealed class PortalUser : ApplicationUser
         : base(firstName, lastName, email, null) { }
 
 
-    public static Result<PortalUser> Create(string firstName, string lastName, string email)
+    public static Result<PortalUser> Create(string firstName, string lastName, string email, string? phoneNumber)
     {
-        var validationResult = ValidateBasicInfo(firstName, lastName, email, null);
+        var validationResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
         if (validationResult.IsFailure)
             return Result.Failure<PortalUser>(validationResult.Error);
 
@@ -22,16 +22,25 @@ public sealed class PortalUser : ApplicationUser
         return new PortalUser(firstName, lastName, email);
     }
 
+    public override void Deactivate()
+    {
+        base.Deactivate();
+        foreach(var address in Addresses)
+        {
+            address.Deactivate(); 
+        }
+    }
     public static Result<PortalUser> CreateWithAddress(
         string firstName,
         string lastName,
         string email,
+        string? phoneNumber,
         Address address,
         IEnumerable<Guid>? revokedPermissions,
         IEnumerable<Guid>? grantedPermissions
        )
     {
-        var portalUserResult = Create(firstName, lastName, email);
+        var portalUserResult = Create(firstName, lastName, email, phoneNumber);
         if (portalUserResult.IsFailure)
             return Result.Failure<PortalUser>(portalUserResult.Error);
 

@@ -17,11 +17,12 @@ public class Address : AuditableEntity, ISoftDeletable
     public PortalUser? User { get; private set; }
     public Guid CountryId { get; private set; }
     public Country Country { get; private set; } = null!;
+    public bool IsDefault { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
     private Address() { }
-    private Address(string label, string city, string street, string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country)
+    private Address(string label, string city, string street, string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault)
     {
         Label = label;
         City = city;
@@ -34,6 +35,7 @@ public class Address : AuditableEntity, ISoftDeletable
         CountryId = country.Id;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
+        IsDefault = isDefault;
     }
 
     public static Result Validate(string label, string city, string street, string houseNumber,
@@ -53,7 +55,7 @@ public class Address : AuditableEntity, ISoftDeletable
     }
 
     public static Result<Address> Create(string label, string city, string street,
-        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country,
+        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault,
         IAddressValidationService validator)
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
@@ -63,7 +65,7 @@ public class Address : AuditableEntity, ISoftDeletable
         if (country is null)
             return Result.Failure<Address>(Error.Validation("Country can't be null"));
 
-        return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, country);
+        return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, country, isDefault);
     }
 
     public void AssignToUser(PortalUser user)

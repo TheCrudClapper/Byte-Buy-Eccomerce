@@ -44,7 +44,7 @@ public class PortalUserService : IPortalUserService
         if (applicationRole is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
 
-        var country = await _countryRepository.GetByIdAsync(request.CountryId);
+        var country = await _countryRepository.GetByIdAsync(request.Address.CountryId);
         if (country is null)
             return Result.Failure<CreatedResponse>(CountryErrors.NotFound);
 
@@ -57,6 +57,7 @@ public class PortalUserService : IPortalUserService
             request.Address.PostalCode,
             request.Address.FlatNumber,
             country,
+            true,
             _addressValidator);
 
         if (addressResult.IsFailure)
@@ -68,6 +69,7 @@ public class PortalUserService : IPortalUserService
             request.FirstName,
             request.LastName,
             request.Email,
+            request.PhoneNumber,
             address,
             request.RevokedPermissionIds,
             request.GrantedPermissionIds);
@@ -88,21 +90,38 @@ public class PortalUserService : IPortalUserService
         return user.ToCreatedResponse();
     }
 
-    public Task<Result<PortalUserResponse>> GetPortalUser(Guid userId, CancellationToken ct = default)
+    public async Task<Result> DeletePortalUser(Guid userId)
     {
-        throw new NotImplementedException();
+        var portalUser = await _portalUserRepository.GetPortalUserWithAddress(userId);
+        if (portalUser is null)
+            return Result.Failure(Error.NotFound);
+
+        portalUser.Deactivate();
+
+        await _portalUserRepository.UpdateAsync(portalUser);
+
+        return Result.Success();
+    }
+
+    public async Task<Result<PortalUserResponse>> GetPortalUser(Guid userId, CancellationToken ct = default)
+    {
+        var portalUser = await _portalUserRepository.GetPortalUserWithAllDataByIdAsync(userId, ct);
+        if (portalUser is null)
+            return Result.Failure<PortalUserResponse>(Error.NotFound);
+
+        return portalUser.ToPortalUserResponse();
     }
 
     public async Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct = default)
     {
-        var portalUsers = await _portalUserRepository.GetPortalUSersWithRolesAsync(ct);
+        var portalUsers = await _portalUserRepository.GetPortalUsersWithRolesAsync(ct);
 
         return portalUsers
             .Select(p => p.ToPortalUserListResponse())
             .ToList();
     }
 
-    public Task<Result<UpdatedResponse>> UpdatePortalUser(Guid userId, PortalUserAddRequest request)
+    public Task<Result<UpdatedResponse>> UpdatePortalUser(Guid userId, PortalUserUpdateRequest request)
     {
         throw new NotImplementedException();
     }

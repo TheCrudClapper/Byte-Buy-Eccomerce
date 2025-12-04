@@ -8,9 +8,23 @@ public static class EmployeeMappings
 {
     public static EmployeeResponse ToEmployeeResponse(this Employee employee)
     {
+        var roles = employee.UserRoles;
+        var roleId = roles?.FirstOrDefault()?.Role?.Id ?? Guid.Empty;
+
+        var permissions = employee.UserPermissions ?? [];
+        var grantedPermissions = permissions
+            .Where(p => p.IsGranted)
+            .Select(p => p.PermissionId)
+            .ToList();
+
+        var revokedPermissions = permissions
+            .Where(p => !p.IsGranted)
+            .Select(p => p.PermissionId)
+            .ToList();
+
         return new EmployeeResponse(
             employee.Id,
-            employee.UserRoles?.FirstOrDefault()?.Role.Id ?? Guid.Empty,
+            roleId,
             employee.FirstName,
             employee.LastName,
             employee.Email!,
@@ -21,14 +35,8 @@ public static class EmployeeMappings
             employee.HomeAddress.Country,
             employee.HomeAddress.FlatNumber,
             employee.PhoneNumber,
-            employee.UserPermissions
-                ?.Where(up => up.IsGranted)
-                .Select(up => up.PermissionId)
-                .ToList() ?? [],
-            employee.UserPermissions
-                ?.Where(up => !up.IsGranted)
-                .Select(up => up.PermissionId)
-                .ToList() ?? []);
+            grantedPermissions,
+            revokedPermissions);
     }
 
     public static EmployeeProfileResponse ToEmployeeProfileResponse(this Employee employee)

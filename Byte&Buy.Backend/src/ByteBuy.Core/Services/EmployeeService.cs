@@ -170,11 +170,7 @@ public class EmployeeService : IEmployeeService
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
 
-        //permission assigmnets
-        var grantedPerms = request.GrantedPermissionIds ?? [];
-        var revokedPerms = request.RevokedPermissionIds ?? [];
-
-        var permissionResult = employee.SetPermissionOverrides(revokedPerms, grantedPerms);
+        var permissionResult = employee.SetPermissionOverrides(request.RevokedPermissionIds, request.GrantedPermissionIds);
         if (permissionResult.IsFailure)
             return Result.Failure<UpdatedResponse>(permissionResult.Error);
 

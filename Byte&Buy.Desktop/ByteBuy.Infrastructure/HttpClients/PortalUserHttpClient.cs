@@ -8,5 +8,5 @@ public class PortalUserHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IPortalUserHttpClient
 {
     public async Task<Result<IEnumerable<PortalUserListResponse>>> GetListAsync()
-        => await GetAsync<IEnumerable<PortalUserListResponse>>("portalusers");
+        => await GetAsync<IEnumerable<PortalUserListResponse>>("portalusers/list");
 }

@@ -68,19 +68,6 @@ public sealed class Employee : ApplicationUser
         return Result.Success();
     }
 
-    public void Deactivate()
-    {
-        if (!IsActive)
-            return;
-
-        var suffix = "_DELETED_" + Guid.NewGuid();
-        UserName += suffix;
-        NormalizedUserName += suffix.ToUpper();
-        IsActive = false;
-        DateDeleted = DateTime.UtcNow;
-        DeactivateAllUserPermissions();
-    }
-
     public Result Update(
         string firstName,
         string lastName,

@@ -5,7 +5,6 @@ namespace ByteBuy.Core.DTO.PortalUser;
 
 public record PortalUserAddRequest(
     [Required] Guid RoleId,
-    [Required] Guid CountryId,
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,

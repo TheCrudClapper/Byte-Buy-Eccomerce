@@ -53,6 +53,19 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         return Result.Success();
     }
 
+    public virtual void Deactivate()
+    {
+        if (!IsActive)
+            return;
+
+        var suffix = "_DELETED_" + Guid.NewGuid();
+        UserName += suffix;
+        NormalizedUserName += suffix.ToUpper();
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+        DeactivateAllUserPermissions();
+    }
+
     protected Result ChangePhoneNumber(string? phoneNumber)
     {
         if (phoneNumber is not null)
@@ -91,19 +104,22 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         }
     }
 
-    public Result SetPermissionOverrides(IEnumerable<Guid> revokedPermissions,
-        IEnumerable<Guid> grantedPermissions)
+    public Result SetPermissionOverrides(IEnumerable<Guid>? revokedPermissions,
+        IEnumerable<Guid>? grantedPermissions)
     {
         //deactivate permissions that are not in given parameters
-        var merge = revokedPermissions
-            .Concat(grantedPermissions);
+        var grantedPerms = grantedPermissions ?? [];
+        var revokedPerms = revokedPermissions ?? [];
+
+        var merge = revokedPerms
+            .Concat(grantedPerms);
 
         foreach (var up in UserPermissions.Where(up => up.IsActive && !merge.Contains(up.PermissionId)))
         {
             up.Deactivate();
         }
 
-        foreach (var permissionId in grantedPermissions)
+        foreach (var permissionId in grantedPerms)
         {
             var existing = UserPermissions
                 .FirstOrDefault(up  => up.PermissionId == permissionId);
@@ -121,7 +137,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
             }
         }
 
-        foreach (var permissionId in revokedPermissions)
+        foreach (var permissionId in revokedPerms)
         {
             var existing = UserPermissions
                 .FirstOrDefault(up => up.PermissionId == permissionId);
