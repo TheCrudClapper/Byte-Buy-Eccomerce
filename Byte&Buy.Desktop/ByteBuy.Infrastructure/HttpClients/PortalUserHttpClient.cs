@@ -12,7 +12,7 @@ public class PortalUserHttpClient(HttpClient httpClient)
         => await PostAsync<CreatedResponse>("portalusers", request);
 
     public async Task<Result> DeleteByIdAsync(Guid userId)
-        => await DeleteAsync($"portalusers{userId}");
+        => await DeleteAsync($"portalusers/{userId}");
 
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId)
         => await GetAsync<PortalUserResponse>($"portalusers/{userId}");

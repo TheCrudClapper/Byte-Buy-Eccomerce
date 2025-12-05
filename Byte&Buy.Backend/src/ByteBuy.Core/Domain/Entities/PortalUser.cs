@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.ResultTypes;
+using System.Threading.Tasks;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -8,8 +9,8 @@ public sealed class PortalUser : ApplicationUser
     public ICollection<Order> Orders { get; private set; } = new List<Order>();
     public Cart Cart { get; private set; } = null!;
 
-    private PortalUser(string firstName, string lastName, string email) 
-        : base(firstName, lastName, email, null) { }
+    private PortalUser(string firstName, string lastName, string email, string? phoneNumber)
+        : base(firstName, lastName, email, phoneNumber) { }
 
 
     public static Result<PortalUser> Create(string firstName, string lastName, string email, string? phoneNumber)
@@ -18,18 +19,18 @@ public sealed class PortalUser : ApplicationUser
         if (validationResult.IsFailure)
             return Result.Failure<PortalUser>(validationResult.Error);
 
-        //return Result.Success(new PortalUser(firstName, lastName, email));
-        return new PortalUser(firstName, lastName, email);
+        return new PortalUser(firstName, lastName, email, phoneNumber);
     }
 
     public override void Deactivate()
     {
         base.Deactivate();
-        foreach(var address in Addresses)
+        foreach (var address in Addresses)
         {
-            address.Deactivate(); 
+            address.Deactivate();
         }
     }
+
     public static Result<PortalUser> CreateWithAddress(
         string firstName,
         string lastName,
@@ -37,8 +38,7 @@ public sealed class PortalUser : ApplicationUser
         string? phoneNumber,
         Address address,
         IEnumerable<Guid>? revokedPermissions,
-        IEnumerable<Guid>? grantedPermissions
-       )
+        IEnumerable<Guid>? grantedPermissions)
     {
         var portalUserResult = Create(firstName, lastName, email, phoneNumber);
         if (portalUserResult.IsFailure)
@@ -46,12 +46,31 @@ public sealed class PortalUser : ApplicationUser
 
         var user = portalUserResult.Value;
 
-        if(address is null)
+        if (address is null)
             return Result.Failure<PortalUser>(Error.Validation("Address can't be null!"));
 
         user.AssignAddress(address);
         user.AssignPermissionsToUser(revokedPermissions ?? [], grantedPermissions ?? []);
         return user;
+    }
+
+    public Result Update(
+        string firstName,
+        string lastName,
+        string email,
+        string? phoneNumber)
+    {
+        var validationResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
+        if(validationResult.IsFailure)
+            return Result.Failure(validationResult.Error);
+
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        DateEdited = DateTime.UtcNow;
+        PhoneNumber = phoneNumber;
+
+        return Result.Success();
     }
 
     public void AssignCart(Cart cart)

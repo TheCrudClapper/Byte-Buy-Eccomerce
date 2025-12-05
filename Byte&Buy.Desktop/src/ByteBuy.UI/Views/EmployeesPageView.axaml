@@ -12,6 +12,7 @@
     <UserControl.Styles>
         <StyleInclude Source="../Styles/EmployeeStyles.axaml" />
     </UserControl.Styles>
+
     <Grid>
 
         <Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">

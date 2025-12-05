@@ -74,7 +74,7 @@
 								<DataTemplate>
 									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+										Command="{Binding #Root.((vm:PortalUsersPageViewModel)DataContext).EditCommand}"
 										CommandParameter="{Binding}"
 										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
@@ -84,7 +84,7 @@
 										</Button>
 
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+										Command="{Binding #Root.((vm:PortalUsersPageViewModel)DataContext).DeleteCommand}"
 										CommandParameter="{Binding}"
 										FontSize="10"
 										Foreground="{DynamicResource BackgroundLightBrush}">

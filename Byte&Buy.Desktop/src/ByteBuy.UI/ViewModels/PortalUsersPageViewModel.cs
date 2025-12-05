@@ -17,27 +17,39 @@ public class PortalUsersPageViewModel(AlertViewModel alert,
 {
     private readonly IPortalUserService _userService = userService;
 
-    protected override Task Delete(PortalUserListItem item)
+    protected override async Task Delete(PortalUserListItem item)
     {
-        throw new System.NotImplementedException();
+        var result = await _userService.DeleteById(item.Id);
+        if (!result.Success)
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+
+        Items.Remove(item);
+        await Alert.ShowSuccessAlert("Successfully deleted user !");
     }
 
-    protected override Task Edit(PortalUserListItem item)
+    protected override async Task Edit(PortalUserListItem item)
     {
-        throw new System.NotImplementedException();
+        await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
+        {
+            if (vm is PortalUserPageViewModel userVm)
+                await userVm.InitializeForEdit(item.Id);
+        });
     }
 
     protected override async Task LoadData()
     {
         var result = await _userService.GetList();
-        if(!result.Success)
+        if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
         var list = result?.Value
-            .Select((u, index ) => u.ToListItem(index)) ?? [];
+            .Select((u, index) => u.ToListItem(index)) ?? [];
 
         Items = new ObservableCollection<PortalUserListItem>(list);
     }

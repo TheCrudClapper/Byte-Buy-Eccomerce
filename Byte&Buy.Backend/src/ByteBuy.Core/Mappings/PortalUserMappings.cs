@@ -54,6 +54,6 @@ public static class PortalUserMappings
     public static CreatedResponse ToCreatedResponse(this PortalUser user)
         => new CreatedResponse(user.Id, user.DateCreated);
 
-    public static CreatedResponse ToUpdatedResponse(this PortalUser user)
-        => new CreatedResponse(user.Id, user.DateEdited ?? DateTime.MinValue);
+    public static UpdatedResponse ToUpdatedResponse(this PortalUser user)
+        => new UpdatedResponse(user.Id, user.DateEdited ?? DateTime.MinValue);
 }

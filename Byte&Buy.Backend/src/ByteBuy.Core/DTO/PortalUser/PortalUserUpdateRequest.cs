@@ -5,13 +5,12 @@ namespace ByteBuy.Core.DTO.PortalUser;
 
 public record PortalUserUpdateRequest(
     [Required] Guid RoleId,
-    [Required] Guid CountryId,
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,
     string? Password,
     [MaxLength(15)] string? PhoneNumber,
-    [Required] AddressAddRequest Address,
+    AddressUpdateRequest? Address,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
     );

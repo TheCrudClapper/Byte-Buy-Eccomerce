@@ -1,188 +1,198 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <StackPanel>
-                <CheckBox/>
-                <CheckBox Content="Content"/>
-                <CheckBox IsChecked="True"/>
-                <CheckBox IsEnabled="False"/>
-                <CheckBox IsEnabled="False"/>
-            </StackPanel>
-        </Border>
-    </Design.PreviewWith>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<StackPanel>
+				<CheckBox/>
+				<CheckBox Content="Content"/>
+				<CheckBox IsChecked="True"/>
+				<CheckBox IsEnabled="False"/>
+				<CheckBox IsEnabled="False"/>
+				<TextBox IsEnabled="False"></TextBox>
+			</StackPanel>
 
-    <!-- Add Styles Here -->
 
-    <!-- Checkbox Styles -->
-    <Style Selector="CheckBox /template/ Border#NormalRectangle">
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
-    </Style>
-    
-    <Style Selector="CheckBox:pointerover /template/ Border#NormalRectangle">
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-    </Style>
-    
-    <Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
-        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
-    </Style>
-    
-    <Style Selector="CheckBox:disabled /template/ Border#NormalRectangle">
-        <Setter Property="BorderBrush" Value="Gray"/>
-        <Setter Property="Background" Value="DarkGray"/>
-    </Style>
-    
-    <!-- Button Styles -->
-    <Style Selector="Button">
-        <Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="CornerRadius" Value="8" />
-        <Setter Property="FontWeight" Value="600"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-    </Style>
+		</Border>
+	</Design.PreviewWith>
 
-    <Style Selector="Button:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
-    </Style>
+	<!-- Add Styles Here -->
 
-    <Style Selector="Button.menu">
-        <Setter Property="Margin" Value="0,5" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Background" Value="{DynamicResource ButtonGradient}" />
-    </Style>
+	<!-- Checkbox Styles -->
+	<Style Selector="CheckBox /template/ Border#NormalRectangle">
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+	</Style>
 
-    <!-- Text Box Styles -->
-    <Style Selector="TextBox">
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
-        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
-        <Setter Property="CaretBrush" Value="{DynamicResource TextLightBrush}" />
-    </Style>
+	<Style Selector="CheckBox:pointerover /template/ Border#NormalRectangle">
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+	</Style>
 
-    <Style Selector="TextBox:pointerover, TextBox:focus">
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
-    </Style>
+	<Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
+		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+	</Style>
 
-    <Style
-        Selector="TextBox:pointerover /template/ Border#PART_BorderElement,
-     TextBox:focus /template/ Border#PART_BorderElement">
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-    </Style>
+	<Style Selector="CheckBox:disabled /template/ Border#NormalRectangle">
+		<Setter Property="BorderBrush" Value="Gray"/>
+		<Setter Property="Background" Value="DarkGray"/>
+	</Style>
 
-    <Style Selector="TextBox:disabled">
-        <Setter Property="Background" Value="Gray"/>
-        <Setter Property="Foreground" Value="DarkGray"/>
-    </Style>
-    
-    <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-        <Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-    </Style>
-    
-    <!-- Text Box Label -->
-    <Style Selector="Label.textBoxLabel">
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="600"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-    </Style>
-    
-    <!-- ComboBox Styles -->
-    <Style Selector="ComboBox">
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
-    </Style>
+	<!-- Button Styles -->
+	<Style Selector="Button">
+		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="CornerRadius" Value="8" />
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="BorderBrush" Value="Black"/>
+		<Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+	</Style>
 
-    <Style Selector="ComboBox:pointerover, ComboBox:focus">
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-    </Style>
-    
-    <Style Selector="Label.pageTitle">
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontWeight" Value="700"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-    </Style>
-    
-    <Style Selector="Label.sectionLabel">
-        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontWeight" Value="700"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-    </Style>
-    
-    <!-- Data Grid -->
-    <Style Selector="DataGrid">
-        <Setter Property="CornerRadius" Value="10"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
-    </Style>
-    
-    
-    <Style Selector="DataGridColumnHeader">
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
-        <Setter Property="FontWeight" Value="600"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
-    </Style>
-    
-    <!-- Default error styles used from documentation -->
-    <!-- Source:  https://docs.avaloniaui.net/docs/guides/development-guides/data-validation -->
-    <Style Selector="DataValidationErrors">
-        <Setter Property="Template">
-            <ControlTemplate>
-                <DockPanel LastChildFill="True">
-                    <ContentControl DockPanel.Dock="Right"
-                                    ContentTemplate="{TemplateBinding ErrorTemplate}"
-                                    DataContext="{TemplateBinding Owner}"
-                                    Content="{Binding (DataValidationErrors.Errors)}"
-                                    IsVisible="{Binding (DataValidationErrors.HasErrors)}" />
-                    <ContentPresenter Name="PART_ContentPresenter"
-                                      Background="{TemplateBinding Background}"
-                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                      CornerRadius="{TemplateBinding CornerRadius}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      Content="{TemplateBinding Content}"
-                                      Padding="{TemplateBinding Padding}" />
-                </DockPanel>
-            </ControlTemplate>
-        </Setter>
-        <Setter Property="ErrorTemplate">
-            <DataTemplate x:DataType="{x:Type x:Object}">
-                <Canvas Width="14" Height="14" Margin="4 0 1 0"
-                        Background="Transparent">
-                    <Canvas.Styles>
-                        <Style Selector="ToolTip">
-                            <Setter Property="Background" Value="{DynamicResource ErrorBrush}" />
-                            <Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
-                        </Style>
-                    </Canvas.Styles>
-                    <ToolTip.Tip>
-                        <ItemsControl ItemsSource="{Binding}" />
-                    </ToolTip.Tip>
-                    <Path Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2"
-                          Stroke="{DynamicResource ErrorBrush}"
-                          StrokeThickness="2" />
-                </Canvas>
-            </DataTemplate>
-        </Setter>
-    </Style>
-    
-    <Style Selector="TextBox:has-errors /template/ Border#PART_BorderElement">
-        <Setter Property="BorderThickness" Value="2" />
-    </Style>
+	<Style Selector="Button:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+		<Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+	</Style>
+
+	<Style Selector="Button.menu">
+		<Setter Property="Margin" Value="0,5" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="HorizontalContentAlignment" Value="Left" />
+		<Setter Property="Background" Value="{DynamicResource ButtonGradient}" />
+	</Style>
+
+	<!-- Text Box Styles -->
+	<Style Selector="TextBox">
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
+		<Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
+		<Setter Property="CaretBrush" Value="{DynamicResource TextLightBrush}" />
+	</Style>
+
+	<Style Selector="TextBox:pointerover, TextBox:focus">
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+	</Style>
+
+	<Style
+	Selector="TextBox:pointerover /template/ Border#PART_BorderElement,
+	TextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+	</Style>
+
+	<Style Selector="TextBox:disabled">
+		<Setter Property="Background" Value="Gray"/>
+		<Setter Property="Foreground" Value="DarkGray"/>
+	</Style>
+
+	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="Background" Value="Gray"/>
+	</Style>
+
+	<!-- Text Box Label -->
+	<Style Selector="Label.textBoxLabel">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+	</Style>
+
+	<!-- ComboBox Styles -->
+	<Style Selector="ComboBox">
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
+	</Style>
+
+	<Style Selector="ComboBox:pointerover, ComboBox:focus">
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+	</Style>
+
+	<Style Selector="ComboBox:disabled Border#Background">
+		<Setter Property="Background" Value="Gray"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+	</Style>
+
+	<Style Selector="Label.pageTitle">
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+	</Style>
+
+	<Style Selector="Label.sectionLabel">
+		<Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"></Setter>
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+	</Style>
+
+	<!-- Data Grid -->
+	<Style Selector="DataGrid">
+		<Setter Property="CornerRadius" Value="10"/>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+	</Style>
+
+
+	<Style Selector="DataGridColumnHeader">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+	</Style>
+
+	<!-- Default error styles used from documentation -->
+	<!-- Source:  https://docs.avaloniaui.net/docs/guides/development-guides/data-validation -->
+	<Style Selector="DataValidationErrors">
+		<Setter Property="Template">
+			<ControlTemplate>
+				<DockPanel LastChildFill="True">
+					<ContentControl DockPanel.Dock="Right"
+									ContentTemplate="{TemplateBinding ErrorTemplate}"
+									DataContext="{TemplateBinding Owner}"
+									Content="{Binding (DataValidationErrors.Errors)}"
+									IsVisible="{Binding (DataValidationErrors.HasErrors)}" />
+					<ContentPresenter Name="PART_ContentPresenter"
+									  Background="{TemplateBinding Background}"
+									  BorderBrush="{TemplateBinding BorderBrush}"
+									  BorderThickness="{TemplateBinding BorderThickness}"
+									  CornerRadius="{TemplateBinding CornerRadius}"
+									  ContentTemplate="{TemplateBinding ContentTemplate}"
+									  Content="{TemplateBinding Content}"
+									  Padding="{TemplateBinding Padding}" />
+				</DockPanel>
+			</ControlTemplate>
+		</Setter>
+		<Setter Property="ErrorTemplate">
+			<DataTemplate x:DataType="{x:Type x:Object}">
+				<Canvas Width="14" Height="14" Margin="4 0 1 0"
+						Background="Transparent">
+					<Canvas.Styles>
+						<Style Selector="ToolTip">
+							<Setter Property="Background" Value="{DynamicResource ErrorBrush}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
+						</Style>
+					</Canvas.Styles>
+					<ToolTip.Tip>
+						<ItemsControl ItemsSource="{Binding}" />
+					</ToolTip.Tip>
+					<Path Data="M14,7 A7,7 0 0,0 0,7 M0,7 A7,7 0 1,0 14,7 M7,3l0,5 M7,9l0,2"
+						  Stroke="{DynamicResource ErrorBrush}"
+						  StrokeThickness="2" />
+				</Canvas>
+			</DataTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="TextBox:has-errors /template/ Border#PART_BorderElement">
+		<Setter Property="BorderThickness" Value="2" />
+	</Style>
 </Styles>

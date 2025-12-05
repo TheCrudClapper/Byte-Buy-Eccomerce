@@ -84,7 +84,6 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
         _roleService = roleService;
-
         _ = LoadRoles();
     }
 
@@ -110,12 +109,12 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         Clear();
     }
 
-    public async Task InitializeForEdit(Guid id)
+    public async Task InitializeForEdit(Guid itemId)
     {
         IsEditMode = true;
-        EditingItemId = id;
+        EditingItemId = itemId;
 
-        var result = await _employeeService.GetById(id);
+        var result = await _employeeService.GetById(itemId);
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -146,24 +145,20 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         if (HasErrors)
             return;
 
-        if (IsEditMode)
+        await (IsEditMode switch
         {
-            await UpdateItem();
-        }
-        else
-        {
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
-            {
-                await Alert.Show(AlertType.Error, "Password is required for new employees.");
-                return;
-            }
-
-            await AddItem();
-        }
+            true => UpdateItem(),
+            false => AddItem()
+        });
     }
 
     private async Task AddItem()
     {
+        if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
+        {
+            await Alert.Show(AlertType.Error, "Password is required for new employees.");
+            return;
+        }
         var request = new EmployeeAddRequest(
             SelectedRole!.Id,
             FirstName,
@@ -221,6 +216,9 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     private async Task LoadRoles()
     {
         var result = await _roleService.GetSelectList();
-        Roles = new ObservableCollection<SelectListItemResponse>(result.Value!);
+        if (!result.Success)
+            return;
+
+        Roles = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
     }
 }

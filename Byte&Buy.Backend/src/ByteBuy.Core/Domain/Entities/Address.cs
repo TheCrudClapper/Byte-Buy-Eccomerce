@@ -68,6 +68,28 @@ public class Address : AuditableEntity, ISoftDeletable
         return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, country, isDefault);
     }
 
+    public Result Update(string label, string city, string street,
+        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country,
+        IAddressValidationService validator)
+    {
+        var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
+        if (validationResult.IsFailure)
+            return Result.Failure<Address>(validationResult.Error);
+
+        Label = label;
+        City = city;
+        Street = street;
+        HouseNumber = houseNumber;
+        PostalCity = postalCity;
+        PostalCode = postalCode;
+        FlatNumber = flatNumber;
+        Country = country;
+        CountryId = country.Id;
+        DateEdited = DateTime.UtcNow;
+
+        return Result.Success();
+    }
+
     public void AssignToUser(PortalUser user)
     {
         UserId = user.Id;

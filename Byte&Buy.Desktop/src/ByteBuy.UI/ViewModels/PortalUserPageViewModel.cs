@@ -1,10 +1,13 @@
 ﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
+using ByteBuy.UI.DataAdnotations;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -14,9 +17,16 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty][Required] private string _firstName = string.Empty;
+    [ObservableProperty]
+    [Required]
+    private string _firstName = string.Empty;
 
-    [ObservableProperty][Required] private string _lastName = string.Empty;
+    [ObservableProperty]
+    [RequiredIf(nameof(IsAddressIncluded))]
+    private Guid? _addressEditId  = Guid.Empty;
+
+    [ObservableProperty]
+    [Required] private string _lastName = string.Empty;
 
     [ObservableProperty]
     [Required]
@@ -24,57 +34,68 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private string _email = string.Empty;
 
     [ObservableProperty]
-    [Required]
+    [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _street = string.Empty;
 
     [ObservableProperty]
-    [Required]
+    [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
     [ObservableProperty]
-    [Required]
+    [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
-    [Required]
+    [RequiredIf(nameof(IsAddressIncluded))]
+    [MaxLength(50)]
+    private string _postalCity = string.Empty;
+
+    [ObservableProperty]
+    [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _city = string.Empty;
 
     [ObservableProperty]
-    [Required]
-    [MaxLength(50)]
-    private string _country = string.Empty;
-
-    [ObservableProperty]
-    [Required]
+    [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _label = string.Empty;
 
-    [ObservableProperty][MaxLength(10)] private string? _flatNumber = string.Empty;
-
-    [ObservableProperty][MaxLength(15)] private string? _phoneNumber = string.Empty;
-
-    [ObservableProperty] private string _password = string.Empty;
+    [ObservableProperty]
+    private string? _flatNumber = string.Empty;
 
     [ObservableProperty]
-    [Required(ErrorMessage = "Choose employee's role")]
+    [MaxLength(15)]
+    private string? _phoneNumber;
+
+    [ObservableProperty]
+    private string _password = string.Empty;
+
+    [ObservableProperty]
+    private ObservableCollection<SelectListItemResponse> _roles = [];
+
+    [ObservableProperty]
+    private ObservableCollection<SelectListItemResponse> _countries = [];
+
+    [ObservableProperty]
+    [RequiredIf(nameof(IsAddressIncluded))]
+    private SelectListItemResponse? _selectedCountry;
+
+    [ObservableProperty]
+    [Required(ErrorMessage = "Choose user's role")]
     private SelectListItemResponse? _selectedRole;
 
-    [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
-
-    [ObservableProperty] private ObservableCollection<SelectListItemResponse> _countries = [];
-    [ObservableProperty] private SelectListItemResponse? _selectedCountry;
+    [ObservableProperty]
+    private bool _isAddressIncluded = true;
 
     public PermissionGrantRevokeViewModel PermissionListBox { get; }
+    #endregion
+
     private readonly IRoleService _roleService;
     private readonly ICountryService _countryService;
     private readonly IPortalUserService _portalUserService;
-
-    #endregion
-
     public PortalUserPageViewModel(AlertViewModel alert,
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
@@ -94,6 +115,48 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         ValidateAllProperties();
         if (HasErrors)
             return;
+
+        await (IsEditMode switch
+        {
+            true => UpdateItem(),
+            false => AddItem()
+        });
+    }
+
+    private async Task UpdateItem()
+    {
+        if (EditingItemId is null)
+            return;
+
+        var request = PortalUserMappings.MapToUpdateRequest(this);
+        var result = await _portalUserService.Update(EditingItemId.Value, request);
+        if (!result.Success)
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+
+        await Alert.ShowSuccessAlert("Successfully updated user!");
+    }
+
+    private async Task AddItem()
+    {
+        if (string.IsNullOrWhiteSpace(Password) && Password.Length < 8)
+        {
+            await Alert.ShowErrorAlert("For new user password is required !");
+            return;
+        }
+
+        var request = PortalUserMappings.MapToAddRequest(this);
+
+        var result = await _portalUserService.Add(request);
+        if (!result.Success)
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+
+        await Alert.ShowSuccessAlert("Successfully added new user!");
     }
 
     protected override void Clear()
@@ -116,12 +179,63 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private async Task LoadRoles()
     {
         var result = await _roleService.GetSelectList();
-        Roles = new ObservableCollection<SelectListItemResponse>(result.Value!);
+        if (!result.Success)
+            return;
+
+        Roles = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
     }
 
     private async Task LoadCountries()
     {
         var result = await _countryService.GetSelectList();
-        Countries = new ObservableCollection<SelectListItemResponse>(result.Value!);
+        if(!result.Success)
+            return;
+
+        Countries = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
+    }
+
+    public void InitializeForAdd()
+    {
+        EditingItemId = Guid.Empty;
+        IsEditMode = false;
+    }
+
+    public async Task InitializeForEdit(Guid itemId)
+    {
+        EditingItemId = itemId;
+        IsEditMode = true;
+
+        var result = await _portalUserService.GetById(itemId);
+        if (!result.Success)
+        {
+            await Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+        IsAddressIncluded = result.Value.Address is null ? false : true;
+        PortalUserMappings.MapFromResponse(this, result.Value);
+    }
+
+    partial void OnIsAddressIncludedChanged(bool value)
+    {
+        if (!value)
+        {
+            ClearErrors(nameof(Street));
+            ClearErrors(nameof(HouseNumber));
+            ClearErrors(nameof(PostalCode));
+            ClearErrors(nameof(City));
+            ClearErrors(nameof(PostalCity));
+            ClearErrors(nameof(SelectedCountry));
+            ClearErrors(nameof(Label));
+        }
+        else
+        {
+            ValidateProperty(Street, nameof(Street));
+            ValidateProperty(HouseNumber, nameof(HouseNumber));
+            ValidateProperty(PostalCode, nameof(PostalCode));
+            ValidateProperty(City, nameof(City));
+            ValidateProperty(PostalCity, nameof(PostalCity));
+            ValidateProperty(SelectedCountry, nameof(SelectedCountry));
+            ValidateProperty(Label, nameof(Label));
+        }
     }
 }
