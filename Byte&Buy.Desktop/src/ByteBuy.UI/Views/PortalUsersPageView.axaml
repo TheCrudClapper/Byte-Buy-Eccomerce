@@ -1,134 +1,134 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             xmlns:local="clr-namespace:ByteBuy.UI.Views"
-             x:DataType="vm:PortalUsersPageViewModel"
-             x:Class="ByteBuy.UI.Views.PortalUsersPageView">
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="900"
+			 x:DataType="vm:PortalUsersPageViewModel"
+			 x:Class="ByteBuy.UI.Views.PortalUsersPageView">
 
-    <UserControl.Styles>
-        <StyleInclude Source="../Styles/EmployeeStyles.axaml" />
-    </UserControl.Styles>
-    <Grid>
+	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
 
-        <Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
-            <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
-                <Label Grid.Column="0" Classes="pageTitle" Content="Portal Users" />
-                <Button
-                    Command="{Binding OpenAddPageCommand}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right"
-                    Grid.Column="2">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-                               Width="15" Height="15" />
-                        <Label Content="Add"/>
-                    </StackPanel>
-                    
-                </Button>
-                    
-            </Grid>
-            
-            <!-- Filters -->
-            <Grid Grid.Row="1">
-                <Label Content="Filters" />
-            </Grid>
-            
-            <!-- Fetched items count -->
-            <StackPanel Grid.Row="2">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label Content="Records fetched:"
-                           FontWeight="600"
-                           Foreground="{DynamicResource TextLightBrush}"
-                           HorizontalAlignment="Right" />
-                    <Label Content="{Binding ItemsCount}"
-                           FontWeight="700"
-                           Foreground="{DynamicResource TextLightBrush}"
-                           HorizontalAlignment="Right" />
-                </StackPanel>
+	<Grid>
 
-                <!-- Data Grid Containing All Items -->
-                <DataGrid
-                    x:Name="ItemsGrid"
-                    ItemsSource="{Binding Items}"
-                    AutoGenerateColumns="False"
-                    SelectedItem="{Binding SelectedItem}"
-                    GridLinesVisibility="All"
-                    IsReadOnly="True"
-                    HeadersVisibility="All"
-                    CanUserSortColumns="True"
-                    CanUserResizeColumns="True"
-                    RowHeight="36">
-                    
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
-                        <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
-                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                        <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
-                        <DataGridTemplateColumn Header="Actions">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button
-                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
-                                            CommandParameter="{Binding}"
-                                            FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
-                                            Margin="0,0,5,0">
+		<Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+				<Label Grid.Column="0" Classes="pageTitle" Content="Portal Users" />
+				<Button
+				Command="{Binding OpenAddPageCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right"
+				Grid.Column="2">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+						<Label Content="Add"/>
+					</StackPanel>
 
-                                            <Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
-                                                   Width="16" Height="16"/>
-                                        </Button>
-                                        
-                                        <Button
-                                            Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
-                                            CommandParameter="{Binding}"
-                                            FontSize="10"
-                                            Foreground="{DynamicResource BackgroundLightBrush}">
+				</Button>
 
-                                            <Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-                                                   Width="16" Height="16"/>
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
+			</Grid>
 
-                </DataGrid>
+			<!-- Filters -->
+			<Grid Grid.Row="1">
+				<Label Content="Filters" />
+			</Grid>
 
-            </StackPanel>
+			<!-- Fetched items count -->
+			<StackPanel Grid.Row="2">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<Label Content="Records fetched:"
+						   FontWeight="600"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+					<Label Content="{Binding ItemsCount}"
+						   FontWeight="700"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+				</StackPanel>
 
-            <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button>
-                    <Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
-                           Height="15"
-                           Width="15" />
-                </Button>
-                <Label Content="1 of 32"
-                       FontSize="15"
-                       Foreground="{DynamicResource TextLightBrush}"
-                       FontWeight="600"
-                       VerticalAlignment="Center" />
-                <Button>
-                    <Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
-                           Height="15"
-                           Width="15" />
-                </Button>
-            </StackPanel>
+				<!-- Data Grid Containing All Items -->
+				<DataGrid
+				x:Name="ItemsGrid"
+				ItemsSource="{Binding Items}"
+				AutoGenerateColumns="False"
+				SelectedItem="{Binding SelectedItem}"
+				GridLinesVisibility="All"
+				IsReadOnly="True"
+				HeadersVisibility="All"
+				CanUserSortColumns="True"
+				CanUserResizeColumns="True"
+				RowHeight="36">
 
-        </Grid>
-        <views:AlertView
-            DataContext="{Binding Alert}"
-            IsVisible="{Binding IsVisible}"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Height="70"
-            Width="400"
-            Margin="0,20,20,40"
-            ZIndex="10" />
-    </Grid>
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+						<DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
+						<DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+						<DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
+						<DataGridTemplateColumn Header="Actions">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+										<Button
+										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+										CommandParameter="{Binding}"
+										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
+										<Button
+										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+										CommandParameter="{Binding}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}">
+
+											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+
+				</DataGrid>
+
+			</StackPanel>
+
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+				<Label Content="1 of 32"
+					   FontSize="15"
+					   Foreground="{DynamicResource TextLightBrush}"
+					   FontWeight="600"
+					   VerticalAlignment="Center" />
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+			</StackPanel>
+
+		</Grid>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+	</Grid>
 </UserControl>

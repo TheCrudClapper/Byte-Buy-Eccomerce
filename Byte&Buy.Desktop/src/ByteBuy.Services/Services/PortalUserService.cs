@@ -8,6 +8,7 @@ namespace ByteBuy.Services.Services;
 
 public class PortalUserService(IPortalUserHttpClient portalUserHttpClient) : IPortalUserService
 {
+
     public async Task<Result<CreatedResponse>> Add(PortalUserAddRequest request)
         => await portalUserHttpClient.PostPortalUserAsync(request);
 

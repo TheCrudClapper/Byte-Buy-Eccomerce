@@ -11,16 +11,11 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
+public class PortalUsersPageViewModel(AlertViewModel alert,
+    INavigationService navigation,
+    IPortalUserService userService) : ViewModelMany<PortalUserListItem>(alert, navigation)
 {
-    private readonly IPortalUserService _portalUserService;
-
-    public PortalUsersPageViewModel(AlertViewModel alert,
-        INavigationService navigationService,
-        IPortalUserService portalUserService) : base(alert, navigationService)
-    {
-        _portalUserService = portalUserService;
-    }
+    private readonly IPortalUserService _userService = userService;
 
     protected override Task Delete(PortalUserListItem item)
     {
@@ -34,17 +29,15 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
 
     protected override async Task LoadData()
     {
-        var result = await _portalUserService.GetList();
-
-        if (!result.Success)
+        var result = await _userService.GetList();
+        if(!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        var list = result.Value
-            .Select((item, index) => item.ToListItem(index))
-            .ToList();
+        var list = result?.Value
+            .Select((u, index ) => u.ToListItem(index)) ?? [];
 
         Items = new ObservableCollection<PortalUserListItem>(list);
     }
