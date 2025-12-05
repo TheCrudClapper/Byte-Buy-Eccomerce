@@ -12,18 +12,13 @@ public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<ApplicationRole> _roleManager;
-    private readonly ICartRepository _cartRepository;
     private readonly ITokenService _tokenService;
 
     public AuthService(UserManager<ApplicationUser> userManager,
-        RoleManager<ApplicationRole> roleManager,
         ICartRepository cartRepository,
         ITokenService tokenService,
         IUserRepository userRepository)
     {
-        _cartRepository = cartRepository;
-        _roleManager = roleManager;
         _userManager = userManager;
         _tokenService = tokenService;
         _userRepository = userRepository;
@@ -78,8 +73,6 @@ public class AuthService : IAuthService
             return cartResult;
 
         user.AssignCart(cartResult.Value);
-        await _cartRepository.AddCart(cartResult.Value);
-
         const string defaultRoleName = "PortalUser";
 
         //var roleResult = ApplicationRole.Create(defaultRoleName);
