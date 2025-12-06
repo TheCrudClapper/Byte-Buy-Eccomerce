@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ByteBuy.Services.DTO.Address;
+﻿using ByteBuy.Core.DTO.PortalUser;
 
 namespace ByteBuy.Services.DTO.PortalUser;
 
@@ -10,7 +9,7 @@ public record PortalUserAddRequest(
     string Email,
     string Password,
     string? PhoneNumber,
-    AddressAddRequest Address,
+    UserAddressAddRequest Address,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
 );

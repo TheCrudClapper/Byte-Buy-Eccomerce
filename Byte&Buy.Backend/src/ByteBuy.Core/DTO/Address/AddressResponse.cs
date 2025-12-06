@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.DTO.Address;
+﻿namespace ByteBuy.Core.DTO.PortalUser;
 
 public record AddressResponse(
     Guid Id,
@@ -9,6 +9,7 @@ public record AddressResponse(
     string PostalCity,
     string PostalCode,
     string City,
-    string? FlatNumber
+    string? FlatNumber,
+    bool IsDefault
     );
 

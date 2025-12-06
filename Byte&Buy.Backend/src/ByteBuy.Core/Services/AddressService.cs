@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Address;
+using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -33,7 +34,8 @@ public class AddressService : IAddressService
         if (exist)
             return Result.Failure<CreatedResponse>(AddressErrors.DuplicateLabel);
 
-        var isDefault = await _addressRepository.DoesUserHaveAdresses(userId);
+        if (request.IsDefault)
+            await UnsetCurrentDefault(userId);
 
         var addressResult = Address.Create(
             request.Label,
@@ -44,7 +46,7 @@ public class AddressService : IAddressService
             request.PostalCode,
             request.FlatNumber,
             country,
-            isDefault,
+            request.IsDefault,
             _addressValidator
             );
 
@@ -58,10 +60,54 @@ public class AddressService : IAddressService
         return address.ToCreatedResponse();
     }
 
+    public async Task<Result<UpdatedResponse>> UpdateAddress(Guid addressId, Guid userId, AddressUpdateRequest request)
+    {
+        var address = await _addressRepository.GetUserAddressAsync(addressId, userId);
+        if (address is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var country = await _countryRepository.GetByIdAsync(request.CountryId);
+        if (country is null)
+            return Result.Failure<UpdatedResponse>(CountryErrors.NotFound);
+
+        if (address.Label != request.Label)
+        {
+            var exist = await _addressRepository.DoesAddressWithLabelExists(userId, request.Label);
+            if (exist)
+                return Result.Failure<UpdatedResponse>(AddressErrors.DuplicateLabel);
+        }
+
+        if (address.IsDefault && !request.IsDefault)
+            return Result.Failure<UpdatedResponse>(AddressErrors.CannotUnsetCurrentDefault);
+
+        if(!address.IsDefault && request.IsDefault)
+            await UnsetCurrentDefault(userId, addressId);
+        
+        var updateResult = address.Update(
+            request.Label,
+            request.City,
+            request.Street,
+            request.HouseNumber,
+            request.PostalCity,
+            request.PostalCode,
+            request.FlatNumber,
+            country,
+            request.IsDefault,
+            _addressValidator
+            );
+
+        if (updateResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
+
+        await _addressRepository.UpdateAsync(address);
+
+        return address.ToUpdatedResponse();
+    }
+
     public async Task<Result<AddressResponse>> GetUserAddress(Guid userId, Guid addressId, CancellationToken ct = default)
     {
-        var address = await _addressRepository.GetUserAddress(userId, addressId, ct);
-        if(address is null)
+        var address = await _addressRepository.GetUserAddressAsync(addressId, userId, ct);
+        if (address is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
         return address.ToAddressResponse();
@@ -76,11 +122,6 @@ public class AddressService : IAddressService
         return address.ToAddressResponse();
     }
 
-    public Task<Result<UpdatedResponse>> UpdateAddress(Guid userId, AddressUpdateRequest request)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<Result<IEnumerable<AddressResponse>>> GetUserAddresses(Guid userId, CancellationToken ct)
     {
         var addresses = await _addressRepository.GetUserAdressesAsync(userId, ct);
@@ -88,4 +129,33 @@ public class AddressService : IAddressService
             .Select(a => a.ToAddressResponse())
             .ToList();
     }
+
+    public async Task<Result> DeleteUserAddress(Guid userId, Guid addressId)
+    {
+        var address = await _addressRepository.GetUserAddressAsync(addressId, userId);
+        if (address is null)
+            return Result.Failure<AddressResponse>(Error.NotFound);
+
+        if(address.IsDefault)
+            return Result.Failure<AddressResponse>(AddressErrors.CannotDeleteCurrentDefault);
+
+        address.Deactivate();
+
+        await _addressRepository.UpdateAsync(address);
+        return Result.Success();
+    }
+
+    private async Task UnsetCurrentDefault(Guid userId, Guid? excludeId = null)
+    {
+        var currentDefault = await _addressRepository.GetCurrentDefault(userId);
+        if (currentDefault is null)
+            return;
+
+        if (excludeId.HasValue && currentDefault.Id == excludeId)
+            return;
+
+        currentDefault.UnmarkAsDefault();
+        await _addressRepository.UpdateAsync(currentDefault);
+    }
+
 }

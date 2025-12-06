@@ -203,7 +203,7 @@ public class PortalUserService : IPortalUserService
         return Result.Success();
     }
 
-    private async Task<Result> HandleAddressUpdate(PortalUser user, AddressUpdateRequest? request)
+    private async Task<Result> HandleAddressUpdate(PortalUser user, UserAddressUpdateRequest? request)
     {
         if (request == null)
             return Result.Success();
@@ -247,6 +247,7 @@ public class PortalUserService : IPortalUserService
                 request.PostalCode,
                 request.FlatNumber,
                 country,
+                true,
                 _addressValidator
                 );
 

@@ -27,12 +27,10 @@ public class AddressRepository : BaseRepository, IAddressRepository
             .Include(a => a.Country)
             .FirstOrDefaultAsync(a => a.Id == addressId, ct);
     }
-
-    public async Task<Address?> GetUserAddress(Guid addressId, CancellationToken ct = default)
+    public async Task<Address?> GetUserAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
     {
         return await _context.Addresses
-            .Include(a => a.Country)
-            .FirstOrDefaultAsync(a => a.Id == addressId)
+            .FirstOrDefaultAsync(a => a.Id == addressId && a.UserId == userId, ct);
     }
 
     public async Task<bool> DoesUserHaveAdresses(Guid userId)
@@ -57,5 +55,10 @@ public class AddressRepository : BaseRepository, IAddressRepository
             .ToListAsync(ct);
     }
 
-   
+    public async Task<Address?> GetCurrentDefault(Guid userId)
+    {
+        return await _context.Addresses
+            .Where(a => a.UserId == userId)
+            .FirstOrDefaultAsync(a => a.IsDefault);
+    }
 }

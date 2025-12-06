@@ -1,4 +1,4 @@
-﻿using ByteBuy.Services.DTO.Address;
+﻿using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Services.DTO.PortalUser;
 using ByteBuy.UI.ModelsUI.PortalUser;
 using ByteBuy.UI.ViewModels;
@@ -35,7 +35,7 @@ public static class PortalUserMappings
     /// <returns>Ready to use DTO</returns>
     public static PortalUserAddRequest MapToAddRequest(PortalUserPageViewModel vm)
     {
-        var address = new AddressAddRequest(
+        var address = new UserAddressAddRequest(
                 vm.SelectedCountry!.Id,
                 vm.Label,
                 vm.Street,
@@ -69,10 +69,10 @@ public static class PortalUserMappings
     /// <returns>Ready to use DTO</returns>
     public static PortalUserUpdateRequest MapToUpdateRequest(PortalUserPageViewModel vm)
     {
-        AddressUpdateRequest? address;
+        UserAddressUpdateRequest? address;
         if (vm.IsAddressIncluded)
         {
-            address = new AddressUpdateRequest(
+            address = new UserAddressUpdateRequest(
               vm.AddressEditId!.Value,
               vm.SelectedCountry!.Id,
               vm.Label,

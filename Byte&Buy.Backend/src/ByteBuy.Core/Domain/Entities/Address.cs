@@ -22,7 +22,10 @@ public class Address : AuditableEntity, ISoftDeletable
     public DateTime? DateDeleted { get; private set; }
 
     private Address() { }
-    private Address(string label, string city, string street, string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault)
+    private Address(string label, string city,
+        string street, string houseNumber,
+        string postalCity, string postalCode,
+        string? flatNumber, Country country, bool isDefault)
     {
         Label = label;
         City = city;
@@ -69,7 +72,7 @@ public class Address : AuditableEntity, ISoftDeletable
     }
 
     public Result Update(string label, string city, string street,
-        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country,
+        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault,
         IAddressValidationService validator)
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
@@ -83,11 +86,28 @@ public class Address : AuditableEntity, ISoftDeletable
         PostalCity = postalCity;
         PostalCode = postalCode;
         FlatNumber = flatNumber;
+        IsDefault = isDefault;
         Country = country;
         CountryId = country.Id;
         DateEdited = DateTime.UtcNow;
 
         return Result.Success();
+    }
+
+    public void MarkAsDefault()
+    {
+        if (IsDefault)
+            return;
+
+        IsDefault = true;
+    }
+
+    public void UnmarkAsDefault()
+    {
+        if (!IsDefault)
+            return;
+
+        IsDefault = false;
     }
 
     public void AssignToUser(PortalUser user)

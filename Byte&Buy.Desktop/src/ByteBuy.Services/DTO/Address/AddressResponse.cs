@@ -9,5 +9,6 @@ public record AddressResponse(
     string PostalCity,
     string PostalCode,
     string City,
-    string? FlatNumber
+    string? FlatNumber,
+    bool IsDefault
 );

@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Address;
+using ByteBuy.Core.DTO.PortalUser;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -16,7 +16,8 @@ public static class AddressMappings
             address.PostalCity,
             address.PostalCode,
             address.City,
-            address.FlatNumber
+            address.FlatNumber,
+            address.IsDefault
             );
     }
 }

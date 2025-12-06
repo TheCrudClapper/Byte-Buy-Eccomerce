@@ -10,7 +10,7 @@ public record PortalUserUpdateRequest(
     [Required, EmailAddress] string Email,
     string? Password,
     [MaxLength(15)] string? PhoneNumber,
-    AddressUpdateRequest? Address,
+    UserAddressUpdateRequest? Address,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
     );

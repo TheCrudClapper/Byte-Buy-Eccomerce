@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ByteBuy.Core.DTO.Address;
+namespace ByteBuy.Core.DTO.PortalUser;
 
-public record AddressAddRequest(
+public record UserAddressUpdateRequest(
+    [Required]
+    Guid Id,
     [Required] Guid CountryId,
     [Required, MaxLength(50)] string Label,
     [Required, MaxLength(50)] string Street,
@@ -10,6 +12,6 @@ public record AddressAddRequest(
     [Required, MaxLength(20)] string PostalCode,
     [Required, MaxLength(50)] string PostalCity,
     [Required, MaxLength(50)] string City,
-    [MaxLength(10)] string? FlatNumber,
-    [Required] bool IsDefault
+    [MaxLength(10)] string? FlatNumber
     );
+
