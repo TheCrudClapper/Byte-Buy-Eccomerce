@@ -10,16 +10,10 @@ public class AddressRepository : BaseRepository, IAddressRepository
     public AddressRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(Address address)
-    {
-        await _context.Addresses.AddAsync(address);
-        await _context.SaveChangesAsync();
-    }
+        => await _context.Addresses.AddAsync(address);
 
     public async Task UpdateAsync(Address address)
-    {
-        _context.Addresses.Update(address);
-        await _context.SaveChangesAsync();
-    }
+        => _context.Addresses.Update(address);
 
     public async Task<Address?> GetByIdAsync(Guid addressId, CancellationToken ct = default)
     {

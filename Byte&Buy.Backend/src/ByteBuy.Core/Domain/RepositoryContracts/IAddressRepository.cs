@@ -11,4 +11,5 @@ public interface IAddressRepository
     Task<Address?> GetUserAddressAsync(Guid addressId, Guid userId, CancellationToken ct = default);
     Task<bool> DoesAddressWithLabelExists(Guid userId, string label);
     Task<IEnumerable<Address>> GetUserAdressesAsync(Guid userId, CancellationToken ct = default);
+    Task<int> CommitAsync();
 }

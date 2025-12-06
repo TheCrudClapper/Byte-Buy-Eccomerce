@@ -56,6 +56,7 @@ public class AddressService : IAddressService
         var address = addressResult.Value;
 
         await _addressRepository.AddAsync(address);
+        await _addressRepository.CommitAsync();
 
         return address.ToCreatedResponse();
     }
@@ -100,6 +101,7 @@ public class AddressService : IAddressService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _addressRepository.UpdateAsync(address);
+        await _addressRepository.CommitAsync();
 
         return address.ToUpdatedResponse();
     }
@@ -142,6 +144,7 @@ public class AddressService : IAddressService
         address.Deactivate();
 
         await _addressRepository.UpdateAsync(address);
+        await _addressRepository.CommitAsync();
         return Result.Success();
     }
 
