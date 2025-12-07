@@ -6,7 +6,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class CartRepository : BaseRepository, ICartRepository
 {
-    public CartRepository(ApplicationDbContext context) : base(context){}
+    public CartRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddCart(Cart cart)
     {

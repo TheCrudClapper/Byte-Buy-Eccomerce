@@ -27,7 +27,7 @@ public class CountryRepository : BaseRepository, ICountryRepository
         return await _context.Countries
             .ToListAsync(ct);
     }
-     
+
     public async Task<IEnumerable<Country>> GetAllByCondition(Expression<Func<Country, bool>> expression, CancellationToken ct = default)
     {
         return await _context.Countries
@@ -48,5 +48,5 @@ public class CountryRepository : BaseRepository, ICountryRepository
             .FirstOrDefaultAsync(c => c.Id == countryId, ct);
     }
 
-    
+
 }

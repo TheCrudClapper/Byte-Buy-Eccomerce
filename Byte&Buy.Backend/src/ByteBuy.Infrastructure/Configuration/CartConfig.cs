@@ -19,7 +19,8 @@ public class CartConfig : IEntityTypeConfiguration<Cart>
             c.Property(prop => prop.Currency).HasColumnName("TotalItemsValue_Currency").HasMaxLength(3).IsRequired();
         });
 
-        builder.OwnsOne(c => c.TotalCartValue, c => {
+        builder.OwnsOne(c => c.TotalCartValue, c =>
+        {
             c.Property(prop => prop.Amount).HasColumnName("TotalCartValue_Amount").HasPrecision(18, 3).IsRequired();
             c.Property(prop => prop.Currency).HasColumnName("TotalCartValue_Currency").HasMaxLength(3).IsRequired();
         });

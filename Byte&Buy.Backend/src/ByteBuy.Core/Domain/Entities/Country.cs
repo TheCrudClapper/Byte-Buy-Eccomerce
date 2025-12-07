@@ -12,7 +12,7 @@ public class Country : AuditableEntity, ISoftDeletable
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
-    private Country(){}
+    private Country() { }
 
     private Country(string name, string code)
     {
@@ -44,7 +44,7 @@ public class Country : AuditableEntity, ISoftDeletable
     {
         var validationResult = Validate(name, code);
 
-        if(validationResult.IsFailure)
+        if (validationResult.IsFailure)
             return Result.Failure<Country>(validationResult.Error);
 
         Name = name;

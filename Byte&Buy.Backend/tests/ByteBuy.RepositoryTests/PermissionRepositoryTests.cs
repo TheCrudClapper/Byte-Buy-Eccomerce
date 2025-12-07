@@ -5,7 +5,6 @@ using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.RepositoryTests;

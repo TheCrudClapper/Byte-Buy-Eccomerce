@@ -7,7 +7,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class CompanyInfoRepository : BaseRepository, ICompanyInfoRepository
 {
-    public CompanyInfoRepository(ApplicationDbContext context) : base(context){}
+    public CompanyInfoRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task AddAsync(CompanyInfo companyInfo)
     {

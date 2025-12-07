@@ -44,7 +44,7 @@ public class AddressValueObj
     }
 
     public static Result<AddressValueObj> Create(
-        string street, string houseNumber,string postalCode, string city, string country, string? flatNumber, IAddressValidationService validator)
+        string street, string houseNumber, string postalCode, string city, string country, string? flatNumber, IAddressValidationService validator)
     {
         var validationResult = Validate(street, houseNumber, postalCode, city, country, flatNumber, validator);
         if (validationResult.IsFailure)

@@ -29,7 +29,7 @@ public sealed class Employee : ApplicationUser
             return Result.Failure<Employee>(validatioResult.Error);
 
         var addressResult = AddressValueObj
-            .Create(street, houseNumber, postalCode, city, country, flatNumber,validator);
+            .Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure<Employee>(addressResult.Error);

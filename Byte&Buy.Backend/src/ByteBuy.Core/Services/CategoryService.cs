@@ -75,5 +75,5 @@ public class CategoryService : ICategoryService
         return categories.Select(c => c.ToSelectListItemResponse()).ToList();
     }
 
-    
+
 }

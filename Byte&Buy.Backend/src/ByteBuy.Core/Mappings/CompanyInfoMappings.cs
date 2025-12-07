@@ -3,6 +3,7 @@ using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.CompanyInfo;
 
 namespace ByteBuy.Core.Mappings;
+
 public static class CompanyInfoMappings
 {
     public static CompanyInfoResponse ToCompanyInfoResponse(this CompanyInfo company)

@@ -11,7 +11,7 @@ public class Cart : AuditableEntity, ISoftDeletable
     public Money TotalCartValue { get; private set; } = Money.Zero;
     public Money TotalItemsValue { get; private set; } = Money.Zero;
     public ICollection<CartOffer> CartOffers { get; private set; } = new List<CartOffer>();
-    public bool IsActive { get;  set; }
+    public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
     private Cart() { }
     private Cart(PortalUser user)

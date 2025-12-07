@@ -10,8 +10,8 @@ public class RentOfferConfig : IEntityTypeConfiguration<RentOffer>
     {
         builder.OwnsOne(ro => ro.PricePerDay, ro =>
         {
-             ro.Property(prop => prop.Currency).HasMaxLength(3);
-             ro.Property(prop => prop.Amount).HasPrecision(18, 3);
+            ro.Property(prop => prop.Currency).HasMaxLength(3);
+            ro.Property(prop => prop.Amount).HasPrecision(18, 3);
         });
 
     }

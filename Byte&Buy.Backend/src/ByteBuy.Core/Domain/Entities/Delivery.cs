@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
+
 public class Delivery : AuditableEntity, ISoftDeletable
 {
     public string Name { get; private set; } = null!;
@@ -56,7 +57,7 @@ public class Delivery : AuditableEntity, ISoftDeletable
             return Result.Failure<Delivery>(validationResult.Error);
 
         var moneyResult = Money.Create(price, "PLN");
-        if(moneyResult.IsFailure)
+        if (moneyResult.IsFailure)
             return Result.Failure<Delivery>(moneyResult.Error);
 
         return new Delivery(name, description, moneyResult.Value);

@@ -32,13 +32,13 @@ public class Category : AuditableEntity, ISoftDeletable
     public void Deactivate()
     {
         IsActive = false;
-        DateDeleted= DateTime.UtcNow;
+        DateDeleted = DateTime.UtcNow;
     }
 
     public Result Update(string name, string? description)
     {
         var validationResult = Validate(name, description);
-        if(validationResult.IsFailure)
+        if (validationResult.IsFailure)
             return Result.Failure<Category>(validationResult.Error);
 
         Name = name;
@@ -65,5 +65,5 @@ public class Category : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    
+
 }

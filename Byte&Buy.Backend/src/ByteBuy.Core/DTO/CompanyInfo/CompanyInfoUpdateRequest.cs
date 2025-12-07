@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.DTO.CompanyInfo;
+
 public record CompanyInfoUpdateRequest(
     [Required, MaxLength(50)] string CompanyName,
     [Required, MaxLength(20)] string TIN,

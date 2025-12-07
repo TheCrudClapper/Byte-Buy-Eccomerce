@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.API.Extensions;
+using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
-using ByteBuy.API.Extensions;
 namespace ByteBuy.API.Controllers;
 
 /// <summary>

@@ -1,5 +1,4 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.DTO.Condition;
+﻿using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 

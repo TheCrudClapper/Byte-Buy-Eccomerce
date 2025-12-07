@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Entities;
+
 public class Order : AuditableEntity, ISoftDeletable
 {
     public Guid UserId { get; set; }

@@ -8,4 +8,3 @@ public interface ICachingHelper
     Task CacheObject<T>(T obj, string cacheKey, DistributedCacheEntryOptions options, CancellationToken ct = default);
     Task InvalidateCache(string cacheKey, CancellationToken ct = default);
 }
- 

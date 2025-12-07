@@ -20,12 +20,12 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
     public bool IsActive { get; protected set; }
     public DateTime DateCreated { get; protected set; }
     public DateTime? DateEdited { get; protected set; }
-    public DateTime? DateDeleted { get; protected set; } 
+    public DateTime? DateDeleted { get; protected set; }
 
     private ApplicationUser() { }
     protected ApplicationUser(string firstName, string lastName, string email, string? phoneNumber)
     {
-        FirstName = firstName;  
+        FirstName = firstName;
         LastName = lastName;
         Email = email;
         PhoneNumber = phoneNumber;
@@ -43,7 +43,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
             return Result.Failure(Error.Validation("Last name cannot be empty!"));
         if (string.IsNullOrWhiteSpace(email) || !email.Contains('@'))
             return Result.Failure(Error.Validation("Email is in invalid format!"));
-        if(phoneNumber is not null)
+        if (phoneNumber is not null)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
             {
@@ -70,7 +70,8 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
     {
         if (phoneNumber is not null)
         {
-            if(string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15){
+            if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
+            {
                 return Result.Failure(Error.Validation("Phone number can't be a whitespace and not longer that 15 characters"));
             }
             else
@@ -95,12 +96,12 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
                 .Add(UserPermission.Create(Id, id, true));
         }
     }
-    
+
     protected void DeactivateAllUserPermissions()
     {
         foreach (var perm in UserPermissions)
         {
-           perm.Deactivate();
+            perm.Deactivate();
         }
     }
 
@@ -122,7 +123,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
         foreach (var permissionId in grantedPerms)
         {
             var existing = UserPermissions
-                .FirstOrDefault(up  => up.PermissionId == permissionId);
+                .FirstOrDefault(up => up.PermissionId == permissionId);
 
             if (existing != null)
             {

@@ -39,7 +39,7 @@ public class CompanyInfoService : ICompanyInfoService
             _addressValidator
             );
 
-        if(createResult.IsFailure)
+        if (createResult.IsFailure)
             return Result.Failure<CreatedResponse>(createResult.Error);
 
         await _companyInfoRepository.AddAsync(createResult.Value);

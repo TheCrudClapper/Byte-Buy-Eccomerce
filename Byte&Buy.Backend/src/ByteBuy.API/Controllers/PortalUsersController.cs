@@ -24,7 +24,7 @@ public class PortalUsersController : BaseApiController
         => HandleResult(await _portalUserService.UpdatePortalUser(userId, request));
 
     [HttpDelete("{userId}")]
-    public async Task<IActionResult> DeletePortalUser(Guid userId) 
+    public async Task<IActionResult> DeletePortalUser(Guid userId)
         => HandleResult(await _portalUserService.DeletePortalUser(userId));
 
     [HttpGet("list")]

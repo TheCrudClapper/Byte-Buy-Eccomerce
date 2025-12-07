@@ -5,7 +5,7 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class Condition : AuditableEntity, ISoftDeletable
 {
-    public string Name { get; set;  } = null!;
+    public string Name { get; set; } = null!;
     public string? Description { get; set; }
     public ICollection<Item> Products { get; set; } = new List<Item>();
     public bool IsActive { get; set; }
@@ -32,7 +32,7 @@ public class Condition : AuditableEntity, ISoftDeletable
     public static Result<Condition> Create(string name, string? description)
     {
         var validationResult = Validate(name, description);
-        
+
         return validationResult.IsFailure
             ? Result.Failure<Condition>(validationResult.Error)
             : new Condition(name, description);
@@ -56,9 +56,9 @@ public class Condition : AuditableEntity, ISoftDeletable
         if (string.IsNullOrWhiteSpace(name) || name.Length > 20)
             return Result.Failure(Error.Validation("Name is required and must be at most 20 characters."));
 
-        if(description is not null)
+        if (description is not null)
         {
-            if(string.IsNullOrWhiteSpace(description))
+            if (string.IsNullOrWhiteSpace(description))
                 return Result.Failure(Error.Validation("Description cannot contain only whitespace."));
 
             if (description?.Length > 50)

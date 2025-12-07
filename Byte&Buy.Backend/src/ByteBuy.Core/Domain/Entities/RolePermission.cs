@@ -6,7 +6,7 @@ public class RolePermission : AuditableEntity, ISoftDeletable
 {
     public Guid RoleId { get; private set; }
     public ApplicationRole Role { get; private set; } = null!;
-  
+
     public Guid PermissionId { get; private set; }
     public Permission Permission { get; private set; } = null!;
 

@@ -22,7 +22,7 @@ public class PermissionService : IPermissionService
     }
 
     public async Task<bool> HasPermissionAsync(Guid userId, string permissionName)
-    { 
+    {
         var permission = await _permissionRepository.GetByNameAsync(permissionName);
         //if permision of given name not found -> deny access
         if (permission == null) return false;

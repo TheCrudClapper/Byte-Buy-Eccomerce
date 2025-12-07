@@ -7,6 +7,7 @@ using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.AddressSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -63,7 +64,7 @@ public class AddressService : IAddressService
 
     public async Task<Result<UpdatedResponse>> UpdateAddress(Guid addressId, Guid userId, AddressUpdateRequest request)
     {
-        var address = await _addressRepository.GetUserAddressAsync(addressId, userId);
+        var address = await _addressRepository.GetBySpecAsync(new UserAddresSpec(userId, addressId));
         if (address is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -81,9 +82,9 @@ public class AddressService : IAddressService
         if (address.IsDefault && !request.IsDefault)
             return Result.Failure<UpdatedResponse>(AddressErrors.CannotUnsetCurrentDefault);
 
-        if(!address.IsDefault && request.IsDefault)
+        if (!address.IsDefault && request.IsDefault)
             await UnsetCurrentDefault(userId, addressId);
-        
+
         var updateResult = address.Update(
             request.Label,
             request.City,
@@ -108,37 +109,33 @@ public class AddressService : IAddressService
 
     public async Task<Result<AddressResponse>> GetUserAddress(Guid userId, Guid addressId, CancellationToken ct = default)
     {
-        var address = await _addressRepository.GetUserAddressAsync(addressId, userId, ct);
-        if (address is null)
+        var addressDto = await _addressRepository.GetBySpecAsync(new UserAddresToDtoSpec(userId, addressId), ct);
+        if (addressDto is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
-        return address.ToAddressResponse();
+        return addressDto;
     }
 
     public async Task<Result<AddressResponse>> GetAddress(Guid addressId, CancellationToken ct = default)
     {
-        var address = await _addressRepository.GetByIdAsync(addressId);
-        if (address is null)
+        var addressDto = await _addressRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
+        if (addressDto is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
-        return address.ToAddressResponse();
+        return addressDto;
     }
 
     public async Task<Result<IEnumerable<AddressResponse>>> GetUserAddresses(Guid userId, CancellationToken ct)
-    {
-        var addresses = await _addressRepository.GetUserAdressesAsync(userId, ct);
-        return addresses
-            .Select(a => a.ToAddressResponse())
-            .ToList();
-    }
+        => await _addressRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
+
 
     public async Task<Result> DeleteUserAddress(Guid userId, Guid addressId)
     {
-        var address = await _addressRepository.GetUserAddressAsync(addressId, userId);
+        var address = await _addressRepository.GetBySpecAsync(new UserAddresSpec(userId, addressId));
         if (address is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
-        if(address.IsDefault)
+        if (address.IsDefault)
             return Result.Failure<AddressResponse>(AddressErrors.CannotDeleteCurrentDefault);
 
         address.Deactivate();
@@ -150,7 +147,8 @@ public class AddressService : IAddressService
 
     private async Task UnsetCurrentDefault(Guid userId, Guid? excludeId = null)
     {
-        var currentDefault = await _addressRepository.GetCurrentDefault(userId);
+        var currentDefault = await _addressRepository
+            .GetBySpecAsync(new CurrentDefaultAddressSpec(userId));
         if (currentDefault is null)
             return;
 

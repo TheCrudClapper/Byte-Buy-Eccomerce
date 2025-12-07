@@ -14,7 +14,7 @@ public class PasswordService : IPasswordService
     public async Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string newPassword)
     {
         //Check wheter user has password
-        if(await _userManager.HasPasswordAsync(user))
+        if (await _userManager.HasPasswordAsync(user))
         {
             var remove = await _userManager.RemovePasswordAsync(user);
             if (!remove.Succeeded)
@@ -31,7 +31,7 @@ public class PasswordService : IPasswordService
         foreach (var validator in _userManager.PasswordValidators)
         {
             var result = await validator.ValidateAsync(_userManager, user, password);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return result;
         }
 

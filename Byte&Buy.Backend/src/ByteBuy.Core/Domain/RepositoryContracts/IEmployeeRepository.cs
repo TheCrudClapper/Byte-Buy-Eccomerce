@@ -23,4 +23,3 @@ public interface IEmployeeRepository
     Task<Employee?> GetWithRolesById(Guid employeeId, CancellationToken ct = default);
 
 }
- 

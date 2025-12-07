@@ -50,5 +50,5 @@ public class EmployeesController : BaseApiController
     //[HasPermission("employee:delete")]
     public async Task<IActionResult> DeleteEmployee(Guid employeeId)
         => HandleResult(await _employeeService.DeleteEmployee(employeeId));
-   
+
 }

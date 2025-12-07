@@ -51,9 +51,9 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
         if (validationResult.IsFailure)
             return Result.Failure<ApplicationRole>(validationResult.Error);
 
-        var role =  new ApplicationRole(name);
+        var role = new ApplicationRole(name);
 
-        if (permissionIds is null ||!permissionIds.Any())
+        if (permissionIds is null || !permissionIds.Any())
             return Result.Failure<ApplicationRole>(Error.Validation("Role need to have at least one Permission"));
 
         role.AssignPermissionsToRole(permissionIds);
@@ -68,7 +68,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
     /// <param name="PermissionIds"></param>
     private void AssignPermissionsToRole(IEnumerable<Guid> PermissionIds)
     {
-        foreach(var id in PermissionIds)
+        foreach (var id in PermissionIds)
         {
             RolePermissions.Add(RolePermission.Create(Id, id));
         }
@@ -88,7 +88,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
 
     private void DeactiveAllRolePermissions()
     {
-        foreach(var rolePerm in RolePermissions)
+        foreach (var rolePerm in RolePermissions)
         {
             rolePerm.Deactivate();
         }
@@ -102,15 +102,15 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
         var newPermissionIds = PermissionIds.Distinct().ToList();
 
         //deactivate permissions not present in request
-        foreach(var rp in RolePermissions.Where(rp => rp.IsActive && !newPermissionIds.Contains(rp.PermissionId)))
+        foreach (var rp in RolePermissions.Where(rp => rp.IsActive && !newPermissionIds.Contains(rp.PermissionId)))
         {
             rp.Deactivate();
         }
 
-        foreach(var permissionId in newPermissionIds)
+        foreach (var permissionId in newPermissionIds)
         {
             var existing = RolePermissions.FirstOrDefault(rp => rp.PermissionId == permissionId);
-            if(existing != null)
+            if (existing != null)
             {
                 if (!existing.IsActive)
                 {

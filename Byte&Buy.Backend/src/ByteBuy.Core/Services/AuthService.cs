@@ -69,7 +69,7 @@ public class AuthService : IAuthService
             return identityResult.ToResult();
 
         var cartResult = Cart.Create(user);
-        if(cartResult.IsFailure)
+        if (cartResult.IsFailure)
             return cartResult;
 
         user.AssignCart(cartResult.Value);

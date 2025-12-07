@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ByteBuy.Infrastructure.DbContexts;
 
 public class ApplicationDbContext : IdentityDbContext<
-    ApplicationUser, 
+    ApplicationUser,
     ApplicationRole,
     Guid,
     IdentityUserClaim<Guid>,
@@ -40,11 +40,11 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<CompanyInfo> CompanyInfo { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }
-    
+
 
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
-    public ApplicationDbContext(){ }
+    public ApplicationDbContext() { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -70,6 +70,6 @@ public class ApplicationDbContext : IdentityDbContext<
         builder.Entity<ApplicationUser>()
            .HasDiscriminator<string>("UserType")
            .HasValue<PortalUser>("PortalUser")
-           .HasValue<Employee>("Employee");    
+           .HasValue<Employee>("Employee");
     }
 }

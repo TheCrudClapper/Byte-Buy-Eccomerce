@@ -48,5 +48,5 @@ public class DeliveryRepository : BaseRepository, IDeliveryRepository
             .FirstOrDefaultAsync(d => d.Id == id, ct);
     }
 
-   
+
 }

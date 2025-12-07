@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Mappings;
@@ -121,7 +120,7 @@ public class PortalUserService : IPortalUserService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         var addressUpdateResult = await HandleAddressUpdate(user, request.Address);
-        if(addressUpdateResult.IsFailure)
+        if (addressUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(addressUpdateResult.Error);
 
         if (!string.IsNullOrWhiteSpace(request.Password))

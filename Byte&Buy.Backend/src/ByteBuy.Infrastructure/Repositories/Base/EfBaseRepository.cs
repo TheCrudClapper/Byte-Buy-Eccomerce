@@ -1,0 +1,57 @@
+﻿using Ardalis.Specification;
+using Ardalis.Specification.EntityFrameworkCore;
+using ByteBuy.Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace ByteBuy.Infrastructure.Repositories.Base;
+
+public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IRepositoryBase<T>
+    where T : class
+{
+    protected readonly ApplicationDbContext _context;
+    private readonly ISpecificationEvaluator _specEval
+        = SpecificationEvaluator.Default;
+
+    public EfBaseRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public virtual Task AddAsync(T entity)
+    {
+        _context.Set<T>().Add(entity);
+        return Task.CompletedTask;
+    }
+
+    public virtual Task UpdateAsync(T entity)
+    {
+        _context.Set<T>().Update(entity);
+        return Task.CompletedTask;
+    }
+
+    public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken ct = default)
+      where TId : notnull
+        => await _context.Set<T>().FindAsync([id], ct);
+
+    public virtual async Task<T?> GetBySpecAsync(ISpecification<T> spec, CancellationToken ct = default)
+        => await ApplySpecification(spec).FirstOrDefaultAsync(ct);
+
+    public virtual async Task<TResult?> GetBySpecAsync<TResult>(ISpecification<T, TResult> spec, CancellationToken ct = default)
+        => await ApplySpecification(spec).FirstOrDefaultAsync(ct);
+
+    public virtual async Task<List<T>> GetListBySpecAsync(ISpecification<T> spec, CancellationToken ct = default)
+        => await ApplySpecification(spec).ToListAsync(ct);
+
+    public virtual async Task<List<TResult>> GetListBySpecAsync<TResult>(ISpecification<T, TResult> spec, CancellationToken ct = default)
+        => await ApplySpecification(spec).ToListAsync(ct);
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        => _specEval.GetQuery(_context.Set<T>(), spec);
+
+    private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
+        => _specEval.GetQuery(_context.Set<T>(), spec);
+
+    public virtual Task<int> CommitAsync(CancellationToken ct = default)
+        => _context.SaveChangesAsync(ct);
+
+}

@@ -33,15 +33,15 @@ public sealed class Money
 
     public override bool Equals(object? obj)
     {
-        if(obj is null || obj is not Money)
+        if (obj is null || obj is not Money)
             return false;
 
         Money other = (Money)obj;
 
-        if(Currency != other.Currency)
+        if (Currency != other.Currency)
             return false;
 
-        if(Amount != other.Amount)
+        if (Amount != other.Amount)
             return false;
 
         return true;

@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

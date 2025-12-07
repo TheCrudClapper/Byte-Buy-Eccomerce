@@ -26,12 +26,12 @@ public class GlobalExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            if(ex is TaskCanceledException or OperationCanceledException)
+            if (ex is TaskCanceledException or OperationCanceledException)
             {
                 _logger.LogInformation("Request canceled by user");
             }
 
-            if(ex.InnerException is not null)
+            if (ex.InnerException is not null)
             {
                 _logger.LogError($"{ex.InnerException.GetType().ToString()}:" +
                     $" {ex.InnerException.Message}");
@@ -56,7 +56,7 @@ public class GlobalExceptionHandlingMiddleware
 
             await httpContext.Response.WriteAsync(json);
         }
-        
+
     }
 }
 public static class GlobalExceptionHandlingMiddlewareExtensions

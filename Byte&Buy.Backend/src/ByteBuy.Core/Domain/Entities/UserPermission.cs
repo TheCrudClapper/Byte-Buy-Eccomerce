@@ -5,7 +5,7 @@ public class UserPermission : AuditableEntity, ISoftDeletable
 {
     public Guid UserId { get; private set; }
     public ApplicationUser User { get; private set; } = null!;
-    public Guid PermissionId { get; private set;  }
+    public Guid PermissionId { get; private set; }
     public Permission Permission { get; private set; } = null!;
     public bool IsGranted { get; private set; }
     public bool IsActive { get; private set; }

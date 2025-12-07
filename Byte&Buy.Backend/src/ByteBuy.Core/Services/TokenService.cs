@@ -40,11 +40,11 @@ public class TokenService : ITokenService
         //Creating token payload
         var tokenDescriptior = new SecurityTokenDescriptor
         {
-           Subject = new ClaimsIdentity(claims),
-           Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
-           SigningCredentials = credentials,
-           Issuer = _configuration["Jwt:Issuer"],
-           Audience = _configuration["Jwt:Audience"]
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("Jwt:ExpirationInMinutes")),
+            SigningCredentials = credentials,
+            Issuer = _configuration["Jwt:Issuer"],
+            Audience = _configuration["Jwt:Audience"]
         };
 
         var tokenHandler = new JsonWebTokenHandler();

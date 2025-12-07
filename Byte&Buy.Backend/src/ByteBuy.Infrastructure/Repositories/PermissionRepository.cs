@@ -20,7 +20,7 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .Select(up => (bool?)up.IsGranted)
             .FirstOrDefaultAsync();
 
-        if(userPermission.HasValue)
+        if (userPermission.HasValue)
             return userPermission.Value;
 
         var hasRolePermission = await _context.UserRoles

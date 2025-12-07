@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.ResultTypes;
-using System.Threading.Tasks;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -61,7 +60,7 @@ public sealed class PortalUser : ApplicationUser
         string? phoneNumber)
     {
         var validationResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
-        if(validationResult.IsFailure)
+        if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 
         FirstName = firstName;

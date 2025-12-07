@@ -17,6 +17,6 @@ public interface IEmployeeService
     Task<Result<UpdatedResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request);
     Task<Result> DeleteEmployee(Guid employeeId);
     Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct = default);
-    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default); 
+    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default);
     Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct = default);
 }

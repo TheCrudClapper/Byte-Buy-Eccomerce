@@ -1,5 +1,4 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.DTO;
+﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.CompanyInfo;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;

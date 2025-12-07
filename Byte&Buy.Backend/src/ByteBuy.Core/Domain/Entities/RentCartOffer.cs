@@ -3,5 +3,5 @@
 public class RentCartOffer : CartOffer
 {
     public DateTime RentalStartDate { get; set; }
-    public DateTime RentalEndDate { get; set;  }
+    public DateTime RentalEndDate { get; set; }
 }

@@ -7,7 +7,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class PortalUserRepository : BaseRepository, IPortalUserRepository
 {
-    public PortalUserRepository(ApplicationDbContext context) : base(context){}
+    public PortalUserRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<PortalUser?> GetAggregateAsync(Guid userId, CancellationToken ct = default)
     {

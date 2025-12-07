@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.PortalUser;
 
 namespace ByteBuy.Core.Mappings;
