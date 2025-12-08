@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.PortalUser;
+using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -11,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class PortalUsersPageViewModel(AlertViewModel alert,
+public class ConditionsPageViewModel(AlertViewModel alert,
     INavigationService navigation,
-    IPortalUserService userService) : ViewModelMany<PortalUserListItem>(alert, navigation)
+    IConditionService conditionService)
+    : ViewModelMany<ConditionListItem>(alert, navigation)
 {
-
-    protected override async Task Delete(PortalUserListItem item)
+    protected override async Task Delete(ConditionListItem item)
     {
-        var result = await userService.DeleteById(item.Id);
+        var result = await conditionService.DeleteById(item.Id);
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -29,18 +28,14 @@ public class PortalUsersPageViewModel(AlertViewModel alert,
         await Alert.ShowSuccessAlert("Successfully deleted user !");
     }
 
-    protected override async Task Edit(PortalUserListItem item)
+    protected override Task Edit(ConditionListItem item)
     {
-        await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
-        {
-            if (vm is PortalUserPageViewModel userVm)
-                await userVm.InitializeForEdit(item.Id);
-        });
+        throw new System.NotImplementedException();
     }
 
     protected override async Task LoadData()
     {
-        var result = await userService.GetList();
+        var result = await conditionService.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -50,11 +45,11 @@ public class PortalUsersPageViewModel(AlertViewModel alert,
         var list = result?.Value
             .Select((u, index) => u.ToListItem(index)) ?? [];
 
-        Items = new ObservableCollection<PortalUserListItem>(list);
+        Items = new ObservableCollection<ConditionListItem>(list);
     }
 
     protected override void OpenAddPage()
     {
-        Navigation.NavigateTo(ApplicationPageNames.PortalUser);
+
     }
 }
