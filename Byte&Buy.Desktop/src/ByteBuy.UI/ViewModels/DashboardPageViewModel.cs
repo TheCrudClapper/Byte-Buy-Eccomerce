@@ -1,5 +1,4 @@
-﻿using ByteBuy.UI.Data;
-using ByteBuy.UI.ViewModels.Shared;
+﻿using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ByteBuy.UI.ViewModels;

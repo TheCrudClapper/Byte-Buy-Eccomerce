@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class DeliveryHttpClient(HttpClient httpClient) 
+public class DeliveryHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IDeliveryHttpClient
 {
     private const string resource = "deliveries";

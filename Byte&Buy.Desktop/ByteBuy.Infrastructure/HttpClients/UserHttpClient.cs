@@ -4,7 +4,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class UserHttpClient(HttpClient httpClient) 
+public class UserHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IUserHttpClient
 {
     private const string resource = "users";

@@ -1,10 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Permission;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
@@ -15,13 +15,13 @@ public abstract partial class PermissionListBoxBaseViewModel : ViewModelBase
     #endregion
 
     private readonly IPermissionService _permissionService;
-    
+
     protected PermissionListBoxBaseViewModel(IPermissionService permissionService)
     {
         _permissionService = permissionService;
         _ = LoadPermissions();
     }
-    protected virtual async  Task LoadPermissions()
+    protected virtual async Task LoadPermissions()
     {
         var result = await _permissionService.GetSelectList();
         if (!result.Success || result.Value is null)

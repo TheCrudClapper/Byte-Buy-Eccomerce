@@ -20,7 +20,7 @@ public interface INavigationService
     /// <summary>
     /// Open a new window asynchronously with async initialization
     /// </summary>
-    Task OpenWindowAsync(ApplicationWindowNames window, Func<WindowViewModel,Task>? init = null);
+    Task OpenWindowAsync(ApplicationWindowNames window, Func<WindowViewModel, Task>? init = null);
 
     /// <summary>
     /// Open a new window with optional initialization

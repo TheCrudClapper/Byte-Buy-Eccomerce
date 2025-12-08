@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ByteBuy.Services.ServiceContracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 

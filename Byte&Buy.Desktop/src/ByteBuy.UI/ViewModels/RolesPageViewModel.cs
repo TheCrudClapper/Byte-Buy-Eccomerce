@@ -1,14 +1,13 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
-using ByteBuy.UI.Factories;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Employee;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using ByteBuy.UI.Mappings;
-using ByteBuy.UI.Navigation;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -48,14 +47,14 @@ public class RolesPageViewModel(
             await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-            
+
         var list = result.Value!
             .Select((r, index) => r.ToListItem(index))
             .ToList();
 
         Items = new ObservableCollection<RoleListItem>(list);
     }
-    
+
     protected override void OpenAddPage()
     {
         Navigation.NavigateTo(ApplicationPageNames.Role, vm =>

@@ -9,6 +9,6 @@ namespace ByteBuy.UI.ModelsUI.Delivery
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public string Currency { get; set; } = null!;
-        public decimal Amount { get; set;  }
+        public decimal Amount { get; set; }
     }
 }

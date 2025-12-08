@@ -95,7 +95,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
             await Alert.Show(AlertType.Error, response.Error!.Description);
             return;
         }
-            
+
         var companyInfo = response.Value;
         CompanyName = companyInfo.CompanyName;
         Slogan = companyInfo.Slogan;

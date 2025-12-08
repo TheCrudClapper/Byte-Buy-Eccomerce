@@ -8,21 +8,21 @@ namespace ByteBuy.Services.Services;
 
 public class CountryService(ICountryHttpClient httpClient) : ICountryService
 {
-    public async Task<Result<CreatedResponse>> AddCountry(CountryAddRequest request)
+    public async Task<Result<CreatedResponse>> Add(CountryAddRequest request)
         => await httpClient.PostCountryAsync(request);
 
-    public async Task<Result> DeleteCountry(Guid countryId)
+    public async Task<Result> DeleteById(Guid countryId)
         => await httpClient.DeleteAsync(countryId);
 
-    public async Task<Result<IEnumerable<CountryResponse>>> GetCountries()
+    public async Task<Result<IEnumerable<CountryResponse>>> GetAll()
         => await httpClient.GetCountriesAsync();
 
-    public async Task<Result<CountryResponse>> GetCountry(Guid coutryId)
+    public async Task<Result<CountryResponse>> GetById(Guid coutryId)
         => await httpClient.GetByIdAsync(coutryId);
-      
+
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
         => await httpClient.GetSelectListAsync();
 
-    public async Task<Result<UpdatedResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> Update(Guid countryId, CountryUpdateRequest request)
         => await httpClient.PutCountryAsync(countryId, request);
 }

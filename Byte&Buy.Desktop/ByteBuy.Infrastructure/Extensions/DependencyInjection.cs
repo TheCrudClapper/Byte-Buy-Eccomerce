@@ -28,10 +28,10 @@ public static class DependencyInjection
 
         services.AddHttpClient<ICompanyInfoHttpClient, CompanyInfoHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
-        
+
         services.AddHttpClient<IPortalUserHttpClient, PortalUserHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
-        
+
         services.AddHttpClient<ICountryHttpClient, CountryHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 

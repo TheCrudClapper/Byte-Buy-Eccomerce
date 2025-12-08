@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class EmployeeHttpClient(HttpClient client) 
+public class EmployeeHttpClient(HttpClient client)
     : HttpClientBase(client), IEmployeeHttpClient
 {
     private const string resource = "employees";

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Services.DTO.Category;
+﻿namespace ByteBuy.Services.DTO.Category;
 
 public record CategoryAddRequest(
     string Name,

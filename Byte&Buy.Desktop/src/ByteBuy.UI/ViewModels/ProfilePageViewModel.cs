@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;

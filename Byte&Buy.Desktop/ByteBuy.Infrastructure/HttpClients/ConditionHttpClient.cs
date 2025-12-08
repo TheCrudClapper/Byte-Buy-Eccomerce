@@ -5,17 +5,17 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class ConditionHttpClient(HttpClient httpClient) 
+public class ConditionHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IConditionHttpClient
 {
     private const string resource = "conditions";
-    
+
     public async Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
-    
+
     public async Task<Result<UpdatedResponse>> PutConditionAsync(Guid conditionId, ConditionUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{conditionId}", request);
-    
+
     public async Task<Result> DeleteAsync(Guid conditionId)
        => await DeleteAsync($"{resource}/{conditionId}");
 

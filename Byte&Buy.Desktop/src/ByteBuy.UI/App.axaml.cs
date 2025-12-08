@@ -61,7 +61,7 @@ namespace ByteBuy.UI
                 _ => throw new InvalidOperationException(),
             });
 
-            
+
             services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
             {
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindow>(),

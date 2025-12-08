@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CategoryHttpClient(HttpClient httpClient) 
+public class CategoryHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), ICategoryHttpClient
 {
 
@@ -29,5 +29,5 @@ public class CategoryHttpClient(HttpClient httpClient)
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
 
-   
+
 }

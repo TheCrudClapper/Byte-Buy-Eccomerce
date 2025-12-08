@@ -5,5 +5,5 @@ namespace ByteBuy.UI.ViewModels;
 
 public class AdministrationPageViewModel : PageViewModel
 {
-    public AdministrationPageViewModel(AlertViewModel alert) : base(alert){}
+    public AdministrationPageViewModel(AlertViewModel alert) : base(alert) { }
 }

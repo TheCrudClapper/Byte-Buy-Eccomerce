@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Core.DTO.Country;
+﻿namespace ByteBuy.Core.DTO.Country;
 
 public record CountryUpdateRequest(
     string Name,

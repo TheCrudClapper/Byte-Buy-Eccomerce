@@ -86,7 +86,7 @@ public static class PortalUserMappings
         }
         else
             address = null;
-        
+
 
         var request = new PortalUserUpdateRequest(
                 vm.SelectedRole!.Id,

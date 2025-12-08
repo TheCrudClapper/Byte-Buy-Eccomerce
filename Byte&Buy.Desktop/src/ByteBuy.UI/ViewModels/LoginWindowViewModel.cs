@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;

@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CountryHttpClient(HttpClient httpClient) 
+public class CountryHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), ICountryHttpClient
 {
     private const string resource = "countries";
@@ -15,7 +15,7 @@ public class CountryHttpClient(HttpClient httpClient)
 
     public async Task<Result<UpdatedResponse>> PutCountryAsync(Guid countryId, CountryUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{countryId}", request);
-    
+
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
 

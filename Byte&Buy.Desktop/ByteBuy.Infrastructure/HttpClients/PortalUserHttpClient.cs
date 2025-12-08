@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class PortalUserHttpClient(HttpClient httpClient) 
+public class PortalUserHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IPortalUserHttpClient
 {
     private const string resource = "portalusers";
@@ -24,5 +24,5 @@ public class PortalUserHttpClient(HttpClient httpClient)
     public async Task<Result<IEnumerable<PortalUserListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<PortalUserListResponse>>($"{resource}/list");
 
-    
+
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using ByteBuy.Services.ServiceContracts;
+using System;
 using System.Collections.Generic;
-using ByteBuy.Services.ServiceContracts;
 using System.Linq;
 
 namespace ByteBuy.UI.ViewModels.Shared;
@@ -8,18 +8,18 @@ namespace ByteBuy.UI.ViewModels.Shared;
 public class PermissionListBoxViewModel(IPermissionService permissionService)
     : PermissionListBoxBaseViewModel(permissionService)
 {
-    
+
     public IEnumerable<Guid> ExtractSelectedPermissions()
     => Permissions
         .Where(p => p.IsSelected)
         .Select(p => p.Id)
         .ToList();
-    
+
     public void SetSelectedPermissions(IEnumerable<Guid>? selectedPermissions)
     {
         if (selectedPermissions is null)
             return;
-        
+
         var matchingPerms = Permissions
             .Where(p => selectedPermissions
                 .Contains(p.Id));

@@ -30,7 +30,7 @@ public class NavigationService : INavigationService
     public async Task NavigateToAsync(ApplicationPageNames page, Func<PageViewModel, Task>? init = null)
     {
         var pageVm = _pageFactory.GetPageViewModel(page);
-        if(init != null)
+        if (init != null)
             await init(pageVm);
         _main.CurrentPage = pageVm;
     }

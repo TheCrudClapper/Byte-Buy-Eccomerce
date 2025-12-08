@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Services.DTO.Address;
 
 namespace ByteBuy.Services.DTO.PortalUser;
 

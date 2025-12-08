@@ -7,7 +7,6 @@ using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -23,7 +22,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 
     [ObservableProperty]
     [RequiredIf(nameof(IsAddressIncluded))]
-    private Guid? _addressEditId  = Guid.Empty;
+    private Guid? _addressEditId = Guid.Empty;
 
     [ObservableProperty]
     [Required] private string _lastName = string.Empty;
@@ -188,7 +187,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private async Task LoadCountries()
     {
         var result = await _countryService.GetSelectList();
-        if(!result.Success)
+        if (!result.Success)
             return;
 
         Countries = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
