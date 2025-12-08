@@ -17,16 +17,16 @@ public class ConditionService : IConditionService
         _conditionRepository = conditionRepository;
     }
 
-    public async Task<Result<ConditionResponse>> AddCondition(ConditionAddRequest request)
+    public async Task<Result<CreatedResponse>> AddCondition(ConditionAddRequest request)
     {
         var result = Condition.Create(request.Name, request.Description);
         if (result.IsFailure)
-            return Result.Failure<ConditionResponse>(result.Error);
+            return Result.Failure<CreatedResponse>(result.Error);
 
         var condition = result.Value;
         await _conditionRepository.AddAsync(condition);
 
-        return condition.ToConditionResponse();
+        return condition.ToCreatedResponse();
     }
 
     public async Task<Result> DeleteCondition(Guid conditionId)
@@ -62,15 +62,15 @@ public class ConditionService : IConditionService
         return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
     }
 
-    public async Task<Result<ConditionResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request)
     {
         var condition = await _conditionRepository.GetByIdAsync(conditionId);
         if (condition is null)
-            return Result.Failure<ConditionResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         condition.Update(request.Name, request.Description);
         await _conditionRepository.UpdateAsync(condition);
 
-        return condition.ToConditionResponse();
+        return condition.ToUpdatedResponse();
     }
 }

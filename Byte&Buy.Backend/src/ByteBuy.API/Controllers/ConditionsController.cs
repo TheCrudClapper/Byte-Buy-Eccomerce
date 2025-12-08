@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Condition;
+﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,12 @@ public class ConditionsController : BaseApiController
 
     //[HasPermission("condition:write")]
     [HttpPost]
-    public async Task<ActionResult> PostCondition(ConditionAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostCondition(ConditionAddRequest request)
         => HandleResult(await _conditionService.AddCondition(request));
 
     [HttpPut("{conditionId}")]
     //[HasPermission("condition:update")]
-    public async Task<ActionResult> PutCondition(Guid conditionId, ConditionUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutCondition(Guid conditionId, ConditionUpdateRequest request)
         => HandleResult(await _conditionService.UpdateCondition(conditionId, request));
 
     [HttpDelete("{conditionId}")]
@@ -29,16 +30,16 @@ public class ConditionsController : BaseApiController
 
     [HttpGet("{conditionId}")]
     //[HasPermission("condition:read")]
-    public async Task<ActionResult> GetCondition(Guid conditionId, CancellationToken ct)
+    public async Task<ActionResult<ConditionResponse>> GetCondition(Guid conditionId, CancellationToken ct)
         => HandleResult(await _conditionService.GetCondition(conditionId, ct));
 
     [HttpGet]
     //[HasPermission("condition:read:many")]
-    public async Task<ActionResult> GetCountries(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<ConditionResponse>>> GetConditions(CancellationToken ct)
         => HandleResult(await _conditionService.GetConditions(ct));
 
     [HttpGet("options")]
     //[HasPermission("condition:read:options")]
-    public async Task<ActionResult> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _conditionService.GetSelectList(ct));
 }
