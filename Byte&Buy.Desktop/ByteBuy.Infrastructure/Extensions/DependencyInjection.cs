@@ -35,6 +35,15 @@ public static class DependencyInjection
         services.AddHttpClient<ICountryHttpClient, CountryHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
+        services.AddHttpClient<IDeliveryHttpClient, DeliveryHttpClient>()
+           .AddHttpMessageHandler<BearerTokenHandler>();
+
+        services.AddHttpClient<IConditionHttpClient, ConditionHttpClient>()
+           .AddHttpMessageHandler<BearerTokenHandler>();
+
+        services.AddHttpClient<ICategoryHttpClient, CategoryHttpClient>()
+          .AddHttpMessageHandler<BearerTokenHandler>();
+
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
         return services;

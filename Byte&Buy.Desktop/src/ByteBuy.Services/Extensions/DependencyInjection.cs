@@ -16,6 +16,9 @@ public static class DependencyInjection
         services.AddSingleton<IPermissionService, PermissionService>();
         services.AddSingleton<IPortalUserService, PortalUserService>();
         services.AddSingleton<ICountryService, CountryService>();
+        services.AddSingleton<IDeliveryService, DeliveryService>();
+        services.AddSingleton<IConditionService, ConditionService>();
+        services.AddSingleton<ICategoryService, CategoryService>();
         return services;
     }
 }
