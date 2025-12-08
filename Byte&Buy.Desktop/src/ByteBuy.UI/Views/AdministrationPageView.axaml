@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             xmlns:tabitems="clr-namespace:ByteBuy.UI.Views"
              Background="Transparent"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ByteBuy.UI.Views.AdministrationPageView"
@@ -11,18 +12,25 @@
     <TabControl>
 
         <TabItem Header="Deliveries">
-            
+            <tabitems:DeliveriesPageView 
+            DataContext="{Binding DeliveriesPageViewModel}"/>
         </TabItem>
         
         <TabItem Header="Categories">
+            <tabitems:CategoriesPageView
+            DataContext="{Binding CategoriesPageViewModel}"/>
         </TabItem>
 
         
         <TabItem Header="Condition">
+             <tabitems:ConditionsPageView
+             DataContext="{Binding ConditionsPageViewModel}"/>
         </TabItem>
 
         
         <TabItem Header="Countries">
+             <tabitems:CountriesPageView
+             DataContext="{Binding CountriesPageViewModel}"/>
         </TabItem>
 
     </TabControl>

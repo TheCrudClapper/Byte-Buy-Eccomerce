@@ -50,7 +50,13 @@ namespace ByteBuy.UI
                 ApplicationPageNames.CompanyInfo => x.GetRequiredService<CompanyInfoPageViewModel>(),
                 ApplicationPageNames.PortalUsers => x.GetRequiredService<PortalUsersPageViewModel>(),
                 ApplicationPageNames.PortalUser => x.GetRequiredService<PortalUserPageViewModel>(),
+                ApplicationPageNames.Categories => x.GetRequiredService<CategoriesPageViewModel>(),
+                ApplicationPageNames.Deliveries => x.GetRequiredService<DeliveriesPageViewModel>(),
+                ApplicationPageNames.Conditions => x.GetRequiredService<ConditionsPageViewModel>(),
+                ApplicationPageNames.Countries => x.GetRequiredService<CountriesPageViewModel>(),
                 ApplicationPageNames.Administration => x.GetRequiredService<AdministrationPageViewModel>(),
+                
+
                 _ => throw new InvalidOperationException(),
             });
 

@@ -4,6 +4,7 @@ using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,7 +24,6 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
             await Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-
         Items.Remove(item);
         await Alert.ShowSuccessAlert("Successfully deleted user !");
     }

@@ -1,0 +1,125 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+             x:Class="ByteBuy.UI.Views.ConditionsPageView"
+             x:DataType="vm:ConditionsPageViewModel">
+
+  	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Grid>
+
+		<Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+			<Button
+			Command="{Binding OpenAddPageCommand}"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Right">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+						   Width="15" Height="15" />
+					<Label Content="Add"/>
+				</StackPanel>
+
+			</Button>
+			<!-- Filters -->
+			<Grid Grid.Row="1">
+				<Label Content="Filters" />
+			</Grid>
+
+			<!-- Fetched items count -->
+			<StackPanel Grid.Row="2">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<Label Content="Records fetched:"
+						   FontWeight="600"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+					<Label Content="{Binding ItemsCount}"
+						   FontWeight="700"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+				</StackPanel>
+
+				<!-- Data Grid Containing All Items -->
+				<DataGrid
+				x:Name="ItemsGrid"
+				ItemsSource="{Binding Items}"
+				AutoGenerateColumns="False"
+				SelectedItem="{Binding SelectedItem}"
+				GridLinesVisibility="All"
+				IsReadOnly="True"
+				HeadersVisibility="All"
+				CanUserSortColumns="True"
+				CanUserResizeColumns="True"
+				RowHeight="36">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+						<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+						<DataGridTemplateColumn Header="Actions">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+										<Button
+										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+										CommandParameter="{Binding}"
+										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
+										<Button
+										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+										CommandParameter="{Binding}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}">
+
+											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+
+				</DataGrid>
+
+			</StackPanel>
+
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+				<Label Content="1 of 32"
+					   FontSize="15"
+					   Foreground="{DynamicResource TextLightBrush}"
+					   FontWeight="600"
+					   VerticalAlignment="Center" />
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+			</StackPanel>
+
+		</Grid>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+	</Grid>
+</UserControl>

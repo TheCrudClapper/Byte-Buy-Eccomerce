@@ -45,6 +45,9 @@ public static class DependencyInjection
         services.AddTransient<AdministrationPageViewModel>();
         services.AddTransient<CountriesPageViewModel>();
         services.AddTransient<CountryPageViewModel>();
+        services.AddTransient<DeliveriesPageViewModel>();
+        services.AddTransient<ConditionsPageViewModel>();
+        services.AddTransient<CategoriesPageViewModel>();
         return services;
     }
 }
