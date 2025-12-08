@@ -22,7 +22,7 @@ public class ConditionHttpClient(HttpClient httpClient)
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<ConditionResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<IEnumerable<ConditionListResponse>>> GetConditionList()
+    public async Task<Result<IEnumerable<ConditionListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<ConditionListResponse>>($"{resource}/list");
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()

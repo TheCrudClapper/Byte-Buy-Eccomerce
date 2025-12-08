@@ -23,9 +23,6 @@ public class RoleService(IRoleHttpClient roleClient) : IRoleService
     public async Task<Result<IEnumerable<RoleResponse>>> GetAll()
         => await roleClient.GetAllAsync();
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(Guid id)
-        => await roleClient.GetSelectListItemsAsync();
-
     public async Task<Result> DeleteById(Guid id)
         => await roleClient.DeleteByIdAsync(id);
 }

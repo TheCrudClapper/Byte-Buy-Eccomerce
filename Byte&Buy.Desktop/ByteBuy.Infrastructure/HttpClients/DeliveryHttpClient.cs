@@ -10,7 +10,7 @@ public class DeliveryHttpClient(HttpClient httpClient)
 {
     private const string resource = "deliveries";
 
-    public async Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryUpdateRequest request)
+    public async Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 
     public async Task<Result<UpdatedResponse>> PutDeliveryAsync(Guid deliveryId, DeliveryUpdateRequest request)
@@ -22,7 +22,7 @@ public class DeliveryHttpClient(HttpClient httpClient)
     public async Task<Result<DeliveryResponse>> GetByIdAsync(Guid deliveryId)
         => await GetAsync<DeliveryResponse>($"{resource}/{deliveryId}");
 
-    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList()
+    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<DeliveryListResponse>>($"{resource}/list");
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()

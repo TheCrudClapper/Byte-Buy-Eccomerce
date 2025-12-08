@@ -7,7 +7,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 public interface IConditionHttpClient
 {
     Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync();
-    Task<Result<IEnumerable<ConditionListResponse>>> GetConditionList();
+    Task<Result<IEnumerable<ConditionListResponse>>> GetListAsync();
     Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request);
     Task<Result<UpdatedResponse>> PutConditionAsync(Guid conditionId, ConditionUpdateRequest request);

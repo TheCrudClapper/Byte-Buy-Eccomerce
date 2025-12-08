@@ -23,7 +23,7 @@ public class CategoryHttpClient(HttpClient httpClient)
     public async Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<CategoryResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<IEnumerable<CategoryListResponse>>> GetCategoryList()
+    public async Task<Result<IEnumerable<CategoryListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<CategoryListResponse>>($"{resource}/list");
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
