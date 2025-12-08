@@ -8,9 +8,10 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyInfoHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), ICompanyInfoHttpClient
 {
+    private const string resource = "companyInfo";
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()
-        => GetAsync<CompanyInfoResponse>("companyInfo");
+        => GetAsync<CompanyInfoResponse>($"{resource}");
 
     public Task<Result<UpdatedResponse>> PutCompanyInfoAsync(CompanyInfoUpdateRequest request)
-        => PutAsync<UpdatedResponse>("companyInfo", request);
+        => PutAsync<UpdatedResponse>($"{resource}", request);
 }

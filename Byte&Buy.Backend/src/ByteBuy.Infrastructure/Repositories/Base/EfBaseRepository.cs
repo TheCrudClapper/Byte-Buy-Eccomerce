@@ -2,6 +2,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories.Base;
 
@@ -54,4 +55,9 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
     public virtual Task<int> CommitAsync(CancellationToken ct = default)
         => _context.SaveChangesAsync(ct);
 
+    public Task<List<T>> GetAllByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken ct = default)
+        => _context.Set<T>().Where(expression).ToListAsync(ct);
+
+    public async Task<T?> GetByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken ct = default)
+        => await _context.Set<T>().FirstOrDefaultAsync(expression, ct);
 }

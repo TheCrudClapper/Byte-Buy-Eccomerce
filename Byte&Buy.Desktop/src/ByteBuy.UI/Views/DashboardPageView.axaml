@@ -5,9 +5,10 @@
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:DashboardPageViewModel"
+             Background="Transparent"
              x:Class="ByteBuy.UI.Views.DashboardPageView">
     
-    <StackPanel Background="White">
+    <StackPanel>
         <Label Foreground="Black" Content="{Binding Test}"/>
     </StackPanel>
   

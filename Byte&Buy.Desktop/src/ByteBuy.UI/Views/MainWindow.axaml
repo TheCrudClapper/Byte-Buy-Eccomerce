@@ -72,6 +72,18 @@
                         </StackPanel>
                     </Button>
 
+                   
+                    <Button
+                        Command="{Binding GoToAdministrationCommand}"
+                        Classes.active="{Binding IsAdministrationActive}"
+                        Classes="sidebarMenuButton">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
+                                   Width="20" Height="20" />
+                            <Label Content="Administration" />
+                        </StackPanel>
+                    </Button>
+
                     <Button
                         Command="{Binding GoToEmployeesCommand}"
                         Classes.active="{Binding IsEmployeesPageActive}"

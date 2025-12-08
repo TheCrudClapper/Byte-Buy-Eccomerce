@@ -17,20 +17,38 @@ public class DeliveryService : IDeliveryService
         _deliveryRepository = deliveryRepository;
     }
 
-    public async Task<Result<DeliveryResponse>> AddDelivery(DeliveryAddRequest request)
+    public async Task<Result<CreatedResponse>> AddDelivery(DeliveryAddRequest request)
     {
-        var delivery = Delivery.Create(
+        var deliveryResult = Delivery.Create(
             request.Name,
             request.Description,
             request.Price
         );
 
-        if (delivery.IsFailure)
-            return Result.Failure<DeliveryResponse>(delivery.Error);
+        if (deliveryResult.IsFailure)
+            return Result.Failure<CreatedResponse>(deliveryResult.Error);
 
-        await _deliveryRepository.AddAsync(delivery.Value);
+        var delivery = deliveryResult.Value;
+        await _deliveryRepository.AddAsync(deliveryResult.Value);
 
-        return delivery.Value.ToDeliveryResponse();
+        return delivery.ToCreatedResponse();
+    }
+
+    public async Task<Result<UpdatedResponse>> UpdateDelivery(Guid deliveryId, DeliveryUpdateRequest request)
+    {
+        var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
+        if (delivery is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        delivery.Update(
+            request.Name,
+            request.Description,
+            request.Price
+        );
+
+        await _deliveryRepository.UpdateAsync(delivery);
+
+        return delivery.ToUpdatedResponse();
     }
 
     public async Task<Result> DeleteDelivery(Guid deliveryId)
@@ -43,29 +61,6 @@ public class DeliveryService : IDeliveryService
         await _deliveryRepository.UpdateAsync(delivery);
 
         return Result.Success();
-    }
-
-    public async Task<Result<DeliveryResponse>> UpdateDelivery(Guid deliveryId, DeliveryUpdateRequest request)
-    {
-        var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
-        if (delivery is null)
-            return Result.Failure<DeliveryResponse>(Error.NotFound);
-
-        delivery.Update(
-            request.Name,
-            request.Description,
-            request.Price
-        );
-
-        await _deliveryRepository.UpdateAsync(delivery);
-
-        return delivery.ToDeliveryResponse();
-    }
-
-    public async Task<Result<IEnumerable<DeliveryResponse>>> GetDeliveries(CancellationToken ct)
-    {
-        var deliveries = await _deliveryRepository.GetAllAsync(ct);
-        return deliveries.Select(d => d.ToDeliveryResponse()).ToList();
     }
 
     public async Task<Result<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct)
@@ -83,5 +78,11 @@ public class DeliveryService : IDeliveryService
             .ToList();
     }
 
+    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default)
+    {
+        var deliveries = await _deliveryRepository.GetAllAsync(ct);
+        return deliveries.Select(d => d.ToDeliveryListResponse())
+            .ToList();
+    }
 
 }

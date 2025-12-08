@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Country;
+﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,12 @@ public class CountriesController : BaseApiController
 
     //[HasPermission("country:write")]
     [HttpPost]
-    public async Task<ActionResult> PostCountry(CountryAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostCountry(CountryAddRequest request)
         => HandleResult(await _countryService.AddCountry(request));
 
     [HttpPut("{countryId}")]
     //[HasPermission("country:update")]
-    public async Task<ActionResult> PutCountry(Guid countryId, CountryUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutCountry(Guid countryId, CountryUpdateRequest request)
         => HandleResult(await _countryService.UpdateCountry(countryId, request));
 
     [HttpDelete("{countryId}")]
@@ -29,12 +30,12 @@ public class CountriesController : BaseApiController
 
     [HttpGet("{countryId}")]
     //[HasPermission("country:read")]
-    public async Task<ActionResult> GetCountry(Guid countryId, CancellationToken ct)
+    public async Task<ActionResult<CountryResponse>> GetCountry(Guid countryId, CancellationToken ct)
         => HandleResult(await _countryService.GetCountry(countryId, ct));
 
     [HttpGet]
     //[HasPermission("country:read:many")]
-    public async Task<ActionResult> GetCountries(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct)
         => HandleResult(await _countryService.GetCountries(ct));
 
     [HttpGet("options")]

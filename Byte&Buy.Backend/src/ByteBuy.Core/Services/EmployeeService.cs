@@ -8,6 +8,7 @@ using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
+using static ByteBuy.Core.Specification.EmployeeSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -87,48 +88,40 @@ public class EmployeeService : IEmployeeService
         employee.Deactivate();
 
         await _employeeRepository.UpdateAsync(employee);
+        await _employeeRepository.CommitAsync();
 
         return Result.Success();
     }
 
     public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
     {
-        var employee = await _employeeRepository.GetWithRolesById(employeeId, ct);
+        var employeeDto = await _employeeRepository
+            .GetBySpecAsync(new EmployeeToEmployeeResponseDtoSpec(employeeId), ct);
 
-        if (employee is null)
+        if (employeeDto is null)
             return Result.Failure<EmployeeResponse>(Error.NotFound);
 
-        return employee.ToEmployeeResponse();
+        return employeeDto;
     }
 
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default)
     {
-        var employee = await _employeeRepository.GetWithRolesById(employeeId, ct);
-        if (employee is null)
+        var employeeDto = await _employeeRepository
+            .GetBySpecAsync(new EmployeeToEmployeeProfileResponseDto(employeeId), ct);
+        if (employeeDto is null)
             return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
 
-        return employee.ToEmployeeProfileResponse();
-    }
-
-    public async Task<Result<IEnumerable<EmployeeResponse>>> GetEmployees(CancellationToken ct)
-    {
-        var employees = await _employeeRepository.GetAllWithRolesAsync(ct);
-
-        return employees.Select(e => e.ToEmployeeResponse())
-            .ToList();
+        return employeeDto;
     }
 
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default)
     {
-        var employees = await _employeeRepository.GetAllWithRolesAsync(ct);
-        return employees
-            .Select(e => e.ToEmployeeListResponse())
-            .ToList();
+        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(),ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
     {
-        var employee = await _employeeRepository.GetAggregateAsync(employeeId);
+        var employee = await _employeeRepository.GetBySpecAsync(new EmployeeAggregateSpec(employeeId));
         if (employee is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -175,6 +168,7 @@ public class EmployeeService : IEmployeeService
             return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
+        await _employeeRepository.CommitAsync();
 
         return employee.ToUpdatedResponse();
     }
@@ -199,6 +193,7 @@ public class EmployeeService : IEmployeeService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
+        await _employeeRepository.CommitAsync();
         return employee.ToUpdatedResponse();
     }
 

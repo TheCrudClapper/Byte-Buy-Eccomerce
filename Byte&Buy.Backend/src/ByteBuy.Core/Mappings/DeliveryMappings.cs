@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
+using System.Threading.Tasks;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -20,4 +21,13 @@ public static class DeliveryMappings
             delivery.Id,
             string.Join(" ", delivery.Name, delivery.Price.Amount, delivery.Price.Currency)
             );
+
+    public static DeliveryListResponse ToDeliveryListResponse(this Delivery delivery)
+        => new DeliveryListResponse(
+               delivery.Id,
+               delivery.Name,
+               delivery.Price.Currency,
+               delivery.Price.Amount
+            );
+
 }

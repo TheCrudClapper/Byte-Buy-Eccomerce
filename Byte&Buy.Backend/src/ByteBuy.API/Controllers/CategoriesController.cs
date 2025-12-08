@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Category;
+﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.Category;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,28 +16,28 @@ public class CategoriesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("category:create")]
-    public async Task<ActionResult> PostCategory(CategoryAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostCategory(CategoryAddRequest request)
         => HandleResult(await _categoryService.AddCategory(request));
 
     [HttpPut("{categoryId}")]
     //[HasPermission("category:update")]
-    public async Task<ActionResult> PutCategory(Guid categoryId, CategoryUpdateRequest request, CancellationToken ct)
+    public async Task<ActionResult<UpdatedResponse>> PutCategory(Guid categoryId, CategoryUpdateRequest request, CancellationToken ct)
         => HandleResult(await _categoryService.UpdateCategory(categoryId, request));
 
     [HttpDelete("{categoryId}")]
     //[HasPermission("category:delete")]
-    public async Task<ActionResult> DeleteCategory(Guid categoryId, CancellationToken ct)
+    public async Task<IActionResult> DeleteCategory(Guid categoryId, CancellationToken ct)
         => HandleResult(await _categoryService.DeleteCategory(categoryId));
 
     [HttpGet("{categoryId}")]
     //[HasPermission("category:read")]
-    public async Task<ActionResult> GetCategory(Guid categoryId, CancellationToken ct)
+    public async Task<ActionResult<CategoryResponse>> GetCategory(Guid categoryId, CancellationToken ct)
         => HandleResult(await _categoryService.GetCategory(categoryId, ct));
 
     [HttpGet]
     //[HasPermission("category:read:many")]
-    public async Task<ActionResult> GetCategories(CancellationToken ct)
-        => HandleResult(await _categoryService.GetCategories(ct));
+    public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
+        => HandleResult(await _categoryService.GetCategoriesList(ct));
 
     [HttpGet("options")]
     //[HasPermission("category:read:options")]

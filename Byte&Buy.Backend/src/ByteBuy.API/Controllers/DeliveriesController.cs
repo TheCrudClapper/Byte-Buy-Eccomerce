@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Delivery;
+﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,31 +16,31 @@ public class DeliveriesController : BaseApiController
 
     [HttpPost]
     //[HasPermission("delivery:create")]
-    public async Task<ActionResult> PostDelivery(DeliveryAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostDelivery(DeliveryAddRequest request)
         => HandleResult(await _deliveryService.AddDelivery(request));
 
     [HttpPut("{deliveryId}")]
     //[HasPermission("delivery:update")]
-    public async Task<ActionResult> PutDelivery(Guid deliveryId, DeliveryUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutDelivery(Guid deliveryId, DeliveryUpdateRequest request)
         => HandleResult(await _deliveryService.UpdateDelivery(deliveryId, request));
 
     [HttpDelete("{deliveryId}")]
     //[HasPermission("delivery:delete")]
-    public async Task<ActionResult> DeleteDelivery(Guid deliveryId)
+    public async Task<IActionResult> DeleteDelivery(Guid deliveryId)
         => HandleResult(await _deliveryService.DeleteDelivery(deliveryId));
 
     [HttpGet("{deliveryId}")]
     //[HasPermission("delivery:read")]
-    public async Task<ActionResult> GetDelivery(Guid deliveryId, CancellationToken ct)
+    public async Task<ActionResult<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct)
         => HandleResult(await _deliveryService.GetDelivery(deliveryId, ct));
 
-    [HttpGet]
-    //[HasPermission("delivery:read:many")]
-    public async Task<ActionResult> GetDeliveries(CancellationToken ct)
-        => HandleResult(await _deliveryService.GetDeliveries(ct));
+    [HttpGet("list")]
+    //[HasPermission("delivery:read:list")]
+    public async Task<ActionResult<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct)
+        => HandleResult(await _deliveryService.GetDeliveriesList(ct));
 
     [HttpGet("options")]
     //[HasPermission("delivery:read:options")]
-    public async Task<ActionResult> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectList(ct));
 }

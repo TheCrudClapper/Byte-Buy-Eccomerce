@@ -42,6 +42,9 @@ public static class DependencyInjection
         services.AddTransient<PermissionGrantRevokeViewModel>();
         services.AddTransient<PortalUsersPageViewModel>();
         services.AddTransient<PortalUserPageViewModel>();
+        services.AddTransient<AdministrationPageViewModel>();
+        services.AddTransient<CountriesPageViewModel>();
+        services.AddTransient<CountryPageViewModel>();
         return services;
     }
 }

@@ -7,21 +7,22 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public class RoleHttpClient(HttpClient httpClient) : HttpClientBase(httpClient), IRoleHttpClient
 {
-    public async Task<Result<UpdatedResponse>> PutAsync(Guid id, RoleUpdateRequest request)
-        => await PutAsync<UpdatedResponse>($"roles/{id}", request);
+    private const string resource = "roles";
+    public async Task<Result<UpdatedResponse>> PutAsync(Guid roleId, RoleUpdateRequest request)
+        => await PutAsync<UpdatedResponse>($"{resource}/{roleId}", request);
 
     public async Task<Result<CreatedResponse>> PostAsync(RoleAddRequest request)
-        => await PostAsync<CreatedResponse>("roles", request);
+        => await PostAsync<CreatedResponse>($"{resource}", request);
 
     public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListItemsAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>("roles/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
 
     public async Task<Result<IEnumerable<RoleResponse>>> GetAllAsync()
-        => await GetAsync<IEnumerable<RoleResponse>>("roles");
+        => await GetAsync<IEnumerable<RoleResponse>>($"{resource}");
 
-    public async Task<Result> DeleteByIdAsync(Guid id)
-        => await DeleteAsync($"roles/{id}");
+    public async Task<Result> DeleteByIdAsync(Guid roleId)
+        => await DeleteAsync($"{resource}/{roleId}");
 
-    public async Task<Result<RoleResponse>> GetByIdAsync(Guid id)
-        => await GetAsync<RoleResponse>($"roles/{id}");
+    public async Task<Result<RoleResponse>> GetByIdAsync(Guid roleId)
+        => await GetAsync<RoleResponse>($"{resource}/{roleId}");
 }

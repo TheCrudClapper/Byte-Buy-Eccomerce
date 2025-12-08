@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using System.Linq.Expressions;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
@@ -11,15 +11,7 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// querying by identifier or custom conditions. Methods accept a <see cref="CancellationToken"/> to support
 /// cancellation of long-running operations. This interface is used in repository patterns to abstract data
 /// access logic and promote testability.</remarks>
-public interface IEmployeeRepository
+public interface IEmployeeRepository : IRepositoryBase<Employee>
 {
-    Task UpdateAsync(Employee employee);
     Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
-    Task<Employee?> GetAggregateAsync(Guid employeeId, CancellationToken ct = default);
-    Task<IEnumerable<Employee>> GetAllAsync(CancellationToken ct = default);
-    Task<IEnumerable<Employee>> GetAllByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
-    Task<Employee?> GetByConditionAsync(Expression<Func<Employee, bool>> expression, CancellationToken ct = default);
-    Task<IEnumerable<Employee>> GetAllWithRolesAsync(CancellationToken ct = default);
-    Task<Employee?> GetWithRolesById(Guid employeeId, CancellationToken ct = default);
-
 }

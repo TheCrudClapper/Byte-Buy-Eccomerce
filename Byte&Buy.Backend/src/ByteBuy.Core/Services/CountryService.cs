@@ -16,16 +16,31 @@ public class CountryService : ICountryService
     {
         _countryRepository = countryRepository;
     }
-    public async Task<Result<CountryResponse>> AddCountry(CountryAddRequest request)
+    public async Task<Result<CreatedResponse>> AddCountry(CountryAddRequest request)
     {
         var countryResult = Country.Create(request.Name, request.Code);
         if (countryResult.IsFailure)
-            return Result.Failure<CountryResponse>(countryResult.Error);
+            return Result.Failure<CreatedResponse>(countryResult.Error);
 
         var country = countryResult.Value;
         await _countryRepository.AddAsync(country);
 
-        return country.ToCountryResponse();
+        return country.ToCreatedResponse();
+    }
+
+    public async Task<Result<UpdatedResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
+    {
+        var country = await _countryRepository.GetByIdAsync(countryId);
+        if (country is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        country.Update(
+            request.Name,
+            request.Code);
+
+        await _countryRepository.UpdateAsync(country);
+
+        return country.ToUpdatedResponse();
     }
 
     public async Task<Result> DeleteCountry(Guid countryId)
@@ -40,20 +55,7 @@ public class CountryService : ICountryService
 
         return Result.Success();
     }
-    public async Task<Result<CountryResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
-    {
-        var country = await _countryRepository.GetByIdAsync(countryId);
-        if (country is null)
-            return Result.Failure<CountryResponse>(Error.NotFound);
 
-        country.Update(
-            request.Name,
-            request.Code);
-
-        await _countryRepository.UpdateAsync(country);
-
-        return country.ToCountryResponse();
-    }
     public async Task<Result<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct = default)
     {
         var countries = await _countryRepository.GetAllAsync(ct);

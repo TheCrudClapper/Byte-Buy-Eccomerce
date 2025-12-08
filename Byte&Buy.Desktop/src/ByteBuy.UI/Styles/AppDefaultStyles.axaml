@@ -3,12 +3,12 @@
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
-				<CheckBox/>
-				<CheckBox Content="Content"/>
-				<CheckBox IsChecked="True"/>
-				<CheckBox IsEnabled="False"/>
-				<CheckBox IsEnabled="False"/>
-				<TextBox IsEnabled="False"></TextBox>
+				<TabControl>
+					<TabItem Header="Deliveries"/>
+					<TabItem Header="Countries"/>
+					<TabItem Header="Categories"/>
+					<TabItem Header="Conditions"/>
+				</TabControl>
 			</StackPanel>
 
 
@@ -16,6 +16,27 @@
 	</Design.PreviewWith>
 
 	<!-- Add Styles Here -->
+	<!--Tab Control Styles-->
+	<Style Selector="TabControl">
+		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+		<Setter Property="CornerRadius" Value="10,10,0,0"/>
+	</Style>
+
+	<Style Selector="TabItem">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
+		<Setter Property="Foreground" Value="{DynamicResource BackgroundLightBrush}"/>
+	</Style>
+
+	<Style Selector="TabItem:pointerover">
+		 <Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
+        <Setter Property="FontSize" Value="20"/>
+		<Setter Property="Foreground" Value="{DynamicResource BackgroundLightBrush}"/>
+	</Style>
+
+	<Style Selector="TabItem /template/ Border#PART_SelectedPipe">
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+	</Style>
 
 	<!-- Checkbox Styles -->
 	<Style Selector="CheckBox /template/ Border#NormalRectangle">

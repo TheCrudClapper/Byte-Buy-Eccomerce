@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
+using System.Net;
 namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications
@@ -27,7 +28,7 @@ public static class AddressSpecifications
         public UserAddresToDtoSpec(Guid userId, Guid addressId)
         {
             Query.Where(a => a.Id == addressId && a.UserId == userId)
-                .Select(a => a.ToAddressResponse());
+                .Select(AddressMappings.AddressDtoProjection);
         }
     }
 
@@ -36,7 +37,7 @@ public static class AddressSpecifications
         public AddresToDtoSpec(Guid addressId)
         {
             Query.Where(a => a.Id == addressId)
-                .Select(a => a.ToAddressResponse());
+                .Select(AddressMappings.AddressDtoProjection);
         }
     }
 
@@ -46,7 +47,7 @@ public static class AddressSpecifications
         {
             Query
            .Where(a => a.UserId == userId)
-           .Select(a => a.ToAddressResponse());
+           .Select(AddressMappings.AddressDtoProjection);
         }
     }
 }

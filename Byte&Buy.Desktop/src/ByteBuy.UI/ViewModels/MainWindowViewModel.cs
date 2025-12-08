@@ -26,6 +26,7 @@ namespace ByteBuy.UI.ViewModels
         public bool IsSettingPageActive => CurrentPage.PageName == ApplicationPageNames.Settings;
         public bool IsRolesPageActive => CurrentPage.PageName == ApplicationPageNames.Roles;
         public bool IsPortalUsersActive => CurrentPage.PageName == ApplicationPageNames.PortalUsers;
+        public bool IsAdministrationActive => CurrentPage.PageName == ApplicationPageNames.Administration;
 
         public MainWindowViewModel(PageFactory pageFactory)
         {
@@ -53,6 +54,9 @@ namespace ByteBuy.UI.ViewModels
 
         [RelayCommand]
         private void GoToRoles() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Roles);
+        
+        [RelayCommand]
+        private void GoToAdministration() => CurrentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Administration);
 
         [RelayCommand]
         private void LogOut() => Logout?.Invoke();
