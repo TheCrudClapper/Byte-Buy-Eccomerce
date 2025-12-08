@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
@@ -32,6 +33,11 @@ public class ConditionsController : BaseApiController
     //[HasPermission("condition:read")]
     public async Task<ActionResult<ConditionResponse>> GetCondition(Guid conditionId, CancellationToken ct)
         => HandleResult(await _conditionService.GetCondition(conditionId, ct));
+
+    [HttpGet("list")]
+    //[HasPermission("category:read:many")]
+    public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
+       => HandleResult(await _conditionService.GetConditionsList(ct));
 
     [HttpGet]
     //[HasPermission("condition:read:many")]

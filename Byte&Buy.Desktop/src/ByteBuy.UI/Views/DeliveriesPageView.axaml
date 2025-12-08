@@ -14,25 +14,24 @@
 
 	<Grid>
 
-		<Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
-			<Button
-			Command="{Binding OpenAddPageCommand}"
-			VerticalAlignment="Top"
-			HorizontalAlignment="Right">
-				<StackPanel Orientation="Horizontal">
-					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-						   Width="15" Height="15" />
-					<Label Content="Add"/>
-				</StackPanel>
-
-			</Button>
-			<!-- Filters -->
-			<Grid Grid.Row="1">
+		<Grid x:Name="Root" RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
+				<Button
+				Grid.Column="2"
+				Command="{Binding OpenAddPageCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+					</StackPanel>
+
+				</Button>
 			</Grid>
 
 			<!-- Fetched items count -->
-			<StackPanel Grid.Row="2">
+			<StackPanel Grid.Row="1">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
 						   FontWeight="600"
@@ -43,7 +42,6 @@
 						   Foreground="{DynamicResource TextLightBrush}"
 						   HorizontalAlignment="Right" />
 				</StackPanel>
-
 				<!-- Data Grid Containing All Items -->
 				<DataGrid
 				x:Name="ItemsGrid"
@@ -95,7 +93,7 @@
 
 			</StackPanel>
 
-			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button>
 					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
 						   Height="15"

@@ -13,9 +13,8 @@ public class ConditionService : IConditionService
     private readonly IConditionRepository _conditionRepository;
 
     public ConditionService(IConditionRepository conditionRepository)
-    {
-        _conditionRepository = conditionRepository;
-    }
+        => _conditionRepository = conditionRepository;
+    
 
     public async Task<Result<CreatedResponse>> AddCondition(ConditionAddRequest request)
     {
@@ -72,5 +71,11 @@ public class ConditionService : IConditionService
         await _conditionRepository.UpdateAsync(condition);
 
         return condition.ToUpdatedResponse();
+    }
+
+    public async Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsList(CancellationToken ct = default)
+    {
+        var condtions = await _conditionRepository.GetAllAsync(ct);
+        return condtions.Select(c => c.ToConditionListResponse()).ToList();
     }
 }

@@ -34,7 +34,7 @@ public class CategoriesController : BaseApiController
     public async Task<ActionResult<CategoryResponse>> GetCategory(Guid categoryId, CancellationToken ct)
         => HandleResult(await _categoryService.GetCategory(categoryId, ct));
 
-    [HttpGet]
+    [HttpGet("list")]
     //[HasPermission("category:read:many")]
     public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
         => HandleResult(await _categoryService.GetCategoriesList(ct));

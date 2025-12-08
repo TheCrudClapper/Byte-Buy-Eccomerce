@@ -1,92 +1,101 @@
 <Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="ByteBuy.UI.App"
-             xmlns:ui="clr-namespace:ByteBuy.UI"
-             RequestedThemeVariant="Default">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 x:Class="ByteBuy.UI.App"
+			 xmlns:ui="clr-namespace:ByteBuy.UI"
+			 RequestedThemeVariant="Default">
+	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-    <Application.DataTemplates>
-        <ui:ViewLocator />
-    </Application.DataTemplates>
+	<Application.DataTemplates>
+		<ui:ViewLocator />
+	</Application.DataTemplates>
 
-    <Application.Styles>
-        <FluentTheme />
-        <StyleInclude Source="Styles/AppDefaultStyles.axaml" />
-        <StyleInclude Source="Styles/MainWindowStyles.axaml"/>
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
-    </Application.Styles>
+	<Application.Styles>
+		<FluentTheme />
+		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />
+		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+	</Application.Styles>
 
-    <Application.Resources>
-        <!-- Colors -->
-        <Color x:Key="BackgroundLight">#FFFFFF</Color>
-        <Color x:Key="BackgroundDark">#121212</Color>
-        <Color x:Key="BackgroundLightDarker">#ededed</Color>
-        
-        <Color x:Key="Primary">#60118C</Color>
+	<Application.Resources>
 
-        <Color x:Key="SecondaryLight">#8B5CF6</Color>
-        <Color x:Key="SecondaryDark">#00FFC6</Color>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<MergeResourceInclude Source="/Controls/TabControl.axaml"></MergeResourceInclude>
+				<MergeResourceInclude Source="/Controls/TabItem.axaml"></MergeResourceInclude>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 
-        <Color x:Key="TextLight">#1E1E1E</Color>
-        <Color x:Key="TextDark">#E5E7EB</Color>
+		<!-- Colors -->
+		<Color x:Key="BackgroundLight">#FFFFFF</Color>
+		<Color x:Key="BackgroundDark">#121212</Color>
+		<Color x:Key="BackgroundLightDarker">#ededed</Color>
 
-        <Color x:Key="TextMuted">#6B7280</Color>
+		<Color x:Key="Primary">#60118C</Color>
 
-        <Color x:Key="CardBgLight">#F9FAFB</Color>
-        <Color x:Key="CardBgDark">#181226</Color>
+		<Color x:Key="SecondaryLight">#8B5CF6</Color>
+		<Color x:Key="SecondaryDark">#00FFC6</Color>
 
-        <Color x:Key="Hover">#7B2CBF</Color>
+		<Color x:Key="TextLight">#1E1E1E</Color>
+		<Color x:Key="TextDark">#E5E7EB</Color>
 
-        <Color x:Key="Success">#22C55E</Color>
-        <Color x:Key="Error">#EF4444</Color>
+		<Color x:Key="TextMuted">#6B7280</Color>
 
-        <Color x:Key="GradientStartLight">#60118C</Color>
+		<Color x:Key="CardBgLight">#F9FAFB</Color>
+		<Color x:Key="CardBgDark">#181226</Color>
 
-        <Color x:Key="GradientEndLight">#8B5CF6</Color>
-        <Color x:Key="GradientEndDark">#00FFC6</Color>
+		<Color x:Key="Hover">#7B2CBF</Color>
 
-        <!-- Brushes -->
-        <SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
-        <SolidColorBrush x:Key="BackgroundLightDarkerBrush" Color="{StaticResource BackgroundLightDarker}" />
-        <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
-        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
-        <SolidColorBrush x:Key="SecondaryLightBrush" Color="{StaticResource SecondaryLight}" />
-        <SolidColorBrush x:Key="SecondaryDarkBrush" Color="{StaticResource SecondaryDark}" />
-        <SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}" />
-        <SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
-        <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
-        <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
-        
-        <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
-            <GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
-            <GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
-        </LinearGradientBrush>
+		<Color x:Key="Success">#22C55E</Color>
+		<Color x:Key="Error">#EF4444</Color>
 
-        <LinearGradientBrush x:Key="TopbarGradient"
-                             StartPoint="0%, 0%"
-                             EndPoint="100%, 0%">
+		<Color x:Key="GradientStartLight">#60118C</Color>
 
-            <GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
-            <GradientStop Offset="0.3" Color="{DynamicResource SecondaryLight}" />
-            
-            <GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+		<Color x:Key="GradientEndLight">#8B5CF6</Color>
+		<Color x:Key="GradientEndDark">#00FFC6</Color>
 
-        </LinearGradientBrush>
-        
-        <LinearGradientBrush x:Key="SidebarGradient"
-                             StartPoint="0%, 0%"
-                             EndPoint="100%, 100%">
+		<!-- Brushes -->
+		<SolidColorBrush x:Key="BackgroundLightBrush" Color="{StaticResource BackgroundLight}" />
+		<SolidColorBrush x:Key="BackgroundLightDarkerBrush" Color="{StaticResource BackgroundLightDarker}" />
+		<SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
+		<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+		<SolidColorBrush x:Key="SecondaryLightBrush" Color="{StaticResource SecondaryLight}" />
+		<SolidColorBrush x:Key="SecondaryDarkBrush" Color="{StaticResource SecondaryDark}" />
+		<SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}" />
+		<SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
+		<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
+		<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
 
-            <GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
-            <GradientStop Offset="0.6" Color="{DynamicResource SecondaryLight}" />
-            
-            <GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+		<LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
+			<GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
+			<GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
+		</LinearGradientBrush>
 
-        </LinearGradientBrush>
+		<LinearGradientBrush x:Key="TopbarGradient"
+							 StartPoint="0%, 0%"
+							 EndPoint="100%, 0%">
 
-        <!-- Fonts -->
-        <FontFamily x:Key="SegoeUiThis">/Assets/Fonts/segoeuithibd.ttf#Segoe UI This</FontFamily>
-        <FontFamily x:Key="SegoeUiThisBoldItalic">/Assets/Fonts/segoeuithisz.ttf#Segoe UI This</FontFamily>
-        <FontFamily x:Key="SegoeUiThisBoldReqular">/Assets/Fonts/segoeuithis.ttf#Segoe UI This</FontFamily>
-    </Application.Resources>
+			<GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
+			<GradientStop Offset="0.3" Color="{DynamicResource SecondaryLight}" />
+
+			<GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+
+		</LinearGradientBrush>
+
+		<LinearGradientBrush x:Key="SidebarGradient"
+							 StartPoint="0%, 0%"
+							 EndPoint="100%, 100%">
+
+			<GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
+			<GradientStop Offset="0.6" Color="{DynamicResource SecondaryLight}" />
+
+			<GradientStop Offset="1"   Color="{DynamicResource Primary}" />
+
+		</LinearGradientBrush>
+
+		<!-- Fonts -->
+		<FontFamily x:Key="SegoeUiThis">/Assets/Fonts/segoeuithibd.ttf#Segoe UI This</FontFamily>
+		<FontFamily x:Key="SegoeUiThisBoldItalic">/Assets/Fonts/segoeuithisz.ttf#Segoe UI This</FontFamily>
+		<FontFamily x:Key="SegoeUiThisBoldReqular">/Assets/Fonts/segoeuithis.ttf#Segoe UI This</FontFamily>
+
+	</Application.Resources>
 </Application>

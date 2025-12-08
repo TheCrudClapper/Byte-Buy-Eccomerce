@@ -57,7 +57,7 @@
             
         </Grid>
         <Grid ColumnDefinitions="220, *" Grid.Row="1">
-            <Grid Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
+            <Grid Grid.Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
 
                 <!-- Stack Panel With Menu Buttons -->
                 <StackPanel Margin="5,0" Grid.Row="0">
@@ -80,7 +80,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
                                    Width="20" Height="20" />
-                            <Label Content="Administration" />
+                            <Label Content="Shop Administration" />
                         </StackPanel>
                     </Button>
 
@@ -148,7 +148,7 @@
                 </StackPanel>
 
                 <!-- Settings Button -->
-                <Grid Row="1" Margin="5">
+                <Grid Grid.Row="1" Margin="5">
                     <Grid ColumnDefinitions="*,*">
                         <Button
                             Grid.Column="0"

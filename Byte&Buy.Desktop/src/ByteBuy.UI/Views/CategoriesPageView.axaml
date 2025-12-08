@@ -1,37 +1,37 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.CategoriesPageView"
-             x:DataType="vm:CategoriesPageViewModel">
- 	<UserControl.Styles>
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.CategoriesPageView"
+			 x:DataType="vm:CategoriesPageViewModel">
+	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
+
 	<Grid>
-
-		<Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
-			<Button
-			Command="{Binding OpenAddPageCommand}"
-			VerticalAlignment="Top"
-			HorizontalAlignment="Right">
-				<StackPanel Orientation="Horizontal">
-					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-						   Width="15" Height="15" />
-					<Label Content="Add"/>
-				</StackPanel>
-
-			</Button>
+		<Grid x:Name="Root" RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
 			<!-- Filters -->
-			<Grid Grid.Row="1">
+			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
+				<Button
+				Grid.Column="2"
+				Command="{Binding OpenAddPageCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+					</StackPanel>
+
+				</Button>
 			</Grid>
 
 			<!-- Fetched items count -->
-			<StackPanel Grid.Row="2">
+			<StackPanel Grid.Row="1">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
 						   FontWeight="600"
@@ -92,7 +92,7 @@
 
 			</StackPanel>
 
-			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button>
 					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
 						   Height="15"
