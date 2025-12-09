@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Category;
 using ByteBuy.UI.Navigation;
@@ -12,6 +13,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public class CategoriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
+    IDialogNavigationService dialogNavigation,
     ICategoryService categoryService)
     : ViewModelMany<CategoryListItem>(alert, navigation)
 {
@@ -50,6 +52,16 @@ public class CategoriesPageViewModel(AlertViewModel alert,
 
     protected override void OpenAddPage()
     {
-        throw new System.NotImplementedException();
+        var result = dialogNavigation.OpenDialog(
+            ApplicationDialogNames.Category,
+            async vm =>
+            {
+                await Task.CompletedTask;
+            });
+
+        if (result is true)
+        {
+            
+        }
     }
 }

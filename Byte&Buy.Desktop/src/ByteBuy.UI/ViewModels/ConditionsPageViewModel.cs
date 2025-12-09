@@ -4,6 +4,7 @@ using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using DialogHostAvalonia;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,6 +51,6 @@ public class ConditionsPageViewModel(AlertViewModel alert,
 
     protected override void OpenAddPage()
     {
-
+       
     }
 }

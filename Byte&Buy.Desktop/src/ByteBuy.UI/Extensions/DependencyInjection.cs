@@ -1,5 +1,7 @@
 ﻿using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using ByteBuy.UI.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using DashboardPageViewModel = ByteBuy.UI.ViewModels.DashboardPageViewModel;
 using EmployeePageViewModel = ByteBuy.UI.ViewModels.EmployeePageViewModel;
@@ -26,6 +28,9 @@ public static class DependencyInjection
         services.AddTransient<LoginWindow>();
         services.AddSingleton<MainWindow>();
 
+        //Dialog Views
+        services.AddTransient<CategoryView>();
+
         //Transients
         services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();
@@ -48,6 +53,10 @@ public static class DependencyInjection
         services.AddTransient<DeliveriesPageViewModel>();
         services.AddTransient<ConditionsPageViewModel>();
         services.AddTransient<CategoriesPageViewModel>();
+        services.AddTransient<CategoryDialogViewModel>();
+        services.AddTransient<ConditionDialogViewModel>();
+        services.AddTransient<DeliveryDialogViewModel>();
+        services.AddTransient<CountryDialogViewModel>();
         return services;
     }
 }

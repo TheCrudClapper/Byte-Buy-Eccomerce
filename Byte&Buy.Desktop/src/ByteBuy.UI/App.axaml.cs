@@ -12,10 +12,14 @@ using ByteBuy.UI.Factories;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.Views;
+using ByteBuy.UI.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Xml.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 
 
@@ -60,13 +64,13 @@ namespace ByteBuy.UI
                 _ => throw new InvalidOperationException(),
             });
 
+            //Windows ViewModels and Views
             services.AddSingleton<Func<ApplicationWindowNames, WindowViewModel>>(x => name => name switch
             {
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindowViewModel>(),
                 ApplicationWindowNames.Main => x.GetRequiredService<MainWindowViewModel>(),
                 _ => throw new InvalidOperationException(),
-            });
-
+            }); 
 
             services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
             {
@@ -75,9 +79,23 @@ namespace ByteBuy.UI
                 _ => throw new InvalidOperationException(),
             });
 
+            //Dialog ViewModels and Views
+            services.AddSingleton<Func<ApplicationDialogNames, PageViewModel>>(x => name => name switch
+            {
+                ApplicationDialogNames.Category => x.GetRequiredService<CategoryDialogViewModel>(),
+                _ => throw new InvalidOperationException(),
+            });
+
+            services.AddSingleton<Func<ApplicationDialogNames, UserControl>>(x => name => name switch
+            {
+                ApplicationDialogNames.Category => x.GetRequiredService<CategoryView>(),
+                _ => throw new InvalidOperationException(),
+            });
+
             //Register factories
             services.AddSingleton<PageFactory>();
             services.AddSingleton<WindowFactory>();
+            services.AddSingleton<DialogFactory>();
 
             //Register Navigation
             services.AddSingleton<INavigationService>(sp => new NavigationService(
@@ -85,6 +103,10 @@ namespace ByteBuy.UI
                 sp.GetRequiredService<PageFactory>(),
                 sp.GetRequiredService<WindowFactory>()
                 ));
+
+            //Register Dialog Navigation
+            services.AddSingleton<IDialogNavigationService>(sp => new DialogNavigationService(
+                    sp.GetRequiredService<DialogFactory>()));
 
             var provider = services.BuildServiceProvider();
 
