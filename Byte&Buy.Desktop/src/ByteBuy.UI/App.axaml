@@ -14,8 +14,8 @@
 		<FluentTheme />
 		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />
 		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
-		<StyleInclude Source="avares://DialogHost.Avalonia/Styles.xaml"/>
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+		<dialogHostAvalonia:DialogHostStyles />
 	</Application.Styles>
 
 	<Application.Resources>

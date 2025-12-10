@@ -42,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Dialogs\CategoryDialogView.axaml.cs">
+      <DependentUpon>CategoryDialogView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\EmployeePageView.axaml.cs">
       <DependentUpon>EmployeePageView.axaml</DependentUpon>
       <SubType>Code</SubType>

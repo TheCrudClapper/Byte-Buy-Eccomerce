@@ -29,7 +29,6 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
         INavigationService navigation) : base(alert)
     {
         Navigation = navigation;
-        _ = LoadData();
     }
 
     partial void OnItemsChanged(ObservableCollection<TDataGridItem> value)
@@ -60,5 +59,5 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     protected abstract Task LoadData();
 
     [RelayCommand]
-    protected abstract void OpenAddPage();
+    protected abstract Task OpenAddPage();
 }

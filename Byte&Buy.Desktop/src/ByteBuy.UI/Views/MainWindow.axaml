@@ -4,12 +4,12 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
 		mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="800"
-		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 		Height="800" Width="1300"
 		x:Class="ByteBuy.UI.Views.MainWindow"
 		x:DataType="viewModels:MainWindowViewModel"
 		FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
 		Icon="/Assets/logo.ico"
+		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 		Title="ByteBuy MP v.0.1">
 
 	<dialogHost:DialogHost Identifier="MainDialogHost" CloseOnClickAway="True">

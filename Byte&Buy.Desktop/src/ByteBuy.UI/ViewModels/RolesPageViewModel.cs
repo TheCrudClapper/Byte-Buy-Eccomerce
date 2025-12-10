@@ -11,15 +11,22 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class RolesPageViewModel(
-    AlertViewModel alert,
-    INavigationService navigationService,
-    IRoleService roleService)
-    : ViewModelMany<RoleListItem>(alert, navigationService)
+public class RolesPageViewModel : ViewModelMany<RoleListItem>
 {
+    private readonly IRoleService _roleService;
+
+    public RolesPageViewModel(
+        AlertViewModel alert,
+        INavigationService navigationService,
+        IRoleService roleService) : base(alert, navigationService)
+    {
+        _roleService = roleService;
+        _ = LoadData();
+    }
+
     protected override async Task Delete(RoleListItem item)
     {
-        var result = await roleService.DeleteById(item.Id);
+        var result = await _roleService.DeleteById(item.Id);
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -41,7 +48,7 @@ public class RolesPageViewModel(
 
     protected override async Task LoadData()
     {
-        var result = await roleService.GetAll();
+        var result = await _roleService.GetAll();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -55,13 +62,14 @@ public class RolesPageViewModel(
         Items = new ObservableCollection<RoleListItem>(list);
     }
 
-    protected override void OpenAddPage()
+    protected override Task OpenAddPage()
     {
         Navigation.NavigateTo(ApplicationPageNames.Role, vm =>
         {
             if (vm is RolePageViewModel roleVm)
                 roleVm.InitializeForAdd();
         });
+        return Task.CompletedTask;
     }
 
 }

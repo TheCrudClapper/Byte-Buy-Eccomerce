@@ -1,19 +1,19 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.CountriesPageView"
-             x:DataType="vm:CountriesPageViewModel">
-  <UserControl.Styles>
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.CountriesPageView"
+			 x:DataType="vm:CountriesPageViewModel">
+	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
 
-		<Grid x:Name="Root" RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
 				<Button
@@ -62,25 +62,26 @@
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+										Command="{Binding DataContext.EditCommand,
+										RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
-										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
-
 											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
-												   Width="16" Height="16"/>
+												   Width="16" Height="16" />
 										</Button>
 
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+										Command="{Binding DataContext.DeleteCommand,
+										RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10"
 										Foreground="{DynamicResource BackgroundLightBrush}">
-
 											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-												   Width="16" Height="16"/>
+												   Width="16" Height="16" />
 										</Button>
 									</StackPanel>
 								</DataTemplate>

@@ -14,7 +14,7 @@
 
 	<Grid>
 
-		<Grid x:Name="Root" RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid  RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
 				<Button
@@ -62,9 +62,9 @@
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="False">
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).EditCommand}"
+										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
@@ -74,7 +74,7 @@
 										</Button>
 
 										<Button
-										Command="{Binding #Root.((vm:EmployeesPageViewModel)DataContext).DeleteCommand}"
+										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10"
 										Foreground="{DynamicResource BackgroundLightBrush}">

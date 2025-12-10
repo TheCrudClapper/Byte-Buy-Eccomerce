@@ -29,7 +29,10 @@ public static class DependencyInjection
         services.AddSingleton<MainWindow>();
 
         //Dialog Views
-        services.AddTransient<CategoryView>();
+        services.AddTransient<CategoryDialogView>();
+        services.AddTransient<CountryDialogView>();
+        services.AddTransient<DeliveryDialogView>();
+        services.AddTransient<ConditionDialogView>();
 
         //Transients
         services.AddTransient<LoginWindowViewModel>();
@@ -49,7 +52,6 @@ public static class DependencyInjection
         services.AddTransient<PortalUserPageViewModel>();
         services.AddTransient<AdministrationPageViewModel>();
         services.AddTransient<CountriesPageViewModel>();
-        services.AddTransient<CountryPageViewModel>();
         services.AddTransient<DeliveriesPageViewModel>();
         services.AddTransient<ConditionsPageViewModel>();
         services.AddTransient<CategoriesPageViewModel>();

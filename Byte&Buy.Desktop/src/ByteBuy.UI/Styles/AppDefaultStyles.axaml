@@ -1,12 +1,11 @@
 <Styles xmlns="https://github.com/avaloniaui"
+		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
 				<TabControl>
-					<TabItem Header="Deliveries">
-						<TextBlock Text="Sex"/>
-						</TabItem>
+
 					<TabItem Header="Countries"/>
 					<TabItem Header="Categories"/>
 					<TabItem Header="Conditions"/>
@@ -17,7 +16,6 @@
 		</Border>
 	</Design.PreviewWith>
 
-	<!-- Add Styles Here -->
 	<!--Tab Control Styles-->
 	<Style Selector="TabControl">
 		<Setter Property="CornerRadius" Value="10,10,0,0"/>

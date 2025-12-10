@@ -18,8 +18,6 @@ using ByteBuy.UI.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Xml.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 
 
@@ -59,7 +57,7 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Conditions => x.GetRequiredService<ConditionsPageViewModel>(),
                 ApplicationPageNames.Countries => x.GetRequiredService<CountriesPageViewModel>(),
                 ApplicationPageNames.Administration => x.GetRequiredService<AdministrationPageViewModel>(),
-                
+
 
                 _ => throw new InvalidOperationException(),
             });
@@ -70,7 +68,7 @@ namespace ByteBuy.UI
                 ApplicationWindowNames.Login => x.GetRequiredService<LoginWindowViewModel>(),
                 ApplicationWindowNames.Main => x.GetRequiredService<MainWindowViewModel>(),
                 _ => throw new InvalidOperationException(),
-            }); 
+            });
 
             services.AddSingleton<Func<ApplicationWindowNames, Window>>(x => name => name switch
             {
@@ -80,15 +78,21 @@ namespace ByteBuy.UI
             });
 
             //Dialog ViewModels and Views
-            services.AddSingleton<Func<ApplicationDialogNames, PageViewModel>>(x => name => name switch
+            services.AddSingleton<Func<ApplicationDialogNames, DialogViewModel>>(x => name => name switch
             {
                 ApplicationDialogNames.Category => x.GetRequiredService<CategoryDialogViewModel>(),
+                ApplicationDialogNames.Country => x.GetRequiredService<CountryDialogViewModel>(),
+                ApplicationDialogNames.Delivery => x.GetRequiredService<DeliveryDialogViewModel>(),
+                ApplicationDialogNames.Condition => x.GetRequiredService<ConditionDialogViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
             services.AddSingleton<Func<ApplicationDialogNames, UserControl>>(x => name => name switch
             {
-                ApplicationDialogNames.Category => x.GetRequiredService<CategoryView>(),
+                ApplicationDialogNames.Category => x.GetRequiredService<CategoryDialogView>(),
+                ApplicationDialogNames.Country => x.GetRequiredService<CountryDialogView>(),
+                ApplicationDialogNames.Condition => x.GetRequiredService<ConditionDialogView>(),
+                ApplicationDialogNames.Delivery => x.GetRequiredService<DeliveryDialogView>(),
                 _ => throw new InvalidOperationException(),
             });
 

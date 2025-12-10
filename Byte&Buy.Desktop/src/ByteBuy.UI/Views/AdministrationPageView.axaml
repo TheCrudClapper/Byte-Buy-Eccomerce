@@ -9,29 +9,12 @@
              x:Class="ByteBuy.UI.Views.AdministrationPageView"
              x:DataType="vm:AdministrationPageViewModel">
 
-    <TabControl>
 
-        <TabItem Header="Deliveries">
-            <tabitems:DeliveriesPageView 
-            DataContext="{Binding DeliveriesPageViewModel}"/>
-        </TabItem>
-        
-        <TabItem Header="Categories">
-            <tabitems:CategoriesPageView
-            DataContext="{Binding CategoriesPageViewModel}"/>
-        </TabItem>
-
-        
-        <TabItem Header="Condition">
-             <tabitems:ConditionsPageView
-             DataContext="{Binding ConditionsPageViewModel}"/>
-        </TabItem>
-
-        
-        <TabItem Header="Countries">
-             <tabitems:CountriesPageView
-             DataContext="{Binding CountriesPageViewModel}"/>
-        </TabItem>
+    <TabControl SelectedItem="{Binding SelectedTab}">
+        <TabItem Header="Deliveries" Content="{Binding DeliveriesPageViewModel}"/>
+        <TabItem Header="Categories" Content="{Binding CategoriesPageViewModel}"/>
+        <TabItem Header="Condition" Content="{Binding ConditionsPageViewModel}"/>
+        <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>
 
     </TabControl>
 </UserControl>

@@ -1,17 +1,70 @@
-﻿using ByteBuy.UI.ViewModels.Base;
-using ByteBuy.UI.ViewModels.Shared;
+﻿using Avalonia;
+using ByteBuy.Core.DTO.Country;
+using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.ServiceContracts;
+using ByteBuy.Services.Services;
+using ByteBuy.UI.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace ByteBuy.UI.ViewModels.Dialogs
+namespace ByteBuy.UI.ViewModels.Dialogs;
+
+public partial class CountryDialogViewModel(ICountryService countryService)
+    : DialogSingleViewModel("Country")
 {
-    public class CountryDialogViewModel : PageViewModel
+    [ObservableProperty]
+    [Required, MaxLength(50)]
+    private string _name = string.Empty;
+
+    [ObservableProperty]
+    [Required, MaxLength(3)]
+    private string _code = string.Empty;
+
+    public override async Task InitializeForEdit(Guid id)
     {
-        public CountryDialogViewModel(AlertViewModel alert) : base(alert)
+        IsEditMode = true;
+        EditingItemId = id;
+        var response = await countryService.GetById(id);
+        if (!response.Success)
         {
+            Error = response.Error!.Description;
+            return;
         }
+
+        var item = response.Value;
+
+        Name = item.Name;
+        Code = item.Code;
     }
+
+    protected override async Task<bool> UpdateItem()
+    {
+        if (EditingItemId is null)
+            return false;
+
+        var request = new CountryUpdateRequest(Name, Code);
+        var response = await countryService.Update(EditingItemId.Value, request);
+        if (!response.Success)
+        {
+            Error = response.Error!.Description;
+            return false;
+        }
+        return true;
+    }
+
+    protected override async Task<bool> AddItem()
+    {
+        var request = new CountryAddRequest(Name, Code);
+        var response = await countryService.Add(request);
+        if (!response.Success)
+        {
+            Error = response.Error!.Description;
+            return false;
+        }
+        return true;
+    }
+
+    
 }

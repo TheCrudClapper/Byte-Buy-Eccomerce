@@ -8,8 +8,5 @@ namespace ByteBuy.UI.Navigation;
 public interface IDialogNavigationService
 {
     Task<object?> OpenDialogAsync(ApplicationDialogNames dialog,
-        Func<PageViewModel, Task>? init = null);
-
-    object? OpenDialog(ApplicationDialogNames dialog,
-        Action<PageViewModel>? init = null);
+        Func<DialogViewModel, Task>? init = null);
 }

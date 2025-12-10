@@ -1,10 +1,11 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,11 @@ namespace ByteBuy.UI.ViewModels;
 
 public class DeliveriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
+    IDialogNavigationService dialogNavigation,
     IDeliveryService deliveryService)
     : ViewModelMany<DeliveryListItem>(alert, navigation)
 {
+    private bool _isLoaded;
     protected override async Task Delete(DeliveryListItem item)
     {
         var result = await deliveryService.DeleteById(item.Id);
@@ -28,9 +31,17 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
         await Alert.ShowSuccessAlert("Successfully deleted user !");
     }
 
-    protected override Task Edit(DeliveryListItem item)
+    protected override async Task Edit(DeliveryListItem item)
     {
-        throw new System.NotImplementedException();
+        var result = await dialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
+            {
+                if (vm is DeliveryDialogViewModel deliveryVm)
+                    await deliveryVm.InitializeForEdit(item.Id);
+            });
+
+        if (result is bool ok && ok)
+            _ = LoadData();
     }
 
     protected override async Task LoadData()
@@ -49,8 +60,21 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<DeliveryListItem>(list);
     }
 
-    protected override void OpenAddPage()
+    protected override async Task OpenAddPage()
     {
-        throw new System.NotImplementedException();
+        var result = await dialogNavigation
+         .OpenDialogAsync(ApplicationDialogNames.Delivery);
+
+        if (result is bool ok && ok)
+            _ = LoadData();
+    }
+
+    public async Task EnsureLoadedAsync()
+    {
+        if (_isLoaded)
+            return;
+
+        await LoadData();
+        _isLoaded = true;
     }
 }

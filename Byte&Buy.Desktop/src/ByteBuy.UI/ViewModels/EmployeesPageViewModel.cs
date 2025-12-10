@@ -11,15 +11,22 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel(
-    INavigationService navigation,
-    AlertViewModel alert,
-    IEmployeeService employeeService)
-    : ViewModelMany<EmployeeListItem>(alert, navigation)
+public partial class EmployeesPageViewModel : ViewModelMany<EmployeeListItem>
 {
+    private readonly IEmployeeService _employeeService;
+
+    public EmployeesPageViewModel(
+        INavigationService navigation,
+        AlertViewModel alert,
+        IEmployeeService employeeService) : base(alert, navigation)
+    {
+        _employeeService = employeeService;
+        _ = LoadData();
+    }
+
     protected override async Task LoadData()
     {
-        var result = await employeeService.GetList();
+        var result = await _employeeService.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -35,7 +42,7 @@ public partial class EmployeesPageViewModel(
 
     protected override async Task Delete(EmployeeListItem employee)
     {
-        var result = await employeeService.DeleteById(employee.Id);
+        var result = await _employeeService.DeleteById(employee.Id);
         if (!result.Success)
         {
             await Alert.ShowSuccessAlert(result.Error!.Description);
@@ -55,12 +62,13 @@ public partial class EmployeesPageViewModel(
         });
     }
 
-    protected override void OpenAddPage()
+    protected override Task OpenAddPage()
     {
         Navigation.NavigateTo(ApplicationPageNames.Employee, async vm =>
         {
             if (vm is EmployeePageViewModel employeeVm)
                 employeeVm.InitializeForAdd();
         });
+        return Task.CompletedTask;
     }
 }

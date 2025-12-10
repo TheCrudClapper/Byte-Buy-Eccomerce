@@ -4,6 +4,7 @@ using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Category;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,12 +12,13 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class CategoriesPageViewModel(AlertViewModel alert,
+public partial class CategoriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogNavigationService dialogNavigation,
-    ICategoryService categoryService)
-    : ViewModelMany<CategoryListItem>(alert, navigation)
+    ICategoryService categoryService) : ViewModelMany<CategoryListItem>(alert, navigation)
 {
+    private bool _isLoaded;
+
     protected override async Task Delete(CategoryListItem item)
     {
         var result = await categoryService.DeleteById(item.Id);
@@ -30,9 +32,17 @@ public class CategoriesPageViewModel(AlertViewModel alert,
         await Alert.ShowSuccessAlert("Successfully deleted user !");
     }
 
-    protected override Task Edit(CategoryListItem item)
+    protected override async Task Edit(CategoryListItem item)
     {
-        throw new System.NotImplementedException();
+        var result = await dialogNavigation
+             .OpenDialogAsync(ApplicationDialogNames.Category, async vm =>
+             {
+                 if (vm is CategoryDialogViewModel categoryVm)
+                     await categoryVm.InitializeForEdit(item.Id);
+             });
+
+        if (result is bool ok && ok)
+            _ = LoadData();
     }
 
     protected override async Task LoadData()
@@ -50,18 +60,21 @@ public class CategoriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<CategoryListItem>(list);
     }
 
-    protected override void OpenAddPage()
+    protected override async Task OpenAddPage()
     {
-        var result = dialogNavigation.OpenDialog(
-            ApplicationDialogNames.Category,
-            async vm =>
-            {
-                await Task.CompletedTask;
-            });
+        var result = await dialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Category);
 
-        if (result is true)
-        {
-            
-        }
+        if (result is bool ok && ok)
+            _ = LoadData();
+    }
+
+    public async Task EnsureLoadedAsync()
+    {
+        if (_isLoaded)
+            return;
+
+        await LoadData();
+        _isLoaded = true;
     }
 }

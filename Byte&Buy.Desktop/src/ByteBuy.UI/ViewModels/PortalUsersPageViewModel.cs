@@ -11,14 +11,21 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class PortalUsersPageViewModel(AlertViewModel alert,
-    INavigationService navigation,
-    IPortalUserService userService) : ViewModelMany<PortalUserListItem>(alert, navigation)
+public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
 {
+    private readonly IPortalUserService _userService;
+
+    public PortalUsersPageViewModel(AlertViewModel alert,
+        INavigationService navigation,
+        IPortalUserService userService) : base(alert, navigation)
+    {
+        _userService = userService;
+        _ = LoadData();
+    }
 
     protected override async Task Delete(PortalUserListItem item)
     {
-        var result = await userService.DeleteById(item.Id);
+        var result = await _userService.DeleteById(item.Id);
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -40,7 +47,7 @@ public class PortalUsersPageViewModel(AlertViewModel alert,
 
     protected override async Task LoadData()
     {
-        var result = await userService.GetList();
+        var result = await _userService.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -53,8 +60,9 @@ public class PortalUsersPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<PortalUserListItem>(list);
     }
 
-    protected override void OpenAddPage()
+    protected override Task OpenAddPage()
     {
         Navigation.NavigateTo(ApplicationPageNames.PortalUser);
+        return Task.CompletedTask;
     }
 }

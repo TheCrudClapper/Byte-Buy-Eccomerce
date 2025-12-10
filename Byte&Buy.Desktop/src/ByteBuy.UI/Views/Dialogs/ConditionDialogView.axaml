@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogHost="using:DialogHostAvalonia"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ByteBuy.UI.Views.Dialogs.ConditionDialogView"
+			 x:DataType="vm:ConditionDialogViewModel"
+			 >
+    <UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Border CornerRadius="2" BorderThickness="2" Background="{DynamicResource BackgroundLightBrush}" BorderBrush="{DynamicResource ButtonGradient}"
+			MinHeight="200" MinWidth="400">
+		<Grid RowDefinitions="30,*,*">
+			<Border
+			Grid.Row="0"
+			Background="{DynamicResource ButtonGradient}"
+			Height="30"
+			VerticalAlignment="Top">
+				<TextBlock Text="{Binding DialogTitle}"
+						   VerticalAlignment="Center"
+						   Margin="5,0"
+						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+			</Border>
+
+			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
+				<TextBlock Text="Condition Name" Classes="textBoxLabel" />
+				<TextBox
+				Foreground="{DynamicResource TextLightBrush}"
+				Text="{Binding Name}"
+				TextWrapping="Wrap"
+				Watermark="Name" />
+
+				<TextBlock Text="Description" Classes="textBoxLabel" />
+				<TextBox
+				Text="{Binding Description}"
+				MinHeight="150"
+				TextWrapping="Wrap"
+				Watermark="Description" />
+
+				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
+
+				<StackPanel Grid.Row="2"
+							Orientation="Horizontal"
+							HorizontalAlignment="Right"
+							Spacing="8">
+					<Button
+					Content="Cancel"
+					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
+					Path=CloseDialogCommand}"
+					CommandParameter="False" />
+					<Button
+					Content="Save"
+					Command="{Binding SaveCommand}" />
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+	</Border>
+</UserControl>
