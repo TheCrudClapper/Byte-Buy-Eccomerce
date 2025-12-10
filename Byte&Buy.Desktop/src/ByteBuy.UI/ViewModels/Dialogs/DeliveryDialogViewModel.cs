@@ -21,6 +21,7 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     private string? _description;
 
     [ObservableProperty]
+    [Range(1, double.MaxValue, ErrorMessage = "Price cannot be less that 1")]
     private decimal _price;
 
     public async override Task InitializeForEdit(Guid id)

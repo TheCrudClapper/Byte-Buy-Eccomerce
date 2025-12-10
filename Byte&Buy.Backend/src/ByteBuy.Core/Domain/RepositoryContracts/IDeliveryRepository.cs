@@ -1,26 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface IDeliveryRepository
+public interface IDeliveryRepository : IRepositoryBase<Delivery>
 {
-    Task AddAsync(Delivery delivery);
-    Task UpdateAsync(Delivery delivery);
     Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct = default);
+    Task<bool> ExistWithNameAsync(string name, Guid? exludeId = null);
     Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct = default);
-    /// <summary>
-    /// Gets an collection of deliveries based on given expression tree, ignores global query filters
-    /// </summary>
-    /// <param name="expression">LINQ expression used for generating SQL Query</param>
-    /// <param name="ct">Cancelation token used for cancelation of async operations</param>
-    /// <returns></returns>
-    Task<IEnumerable<Delivery>> GetAllByCondition(Expression<Func<Delivery, bool>> expression, CancellationToken ct = default);
-    /// <summary>
-    /// Gets one of deliveries based on given expression tree, ignores global query filters
-    /// </summary>
-    /// <param name="expression">LINQ expression used for generating SQL Query</param>
-    /// <param name="ct">Cancelation token used for cancelation of async operations</param>
-    /// <returns></returns>
-    Task<Delivery?> GetByConditionAsync(Expression<Func<Delivery, bool>> expression, CancellationToken ct = default);
 }

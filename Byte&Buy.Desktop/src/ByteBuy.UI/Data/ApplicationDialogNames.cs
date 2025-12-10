@@ -5,5 +5,6 @@ public enum ApplicationDialogNames
     Category,
     Delivery,
     Condition,
-    Country
+    Country,
+    Confirm
 }

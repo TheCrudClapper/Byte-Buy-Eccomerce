@@ -19,7 +19,7 @@ public static class DependencyInjection
     /// </summary>
     /// <param name="services">A collection with DI services</param>
     /// <returns></returns>
-    public static IServiceCollection RegisterViewModels(this IServiceCollection services)
+    public static IServiceCollection AddUserInterfaceLayer(this IServiceCollection services)
     {
         //Singletons
         services.AddSingleton<MainWindowViewModel>();
@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddTransient<CountryDialogView>();
         services.AddTransient<DeliveryDialogView>();
         services.AddTransient<ConditionDialogView>();
+        services.AddTransient<ConfirmDialogView>();
 
         //Transients
         services.AddTransient<LoginWindowViewModel>();
@@ -59,6 +60,7 @@ public static class DependencyInjection
         services.AddTransient<ConditionDialogViewModel>();
         services.AddTransient<DeliveryDialogViewModel>();
         services.AddTransient<CountryDialogViewModel>();
+        services.AddTransient<ConfirmationDialogViewModel>();
         return services;
     }
 }

@@ -1,4 +1,6 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ResultTypes;
 

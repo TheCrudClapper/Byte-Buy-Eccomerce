@@ -21,15 +21,22 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
 
     protected override async Task Delete(CategoryListItem item)
     {
-        var result = await categoryService.DeleteById(item.Id);
-        if (!result.Success)
-        {
-            await Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
+        var decision = await dialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Confirm);
 
-        Items.Remove(item);
-        await Alert.ShowSuccessAlert("Successfully deleted user !");
+        if (decision is bool ok && ok)
+        {
+            var result = await categoryService.DeleteById(item.Id);
+            if (!result.Success)
+            {
+                await Alert.ShowErrorAlert(result.Error!.Description);
+                return;
+            }
+
+            Items.Remove(item);
+            await Alert.ShowSuccessAlert("Successfully deleted user !");
+        }
+        return;
     }
 
     protected override async Task Edit(CategoryListItem item)

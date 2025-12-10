@@ -18,12 +18,17 @@ public class ConditionService : IConditionService
 
     public async Task<Result<CreatedResponse>> AddCondition(ConditionAddRequest request)
     {
+        var exist = await _conditionRepository.ExistWithNameAsync(request.Name);
+        if (exist)
+            return Result.Failure<CreatedResponse>(ConditionErrors.AlreadyExists);
+
         var result = Condition.Create(request.Name, request.Description);
         if (result.IsFailure)
             return Result.Failure<CreatedResponse>(result.Error);
 
         var condition = result.Value;
         await _conditionRepository.AddAsync(condition);
+        await _conditionRepository.CommitAsync();
 
         return condition.ToCreatedResponse();
     }
@@ -36,6 +41,7 @@ public class ConditionService : IConditionService
 
         condition.Deactivate();
         await _conditionRepository.UpdateAsync(condition);
+        await _conditionRepository.CommitAsync();
 
         return Result.Success();
     }
@@ -63,13 +69,17 @@ public class ConditionService : IConditionService
 
     public async Task<Result<UpdatedResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request)
     {
+        var exist = await _conditionRepository.ExistWithNameAsync(request.Name, conditionId);
+        if (exist)
+            return Result.Failure<UpdatedResponse>(ConditionErrors.AlreadyExists);
+
         var condition = await _conditionRepository.GetByIdAsync(conditionId);
         if (condition is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         condition.Update(request.Name, request.Description);
         await _conditionRepository.UpdateAsync(condition);
-
+        await _conditionRepository.CommitAsync();
         return condition.ToUpdatedResponse();
     }
 

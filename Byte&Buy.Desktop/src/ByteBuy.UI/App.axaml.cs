@@ -36,7 +36,7 @@ namespace ByteBuy.UI
             //Registering Services
             var services = new ServiceCollection();
             services.AddAuthHeaderHandler();
-            services.RegisterViewModels();
+            services.AddUserInterfaceLayer();
             services.AddServiceLayer();
             services.AddInfrastructureLayer();
 
@@ -84,6 +84,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Country => x.GetRequiredService<CountryDialogViewModel>(),
                 ApplicationDialogNames.Delivery => x.GetRequiredService<DeliveryDialogViewModel>(),
                 ApplicationDialogNames.Condition => x.GetRequiredService<ConditionDialogViewModel>(),
+                ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmationDialogViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -93,6 +94,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Country => x.GetRequiredService<CountryDialogView>(),
                 ApplicationDialogNames.Condition => x.GetRequiredService<ConditionDialogView>(),
                 ApplicationDialogNames.Delivery => x.GetRequiredService<DeliveryDialogView>(),
+                ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmDialogView>(),
                 _ => throw new InvalidOperationException(),
             });
 

@@ -19,6 +19,10 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<CreatedResponse>> AddDelivery(DeliveryAddRequest request)
     {
+        var exist = await _deliveryRepository.ExistWithNameAsync(request.Name);
+        if (exist)
+            return Result.Failure<CreatedResponse>(DeliveryErrors.AlreadyExists);
+
         var deliveryResult = Delivery.Create(
             request.Name,
             request.Description,
@@ -29,25 +33,32 @@ public class DeliveryService : IDeliveryService
             return Result.Failure<CreatedResponse>(deliveryResult.Error);
 
         var delivery = deliveryResult.Value;
-        await _deliveryRepository.AddAsync(deliveryResult.Value);
-
+        await _deliveryRepository.AddAsync(delivery);
+        await _deliveryRepository.CommitAsync();
         return delivery.ToCreatedResponse();
     }
 
     public async Task<Result<UpdatedResponse>> UpdateDelivery(Guid deliveryId, DeliveryUpdateRequest request)
     {
+        var exist = await _deliveryRepository.ExistWithNameAsync(request.Name, deliveryId);
+        if (exist)
+            return Result.Failure<UpdatedResponse>(DeliveryErrors.AlreadyExists);
+
         var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
         if (delivery is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        delivery.Update(
+        var deliveryResult = delivery.Update(
             request.Name,
             request.Description,
             request.Price
         );
 
-        await _deliveryRepository.UpdateAsync(delivery);
+        if (deliveryResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(deliveryResult.Error);
 
+        await _deliveryRepository.UpdateAsync(delivery);
+        await _deliveryRepository.CommitAsync();
         return delivery.ToUpdatedResponse();
     }
 
@@ -58,8 +69,9 @@ public class DeliveryService : IDeliveryService
             return Result.Failure(Error.NotFound);
 
         delivery.Deactivate();
-        await _deliveryRepository.UpdateAsync(delivery);
 
+        await _deliveryRepository.UpdateAsync(delivery);
+        await _deliveryRepository.CommitAsync();
         return Result.Success();
     }
 

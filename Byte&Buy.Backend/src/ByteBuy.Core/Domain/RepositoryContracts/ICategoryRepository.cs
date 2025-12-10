@@ -1,14 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : IRepositoryBase<Category>
 {
-    Task AddAsync(Category category);
-    Task UpdateAsync(Category category);
+    Task<bool> ExistWithNameAsync(string name, Guid? excludedId = null);
     Task<Category?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<IEnumerable<Category>> GetAllAsync(CancellationToken ct = default);
-    Task<IEnumerable<Category>> GetAllByCondition(Expression<Func<Category, bool>> expression, CancellationToken ct = default);
-    Task<Category?> GetByConditionAsync(Expression<Func<Category, bool>> expression, CancellationToken ct = default);
 }

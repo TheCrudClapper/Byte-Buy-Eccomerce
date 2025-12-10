@@ -17,8 +17,8 @@ public sealed class Money
 
     public static Result<Money> Create(decimal amount, string currency)
     {
-        if (amount < 0)
-            return Result.Failure<Money>(Error.Validation("Amount of money can't be negative"));
+        if (amount < 1)
+            return Result.Failure<Money>(Error.Validation("Amount of money can't 0 or negative"));
 
         if (string.IsNullOrWhiteSpace(currency))
             return Result.Failure<Money>(Error.Validation("Currency can't be null"));

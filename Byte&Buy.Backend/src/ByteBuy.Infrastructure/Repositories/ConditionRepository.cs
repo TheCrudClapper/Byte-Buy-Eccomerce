@@ -1,24 +1,20 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class ConditionRepository : BaseRepository, IConditionRepository
+public class ConditionRepository : EfBaseRepository<Condition>, IConditionRepository
 {
     public ConditionRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task AddAsync(Condition condition)
+    public async Task<bool> ExistWithNameAsync(string name, Guid? excludedId = null)
     {
-        await _context.Conditions.AddAsync(condition);
-        await _context.SaveChangesAsync();
-    }
-    public async Task UpdateAsync(Condition condition)
-    {
-        _context.Conditions.Update(condition);
-        await _context.SaveChangesAsync();
+        return await _context.Conditions
+            .AnyAsync(c => c.Name == name && c.Id != excludedId);
     }
 
     public async Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct)
@@ -27,23 +23,9 @@ public class ConditionRepository : BaseRepository, IConditionRepository
             .ToListAsync(ct);
     }
 
-    public async Task<IEnumerable<Condition>> GetAllByCondition(Expression<Func<Condition, bool>> expression, CancellationToken ct)
-    {
-        return await _context.Conditions
-            .Where(expression)
-            .ToListAsync(ct);
-    }
-
-    public async Task<Condition?> GetByConditionAsync(Expression<Func<Condition, bool>> expression, CancellationToken ct)
-    {
-        return await _context.Conditions.Where(expression)
-            .FirstOrDefaultAsync(ct);
-    }
-
     public async Task<Condition?> GetByIdAsync(Guid conditionId, CancellationToken ct)
     {
         return await _context.Conditions
             .FirstOrDefaultAsync(c => c.Id == conditionId, ct);
     }
-
 }

@@ -14,23 +14,31 @@ public class CategoryService : ICategoryService
     private readonly ICategoryRepository _categoryRepository;
 
     public CategoryService(ICategoryRepository categoryRepository)
-    {
-        _categoryRepository = categoryRepository;
-    }
+        => _categoryRepository = categoryRepository;
 
     public async Task<Result<CreatedResponse>> AddCategory(CategoryAddRequest request)
     {
+        var exist = await _categoryRepository.ExistWithNameAsync(request.Name);
+        if (exist)
+            return Result.Failure<CreatedResponse>(CategoryErrors.AlreadyExists);
+
         var categoryResult = Category.Create(request.Name, request.Description);
         if (categoryResult.IsFailure)
             return Result.Failure<CreatedResponse>(categoryResult.Error);
 
         var category = categoryResult.Value;
         await _categoryRepository.AddAsync(category);
+        await _categoryRepository.CommitAsync();
 
         return category.ToCreatedResponse();
     }
+
     public async Task<Result<UpdatedResponse>> UpdateCategory(Guid categoryId, CategoryUpdateRequest request)
     {
+        var exist = await _categoryRepository.ExistWithNameAsync(request.Name, categoryId);
+        if (exist)
+            return Result.Failure<UpdatedResponse>(CategoryErrors.AlreadyExists);
+
         var category = await _categoryRepository.GetByIdAsync(categoryId);
         if (category is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -40,6 +48,7 @@ public class CategoryService : ICategoryService
             return Result.Failure<UpdatedResponse>(result.Error);
 
         await _categoryRepository.UpdateAsync(category);
+        await _categoryRepository.CommitAsync();
 
         return category.ToUpdatedResponse();
     }
@@ -51,7 +60,9 @@ public class CategoryService : ICategoryService
             return Result.Failure(Error.NotFound);
 
         category.Deactivate();
+
         await _categoryRepository.UpdateAsync(category);
+        await _categoryRepository.CommitAsync();
 
         return Result.Success();
     }

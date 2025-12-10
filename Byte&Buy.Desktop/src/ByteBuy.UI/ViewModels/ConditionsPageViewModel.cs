@@ -23,15 +23,22 @@ public class ConditionsPageViewModel(AlertViewModel alert,
 
     protected override async Task Delete(ConditionListItem item)
     {
-        var result = await _conditionService.DeleteById(item.Id);
-        if (!result.Success)
-        {
-            await Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
+        var decision = await dialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Confirm);
 
-        Items.Remove(item);
-        await Alert.ShowSuccessAlert("Successfully deleted user !");
+        if (decision is bool ok && ok)
+        {
+            var result = await _conditionService.DeleteById(item.Id);
+            if (!result.Success)
+            {
+                await Alert.ShowErrorAlert(result.Error!.Description);
+                return;
+            }
+
+            Items.Remove(item);
+            await Alert.ShowSuccessAlert("Successfully deleted user !");
+        }
+        return;
     }
 
     protected override async Task Edit(ConditionListItem item)

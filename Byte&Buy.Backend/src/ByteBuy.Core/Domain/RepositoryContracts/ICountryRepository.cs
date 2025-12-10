@@ -1,15 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface ICountryRepository
+public interface ICountryRepository : IRepositoryBase<Country>
 {
-    Task AddAsync(Country country);
-    Task UpdateAsync(Country country);
+    Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludedId = null);
     Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default);
     Task<Country?> GetByIdAsync(Guid countryId, CancellationToken ct = default);
-    Task<IEnumerable<Country>> GetAllByCondition(Expression<Func<Country, bool>> expression, CancellationToken ct = default);
-    Task<Country?> GetByConditionAsync(Expression<Func<Country, bool>> expression, CancellationToken ct = default);
-
 }

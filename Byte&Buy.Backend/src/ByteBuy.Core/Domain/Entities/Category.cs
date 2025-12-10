@@ -31,6 +31,9 @@ public class Category : AuditableEntity, ISoftDeletable
 
     public void Deactivate()
     {
+        if (!IsActive)
+            return;
+
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
     }

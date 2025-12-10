@@ -1,25 +1,20 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CountryRepository : BaseRepository, ICountryRepository
+public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
 {
     public CountryRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task AddAsync(Country country)
+    public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludedId = null)
     {
-        await _context.Countries.AddAsync(country);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Country country)
-    {
-        _context.Countries.Update(country);
-        await _context.SaveChangesAsync();
+        return await _context.Countries
+            .AnyAsync(c => c.Id != excludedId && c.Name == name || c.Code == code);
     }
 
     public async Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default)
@@ -27,21 +22,6 @@ public class CountryRepository : BaseRepository, ICountryRepository
         return await _context.Countries
             .ToListAsync(ct);
     }
-
-    public async Task<IEnumerable<Country>> GetAllByCondition(Expression<Func<Country, bool>> expression, CancellationToken ct = default)
-    {
-        return await _context.Countries
-            .Where(expression)
-            .ToListAsync(ct);
-    }
-
-    public async Task<Country?> GetByConditionAsync(Expression<Func<Country, bool>> expression, CancellationToken ct = default)
-    {
-        return await _context.Countries
-            .Where(expression)
-            .FirstOrDefaultAsync(ct);
-    }
-
     public async Task<Country?> GetByIdAsync(Guid countryId, CancellationToken ct = default)
     {
         return await _context.Countries

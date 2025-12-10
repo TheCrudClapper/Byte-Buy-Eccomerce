@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:dialogHost="using:DialogHostAvalonia"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+			 mc:Ignorable="d"
+			 x:Class="ByteBuy.UI.Views.Dialogs.ConfirmDialogView"
+			 x:DataType="vm:ConfirmationDialogViewModel">
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Border CornerRadius="2"
+			BorderThickness="2"
+			Background="{DynamicResource BackgroundLightBrush}"
+			BorderBrush="{DynamicResource ButtonGradient}"
+			MinHeight="150"
+			MinWidth="400">
+
+		<Grid RowDefinitions="Auto,*">
+			<!-- Header -->
+			<Border Grid.Row="0"
+					Background="{DynamicResource ButtonGradient}"
+					Height="30"
+					VerticalAlignment="Top">
+				<TextBlock Text="{Binding DialogTitle}"
+						   VerticalAlignment="Center"
+						   Margin="5,0"
+						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+			</Border>
+
+			<Grid Grid.Row="1"
+				  RowDefinitions="*,Auto"
+				  Margin="10">
+
+				<Grid Grid.Row="0"
+					  ColumnDefinitions="Auto,*"
+					  HorizontalAlignment="Center"
+					  VerticalAlignment="Center">
+
+					<!--Icon-->
+					<Image Grid.Column="0"
+						   Height="30"
+						   Width="30"
+						   Margin="0,0,10,0"
+						   VerticalAlignment="Center">
+						<Image.Source>
+							<SvgImage Source="{Binding Icon}" />
+						</Image.Source>
+					</Image>
+
+					<!--Dialog Message-->
+					<TextBlock Grid.Column="1"
+							   HorizontalAlignment="Left"
+							   Foreground="{DynamicResource TextLightBrush}"
+							   FontSize="15"
+							   TextWrapping="Wrap"
+							   VerticalAlignment="Center"
+							   Text="{Binding Message}" />
+				</Grid>
+
+				<!--Cancel and Confirm buttons-->
+				<StackPanel Grid.Row="1"
+							Orientation="Horizontal"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Margin="0,10,0,0"
+							Spacing="8">
+					<Button Content="{Binding CancelText}"
+							Command="{Binding CancelCommand}" />
+					<Button Content="{Binding ConfirmText}"
+							Command="{Binding ConfirmCommand}" />
+				</StackPanel>
+			</Grid>
+		</Grid>
+	</Border>
+</UserControl>

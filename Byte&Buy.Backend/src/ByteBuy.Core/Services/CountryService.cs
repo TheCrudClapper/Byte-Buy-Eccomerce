@@ -18,18 +18,27 @@ public class CountryService : ICountryService
     }
     public async Task<Result<CreatedResponse>> AddCountry(CountryAddRequest request)
     {
+        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code);
+        if (exist)
+            return Result.Failure<CreatedResponse>(CountryErrors.AlreadyExists);
+
         var countryResult = Country.Create(request.Name, request.Code);
         if (countryResult.IsFailure)
             return Result.Failure<CreatedResponse>(countryResult.Error);
 
         var country = countryResult.Value;
         await _countryRepository.AddAsync(country);
+        await _countryRepository.CommitAsync();
 
         return country.ToCreatedResponse();
     }
 
     public async Task<Result<UpdatedResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
     {
+        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code);
+        if (exist)
+            return Result.Failure<UpdatedResponse>(CountryErrors.AlreadyExists);
+
         var country = await _countryRepository.GetByIdAsync(countryId);
         if (country is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -39,6 +48,7 @@ public class CountryService : ICountryService
             request.Code);
 
         await _countryRepository.UpdateAsync(country);
+        await _countryRepository.CommitAsync();
 
         return country.ToUpdatedResponse();
     }
@@ -52,7 +62,7 @@ public class CountryService : ICountryService
         country.Deactivate();
 
         await _countryRepository.UpdateAsync(country);
-
+        await _countryRepository.CommitAsync();
         return Result.Success();
     }
 

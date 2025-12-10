@@ -1,14 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface IConditionRepository
+public interface IConditionRepository : IRepositoryBase<Condition>
 {
-    Task AddAsync(Condition condition);
-    Task UpdateAsync(Condition condition);
     Task<Condition?> GetByIdAsync(Guid conditionId, CancellationToken ct = default);
     Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct = default);
-    Task<IEnumerable<Condition>> GetAllByCondition(Expression<Func<Condition, bool>> expression, CancellationToken ct = default);
-    Task<Condition?> GetByConditionAsync(Expression<Func<Condition, bool>> expression, CancellationToken ct = default);
+    Task<bool> ExistWithNameAsync(string name, Guid? excludedId = null);
 }

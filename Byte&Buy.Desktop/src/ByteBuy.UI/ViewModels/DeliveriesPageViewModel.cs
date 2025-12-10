@@ -21,14 +21,21 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
     private bool _isLoaded;
     protected override async Task Delete(DeliveryListItem item)
     {
-        var result = await deliveryService.DeleteById(item.Id);
-        if (!result.Success)
+        var decision = await dialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Confirm);
+
+        if(decision is bool ok && ok)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
-            return;
+            var result = await deliveryService.DeleteById(item.Id);
+            if (!result.Success)
+            {
+                await Alert.ShowErrorAlert(result.Error!.Description);
+                return;
+            }
+            Items.Remove(item);
+            await Alert.ShowSuccessAlert("Successfully deleted user !");
         }
-        Items.Remove(item);
-        await Alert.ShowSuccessAlert("Successfully deleted user !");
+        return;
     }
 
     protected override async Task Edit(DeliveryListItem item)
