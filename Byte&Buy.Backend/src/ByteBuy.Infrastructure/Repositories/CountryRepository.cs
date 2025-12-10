@@ -28,5 +28,9 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
             .FirstOrDefaultAsync(c => c.Id == countryId, ct);
     }
 
-
+    public async Task<bool> HasActiveRelationsAsync(Guid countryId)
+    {
+        return await _context.Countries
+            .AnyAsync(c => c.Id == countryId && c.Addresses.Any());  
+    }
 }

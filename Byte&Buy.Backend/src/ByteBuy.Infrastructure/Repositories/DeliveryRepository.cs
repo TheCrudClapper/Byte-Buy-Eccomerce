@@ -25,4 +25,10 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
         return await _context.Deliveries
             .FirstOrDefaultAsync(d => d.Id == id, ct);
     }
+
+    public async Task<bool> HasActiveRelations(Guid deliveryId)
+    {
+        return await _context.Deliveries
+            .AnyAsync(d => d.Id == deliveryId && d.OfferDeliveries.Any());
+    }
 }

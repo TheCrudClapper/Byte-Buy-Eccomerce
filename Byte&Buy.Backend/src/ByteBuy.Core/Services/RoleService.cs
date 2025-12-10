@@ -43,13 +43,13 @@ public class RoleService : IRoleService
 
     public async Task<Result> DeleteRole(Guid roleId)
     {
+        if (await _roleRepository.DoesRoleHaveActiveUsers(roleId))
+            return Result.Failure(RoleErrors.RoleHasActiveUsers);
+
         var role = await _roleRepository.GetByIdAsync(roleId);
 
         if (role is null)
             return Result.Failure(Error.NotFound);
-
-        if (await _roleRepository.DoesRoleHaveActiveUsers(roleId))
-            return Result.Failure(RoleErrors.RoleHasActiveUsers);
 
         role.Deactivate();
 

@@ -28,4 +28,10 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
         return await _context.Conditions
             .FirstOrDefaultAsync(c => c.Id == conditionId, ct);
     }
+
+    public async Task<bool> HasActiveRelations(Guid conditionId)
+    {
+        return await _context.Conditions
+            .AnyAsync(c => c.Id == conditionId && c.Products.Any());
+    }
 }

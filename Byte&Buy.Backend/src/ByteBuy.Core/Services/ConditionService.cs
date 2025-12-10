@@ -14,7 +14,7 @@ public class ConditionService : IConditionService
 
     public ConditionService(IConditionRepository conditionRepository)
         => _conditionRepository = conditionRepository;
-    
+
 
     public async Task<Result<CreatedResponse>> AddCondition(ConditionAddRequest request)
     {
@@ -35,6 +35,9 @@ public class ConditionService : IConditionService
 
     public async Task<Result> DeleteCondition(Guid conditionId)
     {
+        if (await _conditionRepository.HasActiveRelations(conditionId))
+            return Result.Failure(ConditionErrors.InUse);
+
         var condition = await _conditionRepository.GetByIdAsync(conditionId);
         if (condition is null)
             return Result.Failure(Error.NotFound);

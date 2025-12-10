@@ -64,6 +64,9 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result> DeleteDelivery(Guid deliveryId)
     {
+        if(await _deliveryRepository.HasActiveRelations(deliveryId))
+            return Result.Failure(DeliveryErrors.InUse);
+
         var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
         if (delivery is null)
             return Result.Failure(Error.NotFound);

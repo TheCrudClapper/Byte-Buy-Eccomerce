@@ -6,5 +6,8 @@ public static class CountryErrors
         404, "Country was not found");
 
     public static readonly Error AlreadyExists = new Error
-       (400, "Condition with this name or code already exists");
+       (400, "Country with this name or code already exists");
+
+    public static readonly Error InUse= new Error
+      (400, "Country is used, cannot be deleted");
 }

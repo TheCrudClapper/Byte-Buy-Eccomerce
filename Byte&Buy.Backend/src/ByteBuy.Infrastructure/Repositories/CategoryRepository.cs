@@ -28,4 +28,9 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
             .FirstOrDefaultAsync(c => c.Id == id, ct);
     }
 
+    public async Task<bool> HasActiveRelations(Guid categoryId)
+    {
+        return await _context.Conditions
+            .AnyAsync(c => c.Id == categoryId && c.Products.Any());
+    }
 }
