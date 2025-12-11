@@ -18,7 +18,7 @@
 			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
 				<Label Grid.Column="0" Classes="pageTitle" Content="Portal Users" />
 				<Button
-				Command="{Binding OpenAddPageCommand}"
+				Command="{Binding AddCommand}"
 				VerticalAlignment="Top"
 				HorizontalAlignment="Right"
 				Grid.Column="2">

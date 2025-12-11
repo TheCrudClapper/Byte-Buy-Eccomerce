@@ -16,32 +16,12 @@ public class CountriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogNavigationService dialogNavigation,
     ICountryService countryService)
-    : ViewModelMany<CountryListItem>(alert, navigation)
+    : ViewModelMany<CountryListItem, ICountryService>(alert, navigation, dialogNavigation, countryService)
 {
     private bool _isLoaded;
-    protected override async Task Delete(CountryListItem item)
-    {
-        var decision = await dialogNavigation
-            .OpenDialogAsync(ApplicationDialogNames.Confirm);
-
-        if (decision is bool ok && ok)
-        {
-            var result = await countryService.DeleteById(item.Id);
-            if (!result.Success)
-            {
-                await Alert.ShowErrorAlert(result.Error!.Description);
-                return;
-            }
-
-            Items.Remove(item);
-            await Alert.ShowSuccessAlert("Successfully deleted user !");
-        }
-        return;
-    }
-
     protected override async Task Edit(CountryListItem item)
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
           .OpenDialogAsync(ApplicationDialogNames.Country, async vm =>
           {
               if (vm is CountryDialogViewModel countryVm)
@@ -49,12 +29,12 @@ public class CountriesPageViewModel(AlertViewModel alert,
           });
 
         if (result is bool ok && ok)
-            _ = LoadData();
+            await LoadData();
     }
 
     protected override async Task LoadData()
     {
-        var result = await countryService.GetAll();
+        var result = await Service.GetAll();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -67,13 +47,13 @@ public class CountriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<CountryListItem>(list);
     }
 
-    protected override async Task OpenAddPage()
+    protected override async Task Add()
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Country);
 
         if (result is bool ok && ok)
-            _ = LoadData();
+            await LoadData();
     }
 
     public async Task EnsureLoadedAsync()
@@ -81,7 +61,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         if (_isLoaded)
             return;
 
-        _ = LoadData();
+        await LoadData();
         _isLoaded = true;
     }
 }

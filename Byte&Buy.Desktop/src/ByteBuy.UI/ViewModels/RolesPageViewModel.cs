@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Employee;
+using ByteBuy.UI.ModelsUI.Role;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -11,30 +11,15 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class RolesPageViewModel : ViewModelMany<RoleListItem>
+public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
 {
-    private readonly IRoleService _roleService;
-
     public RolesPageViewModel(
         AlertViewModel alert,
         INavigationService navigationService,
-        IRoleService roleService) : base(alert, navigationService)
+        IDialogNavigationService dialogNavigation,
+        IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
     {
-        _roleService = roleService;
         _ = LoadData();
-    }
-
-    protected override async Task Delete(RoleListItem item)
-    {
-        var result = await _roleService.DeleteById(item.Id);
-        if (!result.Success)
-        {
-            await Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-
-        Items.Remove(item);
-        await Alert.ShowSuccessAlert("Role deleted successfully");
     }
 
     protected override async Task Edit(RoleListItem item)
@@ -48,7 +33,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem>
 
     protected override async Task LoadData()
     {
-        var result = await _roleService.GetAll();
+        var result = await Service.GetAll();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -62,7 +47,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem>
         Items = new ObservableCollection<RoleListItem>(list);
     }
 
-    protected override Task OpenAddPage()
+    protected override Task Add()
     {
         Navigation.NavigateTo(ApplicationPageNames.Role, vm =>
         {

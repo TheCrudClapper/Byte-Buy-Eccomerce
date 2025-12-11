@@ -18,7 +18,7 @@
 				<Label Content="Filters" />
 				<Button
 				Grid.Column="2"
-				Command="{Binding OpenAddPageCommand}"
+				Command="{Binding AddCommand}"
 				VerticalAlignment="Top"
 				HorizontalAlignment="Right">
 					<StackPanel Orientation="Horizontal">

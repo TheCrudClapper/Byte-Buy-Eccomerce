@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Role;
-using ByteBuy.UI.ModelsUI.Employee;
+using ByteBuy.UI.ModelsUI.Role;
 
 namespace ByteBuy.UI.Mappings;
 

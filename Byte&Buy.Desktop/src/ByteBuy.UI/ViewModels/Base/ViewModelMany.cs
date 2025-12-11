@@ -1,4 +1,6 @@
-﻿using ByteBuy.UI.ModelsUI.Abstractions;
+﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.ModelsUI.Abstractions;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,10 +10,11 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
 
-public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
+public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageViewModel
     where TDataGridItem : IListItem
+    where ServiceType : IBaseService
 {
-    #region MVVM Field
+    #region MVVM Fields
 
     [ObservableProperty]
     private int _itemsCount;
@@ -24,11 +27,17 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     #endregion
 
     protected INavigationService Navigation;
+    protected IDialogNavigationService DialogNavigation;
+    protected readonly ServiceType Service;
 
     protected ViewModelMany(AlertViewModel alert,
-        INavigationService navigation) : base(alert)
+        INavigationService navigation,
+        IDialogNavigationService dialogNavigation,
+        ServiceType service) : base(alert)
     {
         Navigation = navigation;
+        DialogNavigation = dialogNavigation;
+        Service = service;
     }
 
     partial void OnItemsChanged(ObservableCollection<TDataGridItem> value)
@@ -51,7 +60,25 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     }
 
     [RelayCommand]
-    protected abstract Task Delete(TDataGridItem item);
+    protected virtual async Task Delete(TDataGridItem item)
+    {
+        var decision = await DialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Confirm);
+
+        if (decision is bool ok && ok)
+        {
+            var result = await Service.DeleteById(item.Id);
+            if (!result.Success)
+            {
+                await Alert.ShowErrorAlert(result.Error!.Description);
+                return;
+            }
+
+            Items.Remove(item);
+            await Alert.ShowSuccessAlert("Successfully deleted item !");
+        }
+        return;
+    }
 
     [RelayCommand]
     protected abstract Task Edit(TDataGridItem item);
@@ -59,5 +86,5 @@ public abstract partial class ViewModelMany<TDataGridItem> : PageViewModel
     protected abstract Task LoadData();
 
     [RelayCommand]
-    protected abstract Task OpenAddPage();
+    protected abstract Task Add();
 }

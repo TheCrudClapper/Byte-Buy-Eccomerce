@@ -11,22 +11,21 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel : ViewModelMany<EmployeeListItem>
+public partial class EmployeesPageViewModel
+    : ViewModelMany<EmployeeListItem, IEmployeeService>
 {
-    private readonly IEmployeeService _employeeService;
-
     public EmployeesPageViewModel(
-        INavigationService navigation,
         AlertViewModel alert,
-        IEmployeeService employeeService) : base(alert, navigation)
+        INavigationService navigation,
+        IDialogNavigationService dialogNavigation,
+        IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
     {
-        _employeeService = employeeService;
         _ = LoadData();
     }
 
     protected override async Task LoadData()
     {
-        var result = await _employeeService.GetList();
+        var result = await Service.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -40,19 +39,6 @@ public partial class EmployeesPageViewModel : ViewModelMany<EmployeeListItem>
         Items = new ObservableCollection<EmployeeListItem>(list);
     }
 
-    protected override async Task Delete(EmployeeListItem employee)
-    {
-        var result = await _employeeService.DeleteById(employee.Id);
-        if (!result.Success)
-        {
-            await Alert.ShowSuccessAlert(result.Error!.Description);
-            return;
-        }
-
-        Items.Remove(employee);
-        await Alert.ShowErrorAlert("Employee deleted successfully");
-    }
-
     protected override async Task Edit(EmployeeListItem employee)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
@@ -62,13 +48,12 @@ public partial class EmployeesPageViewModel : ViewModelMany<EmployeeListItem>
         });
     }
 
-    protected override Task OpenAddPage()
+    protected override async Task Add()
     {
-        Navigation.NavigateTo(ApplicationPageNames.Employee, async vm =>
+        await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {
             if (vm is EmployeePageViewModel employeeVm)
                 employeeVm.InitializeForAdd();
         });
-        return Task.CompletedTask;
     }
 }

@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;
 
-public interface IEmployeeService
+public interface IEmployeeService : IBaseService
 {
     Task<Result<IEnumerable<EmployeeListResponse>>> GetList();
     Task<Result<EmployeeProfileResponse>> GetSelf();
@@ -15,5 +15,4 @@ public interface IEmployeeService
     Task<Result<UpdatedResponse>> Update(Guid id, EmployeeUpdateRequest request);
     Task<Result<IEnumerable<EmployeeResponse>>> GetAll();
     Task<Result<EmployeeResponse>> GetById(Guid id);
-    Task<Result> DeleteById(Guid id);
 }

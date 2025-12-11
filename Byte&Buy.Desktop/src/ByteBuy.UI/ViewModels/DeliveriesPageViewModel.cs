@@ -16,31 +16,12 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogNavigationService dialogNavigation,
     IDeliveryService deliveryService)
-    : ViewModelMany<DeliveryListItem>(alert, navigation)
+    : ViewModelMany<DeliveryListItem, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
 {
     private bool _isLoaded;
-    protected override async Task Delete(DeliveryListItem item)
-    {
-        var decision = await dialogNavigation
-            .OpenDialogAsync(ApplicationDialogNames.Confirm);
-
-        if(decision is bool ok && ok)
-        {
-            var result = await deliveryService.DeleteById(item.Id);
-            if (!result.Success)
-            {
-                await Alert.ShowErrorAlert(result.Error!.Description);
-                return;
-            }
-            Items.Remove(item);
-            await Alert.ShowSuccessAlert("Successfully deleted user !");
-        }
-        return;
-    }
-
     protected override async Task Edit(DeliveryListItem item)
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
             {
                 if (vm is DeliveryDialogViewModel deliveryVm)
@@ -53,7 +34,7 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
 
     protected override async Task LoadData()
     {
-        var result = await deliveryService.GetList();
+        var result = await Service.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -67,9 +48,9 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<DeliveryListItem>(list);
     }
 
-    protected override async Task OpenAddPage()
+    protected override async Task Add()
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
          .OpenDialogAsync(ApplicationDialogNames.Delivery);
 
         if (result is bool ok && ok)

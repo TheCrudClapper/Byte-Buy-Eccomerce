@@ -4,12 +4,11 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;
 
-public interface ICategoryService
+public interface ICategoryService : IBaseService
 {
     Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList();
     Task<Result<CreatedResponse>> Add(CategoryAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, CategoryUpdateRequest request);
-    Task<Result> DeleteById(Guid id);
     Task<Result<CategoryResponse>> GetById(Guid id);
     Task<Result<IEnumerable<CategoryListResponse>>> GetList();
 }

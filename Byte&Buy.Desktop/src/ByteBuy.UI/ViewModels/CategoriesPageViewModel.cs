@@ -15,33 +15,14 @@ namespace ByteBuy.UI.ViewModels;
 public partial class CategoriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogNavigationService dialogNavigation,
-    ICategoryService categoryService) : ViewModelMany<CategoryListItem>(alert, navigation)
+    ICategoryService categoryService)
+    : ViewModelMany<CategoryListItem, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
 {
     private bool _isLoaded;
 
-    protected override async Task Delete(CategoryListItem item)
-    {
-        var decision = await dialogNavigation
-            .OpenDialogAsync(ApplicationDialogNames.Confirm);
-
-        if (decision is bool ok && ok)
-        {
-            var result = await categoryService.DeleteById(item.Id);
-            if (!result.Success)
-            {
-                await Alert.ShowErrorAlert(result.Error!.Description);
-                return;
-            }
-
-            Items.Remove(item);
-            await Alert.ShowSuccessAlert("Successfully deleted user !");
-        }
-        return;
-    }
-
     protected override async Task Edit(CategoryListItem item)
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
              .OpenDialogAsync(ApplicationDialogNames.Category, async vm =>
              {
                  if (vm is CategoryDialogViewModel categoryVm)
@@ -54,7 +35,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
 
     protected override async Task LoadData()
     {
-        var result = await categoryService.GetList();
+        var result = await Service.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -67,9 +48,9 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<CategoryListItem>(list);
     }
 
-    protected override async Task OpenAddPage()
+    protected override async Task Add()
     {
-        var result = await dialogNavigation
+        var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Category);
 
         if (result is bool ok && ok)

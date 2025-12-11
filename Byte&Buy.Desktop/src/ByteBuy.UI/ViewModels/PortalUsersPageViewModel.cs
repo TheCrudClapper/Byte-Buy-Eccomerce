@@ -11,29 +11,15 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
+public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPortalUserService>
 {
-    private readonly IPortalUserService _userService;
-
-    public PortalUsersPageViewModel(AlertViewModel alert,
+    public PortalUsersPageViewModel(
+        AlertViewModel alert,
         INavigationService navigation,
-        IPortalUserService userService) : base(alert, navigation)
+        IDialogNavigationService dialogNavigation,
+        IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
     {
-        _userService = userService;
         _ = LoadData();
-    }
-
-    protected override async Task Delete(PortalUserListItem item)
-    {
-        var result = await _userService.DeleteById(item.Id);
-        if (!result.Success)
-        {
-            await Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-
-        Items.Remove(item);
-        await Alert.ShowSuccessAlert("Successfully deleted user !");
     }
 
     protected override async Task Edit(PortalUserListItem item)
@@ -47,7 +33,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
 
     protected override async Task LoadData()
     {
-        var result = await _userService.GetList();
+        var result = await Service.GetList();
         if (!result.Success)
         {
             await Alert.ShowErrorAlert(result.Error!.Description);
@@ -60,9 +46,8 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem>
         Items = new ObservableCollection<PortalUserListItem>(list);
     }
 
-    protected override Task OpenAddPage()
+    protected override async Task Add()
     {
-        Navigation.NavigateTo(ApplicationPageNames.PortalUser);
-        return Task.CompletedTask;
+        await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser);
     }
 }

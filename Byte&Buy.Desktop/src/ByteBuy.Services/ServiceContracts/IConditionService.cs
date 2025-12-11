@@ -4,12 +4,11 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;
 
-public interface IConditionService
+public interface IConditionService : IBaseService
 {
     Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList();
     Task<Result<CreatedResponse>> Add(ConditionAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, ConditionUpdateRequest request);
-    Task<Result> DeleteById(Guid id);
     Task<Result<ConditionResponse>> GetById(Guid id);
     Task<Result<IEnumerable<ConditionListResponse>>> GetList();
 }

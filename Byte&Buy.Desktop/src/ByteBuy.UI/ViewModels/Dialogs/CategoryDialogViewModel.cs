@@ -1,7 +1,5 @@
-﻿using ByteBuy.Core.DTO.Delivery;
-using ByteBuy.Services.DTO.Category;
+﻿using ByteBuy.Services.DTO.Category;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.Services.Services;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -67,5 +65,5 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
         return true;
     }
 
-   
+
 }
