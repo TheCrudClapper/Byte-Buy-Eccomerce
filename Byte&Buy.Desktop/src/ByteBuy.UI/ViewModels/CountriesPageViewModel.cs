@@ -37,7 +37,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         var result = await Service.GetAll();
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 

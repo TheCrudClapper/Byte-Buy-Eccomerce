@@ -131,18 +131,18 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var result = await _portalUserService.Update(EditingItemId.Value, request);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        await Alert.ShowSuccessAlert("Successfully updated user!");
+        Alert.ShowSuccessAlert("Successfully updated user!");
     }
 
     private async Task AddItem()
     {
         if (string.IsNullOrWhiteSpace(Password) && Password.Length < 8)
         {
-            await Alert.ShowErrorAlert("For new user password is required !");
+            Alert.ShowErrorAlert("For new user password is required !");
             return;
         }
 
@@ -151,11 +151,11 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var result = await _portalUserService.Add(request);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        await Alert.ShowSuccessAlert("Successfully added new user!");
+        Alert.ShowSuccessAlert("Successfully added new user!");
     }
 
     protected override void Clear()
@@ -207,7 +207,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var result = await _portalUserService.GetById(itemId);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
         IsAddressIncluded = result.Value.Address is null ? false : true;

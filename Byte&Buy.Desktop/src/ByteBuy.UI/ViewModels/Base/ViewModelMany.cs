@@ -70,12 +70,12 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             var result = await Service.DeleteById(item.Id);
             if (!result.Success)
             {
-                await Alert.ShowErrorAlert(result.Error!.Description);
+                Alert.ShowErrorAlert(result.Error!.Description);
                 return;
             }
 
             Items.Remove(item);
-            await Alert.ShowSuccessAlert("Successfully deleted item !");
+            Alert.ShowSuccessAlert("Successfully deleted item !");
         }
         return;
     }

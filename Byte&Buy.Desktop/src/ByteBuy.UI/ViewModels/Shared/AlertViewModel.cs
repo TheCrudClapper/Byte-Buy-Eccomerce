@@ -1,24 +1,37 @@
 ﻿using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
+public enum AlertType
+{
+    Info = 0,
+    Warning = 1,
+    Error = 2,
+    Success = 3
+};
+
 public partial class AlertViewModel : ViewModelBase
 {
-    [ObservableProperty] private string _title = null!;
+    [ObservableProperty] private string _title = string.Empty;
 
-    [ObservableProperty] private string _message = null!;
+    [ObservableProperty] private string _message = string.Empty;
 
-    [ObservableProperty] private string _imagePath = null!;
+    [ObservableProperty] private string _imagePath = string.Empty;
 
-    [ObservableProperty] private string _backgroundColor = null!;
+    [ObservableProperty] private string _backgroundColor = string.Empty;
 
     [ObservableProperty] private bool _isVisible;
 
-    public Task Show(AlertType alertType, string message)
+    private CancellationTokenSource? _autoHideCts;
+    public void Show(AlertType alertType, string message, int durationMs = 2000)
     {
+        _autoHideCts?.Cancel();
+        _autoHideCts = new CancellationTokenSource();
+
         Message = message;
         Title = alertType.ToString();
 
@@ -45,34 +58,35 @@ public partial class AlertViewModel : ViewModelBase
                 break;
         }
 
-        _ = AutoHide();
-        return Task.CompletedTask;
+        IsVisible = true;
+        _ = AutoHideAsync(durationMs, _autoHideCts.Token);
     }
 
-    public async Task ShowErrorAlert(string message)
-        => await Show(AlertType.Error, message);
+    public void ShowErrorAlert(string message)
+        => Show(AlertType.Error, message);
 
-    public async Task ShowSuccessAlert(string message)
-        => await Show(AlertType.Success, message);
+    public void ShowSuccessAlert(string message)
+        => Show(AlertType.Success, message);
 
     [RelayCommand]
     private void Hide()
     {
+        _autoHideCts?.Cancel();
         IsVisible = false;
     }
 
-    private async Task AutoHide()
+    private async Task AutoHideAsync(int durationMs, CancellationToken token)
     {
-        IsVisible = true;
-        await Task.Delay(2000);
-        IsVisible = false;
+        try
+        {
+            await Task.Delay(durationMs, token);
+            if (!token.IsCancellationRequested)
+                IsVisible = false;
+        }
+        catch (TaskCanceledException)
+        {
+            //ignore
+        }
     }
-}
 
-public enum AlertType
-{
-    Info = 0,
-    Warning = 1,
-    Error = 2,
-    Success = 3
-};
+}

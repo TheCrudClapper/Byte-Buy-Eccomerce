@@ -55,7 +55,7 @@ public partial class RolePageViewModel : ViewModelSingle
         var result = await _roleService.GetById(id);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
@@ -82,9 +82,9 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var response = await _roleService.Update(EditingItemId.Value, request);
         if (!response.Success)
-            await Alert.ShowErrorAlert(response.Error!.Description);
+            Alert.ShowErrorAlert(response.Error!.Description);
         else
-            await Alert.ShowSuccessAlert("Successfully added role");
+            Alert.ShowSuccessAlert("Successfully added role");
     }
 
     private async Task AddItem()
@@ -93,9 +93,9 @@ public partial class RolePageViewModel : ViewModelSingle
 
         var response = await _roleService.Add(request);
         if (!response.Success)
-            await Alert.ShowErrorAlert(response.Error!.Description);
+            Alert.ShowErrorAlert(response.Error!.Description);
         else
-            await Alert.ShowSuccessAlert("Successfully added role");
+            Alert.ShowSuccessAlert("Successfully added role");
 
     }
 

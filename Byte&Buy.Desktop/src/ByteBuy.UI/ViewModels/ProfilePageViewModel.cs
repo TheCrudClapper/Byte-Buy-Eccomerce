@@ -85,10 +85,10 @@ public partial class ProfilePageViewModel : ViewModelSingle
 
         if (!result.Success)
         {
-            await Alert.Show(AlertType.Error, result.Error!.Description);
+            Alert.Show(AlertType.Error, result.Error!.Description);
             return;
         }
-        await Alert.Show(AlertType.Success, "Address Updated Successfully");
+        Alert.Show(AlertType.Success, "Address Updated Successfully");
 
     }
 
@@ -109,7 +109,7 @@ public partial class ProfilePageViewModel : ViewModelSingle
         var result = await _employeeService.GetSelf();
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 

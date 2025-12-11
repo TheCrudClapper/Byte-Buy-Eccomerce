@@ -15,4 +15,6 @@ public partial class PageViewModel : ViewModelBase
     {
         Alert = alert;
     }
+
+   
 }

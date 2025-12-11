@@ -116,7 +116,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         var result = await _employeeService.GetById(itemId);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
@@ -155,7 +155,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
-            await Alert.Show(AlertType.Error, "Password is required for new employees.");
+            Alert.Show(AlertType.Error, "Password is required for new employees.");
             return;
         }
         var request = new EmployeeAddRequest(
@@ -178,10 +178,10 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         var result = await _employeeService.Add(request);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-        await Alert.ShowSuccessAlert("Employee Added Successfully");
+        Alert.ShowSuccessAlert("Employee Added Successfully");
     }
 
     private async Task UpdateItem()
@@ -206,10 +206,10 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         var result = await _employeeService.Update(EditingItemId.Value, request);
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
-        await Alert.Show(AlertType.Success, "Employee updated successfully");
+        Alert.Show(AlertType.Success, "Employee updated successfully");
     }
 
     private async Task LoadRoles()

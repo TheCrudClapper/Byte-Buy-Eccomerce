@@ -36,7 +36,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
         var result = await Service.GetList();
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 

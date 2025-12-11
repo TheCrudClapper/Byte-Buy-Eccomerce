@@ -92,7 +92,7 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         var response = await _companyInfoService.GetCompanyInfo();
         if (!response.Success)
         {
-            await Alert.Show(AlertType.Error, response.Error!.Description);
+            Alert.Show(AlertType.Error, response.Error!.Description);
             return;
         }
 
@@ -138,9 +138,9 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         var response = await _companyInfoService.Update(request);
         if (!response.Success)
         {
-            await Alert.ShowErrorAlert(response.Error.Description);
+            Alert.ShowErrorAlert(response.Error!.Description);
             return;
         }
-        await Alert.ShowSuccessAlert("Successfully Updated Company Info!");
+        Alert.ShowSuccessAlert("Successfully Updated Company Info!");
     }
 }

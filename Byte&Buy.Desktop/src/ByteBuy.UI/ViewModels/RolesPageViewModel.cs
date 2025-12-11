@@ -36,7 +36,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         var result = await Service.GetAll();
         if (!result.Success)
         {
-            await Alert.ShowErrorAlert(result.Error!.Description);
+            Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
