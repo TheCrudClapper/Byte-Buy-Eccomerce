@@ -141,7 +141,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     ConditionId = table.Column<Guid>(type: "uuid", nullable: false),
                     StockQuantity = table.Column<int>(type: "integer", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedByUserId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -151,8 +151,8 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
+                        name: "FK_Items_AspNetUsers_CreatedByUserId",
+                        column: x => x.CreatedByUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
