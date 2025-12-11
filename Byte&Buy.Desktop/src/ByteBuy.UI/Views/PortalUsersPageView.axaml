@@ -72,9 +72,9 @@
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
 										<Button
-										Command="{Binding #Root.((vm:PortalUsersPageViewModel)DataContext).EditCommand}"
+										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
@@ -84,7 +84,7 @@
 										</Button>
 
 										<Button
-										Command="{Binding #Root.((vm:PortalUsersPageViewModel)DataContext).DeleteCommand}"
+										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10"
 										Foreground="{DynamicResource BackgroundLightBrush}">
