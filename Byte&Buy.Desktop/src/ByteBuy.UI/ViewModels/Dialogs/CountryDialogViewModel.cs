@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Country;
+using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,6 +12,7 @@ namespace ByteBuy.UI.ViewModels.Dialogs;
 public partial class CountryDialogViewModel(ICountryService countryService)
     : DialogSingleViewModel("Country")
 {
+    #region MVVM Properties
     [ObservableProperty]
     [Required, MaxLength(50)]
     private string _name = string.Empty;
@@ -18,22 +20,21 @@ public partial class CountryDialogViewModel(ICountryService countryService)
     [ObservableProperty]
     [Required, MaxLength(3)]
     private string _code = string.Empty;
+    #endregion
 
     public override async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var response = await countryService.GetById(id);
-        if (!response.Success)
+        var result = await countryService.GetById(id);
+        if (!result.Success)
         {
-            Error = response.Error!.Description;
+            Error = result.Error!.Description;
             return;
         }
 
-        var item = response.Value;
-
-        Name = item.Name;
-        Code = item.Code;
+        Name = result.Value.Name;
+        Code = result.Value.Code;
     }
 
     protected override async Task<bool> UpdateItem()
@@ -62,6 +63,4 @@ public partial class CountryDialogViewModel(ICountryService countryService)
         }
         return true;
     }
-
-
 }

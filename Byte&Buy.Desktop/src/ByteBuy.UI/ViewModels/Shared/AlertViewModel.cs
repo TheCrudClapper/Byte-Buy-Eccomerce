@@ -14,7 +14,7 @@ public enum AlertType
     Success = 3
 };
 
-public partial class AlertViewModel : ViewModelBase
+public partial class AlertViewModel : ObservableValidator
 {
     [ObservableProperty] private string _title = string.Empty;
 

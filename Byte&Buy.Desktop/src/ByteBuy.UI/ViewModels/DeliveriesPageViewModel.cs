@@ -29,19 +29,20 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
             });
 
         if (result is bool ok && ok)
-            _ = LoadData();
+        {
+            await LoadData();
+            Alert.ShowSuccessAlert("Successfully updated item!");
+        }       
     }
 
     protected override async Task LoadData()
     {
         var result = await Service.GetList();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        var list = result.Value
+        var list = value
            .Select((d, index) => d.ToListItem(index))
            .ToList();
 
@@ -54,7 +55,10 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
          .OpenDialogAsync(ApplicationDialogNames.Delivery);
 
         if (result is bool ok && ok)
-            _ = LoadData();
+        {
+            await LoadData();
+            Alert.ShowSuccessAlert("Successfully added new item!");
+        }
     }
 
     public async Task EnsureLoadedAsync()

@@ -26,13 +26,11 @@ public partial class EmployeesPageViewModel
     protected override async Task LoadData()
     {
         var result = await Service.GetList();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        var list = result.Value
+        var list = value
             .Select((e, index) => e.ToListItem(index))
             .ToList();
 

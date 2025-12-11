@@ -30,19 +30,20 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
              });
 
         if (result is bool ok && ok)
-            _ = LoadData();
+        {
+            Alert.ShowSuccessAlert("Successfully updated item!");
+            await LoadData();
+        }
     }
 
     protected override async Task LoadData()
     {
         var result = await Service.GetList();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        var list = result?.Value
+        var list = value
             .Select((u, index) => u.ToListItem(index)) ?? [];
 
         Items = new ObservableCollection<CategoryListItem>(list);
@@ -54,7 +55,11 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
             .OpenDialogAsync(ApplicationDialogNames.Category);
 
         if (result is bool ok && ok)
-            _ = LoadData();
+        {
+            Alert.ShowSuccessAlert("Successfully added new item!");
+            await LoadData();
+        }
+            
     }
 
     public async Task EnsureLoadedAsync()

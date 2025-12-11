@@ -14,7 +14,7 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
     public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludedId = null)
     {
         return await _context.Countries
-            .AnyAsync(c => c.Id != excludedId && c.Name == name || c.Code == code);
+            .AnyAsync(c => c.Id != excludedId && (c.Name == name || c.Code == code));
     }
 
     public async Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default)

@@ -29,19 +29,20 @@ public class CountriesPageViewModel(AlertViewModel alert,
           });
 
         if (result is bool ok && ok)
+        {
+            Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadData();
+        }       
     }
 
     protected override async Task LoadData()
     {
         var result = await Service.GetAll();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        var list = result?.Value
+        var list = value
             .Select((u, index) => u.ToListItem(index)) ?? [];
 
         Items = new ObservableCollection<CountryListItem>(list);
@@ -53,7 +54,10 @@ public class CountriesPageViewModel(AlertViewModel alert,
             .OpenDialogAsync(ApplicationDialogNames.Country);
 
         if (result is bool ok && ok)
+        {
+            Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadData();
+        }      
     }
 
     public async Task EnsureLoadedAsync()

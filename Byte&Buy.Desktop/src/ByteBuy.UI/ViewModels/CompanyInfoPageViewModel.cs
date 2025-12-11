@@ -1,16 +1,17 @@
 ﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.ServiceContracts;
-
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
+public sealed partial class CompanyInfoPageViewModel : PageViewModel
 {
     #region MVVM Fields
 
@@ -72,7 +73,8 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
         _ = LoadData();
     }
 
-    protected override void Clear()
+    [RelayCommand]
+    private void Clear()
     {
         CompanyName = string.Empty;
         Slogan = string.Empty;
@@ -90,57 +92,23 @@ public sealed partial class CompanyInfoPageViewModel : ViewModelSingle
     private async Task LoadData()
     {
         var response = await _companyInfoService.GetCompanyInfo();
-        if (!response.Success)
-        {
-            Alert.Show(AlertType.Error, response.Error!.Description);
+        var (ok, value) = HandleResult(response);
+        if (!ok || value is null)
             return;
-        }
 
-        var companyInfo = response.Value;
-        CompanyName = companyInfo.CompanyName;
-        Slogan = companyInfo.Slogan;
-        Tin = companyInfo.TIN;
-        HouseNumber = companyInfo.Address.HouseNumber;
-        Email = companyInfo.Email;
-        PostalCode = companyInfo.Address.PostalCode;
-        City = companyInfo.Address.City;
-        Street = companyInfo.Address.Street;
-        FlatNumber = companyInfo.Address.FlatNumber;
-        Country = companyInfo.Address.Country;
-        PhoneNumber = companyInfo.PhoneNumber;
+        CompanyInfoMappings.MapFromResponse(this, value);
     }
 
-    protected override async Task Save()
+    [RelayCommand]
+    private async Task Save()
     {
         ValidateAllProperties();
 
         if (HasErrors)
             return;
 
-        var request = new CompanyInfoUpdateRequest
-        {
-            Email = Email,
-            CompanyName = CompanyName,
-            PhoneNumber = PhoneNumber,
-            TIN = Tin,
-            Slogan = Slogan,
-            Address = new AddressDto()
-            {
-                City = City,
-                PostalCode = PostalCode,
-                Country = Country,
-                FlatNumber = FlatNumber,
-                Street = Street,
-                HouseNumber = HouseNumber
-            }
-        };
-
-        var response = await _companyInfoService.Update(request);
-        if (!response.Success)
-        {
-            Alert.ShowErrorAlert(response.Error!.Description);
-            return;
-        }
-        Alert.ShowSuccessAlert("Successfully Updated Company Info!");
+        var request = CompanyInfoMappings.MapToUpdateRequest(this);
+        var result = await _companyInfoService.Update(request);
+        HandleResult(result, "Successfully updated company details !");
     }
 }

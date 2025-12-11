@@ -1,13 +1,12 @@
-﻿using ByteBuy.Services.DTO.Employee;
-using ByteBuy.Services.DTO.Shared;
+﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -114,102 +113,33 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         EditingItemId = itemId;
 
         var result = await _employeeService.GetById(itemId);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-
-        var item = result.Value;
-
-        FirstName = item.FirstName;
-        LastName = item.LastName;
-        Email = item.Email;
-        PhoneNumber = item.PhoneNumber;
-        Street = item.Street;
-        HouseNumber = item.HouseNumber;
-        FlatNumber = item.FlatNumber;
-        PostalCode = item.PostalCode;
-        City = item.City;
-        Country = item.Country;
-        SelectedRole = Roles.FirstOrDefault(r => r.Id == item.RoleId);
-
-        PermissionListBox.SetSelectedPermissions(item.RevokedPermissionIds.ToList(),
-            item.GrantedPermissionIds.ToList());
-    }
-
-    protected override async Task Save()
-    {
-        ValidateAllProperties();
-        if (HasErrors)
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
 
-        await (IsEditMode switch
-        {
-            true => UpdateItem(),
-            false => AddItem()
-        });
+        EmployeeMappings.MapFromResponse(this, value);
     }
 
-    private async Task AddItem()
+    protected override async Task AddItem()
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
             Alert.Show(AlertType.Error, "Password is required for new employees.");
             return;
         }
-        var request = new EmployeeAddRequest(
-            SelectedRole!.Id,
-            FirstName,
-            LastName,
-            Email,
-            Password,
-            PhoneNumber,
-            Street,
-            HouseNumber,
-            PostalCode,
-            City,
-            Country,
-            FlatNumber,
-            PermissionListBox.ExtractGrantedPermissions(),
-            PermissionListBox.ExtractRevokedPermissions()
-        );
-
+        var request = EmployeeMappings.MapToAddRequest(this);
         var result = await _employeeService.Add(request);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-        Alert.ShowSuccessAlert("Employee Added Successfully");
+        HandleResult(result, "Successfully added employee!");
     }
 
-    private async Task UpdateItem()
+    protected override async Task UpdateItem()
     {
         if (EditingItemId is null)
             return;
 
-        var request = new EmployeeUpdateRequest(
-            SelectedRole!.Id,
-            FirstName, LastName,
-            Email, Street,
-            HouseNumber,
-            PostalCode,
-            City,
-            Country,
-            PhoneNumber,
-            FlatNumber,
-            Password,
-            PermissionListBox.ExtractGrantedPermissions(),
-            PermissionListBox.ExtractRevokedPermissions());
-
+        var request = EmployeeMappings.MapToUpdateRequest(this);
         var result = await _employeeService.Update(EditingItemId.Value, request);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-        Alert.Show(AlertType.Success, "Employee updated successfully");
+        HandleResult(result, "Employee updated successfully");
     }
 
     private async Task LoadRoles()

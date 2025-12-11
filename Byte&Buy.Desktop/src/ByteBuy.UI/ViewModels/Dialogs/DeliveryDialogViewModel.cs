@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,7 +12,7 @@ namespace ByteBuy.UI.ViewModels.Dialogs;
 public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     : DialogSingleViewModel("Delivery")
 {
-
+    #region MVVM Properties
     [ObservableProperty]
     [Required, MaxLength(50)]
     private string _name = string.Empty;
@@ -23,23 +24,21 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     [ObservableProperty]
     [Range(1, double.MaxValue, ErrorMessage = "Price cannot be less that 1")]
     private decimal _price;
-
+    #endregion
     public async override Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var response = await deliveryService.GetById(id);
-        if (!response.Success)
+        var result = await deliveryService.GetById(id);
+        if (!result.Success)
         {
-            Error = response.Error!.Description;
+            Error = result.Error!.Description;
             return;
         }
 
-        var item = response.Value;
-
-        Name = item.Name;
-        Description = item.Description;
-        Price = item.Amount;
+        Name = result.Value.Name;
+        Description = result.Value.Description;
+        Price = result.Value.Amount;
     }
 
     protected async override Task<bool> AddItem()

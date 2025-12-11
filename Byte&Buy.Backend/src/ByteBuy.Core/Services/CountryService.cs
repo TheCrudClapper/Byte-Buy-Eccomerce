@@ -35,7 +35,7 @@ public class CountryService : ICountryService
 
     public async Task<Result<UpdatedResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
     {
-        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code);
+        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code, countryId);
         if (exist)
             return Result.Failure<UpdatedResponse>(CountryErrors.AlreadyExists);
 

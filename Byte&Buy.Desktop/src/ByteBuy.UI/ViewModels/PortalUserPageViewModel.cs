@@ -109,38 +109,19 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         _ = LoadRoles();
     }
 
-    protected override async Task Save()
-    {
-        ValidateAllProperties();
-        if (HasErrors)
-            return;
-
-        await (IsEditMode switch
-        {
-            true => UpdateItem(),
-            false => AddItem()
-        });
-    }
-
-    private async Task UpdateItem()
+    protected override async Task UpdateItem()
     {
         if (EditingItemId is null)
             return;
 
         var request = PortalUserMappings.MapToUpdateRequest(this);
         var result = await _portalUserService.Update(EditingItemId.Value, request);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-
-        Alert.ShowSuccessAlert("Successfully updated user!");
+        HandleResult(result, "Successfully updated user!");
     }
 
-    private async Task AddItem()
+    protected override async Task AddItem()
     {
-        if (string.IsNullOrWhiteSpace(Password) && Password.Length < 8)
+        if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
             Alert.ShowErrorAlert("For new user password is required !");
             return;
@@ -149,13 +130,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var request = PortalUserMappings.MapToAddRequest(this);
 
         var result = await _portalUserService.Add(request);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return;
-        }
-
-        Alert.ShowSuccessAlert("Successfully added new user!");
+        HandleResult(result, "Successfullt added new user!");
     }
 
     protected override void Clear()
@@ -197,6 +172,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     {
         EditingItemId = Guid.Empty;
         IsEditMode = false;
+        Clear();
     }
 
     public async Task InitializeForEdit(Guid itemId)
@@ -205,13 +181,12 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         IsEditMode = true;
 
         var result = await _portalUserService.GetById(itemId);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok,value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
-        IsAddressIncluded = result.Value.Address is null ? false : true;
-        PortalUserMappings.MapFromResponse(this, result.Value);
+
+        IsAddressIncluded = value.Address is null ? false : true;
+        PortalUserMappings.MapFromResponse(this, value);
     }
 
     partial void OnIsAddressIncludedChanged(bool value)

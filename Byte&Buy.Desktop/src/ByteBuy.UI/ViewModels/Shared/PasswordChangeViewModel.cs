@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Shared;
 
 public partial class PasswordChangeViewModel(IEmployeeService employeeService)
-    : ViewModelBase
+    : ObservableValidator
 {
     [ObservableProperty]
     [Required(ErrorMessage = "Current Password is required")]

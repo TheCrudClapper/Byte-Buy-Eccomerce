@@ -6,17 +6,30 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
 
-public abstract partial class ViewModelSingle : PageViewModel
+public abstract partial class ViewModelSingle(AlertViewModel alert)
+    : PageViewModel(alert)
 {
     [ObservableProperty]
     protected bool _isEditMode = false;
 
     protected Guid? EditingItemId = Guid.Empty;
 
-    protected ViewModelSingle(AlertViewModel alert) : base(alert) { }
+    protected abstract Task UpdateItem();
+    protected abstract Task AddItem();
 
     [RelayCommand]
-    protected abstract Task Save();
+    protected virtual async Task Save()
+    {
+        ValidateAllProperties();
+        if (HasErrors)
+            return;
+
+        await (IsEditMode switch
+        {
+            true => UpdateItem(),
+            false => AddItem()
+        });
+    }
 
     [RelayCommand]
     protected abstract void Clear();

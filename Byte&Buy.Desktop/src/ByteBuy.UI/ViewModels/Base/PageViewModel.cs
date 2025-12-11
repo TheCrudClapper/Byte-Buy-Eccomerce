@@ -1,4 +1,5 @@
-﻿using ByteBuy.UI.Data;
+﻿using ByteBuy.Services.ResultTypes;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -9,12 +10,7 @@ public partial class PageViewModel : ViewModelBase
     [ObservableProperty]
     private ApplicationPageNames _pageName;
 
-    public AlertViewModel Alert { get; }
-
-    protected PageViewModel(AlertViewModel alert)
+    protected PageViewModel(AlertViewModel alert) : base(alert)
     {
-        Alert = alert;
     }
-
-   
 }

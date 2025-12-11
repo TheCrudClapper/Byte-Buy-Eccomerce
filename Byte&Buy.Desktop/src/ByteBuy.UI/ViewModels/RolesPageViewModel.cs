@@ -34,13 +34,11 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
     protected override async Task LoadData()
     {
         var result = await Service.GetAll();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if(!ok || value is null)
             return;
-        }
 
-        var list = result.Value!
+        var list = value
             .Select((r, index) => r.ToListItem(index))
             .ToList();
 

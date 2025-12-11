@@ -70,6 +70,7 @@
 					<Button Content="{Binding CancelText}"
 							Command="{Binding CancelCommand}" />
 					<Button Content="{Binding ConfirmText}"
+							IsDefault="True"
 							Command="{Binding ConfirmCommand}" />
 				</StackPanel>
 			</Grid>

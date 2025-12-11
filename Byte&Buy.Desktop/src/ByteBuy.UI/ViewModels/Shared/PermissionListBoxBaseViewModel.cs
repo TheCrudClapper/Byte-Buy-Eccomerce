@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public abstract partial class PermissionListBoxBaseViewModel : ViewModelBase
+public abstract partial class PermissionListBoxBaseViewModel : ObservableValidator
 {
     #region Mvvm Fields
     [ObservableProperty] private ObservableCollection<PermissionListItem> _permissions = [];

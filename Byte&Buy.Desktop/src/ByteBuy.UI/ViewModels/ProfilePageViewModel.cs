@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ProfilePageViewModel : ViewModelSingle
+public partial class ProfilePageViewModel : PageViewModel
 {
     #region Fields
 
@@ -71,7 +72,8 @@ public partial class ProfilePageViewModel : ViewModelSingle
         _ = LoadData();
     }
 
-    protected override async Task Save()
+    [RelayCommand]
+    private async Task Save()
     {
         ValidateAllProperties();
         if (HasErrors)
@@ -82,17 +84,12 @@ public partial class ProfilePageViewModel : ViewModelSingle
         );
 
         var result = await _employeeService.UpdateAddress(request);
-
-        if (!result.Success)
-        {
-            Alert.Show(AlertType.Error, result.Error!.Description);
-            return;
-        }
-        Alert.Show(AlertType.Success, "Address Updated Successfully");
+        HandleResult(result, "Address updated successfully !");
 
     }
 
-    protected override void Clear()
+    [RelayCommand]
+    private void Clear()
     {
         Street = string.Empty;
         HouseNumber = string.Empty;
@@ -107,24 +104,10 @@ public partial class ProfilePageViewModel : ViewModelSingle
     private async Task LoadData()
     {
         var result = await _employeeService.GetSelf();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        var employeeResponse = result.Value;
-
-        FirstName = employeeResponse!.FirstName;
-        LastName = employeeResponse.LastName;
-        RoleName = employeeResponse.RoleName;
-        City = employeeResponse.City;
-        HouseNumber = employeeResponse.HouseNumber;
-        PostalCode = employeeResponse.PostalCode;
-        FlatNumber = employeeResponse.FlatNumber;
-        Country = employeeResponse.Country;
-        Email = employeeResponse.Email;
-        Street = employeeResponse.Street;
-        PhoneNumber = employeeResponse.PhoneNumber;
+        ProfilePageMappings.MapFromResponse(this, value);
     }
 }

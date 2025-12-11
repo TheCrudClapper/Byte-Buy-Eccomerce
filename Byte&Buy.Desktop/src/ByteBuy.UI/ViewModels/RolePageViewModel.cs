@@ -31,37 +31,18 @@ public partial class RolePageViewModel : ViewModelSingle
         PermissionListBox = permissionListBox;
     }
 
-    protected override async Task Save()
-    {
-        ValidateAllProperties();
-        if (HasErrors)
-            return;
-
-        if (IsEditMode)
-        {
-            await UpdateItem();
-        }
-        else
-        {
-            await AddItem();
-        }
-    }
-
     public async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
 
         var result = await _roleService.GetById(id);
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
             return;
-        }
 
-        RoleName = result.Value.Name;
-
-        var permissionIds = result.Value.PermissionIds;
+        RoleName = value.Name;
+        var permissionIds = value.PermissionIds;
         PermissionListBox.SetSelectedPermissions(permissionIds);
     }
 
@@ -73,30 +54,23 @@ public partial class RolePageViewModel : ViewModelSingle
         Clear();
     }
 
-    private async Task UpdateItem()
+    protected override async Task UpdateItem()
     {
         if (EditingItemId is null)
             return;
 
         var request = new RoleUpdateRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
-        var response = await _roleService.Update(EditingItemId.Value, request);
-        if (!response.Success)
-            Alert.ShowErrorAlert(response.Error!.Description);
-        else
-            Alert.ShowSuccessAlert("Successfully added role");
+        var result = await _roleService.Update(EditingItemId.Value, request);
+        HandleResult(result, "Successfully updated role!");
     }
 
-    private async Task AddItem()
+    protected override async Task AddItem()
     {
         var request = new RoleAddRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
-        var response = await _roleService.Add(request);
-        if (!response.Success)
-            Alert.ShowErrorAlert(response.Error!.Description);
-        else
-            Alert.ShowSuccessAlert("Successfully added role");
-
+        var result = await _roleService.Add(request);
+        HandleResult(result, "Successfully added new role!");
     }
 
     protected override void Clear()

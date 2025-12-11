@@ -34,13 +34,11 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
     protected override async Task LoadData()
     {
         var result = await Service.GetList();
-        if (!result.Success)
-        {
-            Alert.ShowErrorAlert(result.Error!.Description);
+        var (ok, value) = HandleResult(result);
+        if(!ok || value is null)
             return;
-        }
 
-        var list = result?.Value
+        var list = value
             .Select((u, index) => u.ToListItem(index)) ?? [];
 
         Items = new ObservableCollection<PortalUserListItem>(list);

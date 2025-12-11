@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Category;
+using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,6 +12,7 @@ namespace ByteBuy.UI.ViewModels.Dialogs;
 public partial class CategoryDialogViewModel(ICategoryService categoryService)
     : DialogSingleViewModel("Category")
 {
+    #region MVVM Fields
     [ObservableProperty]
     [Required(ErrorMessage = "Name is required"), MaxLength(20)]
     private string _name = string.Empty;
@@ -18,24 +20,20 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
     [ObservableProperty]
     [MaxLength(50)]
     private string? _description;
-
-    [ObservableProperty]
-    private string _error = string.Empty;
+    #endregion
     public override async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var response = await categoryService.GetById(id);
-        if (!response.Success)
+        var result = await categoryService.GetById(id);
+        if (!result.Success)
         {
-            Error = response.Error!.Description;
+            Error = result.Error!.Description;
             return;
         }
 
-        var item = response.Value;
-
-        Name = item.Name;
-        Description = item.Description;
+        Name = result.Value.Name;
+        Description = result.Value.Description;
     }
 
     protected override async Task<bool> UpdateItem()

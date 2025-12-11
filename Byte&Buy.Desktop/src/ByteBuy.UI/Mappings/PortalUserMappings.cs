@@ -113,11 +113,9 @@ public static class PortalUserMappings
         vm.FirstName = response.FirstName;
         vm.LastName = response.LastName;
         vm.SelectedCountry = vm.Countries
-            .Where(c => c.Id == response.Address?.CountryId)
-            .FirstOrDefault();
+            .FirstOrDefault(c => c.Id == response.Address?.CountryId);
         vm.SelectedRole = vm.Roles
-            .Where(r => r.Id == response.RoleId)
-            .FirstOrDefault();
+            .FirstOrDefault(r => r.Id == response.RoleId);
         vm.Email = response.Email;
         vm.PhoneNumber = response.PhoneNumber;
         vm.Street = response.Address?.Street ?? string.Empty;

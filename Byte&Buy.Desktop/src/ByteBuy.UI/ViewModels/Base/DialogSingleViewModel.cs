@@ -20,6 +20,7 @@ public abstract partial class DialogSingleViewModel(string dialogTitle)
     protected abstract Task<bool> UpdateItem();
     protected abstract Task<bool> AddItem();
     public abstract Task InitializeForEdit(Guid id);
+
     [RelayCommand]
     protected async Task SaveAsync()
     {
