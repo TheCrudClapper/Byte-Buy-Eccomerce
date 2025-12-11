@@ -1,5 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        >
     <Design.PreviewWith>
         <Border Padding="20">
             <!-- Add Controls for Previewer Here -->
@@ -47,4 +48,5 @@
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
     </Style>
+
 </Styles>

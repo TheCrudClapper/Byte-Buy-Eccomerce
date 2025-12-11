@@ -4,7 +4,6 @@
 			 xmlns:ui="clr-namespace:ByteBuy.UI"
 			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 			 RequestedThemeVariant="Default">
-	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.DataTemplates>
 		<ui:ViewLocator />
@@ -12,10 +11,11 @@
 
 	<Application.Styles>
 		<FluentTheme />
-		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />
-		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
+		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />	
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 		<dialogHostAvalonia:DialogHostStyles />
+		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
+		<StyleInclude Source="Styles/DialogHostStyleOverride.axaml"/>
 	</Application.Styles>
 
 	<Application.Resources>
