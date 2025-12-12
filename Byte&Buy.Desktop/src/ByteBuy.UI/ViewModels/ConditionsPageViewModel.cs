@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
+
 public class ConditionsPageViewModel(
     AlertViewModel alert,
     INavigationService navigation,
@@ -34,7 +35,7 @@ public class ConditionsPageViewModel(
             Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadData();
         }
-           
+
     }
 
     protected override async Task LoadData()

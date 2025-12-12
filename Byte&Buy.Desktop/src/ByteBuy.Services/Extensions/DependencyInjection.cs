@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddSingleton<IDeliveryService, DeliveryService>();
         services.AddSingleton<IConditionService, ConditionService>();
         services.AddSingleton<ICategoryService, CategoryService>();
+        services.AddSingleton<IItemService, ItemService>();
         return services;
     }
 }

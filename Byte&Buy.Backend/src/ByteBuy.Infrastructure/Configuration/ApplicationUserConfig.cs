@@ -12,7 +12,7 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
         builder.Property(u => u.FirstName).IsRequired().HasMaxLength(50);
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(50);
 
-        builder.HasMany(u => u.Items)
+        builder.HasMany(u => u.Offers)
             .WithOne(o => o.CreatedBy)
             .HasForeignKey(o => o.CreatedByUserId)
             .OnDelete(DeleteBehavior.NoAction);

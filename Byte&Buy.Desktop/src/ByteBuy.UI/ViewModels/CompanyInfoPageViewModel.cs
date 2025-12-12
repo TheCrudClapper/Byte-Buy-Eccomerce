@@ -1,6 +1,4 @@
-﻿using ByteBuy.Services.DTO.Address;
-using ByteBuy.Services.DTO.CompanyInfo;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;

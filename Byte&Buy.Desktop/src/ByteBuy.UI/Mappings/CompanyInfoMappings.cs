@@ -1,8 +1,6 @@
-﻿using Avalonia;
-using ByteBuy.Services.DTO.Address;
+﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.UI.ViewModels;
-using System.Globalization;
 
 namespace ByteBuy.UI.Mappings;
 

@@ -32,7 +32,7 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
         {
             await LoadData();
             Alert.ShowSuccessAlert("Successfully updated item!");
-        }       
+        }
     }
 
     protected override async Task LoadData()

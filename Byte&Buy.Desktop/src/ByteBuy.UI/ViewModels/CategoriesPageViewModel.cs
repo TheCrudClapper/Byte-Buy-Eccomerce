@@ -59,7 +59,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
             Alert.ShowSuccessAlert("Successfully added new item!");
             await LoadData();
         }
-            
+
     }
 
     public async Task EnsureLoadedAsync()

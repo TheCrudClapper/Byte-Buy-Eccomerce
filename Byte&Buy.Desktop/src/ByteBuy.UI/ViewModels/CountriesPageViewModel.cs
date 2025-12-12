@@ -32,7 +32,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadData();
-        }       
+        }
     }
 
     protected override async Task LoadData()
@@ -57,7 +57,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadData();
-        }      
+        }
     }
 
     public async Task EnsureLoadedAsync()

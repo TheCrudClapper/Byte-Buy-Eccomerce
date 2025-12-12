@@ -10,4 +10,13 @@ public class Image : AuditableEntity, ISoftDeletable
     public string AltText { get; set; } = null!;
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
+
+    public void Deactivate()
+    {
+        if (!IsActive)
+            return;
+
+        IsActive = false;
+        DateDeleted = null!;
+    }
 }

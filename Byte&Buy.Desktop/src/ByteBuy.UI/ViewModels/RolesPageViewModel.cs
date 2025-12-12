@@ -35,7 +35,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
     {
         var result = await Service.GetAll();
         var (ok, value) = HandleResult(result);
-        if(!ok || value is null)
+        if (!ok || value is null)
             return;
 
         var list = value

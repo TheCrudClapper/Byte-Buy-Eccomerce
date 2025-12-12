@@ -181,7 +181,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         IsEditMode = true;
 
         var result = await _portalUserService.GetById(itemId);
-        var (ok,value) = HandleResult(result);
+        var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 

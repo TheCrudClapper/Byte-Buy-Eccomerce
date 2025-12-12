@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Services.ResultTypes;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
 

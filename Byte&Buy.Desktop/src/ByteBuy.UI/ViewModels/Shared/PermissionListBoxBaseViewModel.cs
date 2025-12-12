@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Permission;
-using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;

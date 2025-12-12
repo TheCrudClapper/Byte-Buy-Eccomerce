@@ -35,7 +35,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
-        if(!ok || value is null)
+        if (!ok || value is null)
             return;
 
         var list = value

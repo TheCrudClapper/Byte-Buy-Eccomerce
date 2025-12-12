@@ -1,5 +1,4 @@
-﻿using ByteBuy.UI.ViewModels.Shared;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 namespace ByteBuy.UI.ViewModels.Base;
 
 public abstract partial class DialogViewModel : ObservableValidator

@@ -16,7 +16,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
     public string LastName { get; protected set; } = null!;
     public ICollection<UserPermission> UserPermissions { get; protected set; } = new List<UserPermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; protected set; } = new List<ApplicationUserRole>();
-    public ICollection<Item> Items { get; protected set; } = new List<Item>();
+    public ICollection<Offer> Offers { get; protected set; } = new List<Offer>();
     public bool IsActive { get; protected set; }
     public DateTime DateCreated { get; protected set; }
     public DateTime? DateEdited { get; protected set; }
