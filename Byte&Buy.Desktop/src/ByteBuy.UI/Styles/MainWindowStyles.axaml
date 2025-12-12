@@ -49,4 +49,8 @@
         <Setter Property="Foreground" Value="White"></Setter>
     </Style>
 
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+        <Setter Property="FontWeight" Value="600"/>
+    </Style>
 </Styles>

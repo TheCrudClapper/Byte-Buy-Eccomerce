@@ -1,0 +1,43 @@
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<StackPanel>
+				
+			<Border Classes="sectionBorder">
+				<TextBlock Text="Text"/>
+			</Border>
+			</StackPanel>
+			
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="ComboBox.wideCombo">
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		
+	</Style>
+
+	<Style Selector="TextBlock.sectionText">
+		<Setter Property="FontSize" Value="20"/>
+	</Style>
+
+	<Style Selector="TextBlock.sectionHelperText">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontWeight" Value="Medium"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+	</Style>
+
+	<Style Selector="Border.sectionBorder">
+		<Setter Property="BoxShadow" Value="0 0 10 1 LightGray"/>
+		<Setter Property="CornerRadius" Value="10"/>
+		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
+		<Setter Property="Margin" Value="0,0,30,0" />
+		<Setter Property="Padding" Value="20,20,20,20" />
+	</Style>
+
+
+	<!--Highlightable border-->
+	<Style Selector="Border.highlightable:pointerover">
+		<Setter Property="BoxShadow" Value="0 0 10 1 Purple"/>
+	</Style>
+</Styles>
