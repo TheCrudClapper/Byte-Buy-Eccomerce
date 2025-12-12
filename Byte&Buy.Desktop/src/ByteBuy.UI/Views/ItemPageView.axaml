@@ -1,10 +1,165 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.ItemPageView"
-             x:DataType="vm:ItemPageViewModel">
-    Singular View for Item Page View model
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="using:ByteBuy.UI.Views.Shared"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="1500"
+			 x:Class="ByteBuy.UI.Views.ItemPageView"
+			 x:DataType="vm:ItemPageViewModel">
+
+	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Grid>
+		<ScrollViewer>
+			<Grid RowDefinitions="50, auto, 20, auto, 20, auto, 20, auto, 20, auto">
+				<Label Grid.Row="0" Grid.Column="0" Classes="pageTitle" Content="Warehouse Item" />
+
+				<!--Image container-->
+				<Border Background="{DynamicResource BackgroundLightBrush}" Margin="10,0" Grid.Row="1"
+						CornerRadius="10"
+						BoxShadow="0 0 10 1 LightGray">
+					<Grid RowDefinitions="auto, auto, auto">
+						<StackPanel Grid.Row="0" Orientation="Horizontal" Margin="20,20,0,0">
+							<TextBlock Margin="0,0,10,0" FontSize="20" Text="Images"/>
+							<Button
+							Grid.Column="2">
+								<StackPanel Orientation="Horizontal">
+									<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+										   Width="10" Height="10" />
+								</StackPanel>
+							</Button>
+						</StackPanel>
+						<Border Grid.Row="1"
+								Height="200"
+								Classes="imageContainer"
+								Margin="20"
+								Background="LightGray"
+								DragDrop.AllowDrop="True"
+								CornerRadius="10"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch">
+							<StackPanel VerticalAlignment="Center">
+								<StackPanel Orientation="Horizontal"
+											HorizontalAlignment="Center">
+									<Image Height="50"
+										   Width="50"
+										   Source="{SvgImage /Assets/Images/regular/file-image-regular-full.svg}"/>
+									<TextBlock Text="No images"
+											   FontSize="20"
+											   VerticalAlignment="Center"/>
+								</StackPanel>
+								<TextBlock FontWeight="DemiBold"
+										   HorizontalAlignment="Center"
+										   FontSize="14"
+										   Text="To add new images click + icon above or drag and drop files to gray container"/>
+							</StackPanel>
+						</Border>
+					</Grid>
+				</Border>
+
+				<!--Spacer-->
+				<Border Grid.Row="2" Height="20" Background="Transparent"/>
+
+				<!--Name and Stock Quantity-->
+				<Border Grid.Row="3"
+						Margin="10,0"
+						Background="{DynamicResource BackgroundLightBrush}"
+						CornerRadius="10"
+						BoxShadow="0 0 10 1 LightGray">
+					<Grid RowDefinitions="auto, auto"
+						  ColumnDefinitions="*,*">
+						<StackPanel Grid.Row="0" Margin="20,20,0,0">
+							<TextBlock FontSize="20"
+									   Text="Name and Stock Quantity"/>
+							<TextBlock FontWeight="Medium"
+									   Foreground="{DynamicResource TextMutedBrush}"
+									   FontSize="14"
+									   Text="Choose category and condition of your item"/>
+						</StackPanel>
+
+						<TextBox Grid.Row="1"
+								 Grid.Column="0"
+								 Margin="20,10,10,20"
+								 HorizontalAlignment="Stretch"/>
+
+						<TextBox Grid.Row="1"
+								 Grid.Column="1"
+								 Margin="20,10,20,20"
+								 HorizontalAlignment="Stretch"/>
+					</Grid>
+				</Border>
+
+				<Border Grid.Row="4" Height="20" Background="Transparent"/>
+
+				<!--Category and condition-->
+				<Border Grid.Row="5"
+						Margin="10,0"
+						Background="{DynamicResource BackgroundLightBrush}"
+						CornerRadius="10"
+						BoxShadow="0 0 10 1 LightGray">
+					<Grid RowDefinitions="auto, auto"
+						  ColumnDefinitions="*,*">
+						<StackPanel Grid.Row="0" Margin="20,20,0,0">
+							<TextBlock FontSize="20"
+									   Text="Category and Condition"/>
+							<TextBlock FontWeight="Medium"
+									   Foreground="{DynamicResource TextMutedBrush}"
+									   FontSize="14"
+									   Text="Choose category and condition of your item"/>
+						</StackPanel>
+
+						<ComboBox Grid.Row="1"
+								  Grid.Column="0"
+								  Margin="20,10,10,20"
+								  HorizontalAlignment="Left" />
+
+						<ComboBox Grid.Row="1"
+								  Grid.Column="1"
+								  Margin="10,10,20,20"
+								  HorizontalAlignment="Left" />
+					</Grid>
+				</Border>
+
+				<!--Spacer-->
+				<Border Grid.Row="6" Height="20" Background="Transparent"/>
+
+				<!--Description-->
+				<Border Grid.Row="7"
+						Margin="10,0"
+						Padding="20,0"
+						Background="{DynamicResource BackgroundLightBrush}"
+						CornerRadius="10"
+						BoxShadow="0 0 10 1 LightGray">
+					<Grid RowDefinitions="auto, auto, auto">
+						<StackPanel Grid.Row="0" Margin="0,20,0,20">
+							<TextBlock FontSize="20"
+									   Text="Description"/>
+							<TextBlock FontWeight="Medium"
+									   Foreground="{DynamicResource TextMutedBrush}"
+									   FontSize="14"
+									   Text="Give detailed info about item, to avoid customer questions"/>
+						</StackPanel>
+						<TextBox Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Stretch" Height="250"/>
+						<StackPanel Grid.Row="2" Margin="0,20" HorizontalAlignment="Right" Orientation="Horizontal">
+							<Button Content="Clear" Margin="5,0"/>
+							<Button Content="Save"/>
+						</StackPanel>
+					</Grid>
+				</Border>
+			</Grid>
+		</ScrollViewer>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,
+		20,20,40"
+		ZIndex="10" />
+	</Grid>
 </UserControl>
