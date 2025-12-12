@@ -57,8 +57,8 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Conditions => x.GetRequiredService<ConditionsPageViewModel>(),
                 ApplicationPageNames.Countries => x.GetRequiredService<CountriesPageViewModel>(),
                 ApplicationPageNames.Administration => x.GetRequiredService<AdministrationPageViewModel>(),
-
-
+                ApplicationPageNames.Items => x.GetRequiredService<ItemsPageViewModel>(),
+                ApplicationPageNames.Item => x.GetRequiredService<ItemPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

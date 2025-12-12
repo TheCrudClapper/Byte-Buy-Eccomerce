@@ -61,6 +61,8 @@ public static class DependencyInjection
         services.AddTransient<DeliveryDialogViewModel>();
         services.AddTransient<CountryDialogViewModel>();
         services.AddTransient<ConfirmationDialogViewModel>();
+        services.AddTransient<ItemsPageViewModel>();
+        services.AddTransient<ItemPageViewModel>();
         return services;
     }
 }

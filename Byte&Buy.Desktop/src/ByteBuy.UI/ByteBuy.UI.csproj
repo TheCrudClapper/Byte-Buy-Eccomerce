@@ -49,9 +49,16 @@
       <DependentUpon>EmployeePageView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ItemsPageView.axaml.cs">
+      <DependentUpon>ItemsPageView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Shared\PermissionGrantRevokeView.axaml.cs">
       <DependentUpon>PermissionRevokeGrantListBoxView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ModelsUI\Image\" />
   </ItemGroup>
 </Project>

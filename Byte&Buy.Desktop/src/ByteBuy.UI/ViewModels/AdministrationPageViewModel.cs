@@ -11,6 +11,7 @@ public partial class AdministrationPageViewModel : PageViewModel
     public CountriesPageViewModel CountriesPageViewModel { get; }
     public CategoriesPageViewModel CategoriesPageViewModel { get; }
     public ConditionsPageViewModel ConditionsPageViewModel { get; }
+    public ItemsPageViewModel ItemsPageViewModel { get; }
 
     private object? _selectedTab;
     public object? SelectedTab
@@ -27,7 +28,8 @@ public partial class AdministrationPageViewModel : PageViewModel
         DeliveriesPageViewModel deliveries,
         CountriesPageViewModel countries,
         ConditionsPageViewModel conditions,
-        CategoriesPageViewModel categories) : base(alert)
+        CategoriesPageViewModel categories,
+        ItemsPageViewModel itemsPageViewModel) : base(alert)
     {
         DeliveriesPageViewModel = deliveries;
         CountriesPageViewModel = countries;
@@ -36,6 +38,7 @@ public partial class AdministrationPageViewModel : PageViewModel
 
         SelectedTab = DeliveriesPageViewModel;
         _ = DeliveriesPageViewModel.EnsureLoadedAsync();
+        ItemsPageViewModel = itemsPageViewModel;
     }
 
     private async Task OnSelectedTabChangedAsync(object? tab)
@@ -56,6 +59,9 @@ public partial class AdministrationPageViewModel : PageViewModel
                 break;
             case ConditionsPageViewModel conditions:
                 await conditions.EnsureLoadedAsync();
+                break;
+            case ItemsPageViewModel items:
+                await items.EnsureLoadedAsync();
                 break;
         }
     }

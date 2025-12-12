@@ -9,6 +9,8 @@ namespace ByteBuy.UI.ViewModels;
 
 public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
 {
+    private bool _isLoaded;
+
     public ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
         IDialogNavigationService dialogNavigation,
         IItemService service) : base(alert, navigation, dialogNavigation, service)
@@ -17,7 +19,8 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
 
     protected override Task Add()
     {
-        throw new System.NotImplementedException();
+        Navigation.NavigateToAsync(Data.ApplicationPageNames.Item);
+        return Task.CompletedTask;
     }
 
     protected override Task Edit(ItemListItem item)
@@ -28,5 +31,14 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
     protected override Task LoadData()
     {
         throw new System.NotImplementedException();
+    }
+
+    public async Task EnsureLoadedAsync()
+    {
+        if (_isLoaded)
+            return;
+
+        await LoadData();
+        _isLoaded = true;
     }
 }
