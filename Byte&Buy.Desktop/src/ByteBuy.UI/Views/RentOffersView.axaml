@@ -1,0 +1,126 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="using:ByteBuy.UI.Views.Shared"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:RentOffersViewModel"
+             x:Class="ByteBuy.UI.Views.RentOffersView">
+
+  	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Grid>
+		<Grid RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
+				<Label Content="Filters" />
+				<Button
+				Grid.Column="2"
+				Command="{Binding AddCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+					</StackPanel>
+
+				</Button>
+			</Grid>
+
+			<!-- Fetched items count -->
+			<StackPanel Grid.Row="1">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<Label Content="Records fetched:"
+						   FontWeight="600"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+					<Label Content="{Binding ItemsCount}"
+						   FontWeight="700"
+						   Foreground="{DynamicResource TextLightBrush}"
+						   HorizontalAlignment="Right" />
+				</StackPanel>
+
+				<!-- Data Grid Containing All Items -->
+				<DataGrid
+				x:Name="ItemsGrid"
+				ItemsSource="{Binding Items}"
+				AutoGenerateColumns="False"
+				SelectedItem="{Binding SelectedItem}"
+				GridLinesVisibility="All"
+				IsReadOnly="True"
+				HeadersVisibility="All"
+				CanUserSortColumns="True"
+				CanUserResizeColumns="True"
+				RowHeight="36">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+						<DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*" />
+						<DataGridTextColumn Header="Quantity" Binding="{Binding QuantityAvailable}" Width="*" />
+						<DataGridTextColumn Header="Unit Price per Day" Binding="{Binding PriceAndCurrencyPerDay}" Width="*" />
+						<DataGridTextColumn Header="Created By" Binding="{Binding CreatedByName}" Width="*" />
+						<DataGridTemplateColumn Header="Actions">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
+										<Button
+										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
+										<Button
+										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}">
+
+											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+
+				</DataGrid>
+
+			</StackPanel>
+
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+				<Label Content="1 of 32"
+					   FontSize="15"
+					   Foreground="{DynamicResource TextLightBrush}"
+					   FontWeight="600"
+					   VerticalAlignment="Center" />
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+			</StackPanel>
+
+		</Grid>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+	</Grid>
+</UserControl>

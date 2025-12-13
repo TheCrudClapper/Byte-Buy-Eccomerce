@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddSingleton<IConditionService, ConditionService>();
         services.AddSingleton<ICategoryService, CategoryService>();
         services.AddSingleton<IItemService, ItemService>();
+        services.AddSingleton<IRentOfferService, RentOfferService>();
+        services.AddSingleton<ISaleOfferService, SaleOfferService>();
         return services;
     }
 }

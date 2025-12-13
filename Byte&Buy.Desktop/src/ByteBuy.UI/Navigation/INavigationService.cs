@@ -26,4 +26,6 @@ public interface INavigationService
     /// Open a new window with optional initialization
     /// </summary>
     void OpenWindow(ApplicationWindowNames window, Action<WindowViewModel>? init = null);
+
+    void ShowAlert();
 }

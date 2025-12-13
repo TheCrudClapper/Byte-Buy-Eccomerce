@@ -16,5 +16,7 @@
         <TabItem Header="Condition" Content="{Binding ConditionsPageViewModel}"/>
         <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>
         <TabItem Header="Warehouse Items" Content="{Binding ItemsPageViewModel}"/>
+        <TabItem Header="Sale" Content="{Binding SaleOffersViewModel}"/>
+        <TabItem Header="Rent" Content="{Binding RentOffersViewModel}"/>
     </TabControl>
 </UserControl>

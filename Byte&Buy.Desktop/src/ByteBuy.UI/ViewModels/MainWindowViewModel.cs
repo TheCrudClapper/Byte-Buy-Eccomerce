@@ -1,6 +1,7 @@
 ﻿using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -10,23 +11,10 @@ namespace ByteBuy.UI.ViewModels;
 public partial class MainWindowViewModel : WindowViewModel
 {
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsDashboardPageActive))]
-    [NotifyPropertyChangedFor(nameof(IsSettingPageActive))]
-    [NotifyPropertyChangedFor(nameof(IsEmployeesPageActive))]
-    [NotifyPropertyChangedFor(nameof(IsProfilePageActive))]
-    [NotifyPropertyChangedFor(nameof(IsRolesPageActive))]
     private PageViewModel _currentPage;
 
     private readonly PageFactory _pageFactory;
     public Action? Logout { get; set; }
-
-    public bool IsProfilePageActive => CurrentPage.PageName == ApplicationPageNames.Profile;
-    public bool IsDashboardPageActive => CurrentPage.PageName == ApplicationPageNames.Dashboard;
-    public bool IsEmployeesPageActive => CurrentPage.PageName == ApplicationPageNames.Employees;
-    public bool IsSettingPageActive => CurrentPage.PageName == ApplicationPageNames.Settings;
-    public bool IsRolesPageActive => CurrentPage.PageName == ApplicationPageNames.Roles;
-    public bool IsPortalUsersActive => CurrentPage.PageName == ApplicationPageNames.PortalUsers;
-    public bool IsAdministrationActive => CurrentPage.PageName == ApplicationPageNames.Administration;
 
     public MainWindowViewModel(PageFactory pageFactory)
     {

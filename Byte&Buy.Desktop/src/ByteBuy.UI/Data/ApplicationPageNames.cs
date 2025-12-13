@@ -23,5 +23,7 @@ public enum ApplicationPageNames
     Condition,
     Administration,
     Items,
-    Item
+    Item,
+    RentOffers,
+    SaleOffers
 }

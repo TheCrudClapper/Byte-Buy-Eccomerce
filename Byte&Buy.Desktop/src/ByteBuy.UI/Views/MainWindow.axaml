@@ -3,6 +3,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
+        xmlns:views="using:ByteBuy.UI.Views.Shared"
 		mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="800"
 		Height="800" Width="1300"
 		x:Class="ByteBuy.UI.Views.MainWindow"
@@ -64,7 +65,6 @@
 					<StackPanel Margin="5,0" Grid.Row="0">
 						<Button
 						Command="{Binding GoToDashboardCommand}"
-						Classes.active="{Binding IsDashboardPageActive}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"
@@ -76,7 +76,6 @@
 
 						<Button
 						Command="{Binding GoToAdministrationCommand}"
-						Classes.active="{Binding IsAdministrationActive}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
@@ -87,7 +86,6 @@
 
 						<Button
 						Command="{Binding GoToEmployeesCommand}"
-						Classes.active="{Binding IsEmployeesPageActive}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
@@ -98,7 +96,6 @@
 
 						<Button
 						Command="{Binding GoToPortalUsersCommand}"
-						Classes.active="{Binding IsPortalUsersActive}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
@@ -109,7 +106,6 @@
 
 						<Button
 						Command="{Binding GoToRolesCommand}"
-						Classes.active="{Binding IsRolesPageActive}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"
@@ -154,7 +150,6 @@
 							<Button
 							Grid.Column="0"
 							Classes="menuButton"
-							Classes.active="{Binding IsSettingPageActive}"
 							Command="{Binding GoToSettingsCommand}">
 								<Image Source="{SvgImage /Assets/Images/regular/gear-solid-full-white.svg}"
 									   Height="20" Width="20" />
@@ -178,4 +173,5 @@
 			</Grid>
 		</Grid>
 	</dialogHost:DialogHost>
+
 </Window>

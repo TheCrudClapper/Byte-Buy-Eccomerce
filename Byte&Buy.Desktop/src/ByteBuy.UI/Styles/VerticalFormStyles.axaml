@@ -3,18 +3,18 @@
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
-				
-			<Border Classes="sectionBorder">
-				<TextBlock Text="Text"/>
-			</Border>
+				<ComboBox>
+					<ComboBoxItem>
+						<TextBlock Text="Test"/>
+					</ComboBoxItem>
+				</ComboBox>
 			</StackPanel>
-			
+
 		</Border>
 	</Design.PreviewWith>
 
 	<Style Selector="ComboBox.wideCombo">
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
-		
 	</Style>
 
 	<Style Selector="TextBlock.sectionText">

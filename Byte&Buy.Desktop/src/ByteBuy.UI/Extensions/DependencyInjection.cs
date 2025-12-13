@@ -35,6 +35,9 @@ public static class DependencyInjection
         services.AddTransient<ConditionDialogView>();
         services.AddTransient<ConfirmDialogView>();
 
+        //Alert
+        services.AddTransient<AlertViewModel>();
+
         //Transients
         services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();
@@ -45,7 +48,6 @@ public static class DependencyInjection
         services.AddTransient<RolesPageViewModel>();
         services.AddTransient<RolePageViewModel>();
         services.AddTransient<PasswordChangeViewModel>();
-        services.AddTransient<AlertViewModel>();
         services.AddTransient<CompanyInfoPageViewModel>();
         services.AddTransient<PermissionListBoxViewModel>();
         services.AddTransient<PermissionGrantRevokeViewModel>();
@@ -63,6 +65,8 @@ public static class DependencyInjection
         services.AddTransient<ConfirmationDialogViewModel>();
         services.AddTransient<ItemsPageViewModel>();
         services.AddTransient<ItemPageViewModel>();
+        services.AddTransient<RentOffersViewModel>();
+        services.AddTransient<SaleOffersViewModel>();
         return services;
     }
 }
