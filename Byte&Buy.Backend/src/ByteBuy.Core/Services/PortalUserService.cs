@@ -125,7 +125,7 @@ public class PortalUserService : IPortalUserService
 
         if (!string.IsNullOrWhiteSpace(request.Password))
         {
-            var validation = await _passwordService.ValdiateAsync(user, request.Password);
+            var validation = await _passwordService.ValidateAsync(user, request.Password);
             if (!validation.Succeeded)
                 return validation.ToResult<UpdatedResponse>();
 

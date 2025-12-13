@@ -27,5 +27,4 @@ public interface INavigationService
     /// </summary>
     void OpenWindow(ApplicationWindowNames window, Action<WindowViewModel>? init = null);
 
-    void ShowAlert();
 }

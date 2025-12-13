@@ -24,6 +24,7 @@
 						<StackPanel Grid.Row="0" Orientation="Horizontal">
 							<TextBlock Margin="0,0,10,0" FontSize="20" Text="Images"/>
 							<Button
+							Click="AddImages_Click"
 							Grid.Column="2">
 								<StackPanel Orientation="Horizontal">
 									<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
@@ -40,21 +41,56 @@
 								CornerRadius="10"
 								HorizontalAlignment="Stretch"
 								VerticalAlignment="Stretch">
-							<StackPanel VerticalAlignment="Center">
-								<StackPanel Orientation="Horizontal"
-											HorizontalAlignment="Center">
-									<Image Height="50"
-										   Width="50"
-										   Source="{SvgImage /Assets/Images/regular/file-image-regular-full.svg}"/>
-									<TextBlock Text="No images"
-											   FontSize="20"
-											   VerticalAlignment="Center"/>
+							<Grid>
+								<StackPanel VerticalAlignment="Center" IsVisible="{Binding ImageContainerVisible}">
+									<StackPanel Orientation="Horizontal"
+												HorizontalAlignment="Center">
+										<Image Height="50"
+											   Width="50"
+											   Source="{SvgImage /Assets/Images/regular/file-image-regular-full.svg}"/>
+										<TextBlock Text="No images"
+												   FontSize="20"
+												   VerticalAlignment="Center"/>
+									</StackPanel>
+									<TextBlock FontWeight="DemiBold"
+											   HorizontalAlignment="Center"
+											   FontSize="14"
+											   Text="To add new images click + icon above or drag and drop files to gray container"/>
 								</StackPanel>
-								<TextBlock FontWeight="DemiBold"
-										   HorizontalAlignment="Center"
-										   FontSize="14"
-										   Text="To add new images click + icon above or drag and drop files to gray container"/>
-							</StackPanel>
+								<ScrollViewer HorizontalScrollBarVisibility="Auto"
+											  VerticalScrollBarVisibility="Disabled">
+									<ItemsControl ItemsSource="{Binding Images}">
+										<ItemsControl.ItemsPanel>
+											<ItemsPanelTemplate>
+												<StackPanel Orientation="Horizontal"/>
+											</ItemsPanelTemplate>
+										</ItemsControl.ItemsPanel>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<StackPanel
+												Margin="20"
+												VerticalAlignment="Center"
+												Width="120">
+													<Image Width="130" Height="130"
+														   Stretch="UniformToFill"
+														   Source="{Binding Preview}"/>
+													<StackPanel Orientation="Horizontal" Margin="0,5,0,0" x:CompileBindings="false">
+														<TextBox
+														FontSize="10"
+														Watermark="Alt text"
+														Text="alttext"/>
+														<Button Content="D"
+																Command="{Binding DataContext.DeleteImageCommand,
+																RelativeSource={RelativeSource AncestorType=UserControl}}"
+																CommandParameter="{Binding}"/>
+													</StackPanel>
+												</StackPanel>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+								</ScrollViewer>
+							</Grid>
 						</Border>
 					</Grid>
 				</Border>
@@ -75,10 +111,12 @@
 						<TextBox Grid.Row="1"
 								 Grid.Column="0"
 								 Margin="0,0,10,0"
+								 Text="{Binding Name}"
 								 HorizontalAlignment="Stretch"/>
 
 						<TextBox Grid.Row="1"
 								 Grid.Column="1"
+								 Text="{Binding StockQuantity}"
 								 Margin="10,0,0,0"
 								 HorizontalAlignment="Stretch"/>
 					</Grid>
@@ -99,13 +137,29 @@
 
 						<ComboBox Grid.Row="1"
 								  Classes="wideCombo"
+								  ItemsSource="{Binding Categories}"
+								  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
 								  Grid.Column="0"
-								  Margin="0,0,10,0"/>
+								  Margin="0,0,10,0">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Title}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 
 						<ComboBox Grid.Row="1"
 								  Classes="wideCombo"
+								  ItemsSource="{Binding Conditions}"
+								  SelectedItem="{Binding SelectedCondition, Mode=TwoWay}"
 								  Grid.Column="1"
-								  Margin="10,0,0,0"/>
+								  Margin="10,0,0,0">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Title}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
 					</Grid>
 				</Border>
 
@@ -121,10 +175,14 @@
 							<TextBlock Classes="sectionHelperText"
 									   Text="Give detailed info about item, to avoid customer questions"/>
 						</StackPanel>
-						<TextBox Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Stretch" Height="250"/>
+						<TextBox Grid.Row="1"
+								 Text="{Binding Description}"
+								 TextWrapping="Wrap"
+								 HorizontalAlignment="Stretch"
+								 Height="250"/>
 						<StackPanel Grid.Row="2" Margin="0,20" HorizontalAlignment="Right" Orientation="Horizontal">
-							<Button Content="Clear" Margin="5,0"/>
-							<Button Content="Save"/>
+							<Button Content="Clear" Margin="5,0" Command="{Binding ClearCommand}"/>
+							<Button Content="Save"  Command="{Binding SaveCommand}"/>
 						</StackPanel>
 					</Grid>
 				</Border>

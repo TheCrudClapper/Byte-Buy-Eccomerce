@@ -150,7 +150,7 @@ public class EmployeeService : IEmployeeService
 
         if (!string.IsNullOrWhiteSpace(request.Password))
         {
-            var validation = await _passwordService.ValdiateAsync(employee, request.Password);
+            var validation = await _passwordService.ValidateAsync(employee, request.Password);
             if (!validation.Succeeded)
                 return validation.ToResult<UpdatedResponse>();
 

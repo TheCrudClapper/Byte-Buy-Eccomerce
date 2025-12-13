@@ -26,7 +26,7 @@ public class PasswordService : IPasswordService
 
     }
 
-    public async Task<IdentityResult> ValdiateAsync(ApplicationUser user, string password)
+    public async Task<IdentityResult> ValidateAsync(ApplicationUser user, string password)
     {
         foreach (var validator in _userManager.PasswordValidators)
         {

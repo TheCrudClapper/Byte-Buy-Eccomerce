@@ -12,7 +12,7 @@ public interface IPasswordService
     /// <param name="user">User to validate for</param>
     /// <param name="password">Password to validate</param>
     /// <returns></returns>
-    Task<IdentityResult> ValdiateAsync(ApplicationUser user, string password);
+    Task<IdentityResult> ValidateAsync(ApplicationUser user, string password);
 
     /// <summary>
     /// Changes password to new one, without asking for old password
