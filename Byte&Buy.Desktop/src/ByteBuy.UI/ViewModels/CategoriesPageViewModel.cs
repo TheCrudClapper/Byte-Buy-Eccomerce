@@ -14,7 +14,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class CategoriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     ICategoryService categoryService)
     : ViewModelMany<CategoryListItem, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
 {

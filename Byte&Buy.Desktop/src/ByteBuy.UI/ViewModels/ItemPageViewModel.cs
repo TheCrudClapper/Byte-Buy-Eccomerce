@@ -1,5 +1,7 @@
-﻿using ByteBuy.Services.DTO.Shared;
+﻿using Avalonia.Controls;
+using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -32,6 +34,9 @@ public partial class ItemPageViewModel : ViewModelSingle
     private SelectListItemResponse? _selectedCondition;
 
     [ObservableProperty]
+    private int _descriptionCharCount;
+
+    [ObservableProperty]
     [Required, MaxLength(2000)]
     private string _description = string.Empty;
 
@@ -42,7 +47,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     private ObservableCollection<SelectListItemResponse> _conditions = [];
 
     [ObservableProperty]
-    private ObservableCollection<ItemImageViewModel> _images = [];
+    private ObservableCollection<ImageViewModel> _images = [];
 
     public bool ImageContainerVisible => Images.Count == 0;
 
@@ -50,14 +55,17 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly IItemService _itemService;
     private readonly IConditionService _conditionService;
     private readonly ICategoryService _categoryService;
+    private readonly IDialogService _dialogService;
     public ItemPageViewModel(AlertViewModel alert,
         IItemService itemService,
         IConditionService conditionService,
-        ICategoryService categoryService) : base(alert)
+        ICategoryService categoryService,
+        IDialogService dialogService) : base(alert)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
         _itemService = itemService;
+        _dialogService = dialogService;
         Images.CollectionChanged += OnImagesCollectionChanged;
         _ = Initialize();
     }
@@ -91,11 +99,32 @@ public partial class ItemPageViewModel : ViewModelSingle
     }
 
 
-    partial void OnImagesChanged(ObservableCollection<ItemImageViewModel>? oldValue, ObservableCollection<ItemImageViewModel> newValue)
+    protected override async Task Save()
     {
-        if(oldValue != null)
+        ValidateAllProperties();
+        bool anyImageErrors = false;
+        foreach (var img in Images)
+        {
+            img.Validate();
+            if (img.HasErrors)
+                anyImageErrors = true;
+        }
+
+        if (HasErrors || anyImageErrors)
+            return;
+
+        await (IsEditMode switch
+        {
+            true => UpdateItem(),
+            false => AddItem(),
+        });
+    }
+
+    partial void OnImagesChanged(ObservableCollection<ImageViewModel>? oldValue, ObservableCollection<ImageViewModel> newValue)
+    {
+        if (oldValue != null)
             oldValue.CollectionChanged -= OnImagesCollectionChanged;
-        if(newValue != null)
+        if (newValue != null)
             newValue.CollectionChanged += OnImagesCollectionChanged;
 
         OnPropertyChanged(nameof(ImageContainerVisible));
@@ -107,8 +136,24 @@ public partial class ItemPageViewModel : ViewModelSingle
     }
 
     [RelayCommand]
-    public void DeleteImage(ItemImageViewModel item) 
+    public async Task AddImages()
+    {
+        var result = await _dialogService.SelectImages(true);
+        foreach (var image in result)
+        {
+            Images.Add(image);
+        }
+    }
+
+    [RelayCommand]
+    public void DeleteImage(ImageViewModel item)
     {
         Images.Remove(item);
+    }
+
+    partial void OnDescriptionChanged(string value)
+    {
+        DescriptionCharCount = value.Length;
+        ValidateProperty(value, nameof(Description));
     }
 }

@@ -16,7 +16,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
     public RolesPageViewModel(
         AlertViewModel alert,
         INavigationService navigationService,
-        IDialogNavigationService dialogNavigation,
+        IDialogService dialogNavigation,
         IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
     {
         _ = LoadData();

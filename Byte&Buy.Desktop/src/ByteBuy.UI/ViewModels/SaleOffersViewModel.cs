@@ -9,7 +9,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public class SaleOffersViewModel(AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     ISaleOfferService service) 
     : ViewModelMany<SaleOfferListItem, ISaleOfferService>(alert, navigation, dialogNavigation, service)
 {

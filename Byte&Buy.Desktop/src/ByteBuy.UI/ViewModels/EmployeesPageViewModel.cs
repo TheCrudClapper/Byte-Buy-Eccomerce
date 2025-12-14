@@ -17,7 +17,7 @@ public partial class EmployeesPageViewModel
     public EmployeesPageViewModel(
         AlertViewModel alert,
         INavigationService navigation,
-        IDialogNavigationService dialogNavigation,
+        IDialogService dialogNavigation,
         IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
     {
         _ = LoadData();

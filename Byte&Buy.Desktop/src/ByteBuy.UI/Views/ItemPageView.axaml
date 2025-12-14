@@ -24,7 +24,7 @@
 						<StackPanel Grid.Row="0" Orientation="Horizontal">
 							<TextBlock Margin="0,0,10,0" FontSize="20" Text="Images"/>
 							<Button
-							Click="AddImages_Click"
+							Command="{Binding AddImagesCommand}"
 							Grid.Column="2">
 								<StackPanel Orientation="Horizontal">
 									<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
@@ -96,7 +96,7 @@
 													FontSize="12"
 													HorizontalAlignment="Stretch"
 													Watermark="Alternative text"
-													Text=""/>
+													Text="{Binding AltText}"/>
 												</StackPanel>
 											</DataTemplate>
 										</ItemsControl.ItemTemplate>
@@ -181,17 +181,23 @@
 						Padding="20,0"
 						Classes="sectionBorder">
 					<Grid RowDefinitions="auto, auto, auto">
-						<StackPanel Grid.Row="0" Margin="0,20,0,10">
+						<StackPanel Grid.Row="0" Margin="0,020,0,0">
 							<TextBlock Classes="sectionText"
 									   Text="Description"/>
-							<TextBlock Classes="sectionHelperText"
+							<TextBlock Classes="sectionHelperText" HorizontalAlignment="Left"
 									   Text="Give detailed info about item, to avoid customer questions"/>
 						</StackPanel>
-						<TextBox Grid.Row="1"
-								 Text="{Binding Description}"
-								 TextWrapping="Wrap"
-								 HorizontalAlignment="Stretch"
-								 Height="250"/>
+						<StackPanel Grid.Row="1">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+								<TextBlock Classes="sectionHelperText" Text="{Binding DescriptionCharCount}"/>
+								<TextBlock Classes="sectionHelperText" Text="/2000"/>
+							</StackPanel>
+							<TextBox
+							Text="{Binding Description}"
+							TextWrapping="Wrap"
+							HorizontalAlignment="Stretch"
+							Height="250"/>
+						</StackPanel>
 						<StackPanel Grid.Row="2" Margin="0,20" HorizontalAlignment="Right" Orientation="Horizontal">
 							<Button Content="Clear" Margin="5,0" Command="{Binding ClearCommand}"/>
 							<Button Content="Save"  Command="{Binding SaveCommand}"/>

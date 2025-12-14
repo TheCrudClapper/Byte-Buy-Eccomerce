@@ -1,0 +1,29 @@
+﻿using Avalonia.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+
+namespace ByteBuy.UI.ViewModels.Shared;
+
+public partial class ImageViewModel(Bitmap bitmap, string fileName, Stream fileStream) : ObservableValidator
+{
+
+    public string FileName { get; } = fileName;
+    public Bitmap? Preview { get; } = bitmap;
+
+    [ObservableProperty]
+    [Required, MaxLength(50)]
+    private string _altText = string.Empty;
+
+    public Stream FileStream { get; } = fileStream;
+
+    public void Validate()
+    {
+        ValidateAllProperties();
+    }
+
+    partial void OnAltTextChanged(string? oldValue, string newValue)
+    {
+        ValidateProperty(newValue, nameof(AltText));
+    }
+}

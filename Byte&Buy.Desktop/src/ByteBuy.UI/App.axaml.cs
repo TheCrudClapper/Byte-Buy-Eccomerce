@@ -112,9 +112,23 @@ namespace ByteBuy.UI
                 sp.GetRequiredService<WindowFactory>()
                 ));
 
+            //Application LifeTime
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifeTime)
+            {
+                services.AddSingleton<IClassicDesktopStyleApplicationLifetime>(desktopLifeTime);
+            }
+
+            //Top level provider
+            services.AddSingleton<Func<TopLevel?>>(x => () =>
+            {
+                if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime topDesktop)
+                    return TopLevel.GetTopLevel(topDesktop.MainWindow);
+
+                return null;
+            });
+
             //Register Dialog Navigation
-            services.AddSingleton<IDialogNavigationService>(sp => new DialogNavigationService(
-                    sp.GetRequiredService<DialogFactory>()));
+            services.AddSingleton<IDialogService, DialogService>();
 
             var provider = services.BuildServiceProvider();
 

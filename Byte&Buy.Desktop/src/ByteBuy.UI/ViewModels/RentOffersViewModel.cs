@@ -10,7 +10,7 @@ namespace ByteBuy.UI.ViewModels;
 public class RentOffersViewModel(
     AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     IRentOfferService service)
     : ViewModelMany<RentOfferListItem, IRentOfferService>(alert, navigation, dialogNavigation, service)
 {

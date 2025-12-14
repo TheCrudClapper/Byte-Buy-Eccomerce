@@ -14,7 +14,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public class CountriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     ICountryService countryService)
     : ViewModelMany<CountryListItem, ICountryService>(alert, navigation, dialogNavigation, countryService)
 {

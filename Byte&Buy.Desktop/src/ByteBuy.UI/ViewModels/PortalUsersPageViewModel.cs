@@ -16,7 +16,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
     public PortalUsersPageViewModel(
         AlertViewModel alert,
         INavigationService navigation,
-        IDialogNavigationService dialogNavigation,
+        IDialogService dialogNavigation,
         IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
     {
         _ = LoadData();

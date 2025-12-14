@@ -14,7 +14,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public class DeliveriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     IDeliveryService deliveryService)
     : ViewModelMany<DeliveryListItem, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
 {

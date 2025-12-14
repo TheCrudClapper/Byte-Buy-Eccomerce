@@ -15,7 +15,7 @@ namespace ByteBuy.UI.ViewModels;
 public class ConditionsPageViewModel(
     AlertViewModel alert,
     INavigationService navigation,
-    IDialogNavigationService dialogNavigation,
+    IDialogService dialogNavigation,
     IConditionService conditionService)
     : ViewModelMany<ConditionListItem, IConditionService>(alert, navigation, dialogNavigation, conditionService)
 {

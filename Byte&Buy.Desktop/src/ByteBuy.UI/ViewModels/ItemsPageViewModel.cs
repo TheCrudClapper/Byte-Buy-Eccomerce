@@ -12,7 +12,7 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
     private bool _isLoaded;
 
     public ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
-        IDialogNavigationService dialogNavigation,
+        IDialogService dialogNavigation,
         IItemService service) : base(alert, navigation, dialogNavigation, service)
     {
     }

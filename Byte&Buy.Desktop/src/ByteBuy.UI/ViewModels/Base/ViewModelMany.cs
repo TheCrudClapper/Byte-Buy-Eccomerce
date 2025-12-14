@@ -27,12 +27,12 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     #endregion
 
     protected INavigationService Navigation;
-    protected IDialogNavigationService DialogNavigation;
+    protected IDialogService DialogNavigation;
     protected readonly ServiceType Service;
 
     protected ViewModelMany(AlertViewModel alert,
         INavigationService navigation,
-        IDialogNavigationService dialogNavigation,
+        IDialogService dialogNavigation,
         ServiceType service) : base(alert)
     {
         Navigation = navigation;
