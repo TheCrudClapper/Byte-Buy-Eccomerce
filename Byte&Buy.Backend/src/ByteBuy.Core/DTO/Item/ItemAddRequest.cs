@@ -10,5 +10,5 @@ public record ItemAddRequest(
         [Required, MaxLength(75)] string Name,
         [Required, MaxLength(2000)] string Description,
         [Required] int StockQuantity,
-        [Required] IEnumerable<ImageAddRequest> Images
+        [Required] IList<ImageAddRequest> Images
     );

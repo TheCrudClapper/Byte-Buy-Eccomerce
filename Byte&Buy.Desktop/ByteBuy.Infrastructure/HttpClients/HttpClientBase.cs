@@ -48,6 +48,19 @@ public abstract class HttpClientBase
         }
     }
 
+    protected async Task<Result<T>> PostAsync<T>(string resource, HttpContent content)
+    {
+        try
+        {
+            var response = await _client.PostAsync(resource, content);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
     protected async Task<Result> PostAsync(string resource, object payload)
     {
         try

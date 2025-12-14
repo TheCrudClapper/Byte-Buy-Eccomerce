@@ -168,13 +168,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         Countries = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
     }
 
-    public void InitializeForAdd()
-    {
-        EditingItemId = Guid.Empty;
-        IsEditMode = false;
-        Clear();
-    }
-
     public async Task InitializeForEdit(Guid itemId)
     {
         EditingItemId = itemId;

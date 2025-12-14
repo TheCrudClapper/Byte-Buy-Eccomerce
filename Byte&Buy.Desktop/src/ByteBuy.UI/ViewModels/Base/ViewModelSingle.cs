@@ -31,6 +31,13 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
         });
     }
 
+    public virtual void InitializeForAdd()
+    {
+        IsEditMode = false;
+        EditingItemId = null;
+        Clear();
+    }
+
     [RelayCommand]
     protected abstract void Clear();
 }

@@ -46,12 +46,10 @@ public partial class RolePageViewModel : ViewModelSingle
         PermissionListBox.SetSelectedPermissions(permissionIds);
     }
 
-    public void InitializeForAdd()
+    public override void InitializeForAdd()
     {
-        EditingItemId = Guid.Empty;
-        IsEditMode = false;
+        base.InitializeForAdd();
         PermissionListBox.ClearSelectedPermissions();
-        Clear();
     }
 
     protected override async Task UpdateItem()

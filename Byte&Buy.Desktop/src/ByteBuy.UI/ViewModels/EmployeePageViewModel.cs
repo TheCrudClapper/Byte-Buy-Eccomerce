@@ -99,14 +99,6 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         FlatNumber = string.Empty;
         PermissionListBox.ClearSelectedPermissions();
     }
-
-    public void InitializeForAdd()
-    {
-        IsEditMode = false;
-        EditingItemId = null;
-        Clear();
-    }
-
     public async Task InitializeForEdit(Guid itemId)
     {
         IsEditMode = true;

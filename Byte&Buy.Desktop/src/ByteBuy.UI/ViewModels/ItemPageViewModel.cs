@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -79,9 +80,11 @@ public partial class ItemPageViewModel : ViewModelSingle
         Categories = new ObservableCollection<SelectListItemResponse>(categoryResult?.Value ?? []);
     }
 
-    protected override Task AddItem()
+    protected override async Task AddItem()
     {
-        throw new System.NotImplementedException();
+        var request = ItemMappings.MapToRequest(this);
+        var result = await _itemService.Add(request);
+        HandleResult(result, "Successfully added new item !");
     }
 
     protected override void Clear()

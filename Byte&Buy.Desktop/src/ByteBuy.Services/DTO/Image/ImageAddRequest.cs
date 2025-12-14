@@ -5,5 +5,6 @@ namespace ByteBuy.Services.DTO.Image;
 
 public record ImageAddRequest(
     string AltText,
-    IFormFile Image
+    string FileName,
+    Stream FileStream
     );
