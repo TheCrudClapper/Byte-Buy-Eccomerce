@@ -33,7 +33,7 @@
 							</Button>
 						</StackPanel>
 						<Border Grid.Row="1"
-								Height="200"
+								Height="250"
 								Margin="0,10,0,0"
 								Classes="highlightable"
 								Background="LightGray"
@@ -71,20 +71,32 @@
 												<StackPanel
 												Margin="20"
 												VerticalAlignment="Center"
-												Width="120">
-													<Image Width="130" Height="130"
-														   Stretch="UniformToFill"
-														   Source="{Binding Preview}"/>
-													<StackPanel Orientation="Horizontal" Margin="0,5,0,0" x:CompileBindings="false">
-														<TextBox
-														FontSize="10"
-														Watermark="Alt text"
-														Text="alttext"/>
-														<Button Content="D"
-																Command="{Binding DataContext.DeleteImageCommand,
-																RelativeSource={RelativeSource AncestorType=UserControl}}"
-																CommandParameter="{Binding}"/>
-													</StackPanel>
+												Width="170">
+													<Grid Width="170" Height="170" Margin="0,0,0,5">
+														<Image
+														Stretch="UniformToFill"
+														Source="{Binding Preview}"/>
+														<Button
+														ZIndex="20"
+														Margin="4"
+														HorizontalAlignment="Right"
+														VerticalAlignment="Top"
+														Width="30"
+														x:CompileBindings="false"
+														Height="30"
+														Command="{Binding DataContext.DeleteImageCommand,
+														RelativeSource={RelativeSource AncestorType=UserControl}}"
+														CommandParameter="{Binding}">
+															<Image Source="{SvgImage /Assets/Images/regular/trash-can-regular-full.svg}"
+																   Height="17"
+																   Width="17" />
+														</Button>
+													</Grid>
+													<TextBox
+													FontSize="12"
+													HorizontalAlignment="Stretch"
+													Watermark="Alternative text"
+													Text=""/>
 												</StackPanel>
 											</DataTemplate>
 										</ItemsControl.ItemTemplate>
