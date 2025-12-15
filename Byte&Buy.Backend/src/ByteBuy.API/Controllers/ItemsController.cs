@@ -14,18 +14,22 @@ public class ItemsController : BaseApiController
         => _itemsService = itemsService;
 
     [HttpGet("list")]
-    public async Task<ActionResult<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsList()
-        => HandleResult(await _itemsService.GetCompanyItemsList());
+    public async Task<ActionResult<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsList(CancellationToken ct)
+        => HandleResult(await _itemsService.GetCompanyItemsList(ct));
 
     [HttpPost]
     public async Task<ActionResult<CreatedResponse>> PostItem([FromForm] ItemAddRequest request)
         => HandleResult(await _itemsService.AddCompanyItem(request));
 
-    [HttpPut]
+    [HttpPut("{itemId}")]
     public async Task<ActionResult<UpdatedResponse>> PutItem(Guid itemId, ItemUpdateRequest request)
         => HandleResult(await _itemsService.UpdateCompanyItem(itemId, request));
 
-    [HttpDelete]
+    [HttpDelete("{itemId}")]
     public async Task<IActionResult> DeleteItem(Guid itemId)
         => HandleResult(await _itemsService.DeleteCompanyItem(itemId));
+
+    [HttpGet("{itemId}")]
+    public async Task<ActionResult<ItemResponse>> GetItem(Guid itemId, CancellationToken ct)
+        => HandleResult(await _itemsService.GetCompanyItem(itemId, ct));
 }

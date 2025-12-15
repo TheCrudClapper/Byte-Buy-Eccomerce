@@ -10,7 +10,6 @@ public static class ImageMappings
     public static Expression<Func<Image, ImageResponse>> ImageResponseProjection =>
        i => new ImageResponse(
            i.Id,
-           i.AltText,
-           i.ImagePath
+           i.AltText
            );
 }

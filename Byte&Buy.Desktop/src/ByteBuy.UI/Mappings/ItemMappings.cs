@@ -31,4 +31,16 @@ public static class ItemMappings
             RowNumber = index + 1,
             StockQuantity = response.StockQuantity
         };
+
+    public static void MapFromResponse(this ItemPageViewModel vm, ItemResponse response)
+    {
+        vm.Description = response.Description;
+        vm.StockQuantity = response.StockQuantity;
+        vm.Name = response.Name;
+        vm.SelectedCategory = vm.Categories
+            .FirstOrDefault(c => c.Id == response.CategoryId);
+
+        vm.SelectedCondition = vm.Conditions
+            .FirstOrDefault(c => c.Id == response.ConditionId);
+    }
 }

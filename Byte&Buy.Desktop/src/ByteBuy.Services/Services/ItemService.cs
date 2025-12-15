@@ -37,8 +37,8 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
     public async Task<Result> DeleteById(Guid id)
         => await httpClient.DeleteCompanyItem(id);
 
-    public async Task<Result<CountryResponse>> GetById(Guid id)
-        => throw new NotImplementedException();
+    public async Task<Result<ItemResponse>> GetById(Guid id)
+        => await httpClient.GetByIdAsync(id);
 
     public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetList()
         => await httpClient.GetListAsync();

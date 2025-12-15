@@ -11,4 +11,5 @@ public interface IItemHttpClient
     Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, ItemUpdateRequest request);
     Task<Result<IReadOnlyCollection<ItemListResponse>>> GetListAsync();
     Task<Result> DeleteCompanyItem(Guid id);
+    Task<Result<ItemResponse>> GetByIdAsync(Guid id);
 }

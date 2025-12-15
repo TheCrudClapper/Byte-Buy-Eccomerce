@@ -83,6 +83,13 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         EditingItemId = id;
         IsEditMode = true;
+
+        var result = await _itemService.GetById(id);
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
+            return;
+
+        ItemMappings.MapFromResponse(this, value);
     }
     protected override async Task AddItem()
     {
