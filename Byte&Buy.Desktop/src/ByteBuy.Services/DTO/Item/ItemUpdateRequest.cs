@@ -2,11 +2,13 @@
 
 namespace ByteBuy.Core.DTO.Item;
 
-public record ItemUpdateRequest(
+public sealed record ItemUpdateRequest(
       Guid CategoryId,
       Guid ConditionId,
       string Name,
       string Description,
       int StockQuantity,
-      IEnumerable<ImageUpdateRequest> Images
+
+      IList<ImageAddRequest> NewImages,
+      IList<ExistingImageUpdateRequest> ExistingImages
     );

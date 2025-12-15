@@ -8,12 +8,13 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public abstract class HttpClientBase
 {
-    private readonly HttpClient _client;
+    protected readonly HttpClient _client;
     private readonly JsonSerializerOptions _jsonOptions;
+    protected readonly Uri BaseAddress = new Uri("http://localhost:5099/api/");
     protected HttpClientBase(HttpClient httpClient)
     {
         _client = httpClient;
-        _client.BaseAddress = new Uri("http://localhost:5099/api/");
+        _client.BaseAddress = BaseAddress;
 
         _jsonOptions = new JsonSerializerOptions()
         {
@@ -155,7 +156,6 @@ public abstract class HttpClientBase
         return Result<T>.Fail(error);
     }
 
-
     private async Task<Result> HandleResponseAsync(HttpResponseMessage response)
     {
         if (response.IsSuccessStatusCode)
@@ -186,4 +186,5 @@ public abstract class HttpClientBase
             return ApiErrors.UnknownError;
         }
     }
+
 }

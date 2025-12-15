@@ -2,5 +2,6 @@
 
 public record ImageResponse(
     Guid Id,
+    string ImagePath,
     string AltText
     );

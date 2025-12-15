@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Shared;
+﻿using Avalonia.Media.Imaging;
+using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
@@ -10,6 +11,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -55,17 +58,20 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly IItemService _itemService;
     private readonly IConditionService _conditionService;
     private readonly ICategoryService _categoryService;
+    private readonly IImageService _imageService;
     private readonly IDialogService _dialogService;
     public ItemPageViewModel(AlertViewModel alert,
         IItemService itemService,
         IConditionService conditionService,
         ICategoryService categoryService,
-        IDialogService dialogService) : base(alert)
+        IDialogService dialogService,
+        IImageService imageService) : base(alert)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
         _itemService = itemService;
         _dialogService = dialogService;
+        _imageService = imageService;
         Images.CollectionChanged += OnImagesCollectionChanged;
         _ = Initialize();
     }
@@ -90,6 +96,21 @@ public partial class ItemPageViewModel : ViewModelSingle
             return;
 
         ItemMappings.MapFromResponse(this, value);
+
+        Images.Clear();
+
+        var tasks = value.Images.Select(async img =>
+        {
+            var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
+            if (bytes is null) return;
+
+            using var ms = new MemoryStream(bytes);
+            var bmp = new Bitmap(ms);
+
+            Images.Add(new ImageViewModel(img.Id, img.ImagePath, img.AltText, bmp));
+        });
+
+        await Task.WhenAll(tasks);
     }
     protected override async Task AddItem()
     {
@@ -162,7 +183,13 @@ public partial class ItemPageViewModel : ViewModelSingle
     [RelayCommand]
     public void DeleteImage(ImageViewModel item)
     {
-        Images.Remove(item);
+        if (item.IsNew)
+        {
+            Images.Remove(item);
+            return;
+        }
+
+        item.IsDeleted = true;
     }
 
     partial void OnDescriptionChanged(string value)

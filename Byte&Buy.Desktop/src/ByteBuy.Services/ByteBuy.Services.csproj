@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="DTO\Permission\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

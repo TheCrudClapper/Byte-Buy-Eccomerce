@@ -47,6 +47,11 @@ public static class DependencyInjection
         services.AddHttpClient<IItemHttpClient, ItemHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
+        services.AddHttpClient<IImagePreviewHttpClient, ImagePreviewHttpClient>(options =>
+        {
+            options.BaseAddress = new Uri("http://localhost:5099/Images/");
+        }).AddHttpMessageHandler<BearerTokenHandler>();
+
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
         return services;

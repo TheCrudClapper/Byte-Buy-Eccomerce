@@ -1,6 +1,7 @@
 ﻿namespace ByteBuy.Core.DTO.Image;
 
-public record ImageResponse(
+public sealed record ImageResponse(
     Guid Id,
+    string ImagePath,
     string AltText
     );
