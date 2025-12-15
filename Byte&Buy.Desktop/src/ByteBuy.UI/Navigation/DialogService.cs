@@ -57,11 +57,9 @@ public class DialogService(DialogFactory dialogFactory, Func<TopLevel?> topLevel
             await using var stream = await file.OpenReadAsync();
             var mem = new MemoryStream();
             await stream.CopyToAsync(mem);
-            mem.Position = 0;
-
-            var bmp = new Bitmap(mem);
-            mem.Position = 0;
-            images.Add(new ImageViewModel(bmp, file.Name, mem));
+            var bytes = mem.ToArray();
+            var bmp = new Bitmap(new MemoryStream(bytes));
+            images.Add(new ImageViewModel(bmp, file.Name, bytes));
         }
 
         return images;

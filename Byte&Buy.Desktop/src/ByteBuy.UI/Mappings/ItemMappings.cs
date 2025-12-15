@@ -11,7 +11,7 @@ public static class ItemMappings
 {
     public static ItemAddRequest MapToRequest(this ItemPageViewModel vm)
     {
-        var images = vm.Images.Select(i => new ImageAddRequest(i.AltText, i.FileName, i.FileStream)).ToList();
+        var images = vm.Images.Select(i => new ImageAddRequest(i.AltText, i.FileName, i.FileBytes)).ToList();
         return new ItemAddRequest(vm.SelectedCategory?.Id ?? Guid.Empty,
             vm.SelectedCondition?.Id ?? Guid.Empty,
             vm.Name,

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class ImageViewModel(Bitmap bitmap, string fileName, Stream fileStream) : ObservableValidator
+public partial class ImageViewModel(Bitmap bitmap, string fileName, byte[] imageBytes) : ObservableValidator
 {
 
     public string FileName { get; } = fileName;
@@ -15,7 +15,8 @@ public partial class ImageViewModel(Bitmap bitmap, string fileName, Stream fileS
     [Required, MaxLength(50)]
     private string _altText = string.Empty;
 
-    public Stream FileStream { get; } = fileStream;
+    //public Stream FileStream { get; } = fileStream;
+    public byte[] FileBytes { get; } = imageBytes;
 
     public void Validate()
     {

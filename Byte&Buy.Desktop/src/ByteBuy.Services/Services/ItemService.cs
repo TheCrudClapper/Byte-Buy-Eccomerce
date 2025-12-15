@@ -26,8 +26,8 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
 
             content.Add(new StringContent(img.AltText ?? string.Empty), $"Images[{i}].AltText");
 
-            img.FileStream.Position = 0;
-            var fileContent = new StreamContent(img.FileStream);
+            var uploadStream = new MemoryStream(img.FileBytes, false);
+            var fileContent = new StreamContent(uploadStream);
 
             content.Add(fileContent, $"Images[{i}].Image", img.FileName);
         }
