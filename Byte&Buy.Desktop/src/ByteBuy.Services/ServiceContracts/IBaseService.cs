@@ -5,4 +5,5 @@ namespace ByteBuy.Services.ServiceContracts;
 public interface IBaseService
 {
     Task<Result> DeleteById(Guid id);
+
 }

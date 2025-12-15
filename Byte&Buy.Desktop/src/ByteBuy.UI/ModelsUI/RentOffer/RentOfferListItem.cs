@@ -4,7 +4,7 @@ using System;
 namespace ByteBuy.UI.ModelsUI.RentOffer;
 
 public class RentOfferListItem : IListItem
-{ 
+{
     public int RowNumber { get; set; }
     public Guid Id { get; init; }
     public string ItemName { get; set; } = string.Empty;

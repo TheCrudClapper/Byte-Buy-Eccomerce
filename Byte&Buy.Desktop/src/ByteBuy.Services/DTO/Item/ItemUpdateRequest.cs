@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Services.DTO.Image;
-using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.DTO.Item;
 

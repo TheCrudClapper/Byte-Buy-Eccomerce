@@ -10,4 +10,5 @@ public interface IItemService : IBaseService
     Task<Result<CreatedResponse>> Add(ItemAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, CountryUpdateRequest request);
     Task<Result<CountryResponse>> GetById(Guid id);
+    Task<Result<IReadOnlyCollection<ItemListResponse>>> GetList();
 }

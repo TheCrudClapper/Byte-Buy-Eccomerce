@@ -4,7 +4,6 @@ using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ByteBuy.Services.Services;
 
@@ -35,15 +34,14 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
         return await httpClient.PostCompanyItem(content);
     }
 
-    public Task<Result> DeleteById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Result> DeleteById(Guid id)
+        => await httpClient.DeleteCompanyItem(id);
 
-    public Task<Result<CountryResponse>> GetById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Result<CountryResponse>> GetById(Guid id)
+        => throw new NotImplementedException();
+
+    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetList()
+        => await httpClient.GetListAsync();
 
     public Task<Result<UpdatedResponse>> Update(Guid id, CountryUpdateRequest request)
     {

@@ -9,5 +9,6 @@ public interface IItemHttpClient
 {
     Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request);
     Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, ItemUpdateRequest request);
+    Task<Result<IReadOnlyCollection<ItemListResponse>>> GetListAsync();
     Task<Result> DeleteCompanyItem(Guid id);
 }

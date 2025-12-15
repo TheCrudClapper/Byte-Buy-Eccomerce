@@ -12,8 +12,8 @@ public partial class AdministrationPageViewModel : PageViewModel
     public CategoriesPageViewModel CategoriesPageViewModel { get; }
     public ConditionsPageViewModel ConditionsPageViewModel { get; }
     public ItemsPageViewModel ItemsPageViewModel { get; }
-    public RentOffersViewModel RentOffersViewModel { get; } 
-    public SaleOffersViewModel SaleOffersViewModel { get; } 
+    public RentOffersViewModel RentOffersViewModel { get; }
+    public SaleOffersViewModel SaleOffersViewModel { get; }
 
     private object? _selectedTab;
     public object? SelectedTab

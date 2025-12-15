@@ -10,7 +10,7 @@ namespace ByteBuy.UI.ViewModels;
 public class SaleOffersViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
-    ISaleOfferService service) 
+    ISaleOfferService service)
     : ViewModelMany<SaleOfferListItem, ISaleOfferService>(alert, navigation, dialogNavigation, service)
 {
     private bool _isLoaded;

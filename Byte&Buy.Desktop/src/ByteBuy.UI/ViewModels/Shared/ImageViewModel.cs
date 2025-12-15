@@ -1,7 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 

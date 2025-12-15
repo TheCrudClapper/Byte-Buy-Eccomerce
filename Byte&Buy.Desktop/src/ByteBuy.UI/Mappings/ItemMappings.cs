@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Services.DTO.Image;
 using ByteBuy.Services.DTO.Item;
+using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels;
 using System;
 using System.Linq;
-using System.Net.Http;
 
 namespace ByteBuy.UI.Mappings;
 
@@ -19,4 +19,16 @@ public static class ItemMappings
             vm.StockQuantity,
             images);
     }
+
+    public static ItemListItem ToListItem(this ItemListResponse response, int index)
+        => new ItemListItem
+        {
+            CategoryName = response.CategoryName,
+            ConditionName = response.ConditionName,
+            Id = response.Id,
+            ImagesCount = response.ImagesCount,
+            Name = response.Name,
+            RowNumber = index + 1,
+            StockQuantity = response.StockQuantity
+        };
 }

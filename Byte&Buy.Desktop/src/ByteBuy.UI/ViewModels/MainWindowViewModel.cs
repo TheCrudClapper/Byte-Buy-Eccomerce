@@ -1,7 +1,6 @@
 ﻿using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels.Base;
-using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;

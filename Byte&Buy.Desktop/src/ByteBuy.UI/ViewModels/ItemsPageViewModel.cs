@@ -1,8 +1,12 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -19,7 +23,7 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
 
     protected override Task Add()
     {
-        Navigation.NavigateTo(Data.ApplicationPageNames.Item, vm =>
+        Navigation.NavigateTo(ApplicationPageNames.Item, vm =>
         {
             if (vm is ItemPageViewModel itemVm)
                 itemVm.InitializeForAdd();
@@ -27,14 +31,27 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
         return Task.CompletedTask;
     }
 
-    protected override Task Edit(ItemListItem item)
+    protected override async Task Edit(ItemListItem item)
     {
-        throw new System.NotImplementedException();
+        await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
+        {
+            if (vm is ItemPageViewModel itemVm)
+                await itemVm.InitializeForEdit(item.Id);
+        });
     }
 
-    protected override Task LoadData()
+    protected override async Task LoadData()
     {
-        throw new System.NotImplementedException();
+        var result = await Service.GetList();
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
+            return;
+
+        var list = value
+            .Select((i, index) => i.ToListItem(index))
+            .ToList();
+
+        Items = new ObservableCollection<ItemListItem>(list);
     }
 
     public async Task EnsureLoadedAsync()

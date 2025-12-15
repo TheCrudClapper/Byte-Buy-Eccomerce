@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls;
-using ByteBuy.Services.DTO.Shared;
+﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
@@ -80,6 +79,11 @@ public partial class ItemPageViewModel : ViewModelSingle
         Categories = new ObservableCollection<SelectListItemResponse>(categoryResult?.Value ?? []);
     }
 
+    public async Task InitializeForEdit(Guid id)
+    {
+        EditingItemId = id;
+        IsEditMode = true;
+    }
     protected override async Task AddItem()
     {
         var request = ItemMappings.MapToRequest(this);

@@ -13,6 +13,9 @@ public class ItemHttpClient(HttpClient httpClient) : HttpClientBase(httpClient),
     public async Task<Result> DeleteCompanyItem(Guid id)
         => await DeleteAsync($"{resource}/{id}");
 
+    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetListAsync()
+        => await GetAsync<IReadOnlyCollection<ItemListResponse>>($"{resource}/list");
+
     public async Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 

@@ -3,8 +3,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels;
-using Microsoft.Extensions.Hosting.Internal;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ByteBuy.UI.Views;
 

@@ -3,7 +3,7 @@ using ByteBuy.Core.Domain.ImageStorageContracts;
 using ByteBuy.Core.Domain.ImageStorageContracts.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Abstractions;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -60,9 +60,18 @@ public class ItemsService : IItemsService
         return item.ToCreatedResponse();
     }
 
-    public Task<Result> DeleteCompanyItem(Guid itemId)
+    public async Task<Result> DeleteCompanyItem(Guid itemId)
     {
-        throw new NotImplementedException();
+        var aggregate = await _itemRepository.GetAggregateAsync(itemId);
+        if (aggregate is null)
+            return Result.Failure(Error.NotFound);
+
+        aggregate.Deactivate();
+
+        await _itemRepository.UpdateAsync(aggregate);
+        await _itemRepository.CommitAsync();
+
+        return Result.Success();
     }
 
     public async Task<Result<ItemResponse>> GetCompanyItem(Guid itemId, CancellationToken ct)
@@ -96,12 +105,17 @@ public class ItemsService : IItemsService
     }
 
     /// <summary>
-    /// Method that orchestrates saving files to directories + adding those images to Item aggregate.
+    /// Processes and saves a collection of new images for the specified item, associating each image with the item
+    /// using its provided metadata.
     /// </summary>
-    /// <param name="images">Collection of requests containing images to be added</param>
-    /// <param name="item">Reference of item(aggregate) to add images to</param>
-    /// <returns></returns>
-    private async Task<Result> HandleNewImages(IList<ImageAddRequest> images, Item item)
+    /// <typeparam name="TImageDto">The type of the image data transfer object. Must implement the IImageRequestDto interface.</typeparam>
+    /// <param name="images">A list of image data transfer objects containing the image files and associated metadata to be added to the
+    /// item. Cannot be null.</param>
+    /// <param name="item">The item to which the images will be associated. Cannot be null.</param>
+    /// <returns>A Result indicating whether the images were successfully saved and associated with the item. Returns a failure
+    /// result if any image could not be saved or added.</returns>
+    private async Task<Result> HandleNewImages<TImageDto>(IList<TImageDto> images, Item item)
+        where TImageDto : IImageRequestDto
     {
         var files = images.Select(i => i.Image).ToList();
 
