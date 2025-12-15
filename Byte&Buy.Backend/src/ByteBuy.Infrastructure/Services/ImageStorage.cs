@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.ImageStorageContracts;
 using ByteBuy.Core.Domain.ImageStorageContracts.Enums;
+using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
@@ -30,7 +31,7 @@ public class ImageStorage : IImageStorage
         throw new NotImplementedException();
     }
 
-    public void ValidateExtensions(IReadOnlyList<IFormFile> files)
+    public Result ValidateExtensions(IReadOnlyList<IFormFile> files)
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
 
@@ -38,20 +39,24 @@ public class ImageStorage : IImageStorage
         {
             var extension = Path.GetExtension(file.FileName);
             if (string.IsNullOrWhiteSpace(extension) || !allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
-                throw new InvalidOperationException("Unsuported image extension, Allowed: .jpg, .jpeg, .png");
+                return Result.Failure(ImageErrors.WrongImageExtensions);
         }
+
+        return Result.Success();
     }
 
-    public async Task<List<string>> SaveToDirectoryAsync(IReadOnlyList<IFormFile> files, ImageTypeEnum type)
+    public async Task<Result<List<string>>> SaveToDirectoryAsync(IReadOnlyList<IFormFile> files, ImageTypeEnum type)
     {
-        ValidateExtensions(files);
+        var validationResult = ValidateExtensions(files);
+        if (validationResult.IsFailure)
+            return Result.Failure<List<string>>(validationResult.Error);
 
         var basePath = GetCombinedPath(type);
         Directory.CreateDirectory(basePath);
 
         var paths = new List<string>();
 
-        foreach(var file in files)
+        foreach (var file in files)
         {
             var ext = Path.GetExtension(file.FileName);
 
