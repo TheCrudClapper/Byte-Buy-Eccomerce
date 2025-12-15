@@ -33,7 +33,7 @@ public class Image : AuditableEntity, ISoftDeletable
     public static Result Validate(string imagePath, string altText)
     {
         if(string.IsNullOrWhiteSpace(imagePath))
-            return Result.Failure(Error.Validation("Image Path is required and must be at most 50 characters."));
+            return Result.Failure(Error.Validation("Image Path is required"));
 
         if (string.IsNullOrWhiteSpace(altText) || altText.Length > 50)
             return Result.Failure(Error.Validation("Alernative Text is required and must be at most 50 characters."));

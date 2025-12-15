@@ -1,6 +1,8 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.ImageStorageContracts;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
+using ByteBuy.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,7 @@ public static class DependencyInjection
         services.AddScoped<IPortalUserRepository, PortalUserRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IImageStorage, ImageStorage>();
         return services;
     }
 }

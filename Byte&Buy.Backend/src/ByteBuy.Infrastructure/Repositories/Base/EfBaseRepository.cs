@@ -60,4 +60,7 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
 
     public async Task<T?> GetByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken ct = default)
         => await _context.Set<T>().FirstOrDefaultAsync(expression, ct);
+
+    public async Task<bool> ExistsByCondition(Expression<Func<T, bool>> expression, CancellationToken ct = default)
+        => await _context.Set<T>().AnyAsync(expression, ct);
 }

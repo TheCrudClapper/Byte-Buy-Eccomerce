@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Byte&Buy.Backend/src/ByteBuy.API/wwwroot/Images/Items

@@ -23,4 +23,7 @@ public interface IReadRepository<T> where T : class
 
     //Gets entity by given expression
     Task<T?> GetByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken ct = default);
+
+    //Check wheter entity exist based on expression
+    Task<bool> ExistsByCondition(Expression<Func<T, bool>> expression, CancellationToken ct = default);
 }

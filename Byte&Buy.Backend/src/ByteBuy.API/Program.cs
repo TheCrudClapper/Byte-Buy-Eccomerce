@@ -27,7 +27,6 @@ builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 // AddAsync Identity
 // -----------------------------
 builder.Services.AddIdentity();
-
 // -----------------------------
 // Configure Cors Policies
 // -----------------------------
@@ -69,6 +68,11 @@ if (app.Environment.IsDevelopment())
 // Https
 // -----------------------------
 app.UseHttpsRedirection();
+
+// -----------------------------
+// Enable serving static files
+// -----------------------------
+app.UseStaticFiles();
 
 // --------------------------------
 // Cors

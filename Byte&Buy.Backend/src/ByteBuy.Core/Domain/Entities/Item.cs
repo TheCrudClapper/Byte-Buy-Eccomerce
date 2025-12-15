@@ -20,14 +20,12 @@ public class Item : AuditableEntity, ISoftDeletable
 
     private Item() { }
 
-    private Item(string name, string description, Category category, Condition condition, int stockQuantity, bool isCompanyItem)
+    private Item(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, bool isCompanyItem)
     {
         Name = name;
         Description = description;
-        CategoryId = category.Id;
-        Category = category;
-        ConditionId = condition.Id;
-        Condition = condition;
+        CategoryId = categoryId;
+        ConditionId = conditionId;
         StockQuantity = stockQuantity;
         IsActive = true;
         IsCompanyItem = isCompanyItem;
@@ -58,25 +56,25 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public static Result<Item> Create(string name, string description, Category category, Condition condition, int stockQuantity)
-        => CreateInternal(name, description, category, condition, stockQuantity, false);
+    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
+        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, false);
 
-    public static Result<Item> CreateCompanyItem(string name, string description, Category category, Condition condition, int stockQuantity)
-        => CreateInternal(name, description, category, condition, stockQuantity, true);
+    public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
+        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, true);
 
     private static Result<Item> CreateInternal(
     string name,
     string description,
-    Category category,
-    Condition condition,
+    Guid categoryId,
+    Guid conditionId,
     int stockQuantity,
     bool isCompanyItem)
     {
-        if (condition is null)
-            return Result.Failure<Item>(Error.Validation("Condition can't be null"));
+        //if (conditionId is null)
+        //    return Result.Failure<Item>(Error.Validation("Condition can't be null"));
 
-        if (category is null)
-            return Result.Failure<Item>(Error.Validation("Category can't be null"));
+        //if (category is null)
+        //    return Result.Failure<Item>(Error.Validation("Category can't be null"));
 
         var validationResult = Validate(name, description, stockQuantity);
         if (validationResult.IsFailure)
@@ -85,8 +83,8 @@ public class Item : AuditableEntity, ISoftDeletable
         return new Item(
             name,
             description,
-            category,
-            condition,
+            categoryId,
+            conditionId,
             stockQuantity,
             isCompanyItem);
     }

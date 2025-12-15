@@ -27,4 +27,9 @@
     <ProjectReference Include="..\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Employees\" />
+    <Folder Include="wwwroot\Images\Items\" />
+  </ItemGroup>
+
 </Project>
