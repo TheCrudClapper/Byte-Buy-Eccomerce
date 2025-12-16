@@ -26,7 +26,7 @@ public class ImageStorage : IImageStorage
         };
     }
 
-    public Result DeleteFromDirectory(IReadOnlyList<string> imagePaths)
+    public Result DeleteFromDirectory(IList<string> imagePaths)
     {
         try
         {
@@ -42,7 +42,7 @@ public class ImageStorage : IImageStorage
         }
         catch (UnauthorizedAccessException)
         {
-            return Result.Failure(ImageErrors.UnauthoriedAccess);
+            return Result.Failure(ImageErrors.UnauthorizedAccess);
         }
         catch (IOException)
         {
@@ -53,7 +53,7 @@ public class ImageStorage : IImageStorage
     
     }
 
-    public Result ValidateExtensions(IReadOnlyList<IFormFile> files)
+    public static Result ValidateExtensions(IReadOnlyList<IFormFile> files)
     {
         string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
 
@@ -98,7 +98,7 @@ public class ImageStorage : IImageStorage
         catch (UnauthorizedAccessException)
         {
             CleanupFiles(basePath, paths);
-            return Result.Failure<List<string>>(ImageErrors.UnauthoriedAccess);
+            return Result.Failure<List<string>>(ImageErrors.UnauthorizedAccess);
         }
         catch (IOException)
         {

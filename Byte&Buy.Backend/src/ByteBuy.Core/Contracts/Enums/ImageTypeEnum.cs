@@ -3,5 +3,6 @@
 public enum ImageTypeEnum
 {
     Items,
-    Employees
+    Employees,
+    CompanyLogo
 }

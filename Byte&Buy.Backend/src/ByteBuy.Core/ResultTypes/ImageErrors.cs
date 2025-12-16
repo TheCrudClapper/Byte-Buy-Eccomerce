@@ -5,7 +5,7 @@ public static class ImageErrors
     public static readonly Error WrongImageExtensions =
         new(400, $"Images must have only .jpg, .jpeg, .png  extensions !");
 
-    public static readonly Error UnauthoriedAccess =
+    public static readonly Error UnauthorizedAccess =
         new(403, $"Unable to remove images at this time");
 
     public static readonly Error StorageFailure =

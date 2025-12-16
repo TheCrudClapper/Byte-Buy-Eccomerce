@@ -4,6 +4,7 @@ using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Abstractions;
+using ByteBuy.Core.DTO.Image;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -33,7 +34,7 @@ public class ItemsService : IItemsService
     public async Task<Result<CreatedResponse>> AddCompanyItem(ItemAddRequest request)
     {
         var validateRelatedEntities =
-            await CheckCountryAndConditionExists(request.CategoryId, request.ConditionId);
+            await CheckCountryAndConditionExistsAsync(request.CategoryId, request.ConditionId);
 
         if (validateRelatedEntities.IsFailure)
             return Result.Failure<CreatedResponse>(validateRelatedEntities.Error);
@@ -68,7 +69,7 @@ public class ItemsService : IItemsService
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var validateRelatedEntities =
-            await CheckCountryAndConditionExists(request.CategoryId, request.ConditionId);
+            await CheckCountryAndConditionExistsAsync(request.CategoryId, request.ConditionId);
 
         if (validateRelatedEntities.IsFailure)
             return Result.Failure<UpdatedResponse>(validateRelatedEntities.Error);
@@ -84,7 +85,7 @@ public class ItemsService : IItemsService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        //logic for adding new 
+        //adding new image
         if (request.NewImages.Count > 0)
         {
             var imagesResult = await HandleNewImages(request.NewImages, aggregate);
@@ -92,36 +93,16 @@ public class ItemsService : IItemsService
                 return Result.Failure<UpdatedResponse>(imagesResult.Error);
         }
 
-        var deletedIds = request.ExistingImages
-            .Where(i => i.IsDeleted)
-            .Select(i => i.Id)
-            .ToList();
-
-        var deletedPaths = aggregate.Images
-            .Where(img => deletedIds.Contains(img.Id))
-            .Select(img => img.ImagePath)
-            .ToList();
-
         //delete from disk
-        if(deletedPaths.Count > 0)
-        {
-            var deletedResult = _imageStorage.DeleteFromDirectory(deletedPaths);
-            if (deletedResult.IsFailure)
-                return Result.Failure<UpdatedResponse>(deletedResult.Error);
-        }
+        var imageDeletionResult = DeleteImagesPhysically(request, aggregate);
+        if (imageDeletionResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
 
-        //deleting or updating iamges
-        foreach (var image in request.ExistingImages)
-        {
-            if (image.IsDeleted)
-                aggregate.DeleteImagesById(image.Id);
-            else
-            {
-                var changeResult = aggregate.ChangeImageAltText(image.Id, image.AltText);
-                if (changeResult.IsFailure)
-                    return Result.Failure<UpdatedResponse>(changeResult.Error);
-            }
-        }
+        //marking as deleted or updating images metadata
+        var imageHandlinResult = UpdateOrMarkAsDeletedExistingImages(request, aggregate);
+        if (imageHandlinResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(imageHandlinResult.Error);
+
 
         await _itemRepository.UpdateAsync(aggregate);
         await _itemRepository.CommitAsync();
@@ -157,14 +138,50 @@ public class ItemsService : IItemsService
         return await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
     }
 
-
-    public async Task<Result> CheckCountryAndConditionExists(Guid categoryId, Guid conditionId)
+    //Helpers
+    private async Task<Result> CheckCountryAndConditionExistsAsync(Guid categoryId, Guid conditionId)
     {
         if (!await _categoryRepository.ExistsByCondition(cat => cat.Id == categoryId))
             return Result.Failure(CategoryErrors.NotFound);
 
         if (!await _conditionRepository.ExistsByCondition(con => con.Id == conditionId))
             return Result.Failure(ConditionErrors.NotFound);
+
+        return Result.Success();
+    }
+
+    private Result DeleteImagesPhysically(ItemUpdateRequest request, Item aggregate)
+    {
+        var deletedIds = request.ExistingImages
+            .Where(i => i.IsDeleted)
+            .Select(i => i.Id)
+            .ToList();
+
+        var deletedPaths = aggregate.GetImagePathsByIds(deletedIds);
+
+        if (deletedPaths.Count > 0)
+        {
+            var deletedResult = _imageStorage.DeleteFromDirectory(deletedPaths);
+            if (deletedResult.IsFailure)
+                return Result.Failure(deletedResult.Error);
+        }
+
+        return Result.Success();
+    }
+
+    private static Result UpdateOrMarkAsDeletedExistingImages(ItemUpdateRequest request, Item aggregate)
+    {
+        foreach (var image in request.ExistingImages)
+        {
+            if (image.IsDeleted)
+                aggregate.DeleteImagesById(image.Id);
+            else
+            {
+                var changeResult = aggregate.ChangeImageAltText(image.Id, image.AltText);
+                if (changeResult.IsFailure)
+                    return Result.Failure(changeResult.Error);
+            }
+        }
 
         return Result.Success();
     }
@@ -182,6 +199,7 @@ public class ItemsService : IItemsService
     private async Task<Result> HandleNewImages<TImageDto>(IList<TImageDto> images, Item item)
         where TImageDto : IImageRequestDto
     {
+
         var files = images.Select(i => i.Image).ToList();
 
         var imageSaveResult = await _imageStorage.SaveToDirectoryAsync(files, ImageTypeEnum.Items);

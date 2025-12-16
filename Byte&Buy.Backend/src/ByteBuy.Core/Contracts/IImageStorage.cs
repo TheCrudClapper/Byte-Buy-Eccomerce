@@ -7,5 +7,5 @@ namespace ByteBuy.Core.Contracts;
 public interface IImageStorage
 {
     Task<Result<List<string>>> SaveToDirectoryAsync(IReadOnlyList<IFormFile> files, ImageTypeEnum type);
-    Result DeleteFromDirectory(IReadOnlyList<string> imagePaths);
+    Result DeleteFromDirectory(IList<string> imagePaths);
 }

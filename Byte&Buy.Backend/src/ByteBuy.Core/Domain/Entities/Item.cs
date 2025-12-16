@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.ResultTypes;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -107,7 +108,7 @@ public class Item : AuditableEntity, ISoftDeletable
         image?.Deactivate();
     }
 
-    public Result ChangeImageAltText(Guid imageId, string altText) 
+    public Result ChangeImageAltText(Guid imageId, string altText)
     {
         var image = Images.FirstOrDefault(i => i.Id == imageId);
         if (image is null)
@@ -131,6 +132,14 @@ public class Item : AuditableEntity, ISoftDeletable
         Images.Add(image);
 
         return Result.Success();
+    }
+
+    public IList<string> GetImagePathsByIds(IList<Guid> ids)
+    {
+        var paths = new List<string>();
+        return Images.Where(img => ids.Contains(img.Id))
+            .Select(img => img.ImagePath)
+            .ToList();
     }
 
     public void AssignImageToItem(Image image)
