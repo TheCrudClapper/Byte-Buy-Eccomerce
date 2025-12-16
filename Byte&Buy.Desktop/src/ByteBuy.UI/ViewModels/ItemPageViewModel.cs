@@ -73,22 +73,29 @@ public partial class ItemPageViewModel : ViewModelSingle
         _dialogService = dialogService;
         _imageService = imageService;
         Images.CollectionChanged += OnImagesCollectionChanged;
-        _ = Initialize();
     }
 
-    private async Task Initialize()
+    protected override async Task InitializeAsync()
     {
-        var roleResult = await _conditionService.GetSelectList();
-        Conditions = new ObservableCollection<SelectListItemResponse>(roleResult?.Value ?? []);
+        var conditionTask = _conditionService.GetSelectList();
+        var categoryTask = _categoryService.GetSelectList();
 
-        var categoryResult = await _categoryService.GetSelectList();
-        Categories = new ObservableCollection<SelectListItemResponse>(categoryResult?.Value ?? []);
+        await Task.WhenAll(conditionTask, categoryTask);
+
+        var cond = await conditionTask;
+        var cat = await categoryTask;
+
+
+        Conditions = new ObservableCollection<SelectListItemResponse>(cond?.Value ?? []);
+
+        Categories = new ObservableCollection<SelectListItemResponse>(cat?.Value ?? []);
     }
 
     public async Task InitializeForEdit(Guid id)
     {
         EditingItemId = id;
         IsEditMode = true;
+        await InitializeAsync();
 
         var result = await _itemService.GetById(id);
         var (ok, value) = HandleResult(result);
@@ -144,7 +151,7 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         var request = ItemMappings.MapToUpdateRequest(this);
         var result = await _itemService.Update(EditingItemId.Value, request);
-        HandleResult(result);
+        HandleResult(result, "Successfully updated item !");
     }
 
 

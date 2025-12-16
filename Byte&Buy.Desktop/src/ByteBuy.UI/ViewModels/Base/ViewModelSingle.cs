@@ -16,6 +16,7 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
 
     protected abstract Task UpdateItem();
     protected abstract Task AddItem();
+    protected virtual Task InitializeAsync() => Task.CompletedTask;
 
     [RelayCommand]
     protected virtual async Task Save()
@@ -31,11 +32,11 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
         });
     }
 
-    public virtual void InitializeForAdd()
+    public virtual async Task InitializeForAdd()
     {
         IsEditMode = false;
         EditingItemId = null;
-        Clear();
+        await InitializeAsync();
     }
 
     [RelayCommand]

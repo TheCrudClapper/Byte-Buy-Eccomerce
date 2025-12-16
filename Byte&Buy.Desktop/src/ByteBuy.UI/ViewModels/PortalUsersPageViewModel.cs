@@ -46,6 +46,10 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
 
     protected override async Task Add()
     {
-        await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser);
+        await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
+        {
+            if (vm is PortalUserPageViewModel userVm)
+                await userVm.InitializeForAdd();
+        });
     }
 }

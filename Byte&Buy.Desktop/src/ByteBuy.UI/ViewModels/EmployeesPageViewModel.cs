@@ -51,7 +51,7 @@ public partial class EmployeesPageViewModel
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {
             if (vm is EmployeePageViewModel employeeVm)
-                employeeVm.InitializeForAdd();
+                await employeeVm.InitializeForAdd();
         });
     }
 }

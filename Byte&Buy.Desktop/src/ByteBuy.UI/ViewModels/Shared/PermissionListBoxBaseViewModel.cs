@@ -18,9 +18,8 @@ public abstract partial class PermissionListBoxBaseViewModel : ObservableValidat
     protected PermissionListBoxBaseViewModel(IPermissionService permissionService)
     {
         _permissionService = permissionService;
-        _ = LoadPermissions();
     }
-    protected virtual async Task LoadPermissions()
+    public virtual async Task InitializeAsync()
     {
         var result = await _permissionService.GetSelectList();
         if (!result.Success || result.Value is null)

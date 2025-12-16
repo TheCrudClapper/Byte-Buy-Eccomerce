@@ -45,14 +45,13 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         Items = new ObservableCollection<RoleListItem>(list);
     }
 
-    protected override Task Add()
+    protected override async Task Add()
     {
-        Navigation.NavigateTo(ApplicationPageNames.Role, vm =>
+        await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
         {
             if (vm is RolePageViewModel roleVm)
-                roleVm.InitializeForAdd();
+                await roleVm.InitializeForAdd();
         });
-        return Task.CompletedTask;
     }
 
 }

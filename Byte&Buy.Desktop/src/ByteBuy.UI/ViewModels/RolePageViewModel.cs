@@ -31,10 +31,15 @@ public partial class RolePageViewModel : ViewModelSingle
         PermissionListBox = permissionListBox;
     }
 
+    protected override async Task InitializeAsync()
+        => await PermissionListBox.InitializeAsync();
+
+
     public async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
+        await InitializeAsync();
 
         var result = await _roleService.GetById(id);
         var (ok, value) = HandleResult(result);
@@ -44,12 +49,6 @@ public partial class RolePageViewModel : ViewModelSingle
         RoleName = value.Name;
         var permissionIds = value.PermissionIds;
         PermissionListBox.SetSelectedPermissions(permissionIds);
-    }
-
-    public override void InitializeForAdd()
-    {
-        base.InitializeForAdd();
-        PermissionListBox.ClearSelectedPermissions();
     }
 
     protected override async Task UpdateItem()
@@ -72,10 +71,8 @@ public partial class RolePageViewModel : ViewModelSingle
     }
 
     protected override void Clear()
-    {
-        RoleName = string.Empty;
-        PermissionListBox.ClearSelectedPermissions();
-    }
+        => RoleName = string.Empty;
+
 
     [RelayCommand]
     private void ToggleTutorial()

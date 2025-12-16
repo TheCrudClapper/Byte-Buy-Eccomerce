@@ -105,8 +105,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         _roleService = roleService;
         _countryService = countryService;
         _portalUserService = userService;
-        _ = LoadCountries();
-        _ = LoadRoles();
     }
 
     protected override async Task UpdateItem()
@@ -117,6 +115,23 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var request = PortalUserMappings.MapToUpdateRequest(this);
         var result = await _portalUserService.Update(EditingItemId.Value, request);
         HandleResult(result, "Successfully updated user!");
+    }
+
+    protected override async Task InitializeAsync()
+    {
+        var listBoxTask = PermissionListBox.InitializeAsync();
+        var countriesTask = _countryService.GetSelectList();
+        var roleTask = _roleService.GetSelectList();
+
+        await Task.WhenAll(listBoxTask, countriesTask, roleTask);
+
+        var countries = await countriesTask;
+        var roles = await roleTask;
+        await listBoxTask;
+
+        Countries = new ObservableCollection<SelectListItemResponse>(countries.Value ?? []);
+
+        Roles = new ObservableCollection<SelectListItemResponse>(roles.Value ?? []);
     }
 
     protected override async Task AddItem()
@@ -150,28 +165,11 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         PermissionListBox.ClearSelectedPermissions();
     }
 
-    private async Task LoadRoles()
-    {
-        var result = await _roleService.GetSelectList();
-        if (!result.Success)
-            return;
-
-        Roles = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
-    }
-
-    private async Task LoadCountries()
-    {
-        var result = await _countryService.GetSelectList();
-        if (!result.Success)
-            return;
-
-        Countries = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
-    }
-
     public async Task InitializeForEdit(Guid itemId)
     {
         EditingItemId = itemId;
         IsEditMode = true;
+        await InitializeAsync();
 
         var result = await _portalUserService.GetById(itemId);
         var (ok, value) = HandleResult(result);

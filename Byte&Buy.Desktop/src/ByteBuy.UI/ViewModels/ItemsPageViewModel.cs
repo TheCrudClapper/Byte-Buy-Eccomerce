@@ -21,14 +21,13 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
     {
     }
 
-    protected override Task Add()
+    protected override async Task Add()
     {
-        Navigation.NavigateTo(ApplicationPageNames.Item, vm =>
+        await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
         {
             if (vm is ItemPageViewModel itemVm)
-                itemVm.InitializeForAdd();
+                await itemVm.InitializeForAdd();
         });
-        return Task.CompletedTask;
     }
 
     protected override async Task Edit(ItemListItem item)

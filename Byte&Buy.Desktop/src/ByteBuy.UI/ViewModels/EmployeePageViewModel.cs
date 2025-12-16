@@ -82,9 +82,20 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
         _roleService = roleService;
-        _ = LoadRoles();
     }
 
+    protected override async Task InitializeAsync()
+    {
+        var permissionListBoxTask = PermissionListBox.InitializeAsync();
+        var roleTask = _roleService.GetSelectList();
+
+        await Task.WhenAll(permissionListBoxTask, roleTask);
+
+        await permissionListBoxTask;
+        var role = await roleTask;
+
+        Roles = new ObservableCollection<SelectListItemResponse>(role.Value ?? []);
+    }
     protected override void Clear()
     {
         FirstName = string.Empty;
@@ -103,6 +114,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         IsEditMode = true;
         EditingItemId = itemId;
+        await InitializeAsync();
 
         var result = await _employeeService.GetById(itemId);
         var (ok, value) = HandleResult(result);
@@ -134,12 +146,4 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         HandleResult(result, "Employee updated successfully");
     }
 
-    private async Task LoadRoles()
-    {
-        var result = await _roleService.GetSelectList();
-        if (!result.Success)
-            return;
-
-        Roles = new ObservableCollection<SelectListItemResponse>(result.Value ?? []);
-    }
 }
