@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.ImageStorageContracts;
+﻿using ByteBuy.Core.Contracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;

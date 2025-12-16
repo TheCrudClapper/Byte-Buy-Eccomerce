@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.ImageStorageContracts;
-using ByteBuy.Core.Domain.ImageStorageContracts.Enums;
+﻿using ByteBuy.Core.Contracts;
+using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,9 +26,31 @@ public class ImageStorage : IImageStorage
         };
     }
 
-    public Task DeleteFromDirectoryAsync(string path, ImageTypeEnum type)
+    public Result DeleteFromDirectory(IReadOnlyList<string> imagePaths)
     {
-        throw new NotImplementedException();
+        try
+        {
+            foreach (var imagePath in imagePaths)
+            {
+                var normalized = imagePath.Replace('/', Path.DirectorySeparatorChar);
+
+                var fullPath = Path.Combine(_env.WebRootPath, normalized);
+
+                if (File.Exists(fullPath))
+                    File.Delete(fullPath);
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Result.Failure(ImageErrors.UnauthoriedAccess);
+        }
+        catch (IOException)
+        {
+            return Result.Failure(ImageErrors.StorageFailure);
+        }
+
+        return Result.Success();
+    
     }
 
     public Result ValidateExtensions(IReadOnlyList<IFormFile> files)
@@ -52,26 +74,51 @@ public class ImageStorage : IImageStorage
             return Result.Failure<List<string>>(validationResult.Error);
 
         var basePath = GetCombinedPath(type);
-        Directory.CreateDirectory(basePath);
-
         var paths = new List<string>();
 
-        foreach (var file in files)
+        try
         {
-            var ext = Path.GetExtension(file.FileName);
+            Directory.CreateDirectory(basePath);
 
-            //eg. 278295A7-0407-4063-AC74-6C366F0786C9.jpg
-            var fileName = $"{Guid.NewGuid()}{ext}";
-            var fullPath = Path.Combine(basePath, fileName);
+            foreach (var file in files)
+            {
+                var ext = Path.GetExtension(file.FileName);
 
-            await using var stream = file.OpenReadStream();
-            await using var fs = File.Create(fullPath);
-            await stream.CopyToAsync(fs);
+                //eg. 278295A7-0407-4063-AC74-6C366F0786C9.jpg
+                var fileName = $"{Guid.NewGuid()}{ext}";
+                var fullPath = Path.Combine(basePath, fileName);
 
-            paths.Add(Path.Combine(type.ToString(), fileName).Replace("\\", "/"));
+                await using var stream = file.OpenReadStream();
+                await using var fs = File.Create(fullPath);
+                await stream.CopyToAsync(fs);
+
+                paths.Add(Path.Combine(type.ToString(), fileName).Replace("\\", "/"));
+            }
+        }
+        catch (UnauthorizedAccessException)
+        {
+            CleanupFiles(basePath, paths);
+            return Result.Failure<List<string>>(ImageErrors.UnauthoriedAccess);
+        }
+        catch (IOException)
+        {
+            CleanupFiles(basePath, paths);
+            return Result.Failure<List<string>>(ImageErrors.StorageFailure);
         }
 
         return paths;
+    }
+
+    private static void CleanupFiles(string basePath, IEnumerable<string> paths)
+    {
+        foreach (var relativePath in paths)
+        {
+            var normalized = relativePath.Replace('/', Path.DirectorySeparatorChar);
+            var fullPath = Path.Combine(basePath, Path.GetFileName(normalized));
+
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+        }
     }
 
 }

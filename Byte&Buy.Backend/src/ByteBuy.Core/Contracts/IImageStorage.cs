@@ -1,11 +1,11 @@
-﻿using ByteBuy.Core.Domain.ImageStorageContracts.Enums;
+﻿using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Http;
 
-namespace ByteBuy.Core.Domain.ImageStorageContracts;
+namespace ByteBuy.Core.Contracts;
 
 public interface IImageStorage
 {
     Task<Result<List<string>>> SaveToDirectoryAsync(IReadOnlyList<IFormFile> files, ImageTypeEnum type);
-    Task DeleteFromDirectoryAsync(string path, ImageTypeEnum type);
+    Result DeleteFromDirectory(IReadOnlyList<string> imagePaths);
 }

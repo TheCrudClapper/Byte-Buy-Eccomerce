@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.ImageStorageContracts;
-using ByteBuy.Core.Domain.ImageStorageContracts.Enums;
+﻿using ByteBuy.Core.Contracts;
+using ByteBuy.Core.Contracts.Enums;
+using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Abstractions;
@@ -92,6 +92,25 @@ public class ItemsService : IItemsService
                 return Result.Failure<UpdatedResponse>(imagesResult.Error);
         }
 
+        var deletedIds = request.ExistingImages
+            .Where(i => i.IsDeleted)
+            .Select(i => i.Id)
+            .ToList();
+
+        var deletedPaths = aggregate.Images
+            .Where(img => deletedIds.Contains(img.Id))
+            .Select(img => img.ImagePath)
+            .ToList();
+
+        //delete from disk
+        if(deletedPaths.Count > 0)
+        {
+            var deletedResult = _imageStorage.DeleteFromDirectory(deletedPaths);
+            if (deletedResult.IsFailure)
+                return Result.Failure<UpdatedResponse>(deletedResult.Error);
+        }
+
+        //deleting or updating iamges
         foreach (var image in request.ExistingImages)
         {
             if (image.IsDeleted)
@@ -182,4 +201,5 @@ public class ItemsService : IItemsService
 
         return Result.Success();
     }
+
 }
