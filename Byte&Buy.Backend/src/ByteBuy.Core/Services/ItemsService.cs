@@ -86,7 +86,7 @@ public class ItemsService : IItemsService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         //adding new image
-        if (request.NewImages.Count > 0)
+        if (request.NewImages is not null && request.NewImages.Count > 0)
         {
             var imagesResult = await HandleNewImages(request.NewImages, aggregate);
             if (imagesResult.IsFailure)

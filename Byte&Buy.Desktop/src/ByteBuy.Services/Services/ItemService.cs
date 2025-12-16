@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.DTO.Country;
-using ByteBuy.Core.DTO.Item;
+﻿using ByteBuy.Core.DTO.Item;
 using ByteBuy.Services.DTO.Item;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
@@ -67,13 +66,13 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
             content.Add(fileContent, $"NewImages[{i}].Image", img.FileName);
         }
 
-        for(int i = 0; i < request.ExistingImages.Count; i++)
+        for (int i = 0; i < request.ExistingImages.Count; i++)
         {
             var img = request.ExistingImages[i];
 
             content.Add(new StringContent(img.AltText ?? string.Empty), $"ExistingImages[{i}].AltText");
             content.Add(new StringContent(img.Id.ToString()), $"ExistingImages[{i}].Id");
-            content.Add(new StringContent(img.IsDeleted.ToString()), "$ExistingImages[{i}].IsDeleted");
+            content.Add(new StringContent(img.IsDeleted.ToString()), $"ExistingImages[{i}].IsDeleted");
         }
 
         return await httpClient.PutCompanyItem(id, content);

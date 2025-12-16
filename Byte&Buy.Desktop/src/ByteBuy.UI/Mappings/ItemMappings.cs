@@ -52,7 +52,7 @@ public static class ItemMappings
             .Select(i => new ImageAddRequest(i.AltText, i.FileName, i.FileBytes))
             .ToList();
 
-        var deletedImages = vm.Images
+        var existingImages = vm.Images
             .Where(i => !i.IsNew)
             .Select(i => new ExistingImageUpdateRequest(i.Id ?? Guid.Empty, i.AltText, i.IsDeleted))
             .ToList();
@@ -64,6 +64,6 @@ public static class ItemMappings
             vm.Description,
             vm.StockQuantity,
             newImages,
-            deletedImages);
+            existingImages);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Services.InfraContracts.HttpClients;
-using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;

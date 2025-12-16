@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class ImageViewModel: ObservableValidator
+public partial class ImageViewModel : ObservableValidator
 {
     public Guid? Id { get; }
     public string? Path { get; }
@@ -15,7 +15,7 @@ public partial class ImageViewModel: ObservableValidator
     public bool IsNew => Id is null;
 
     [ObservableProperty]
-    public bool _isDeleted;
+    private bool _isDeleted;
 
     [ObservableProperty]
     [Required, MaxLength(50)]
@@ -23,7 +23,7 @@ public partial class ImageViewModel: ObservableValidator
 
     //public Stream FileStream { get; } = fileStream;
     public byte[] FileBytes { get; } = [];
-     
+
     //For existing picture
     public ImageViewModel(Guid id, string path, string altText, Bitmap preview)
     {

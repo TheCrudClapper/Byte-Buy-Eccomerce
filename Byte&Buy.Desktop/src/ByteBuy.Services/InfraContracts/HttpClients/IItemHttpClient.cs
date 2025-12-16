@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.DTO.Item;
-using ByteBuy.Services.DTO.Item;
+﻿using ByteBuy.Services.DTO.Item;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ResultTypes;
 

@@ -141,7 +141,7 @@ public partial class ItemPageViewModel : ViewModelSingle
             Alert.ShowErrorAlert("You need to add at least one new image.");
             return;
         }
-        
+
         var request = ItemMappings.MapToUpdateRequest(this);
         var result = await _itemService.Update(EditingItemId.Value, request);
         HandleResult(result);
@@ -204,6 +204,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         }
 
         item.IsDeleted = true;
+        OnPropertyChanged(nameof(item.IsDeleted));
         OnPropertyChanged(nameof(ImageContainerVisible));
     }
 

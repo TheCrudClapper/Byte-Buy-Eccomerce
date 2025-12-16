@@ -10,5 +10,5 @@ public record ItemUpdateRequest(
       [Required, MaxLength(2000)] string Description,
       [Required] int StockQuantity,
       IList<ExistingImageUpdateRequest> ExistingImages,
-      IList<ImageAddRequest> NewImages
+      IList<ImageAddRequest>? NewImages
     );
