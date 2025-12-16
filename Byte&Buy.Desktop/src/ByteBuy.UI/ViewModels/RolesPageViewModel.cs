@@ -31,7 +31,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         });
     }
 
-    protected override async Task LoadData()
+    public override async Task LoadData()
     {
         var result = await Service.GetAll();
         var (ok, value) = HandleResult(result);

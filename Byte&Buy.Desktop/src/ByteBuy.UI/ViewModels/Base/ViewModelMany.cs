@@ -83,7 +83,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     [RelayCommand]
     protected abstract Task Edit(TDataGridItem item);
 
-    protected abstract Task LoadData();
+    public abstract Task LoadData();
 
     [RelayCommand]
     protected abstract Task Add();

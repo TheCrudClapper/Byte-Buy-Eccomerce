@@ -1,12 +1,15 @@
 ﻿using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.Navigation;
 
-public interface INavigationService
+public interface INavigationService : INotifyPropertyChanged
 {
+    PageViewModel? CurrentPage { get; }
     /// <summary>
     /// Navigate to a page with optional async initialization
     /// </summary>

@@ -2,29 +2,33 @@
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.Navigation;
 
-public class NavigationService : INavigationService
+public partial class NavigationService : ObservableObject, INavigationService
 {
-    private readonly MainWindowViewModel _main;
     private readonly PageFactory _pageFactory;
     private readonly WindowFactory _windowFactory;
-    public NavigationService(MainWindowViewModel main,
-        PageFactory pageFactory, WindowFactory windowFactory)
+
+    [ObservableProperty]
+    public PageViewModel? _currentPage;
+     
+    public NavigationService(PageFactory pageFactory,
+        WindowFactory windowFactory)
     {
-        _main = main;
         _pageFactory = pageFactory;
         _windowFactory = windowFactory;
+        _currentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Dashboard);
     }
 
     public void NavigateTo(ApplicationPageNames page, Action<PageViewModel>? init = null)
     {
         var pageVm = _pageFactory.GetPageViewModel(page);
         init?.Invoke(pageVm);
-        _main.CurrentPage = pageVm;
+        CurrentPage = pageVm;
     }
 
     public async Task NavigateToAsync(ApplicationPageNames page, Func<PageViewModel, Task>? init = null)
@@ -32,7 +36,7 @@ public class NavigationService : INavigationService
         var pageVm = _pageFactory.GetPageViewModel(page);
         if (init != null)
             await init(pageVm);
-        _main.CurrentPage = pageVm;
+        CurrentPage = pageVm;
     }
 
 

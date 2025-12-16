@@ -107,7 +107,6 @@ namespace ByteBuy.UI
 
             //Register Navigation
             services.AddSingleton<INavigationService>(sp => new NavigationService(
-                sp.GetRequiredService<MainWindowViewModel>(),
                 sp.GetRequiredService<PageFactory>(),
                 sp.GetRequiredService<WindowFactory>()
                 ));

@@ -31,7 +31,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
         });
     }
 
-    protected override async Task LoadData()
+    public override async Task LoadData()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);

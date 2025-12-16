@@ -23,7 +23,7 @@ public partial class EmployeesPageViewModel
         _ = LoadData();
     }
 
-    protected override async Task LoadData()
+    public override async Task LoadData()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);

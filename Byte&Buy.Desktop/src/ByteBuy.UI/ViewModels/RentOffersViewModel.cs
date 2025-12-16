@@ -25,7 +25,7 @@ public class RentOffersViewModel(
         throw new System.NotImplementedException();
     }
 
-    protected override Task LoadData()
+    public override Task LoadData()
     {
         throw new System.NotImplementedException();
     }

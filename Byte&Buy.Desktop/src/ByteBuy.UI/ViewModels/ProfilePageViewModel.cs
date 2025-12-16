@@ -101,7 +101,7 @@ public partial class ProfilePageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private async Task LoadData()
+    public async Task LoadData()
     {
         var result = await _employeeService.GetSelf();
         var (ok, value) = HandleResult(result);

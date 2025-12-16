@@ -87,7 +87,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
         PhoneNumber = string.Empty;
     }
 
-    private async Task LoadData()
+    public async Task LoadData()
     {
         var response = await _companyInfoService.GetCompanyInfo();
         var (ok, value) = HandleResult(response);

@@ -39,7 +39,7 @@ public class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
         });
     }
 
-    protected override async Task LoadData()
+    public override async Task LoadData()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
