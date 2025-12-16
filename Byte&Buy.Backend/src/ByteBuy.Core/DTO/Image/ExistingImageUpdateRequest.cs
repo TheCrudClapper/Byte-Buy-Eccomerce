@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.DTO.Abstractions;
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.DTO.Image;
 

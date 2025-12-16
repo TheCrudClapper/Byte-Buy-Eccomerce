@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.ResultTypes;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -70,11 +72,6 @@ public class Item : AuditableEntity, ISoftDeletable
     int stockQuantity,
     bool isCompanyItem)
     {
-        //if (conditionId is null)
-        //    return Result.Failure<Item>(Error.Validation("Condition can't be null"));
-
-        //if (category is null)
-        //    return Result.Failure<Item>(Error.Validation("Category can't be null"));
 
         var validationResult = Validate(name, description, stockQuantity);
         if (validationResult.IsFailure)
@@ -89,10 +86,44 @@ public class Item : AuditableEntity, ISoftDeletable
             isCompanyItem);
     }
 
+    public Result Update(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
+    {
+        var validationResult = Validate(name, description, stockQuantity);
+        if (validationResult.IsFailure)
+            return Result.Failure(validationResult.Error);
+
+        Name = name;
+        Description = description;
+        CategoryId = categoryId;
+        ConditionId = conditionId;
+        StockQuantity = stockQuantity;
+
+        return Result.Success();
+    }
+
+    public void DeleteImagesById(Guid imageId)
+    {
+        var image = Images.FirstOrDefault(i => i.Id == imageId);
+        image?.Deactivate();
+    }
+
+    public Result ChangeImageAltText(Guid imageId, string altText) 
+    {
+        var image = Images.FirstOrDefault(i => i.Id == imageId);
+        if (image is null)
+            return Result.Failure(Error.Validation("Image of given Id was not found"));
+
+        var altTextResult = image.ChangeImageAltText(altText);
+        if (altTextResult.IsFailure)
+            return Result.Failure(altTextResult.Error);
+
+        return Result.Success();
+    }
+
     public Result AddImage(string imagePath, string altText)
     {
         var imageResult = Image.Create(imagePath, altText);
-        if(imageResult.IsFailure)
+        if (imageResult.IsFailure)
             return imageResult;
 
         var image = imageResult.Value;

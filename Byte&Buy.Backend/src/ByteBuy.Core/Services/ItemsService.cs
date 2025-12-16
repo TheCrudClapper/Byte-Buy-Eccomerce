@@ -60,6 +60,56 @@ public class ItemsService : IItemsService
         return item.ToCreatedResponse();
     }
 
+
+    public async Task<Result<UpdatedResponse>> UpdateCompanyItem(Guid itemId, ItemUpdateRequest request)
+    {
+        var aggregate = await _itemRepository.GetAggregateAsync(itemId);
+        if (aggregate is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var validateRelatedEntities =
+            await CheckCountryAndConditionExists(request.CategoryId, request.ConditionId);
+
+        if (validateRelatedEntities.IsFailure)
+            return Result.Failure<UpdatedResponse>(validateRelatedEntities.Error);
+
+        var updateResult = aggregate.Update(
+            request.Name,
+            request.Description,
+            request.CategoryId,
+            request.ConditionId,
+            request.StockQuantity
+            );
+
+        if (updateResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
+
+        //logic for adding new 
+        if (request.NewImages.Count > 0)
+        {
+            var imagesResult = await HandleNewImages(request.NewImages, aggregate);
+            if (imagesResult.IsFailure)
+                return Result.Failure<UpdatedResponse>(imagesResult.Error);
+        }
+
+        foreach (var image in request.ExistingImages)
+        {
+            if (image.IsDeleted)
+                aggregate.DeleteImagesById(image.Id);
+            else
+            {
+                var changeResult = aggregate.ChangeImageAltText(image.Id, image.AltText);
+                if (changeResult.IsFailure)
+                    return Result.Failure<UpdatedResponse>(changeResult.Error);
+            }
+        }
+
+        await _itemRepository.UpdateAsync(aggregate);
+        await _itemRepository.CommitAsync();
+
+        return aggregate.ToUpdatedResponse();
+    }
+
     public async Task<Result> DeleteCompanyItem(Guid itemId)
     {
         var aggregate = await _itemRepository.GetAggregateAsync(itemId);
@@ -88,10 +138,6 @@ public class ItemsService : IItemsService
         return await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
     }
 
-    public Task<Result<UpdatedResponse>> UpdateCompanyItem(Guid itemId, ItemUpdateRequest request)
-    {
-        throw new NotImplementedException();
-    }
 
     public async Task<Result> CheckCountryAndConditionExists(Guid categoryId, Guid conditionId)
     {
@@ -105,15 +151,15 @@ public class ItemsService : IItemsService
     }
 
     /// <summary>
-    /// Processes and saves a collection of new images for the specified item, associating each image with the item
+    /// Processes and saves a collection of new images for the specified item, associating each imageId with the item
     /// using its provided metadata.
     /// </summary>
-    /// <typeparam name="TImageDto">The type of the image data transfer object. Must implement the IImageRequestDto interface.</typeparam>
-    /// <param name="images">A list of image data transfer objects containing the image files and associated metadata to be added to the
+    /// <typeparam name="TImageDto">The type of the imageId data transfer object. Must implement the IImageRequestDto interface.</typeparam>
+    /// <param name="images">A list of imageId data transfer objects containing the imageId files and associated metadata to be added to the
     /// item. Cannot be null.</param>
     /// <param name="item">The item to which the images will be associated. Cannot be null.</param>
     /// <returns>A Result indicating whether the images were successfully saved and associated with the item. Returns a failure
-    /// result if any image could not be saved or added.</returns>
+    /// result if any imageId could not be saved or added.</returns>
     private async Task<Result> HandleNewImages<TImageDto>(IList<TImageDto> images, Item item)
         where TImageDto : IImageRequestDto
     {

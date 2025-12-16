@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Image;
+﻿using ByteBuy.Core.DTO.Item;
+using ByteBuy.Services.DTO.Image;
 using ByteBuy.Services.DTO.Item;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels;
@@ -9,7 +10,7 @@ namespace ByteBuy.UI.Mappings;
 
 public static class ItemMappings
 {
-    public static ItemAddRequest MapToRequest(this ItemPageViewModel vm)
+    public static ItemAddRequest MapAddToRequest(this ItemPageViewModel vm)
     {
         var images = vm.Images.Select(i => new ImageAddRequest(i.AltText, i.FileName, i.FileBytes)).ToList();
         return new ItemAddRequest(vm.SelectedCategory?.Id ?? Guid.Empty,
@@ -42,5 +43,27 @@ public static class ItemMappings
 
         vm.SelectedCondition = vm.Conditions
             .FirstOrDefault(c => c.Id == response.ConditionId);
+    }
+
+    public static ItemUpdateRequest MapToUpdateRequest(this ItemPageViewModel vm)
+    {
+        var newImages = vm.Images
+            .Where(i => i.IsNew && !i.IsDeleted)
+            .Select(i => new ImageAddRequest(i.AltText, i.FileName, i.FileBytes))
+            .ToList();
+
+        var deletedImages = vm.Images
+            .Where(i => !i.IsNew)
+            .Select(i => new ExistingImageUpdateRequest(i.Id ?? Guid.Empty, i.AltText, i.IsDeleted))
+            .ToList();
+
+        return new ItemUpdateRequest(
+            vm.SelectedCategory?.Id ?? Guid.Empty,
+            vm.SelectedCondition?.Id ?? Guid.Empty,
+            vm.Name,
+            vm.Description,
+            vm.StockQuantity,
+            newImages,
+            deletedImages);
     }
 }

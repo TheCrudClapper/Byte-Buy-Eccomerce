@@ -52,7 +52,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     [ObservableProperty]
     private ObservableCollection<ImageViewModel> _images = [];
 
-    public bool ImageContainerVisible => Images.Count == 0;
+    public bool ImageContainerVisible => !Images.Any(i => !i.IsDeleted);
 
     #endregion
     private readonly IItemService _itemService;
@@ -114,7 +114,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     }
     protected override async Task AddItem()
     {
-        var request = ItemMappings.MapToRequest(this);
+        var request = ItemMappings.MapAddToRequest(this);
         var result = await _itemService.Add(request);
         HandleResult(result, "Successfully added new item !");
     }
@@ -128,9 +128,23 @@ public partial class ItemPageViewModel : ViewModelSingle
         StockQuantity = 0;
     }
 
-    protected override Task UpdateItem()
+    protected override async Task UpdateItem()
     {
-        throw new System.NotImplementedException();
+        if (EditingItemId is null)
+            return;
+
+        var deletedCount = Images.Count(i => i.IsDeleted);
+        var newCount = Images.Count(i => i.IsNew);
+
+        if (Images.Count - deletedCount == 0 && newCount == 0)
+        {
+            Alert.ShowErrorAlert("You need to add at least one new image.");
+            return;
+        }
+        
+        var request = ItemMappings.MapToUpdateRequest(this);
+        var result = await _itemService.Update(EditingItemId.Value, request);
+        HandleResult(result);
     }
 
 
@@ -190,6 +204,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         }
 
         item.IsDeleted = true;
+        OnPropertyChanged(nameof(ImageContainerVisible));
     }
 
     partial void OnDescriptionChanged(string value)

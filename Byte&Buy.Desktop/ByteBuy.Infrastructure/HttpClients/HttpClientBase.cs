@@ -89,6 +89,18 @@ public abstract class HttpClientBase
             return Result<T>.Fail(ApiErrors.RequestFailed);
         }
     }
+    protected async Task<Result<T>> PutAsync<T>(string resource, HttpContent content)
+    {
+        try
+        {
+            var response = await _client.PutAsync(resource, content);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
 
     protected async Task<Result> PutAsync(string resource, object payload)
     {

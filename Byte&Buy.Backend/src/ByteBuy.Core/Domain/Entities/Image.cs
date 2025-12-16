@@ -30,11 +30,18 @@ public class Image : AuditableEntity, ISoftDeletable
         DateCreated = DateTime.UtcNow;
     }
 
-    public static Result Validate(string imagePath, string altText)
+    public Result ChangeImageAltText(string altText)
     {
-        if(string.IsNullOrWhiteSpace(imagePath))
-            return Result.Failure(Error.Validation("Image Path is required"));
+        var validationResult = Validate(altText);
+        if (validationResult.IsFailure)
+            return Result.Failure<Image>(validationResult.Error);
 
+        AltText = altText;
+        return Result.Success();
+    }
+
+    private static Result Validate(string altText)
+    {
         if (string.IsNullOrWhiteSpace(altText) || altText.Length > 50)
             return Result.Failure(Error.Validation("Alernative Text is required and must be at most 50 characters."));
 
@@ -43,14 +50,17 @@ public class Image : AuditableEntity, ISoftDeletable
 
     internal static Result<Image> Create(string imagePath, string altText)
     {
-        var validationResult = Validate(imagePath, altText);
+        var validationResult = Validate(altText);
         if (validationResult.IsFailure)
             return Result.Failure<Image>(validationResult.Error);
+
+        if (string.IsNullOrWhiteSpace(imagePath))
+            return Result.Failure<Image>(Error.Validation("Image Path is required"));
 
         return new Image(imagePath, altText);
     }
 
-    internal void AssignToItem(Item item) 
+    internal void AssignToItem(Item item)
     {
         ItemId = item.Id;
         Item = item;

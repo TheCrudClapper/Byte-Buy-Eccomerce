@@ -69,6 +69,7 @@
 										<ItemsControl.ItemTemplate>
 											<DataTemplate>
 												<StackPanel
+												IsVisible="{Binding !IsDeleted}"
 												Margin="20"
 												VerticalAlignment="Center"
 												Width="170">

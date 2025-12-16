@@ -22,6 +22,6 @@ public class ItemHttpClient(HttpClient httpClient) : HttpClientBase(httpClient),
     public async Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 
-    public async Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, ItemUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, MultipartContent request)
         => await PutAsync<UpdatedResponse>($"{resource}/{id}", request);
 }

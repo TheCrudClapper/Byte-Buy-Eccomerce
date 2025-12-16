@@ -13,7 +13,9 @@ public partial class ImageViewModel: ObservableValidator
     public Bitmap? Preview { get; }
 
     public bool IsNew => Id is null;
-    public bool IsDeleted { get ; set; }
+
+    [ObservableProperty]
+    public bool _isDeleted;
 
     [ObservableProperty]
     [Required, MaxLength(50)]
