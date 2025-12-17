@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -9,4 +10,54 @@ public class DeliveryCarrier : AuditableEntity, ISoftDeletable
     public ICollection<Delivery> Deliveries { get; private set; } = new List<Delivery>();
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
+
+    private DeliveryCarrier() { }
+
+    private DeliveryCarrier(string name, string code)
+    {
+        Name = name;
+        Code = code;
+        DateCreated = DateTime.UtcNow;
+        IsActive = true;
+    }
+
+    public void Deactivate()
+    {
+        if (!IsActive)
+            return;
+
+        DateDeleted = DateTime.UtcNow;
+        IsActive = false;
+    }
+
+    public static Result Validate(string name, string code)
+    {
+        if (string.IsNullOrWhiteSpace(name) || name.Length > 50)
+            return Result.Failure(Error.Validation("Name is required and must be 50 characters max"));
+        if (string.IsNullOrWhiteSpace(code) || code.Length > 20)
+            return Result.Failure(Error.Validation("Code is required and must be 20 characters max"));
+
+        return Result.Success();
+    }
+
+    public static Result<DeliveryCarrier> Create(string name, string code)
+    {
+        var validationResult = Validate(name, code);
+        if(validationResult.IsFailure)
+            return Result.Failure<DeliveryCarrier>(validationResult.Error);
+
+        return new DeliveryCarrier(name, code);
+    }
+
+    public Result Update(string name, string code)
+    {
+        var validationResult = Validate(name, code);
+        if (validationResult.IsFailure)
+            return Result.Failure<DeliveryCarrier>(validationResult.Error);
+
+        Name = name;
+        Code = code;
+        DateEdited = DateTime.UtcNow;
+        return Result.Success();
+    }
 }
