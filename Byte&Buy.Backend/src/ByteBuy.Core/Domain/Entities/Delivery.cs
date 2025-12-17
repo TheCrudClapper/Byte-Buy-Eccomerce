@@ -10,6 +10,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
     public Money Price { get; private set; } = null!;
+    public Guid DeliveryCarrierId { get; private set; }
+    public DeliveryCarrier DeliveryCarrier { get; set; }
     public ParcelSizeEnum? ParcelSize { get; private set; }
     public DeliveryChannelEnum Channel { get; private set; }
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
