@@ -8,7 +8,7 @@
                         <Grid ColumnDefinitions="10*, 80*, 10*">
                             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="1" />
                             <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="users:read" />
-                            <CheckBox Grid.Column="2" IsChecked="True" />
+                            <CheckBox Grid.Column="2" IsChecked="True"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

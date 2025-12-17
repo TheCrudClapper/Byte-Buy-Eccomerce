@@ -26,6 +26,7 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     #endregion
     public async override Task InitializeForEdit(Guid id)
     {
+        await InitializeAsync();
         IsEditMode = true;
         EditingItemId = id;
         var result = await deliveryService.GetById(id);
@@ -39,6 +40,13 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
         Description = result.Value.Description;
         Price = result.Value.Amount;
     }
+
+    public async Task InitializeAsync()
+    {
+
+    }
+
+
 
     protected async override Task<bool> AddItem()
     {

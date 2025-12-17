@@ -24,7 +24,7 @@ public class RolesController : BaseApiController
 
     [HttpGet("options")]
     //[HasPermission("role:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectList(ct));
 
     [HttpGet("{roleId}")]

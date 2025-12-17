@@ -68,6 +68,16 @@
 								<DataTemplate>
 									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
 										<Button
+										Command="{Binding DataContext.PublishCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/upload-solid-full.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
+										<Button
 										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
 										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"

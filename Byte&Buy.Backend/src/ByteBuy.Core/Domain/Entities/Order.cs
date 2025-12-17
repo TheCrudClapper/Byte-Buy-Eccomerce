@@ -10,7 +10,7 @@ public class Order : AuditableEntity, ISoftDeletable
     public PortalUser User { get; set; } = null!;
     public Money TotalAmount { get; set; } = null!;
     public DateTime OrderDate { get; set; }
-    public OrderStatus Status { get; set; }
+    public OrderStatusEnum Status { get; set; }
     public AddressValueObj ShippingAddress { get; set; } = null!;
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     public ICollection<PaymentOrder> PaymentOrders { get; set; } = new List<PaymentOrder>();

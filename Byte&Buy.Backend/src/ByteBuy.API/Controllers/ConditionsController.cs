@@ -46,6 +46,6 @@ public class ConditionsController : BaseApiController
 
     [HttpGet("options")]
     //[HasPermission("condition:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _conditionService.GetSelectList(ct));
 }

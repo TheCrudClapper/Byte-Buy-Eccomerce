@@ -9,6 +9,6 @@ public static class ConditionMappings
     public static ConditionResponse ToConditionResponse(this Condition condition)
         => new ConditionResponse(condition.Id, condition.Name, condition.Description);
 
-    public static SelectListItemResponse ToSelectListItemResponse(this Condition condition)
-        => new SelectListItemResponse(condition.Id, condition.Name);
+    public static SelectListItemResponse<Guid> ToSelectListItemResponse(this Condition condition)
+        => new SelectListItemResponse<Guid>(condition.Id, condition.Name);
 }

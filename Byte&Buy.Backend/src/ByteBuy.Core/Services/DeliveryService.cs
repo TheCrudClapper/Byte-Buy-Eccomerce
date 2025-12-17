@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
@@ -26,7 +27,9 @@ public class DeliveryService : IDeliveryService
         var deliveryResult = Delivery.Create(
             request.Name,
             request.Description,
-            request.Price
+            request.Price,
+            (ParcelSizeEnum)request.ParcelSizeId,
+            (DeliveryChannelEnum)request.ChannelId
         );
 
         if (deliveryResult.IsFailure)
@@ -51,7 +54,9 @@ public class DeliveryService : IDeliveryService
         var deliveryResult = delivery.Update(
             request.Name,
             request.Description,
-            request.Price
+            request.Price,
+            (ParcelSizeEnum)request.ParcelSizeId,
+            (DeliveryChannelEnum)request.ChannelId
         );
 
         if (deliveryResult.IsFailure)
@@ -64,7 +69,7 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result> DeleteDelivery(Guid deliveryId)
     {
-        if(await _deliveryRepository.HasActiveRelations(deliveryId))
+        if (await _deliveryRepository.HasActiveRelations(deliveryId))
             return Result.Failure(DeliveryErrors.InUse);
 
         var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
@@ -74,7 +79,7 @@ public class DeliveryService : IDeliveryService
         delivery.Deactivate();
 
         await _deliveryRepository.UpdateAsync(delivery);
-        await _deliveryRepository.CommitAsync();
+        await _deliveryRepository.CommitAsync(); 
         return Result.Success();
     }
 
@@ -86,7 +91,7 @@ public class DeliveryService : IDeliveryService
             : delivery.ToDeliveryResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
         return deliveries.Select(d => d.ToSelectListItemResponse())

@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:dialogHost="using:DialogHostAvalonia"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+			 x:Class="ByteBuy.UI.OfferDialogView"
+			 x:DataType="vm:OfferDialogViewModel">
+
+
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Border CornerRadius="2" BorderThickness="2"
+			Background="{DynamicResource BackgroundLightBrush}"
+			BorderBrush="{DynamicResource ButtonGradient}"
+			MinHeight="200" MinWidth="400">
+		<ScrollViewer>
+			<Grid RowDefinitions="30,*,*">
+				<Border
+				Grid.Row="0"
+				Background="{DynamicResource ButtonGradient}"
+				Height="30"
+				VerticalAlignment="Top">
+					<TextBlock Text="{Binding DialogTitle}"
+							   VerticalAlignment="Center"
+							   Margin="5,0"
+							   Foreground="{DynamicResource BackgroundLightBrush}"/>
+				</Border>
+
+				<!--Form Fields-->
+				<StackPanel Margin="20" Spacing="10" Grid.Row="1">
+					<CheckBox HorizontalAlignment="Right"
+							  Foreground="{DynamicResource TextLightBrush}"
+							  Command="{Binding ChangeOfferTypeCommand}"
+							  Content="Sale Offer"/>
+					<TextBlock Text="Selected Stock Item" Classes="textBoxLabel" HorizontalAlignment="Stretch"/>
+					<TextBox
+					IsEnabled="false"
+					Foreground="{DynamicResource TextLightBrush}"
+					Text="{Binding SelectedItem.Name}"
+					TextWrapping="Wrap"/>
+
+					<TextBlock Text="Units" Classes="textBoxLabel" />
+					<NumericUpDown
+					Text="{Binding Units}"
+					Value="1"
+					FormatString="0"
+					Minimum="1"/>
+
+					<!--Rent Offer Fields-->
+					<StackPanel Spacing="10" IsVisible="{Binding !IsSaleOffer}">
+						<TextBlock Text="Rental Price per Day" Classes="textBoxLabel" />
+						<NumericUpDown
+						Text="{Binding PricePerDay}"
+						Value="1"
+						FormatString="0.000"
+						Minimum="1"
+						Watermark="Enter price per one day of rental period"/>
+
+						<TextBlock Text="Max Rental Days" Classes="textBoxLabel" />
+						<NumericUpDown
+						Text="{Binding MaxRentalDays}"
+						Value="1"
+						FormatString="0"
+						Minimum="1"/>
+					</StackPanel>
+
+
+					<!--Sale Offer Fields-->
+					<StackPanel Spacing="10" IsVisible="{Binding IsSaleOffer}">
+						<TextBlock Text="Unit Price" Classes="textBoxLabel" />
+						<NumericUpDown
+						Text="{Binding PricePerItem}"
+						Value="1"
+						FormatString="0.000"
+						Minimum="1"
+						Watermark="Enter price per one item"/>
+					</StackPanel>
+
+					<TextBlock Margin="0,30,0,0" Text="Choose Avaliable Deliveries" Classes="textBoxLabel" HorizontalAlignment="Stretch"/>
+
+
+					<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
+
+					<!--Action Buttons-->
+					<StackPanel Grid.Row="2"
+								Orientation="Horizontal"
+								HorizontalAlignment="Right"
+								Spacing="8">
+						<Button
+						Content="Cancel"
+						Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
+						Path=CloseDialogCommand}"
+						CommandParameter="False" />
+						<Button
+						Content="Save"
+						Command="{Binding SaveCommand}" />
+					</StackPanel>
+				</StackPanel>
+			</Grid>
+		</ScrollViewer>
+	</Border>
+</UserControl>

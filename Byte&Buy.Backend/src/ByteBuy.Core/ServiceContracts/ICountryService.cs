@@ -13,5 +13,5 @@ public interface ICountryService
     Task<Result> DeleteCountry(Guid countryId);
     Task<Result<CountryResponse>> GetCountry(Guid contryId, CancellationToken ct = default);
     Task<Result<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct = default);
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

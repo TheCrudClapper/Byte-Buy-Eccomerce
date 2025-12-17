@@ -90,7 +90,7 @@ public class RoleService : IRoleService
         return role.ToRoleResponse(permissionIds);
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
     {
         var roles = await _roleRepository.GetAllAsync(ct);
 

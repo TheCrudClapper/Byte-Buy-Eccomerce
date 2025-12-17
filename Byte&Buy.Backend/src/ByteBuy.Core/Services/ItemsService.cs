@@ -4,7 +4,6 @@ using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Abstractions;
-using ByteBuy.Core.DTO.Image;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -138,7 +137,7 @@ public class ItemsService : IItemsService
         return await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
     }
 
-    //Helpers
+    // HELPERS //
     private async Task<Result> CheckCountryAndConditionExistsAsync(Guid categoryId, Guid conditionId)
     {
         if (!await _categoryRepository.ExistsByCondition(cat => cat.Id == categoryId))

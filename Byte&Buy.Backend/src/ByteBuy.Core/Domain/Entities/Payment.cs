@@ -5,7 +5,7 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class Payment : AuditableEntity, ISoftDeletable
 {
-    public PaymentStatus Status { get; set; }
+    public PaymentStatusEnum Status { get; set; }
     public string Currency { get; set; } = null!;
     public long AmountMinor { get; set; }
     public string StripePaymentIntentId { get; set; } = null!;

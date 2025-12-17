@@ -13,6 +13,6 @@ public static class CategoryMappings
     public static CategoryListResponse ToCategoryListResponse(this Category category)
         => new CategoryListResponse(category.Id, category.Name);
 
-    public static SelectListItemResponse ToSelectListItemResponse(this Category category)
-        => new SelectListItemResponse(category.Id, category.Name);
+    public static SelectListItemResponse<Guid> ToSelectListItemResponse(this Category category)
+        => new SelectListItemResponse<Guid>(category.Id, category.Name);
 }

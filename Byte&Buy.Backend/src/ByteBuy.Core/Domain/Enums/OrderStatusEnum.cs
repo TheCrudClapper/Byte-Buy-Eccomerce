@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.Domain.Enums;
 
-public enum OrderStatus
+public enum OrderStatusEnum
 {
     Created = 0,
     AwaitingPayment,

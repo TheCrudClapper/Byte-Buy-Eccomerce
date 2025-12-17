@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
-using System.Threading.Tasks;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -13,11 +12,13 @@ public static class DeliveryMappings
             delivery.Name,
             delivery.Description,
             delivery.Price.Amount,
-            delivery.Price.Currency
+            delivery.Price.Currency,
+            (int?)delivery.ParcelSize ?? null,
+            (int)delivery.Channel
             );
 
-    public static SelectListItemResponse ToSelectListItemResponse(this Delivery delivery)
-        => new SelectListItemResponse(
+    public static SelectListItemResponse<Guid> ToSelectListItemResponse(this Delivery delivery)
+        => new SelectListItemResponse<Guid>(
             delivery.Id,
             string.Join(" ", delivery.Name, delivery.Price.Amount, delivery.Price.Currency)
             );

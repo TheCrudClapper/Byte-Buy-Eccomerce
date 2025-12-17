@@ -6,8 +6,8 @@ namespace ByteBuy.Core.Mappings;
 
 public static class RoleMappings
 {
-    public static SelectListItemResponse ToSelectListItemResponse(this ApplicationRole role)
-        => new SelectListItemResponse(role.Id, role.Name!);
+    public static SelectListItemResponse<Guid> ToSelectListItemResponse(this ApplicationRole role)
+        => new SelectListItemResponse<Guid>(role.Id, role.Name!);
 
     public static RoleResponse ToRoleResponse(this ApplicationRole role, IEnumerable<Guid> permissionIds)
         => new RoleResponse(role.Id, role.Name!, permissionIds);

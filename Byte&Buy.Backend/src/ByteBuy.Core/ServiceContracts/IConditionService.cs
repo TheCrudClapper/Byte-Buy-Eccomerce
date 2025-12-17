@@ -12,5 +12,5 @@ public interface IConditionService
     Task<Result<ConditionResponse>> GetCondition(Guid conditionId, CancellationToken ct = default);
     Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsList(CancellationToken ct = default);
     Task<Result<IEnumerable<ConditionResponse>>> GetConditions(CancellationToken ct = default);
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

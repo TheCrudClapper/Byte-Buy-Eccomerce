@@ -64,7 +64,7 @@ public class ConditionService : IConditionService
             : condition.ToConditionResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
     {
         var conditions = await _conditionRepository.GetAllAsync(ct);
         return conditions.Select(c => c.ToSelectListItemResponse()).ToList();

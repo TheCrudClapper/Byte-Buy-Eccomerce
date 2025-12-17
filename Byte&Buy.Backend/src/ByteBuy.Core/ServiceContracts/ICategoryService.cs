@@ -12,5 +12,5 @@ public interface ICategoryService
     Task<Result> DeleteCategory(Guid categoryId);
     Task<Result<CategoryResponse>> GetCategory(Guid categoryId, CancellationToken ct = default);
     Task<Result<IEnumerable<CategoryListResponse>>> GetCategoriesList(CancellationToken ct = default);
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

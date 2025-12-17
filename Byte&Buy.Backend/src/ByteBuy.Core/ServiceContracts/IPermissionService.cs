@@ -6,5 +6,5 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IPermissionService
 {
     Task<bool> HasPermissionAsync(Guid userId, string permissionName);
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
@@ -9,17 +10,21 @@ public class Delivery : AuditableEntity, ISoftDeletable
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
     public Money Price { get; private set; } = null!;
+    public ParcelSizeEnum? ParcelSize { get; private set; }
+    public DeliveryChannelEnum Channel { get; private set; }
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
     private Delivery() { }
 
-    private Delivery(string name, string? description, Money money)
+    private Delivery(string name, string? description, Money money, ParcelSizeEnum? size, DeliveryChannelEnum channel)
     {
         Name = name;
         Description = description;
         Price = money;
+        ParcelSize = size;
+        Channel = channel;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
     }
@@ -33,10 +38,13 @@ public class Delivery : AuditableEntity, ISoftDeletable
         DateDeleted = DateTime.UtcNow;
     }
 
-    public static Result Validate(string name, string? description)
+    public static Result Validate(string name, string? description, ParcelSizeEnum? size, DeliveryChannelEnum channel)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 50)
             return Result.Failure(Error.Validation("Name is required and must be at most 50 characters."));
+
+        if (channel is not DeliveryChannelEnum.ParcelLocker && size is not null)
+            return Result.Failure(Error.Validation("Parcel size is allowed only for parcel lockers"));
 
         if (description is not null)
         {
@@ -50,9 +58,9 @@ public class Delivery : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public static Result<Delivery> Create(string name, string? description, decimal price)
+    public static Result<Delivery> Create(string name, string? description, decimal price, ParcelSizeEnum? size, DeliveryChannelEnum channel)
     {
-        var validationResult = Validate(name, description);
+        var validationResult = Validate(name, description, size, channel);
         if (validationResult.IsFailure)
             return Result.Failure<Delivery>(validationResult.Error);
 
@@ -60,12 +68,12 @@ public class Delivery : AuditableEntity, ISoftDeletable
         if (moneyResult.IsFailure)
             return Result.Failure<Delivery>(moneyResult.Error);
 
-        return new Delivery(name, description, moneyResult.Value);
+        return new Delivery(name, description, moneyResult.Value, size, channel);
     }
 
-    public Result Update(string name, string? description, decimal price)
+    public Result Update(string name, string? description, decimal price, ParcelSizeEnum? size, DeliveryChannelEnum channel)
     {
-        var validationResult = Validate(name, description);
+        var validationResult = Validate(name, description, size, channel);
         if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 
@@ -76,6 +84,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
         Name = name;
         Description = description;
         Price = moneyResult.Value;
+        ParcelSize = size;
+        Channel = channel;
         DateEdited = DateTime.UtcNow;
 
         return Result.Success();

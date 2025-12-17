@@ -11,5 +11,5 @@ public interface IDeliveryService
     Task<Result> DeleteDelivery(Guid deliveryId);
     Task<Result<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct = default);
     Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default); 
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.Domain.Enums;
 
-public enum PaymentStatus
+public enum PaymentStatusEnum
 {
     Created = 0,
     Pending,

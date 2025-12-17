@@ -16,7 +16,7 @@ namespace ByteBuy.API.Controllers
 
         [HttpGet("options")]
         //[HasPermission("permission:read:options")]
-        public async Task<ActionResult<SelectListItemResponse>> GetSelectList()
+        public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectList()
             => HandleResult(await _permissionService.GetSelectList());
     }
 }

@@ -83,7 +83,7 @@ public class CountryService : ICountryService
             : country.ToCountryResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
     {
         var countries = await _countryRepository.GetAllAsync();
         return countries.Select(c => c.ToSelectListItemResponse())

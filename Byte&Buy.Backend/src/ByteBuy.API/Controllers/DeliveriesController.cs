@@ -41,6 +41,6 @@ public class DeliveriesController : BaseApiController
 
     [HttpGet("options")]
     //[HasPermission("delivery:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectList(ct));
 }

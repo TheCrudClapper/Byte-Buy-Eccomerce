@@ -14,7 +14,7 @@ public class PermissionService : IPermissionService
         _permissionRepository = permissionRepository;
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
     {
         var permissions = await _permissionRepository.GetAllAsync(ct);
         return permissions.Select(p => p.ToSelectListItemResponse())
