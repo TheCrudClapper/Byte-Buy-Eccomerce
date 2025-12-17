@@ -1,8 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.ResultTypes;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ByteBuy.Core.Domain.Entities;
 

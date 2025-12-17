@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.DTO.PortalUser;
 using System.Linq.Expressions;
 

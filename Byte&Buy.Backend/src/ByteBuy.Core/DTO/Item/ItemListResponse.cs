@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ByteBuy.Core.DTO.Item;
+﻿namespace ByteBuy.Core.DTO.Item;
 
 public record ItemListResponse(
     Guid Id,

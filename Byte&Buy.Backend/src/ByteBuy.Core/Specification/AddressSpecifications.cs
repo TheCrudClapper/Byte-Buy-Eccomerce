@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
-using System.Net;
 namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications

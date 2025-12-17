@@ -10,6 +10,8 @@ public interface IDeliveryService
     Task<Result<UpdatedResponse>> UpdateDelivery(Guid deliveryId, DeliveryUpdateRequest request);
     Task<Result> DeleteDelivery(Guid deliveryId);
     Task<Result<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct = default);
-    Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default); 
+    Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default);
     Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
+    Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels();
+    Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes();
 }

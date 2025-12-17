@@ -1,5 +1,4 @@
 ﻿using Ardalis.Specification;
-using ByteBuy.Core.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts.Base;

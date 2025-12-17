@@ -3,7 +3,6 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
@@ -31,6 +30,6 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
     public async Task<bool> HasActiveRelationsAsync(Guid countryId)
     {
         return await _context.Countries
-            .AnyAsync(c => c.Id == countryId && c.Addresses.Any());  
+            .AnyAsync(c => c.Id == countryId && c.Addresses.Any());
     }
 }

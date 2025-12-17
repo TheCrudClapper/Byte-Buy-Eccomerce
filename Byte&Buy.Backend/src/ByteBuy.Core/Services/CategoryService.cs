@@ -55,7 +55,7 @@ public class CategoryService : ICategoryService
 
     public async Task<Result> DeleteCategory(Guid categoryId)
     {
-        if(await _categoryRepository.HasActiveRelations(categoryId))
+        if (await _categoryRepository.HasActiveRelations(categoryId))
             return Result.Failure(CategoryErrors.InUse);
 
         var category = await _categoryRepository.GetByIdAsync(categoryId);

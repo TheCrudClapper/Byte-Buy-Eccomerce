@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ServiceContracts;
-using ByteBuy.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;

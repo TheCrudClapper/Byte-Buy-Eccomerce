@@ -9,7 +9,7 @@ namespace ByteBuy.API.Controllers;
 [ApiController]
 public class ItemsController : BaseApiController
 {
-    private readonly IItemsService  _itemsService;
+    private readonly IItemsService _itemsService;
     public ItemsController(IItemsService itemsService)
         => _itemsService = itemsService;
 
@@ -22,7 +22,7 @@ public class ItemsController : BaseApiController
         => HandleResult(await _itemsService.AddCompanyItem(request));
 
     [HttpPut("{itemId}")]
-    public async Task<ActionResult<UpdatedResponse>> PutItem(Guid itemId,[FromForm] ItemUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutItem(Guid itemId, [FromForm] ItemUpdateRequest request)
         => HandleResult(await _itemsService.UpdateCompanyItem(itemId, request));
 
     [HttpDelete("{itemId}")]

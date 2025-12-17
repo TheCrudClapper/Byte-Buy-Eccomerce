@@ -116,7 +116,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default)
     {
-        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(),ct);
+        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(), ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)

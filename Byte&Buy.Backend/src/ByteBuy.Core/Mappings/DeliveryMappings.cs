@@ -30,5 +30,4 @@ public static class DeliveryMappings
                delivery.Price.Currency,
                delivery.Price.Amount
             );
-
 }

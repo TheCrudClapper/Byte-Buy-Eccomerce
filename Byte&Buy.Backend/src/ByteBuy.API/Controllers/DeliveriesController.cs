@@ -43,4 +43,12 @@ public class DeliveriesController : BaseApiController
     //[HasPermission("delivery:read:options")]
     public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectList(ct));
+
+    [HttpGet("sizes/list")]
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList()
+        => HandleResult(_deliveryService.GetParcelLockerSizes());
+
+    [HttpGet("channels/list")]
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectList()
+        => HandleResult(_deliveryService.GetParcelLockerSizes());
 }

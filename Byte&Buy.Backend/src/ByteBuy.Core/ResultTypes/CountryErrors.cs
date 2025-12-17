@@ -8,6 +8,6 @@ public static class CountryErrors
     public static readonly Error AlreadyExists = new Error
        (400, "Country with this name or code already exists");
 
-    public static readonly Error InUse= new Error
+    public static readonly Error InUse = new Error
       (400, "Country is used, cannot be deleted");
 }

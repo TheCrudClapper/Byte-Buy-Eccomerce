@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -79,7 +80,7 @@ public class DeliveryService : IDeliveryService
         delivery.Deactivate();
 
         await _deliveryRepository.UpdateAsync(delivery);
-        await _deliveryRepository.CommitAsync(); 
+        await _deliveryRepository.CommitAsync();
         return Result.Success();
     }
 
@@ -102,7 +103,12 @@ public class DeliveryService : IDeliveryService
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
         return deliveries.Select(d => d.ToDeliveryListResponse())
-            .ToList();
+            .ToList().AsReadOnly();
     }
 
+    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<DeliveryChannelEnum>());
+
+    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes()
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSizeEnum>());
 }

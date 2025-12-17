@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
-using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

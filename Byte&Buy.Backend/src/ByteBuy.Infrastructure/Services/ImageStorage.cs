@@ -32,7 +32,7 @@ public class ImageStorage : IImageStorage
         {
             foreach (var imagePath in imagePaths)
             {
-                var normalized = imagePath.Replace('/',Path.DirectorySeparatorChar);
+                var normalized = imagePath.Replace('/', Path.DirectorySeparatorChar);
 
                 var fullPath = Path.Combine(_env.WebRootPath, "Images", normalized);
                 Console.WriteLine($"fullPath: {fullPath}");
@@ -50,7 +50,7 @@ public class ImageStorage : IImageStorage
         }
 
         return Result.Success();
-    
+
     }
 
     public static Result ValidateExtensions(IReadOnlyList<IFormFile> files)
