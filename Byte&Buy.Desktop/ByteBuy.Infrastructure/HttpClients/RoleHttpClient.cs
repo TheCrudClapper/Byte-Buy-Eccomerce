@@ -14,8 +14,8 @@ public class RoleHttpClient(HttpClient httpClient) : HttpClientBase(httpClient),
     public async Task<Result<CreatedResponse>> PostAsync(RoleAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListItemsAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListItemsAsync()
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 
     public async Task<Result<IEnumerable<RoleResponse>>> GetAllAsync()
         => await GetAsync<IEnumerable<RoleResponse>>($"{resource}");

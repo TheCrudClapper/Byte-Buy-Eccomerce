@@ -20,7 +20,7 @@ public class ConditionService(IConditionHttpClient httpClient) : IConditionServi
     public async Task<Result<IEnumerable<ConditionListResponse>>> GetList()
         => await httpClient.GetListAsync();
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
         => await httpClient.GetSelectListAsync();
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, ConditionUpdateRequest request)

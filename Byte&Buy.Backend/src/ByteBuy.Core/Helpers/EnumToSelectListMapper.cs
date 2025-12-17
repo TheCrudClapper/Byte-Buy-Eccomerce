@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO;
+using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Helpers;
@@ -11,7 +12,7 @@ public class EnumToSelectListMapper
         return Enum.GetValues<TEnum>()
             .Select(e => new SelectListItemResponse<int>(
                 Convert.ToInt32(e),
-                e.ToString()))
+                e.GetDescription()))
                 .ToArray();
     }
 }

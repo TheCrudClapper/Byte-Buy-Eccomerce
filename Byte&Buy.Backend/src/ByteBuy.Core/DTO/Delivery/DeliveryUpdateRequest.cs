@@ -6,6 +6,6 @@ public record DeliveryUpdateRequest(
     [Required, MaxLength(50)] string Name,
     [MaxLength(50)] string? Description,
     [Required] decimal Price,
-    int ParcelSizeId,
+    int? ParcelSizeId,
     [Required] int ChannelId
     );

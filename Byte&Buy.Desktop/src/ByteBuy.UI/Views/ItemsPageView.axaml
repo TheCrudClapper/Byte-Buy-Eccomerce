@@ -63,7 +63,7 @@
 						<DataGridTextColumn Header="Category" Binding="{Binding CategoryName}" Width="*" />
 						<DataGridTextColumn Header="Stock Quantity" Binding="{Binding StockQuantity}" Width="*" />
 						<DataGridTextColumn Header="Images Count" Binding="{Binding ImagesCount}" Width="*" />
-						<DataGridTemplateColumn Header="Actions">
+						<DataGridTemplateColumn Header="Actions" MinWidth="130">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">

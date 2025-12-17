@@ -1,7 +1,11 @@
-﻿namespace ByteBuy.Core.DTO.Delivery;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Delivery;
 
 public record DeliveryAddRequest(
     string Name,
     string? Description,
-    decimal Price
+    decimal Price,
+    int? ParcelSizeId,
+    int ChannelId
     );

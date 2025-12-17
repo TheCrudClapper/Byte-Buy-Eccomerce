@@ -62,9 +62,9 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
     [ObservableProperty]
     [Required(ErrorMessage = "Choose employee's role")]
-    private SelectListItemResponse? _selectedRole;
+    private SelectListItemResponse<Guid>? _selectedRole;
 
-    [ObservableProperty] private ObservableCollection<SelectListItemResponse> _roles = [];
+    [ObservableProperty] private ObservableCollection<SelectListItemResponse<Guid>> _roles = [];
 
     #endregion
 
@@ -94,7 +94,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         await permissionListBoxTask;
         var role = await roleTask;
 
-        Roles = new ObservableCollection<SelectListItemResponse>(role.Value ?? []);
+        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(role.Value ?? []);
     }
     protected override void Clear()
     {

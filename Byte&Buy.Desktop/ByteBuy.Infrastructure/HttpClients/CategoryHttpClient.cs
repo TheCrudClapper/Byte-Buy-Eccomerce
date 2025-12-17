@@ -26,8 +26,8 @@ public class CategoryHttpClient(HttpClient httpClient)
     public async Task<Result<IEnumerable<CategoryListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<CategoryListResponse>>($"{resource}/list");
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 
 
 }

@@ -20,7 +20,7 @@ public class CountryService(ICountryHttpClient httpClient) : ICountryService
     public async Task<Result<CountryResponse>> GetById(Guid coutryId)
         => await httpClient.GetByIdAsync(coutryId);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
         => await httpClient.GetSelectListAsync();
 
     public async Task<Result<UpdatedResponse>> Update(Guid countryId, CountryUpdateRequest request)

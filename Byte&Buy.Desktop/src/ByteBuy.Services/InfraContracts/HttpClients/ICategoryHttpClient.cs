@@ -6,7 +6,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 
 public interface ICategoryHttpClient
 {
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync();
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<IEnumerable<CategoryListResponse>>> GetListAsync();
     Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request);

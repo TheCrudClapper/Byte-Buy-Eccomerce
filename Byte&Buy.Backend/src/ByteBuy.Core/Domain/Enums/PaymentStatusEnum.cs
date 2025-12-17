@@ -1,10 +1,21 @@
-﻿namespace ByteBuy.Core.Domain.Enums;
+﻿using System.ComponentModel;
+
+namespace ByteBuy.Core.Domain.Enums;
 
 public enum PaymentStatusEnum
 {
+    [Description("Created")]
     Created = 0,
-    Pending,
-    Completed,
-    Failed,
-    Cancelled
+
+    [Description("Pending")]
+    Pending = 1,
+
+    [Description("Completed")]
+    Completed = 2,
+
+    [Description("Failed")]
+    Failed = 3,
+
+    [Description("Cancelled")]
+    Cancelled = 4
 }

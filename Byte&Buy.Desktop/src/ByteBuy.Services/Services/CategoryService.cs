@@ -19,7 +19,7 @@ public class CategoryService(ICategoryHttpClient httpClient) : ICategoryService
     public async Task<Result<IEnumerable<CategoryListResponse>>> GetList()
         => await httpClient.GetListAsync();
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
         => await httpClient.GetSelectListAsync();
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, CategoryUpdateRequest request)

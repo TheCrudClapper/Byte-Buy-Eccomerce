@@ -4,7 +4,7 @@
 			 xmlns:dialogHost="using:DialogHostAvalonia"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
 			 x:Class="ByteBuy.UI.Views.Dialogs.DeliveryDialogView"
 			 x:DataType="vm:DeliveryDialogViewModel">
 
@@ -15,7 +15,7 @@
 	<Border CornerRadius="2" BorderThickness="2"
 			Background="{DynamicResource BackgroundLightBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="200" MinWidth="400">
+			MinHeight="550" MinWidth="400">
 		<Grid RowDefinitions="30,*,*">
 			<Border
 			Grid.Row="0"
@@ -43,12 +43,68 @@
 				Text="{Binding Description}"
 				Watermark="Description" />
 
+				<Grid RowDefinitions="auto, auto" ColumnDefinitions="*, *">
+					<TextBlock
+					Grid.Row="0"
+					Grid.Column="0"
+					Text="Parcel Locker Size"
+					Classes="textBoxLabel" />
+					<!--minus-solid-full.svg-->
+					<StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,5,0" Orientation="Horizontal">
+						<Button VerticalAlignment="Stretch"
+								HorizontalAlignment="Stretch"
+								CornerRadius="5,0,0,5"
+								Command="{Binding ClearSelectedSizeCommand}">
+							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+								   Height="15"
+								   Width="15"/>
+						</Button>
+						<ComboBox
+						ItemsSource="{Binding ParcelLockerSize}"
+						SelectedValue="{Binding SelectedSize}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Title}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+
+
+					<TextBlock
+					Grid.Row="0"
+					Grid.Column="1"
+					Text="Delivery Type"
+					Margin="5,0,0,0"
+					Classes="textBoxLabel" />
+
+					<StackPanel Grid.Row="1" Margin="5,0,0,0" Grid.Column="1" Orientation="Horizontal">
+						<Button VerticalAlignment="Stretch"
+								HorizontalAlignment="Stretch"
+								CornerRadius="5,0,0,5"
+								Command="{Binding ClearSelectedChannelCommand}">
+							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+								   Height="15"
+								   Width="15"/>
+						</Button>
+						<ComboBox
+						ItemsSource="{Binding DeliveryChannels}"
+						SelectedValue="{Binding SelectedChannel}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Title}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+
+				</Grid>
 
 				<TextBlock Text="Price" Classes="textBoxLabel" />
 				<TextBox
 				Text="{Binding Price}"
 				TextWrapping="Wrap"
-				Watermark="100" />
+				Watermark="100"/>
 
 				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
 

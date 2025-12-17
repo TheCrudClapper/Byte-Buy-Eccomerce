@@ -73,18 +73,18 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private string _password = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<SelectListItemResponse> _roles = [];
+    private ObservableCollection<SelectListItemResponse<Guid>> _roles = [];
 
     [ObservableProperty]
-    private ObservableCollection<SelectListItemResponse> _countries = [];
+    private ObservableCollection<SelectListItemResponse<Guid>> _countries = [];
 
     [ObservableProperty]
     [RequiredIf(nameof(IsAddressIncluded))]
-    private SelectListItemResponse? _selectedCountry;
+    private SelectListItemResponse<Guid>? _selectedCountry;
 
     [ObservableProperty]
     [Required(ErrorMessage = "Choose user's role")]
-    private SelectListItemResponse? _selectedRole;
+    private SelectListItemResponse<Guid>? _selectedRole;
 
     [ObservableProperty]
     private bool _isAddressIncluded = true;
@@ -129,9 +129,9 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var roles = await roleTask;
         await listBoxTask;
 
-        Countries = new ObservableCollection<SelectListItemResponse>(countries.Value ?? []);
+        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);
 
-        Roles = new ObservableCollection<SelectListItemResponse>(roles.Value ?? []);
+        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Value ?? []);
     }
 
     protected override async Task AddItem()

@@ -10,5 +10,5 @@ public interface IRoleService : IBaseService
     Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request);
     Task<Result<RoleResponse>> GetById(Guid id);
     Task<Result<IEnumerable<RoleResponse>>> GetAll();
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList();
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
 }

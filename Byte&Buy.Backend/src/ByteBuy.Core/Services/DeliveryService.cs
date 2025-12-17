@@ -25,11 +25,13 @@ public class DeliveryService : IDeliveryService
         if (exist)
             return Result.Failure<CreatedResponse>(DeliveryErrors.AlreadyExists);
 
+        var size = GetEnumOrNull(request.ParcelSizeId);
+
         var deliveryResult = Delivery.Create(
             request.Name,
             request.Description,
             request.Price,
-            (ParcelSizeEnum)request.ParcelSizeId,
+            size,
             (DeliveryChannelEnum)request.ChannelId
         );
 
@@ -52,11 +54,13 @@ public class DeliveryService : IDeliveryService
         if (delivery is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
+        var size = GetEnumOrNull(request.ParcelSizeId);
+
         var deliveryResult = delivery.Update(
             request.Name,
             request.Description,
             request.Price,
-            (ParcelSizeEnum)request.ParcelSizeId,
+            size,
             (DeliveryChannelEnum)request.ChannelId
         );
 
@@ -104,6 +108,13 @@ public class DeliveryService : IDeliveryService
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
         return deliveries.Select(d => d.ToDeliveryListResponse())
             .ToList().AsReadOnly();
+    }
+
+    private static ParcelSizeEnum? GetEnumOrNull(int? id)
+    {
+        return id.HasValue
+            ? (ParcelSizeEnum)id.Value
+            : null;
     }
 
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()

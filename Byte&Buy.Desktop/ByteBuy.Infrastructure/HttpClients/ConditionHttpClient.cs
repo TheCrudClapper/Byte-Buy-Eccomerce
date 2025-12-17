@@ -25,6 +25,6 @@ public class ConditionHttpClient(HttpClient httpClient)
     public async Task<Result<IEnumerable<ConditionListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<ConditionListResponse>>($"{resource}/list");
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 }

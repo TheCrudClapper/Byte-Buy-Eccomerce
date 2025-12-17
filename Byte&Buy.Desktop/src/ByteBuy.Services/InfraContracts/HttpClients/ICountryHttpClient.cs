@@ -6,7 +6,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 
 public interface ICountryHttpClient
 {
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync();
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync();
     Task<Result<CountryResponse>> GetByIdAsync(Guid countryId);
     Task<Result<CreatedResponse>> PostCountryAsync(CountryAddRequest request);

@@ -1,8 +1,15 @@
-﻿namespace ByteBuy.Core.Domain.Enums;
+﻿using System.ComponentModel;
+
+namespace ByteBuy.Core.Domain.Enums;
 
 public enum DeliveryChannelEnum
 {
-    Courier = 1,
-    ParcelLocker = 2,
-    PicupPoint = 3,
+    [Description("Courier")]
+    Courier = 0,
+
+    [Description("Parcel Locker")]
+    ParcelLocker = 1,
+
+    [Description("Pickup Point")]
+    PickupPoint = 2,
 }

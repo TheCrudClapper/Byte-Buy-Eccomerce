@@ -52,7 +52,11 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
     protected override async Task Add()
     {
         var result = await DialogNavigation
-         .OpenDialogAsync(ApplicationDialogNames.Delivery);
+            .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
+            {
+                if (vm is DeliveryDialogViewModel dialogVm)
+                    await dialogVm.InitializeAsync();
+            });
 
         if (result is bool ok && ok)
         {

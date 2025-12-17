@@ -1,8 +1,15 @@
-﻿namespace ByteBuy.Core.Domain.Enums;
+﻿using System.ComponentModel;
+
+namespace ByteBuy.Core.Domain.Enums;
 
 public enum ParcelSizeEnum
 {
-    Small = 1,
-    Medium = 2,
-    Large = 3
+    [Description("Small")]
+    Small = 0,
+
+    [Description("Medium")]
+    Medium = 1,
+
+    [Description("Large")]
+    Large = 2
 }

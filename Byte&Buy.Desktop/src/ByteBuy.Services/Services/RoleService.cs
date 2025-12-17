@@ -14,7 +14,7 @@ public class RoleService(IRoleHttpClient roleClient) : IRoleService
     public async Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request)
         => await roleClient.PutAsync(id, request);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList()
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
         => await roleClient.GetSelectListItemsAsync();
 
     public async Task<Result<RoleResponse>> GetById(Guid id)

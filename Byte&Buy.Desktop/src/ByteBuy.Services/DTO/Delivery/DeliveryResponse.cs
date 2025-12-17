@@ -5,5 +5,7 @@ public record DeliveryResponse(
     string Name,
     string? Description,
     decimal Amount,
-    string Currency
+    string Currency,
+    int? ParcelSizeId,
+    int ChannelId
     );

@@ -8,6 +8,6 @@ public class PermissionHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IPermissionHttpClient
 {
     private const string resource = "permissions";
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 }

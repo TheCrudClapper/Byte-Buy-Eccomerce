@@ -50,5 +50,5 @@ public class DeliveriesController : BaseApiController
 
     [HttpGet("channels/list")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectList()
-        => HandleResult(_deliveryService.GetParcelLockerSizes());
+        => HandleResult(_deliveryService.GetDeliveryChannels());
 }

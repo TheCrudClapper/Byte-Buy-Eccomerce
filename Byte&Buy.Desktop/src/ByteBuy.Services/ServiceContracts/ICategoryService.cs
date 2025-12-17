@@ -6,7 +6,7 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface ICategoryService : IBaseService
 {
-    Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectList();
+    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
     Task<Result<CreatedResponse>> Add(CategoryAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, CategoryUpdateRequest request);
     Task<Result<CategoryResponse>> GetById(Guid id);

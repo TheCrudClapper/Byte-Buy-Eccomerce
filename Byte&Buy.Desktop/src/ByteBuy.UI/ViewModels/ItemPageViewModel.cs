@@ -30,11 +30,11 @@ public partial class ItemPageViewModel : ViewModelSingle
 
     [ObservableProperty]
     [Required(ErrorMessage = "You need to select category")]
-    private SelectListItemResponse? _selectedCategory;
+    private SelectListItemResponse<Guid>? _selectedCategory;
 
     [ObservableProperty]
     [Required(ErrorMessage = "You need to select condition")]
-    private SelectListItemResponse? _selectedCondition;
+    private SelectListItemResponse<Guid>? _selectedCondition;
 
     [ObservableProperty]
     private int _descriptionCharCount;
@@ -44,10 +44,10 @@ public partial class ItemPageViewModel : ViewModelSingle
     private string _description = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<SelectListItemResponse> _categories = [];
+    private ObservableCollection<SelectListItemResponse<Guid>> _categories = [];
 
     [ObservableProperty]
-    private ObservableCollection<SelectListItemResponse> _conditions = [];
+    private ObservableCollection<SelectListItemResponse<Guid>> _conditions = [];
 
     [ObservableProperty]
     private ObservableCollection<ImageViewModel> _images = [];
@@ -86,9 +86,9 @@ public partial class ItemPageViewModel : ViewModelSingle
         var cat = await categoryTask;
 
 
-        Conditions = new ObservableCollection<SelectListItemResponse>(cond?.Value ?? []);
+        Conditions = new ObservableCollection<SelectListItemResponse<Guid>>(cond?.Value ?? []);
 
-        Categories = new ObservableCollection<SelectListItemResponse>(cat?.Value ?? []);
+        Categories = new ObservableCollection<SelectListItemResponse<Guid>>(cat?.Value ?? []);
     }
 
     public async Task InitializeForEdit(Guid id)

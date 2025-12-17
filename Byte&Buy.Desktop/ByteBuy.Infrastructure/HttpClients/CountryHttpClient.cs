@@ -16,8 +16,8 @@ public class CountryHttpClient(HttpClient httpClient)
     public async Task<Result<UpdatedResponse>> PutCountryAsync(Guid countryId, CountryUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{countryId}", request);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse>>($"{resource}/options");
+    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 
     public async Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync()
         => await GetAsync<IEnumerable<CountryResponse>>($"{resource}");
