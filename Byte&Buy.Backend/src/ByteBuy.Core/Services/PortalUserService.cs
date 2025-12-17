@@ -52,7 +52,7 @@ public class PortalUserService : IPortalUserService
 
         var country = await _countryRepository.GetByIdAsync(request.Address.CountryId);
         if (country is null)
-            return Result.Failure<CreatedResponse>(CountryErrors.NotFound);
+            return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.NotFound);
 
         var addressResult = Address.Create(
             request.Address.Label,

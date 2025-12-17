@@ -26,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<IPortalUserService, PortalUserService>();
         services.AddScoped<IAddressService, AddressService>();
         services.AddScoped<IItemsService, ItemsService>();
+        services.AddScoped<IDeliveryCarrierService, DeliveryCarrierService>();
 
         //Add Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();

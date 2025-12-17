@@ -16,7 +16,7 @@ public class DeliveryCarrier : AuditableEntity, ISoftDeletable
     private DeliveryCarrier(string name, string code)
     {
         Name = name;
-        Code = code;
+        Code = code.ToUpper();
         DateCreated = DateTime.UtcNow;
         IsActive = true;
     }
@@ -43,7 +43,7 @@ public class DeliveryCarrier : AuditableEntity, ISoftDeletable
     public static Result<DeliveryCarrier> Create(string name, string code)
     {
         var validationResult = Validate(name, code);
-        if(validationResult.IsFailure)
+        if (validationResult.IsFailure)
             return Result.Failure<DeliveryCarrier>(validationResult.Error);
 
         return new DeliveryCarrier(name, code);

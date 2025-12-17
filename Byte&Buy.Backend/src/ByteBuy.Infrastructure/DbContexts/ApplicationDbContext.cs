@@ -41,6 +41,8 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }
 
+    public DbSet<DeliveryCarrier> DeliveryCarriers { get; set; }
+
 
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 

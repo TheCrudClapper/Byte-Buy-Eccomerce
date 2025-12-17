@@ -29,7 +29,7 @@ public class AddressService : IAddressService
     {
         var country = await _countryRepository.GetByIdAsync(request.CountryId);
         if (country is null)
-            return Result.Failure<CreatedResponse>(CountryErrors.NotFound);
+            return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.NotFound);
 
         var exist = await _addressRepository.DoesAddressWithLabelExists(userId, request.Label);
         if (exist)
@@ -70,7 +70,7 @@ public class AddressService : IAddressService
 
         var country = await _countryRepository.GetByIdAsync(request.CountryId);
         if (country is null)
-            return Result.Failure<UpdatedResponse>(CountryErrors.NotFound);
+            return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.NotFound);
 
         if (address.Label != request.Label)
         {

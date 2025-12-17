@@ -32,7 +32,9 @@ public static class DependencyInjection
         services.AddScoped<IPortalUserRepository, PortalUserRepository>();
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<IDeliveryCarrierRepository, DeliveryCarrierRepository>();
         services.AddScoped<IImageStorage, ImageStorage>();
+
         return services;
     }
 }
