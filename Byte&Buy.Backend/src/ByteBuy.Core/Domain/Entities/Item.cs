@@ -139,12 +139,6 @@ public class Item : AuditableEntity, ISoftDeletable
             .ToList();
     }
 
-    public void AssignImageToItem(Image image)
-    {
-        image.AssignToItem(this);
-        Images.Add(image);
-    }
-
     private void DeactivateAllImages()
     {
         foreach (Image image in Images)

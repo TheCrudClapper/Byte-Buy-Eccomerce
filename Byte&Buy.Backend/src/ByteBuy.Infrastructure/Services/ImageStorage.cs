@@ -17,7 +17,6 @@ public class ImageStorage : IImageStorage
     private string GetCombinedPath(ImageTypeEnum type)
     {
         var root = Path.Combine(_env.WebRootPath, "Images");
-
         return type switch
         {
             ImageTypeEnum.Items => Path.Combine(root, "Items"),

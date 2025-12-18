@@ -14,7 +14,8 @@ public static class DeliveryMappings
             delivery.Price.Amount,
             delivery.Price.Currency,
             (int?)delivery.ParcelSize ?? null,
-            (int)delivery.Channel
+            (int)delivery.Channel,
+            delivery.DeliveryCarrierId
             );
 
     public static SelectListItemResponse<Guid> ToSelectListItemResponse(this Delivery delivery)
@@ -28,6 +29,7 @@ public static class DeliveryMappings
                delivery.Id,
                delivery.Name,
                delivery.Price.Currency,
-               delivery.Price.Amount
+               delivery.Price.Amount,
+               delivery.DeliveryCarrier.Name
             );
 }

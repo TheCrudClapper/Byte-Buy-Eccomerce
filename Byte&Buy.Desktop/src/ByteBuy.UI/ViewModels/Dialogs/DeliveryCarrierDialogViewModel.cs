@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
-public partial class DeliveryCarrierDialogViewModel : DialogSingleViewModel
+public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deliveryCarrierService)
+    : DialogSingleViewModel("Delivery Carrier")
 {
     #region MVVM Properties
     [ObservableProperty]
@@ -20,20 +21,14 @@ public partial class DeliveryCarrierDialogViewModel : DialogSingleViewModel
     [ObservableProperty]
     [Required, MaxLength(20)]
     private string _code = string.Empty;
+
     #endregion
-
-    private readonly IDeliveryCarrierService _deliveryCarrierService;
-
-    public DeliveryCarrierDialogViewModel(IDeliveryCarrierService deliveryCarrierService) : base("Delivery Carrier")
-    {
-        _deliveryCarrierService = deliveryCarrierService;
-    }
 
     public override async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await _deliveryCarrierService.GetById(id);
+        var result = await deliveryCarrierService.GetById(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -47,7 +42,7 @@ public partial class DeliveryCarrierDialogViewModel : DialogSingleViewModel
     protected override async Task<bool> AddItem()
     {
         var request = new DeliveryCarrierAddRequest(Name, Code);
-        var response = await _deliveryCarrierService.Add(request);
+        var response = await deliveryCarrierService.Add(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -62,7 +57,7 @@ public partial class DeliveryCarrierDialogViewModel : DialogSingleViewModel
             return false;
 
         var request = new DeliveryCarrierUpdateRequest(Name, Code);
-        var response = await _deliveryCarrierService.Update(EditingItemId.Value, request);
+        var response = await deliveryCarrierService.Update(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;

@@ -13,10 +13,14 @@ namespace ByteBuy.Core.Services;
 public class DeliveryService : IDeliveryService
 {
     private readonly IDeliveryRepository _deliveryRepository;
+    private readonly IDeliveryCarrierRepository _carrierRepository;
 
-    public DeliveryService(IDeliveryRepository deliveryRepository)
+    public DeliveryService(
+        IDeliveryRepository deliveryRepository,
+        IDeliveryCarrierRepository carrierRepository)
     {
         _deliveryRepository = deliveryRepository;
+        _carrierRepository = carrierRepository;
     }
 
     public async Task<Result<CreatedResponse>> AddDelivery(DeliveryAddRequest request)
@@ -25,6 +29,10 @@ public class DeliveryService : IDeliveryService
         if (exist)
             return Result.Failure<CreatedResponse>(DeliveryErrors.AlreadyExists);
 
+        var carrierExists = await _carrierRepository.ExistsByCondition(dc => dc.Id == request.CarrierId);
+        if (!carrierExists)
+            return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.NotFound);
+
         var size = GetEnumOrNull(request.ParcelSizeId);
 
         var deliveryResult = Delivery.Create(
@@ -32,7 +40,8 @@ public class DeliveryService : IDeliveryService
             request.Description,
             request.Price,
             size,
-            (DeliveryChannelEnum)request.ChannelId
+            (DeliveryChannelEnum)request.ChannelId,
+            request.CarrierId
         );
 
         if (deliveryResult.IsFailure)
@@ -50,6 +59,10 @@ public class DeliveryService : IDeliveryService
         if (exist)
             return Result.Failure<UpdatedResponse>(DeliveryErrors.AlreadyExists);
 
+        var carrierExists = await _carrierRepository.ExistsByCondition(dc => dc.Id == request.CarrierId);
+        if (!carrierExists)
+            return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.NotFound);
+
         var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
         if (delivery is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -61,7 +74,8 @@ public class DeliveryService : IDeliveryService
             request.Description,
             request.Price,
             size,
-            (DeliveryChannelEnum)request.ChannelId
+            (DeliveryChannelEnum)request.ChannelId,
+            request.CarrierId
         );
 
         if (deliveryResult.IsFailure)

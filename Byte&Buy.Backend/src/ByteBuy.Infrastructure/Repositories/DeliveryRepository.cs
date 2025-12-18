@@ -17,12 +17,15 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
 
     public async Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct)
     {
-        return await _context.Deliveries.ToListAsync(ct);
+        return await _context.Deliveries
+            .Include(d => d.DeliveryCarrier)
+            .ToListAsync(ct);
     }
 
     public async Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         return await _context.Deliveries
+            .Include(d => d.DeliveryCarrier)
             .FirstOrDefaultAsync(d => d.Id == id, ct);
     }
 

@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
@@ -12,7 +13,9 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
-public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
+public partial class DeliveryDialogViewModel(
+    IDeliveryService deliveryService,
+    IDeliveryCarrierService carrierService)
     : DialogSingleViewModel("Delivery")
 {
     #region MVVM Properties
@@ -35,26 +38,36 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     private ObservableCollection<SelectListItemResponse<int>> _deliveryChannels = [];
 
     [ObservableProperty]
+    private ObservableCollection<SelectListItemResponse<Guid>> _deliveryCarriers = [];
+
+    [ObservableProperty]
     private SelectListItemResponse<int>? _selectedSize;
 
     [ObservableProperty]
     [Required]
     private SelectListItemResponse<int>? _selectedChannel;
+
+    [ObservableProperty]
+    [Required]
+    private SelectListItemResponse<Guid>? _selectedDeliveryCarrier;
     #endregion
 
     //Optimize it
     public async Task InitializeAsync()
     {
-        var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesList();
-        var deliveryChannelsTask = deliveryService.GetDeliveryChannelsList();
+        var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectList();
+        var deliveryChannelsTask = deliveryService.GetDeliveryChannelsSelectList();
+        var deliveryCarriersTask = carrierService.GetSelectList();
 
-        await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask);
+        await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
 
         var parcelResult = await parcelLockerSizesTask;
         var deliveryChannelResult = await deliveryChannelsTask;
+        var deliveryCarriersResult = await deliveryCarriersTask;
 
         ParcelLockerSize = new ObservableCollection<SelectListItemResponse<int>>(parcelResult.Value ?? []);
         DeliveryChannels = new ObservableCollection<SelectListItemResponse<int>>(deliveryChannelResult.Value ?? []);
+        DeliveryCarriers = new ObservableCollection<SelectListItemResponse<Guid>>(deliveryCarriersResult.Value ?? []);
     }
 
     public async override Task InitializeForEdit(Guid id)
@@ -74,12 +87,20 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
         Price = result.Value.Amount;
         SelectedSize = ParcelLockerSize.FirstOrDefault(p => p.Id == result.Value.ParcelSizeId);
         SelectedChannel = DeliveryChannels.FirstOrDefault(p => p.Id == result.Value.ChannelId);
+        SelectedDeliveryCarrier = DeliveryCarriers.FirstOrDefault(dc => dc.Id == result.Value.CarrierId);
     }
 
 
     protected async override Task<bool> AddItem()
     {
-        var request = new DeliveryAddRequest(Name, Description, Price, SelectedSize?.Id, SelectedChannel?.Id ?? default);
+        var request = new DeliveryAddRequest(
+            Name,
+            Description,
+            Price,
+            SelectedSize?.Id,
+            SelectedChannel?.Id ?? default,
+            SelectedDeliveryCarrier?.Id ?? Guid.Empty);
+
         var response = await deliveryService.Add(request);
         if (!response.Success)
         {
@@ -94,7 +115,14 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
         if (EditingItemId is null)
             return false;
 
-        var request = new DeliveryUpdateRequest(Name, Description, Price, SelectedSize?.Id, SelectedChannel?.Id ?? default);
+        var request = new DeliveryUpdateRequest(
+            Name,
+            Description,
+            Price,
+            SelectedSize?.Id,
+            SelectedChannel?.Id ?? default,
+            SelectedDeliveryCarrier?.Id ?? Guid.Empty);
+
         var response = await deliveryService.Update(EditingItemId.Value, request);
         if (!response.Success)
         {
@@ -108,8 +136,12 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     private void ClearSelectedSize()
         => SelectedSize = null;
 
-
     [RelayCommand]
     private void ClearSelectedChannel()
       => SelectedChannel = null;
+
+    [RelayCommand]
+    private void ClearSelectedCarrier()
+      => SelectedDeliveryCarrier = null;
+
 }

@@ -5,5 +5,6 @@ public record DeliveryAddRequest(
     string? Description,
     decimal Price,
     int? ParcelSizeId,
-    int ChannelId
+    int ChannelId,
+    Guid CarrierId
     );

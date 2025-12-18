@@ -4,5 +4,6 @@ public record DeliveryListResponse(
     Guid Id,
     string Name,
     string Currency,
-    decimal Amount
+    decimal Amount,
+    string Carrier
     );

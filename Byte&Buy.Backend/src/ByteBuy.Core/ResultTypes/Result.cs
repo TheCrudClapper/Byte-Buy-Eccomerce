@@ -11,7 +11,6 @@ public class Result
         get => !IsSuccess;
     }
 
-
     protected Result(bool isSuccess, Error error)
     {
         if (isSuccess && error != Error.None ||

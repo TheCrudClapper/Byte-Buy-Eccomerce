@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.Delivery;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Delivery;
 
 public record DeliveryResponse(
     Guid Id,
@@ -7,5 +9,6 @@ public record DeliveryResponse(
     decimal Amount,
     string Currency,
     int? ParcelSizeId,
-    int ChannelId
+    int ChannelId,
+    Guid CarrierId
     );

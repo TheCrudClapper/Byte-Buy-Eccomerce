@@ -4,7 +4,7 @@
 			 xmlns:dialogHost="using:DialogHostAvalonia"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="620"
 			 x:Class="ByteBuy.UI.Views.Dialogs.DeliveryDialogView"
 			 x:DataType="vm:DeliveryDialogViewModel">
 
@@ -15,7 +15,7 @@
 	<Border CornerRadius="2" BorderThickness="2"
 			Background="{DynamicResource BackgroundLightBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="550" MinWidth="400">
+			MinHeight="620" MinWidth="400">
 		<Grid RowDefinitions="30,*,*">
 			<Border
 			Grid.Row="0"
@@ -43,24 +43,26 @@
 				Text="{Binding Description}"
 				Watermark="Description" />
 
-				<Grid RowDefinitions="auto, 10, auto" ColumnDefinitions="*, *">
+				<Grid RowDefinitions="auto, 10, auto, 10, auto, 10, auto" ColumnDefinitions="*, *">
+					
+					<!--Delivery Carrier Combobox-->
 					<TextBlock
 					Grid.Row="0"
 					Grid.Column="0"
-					Text="Parcel Locker Size"
+					Text="Delivery Carrier"
 					Classes="textBoxLabel" />
 					<StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,5,0" Orientation="Horizontal">
 						<Button VerticalAlignment="Stretch"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
-								Command="{Binding ClearSelectedSizeCommand}">
+								Command="{Binding ClearSelectedCarrierCommand}">
 							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
 								   Height="15"
 								   Width="15"/>
 						</Button>
 						<ComboBox
-						ItemsSource="{Binding ParcelLockerSize}"
-						SelectedValue="{Binding SelectedSize}">
+						ItemsSource="{Binding DeliveryCarriers}"
+						SelectedValue="{Binding SelectedDeliveryCarrier}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
 									<TextBlock Text="{Binding Title}"/>
@@ -69,7 +71,7 @@
 						</ComboBox>
 					</StackPanel>
 
-
+					<!--Delivery Type Combobox-->
 					<TextBlock
 					Grid.Row="0"
 					Grid.Column="1"
@@ -97,19 +99,48 @@
 						</ComboBox>
 					</StackPanel>
 
+
+					<!--Parcel Locker Size Combobox-->
+					<TextBlock
+					Grid.Row="4"
+					Text="Parcel Locker Size"
+					Classes="textBoxLabel" />
+					<StackPanel Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,5,0" Orientation="Horizontal">
+						<Button VerticalAlignment="Stretch"
+								HorizontalAlignment="Stretch"
+								CornerRadius="5,0,0,5"
+								Command="{Binding ClearSelectedSizeCommand}">
+							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+								   Height="15"
+								   Width="15"/>
+						</Button>
+						<ComboBox
+						ItemsSource="{Binding ParcelLockerSize}"
+						SelectedValue="{Binding SelectedSize}">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Title}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</StackPanel>
+
 				</Grid>
 
+
+				<!--Price NumericUpDown-->
 				<TextBlock Text="Price" Classes="textBoxLabel" />
 				<NumericUpDown
-				Text="{Binding Price}"
-				Value="1"
+				Value="{Binding Price}"
 				FormatString="0.000"
 				Minimum="1"
 				Watermark="Enter price per one item"/>
 
-
+				<!--Error Feedback-->
 				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
 
+
+				<!--Buttons-->
 				<StackPanel Grid.Row="2"
 							Orientation="Horizontal"
 							HorizontalAlignment="Right"

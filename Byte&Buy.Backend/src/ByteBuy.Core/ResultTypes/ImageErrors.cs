@@ -11,4 +11,6 @@ public static class ImageErrors
     public static readonly Error StorageFailure =
         new(500, $"Unable to remove image/s at this time");
 
+    public static readonly Error FolderDoesntExist =
+        new(500, $"Couldn't save new pictures");
 }

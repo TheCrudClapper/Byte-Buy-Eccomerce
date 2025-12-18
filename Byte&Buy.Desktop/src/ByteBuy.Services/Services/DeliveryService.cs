@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
@@ -17,13 +18,13 @@ public class DeliveryService(IDeliveryHttpClient httpClient) : IDeliveryService
     public async Task<Result<DeliveryResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectList()
         => await httpClient.GetDeliveryChannelsList();
 
     public async Task<Result<IEnumerable<DeliveryListResponse>>> GetList()
         => await httpClient.GetListAsync();
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList()
         => await httpClient.GetParcelLockerSizeList();
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
