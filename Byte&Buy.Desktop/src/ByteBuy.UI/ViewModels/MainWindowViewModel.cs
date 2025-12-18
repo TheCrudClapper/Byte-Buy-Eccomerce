@@ -1,8 +1,6 @@
 ﻿using ByteBuy.UI.Data;
-using ByteBuy.UI.Factories;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;

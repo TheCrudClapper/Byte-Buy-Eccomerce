@@ -9,9 +9,9 @@ namespace ByteBuy.Infrastructure.Repositories;
 public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDeliveryCarrierRepository
 {
     public DeliveryCarrierRepository(ApplicationDbContext context) : base(context) { }
-    public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? exludeId = null)
+    public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludeId = null)
         => await _context.DeliveryCarriers
-            .AnyAsync(dc => dc.Id != exludeId && (dc.Name == name || dc.Code == code));
+            .AnyAsync(dc => dc.Id != excludeId && (dc.Name == name || dc.Code == code));
     public async Task<IEnumerable<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default)
         => await _context.DeliveryCarriers.ToListAsync(ct);
 

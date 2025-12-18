@@ -7,5 +7,6 @@ public enum ApplicationDialogNames
     Condition,
     Country,
     Confirm,
-    Offer
+    Offer,
+    DeliveryCarrier
 }

@@ -1,11 +1,9 @@
 ﻿using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.ModelsUI.Abstractions;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
@@ -44,7 +42,7 @@ public partial class OfferDialogViewModel : DialogSingleViewModel
 
     public async Task InitializeAsync()
     {
-        
+
     }
 
     public async Task InitializeForAdd(ItemListItem item)

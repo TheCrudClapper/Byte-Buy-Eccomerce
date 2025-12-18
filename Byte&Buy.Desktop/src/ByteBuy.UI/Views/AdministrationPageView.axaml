@@ -12,6 +12,7 @@
 
     <TabControl SelectedItem="{Binding SelectedTab}">
         <TabItem Header="Deliveries" Content="{Binding DeliveriesPageViewModel}"/>
+        <TabItem Header="Carriers" Content="{Binding DeliveryCarriersPageViewModel}"/>
         <TabItem Header="Categories" Content="{Binding CategoriesPageViewModel}"/>
         <TabItem Header="Condition" Content="{Binding ConditionsPageViewModel}"/>
         <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>

@@ -46,7 +46,7 @@ public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemServi
     {
         await DialogNavigation.OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
         {
-            if(vm is OfferDialogViewModel offerVm)
+            if (vm is OfferDialogViewModel offerVm)
                 await offerVm.InitializeForAdd(item);
         });
     }

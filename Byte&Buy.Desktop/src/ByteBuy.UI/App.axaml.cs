@@ -61,6 +61,7 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Item => x.GetRequiredService<ItemPageViewModel>(),
                 ApplicationPageNames.RentOffers => x.GetRequiredService<RentOffersViewModel>(),
                 ApplicationPageNames.SaleOffers => x.GetRequiredService<SaleOffersViewModel>(),
+                ApplicationPageNames.DeliveryCarriers => x.GetRequiredService<DeliveryCarriersViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -88,6 +89,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Condition => x.GetRequiredService<ConditionDialogViewModel>(),
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmationDialogViewModel>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogViewModel>(),
+                ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -99,6 +101,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Delivery => x.GetRequiredService<DeliveryDialogView>(),
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmDialogView>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogView>(),
+                ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogView>(),
                 _ => throw new InvalidOperationException(),
             });
 

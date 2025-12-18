@@ -35,6 +35,8 @@ public static class DependencyInjection
         services.AddTransient<ConditionDialogView>();
         services.AddTransient<ConfirmDialogView>();
         services.AddTransient<OfferDialogView>();
+        services.AddTransient<DeliveryCarrierDialogView>();
+
         //Alert
         services.AddTransient<AlertViewModel>();
 
@@ -62,6 +64,7 @@ public static class DependencyInjection
         services.AddTransient<ItemPageViewModel>();
         services.AddTransient<RentOffersViewModel>();
         services.AddTransient<SaleOffersViewModel>();
+        services.AddTransient<DeliveryCarriersViewModel>();
 
 
         //Dialgos View Models
@@ -71,6 +74,7 @@ public static class DependencyInjection
         services.AddTransient<DeliveryDialogViewModel>();
         services.AddTransient<CountryDialogViewModel>();
         services.AddTransient<ConfirmationDialogViewModel>();
+        services.AddTransient<DeliveryCarrierDialogViewModel>();
         return services;
     }
 }

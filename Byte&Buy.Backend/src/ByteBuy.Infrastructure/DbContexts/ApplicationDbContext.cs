@@ -40,7 +40,6 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<CompanyInfo> CompanyInfo { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }
-
     public DbSet<DeliveryCarrier> DeliveryCarriers { get; set; }
 
 

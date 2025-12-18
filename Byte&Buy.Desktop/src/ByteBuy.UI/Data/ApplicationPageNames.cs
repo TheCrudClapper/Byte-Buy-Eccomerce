@@ -25,5 +25,6 @@ public enum ApplicationPageNames
     Items,
     Item,
     RentOffers,
-    SaleOffers
+    SaleOffers,
+    DeliveryCarriers,
 }

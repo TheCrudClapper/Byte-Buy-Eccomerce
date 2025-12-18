@@ -9,10 +9,10 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DeliveryCarrierController : BaseApiController
+public class DeliveryCarriersController : BaseApiController
 {
     private readonly IDeliveryCarrierService _carrierService;
-    public DeliveryCarrierController(IDeliveryCarrierService carrierService)
+    public DeliveryCarriersController(IDeliveryCarrierService carrierService)
          => _carrierService = carrierService;
 
     [HttpPost]
@@ -22,22 +22,22 @@ public class DeliveryCarrierController : BaseApiController
 
     [HttpPut("{carrierId}")]
     //[HasPermission("delivery:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutDelivery(Guid carrierId, DeliveryCarrierUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutDeliveryCarrier(Guid carrierId, DeliveryCarrierUpdateRequest request)
         => HandleResult(await _carrierService.UpdateDeliveryCarrier(carrierId, request));
 
     [HttpDelete("{carrierId}")]
     //[HasPermission("delivery:delete")]
-    public async Task<IActionResult> DeleteDelivery(Guid carrierId)
+    public async Task<IActionResult> DeleteDeliveryCarrier(Guid carrierId)
         => HandleResult(await _carrierService.DeleteDeliveryCarrier(carrierId));
 
     [HttpGet("{carrierId}")]
     //[HasPermission("delivery:read")]
-    public async Task<ActionResult<DeliveryResponse>> GetDelivery(Guid carrierId, CancellationToken ct)
+    public async Task<ActionResult<DeliveryCarrierResponse>> GetDeliveryCarrier(Guid carrierId, CancellationToken ct)
         => HandleResult(await _carrierService.GetDeliveryCarrier(carrierId, ct));
 
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]
-    public async Task<ActionResult<IEnumerable<DeliveryCarrierResponse>>> GetDeliveriesList(CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<DeliveryCarrierResponse>>> GetDeliveryCarriersList(CancellationToken ct)
         => HandleResult(await _carrierService.GetDeliveryCarriersList(ct));
 
     [HttpGet("options")]

@@ -52,6 +52,9 @@ public static class DependencyInjection
             options.BaseAddress = new Uri("http://localhost:5099/Images/");
         }).AddHttpMessageHandler<BearerTokenHandler>();
 
+        services.AddHttpClient<IDeliveryCarrierHttpClient, DeliveryCarrierHttpClient>()
+            .AddHttpMessageHandler<BearerTokenHandler>();
+
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
         return services;

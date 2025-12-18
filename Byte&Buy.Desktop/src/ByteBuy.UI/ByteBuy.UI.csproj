@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\DeliveryCarriersPageView.axaml.cs">
+      <DependentUpon>DeliveryCarriersPageView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Dialogs\CategoryDialogView.axaml.cs">
       <DependentUpon>CategoryDialogView.axaml</DependentUpon>
     </Compile>

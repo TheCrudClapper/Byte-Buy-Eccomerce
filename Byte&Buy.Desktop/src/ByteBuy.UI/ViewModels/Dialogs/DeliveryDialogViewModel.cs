@@ -42,6 +42,7 @@ public partial class DeliveryDialogViewModel(IDeliveryService deliveryService)
     private SelectListItemResponse<int>? _selectedChannel;
     #endregion
 
+    //Optimize it
     public async Task InitializeAsync()
     {
         var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesList();

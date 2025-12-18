@@ -1,6 +1,5 @@
 ﻿using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
-using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -15,7 +14,7 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     [ObservableProperty]
     public PageViewModel? _currentPage;
-     
+
     public NavigationService(PageFactory pageFactory,
         WindowFactory windowFactory)
     {
