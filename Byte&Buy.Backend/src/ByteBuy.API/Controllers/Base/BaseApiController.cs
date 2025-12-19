@@ -1,7 +1,7 @@
 ﻿using ByteBuy.API.Extensions;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
-namespace ByteBuy.API.Controllers;
+namespace ByteBuy.API.Controllers.Base;
 
 /// <summary>
 /// Helper Class to reduce boilerplate in controllers.

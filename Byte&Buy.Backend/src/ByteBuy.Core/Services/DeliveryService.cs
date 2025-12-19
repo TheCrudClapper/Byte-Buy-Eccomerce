@@ -7,7 +7,6 @@ using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using System.Linq;
 
 namespace ByteBuy.Core.Services;
 
@@ -23,8 +22,7 @@ public class DeliveryService : IDeliveryService
         _deliveryRepository = deliveryRepository;
         _carrierRepository = carrierRepository;
     }
-
-    public async Task<Result<CreatedResponse>> AddDelivery(DeliveryAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request)
     {
         var exist = await _deliveryRepository.ExistWithNameAsync(request.Name);
         if (exist)
@@ -54,9 +52,9 @@ public class DeliveryService : IDeliveryService
         return delivery.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateDelivery(Guid deliveryId, DeliveryUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryUpdateRequest request)
     {
-        var exist = await _deliveryRepository.ExistWithNameAsync(request.Name, deliveryId);
+        var exist = await _deliveryRepository.ExistWithNameAsync(request.Name, id);
         if (exist)
             return Result.Failure<UpdatedResponse>(DeliveryErrors.AlreadyExists);
 
@@ -64,7 +62,7 @@ public class DeliveryService : IDeliveryService
         if (!carrierExists)
             return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.NotFound);
 
-        var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
+        var delivery = await _deliveryRepository.GetByIdAsync(id);
         if (delivery is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -87,12 +85,12 @@ public class DeliveryService : IDeliveryService
         return delivery.ToUpdatedResponse();
     }
 
-    public async Task<Result> DeleteDelivery(Guid deliveryId)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        if (await _deliveryRepository.HasActiveRelations(deliveryId))
+        if (await _deliveryRepository.HasActiveRelations(id))
             return Result.Failure(DeliveryErrors.InUse);
 
-        var delivery = await _deliveryRepository.GetByIdAsync(deliveryId);
+        var delivery = await _deliveryRepository.GetByIdAsync(id);
         if (delivery is null)
             return Result.Failure(Error.NotFound);
 
@@ -103,20 +101,23 @@ public class DeliveryService : IDeliveryService
         return Result.Success();
     }
 
-    public async Task<Result<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct)
+    public async Task<Result<DeliveryResponse>> GetById(Guid id, CancellationToken ct = default)
     {
-        var delivery = await _deliveryRepository.GetByIdAsync(deliveryId, ct);
+        var delivery = await _deliveryRepository.GetByIdAsync(id, ct);
         return delivery is null
             ? Result.Failure<DeliveryResponse>(Error.NotFound)
             : delivery.ToDeliveryResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
+
         return deliveries.Select(d => d.ToSelectListItemResponse())
-            .ToList();
+            .ToArray()
+            .AsReadOnly();
     }
+
 
     public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default)
     {

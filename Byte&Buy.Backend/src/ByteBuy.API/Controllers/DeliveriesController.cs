@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.API.Controllers.Base;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -7,32 +8,34 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DeliveriesController : BaseApiController
+public class DeliveriesController 
+    : CrudControllerBase<Guid, DeliveryAddRequest, DeliveryUpdateRequest, DeliveryResponse>
 {
     private readonly IDeliveryService _deliveryService;
-
-    public DeliveriesController(IDeliveryService deliveryService)
-        => _deliveryService = deliveryService;
+    public DeliveriesController(IDeliveryService deliveryService) : base(deliveryService)
+    {
+        _deliveryService = deliveryService;
+    }
 
     [HttpPost]
     //[HasPermission("delivery:create")]
-    public async Task<ActionResult<CreatedResponse>> PostDelivery(DeliveryAddRequest request)
-        => HandleResult(await _deliveryService.AddDelivery(request));
+    public override Task<ActionResult<CreatedResponse>> PostAsync(DeliveryAddRequest request)
+        => base.PostAsync(request);
 
-    [HttpPut("{deliveryId}")]
+    [HttpPut("{id}")]
     //[HasPermission("delivery:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutDelivery(Guid deliveryId, DeliveryUpdateRequest request)
-        => HandleResult(await _deliveryService.UpdateDelivery(deliveryId, request));
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, DeliveryUpdateRequest request)
+        => base.PutAsync(id, request);
 
-    [HttpDelete("{deliveryId}")]
+    [HttpDelete("{id}")]
     //[HasPermission("delivery:delete")]
-    public async Task<IActionResult> DeleteDelivery(Guid deliveryId)
-        => HandleResult(await _deliveryService.DeleteDelivery(deliveryId));
+    public override Task<IActionResult> DeleteAsync(Guid id)
+        => base.DeleteAsync(id);
 
-    [HttpGet("{deliveryId}")]
+    [HttpGet("{id}")]
     //[HasPermission("delivery:read")]
-    public async Task<ActionResult<DeliveryResponse>> GetDelivery(Guid deliveryId, CancellationToken ct)
-        => HandleResult(await _deliveryService.GetDelivery(deliveryId, ct));
+    public override Task<ActionResult<DeliveryResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]

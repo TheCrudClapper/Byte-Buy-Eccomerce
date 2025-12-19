@@ -17,7 +17,7 @@ public static class PortalUserMappings
             );
     }
 
-    //Add nullable for addres bc user don't have to add address while registering
+    //AddAsync nullable for addres bc user don't have to add address while registering
     public static PortalUserResponse ToPortalUserResponse(this PortalUser user)
     {
         var defaultAddress = user.Addresses?

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.API.Controllers.Base;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
