@@ -15,7 +15,7 @@ public sealed class Money
         Currency = currency;
     }
 
-    public static Result<Money> Create(decimal amount, string currency)
+    public static Result<Money> Create(decimal amount, string currency = "PLN")
     {
         if (amount < 1)
             return Result.Failure<Money>(Error.Validation("Amount of money can't 0 or negative"));
