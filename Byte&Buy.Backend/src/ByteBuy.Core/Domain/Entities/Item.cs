@@ -118,6 +118,26 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
+    public Result SubstractStock(int quantity)
+    {
+        if(quantity < 1)
+            return Result.Failure(Error.Validation("Quantity must be at least 1."));
+
+        if(quantity > StockQuantity)
+            return Result.Failure(Error.Validation("Not enough stock."));
+
+        StockQuantity -= quantity;
+        return Result.Success();
+    }
+
+    public Result AddStock(int quantity)
+    {
+        if (quantity < 1)
+            return Result.Failure(Error.Validation("Quantity must be at least 1."));
+
+        StockQuantity += quantity;
+        return Result.Success();
+    }
     public Result AddImage(string imagePath, string altText)
     {
         var imageResult = Image.Create(imagePath, altText);

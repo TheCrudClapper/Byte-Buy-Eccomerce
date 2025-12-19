@@ -18,4 +18,10 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
            .Include(i => i.Images)
            .FirstOrDefaultAsync(i => i.Id == itemId, ct);
     }
+
+    public async Task<Item?> GetByIdAsync(Guid itemId, CancellationToken ct = default)
+    {
+        return await _context.Items
+            .FirstOrDefaultAsync(i => i.Id == itemId, ct);
+    }
 }

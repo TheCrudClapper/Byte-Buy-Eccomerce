@@ -5,6 +5,9 @@ namespace ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 public interface IReadRepository<T> where T : class
 {
+    //Fetch Enitty based on id
+    Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default);
+
     //Used for fetching entites
     Task<T?> GetBySpecAsync(ISpecification<T> spec, CancellationToken ct = default);
     //Used for fetching dtos

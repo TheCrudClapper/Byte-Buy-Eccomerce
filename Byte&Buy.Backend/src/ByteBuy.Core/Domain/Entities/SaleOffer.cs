@@ -4,6 +4,7 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class SaleOffer : Offer
 {
+    private SaleOffer() { }
     public Money PricePerItem { get; set; } = null!;
 
     public SaleOffer(

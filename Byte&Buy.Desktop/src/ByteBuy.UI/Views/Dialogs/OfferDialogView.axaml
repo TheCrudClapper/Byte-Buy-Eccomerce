@@ -45,7 +45,7 @@
 
 					<TextBlock Text="Units" Classes="textBoxLabel" />
 					<NumericUpDown
-					Text="{Binding Units}"
+					Text="{Binding QuantityAvaliable}"
 					Value="1"
 					FormatString="0"
 					Minimum="1"/>

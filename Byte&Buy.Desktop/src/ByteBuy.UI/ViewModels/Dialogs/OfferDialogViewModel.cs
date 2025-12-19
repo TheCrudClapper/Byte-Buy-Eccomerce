@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Delivery;
+using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels.Base;
@@ -6,10 +7,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
-public partial class OfferDialogViewModel(IDeliveryService deliveryService)
+public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISaleOfferService saleOfferService)
     : DialogSingleViewModel("Publish Offer")
 {
     #region MVVM Properties
@@ -29,7 +31,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService)
     private ItemListItem? _selectedItem;
 
     [ObservableProperty]
-    private int _units;
+    private int _quantityAvaliable;
 
     [ObservableProperty]
     private ObservableCollection<DeliveryOptionResponse> _parcelLockerDeliveries = [];
@@ -68,9 +70,25 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService)
         SelectedItem = item;
     }
 
-    protected override Task<bool> AddItem()
+    protected override async Task<bool> AddItem()
     {
-        throw new NotImplementedException();
+        if (IsSaleOffer)
+        {
+            var selectedDeliveries = SelectedCourierDeliveries.Select(d => d.Id).ToList();
+            var request = new SaleOfferAddRequest(SelectedItem?.Id ?? Guid.Empty, QuantityAvaliable, PricePerDay, selectedDeliveries);
+
+            var response = await saleOfferService.Add(request);
+            if (!response.Success)
+            {
+                Error = response.Error!.Description;
+                return false;
+            }
+        }
+        else
+        { 
+        }
+
+        return true;
     }
 
     protected override Task<bool> UpdateItem()

@@ -8,13 +8,13 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public abstract class HttpClientBase
 {
-    protected readonly HttpClient _client;
+    protected readonly HttpClient Client;
     private readonly JsonSerializerOptions _jsonOptions;
     protected readonly Uri BaseAddress = new Uri("http://localhost:5099/api/");
     protected HttpClientBase(HttpClient httpClient)
     {
-        _client = httpClient;
-        _client.BaseAddress = BaseAddress;
+        Client = httpClient;
+        Client.BaseAddress = BaseAddress;
 
         _jsonOptions = new JsonSerializerOptions()
         {
@@ -27,7 +27,7 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await _client.GetAsync(url);
+            var response = await Client.GetAsync(url);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -40,7 +40,7 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await _client.GetAsync(url);
+            var response = await Client.GetAsync(url);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -53,7 +53,7 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await _client.PostAsync(resource, content);
+            var response = await Client.PostAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -67,7 +67,7 @@ public abstract class HttpClientBase
         try
         {
             var serialized = CreateJsonContent(payload);
-            var response = await _client.PostAsync(resource, serialized);
+            var response = await Client.PostAsync(resource, serialized);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -81,7 +81,7 @@ public abstract class HttpClientBase
         try
         {
             var serialized = CreateJsonContent(payload);
-            var response = await _client.PostAsync(resource, serialized);
+            var response = await Client.PostAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -93,7 +93,7 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await _client.PutAsync(resource, content);
+            var response = await Client.PutAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -107,7 +107,7 @@ public abstract class HttpClientBase
         try
         {
             var serialized = CreateJsonContent(payload);
-            var response = await _client.PutAsync(resource, serialized);
+            var response = await Client.PutAsync(resource, serialized);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -121,7 +121,7 @@ public abstract class HttpClientBase
         try
         {
             var serialized = CreateJsonContent(payload);
-            var response = await _client.PutAsync(resource, serialized);
+            var response = await Client.PutAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -134,7 +134,7 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await _client.DeleteAsync(resource);
+            var response = await Client.DeleteAsync(resource);
             return await HandleResponseAsync(response);
         }
         catch (Exception)

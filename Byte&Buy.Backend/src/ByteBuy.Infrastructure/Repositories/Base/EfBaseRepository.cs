@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
+using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 namespace ByteBuy.Infrastructure.Repositories.Base;
 
 public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IRepositoryBase<T>
-    where T : class
+    where T : AuditableEntity
 {
     protected readonly ApplicationDbContext _context;
     private readonly ISpecificationEvaluator _specEval
@@ -30,9 +31,8 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
         return Task.CompletedTask;
     }
 
-    public virtual async Task<T?> GetByIdAsync<TId>(TId id, CancellationToken ct = default)
-      where TId : notnull
-        => await _context.Set<T>().FindAsync([id], ct);
+    public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
+        => await _context.Set<T>().FirstOrDefaultAsync(item => item.Id == id, ct);
 
     public virtual async Task<T?> GetBySpecAsync(ISpecification<T> spec, CancellationToken ct = default)
         => await ApplySpecification(spec).FirstOrDefaultAsync(ct);

@@ -16,7 +16,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
-    private Offer() { }
+    protected Offer() { }
     
     protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable)
     {

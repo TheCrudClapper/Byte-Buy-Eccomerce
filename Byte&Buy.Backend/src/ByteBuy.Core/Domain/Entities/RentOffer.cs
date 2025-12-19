@@ -5,6 +5,7 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class RentOffer : Offer
 {
+    private RentOffer() { }
     public Money PricePerDay { get; set; } = null!;
     public int MaxRentalDays { get; set; }
 
