@@ -15,6 +15,9 @@ public class DeliveryService(IDeliveryHttpClient httpClient) : IDeliveryService
     public async Task<Result> DeleteById(Guid id)
         => await httpClient.DeleteAsync(id);
 
+    public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveries()
+        => await httpClient.GetAvaliableDeliveriesAsync();
+
     public async Task<Result<DeliveryResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 

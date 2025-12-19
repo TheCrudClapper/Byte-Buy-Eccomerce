@@ -44,6 +44,10 @@ public class DeliveriesController : BaseApiController
     public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectList(ct));
 
+    [HttpGet("available")]
+    public async Task<ActionResult<DeliveryOptionsResponse>> GetAvailableDeliveries(CancellationToken ct)
+        => HandleResult(await _deliveryService.GetAvaliableDeliveries(ct));
+
     [HttpGet("sizes/list")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList()
         => HandleResult(_deliveryService.GetParcelLockerSizes());

@@ -31,6 +31,11 @@ public class DeliveryHttpClient(HttpClient httpClient)
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsList()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/channels/list");
+
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizeList()
          => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/sizes/list");
+
+    public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync()
+        => await GetAsync<DeliveryOptionsResponse>($"{resource}/available");
+
 }

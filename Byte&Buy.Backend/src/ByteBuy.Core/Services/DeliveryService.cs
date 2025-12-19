@@ -7,6 +7,7 @@ using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using System.Linq;
 
 namespace ByteBuy.Core.Services;
 
@@ -124,16 +125,31 @@ public class DeliveryService : IDeliveryService
             .ToList().AsReadOnly();
     }
 
+    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<DeliveryChannelEnum>());
+
+    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes()
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSizeEnum>());
+
+    public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveries(CancellationToken ct)
+    {
+        var deliveries = await _deliveryRepository.GetAllAsync(ct);
+
+        var dev = new DeliveryOptionsResponse
+        {
+            ParcelLockerDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.ParcelLocker),
+            CourierDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.Courier),
+            PickupPointDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.PickupPoint)
+        };
+
+        return dev;
+    }
+
+    //Helpers
     private static ParcelSizeEnum? GetEnumOrNull(int? id)
     {
         return id.HasValue
             ? (ParcelSizeEnum)id.Value
             : null;
     }
-
-    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()
-        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<DeliveryChannelEnum>());
-
-    public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes()
-        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSizeEnum>());
 }

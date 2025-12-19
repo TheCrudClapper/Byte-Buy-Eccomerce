@@ -12,6 +12,7 @@ public interface IDeliveryHttpClient
     Task<Result<DeliveryResponse>> GetByIdAsync(Guid countryId);
     Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryAddRequest request);
     Task<Result<UpdatedResponse>> PutDeliveryAsync(Guid deliveryId, DeliveryUpdateRequest request);
+    Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync();
     Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsList();
     Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizeList();
     Task<Result> DeleteAsync(Guid deliveryId);
