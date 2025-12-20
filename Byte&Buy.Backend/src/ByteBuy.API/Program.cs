@@ -21,6 +21,7 @@ builder.Services
     .AddCoreLayer()
     .AddInfrastructureLayer(builder.Configuration);
 
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // -----------------------------
@@ -43,7 +44,6 @@ builder.Services.AddSwaggerGen();
 // Authorization & Permissions
 // -----------------------------
 builder.Services.AddJwtTokenAuth(builder.Configuration);
-builder.Services.LoadAuthorizationPolicies();
 #endregion
 #region Middleware Pipeline
 var app = builder.Build();

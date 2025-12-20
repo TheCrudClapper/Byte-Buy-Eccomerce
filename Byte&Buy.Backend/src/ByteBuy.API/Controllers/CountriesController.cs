@@ -33,6 +33,7 @@ public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, C
         => base.DeleteAsync(id);
 
     [HttpGet]
+    [AllowAnonymous]
     //[HasPermission("country:read:many")]
     public async Task<ActionResult<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct)
         => HandleResult(await _countryService.GetCountriesAsync(ct));
