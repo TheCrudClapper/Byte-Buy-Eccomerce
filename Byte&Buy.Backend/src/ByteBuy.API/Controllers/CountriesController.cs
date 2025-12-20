@@ -1,11 +1,14 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Resource("country")]
 [Route("api/[controller]")]
 [ApiController]
 public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, CountryUpdateRequest, CountryResponse>
@@ -28,11 +31,6 @@ public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, C
     //[HasPermission("country:delete")]
     public override Task<IActionResult> DeleteAsync(Guid id)
         => base.DeleteAsync(id);
-
-    [HttpGet("{id}")]
-    //[HasPermission("country:read")]
-    public override Task<ActionResult<CountryResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet]
     //[HasPermission("country:read:many")]

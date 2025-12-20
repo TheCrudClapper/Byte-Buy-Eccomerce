@@ -8,7 +8,7 @@ public static class AuthorizationExtensions
     {
         return services.AddAuthorization(options =>
         {
-            var permissions = new[] { "companyinfo:update", "users:write", "products:edit", "orders:view", "employee:create", "employee:update" };
+            var permissions = new[] { "{resource}:read", "companyinfo:update", "users:write", "products:edit", "orders:view", "employee:create", "employee:update" };
             foreach (var perm in permissions)
             {
                 options.AddPolicy(perm, policy => policy.Requirements.Add(new PermissionRequirement(perm)));

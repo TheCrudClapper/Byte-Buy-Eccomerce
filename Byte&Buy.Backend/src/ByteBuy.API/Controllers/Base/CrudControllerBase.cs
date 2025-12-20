@@ -1,5 +1,7 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.ServiceContracts.Base;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Base;
@@ -14,6 +16,7 @@ namespace ByteBuy.API.Controllers.Base;
 /// <typeparam name="TResponse"></typeparam>
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : BaseApiController
 {
     private readonly IBaseCrudService<TId, TAddRequest, TUpdateRequest, TResponse> _service;
@@ -22,6 +25,7 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
         => _service = service;
 
     [HttpPost]
+    [HasPermission("{resource}.create")]
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync(TAddRequest request)
         => HandleResult(await _service.AddAsync(request));
 
@@ -34,6 +38,7 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
         => HandleResult(await _service.DeleteAsync(id));
 
     [HttpGet("{id}")]
+    [HasPermission("{resource}:read")]
     public virtual async Task<ActionResult<TResponse>> GetByIdAsync(TId id, CancellationToken cancellationToken)
         => HandleResult(await _service.GetByIdAsync(id, cancellationToken));
 

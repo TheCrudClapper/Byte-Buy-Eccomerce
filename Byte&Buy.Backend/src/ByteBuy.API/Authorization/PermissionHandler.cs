@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
@@ -16,13 +17,24 @@ public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
         PermissionRequirement requirement)
     {
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userId is null)
+        if (userId is null || !Guid.TryParse(userId, out var userIdGuid))
             return;
 
-        if (!Guid.TryParse(userId, out var userIdGuid))
-            return;
+        var permissionName = requirement.Permission;
 
-        if (await _permissionService.HasPermissionAsync(userIdGuid, requirement.Permission))
-            context.Succeed(requirement);
+        if (permissionName.Contains("{resource}") &&
+         context.Resource is HttpContext httpContext)
+        {
+            var endpoint = httpContext.GetEndpoint();
+            var resourceAttr = endpoint?.Metadata.GetMetadata<ResourceAttribute>();
+
+            if (resourceAttr is null)
+                return;
+
+            permissionName = permissionName.Replace("{resource}", resourceAttr.Name);
+        }
+
+        if (await _permissionService.HasPermissionAsync(userIdGuid, permissionName))
+        context.Succeed(requirement);
     }
 }
