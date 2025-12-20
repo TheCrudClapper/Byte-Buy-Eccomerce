@@ -18,26 +18,6 @@ public class CategoriesController
     public CategoriesController(ICategoryService categoryService) : base(categoryService)
         => _categoryService = categoryService;
 
-    [HttpPost]
-    //[HasPermission("category:create")]
-    public override Task<ActionResult<CreatedResponse>> PostAsync(CategoryAddRequest request)
-        => base.PostAsync(request);
-
-    [HttpPut("{id}")]
-    //[HasPermission("category:update")]
-    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, CategoryUpdateRequest request) 
-        => base.PutAsync(id, request);
-
-    [HttpDelete("{id}")]
-    //[HasPermission("category:delete")]
-    public override Task<IActionResult> DeleteAsync(Guid id) 
-        => base.DeleteAsync(id);
-
-    [HttpGet("{id}")]
-    //[HasPermission("category:read")]
-    public override Task<ActionResult<CategoryResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
-        => base.GetByIdAsync(id, cancellationToken);
-
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
     public async Task<ActionResult> GetCategoriesList(CancellationToken ct)

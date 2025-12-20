@@ -1,12 +1,13 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
-using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Resource("conditions")]
 [Route("api/[controller]")]
 [ApiController]
 public class ConditionsController 
@@ -15,26 +16,6 @@ public class ConditionsController
     private readonly IConditionService _conditionService;
     public ConditionsController(IConditionService conditionService) : base(conditionService)
         => _conditionService = conditionService;
-
-    [HttpPost]
-    //[HasPermission("condition:write")]
-    public override Task<ActionResult<CreatedResponse>> PostAsync(ConditionAddRequest request)
-        => base.PostAsync(request);
-
-    [HttpPut("{id}")]
-    //[HasPermission("condition:update")]
-    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, ConditionUpdateRequest request)
-        => base.PutAsync(id, request);
-
-    [HttpDelete("{id}")]
-    //[HasPermission("condition:delete")]
-    public override Task<IActionResult> DeleteAsync(Guid id)
-        => base.DeleteAsync(id);
-
-    [HttpGet("{id}")]
-    //[HasPermission("condition:read")]
-    public override Task<ActionResult<ConditionResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]

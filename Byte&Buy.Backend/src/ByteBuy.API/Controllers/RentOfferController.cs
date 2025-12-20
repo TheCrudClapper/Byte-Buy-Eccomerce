@@ -1,4 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.RentOffer;
 using ByteBuy.Core.DTO.SaleOffer;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Resource("rentoffers")]
 [Route("api/[controller]")]
 [ApiController]
 public class RentOfferController : BaseApiController

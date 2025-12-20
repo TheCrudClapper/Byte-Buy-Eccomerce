@@ -1,4 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
 using ByteBuy.Core.ServiceContracts;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [ApiController]
+[Resource("roles")]
 [Route("api/[controller]")]
 public class RolesController 
     : CrudControllerBase<Guid, RoleAddRequest, RoleUpdateRequest, RoleResponse>

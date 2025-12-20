@@ -1,4 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.PortalUser;
@@ -7,12 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Resource("addresses")]
 [Route("api/[controller]")]
 [ApiController]
-public class AddressController : BaseApiController
+public class AddressesController : BaseApiController
 {
     private readonly IAddressService _addressService;
-    public AddressController(IAddressService addressService)
+    public AddressesController(IAddressService addressService)
        => _addressService = addressService;
 
 

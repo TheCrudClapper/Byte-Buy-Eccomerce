@@ -1,4 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Core.DTO.DeliveryCarrier;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Resource("deliverycarriers")]
 [Route("api/[controller]")]
 [ApiController]
 public class DeliveryCarriersController 
@@ -16,26 +18,6 @@ public class DeliveryCarriersController
     private readonly IDeliveryCarrierService _carrierService;
     public DeliveryCarriersController(IDeliveryCarrierService carrierService) : base(carrierService)
          => _carrierService = carrierService;
-
-    [HttpPost]
-    //[HasPermission("delivery:create")]
-    public override Task<ActionResult<CreatedResponse>> PostAsync(DeliveryCarrierAddRequest request)
-        => base.PostAsync(request);
-
-    [HttpPut("{id}")]
-    //[HasPermission("delivery:update")]
-    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, DeliveryCarrierUpdateRequest request)
-        => base.PutAsync(id, request);
-
-    [HttpDelete("{id}")]
-    //[HasPermission("delivery:delete")]
-    public override Task<IActionResult> DeleteAsync(Guid id)
-        => base.DeleteAsync(id);
-
-    [HttpGet("{id}")]
-    //[HasPermission("delivery:read")]
-    public override Task<ActionResult<DeliveryCarrierResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]
