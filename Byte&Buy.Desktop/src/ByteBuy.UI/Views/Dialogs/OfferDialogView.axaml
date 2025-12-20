@@ -4,7 +4,7 @@
 			 xmlns:dialogHost="using:DialogHostAvalonia"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1000"
 			 x:Class="ByteBuy.UI.OfferDialogView"
 			 x:DataType="vm:OfferDialogViewModel">
 
@@ -16,7 +16,7 @@
 	<Border CornerRadius="2" BorderThickness="2"
 			Background="{DynamicResource BackgroundLightBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="200" MinWidth="400">
+			MinHeight="300" MinWidth="500" >
 		<ScrollViewer>
 			<Grid RowDefinitions="30,*,*">
 				<Border
@@ -82,28 +82,76 @@
 
 					<!--Deliveries-->
 					<StackPanel Spacing="10">
-						<TextBlock Text="Deliveries"/>
-						<TextBlock Text="Parcel Lockers:"/>
-						<TextBlock Text="Courier:"/>
-						<ItemsControl ItemsSource="{Binding CourierDeliveries}">
-							 <ItemsControl.ItemTemplate>
+						<TextBlock Text="Parcel Lockers:" FontWeight="700"/>
+						<ItemsControl ItemsSource="{Binding ParcelLockerGroups}">
+							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<StackPanel Spacing="10">
-										<Grid ColumnDefinitions="2*, 1*, 5*, 2*">
-										<TextBlock Text="{Binding Name}"/>
-										<CheckBox
-										Grid.Column="1"
-										x:CompileBindings="false"
-										HorizontalAlignment="Right"
-										IsThreeState="false"
-										Command="{Binding DataContext.ToggleCourierDeliveryCommand,
-										RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"/>
-										<TextBlock Grid.Column="3" Text="{Binding PriceAndCurrency}"/>
-									</Grid>
+									<StackPanel>
+										<TextBlock Text="{Binding Carrier}"/>
+										<ItemsControl ItemsSource="{Binding Options}">
+											<ItemsControl.ItemTemplate>
+												<DataTemplate x:CompileBindings="false">
+													<Grid ColumnDefinitions="auto, *, auto">
+														<StackPanel Orientation="Horizontal">
+															<RadioButton GroupName="{Binding Carrier}"
+																		 IsChecked="{Binding }"/>
+															<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+														</StackPanel>
+														<TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding PriceAndCurrency}"/>
+													</Grid>
+												</DataTemplate>
+											</ItemsControl.ItemTemplate>
+										</ItemsControl>
 									</StackPanel>
 								</DataTemplate>
-							 </ItemsControl.ItemTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+
+
+
+						<TextBlock Text="Courier:" FontWeight="700"/>
+						<ItemsControl ItemsSource="{Binding CourierDeliveries}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Spacing="10">
+										<Grid ColumnDefinitions="auto, *, auto">
+											<StackPanel Orientation="Horizontal">
+												<CheckBox
+												x:CompileBindings="false"
+												IsThreeState="false"
+												Command="{Binding DataContext.ToggleCourierDeliveryCommand,
+												RelativeSource={RelativeSource AncestorType=UserControl}}"
+												CommandParameter="{Binding}"/>
+												<TextBlock Text="{Binding Name}" Grid.Column="1"  VerticalAlignment="Center"/>
+											</StackPanel>
+											<TextBlock Grid.Column="2" Text="{Binding PriceAndCurrency}"  VerticalAlignment="Center"/>
+										</Grid>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+
+
+						<TextBlock Text="Pickup Point:" FontWeight="700"/>
+						<ItemsControl ItemsSource="{Binding PickupPointDeliveries}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<StackPanel>
+										<Grid ColumnDefinitions="auto, *, auto">
+											<StackPanel Orientation="Horizontal">
+												<CheckBox
+												x:CompileBindings="false"
+												IsThreeState="false"
+												Command="{Binding DataContext.TogglePickupDeliveryCommand,
+												RelativeSource={RelativeSource AncestorType=UserControl}}"
+												CommandParameter="{Binding}"/>
+												<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+											</StackPanel>
+											<TextBlock Grid.Column="2" Text="{Binding PriceAndCurrency}" VerticalAlignment="Center"/>
+										</Grid>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
 						</ItemsControl>
 					</StackPanel>
 

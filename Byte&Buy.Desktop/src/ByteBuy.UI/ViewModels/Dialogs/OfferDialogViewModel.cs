@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -34,7 +35,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
     private int _quantityAvaliable;
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _parcelLockerDeliveries = [];
+    private ObservableCollection<ParcelLockerCarrierGroup> _parcelLockerGroups = [];
 
     [ObservableProperty]
     private ObservableCollection<DeliveryOptionResponse> _courierDeliveries = [];
@@ -59,7 +60,16 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
     {
         var deliveries = await deliveryService.GetAvaliableDeliveries();
 
-        ParcelLockerDeliveries = new ObservableCollection<DeliveryOptionResponse>(deliveries.Value.ParcelLockerDeliveries ?? []);
+        //Group parcel by carrier so user can select only one parcel locker delivery option per carrier
+        ParcelLockerGroups= new ObservableCollection<ParcelLockerCarrierGroup>(
+            deliveries.Value.ParcelLockerDeliveries
+            .GroupBy(d => d.Carrier)
+            .Select(g => new ParcelLockerCarrierGroup()
+            {
+                Carrier = g.Key,
+                Options = new ObservableCollection<DeliveryOptionResponse>(g)
+            }));
+
         CourierDeliveries = new ObservableCollection<DeliveryOptionResponse>(deliveries.Value.CourierDeliveries ?? []);
         PickupPointDeliveries = new ObservableCollection<DeliveryOptionResponse>(deliveries.Value.PickupPointDeliveries ?? []);
     }
@@ -86,6 +96,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
         }
         else
         { 
+
         }
 
         return true;

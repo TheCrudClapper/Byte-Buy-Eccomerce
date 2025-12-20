@@ -19,6 +19,7 @@ public class PortalUserRepository : BaseRepository, IPortalUserRepository
             .Include(p => p.Addresses)
             .FirstOrDefaultAsync(p => p.Id == userId, ct);
     }
+
     public async Task<PortalUser?> GetPortalUserWithAllDataByIdAsync(Guid userId, CancellationToken ct = default)
     {
         return await _context.PortalUsers
@@ -28,6 +29,7 @@ public class PortalUserRepository : BaseRepository, IPortalUserRepository
             .Include(p => p.Addresses)
             .FirstOrDefaultAsync(p => p.Id == userId, ct);
     }
+
     public async Task<PortalUser?> GetPortalUserWithAddress(Guid userId, CancellationToken ct = default)
     {
         return await _context.PortalUsers
@@ -35,6 +37,7 @@ public class PortalUserRepository : BaseRepository, IPortalUserRepository
             .Include(p => p.Addresses)
             .FirstOrDefaultAsync(p => p.Id == userId, ct);
     }
+
     public async Task<IEnumerable<PortalUser>> GetPortalUsersWithRolesAsync(CancellationToken ct = default)
     {
         return await _context.PortalUsers

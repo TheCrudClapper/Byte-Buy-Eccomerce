@@ -4,12 +4,7 @@
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
-				<TabControl>
-					<CheckBox Content="Black"/>
-					<TabItem Header="Countries"/>
-					<TabItem Header="Categories"/>
-					<TabItem Header="Conditions"/>
-				</TabControl>
+				<NumericUpDown Value="2" Minimum="1"/>
 			</StackPanel>
 
 
@@ -19,6 +14,15 @@
 	<!--Tab Control Styles-->
 	<Style Selector="TabControl">
 		<Setter Property="CornerRadius" Value="10,10,0,0"/>
+	</Style>
+
+	<!--NumericUpDownStyles-->
+	<Style Selector="NumericUpDown /template/ TextBox#PART_TextBox">
+		<Setter Property="CornerRadius" Value="3,0,0,3"/>
+	</Style>
+
+	<Style Selector="NumericUpDown:pointerover /template/ TextBox#PART_TextBox">
+		<Setter Property="CornerRadius" Value="3,0,0,3"/>
 	</Style>
 
 	<!-- Checkbox Styles -->
@@ -62,6 +66,41 @@
 		<Setter Property="BorderBrush" Value="Gray"/>
 		<Setter Property="Background" Value="DarkGray"/>
 	</Style>
+
+
+	<!--Radio button styles-->
+	<Style Selector="RadioButton:unchecked /template/ Ellipse#OuterEllipse">
+		<Setter Property="Stroke" Value="{DynamicResource PrimaryBrush}" />
+		<Setter Property="Fill"   Value="Transparent" />
+		<Setter Property="Opacity" Value="1" />
+	</Style>
+
+	<Style Selector="RadioButton:unchecked /template/ Ellipse#CheckOuterEllipse">
+		<Setter Property="Opacity" Value="0" />
+	</Style>
+
+	<Style Selector="RadioButton:unchecked /template/ Ellipse#CheckGlyph">
+		<Setter Property="Opacity" Value="0" />
+	</Style>
+
+	<!-- Checked state-->
+
+	<Style Selector="RadioButton:checked /template/ Ellipse#OuterEllipse">
+		<Setter Property="Opacity" Value="0" />
+	</Style>
+
+	<Style Selector="RadioButton:checked /template/ Ellipse#CheckOuterEllipse">
+		<Setter Property="Opacity" Value="1" />
+		<Setter Property="Stroke" Value="{DynamicResource ButtonGradient}" />
+		<Setter Property="Fill"   Value="{DynamicResource ButtonGradient}" />
+	</Style>
+
+	<Style Selector="RadioButton:checked /template/ Ellipse#CheckGlyph">
+		<Setter Property="Opacity" Value="1" />
+		<Setter Property="Fill"   Value="White" />
+		<Setter Property="Stroke" Value="Transparent" />
+	</Style>
+
 
 	<!-- Button Styles -->
 	<Style Selector="Button">
