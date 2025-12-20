@@ -15,8 +15,7 @@ public class ConditionService : IConditionService
     public ConditionService(IConditionRepository conditionRepository)
         => _conditionRepository = conditionRepository;
 
-
-    public async Task<Result<CreatedResponse>> AddCondition(ConditionAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(ConditionAddRequest request)
     {
         var exist = await _conditionRepository.ExistWithNameAsync(request.Name);
         if (exist)
@@ -33,12 +32,28 @@ public class ConditionService : IConditionService
         return condition.ToCreatedResponse();
     }
 
-    public async Task<Result> DeleteCondition(Guid conditionId)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ConditionUpdateRequest request)
     {
-        if (await _conditionRepository.HasActiveRelations(conditionId))
+        var exist = await _conditionRepository.ExistWithNameAsync(request.Name, id);
+        if (exist)
+            return Result.Failure<UpdatedResponse>(ConditionErrors.AlreadyExists);
+
+        var condition = await _conditionRepository.GetByIdAsync(id);
+        if (condition is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        condition.Update(request.Name, request.Description);
+        await _conditionRepository.UpdateAsync(condition);
+        await _conditionRepository.CommitAsync();
+        return condition.ToUpdatedResponse();
+    }
+
+    public async Task<Result> DeleteAsync(Guid id)
+    {
+        if (await _conditionRepository.HasActiveRelations(id))
             return Result.Failure(ConditionErrors.InUse);
 
-        var condition = await _conditionRepository.GetByIdAsync(conditionId);
+        var condition = await _conditionRepository.GetByIdAsync(id);
         if (condition is null)
             return Result.Failure(Error.NotFound);
 
@@ -49,44 +64,28 @@ public class ConditionService : IConditionService
         return Result.Success();
     }
 
-    public async Task<Result<IEnumerable<ConditionResponse>>> GetConditions(CancellationToken ct = default)
+    public async Task<Result<ConditionResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
+    {
+        var condition = await _conditionRepository.GetByIdAsync(id, ct);
+        return condition is null
+            ? Result.Failure<ConditionResponse>(Error.NotFound)
+            : condition.ToConditionResponse();
+    }
+
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
+    {
+        var conditions = await _conditionRepository.GetAllAsync(ct);
+        return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
+    }
+
+    public async Task<Result<IEnumerable<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default)
     {
         var conditions = await _conditionRepository.GetAllAsync(ct);
         return conditions.Select(c => c.ToConditionResponse())
             .ToList();
     }
 
-    public async Task<Result<ConditionResponse>> GetCondition(Guid conditionId, CancellationToken ct = default)
-    {
-        var condition = await _conditionRepository.GetByIdAsync(conditionId, ct);
-        return condition is null
-            ? Result.Failure<ConditionResponse>(Error.NotFound)
-            : condition.ToConditionResponse();
-    }
-
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
-    {
-        var conditions = await _conditionRepository.GetAllAsync(ct);
-        return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
-    }
-
-    public async Task<Result<UpdatedResponse>> UpdateCondition(Guid conditionId, ConditionUpdateRequest request)
-    {
-        var exist = await _conditionRepository.ExistWithNameAsync(request.Name, conditionId);
-        if (exist)
-            return Result.Failure<UpdatedResponse>(ConditionErrors.AlreadyExists);
-
-        var condition = await _conditionRepository.GetByIdAsync(conditionId);
-        if (condition is null)
-            return Result.Failure<UpdatedResponse>(Error.NotFound);
-
-        condition.Update(request.Name, request.Description);
-        await _conditionRepository.UpdateAsync(condition);
-        await _conditionRepository.CommitAsync();
-        return condition.ToUpdatedResponse();
-    }
-
-    public async Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsListAsync(CancellationToken ct = default)
     {
         var condtions = await _conditionRepository.GetAllAsync(ct);
         return condtions.Select(c => c.ToConditionListResponse()).ToList();

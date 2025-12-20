@@ -19,7 +19,7 @@ public class CompanyInfoService : ICompanyInfoService
         _companyInfoRepository = companyInfo;
         _addressValidator = addressValidator;
     }
-    public async Task<Result<CreatedResponse>> AddCompanyInfo(CompanyInfoAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(CompanyInfoAddRequest request)
     {
         if (await _companyInfoRepository.ExistAsync())
             return Result.Failure<CreatedResponse>(CompanyInfoErrors.MultipleCompanyInfos);
@@ -55,7 +55,7 @@ public class CompanyInfoService : ICompanyInfoService
             : companyInfo.ToCompanyInfoResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateCompanyInfo(CompanyInfoUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(CompanyInfoUpdateRequest request)
     {
         var companyInfo = await _companyInfoRepository.GetAsync();
         if (companyInfo is null)

@@ -1,14 +1,11 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IItemsService
+public interface IItemsService : IBaseCrudService<Guid, ItemAddRequest, ItemUpdateRequest, ItemResponse>
 {
-    Task<Result<CreatedResponse>> AddCompanyItem(ItemAddRequest request);
-    Task<Result<UpdatedResponse>> UpdateCompanyItem(Guid itemId, ItemUpdateRequest request);
-    Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsList(CancellationToken ct = default);
-    Task<Result<ItemResponse>> GetCompanyItem(Guid itemId, CancellationToken ct = default);
-    Task<Result> DeleteCompanyItem(Guid itemId);
+    Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsListAsync(CancellationToken ct = default);
 }

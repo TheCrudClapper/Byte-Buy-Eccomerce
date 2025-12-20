@@ -8,40 +8,41 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CategoriesController : BaseApiController
+public class CategoriesController 
+    : CrudControllerBase<Guid, CategoryAddRequest, CategoryUpdateRequest, CategoryResponse>
 {
     private readonly ICategoryService _categoryService;
 
-    public CategoriesController(ICategoryService categoryService)
+    public CategoriesController(ICategoryService categoryService) : base(categoryService)
         => _categoryService = categoryService;
 
     [HttpPost]
     //[HasPermission("category:create")]
-    public async Task<ActionResult<CreatedResponse>> PostCategory(CategoryAddRequest request)
-        => HandleResult(await _categoryService.AddCategory(request));
+    public override Task<ActionResult<CreatedResponse>> PostAsync(CategoryAddRequest request)
+        => base.PostAsync(request);
 
-    [HttpPut("{categoryId}")]
+    [HttpPut("{id}")]
     //[HasPermission("category:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutCategory(Guid categoryId, CategoryUpdateRequest request, CancellationToken ct)
-        => HandleResult(await _categoryService.UpdateCategory(categoryId, request));
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, CategoryUpdateRequest request) 
+        => base.PutAsync(id, request);
 
-    [HttpDelete("{categoryId}")]
+    [HttpDelete("{id}")]
     //[HasPermission("category:delete")]
-    public async Task<IActionResult> DeleteCategory(Guid categoryId, CancellationToken ct)
-        => HandleResult(await _categoryService.DeleteCategory(categoryId));
+    public override Task<IActionResult> DeleteAsync(Guid id) 
+        => base.DeleteAsync(id);
 
-    [HttpGet("{categoryId}")]
+    [HttpGet("{id}")]
     //[HasPermission("category:read")]
-    public async Task<ActionResult<CategoryResponse>> GetCategory(Guid categoryId, CancellationToken ct)
-        => HandleResult(await _categoryService.GetCategory(categoryId, ct));
+    public override Task<ActionResult<CategoryResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
+        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
     public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
-        => HandleResult(await _categoryService.GetCategoriesList(ct));
+        => HandleResult(await _categoryService.GetCategoriesListAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("category:read:options")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
-        => HandleResult(await _categoryService.GetSelectList(ct));
+        => HandleResult(await _categoryService.GetSelectListAsync(ct));
 }

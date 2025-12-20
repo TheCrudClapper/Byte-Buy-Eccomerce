@@ -6,7 +6,6 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 public interface IDeliveryCarrierRepository : IRepositoryBase<DeliveryCarrier>
 {
     Task<bool> HasActiveRelationsAsync(Guid carrierId);
-    Task<DeliveryCarrier?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? exludeId = null);
     Task<IEnumerable<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default);
 }

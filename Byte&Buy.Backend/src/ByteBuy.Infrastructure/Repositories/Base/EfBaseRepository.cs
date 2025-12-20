@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace ByteBuy.Infrastructure.Repositories.Base;
 
 public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IRepositoryBase<T>
-    where T : AuditableEntity
+    where T : class, IEntity
 {
     protected readonly ApplicationDbContext _context;
     private readonly ISpecificationEvaluator _specEval

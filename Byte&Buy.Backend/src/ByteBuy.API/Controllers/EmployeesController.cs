@@ -8,43 +8,43 @@ namespace ByteBuy.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EmployeesController : BaseApiController
+public class EmployeesController 
+    : CrudControllerBase<Guid, EmployeeAddRequest, EmployeeUpdateRequest, EmployeeResponse>
 {
     private readonly IEmployeeService _employeeService;
-    public EmployeesController(IEmployeeService employeeService)
+    public EmployeesController(IEmployeeService employeeService) : base(employeeService)
         => _employeeService = employeeService;
-
+    
     [HttpPost]
     //[HasPermission("employee:create")]
-    public async Task<ActionResult<CreatedResponse>> PostEmployee(EmployeeAddRequest request)
-        => HandleResult(await _employeeService.AddEmployee(request));
+    public override Task<ActionResult<CreatedResponse>> PostAsync(EmployeeAddRequest request)
+        => base.PostAsync(request);
 
-    [HttpGet("{employeeId}")]
+    [HttpGet("{id}")]
     //[HasPermission("employee:read")]
-    public async Task<ActionResult<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
-        => HandleResult(await _employeeService.GetEmployee(employeeId, ct));
+    public override Task<ActionResult<EmployeeResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        => base.GetByIdAsync(id, cancellationToken);
+
+    [HttpPut("{id}")]
+    //[HasPermission("employee:update")]
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, EmployeeUpdateRequest request) 
+        => base.PutAsync(id, request);
+
+    [HttpDelete("{id}")]
+    //[HasPermission("employee:delete")]
+    public override Task<IActionResult> DeleteAsync(Guid id)
+        => base.DeleteAsync(id);
 
     [HttpPut("address")]
     public async Task<ActionResult<UpdatedResponse>> PutEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
-        => HandleResult(await _employeeService.UpdateEmployeeAddress(CurrentUserId, request));
+        => HandleResult(await _employeeService.UpdateEmployeeAddressAsync(CurrentUserId, request));
 
     [HttpGet("list")]
     public async Task<ActionResult<EmployeeListResponse>> GetEmployeesList(CancellationToken ct)
-        => HandleResult(await _employeeService.GetEmployeesList(ct));
+        => HandleResult(await _employeeService.GetEmployeesListAsync(ct));
 
     [HttpGet("me")]
     //[HasPermission("employee:read:me")]
     public async Task<ActionResult<EmployeeProfileResponse>> GetEmployee(CancellationToken ct)
-        => HandleResult(await _employeeService.GetEmployeeProfileInfo(CurrentUserId, ct));
-
-    [HttpPut("{employeeId}")]
-    //[HasPermission("employee:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutEmployee(Guid employeeId, EmployeeUpdateRequest request)
-        => HandleResult(await _employeeService.UpdateEmployee(employeeId, request));
-
-    [HttpDelete("{employeeId}")]
-    //[HasPermission("employee:delete")]
-    public async Task<IActionResult> DeleteEmployee(Guid employeeId)
-        => HandleResult(await _employeeService.DeleteEmployee(employeeId));
-
+        => HandleResult(await _employeeService.GetEmployeeProfileInfoAsync(CurrentUserId, ct));
 }

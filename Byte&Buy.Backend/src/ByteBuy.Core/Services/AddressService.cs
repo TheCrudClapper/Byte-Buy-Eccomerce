@@ -25,7 +25,7 @@ public class AddressService : IAddressService
         _countryRepository = countryRepository;
     }
 
-    public async Task<Result<CreatedResponse>> AddAddress(Guid userId, AddressAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(Guid userId, AddressAddRequest request)
     {
         var country = await _countryRepository.GetByIdAsync(request.CountryId);
         if (country is null)
@@ -62,7 +62,7 @@ public class AddressService : IAddressService
         return address.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateAddress(Guid addressId, Guid userId, AddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid addressId, Guid userId, AddressUpdateRequest request)
     {
         var address = await _addressRepository.GetBySpecAsync(new UserAddresSpec(userId, addressId));
         if (address is null)
@@ -107,7 +107,7 @@ public class AddressService : IAddressService
         return address.ToUpdatedResponse();
     }
 
-    public async Task<Result<AddressResponse>> GetUserAddress(Guid userId, Guid addressId, CancellationToken ct = default)
+    public async Task<Result<AddressResponse>> GetUserAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
     {
         var addressDto = await _addressRepository.GetBySpecAsync(new UserAddresToDtoSpec(userId, addressId), ct);
         if (addressDto is null)
@@ -116,7 +116,7 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
-    public async Task<Result<AddressResponse>> GetAddress(Guid addressId, CancellationToken ct = default)
+    public async Task<Result<AddressResponse>> GetByIdAsync(Guid addressId, CancellationToken ct = default)
     {
         var addressDto = await _addressRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
         if (addressDto is null)
@@ -125,11 +125,11 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
-    public async Task<Result<IEnumerable<AddressResponse>>> GetUserAddresses(Guid userId, CancellationToken ct)
+    public async Task<Result<IEnumerable<AddressResponse>>> GetUserAddressesAsync(Guid userId, CancellationToken ct)
         => await _addressRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
 
 
-    public async Task<Result> DeleteUserAddress(Guid userId, Guid addressId)
+    public async Task<Result> DeleteUserAddressAsync(Guid userId, Guid addressId)
     {
         var address = await _addressRepository.GetBySpecAsync(new UserAddresSpec(userId, addressId));
         if (address is null)

@@ -35,6 +35,6 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
 
     [HttpGet("{id}")]
     public virtual async Task<ActionResult<TResponse>> GetByIdAsync(TId id, CancellationToken cancellationToken)
-        => HandleResult(await _service.GetById(id, cancellationToken));
+        => HandleResult(await _service.GetByIdAsync(id, cancellationToken));
 
 }

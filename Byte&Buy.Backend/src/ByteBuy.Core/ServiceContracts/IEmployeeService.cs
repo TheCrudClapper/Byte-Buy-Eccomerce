@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Employee;
 using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 /// <summary>
@@ -9,13 +10,9 @@ namespace ByteBuy.Core.ServiceContracts;
 /// <remarks>Implementations of this interface should ensure thread safety if accessed concurrently. All methods
 /// are asynchronous and return a <see cref="Result{T}"/> indicating success or failure, along with the relevant
 /// employee data. Cancellation tokens allow callers to cancel ongoing operations as needed.</remarks>
-public interface IEmployeeService
+public interface IEmployeeService : IBaseCrudService<Guid, EmployeeAddRequest, EmployeeUpdateRequest, EmployeeResponse>
 {
-    Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default);
-    Task<Result<CreatedResponse>> AddEmployee(EmployeeAddRequest request);
-    Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request);
-    Task<Result<UpdatedResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request);
-    Task<Result> DeleteEmployee(Guid employeeId);
-    Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct = default);
-    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default);
+    Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(Guid employeeId, CancellationToken ct = default);
+    Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request);
+    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesListAsync(CancellationToken ct = default);
 }

@@ -5,6 +5,7 @@ using ByteBuy.Core.DTO.Category;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Core.ServiceContracts.Base;
 using ByteBuy.Services.DTO.Category;
 
 namespace ByteBuy.Core.Services;
@@ -16,7 +17,7 @@ public class CategoryService : ICategoryService
     public CategoryService(ICategoryRepository categoryRepository)
         => _categoryRepository = categoryRepository;
 
-    public async Task<Result<CreatedResponse>> AddCategory(CategoryAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)
     {
         var exist = await _categoryRepository.ExistWithNameAsync(request.Name);
         if (exist)
@@ -33,13 +34,13 @@ public class CategoryService : ICategoryService
         return category.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateCategory(Guid categoryId, CategoryUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, CategoryUpdateRequest request)
     {
-        var exist = await _categoryRepository.ExistWithNameAsync(request.Name, categoryId);
+        var exist = await _categoryRepository.ExistWithNameAsync(request.Name, id);
         if (exist)
             return Result.Failure<UpdatedResponse>(CategoryErrors.AlreadyExists);
 
-        var category = await _categoryRepository.GetByIdAsync(categoryId);
+        var category = await _categoryRepository.GetByIdAsync(id);
         if (category is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -53,12 +54,12 @@ public class CategoryService : ICategoryService
         return category.ToUpdatedResponse();
     }
 
-    public async Task<Result> DeleteCategory(Guid categoryId)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        if (await _categoryRepository.HasActiveRelations(categoryId))
+        if (await _categoryRepository.HasActiveRelations(id))
             return Result.Failure(CategoryErrors.InUse);
 
-        var category = await _categoryRepository.GetByIdAsync(categoryId);
+        var category = await _categoryRepository.GetByIdAsync(id);
         if (category is null)
             return Result.Failure(Error.NotFound);
 
@@ -70,24 +71,23 @@ public class CategoryService : ICategoryService
         return Result.Success();
     }
 
-    public async Task<Result<IEnumerable<CategoryListResponse>>> GetCategoriesList(CancellationToken ct)
+    public async Task<Result<CategoryResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var categories = await _categoryRepository.GetAllAsync(ct);
-        return categories.Select(c => c.ToCategoryListResponse()).ToList();
-    }
-
-    public async Task<Result<CategoryResponse>> GetCategory(Guid categoryId, CancellationToken ct)
-    {
-        var category = await _categoryRepository.GetByIdAsync(categoryId, ct);
+        var category = await _categoryRepository.GetByIdAsync(id, ct);
         return category is null
             ? Result.Failure<CategoryResponse>(Error.NotFound)
             : category.ToCategoryResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<Result<IEnumerable<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct)
+    {
+        var categories = await _categoryRepository.GetAllAsync(ct);
+        return categories.Select(c => c.ToCategoryListResponse()).ToList();
+    }
+
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {
         var categories = await _categoryRepository.GetAllAsync(ct);
         return categories.Select(c => c.ToSelectListItemResponse()).ToList();
     }
-
 }

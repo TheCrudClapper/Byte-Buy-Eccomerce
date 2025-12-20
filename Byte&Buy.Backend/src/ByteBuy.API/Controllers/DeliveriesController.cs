@@ -40,16 +40,16 @@ public class DeliveriesController
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]
     public async Task<ActionResult<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct)
-        => HandleResult(await _deliveryService.GetDeliveriesList(ct));
+        => HandleResult(await _deliveryService.GetDeliveriesListAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("delivery:read:options")]
     public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
-        => HandleResult(await _deliveryService.GetSelectList(ct));
+        => HandleResult(await _deliveryService.GetSelectListAsync(ct));
 
     [HttpGet("available")]
     public async Task<ActionResult<DeliveryOptionsResponse>> GetAvailableDeliveries(CancellationToken ct)
-        => HandleResult(await _deliveryService.GetAvaliableDeliveries(ct));
+        => HandleResult(await _deliveryService.GetAvaliableDeliveriesAsync(ct));
 
     [HttpGet("sizes/list")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList()

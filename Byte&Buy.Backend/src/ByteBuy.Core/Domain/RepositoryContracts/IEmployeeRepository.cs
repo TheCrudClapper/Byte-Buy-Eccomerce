@@ -13,5 +13,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository : IRepositoryBase<Employee>
 {
-    Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct = default);
+    
 }

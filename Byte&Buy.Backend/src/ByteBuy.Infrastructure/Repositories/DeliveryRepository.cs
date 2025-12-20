@@ -22,7 +22,7 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
             .ToListAsync(ct);
     }
 
-    public async Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct)
+    public override async Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         return await _context.Deliveries
             .Include(d => d.DeliveryCarrier)

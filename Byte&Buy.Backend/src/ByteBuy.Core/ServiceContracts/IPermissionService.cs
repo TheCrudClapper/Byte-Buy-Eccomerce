@@ -1,10 +1,10 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IPermissionService
+public interface IPermissionService : ISelectableService<Guid>
 {
     Task<bool> HasPermissionAsync(Guid userId, string permissionName);
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
 }

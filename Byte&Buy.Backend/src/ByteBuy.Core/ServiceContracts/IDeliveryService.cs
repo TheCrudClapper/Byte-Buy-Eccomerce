@@ -10,8 +10,8 @@ public interface IDeliveryService
       ISelectableService<Guid>
 {
 
-    Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveries(CancellationToken ct = default);
-    Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default);
+    Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct = default);
+    Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default);
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels();
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes();
 }

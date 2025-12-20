@@ -30,7 +30,7 @@ public class ItemsService : IItemsService
         _imageStorage = imageStorage;
     }
 
-    public async Task<Result<CreatedResponse>> AddCompanyItem(ItemAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
     {
         var validateRelatedEntities =
             await CheckCountryAndConditionExistsAsync(request.CategoryId, request.ConditionId);
@@ -50,7 +50,7 @@ public class ItemsService : IItemsService
 
         var item = itemCreationResult.Value;
 
-        var imagesResult = await HandleNewImages(request.Images, item);
+        var imagesResult = await HandleNewImagesAsync(request.Images, item);
         if (imagesResult.IsFailure)
             return Result.Failure<CreatedResponse>(imagesResult.Error);
 
@@ -60,10 +60,9 @@ public class ItemsService : IItemsService
         return item.ToCreatedResponse();
     }
 
-
-    public async Task<Result<UpdatedResponse>> UpdateCompanyItem(Guid itemId, ItemUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ItemUpdateRequest request)
     {
-        var aggregate = await _itemRepository.GetAggregateAsync(itemId);
+        var aggregate = await _itemRepository.GetAggregateAsync(id);
         if (aggregate is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -87,7 +86,7 @@ public class ItemsService : IItemsService
         //adding new image
         if (request.NewImages is not null && request.NewImages.Count > 0)
         {
-            var imagesResult = await HandleNewImages(request.NewImages, aggregate);
+            var imagesResult = await HandleNewImagesAsync(request.NewImages, aggregate);
             if (imagesResult.IsFailure)
                 return Result.Failure<UpdatedResponse>(imagesResult.Error);
         }
@@ -109,9 +108,9 @@ public class ItemsService : IItemsService
         return aggregate.ToUpdatedResponse();
     }
 
-    public async Task<Result> DeleteCompanyItem(Guid itemId)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        var aggregate = await _itemRepository.GetAggregateAsync(itemId);
+        var aggregate = await _itemRepository.GetAggregateAsync(id);
         if (aggregate is null)
             return Result.Failure(Error.NotFound);
 
@@ -123,16 +122,16 @@ public class ItemsService : IItemsService
         return Result.Success();
     }
 
-    public async Task<Result<ItemResponse>> GetCompanyItem(Guid itemId, CancellationToken ct)
+    public async Task<Result<ItemResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var itemDto = await _itemRepository.GetBySpecAsync(new CompanyItemToItemResponseDtoSpec(itemId), ct);
-        if (itemDto is null)
-            return Result.Failure<ItemResponse>(Error.NotFound);
+        var itemDto = await _itemRepository.GetBySpecAsync(new CompanyItemToItemResponseDtoSpec(id), ct);
 
-        return itemDto;
+        return itemDto is null
+            ? Result.Failure<ItemResponse>(Error.NotFound)
+            : itemDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsList(CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsListAsync(CancellationToken ct)
     {
         return await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
     }
@@ -195,7 +194,7 @@ public class ItemsService : IItemsService
     /// <param name="item">The item to which the images will be associated. Cannot be null.</param>
     /// <returns>A Result indicating whether the images were successfully saved and associated with the item. Returns a failure
     /// result if any imageId could not be saved or added.</returns>
-    private async Task<Result> HandleNewImages<TImageDto>(IList<TImageDto> images, Item item)
+    private async Task<Result> HandleNewImagesAsync<TImageDto>(IList<TImageDto> images, Item item)
         where TImageDto : IImageRequestDto
     {
 

@@ -21,11 +21,6 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
         return await _context.Countries
             .ToListAsync(ct);
     }
-    public async Task<Country?> GetByIdAsync(Guid countryId, CancellationToken ct = default)
-    {
-        return await _context.Countries
-            .FirstOrDefaultAsync(c => c.Id == countryId, ct);
-    }
 
     public async Task<bool> HasActiveRelationsAsync(Guid countryId)
     {

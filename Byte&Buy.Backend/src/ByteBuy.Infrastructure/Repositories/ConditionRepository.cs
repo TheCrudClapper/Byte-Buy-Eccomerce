@@ -22,12 +22,6 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
             .ToListAsync(ct);
     }
 
-    public async Task<Condition?> GetByIdAsync(Guid conditionId, CancellationToken ct)
-    {
-        return await _context.Conditions
-            .FirstOrDefaultAsync(c => c.Id == conditionId, ct);
-    }
-
     public async Task<bool> HasActiveRelations(Guid conditionId)
     {
         return await _context.Conditions

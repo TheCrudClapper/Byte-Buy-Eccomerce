@@ -10,7 +10,7 @@ namespace ByteBuy.Core.Domain.Entities;
 /// data, permissions, roles, and soft deletion support. It is typically used to manage authentication, authorization,
 /// and user-related data within the application. The <see cref="ISoftDeletable"/> interface enables tracking of deleted
 /// users without permanently removing their records.</remarks>
-public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable
+public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEntity
 {
     public string FirstName { get; protected set; } = null!;
     public string LastName { get; protected set; } = null!;

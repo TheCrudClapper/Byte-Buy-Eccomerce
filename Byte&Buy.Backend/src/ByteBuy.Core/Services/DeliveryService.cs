@@ -101,7 +101,7 @@ public class DeliveryService : IDeliveryService
         return Result.Success();
     }
 
-    public async Task<Result<DeliveryResponse>> GetById(Guid id, CancellationToken ct = default)
+    public async Task<Result<DeliveryResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         var delivery = await _deliveryRepository.GetByIdAsync(id, ct);
         return delivery is null
@@ -109,17 +109,16 @@ public class DeliveryService : IDeliveryService
             : delivery.ToDeliveryResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
 
         return deliveries.Select(d => d.ToSelectListItemResponse())
-            .ToArray()
-            .AsReadOnly();
+            .ToList();
     }
 
 
-    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default)
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
         return deliveries.Select(d => d.ToDeliveryListResponse())
@@ -132,7 +131,7 @@ public class DeliveryService : IDeliveryService
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes()
         => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSizeEnum>());
 
-    public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveries(CancellationToken ct)
+    public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct)
     {
         var deliveries = await _deliveryRepository.GetAllAsync(ct);
 

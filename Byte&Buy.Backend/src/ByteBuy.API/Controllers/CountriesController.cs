@@ -8,39 +8,39 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CountriesController : BaseApiController
+public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, CountryUpdateRequest, CountryResponse>
 {
     private readonly ICountryService _countryService;
-    public CountriesController(ICountryService countryService)
+    public CountriesController(ICountryService countryService) : base(countryService)
         => _countryService = countryService;
 
-    //[HasPermission("country:write")]
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostCountry(CountryAddRequest request)
-        => HandleResult(await _countryService.AddCountry(request));
+    //[HasPermission("country:write")]
+    public override Task<ActionResult<CreatedResponse>> PostAsync(CountryAddRequest request)
+        => base.PostAsync(request);
 
-    [HttpPut("{countryId}")]
+    [HttpPut("{id}")]
     //[HasPermission("country:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutCountry(Guid countryId, CountryUpdateRequest request)
-        => HandleResult(await _countryService.UpdateCountry(countryId, request));
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, CountryUpdateRequest request) 
+        => base.PutAsync(id, request);
 
-    [HttpDelete("{countryId}")]
+    [HttpDelete("{id}")]
     //[HasPermission("country:delete")]
-    public async Task<IActionResult> DeleteCountry(Guid countryId)
-        => HandleResult(await _countryService.DeleteCountry(countryId));
+    public override Task<IActionResult> DeleteAsync(Guid id)
+        => base.DeleteAsync(id);
 
-    [HttpGet("{countryId}")]
+    [HttpGet("{id}")]
     //[HasPermission("country:read")]
-    public async Task<ActionResult<CountryResponse>> GetCountry(Guid countryId, CancellationToken ct)
-        => HandleResult(await _countryService.GetCountry(countryId, ct));
+    public override Task<ActionResult<CountryResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet]
     //[HasPermission("country:read:many")]
     public async Task<ActionResult<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct)
-        => HandleResult(await _countryService.GetCountries(ct));
+        => HandleResult(await _countryService.GetCountriesAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("country:read:options")]
     public async Task<ActionResult> GetSelectList(CancellationToken ct)
-        => HandleResult(await _countryService.GetSelectList(ct));
+        => HandleResult(await _countryService.GetSelectListAsync(ct));
 }

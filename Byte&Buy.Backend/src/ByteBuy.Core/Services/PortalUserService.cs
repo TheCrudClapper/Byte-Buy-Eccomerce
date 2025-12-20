@@ -41,7 +41,7 @@ public class PortalUserService : IPortalUserService
         _addressRepository = addressRepository;
     }
 
-    public async Task<Result<CreatedResponse>> AddPortalUser(PortalUserAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(PortalUserAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure<CreatedResponse>(AuthErrors.AccountExists);
@@ -96,10 +96,9 @@ public class PortalUserService : IPortalUserService
         return user.ToCreatedResponse();
     }
 
-
-    public async Task<Result<UpdatedResponse>> UpdatePortalUser(Guid userId, PortalUserUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
     {
-        var user = await _portalUserRepository.GetAggregateAsync(userId);
+        var user = await _portalUserRepository.GetAggregateAsync(id);
         if (user is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -119,7 +118,7 @@ public class PortalUserService : IPortalUserService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        var addressUpdateResult = await HandleAddressUpdate(user, request.Address);
+        var addressUpdateResult = await HandleAddressUpdateAsync(user, request.Address);
         if (addressUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(addressUpdateResult.Error);
 
@@ -134,7 +133,7 @@ public class PortalUserService : IPortalUserService
                 return change.ToResult<UpdatedResponse>();
         }
 
-        var roleChange = await UpdateUserRole(user, newRole);
+        var roleChange = await UpdateUserRoleAsync(user, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
 
@@ -145,12 +144,11 @@ public class PortalUserService : IPortalUserService
         await _portalUserRepository.UpdateAsync(user);
 
         return user.ToUpdatedResponse();
-
     }
 
-    public async Task<Result> DeletePortalUser(Guid userId)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        var portalUser = await _portalUserRepository.GetPortalUserWithAddress(userId);
+        var portalUser = await _portalUserRepository.GetPortalUserWithAddress(id);
         if (portalUser is null)
             return Result.Failure(Error.NotFound);
 
@@ -161,16 +159,16 @@ public class PortalUserService : IPortalUserService
         return Result.Success();
     }
 
-    public async Task<Result<PortalUserResponse>> GetPortalUser(Guid userId, CancellationToken ct = default)
+    public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var portalUser = await _portalUserRepository.GetPortalUserWithAllDataByIdAsync(userId, ct);
-        if (portalUser is null)
-            return Result.Failure<PortalUserResponse>(Error.NotFound);
+        var portalUser = await _portalUserRepository.GetPortalUserWithAllDataByIdAsync(id, ct);
 
-        return portalUser.ToPortalUserResponse();
+        return portalUser is null 
+            ? Result.Failure<PortalUserResponse>(Error.NotFound)
+            : portalUser.ToPortalUserResponse();
     }
 
-    public async Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default)
     {
         var portalUsers = await _portalUserRepository.GetPortalUsersWithRolesAsync(ct);
 
@@ -179,8 +177,7 @@ public class PortalUserService : IPortalUserService
             .ToList();
     }
 
-
-    private async Task<Result> UpdateUserRole(ApplicationUser user, ApplicationRole newRole)
+    private async Task<Result> UpdateUserRoleAsync(ApplicationUser user, ApplicationRole newRole)
     {
         var currentRoles = await _userManager.GetRolesAsync(user);
         var currentRole = currentRoles.SingleOrDefault();
@@ -202,7 +199,7 @@ public class PortalUserService : IPortalUserService
         return Result.Success();
     }
 
-    private async Task<Result> HandleAddressUpdate(PortalUser user, UserAddressUpdateRequest? request)
+    private async Task<Result> HandleAddressUpdateAsync(PortalUser user, UserAddressUpdateRequest? request)
     {
         if (request == null)
             return Result.Success();

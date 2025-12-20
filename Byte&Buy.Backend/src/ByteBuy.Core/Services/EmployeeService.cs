@@ -36,7 +36,8 @@ public class EmployeeService : IEmployeeService
         _passwordService = passwordService;
         _addressValidator = addressValidator;
     }
-    public async Task<Result<CreatedResponse>> AddEmployee(EmployeeAddRequest request)
+
+    public async Task<Result<CreatedResponse>> AddAsync(EmployeeAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
             return Result.Failure<CreatedResponse>(AuthErrors.AccountExists);
@@ -78,50 +79,9 @@ public class EmployeeService : IEmployeeService
         return employee.ToCreatedResponse();
     }
 
-    public async Task<Result> DeleteEmployee(Guid employeeId)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, EmployeeUpdateRequest request)
     {
-        var employee = await _employeeRepository.GetByIdAsync(employeeId);
-
-        if (employee is null)
-            return Result.Failure(Error.NotFound);
-
-        employee.Deactivate();
-
-        await _employeeRepository.UpdateAsync(employee);
-        await _employeeRepository.CommitAsync();
-
-        return Result.Success();
-    }
-
-    public async Task<Result<EmployeeResponse>> GetEmployee(Guid employeeId, CancellationToken ct)
-    {
-        var employeeDto = await _employeeRepository
-            .GetBySpecAsync(new EmployeeToEmployeeResponseDtoSpec(employeeId), ct);
-
-        if (employeeDto is null)
-            return Result.Failure<EmployeeResponse>(Error.NotFound);
-
-        return employeeDto;
-    }
-
-    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfo(Guid employeeId, CancellationToken ct = default)
-    {
-        var employeeDto = await _employeeRepository
-            .GetBySpecAsync(new EmployeeToEmployeeProfileResponseDto(employeeId), ct);
-        if (employeeDto is null)
-            return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
-
-        return employeeDto;
-    }
-
-    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct = default)
-    {
-        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(), ct);
-    }
-
-    public async Task<Result<UpdatedResponse>> UpdateEmployee(Guid employeeId, EmployeeUpdateRequest request)
-    {
-        var employee = await _employeeRepository.GetBySpecAsync(new EmployeeAggregateSpec(employeeId));
+        var employee = await _employeeRepository.GetBySpecAsync(new EmployeeAggregateSpec(id));
         if (employee is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -159,7 +119,7 @@ public class EmployeeService : IEmployeeService
                 return change.ToResult<UpdatedResponse>();
         }
 
-        var roleChange = await UpdateEmployeeRole(employee, newRole);
+        var roleChange = await UpdateEmployeeRoleAsync(employee, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
 
@@ -173,7 +133,47 @@ public class EmployeeService : IEmployeeService
         return employee.ToUpdatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+    public async Task<Result> DeleteAsync(Guid id)
+    {
+        var employee = await _employeeRepository.GetByIdAsync(id);
+
+        if (employee is null)
+            return Result.Failure(Error.NotFound);
+
+        employee.Deactivate();
+
+        await _employeeRepository.UpdateAsync(employee);
+        await _employeeRepository.CommitAsync();
+
+        return Result.Success();
+    }
+
+    public async Task<Result<EmployeeResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
+    {
+        var employeeDto = await _employeeRepository
+           .GetBySpecAsync(new EmployeeToEmployeeResponseDtoSpec(id), ct);
+
+        return employeeDto is null
+            ? Result.Failure<EmployeeResponse>(Error.NotFound)
+            : employeeDto;
+    }
+
+    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(Guid employeeId, CancellationToken ct = default)
+    {
+        var employeeDto = await _employeeRepository
+            .GetBySpecAsync(new EmployeeToEmployeeProfileResponseDto(employeeId), ct);
+        if (employeeDto is null)
+            return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
+
+        return employeeDto;
+    }
+
+    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesListAsync(CancellationToken ct = default)
+    {
+        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(), ct);
+    }
+
+    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);
         if (employee is null)
@@ -197,7 +197,7 @@ public class EmployeeService : IEmployeeService
         return employee.ToUpdatedResponse();
     }
 
-    private async Task<Result> UpdateEmployeeRole(ApplicationUser employee, ApplicationRole newRole)
+    private async Task<Result> UpdateEmployeeRoleAsync(ApplicationUser employee, ApplicationRole newRole)
     {
         var currentRoles = await _userManager.GetRolesAsync(employee);
         var currentRole = currentRoles.SingleOrDefault();

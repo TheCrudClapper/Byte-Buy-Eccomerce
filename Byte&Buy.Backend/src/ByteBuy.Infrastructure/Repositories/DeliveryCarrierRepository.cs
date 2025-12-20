@@ -15,9 +15,6 @@ public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDel
     public async Task<IEnumerable<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default)
         => await _context.DeliveryCarriers.ToListAsync(ct);
 
-    public async Task<DeliveryCarrier?> GetByIdAsync(Guid id, CancellationToken ct = default)
-        => await _context.DeliveryCarriers.FirstOrDefaultAsync(dc => dc.Id == id, ct);
-
     public async Task<bool> HasActiveRelationsAsync(Guid carrierId)
         => await _context.DeliveryCarriers.AnyAsync(dc => dc.Deliveries.Any());
 }

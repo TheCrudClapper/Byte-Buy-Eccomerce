@@ -10,5 +10,5 @@ namespace ByteBuy.Core.ServiceContracts.Base;
 /// <typeparam name="TId">Type of Id used for value</typeparam>
 public interface ISelectableService<TId>
 {
-    Task<Result<IReadOnlyCollection<SelectListItemResponse<TId>>>> GetSelectList(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<TId>>>> GetSelectListAsync(CancellationToken ct = default);
 }

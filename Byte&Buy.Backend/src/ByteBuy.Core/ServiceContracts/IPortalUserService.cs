@@ -1,14 +1,12 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IPortalUserService
+public interface IPortalUserService 
+    : IBaseCrudService<Guid, PortalUserAddRequest, PortalUserUpdateRequest, PortalUserResponse>
 {
-    Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct = default);
-    Task<Result<CreatedResponse>> AddPortalUser(PortalUserAddRequest request);
-    Task<Result<UpdatedResponse>> UpdatePortalUser(Guid userId, PortalUserUpdateRequest request);
-    Task<Result> DeletePortalUser(Guid userId);
-    Task<Result<PortalUserResponse>> GetPortalUser(Guid userId, CancellationToken ct = default);
+    Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default);
 }

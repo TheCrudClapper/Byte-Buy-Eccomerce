@@ -1,15 +1,12 @@
-﻿using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Role;
+﻿using ByteBuy.Core.DTO.Role;
 using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IRoleService
+public interface IRoleService 
+    : IBaseCrudService<Guid, RoleAddRequest, RoleUpdateRequest, RoleResponse>,
+      ISelectableService<Guid>
 {
-    public Task<Result<CreatedResponse>> AddRole(RoleAddRequest request);
-    public Task<Result<UpdatedResponse>> UpdateRole(Guid roleId, RoleUpdateRequest request);
-    public Task<Result> DeleteRole(Guid roleId);
-    public Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default);
-    public Task<Result<IEnumerable<RoleResponse>>> GetAllRoles(CancellationToken ct = default);
-    public Task<Result<RoleResponse>> GetRole(Guid roleId, CancellationToken ct = default);
+    public Task<Result<IEnumerable<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default);
 }

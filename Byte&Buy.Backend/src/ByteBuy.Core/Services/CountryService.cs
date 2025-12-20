@@ -16,7 +16,8 @@ public class CountryService : ICountryService
     {
         _countryRepository = countryRepository;
     }
-    public async Task<Result<CreatedResponse>> AddCountry(CountryAddRequest request)
+
+    public async Task<Result<CreatedResponse>> AddAsync(CountryAddRequest request)
     {
         var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code);
         if (exist)
@@ -33,13 +34,13 @@ public class CountryService : ICountryService
         return country.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateCountry(Guid countryId, CountryUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, CountryUpdateRequest request)
     {
-        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code, countryId);
+        var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code, id);
         if (exist)
             return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.AlreadyExists);
 
-        var country = await _countryRepository.GetByIdAsync(countryId);
+        var country = await _countryRepository.GetByIdAsync(id);
         if (country is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -53,12 +54,12 @@ public class CountryService : ICountryService
         return country.ToUpdatedResponse();
     }
 
-    public async Task<Result> DeleteCountry(Guid countryId)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        if (await _countryRepository.HasActiveRelationsAsync(countryId))
+        if (await _countryRepository.HasActiveRelationsAsync(id))
             return Result.Failure(DeliveryCarrierErrors.InUse);
 
-        var country = await _countryRepository.GetByIdAsync(countryId);
+        var country = await _countryRepository.GetByIdAsync(id);
         if (country is null)
             return Result.Failure(DeliveryCarrierErrors.NotFound);
 
@@ -69,26 +70,24 @@ public class CountryService : ICountryService
         return Result.Success();
     }
 
-    public async Task<Result<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct = default)
+    public async Task<Result<CountryResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var countries = await _countryRepository.GetAllAsync(ct);
-        return countries.Select(c => c.ToCountryResponse()).ToList();
-    }
-
-    public async Task<Result<CountryResponse>> GetCountry(Guid contryId, CancellationToken ct = default)
-    {
-        var country = await _countryRepository.GetByIdAsync(contryId, ct);
+        var country = await _countryRepository.GetByIdAsync(id, ct);
         return country is null
             ? Result.Failure<CountryResponse>(Error.NotFound)
             : country.ToCountryResponse();
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct = default)
+    public async Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default)
+    {
+        var countries = await _countryRepository.GetAllAsync(ct);
+        return countries.Select(c => c.ToCountryResponse()).ToList();
+    }
+
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {
         var countries = await _countryRepository.GetAllAsync();
         return countries.Select(c => c.ToSelectListItemResponse())
             .ToList();
     }
-
-
 }

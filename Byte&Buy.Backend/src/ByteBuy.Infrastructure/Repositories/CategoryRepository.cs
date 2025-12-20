@@ -22,12 +22,6 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
             .ToListAsync(ct);
     }
 
-    public async Task<Category?> GetByIdAsync(Guid id, CancellationToken ct)
-    {
-        return await _context.Categories
-            .FirstOrDefaultAsync(c => c.Id == id, ct);
-    }
-
     public async Task<bool> HasActiveRelations(Guid categoryId)
     {
         return await _context.Conditions

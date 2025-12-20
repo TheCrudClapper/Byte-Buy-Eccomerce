@@ -8,31 +8,31 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PortalUsersController : BaseApiController
+public class PortalUsersController 
+    : CrudControllerBase<Guid, PortalUserAddRequest, PortalUserUpdateRequest, PortalUserResponse>
 {
     private readonly IPortalUserService _portalUserService;
-    public PortalUsersController(IPortalUserService portalUserService)
-    {
-        _portalUserService = portalUserService;
-    }
+    public PortalUsersController(IPortalUserService portalUserService) : base(portalUserService)
+       => _portalUserService = portalUserService;
 
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostPortalUser(PortalUserAddRequest request)
-        => HandleResult(await _portalUserService.AddPortalUser(request));
+    public override Task<ActionResult<CreatedResponse>> PostAsync(PortalUserAddRequest request) 
+        => base.PostAsync(request);
 
-    [HttpPut("{userId}")]
-    public async Task<ActionResult<UpdatedResponse>> PutPortalUser(Guid userId, PortalUserUpdateRequest request)
-        => HandleResult(await _portalUserService.UpdatePortalUser(userId, request));
+    [HttpDelete("{id}")]
+    public override Task<IActionResult> DeleteAsync(Guid id) 
+        => base.DeleteAsync(id);
 
-    [HttpDelete("{userId}")]
-    public async Task<IActionResult> DeletePortalUser(Guid userId)
-        => HandleResult(await _portalUserService.DeletePortalUser(userId));
+    [HttpPut("{id}")]
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, PortalUserUpdateRequest request) 
+        => base.PutAsync(id, request);
+
+    [HttpGet("{id}")]
+    public override Task<ActionResult<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken) 
+        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     public async Task<ActionResult<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct)
-        => HandleResult(await _portalUserService.GetPortalUsersList(ct));
+        => HandleResult(await _portalUserService.GetPortalUsersListAsync(ct));
 
-    [HttpGet("{userId}")]
-    public async Task<ActionResult<PortalUserResponse>> GetPortalUser(Guid userId, CancellationToken ct)
-        => HandleResult(await _portalUserService.GetPortalUser(userId, ct));
 }

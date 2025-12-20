@@ -17,7 +17,7 @@ public class AddressRepository : EfBaseRepository<Address>, IAddressRepository
             .SelectMany(u => u.Addresses)
             .AnyAsync(a => EF.Functions.ILike(a.Label, label));
     }
-    public async Task<Address?> GetByIdAsync(Guid addressId, CancellationToken ct = default)
+    public override async Task<Address?> GetByIdAsync(Guid addressId, CancellationToken ct = default)
     {
         return await _context.Addresses
             .Include(a => a.Country)

@@ -1,6 +1,7 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
+using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,44 +9,45 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ConditionsController : BaseApiController
+public class ConditionsController 
+    : CrudControllerBase<Guid, ConditionAddRequest, ConditionUpdateRequest, ConditionResponse>
 {
     private readonly IConditionService _conditionService;
-    public ConditionsController(IConditionService conditionService)
+    public ConditionsController(IConditionService conditionService) : base(conditionService)
         => _conditionService = conditionService;
 
-    //[HasPermission("condition:write")]
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostCondition(ConditionAddRequest request)
-        => HandleResult(await _conditionService.AddCondition(request));
+    //[HasPermission("condition:write")]
+    public override Task<ActionResult<CreatedResponse>> PostAsync(ConditionAddRequest request)
+        => base.PostAsync(request);
 
-    [HttpPut("{conditionId}")]
+    [HttpPut("{id}")]
     //[HasPermission("condition:update")]
-    public async Task<ActionResult<UpdatedResponse>> PutCondition(Guid conditionId, ConditionUpdateRequest request)
-        => HandleResult(await _conditionService.UpdateCondition(conditionId, request));
+    public override Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, ConditionUpdateRequest request)
+        => base.PutAsync(id, request);
 
-    [HttpDelete("{conditionId}")]
+    [HttpDelete("{id}")]
     //[HasPermission("condition:delete")]
-    public async Task<IActionResult> DeleteCondition(Guid conditionId)
-        => HandleResult(await _conditionService.DeleteCondition(conditionId));
+    public override Task<IActionResult> DeleteAsync(Guid id)
+        => base.DeleteAsync(id);
 
-    [HttpGet("{conditionId}")]
+    [HttpGet("{id}")]
     //[HasPermission("condition:read")]
-    public async Task<ActionResult<ConditionResponse>> GetCondition(Guid conditionId, CancellationToken ct)
-        => HandleResult(await _conditionService.GetCondition(conditionId, ct));
+    public override Task<ActionResult<ConditionResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        => base.GetByIdAsync(id, cancellationToken);
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
     public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
-       => HandleResult(await _conditionService.GetConditionsList(ct));
+       => HandleResult(await _conditionService.GetConditionsListAsync(ct));
 
     [HttpGet]
     //[HasPermission("condition:read:many")]
     public async Task<ActionResult<IEnumerable<ConditionResponse>>> GetConditions(CancellationToken ct)
-        => HandleResult(await _conditionService.GetConditions(ct));
+        => HandleResult(await _conditionService.GetConditionsAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("condition:read:options")]
     public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
-        => HandleResult(await _conditionService.GetSelectList(ct));
+        => HandleResult(await _conditionService.GetSelectListAsync(ct));
 }

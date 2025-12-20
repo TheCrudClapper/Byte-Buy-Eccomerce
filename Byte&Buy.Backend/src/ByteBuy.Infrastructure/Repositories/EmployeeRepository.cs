@@ -10,7 +10,7 @@ public class EmployeeRepository : EfBaseRepository<Employee>, IEmployeeRepositor
 {
     public EmployeeRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
+    public override async Task<Employee?> GetByIdAsync(Guid employeeId, CancellationToken ct)
     {
         return await _context.Employees
             .Include(e => e.UserPermissions)
