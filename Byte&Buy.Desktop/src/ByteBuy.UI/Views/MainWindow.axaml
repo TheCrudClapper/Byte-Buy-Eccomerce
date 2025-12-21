@@ -3,7 +3,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
-        xmlns:views="using:ByteBuy.UI.Views.Shared"
+		xmlns:views="using:ByteBuy.UI.Views.Shared"
 		mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="800"
 		Height="800" Width="1300"
 		x:Class="ByteBuy.UI.Views.MainWindow"
@@ -16,26 +16,14 @@
 	<dialogHost:DialogHost Identifier="MainDialogHost" CloseOnClickAway="True">
 		<Grid RowDefinitions="50, *">
 			<!-- Top Bar -->
-			<Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource TopbarGradient}">
+			<Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource CardBackgroundBrush}">
 
-				<!-- Image -->
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-					<Button
-					Margin="5,0"
-					Classes="menuButton">
-						<Image Source="{SvgImage /Assets/Images/regular/bars-solid-full-white.svg}"
-							   Width="20" Height="20" />
-					</Button>
-					<Image
-					Source="/Assets/Images/logo.png"
-					Width="100" Height="100" />
-				</StackPanel>
-
-
-				<!-- EmptySpace -->
-				<StackPanel Grid.Column="1" VerticalAlignment="Center">
-
-				</StackPanel>
+				<!-- Branding -->
+				<TextBlock Text="Byte&amp;Buy"
+						   FontSize="30"
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="White"
+						   HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
 				<!-- Quick Actions -->
 				<StackPanel
@@ -52,24 +40,24 @@
 					<Button
 					Classes="menuButton"
 					Command="{Binding GoToProfileCommand}">
-						<Image Source="{SvgImage /Assets/Images/regular/user-solid-full-white.svg}"
-							   Width="20" Height="20" />
+						<Image Source="{SvgImage /Assets/Images/regular/user-solid-full-white.svg}"/>
 					</Button>
 				</StackPanel>
 
 			</Grid>
+
 			<Grid ColumnDefinitions="220, *" Grid.Row="1">
-				<Grid Grid.Column="0" RowDefinitions="*, 50" Background="{DynamicResource SidebarGradient}">
+				<Grid Grid.Column="0" RowDefinitions="*, 50" Background="{DynamicResource CardBackgroundBrush}">
 
 					<!-- Stack Panel With Menu Buttons -->
 					<StackPanel Margin="5,0" Grid.Row="0">
 						<Button
 						Command="{Binding GoToDashboardCommand}"
 						Classes="sidebarMenuButton">
-							<StackPanel Orientation="Horizontal">
+							<StackPanel Orientation="Horizontal" >
 								<Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"
-									   Width="20" Height="20" />
-								<Label Content="Dashboard" />
+									   Margin="0,0,5,0"/>
+								<TextBlock Text="Dashboard" VerticalAlignment="Bottom"/>
 							</StackPanel>
 						</Button>
 
@@ -79,8 +67,8 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
-									   Width="20" Height="20" />
-								<Label Content="Shop Administration" />
+									   Margin="0,0,5,0" />
+								<TextBlock Text="Shop Administration" VerticalAlignment="Bottom"/>
 							</StackPanel>
 						</Button>
 
@@ -89,7 +77,7 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
-									   Width="20" Height="20" />
+									   Margin="0,0,5,0"/>
 								<Label Content="Employees" />
 							</StackPanel>
 						</Button>
@@ -99,7 +87,7 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
-									   Width="20" Height="20" />
+									   Margin="0,0,5,0" />
 								<Label Content="Users" />
 							</StackPanel>
 						</Button>
@@ -109,7 +97,7 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"
-									   Width="20" Height="20" />
+									   Margin="0,0,5,0" />
 								<Label Content="Roles" />
 							</StackPanel>
 						</Button>
@@ -118,7 +106,7 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
-									   Width="20" Height="20" />
+									   Margin="0,0,5,0" />
 								<Label Content="Orders" />
 							</StackPanel>
 						</Button>
@@ -128,20 +116,10 @@
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/company.svg}"
-									   Width="20" Height="20" />
+									   Margin="0,0,5,0" />
 								<Label Content="Company Details" />
 							</StackPanel>
 						</Button>
-
-						<Button
-						Classes="sidebarMenuButton">
-							<StackPanel Orientation="Horizontal">
-								<Image Source="{SvgImage /Assets/Images/regular/vcard.svg}"
-									   Width="20" Height="20" />
-								<Label Content="Documents" />
-							</StackPanel>
-						</Button>
-
 					</StackPanel>
 
 					<!-- Settings Button -->
@@ -168,7 +146,7 @@
 				</Grid>
 
 				<!-- Area for pages -->
-				<ContentControl Grid.Column="1" Padding="30" Background="{DynamicResource BackgroundLightDarkerBrush}"
+				<ContentControl Grid.Column="1" Padding="30" Background="#17182a"
 								Content="{Binding CurrentPage}" />
 			</Grid>
 		</Grid>

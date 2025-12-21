@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaXaml Remove="Styles\Colors.axaml" />
-    <AvaloniaResource Include="Styles\Colors.axaml" />
     <AvaloniaXaml Remove="App.axaml" />
     <AvaloniaResource Include="App.axaml" />
   </ItemGroup>

@@ -4,12 +4,17 @@
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
-				<NumericUpDown Value="2" Minimum="1"/>
+				<Button>Save</Button>
 			</StackPanel>
 
 
 		</Border>
 	</Design.PreviewWith>
+
+	  <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+        <Setter Property="FontWeight" Value="500"/>
+    </Style>
 
 	<!--Tab Control Styles-->
 	<Style Selector="TabControl">
@@ -105,12 +110,12 @@
 	<!-- Button Styles -->
 	<Style Selector="Button">
 		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
-		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 		<Setter Property="CornerRadius" Value="8" />
 		<Setter Property="FontWeight" Value="600"/>
 		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="BorderBrush" Value="Black"/>
-		<Setter Property="FontFamily" Value="{DynamicResource SegoeUiThis}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+		<Setter Property="FontFamily" Value="{DynamicResource RalewayBold}"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 	</Style>
 
@@ -132,7 +137,7 @@
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
 		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
 		<Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
-		<Setter Property="FontFamily" Value="{DynamicResource SegoeUiThisBoldReqular}"/>
+		<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
 		<Setter Property="CaretBrush" Value="{DynamicResource TextLightBrush}" />
 	</Style>
 
@@ -199,15 +204,19 @@
 	<Style Selector="DataGrid">
 		<Setter Property="CornerRadius" Value="10"/>
 		<Setter Property="FontSize" Value="12"/>
-		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Foreground" Value="White"/>
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
 	</Style>
 
+	<Style Selector="DataGridRow">
+		<Setter Property="Background" Value="#2d3059"/>
+		<Setter Property="Foreground" Value="White"/>
+	</Style>
 
 	<Style Selector="DataGridColumnHeader">
 		<Setter Property="FontSize" Value="14"/>
-		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Foreground" Value="White"/>
 		<Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
 		<Setter Property="FontWeight" Value="600"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>

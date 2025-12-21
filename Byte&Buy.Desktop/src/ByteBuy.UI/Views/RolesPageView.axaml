@@ -3,14 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             Background="Transparent"
              xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ByteBuy.UI.Views.RolesPageView"
              x:DataType="vm:RolesPageViewModel">
     <Grid>
-        <Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+        <Grid x:Name="Root" RowDefinitions="50,50,*,50" >
             <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
-                <Label Grid.Column="0" Classes="pageTitle" Content="Roles" />
+                <Label Grid.Column="0" Classes="pageTitle" Content="Roles" Foreground="White" />
                 <Button
                     Command="{Binding AddCommand}"
                     VerticalAlignment="Top"

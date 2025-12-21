@@ -11,7 +11,7 @@
 
 	<Application.Styles>
 		<FluentTheme />
-		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />	
+		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 		<dialogHostAvalonia:DialogHostStyles />
 		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
@@ -26,6 +26,23 @@
 				<MergeResourceInclude Source="/Controls/TabItem.axaml"></MergeResourceInclude>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
+
+
+
+		<!--New Theme-->
+		<Color x:Key="HoverAccent">#3b255a</Color>
+
+		<Color x:Key="TextPrimary">#ffffff</Color>
+
+		<Color x:Key="Background">#17182a</Color>
+
+		<Color x:Key="CardBackground">#2d3059</Color>
+
+		<Color x:Key="SecondaryAccent">#8B5CF6</Color>
+
+		<Color x:Key="PrimaryAccent">#8B5CF6</Color>
+
+		<Color x:Key="GrayAccent">#26293f</Color>
 
 		<!-- Colors -->
 		<Color x:Key="BackgroundLight">#FFFFFF</Color>
@@ -67,6 +84,16 @@
 		<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
 		<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
 
+
+		<!--New Brushes-->
+		<SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}"/>
+		<SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+		<SolidColorBrush x:Key="HoverAccentBrush" Color="{StaticResource HoverAccent}"/>
+		<SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackground}"/>
+		<SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccent}"/>
+		<SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccent}"/>
+		<SolidColorBrush x:Key="GrayAccentBrush" Color="{StaticResource GrayAccent}"/>
+
 		<LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
 			<GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
 			<GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
@@ -98,6 +125,12 @@
 		<FontFamily x:Key="SegoeUiThis">/Assets/Fonts/segoeuithibd.ttf#Segoe UI This</FontFamily>
 		<FontFamily x:Key="SegoeUiThisBoldItalic">/Assets/Fonts/segoeuithisz.ttf#Segoe UI This</FontFamily>
 		<FontFamily x:Key="SegoeUiThisBoldReqular">/Assets/Fonts/segoeuithis.ttf#Segoe UI This</FontFamily>
+
+		<FontFamily x:Key="OpenSansBold">/Assets/Fonts/opensansbold.ttf#Open Sans</FontFamily>
+
+		<FontFamily x:Key="OpenSansMedium">/Assets/Fonts/opensansmedium.ttf#Open Sans Medium</FontFamily>
+		<FontFamily x:Key="RalewayBold">/Assets/Fonts/ralewaybold.ttf#Raleway</FontFamily>
+		<FontFamily x:Key="RalewayMedium">/Assets/Fonts/ralewaymedium.ttf#Raleway Medium</FontFamily>
 
 	</Application.Resources>
 </Application>
