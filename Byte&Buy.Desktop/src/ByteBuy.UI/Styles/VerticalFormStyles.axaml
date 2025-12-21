@@ -27,14 +27,6 @@
 		<Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
 	</Style>
 
-	<Style Selector="Border.sectionBorder">
-		<Setter Property="BoxShadow" Value="0 0 10 1 LightGray"/>
-		<Setter Property="CornerRadius" Value="10"/>
-		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-		<Setter Property="Margin" Value="0,0,30,0" />
-		<Setter Property="Padding" Value="20,20,20,20" />
-	</Style>
-
 
 	<!--Highlightable border-->
 	<Style Selector="Border.highlightable:pointerover">

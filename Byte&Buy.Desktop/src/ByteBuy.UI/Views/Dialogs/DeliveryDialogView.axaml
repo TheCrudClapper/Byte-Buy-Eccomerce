@@ -12,46 +12,58 @@
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Border CornerRadius="2" BorderThickness="2"
-			Background="{DynamicResource BackgroundLightBrush}"
+	<Border CornerRadius="2"
+			BorderThickness="2"
+			Background="{DynamicResource CardBackgroundBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="620" MinWidth="400">
+			MinHeight="620"
+			MinWidth="400">
 		<Grid RowDefinitions="30,*,*">
-			<Border
-			Grid.Row="0"
-			Background="{DynamicResource ButtonGradient}"
-			Height="30"
-			VerticalAlignment="Top">
+
+			<!-- Title bar -->
+			<Border Grid.Row="0"
+					Background="{DynamicResource ButtonGradient}"
+					Height="30"
+					VerticalAlignment="Top">
 				<TextBlock Text="{Binding DialogTitle}"
 						   VerticalAlignment="Center"
 						   Margin="5,0"
-						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+						   Foreground="{DynamicResource TextPrimaryBrush}"/>
 			</Border>
 
-			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
-				<TextBlock Text="Delivery Name" Classes="textBoxLabel" />
-				<TextBox
-				Foreground="{DynamicResource TextLightBrush}"
-				Text="{Binding Name}"
-				TextWrapping="Wrap"
-				Watermark="Name" />
+			<!-- Content -->
+			<StackPanel Margin="20"
+						Spacing="10"
+						Grid.Row="1">
 
-				<TextBlock Text="Description" Classes="textBoxLabel" />
-				<TextBox
-				MinHeight="150"
-				TextWrapping="Wrap"
-				Text="{Binding Description}"
-				Watermark="Description" />
+				<!-- Name -->
+				<TextBlock Text="Delivery Name"
+						   Classes="textBoxLabel" />
+				<TextBox Text="{Binding Name}"
+						 TextWrapping="Wrap"
+						 Watermark="Name" />
 
-				<Grid RowDefinitions="auto, 10, auto, 10, auto, 10, auto" ColumnDefinitions="*, *">
-					
-					<!--Delivery Carrier Combobox-->
-					<TextBlock
-					Grid.Row="0"
-					Grid.Column="0"
-					Text="Delivery Carrier"
-					Classes="textBoxLabel" />
-					<StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,5,0" Orientation="Horizontal">
+				<!-- Description -->
+				<TextBlock Text="Description"
+						   Classes="textBoxLabel" />
+				<TextBox Text="{Binding Description}"
+						 MinHeight="150"
+						 TextWrapping="Wrap"
+						 Watermark="Description" />
+
+				<!-- Combo section -->
+				<Grid RowDefinitions="Auto,10,Auto,10,Auto,10,Auto"
+					  ColumnDefinitions="*,*">
+
+					<!-- Delivery Carrier -->
+					<TextBlock Grid.Row="0"
+							   Grid.Column="0"
+							   Text="Delivery Carrier"
+							   Classes="textBoxLabel" />
+					<StackPanel Grid.Row="2"
+								Grid.Column="0"
+								Margin="0,0,5,0"
+								Orientation="Horizontal">
 						<Button VerticalAlignment="Stretch"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
@@ -60,26 +72,26 @@
 								   Height="15"
 								   Width="15"/>
 						</Button>
-						<ComboBox
-						ItemsSource="{Binding DeliveryCarriers}"
-						SelectedValue="{Binding SelectedDeliveryCarrier}">
+						<ComboBox ItemsSource="{Binding DeliveryCarriers}"
+								  SelectedItem="{Binding SelectedDeliveryCarrier}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
-									<TextBlock Text="{Binding Title}"/>
+									<TextBlock Text="{Binding Title}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
 					</StackPanel>
 
-					<!--Delivery Type Combobox-->
-					<TextBlock
-					Grid.Row="0"
-					Grid.Column="1"
-					Text="Delivery Type"
-					Margin="5,0,0,0"
-					Classes="textBoxLabel" />
-
-					<StackPanel Grid.Row="2" Margin="5,0,0,0" Grid.Column="1" Orientation="Horizontal">
+					<!-- Delivery Type -->
+					<TextBlock Grid.Row="0"
+							   Grid.Column="1"
+							   Text="Delivery Type"
+							   Margin="5,0,0,0"
+							   Classes="textBoxLabel" />
+					<StackPanel Grid.Row="2"
+								Grid.Column="1"
+								Margin="5,0,0,0"
+								Orientation="Horizontal">
 						<Button VerticalAlignment="Stretch"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
@@ -88,24 +100,27 @@
 								   Height="15"
 								   Width="15"/>
 						</Button>
-						<ComboBox
-						ItemsSource="{Binding DeliveryChannels}"
-						SelectedValue="{Binding SelectedChannel}">
+						<ComboBox ItemsSource="{Binding DeliveryChannels}"
+								  SelectedItem="{Binding SelectedChannel}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
-									<TextBlock Text="{Binding Title}"/>
+									<TextBlock Text="{Binding Title}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
 					</StackPanel>
 
-
-					<!--Parcel Locker Size Combobox-->
-					<TextBlock
-					Grid.Row="4"
-					Text="Parcel Locker Size"
-					Classes="textBoxLabel" />
-					<StackPanel Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,5,0" Orientation="Horizontal">
+					<!-- Parcel Locker Size -->
+					<TextBlock Grid.Row="4"
+							   Grid.Column="0"
+							   Grid.ColumnSpan="2"
+							   Text="Parcel Locker Size"
+							   Classes="textBoxLabel" />
+					<StackPanel Grid.Row="6"
+								Grid.Column="0"
+								Grid.ColumnSpan="2"
+								Margin="0,0,5,0"
+								Orientation="Horizontal">
 						<Button VerticalAlignment="Stretch"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
@@ -114,48 +129,45 @@
 								   Height="15"
 								   Width="15"/>
 						</Button>
-						<ComboBox
-						ItemsSource="{Binding ParcelLockerSize}"
-						SelectedValue="{Binding SelectedSize}">
+						<ComboBox ItemsSource="{Binding ParcelLockerSize}"
+								  SelectedItem="{Binding SelectedSize}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
-									<TextBlock Text="{Binding Title}"/>
+									<TextBlock Text="{Binding Title}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
 					</StackPanel>
-
 				</Grid>
 
+				<!-- Price -->
+				<TextBlock Text="Price"
+						   Classes="textBoxLabel" />
+				<NumericUpDown Value="{Binding Price}"
+							   FormatString="0.000"
+							   Minimum="1"
+							   Watermark="Enter price per one item" />
 
-				<!--Price NumericUpDown-->
-				<TextBlock Text="Price" Classes="textBoxLabel" />
-				<NumericUpDown
-				Value="{Binding Price}"
-				FormatString="0.000"
-				Minimum="1"
-				Watermark="Enter price per one item"/>
+				<!-- Error -->
+				<TextBlock
+				Text="{Binding Error}"
+				FontFamily="{DynamicResource RalewayBold}"
+				Foreground="{DynamicResource ErrorBrush}"
+				TextWrapping="Wrap" />
 
-				<!--Error Feedback-->
-				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
-
-
-				<!--Buttons-->
+				<!-- Buttons -->
 				<StackPanel Grid.Row="2"
 							Orientation="Horizontal"
 							HorizontalAlignment="Right"
 							Spacing="8">
-					<Button
-					Content="Cancel"
-					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-					Path=CloseDialogCommand}"
-					CommandParameter="False" />
-					<Button
-					Content="Save"
-					Command="{Binding SaveCommand}" />
+					<Button Content="Cancel"
+							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
+							Path=CloseDialogCommand}"
+							CommandParameter="False" />
+					<Button Content="Save"
+							Command="{Binding SaveCommand}" />
 				</StackPanel>
 			</StackPanel>
 		</Grid>
 	</Border>
-
 </UserControl>

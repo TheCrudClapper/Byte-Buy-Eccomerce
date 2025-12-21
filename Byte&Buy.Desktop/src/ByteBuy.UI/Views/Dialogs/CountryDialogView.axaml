@@ -1,18 +1,20 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dialogHost="using:DialogHostAvalonia"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.Dialogs.CountryDialogView"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:dialogHost="using:DialogHostAvalonia"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.Dialogs.CountryDialogView"
 			 x:DataType="vm:CountryDialogViewModel">
 
-  <UserControl.Styles>
+	<UserControl.Styles>
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Border CornerRadius="2" BorderThickness="2" Background="{DynamicResource BackgroundLightBrush}" BorderBrush="{DynamicResource ButtonGradient}"
+	<Border CornerRadius="2" BorderThickness="2"
+			Background="{DynamicResource CardBackgroundBrush}"
+			BorderBrush="{DynamicResource ButtonGradient}"
 			MinHeight="200" MinWidth="400">
 		<Grid RowDefinitions="30,*,*">
 			<Border
@@ -23,7 +25,7 @@
 				<TextBlock Text="{Binding DialogTitle}"
 						   VerticalAlignment="Center"
 						   Margin="5,0"
-						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+						   Foreground="{DynamicResource TextPrimaryBrush}"/>
 			</Border>
 
 			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
@@ -40,7 +42,11 @@
 				TextWrapping="Wrap"
 				Watermark="Code" />
 
-				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
+				<TextBlock
+				Text="{Binding Error}"
+				FontFamily="{DynamicResource RalewayBold}"
+				Foreground="{DynamicResource ErrorBrush}"
+				TextWrapping="Wrap" />
 
 				<StackPanel Grid.Row="2"
 							Orientation="Horizontal"

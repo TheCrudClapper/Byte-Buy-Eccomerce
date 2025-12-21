@@ -5,6 +5,7 @@
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 Background="Transparent"
 			 x:Class="ByteBuy.UI.Views.CategoriesPageView"
 			 x:DataType="vm:CategoriesPageViewModel">
 	<UserControl.Styles>
@@ -13,7 +14,8 @@
 
 
 	<Grid>
-		<Grid RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid RowDefinitions="50,*,50">
+
 			<!-- Filters -->
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
@@ -75,7 +77,7 @@
 
 										<Button
 										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-            CommandParameter="{Binding}"
+										CommandParameter="{Binding}"
 										FontSize="10"
 										Foreground="{DynamicResource BackgroundLightBrush}">
 

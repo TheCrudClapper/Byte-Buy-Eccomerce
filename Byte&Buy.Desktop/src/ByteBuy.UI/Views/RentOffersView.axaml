@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="using:ByteBuy.UI.Views.Shared"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 Background="Transparent"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:RentOffersViewModel"
              x:Class="ByteBuy.UI.Views.RentOffersView">
@@ -13,7 +14,7 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid RowDefinitions="50,*,50">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
 				<Button

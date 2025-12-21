@@ -3,6 +3,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 Background="Transparent"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:local="clr-namespace:ByteBuy.UI.Views"
@@ -15,9 +16,11 @@
 
 	<Grid>
 
-		<Grid x:Name="Root" RowDefinitions="50,50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid x:Name="Root" RowDefinitions="50,50,*,50">
 			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
-				<Label Grid.Column="0" Classes="pageTitle" Content="Employees" />
+				<!--Page Title-->
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Employees"/>
+
 				<Button
 				Command="{Binding AddCommand}"
 				VerticalAlignment="Top"

@@ -1,20 +1,21 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 Background="Transparent"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-             x:Class="ByteBuy.UI.Views.ConditionsPageView"
-             x:DataType="vm:ConditionsPageViewModel">
+			 x:Class="ByteBuy.UI.Views.ConditionsPageView"
+			 x:DataType="vm:ConditionsPageViewModel">
 
-  	<UserControl.Styles>
+	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
 
-		<Grid  RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid  RowDefinitions="50,*,50">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
 				<Button

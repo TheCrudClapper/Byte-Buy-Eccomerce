@@ -4,6 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 Background="Transparent"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:Class="ByteBuy.UI.Views.DeliveriesPageView"
 			 x:DataType="vm:DeliveriesPageViewModel">
@@ -14,7 +15,7 @@
 
 	<Grid>
 
-		<Grid RowDefinitions="50,*,50" Background="{DynamicResource BackgroundLightDarker}">
+		<Grid RowDefinitions="50,*,50">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
 				<Button

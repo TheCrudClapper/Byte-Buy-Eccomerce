@@ -8,96 +8,112 @@
 			 x:Class="ByteBuy.UI.OfferDialogView"
 			 x:DataType="vm:OfferDialogViewModel">
 
-
 	<UserControl.Styles>
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Border CornerRadius="2" BorderThickness="2"
-			Background="{DynamicResource BackgroundLightBrush}"
+	<Border CornerRadius="2"
+			BorderThickness="2"
+			Background="{DynamicResource CardBackgroundBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="300" MinWidth="500" >
+			MinHeight="300"
+			MinWidth="500">
 		<ScrollViewer>
 			<Grid RowDefinitions="30,*,*">
-				<Border
-				Grid.Row="0"
-				Background="{DynamicResource ButtonGradient}"
-				Height="30"
-				VerticalAlignment="Top">
+
+				<!-- Title bar -->
+				<Border Grid.Row="0"
+						Background="{DynamicResource ButtonGradient}"
+						Height="30"
+						VerticalAlignment="Top">
 					<TextBlock Text="{Binding DialogTitle}"
 							   VerticalAlignment="Center"
 							   Margin="5,0"
-							   Foreground="{DynamicResource BackgroundLightBrush}"/>
+							   Foreground="{DynamicResource TextPrimaryBrush}" />
 				</Border>
 
-				<!--Form Fields-->
-				<StackPanel Margin="20" Spacing="10" Grid.Row="1">
+				<!-- Form Fields -->
+				<StackPanel Margin="20"
+							Spacing="10"
+							Grid.Row="1">
+
+					<!-- Offer type -->
 					<CheckBox HorizontalAlignment="Right"
 							  Foreground="{DynamicResource TextLightBrush}"
 							  Command="{Binding ChangeOfferTypeCommand}"
-							  Content="Sale Offer"/>
-					<TextBlock Text="Selected Stock Item" Classes="textBoxLabel" HorizontalAlignment="Stretch"/>
-					<TextBox
-					IsEnabled="false"
-					Foreground="{DynamicResource TextLightBrush}"
-					Text="{Binding SelectedItem.Name}"
-					TextWrapping="Wrap"/>
+							  Content="Sale Offer" />
 
-					<TextBlock Text="Units" Classes="textBoxLabel" />
-					<NumericUpDown
-					Text="{Binding QuantityAvaliable}"
-					Value="1"
-					FormatString="0"
-					Minimum="1"/>
+					<!-- Selected item -->
+					<TextBlock Text="Selected Stock Item"
+							   Classes="textBoxLabel"
+							   HorizontalAlignment="Stretch" />
+					<TextBox IsEnabled="False"
+							 Text="{Binding SelectedItem.Name}"
+							 TextWrapping="Wrap" />
 
-					<!--Rent Offer Fields-->
-					<StackPanel Spacing="10" IsVisible="{Binding !IsSaleOffer}">
-						<TextBlock Text="Rental Price per Day" Classes="textBoxLabel" />
-						<NumericUpDown
-						Text="{Binding PricePerDay}"
-						Value="1"
-						FormatString="0.000"
-						Minimum="1"
-						Watermark="Enter price per one day of rental period"/>
+					<!-- Units -->
+					<TextBlock Text="Units"
+							   Classes="textBoxLabel" />
+					<NumericUpDown Text="{Binding QuantityAvaliable}"
+								   Value="1"
+								   FormatString="0"
+								   Minimum="1" />
 
-						<TextBlock Text="Max Rental Days" Classes="textBoxLabel" />
-						<NumericUpDown
-						Text="{Binding MaxRentalDays}"
-						Value="1"
-						FormatString="0"
-						Minimum="1"/>
+					<!-- Rent Offer Fields -->
+					<StackPanel Spacing="10"
+								IsVisible="{Binding !IsSaleOffer}">
+						<TextBlock Text="Rental Price per Day"
+								   Classes="textBoxLabel" />
+						<NumericUpDown Text="{Binding PricePerDay}"
+									   Value="1"
+									   FormatString="0.000"
+									   Minimum="1"
+									   Watermark="Enter price per one day of rental period" />
+
+						<TextBlock Text="Max Rental Days"
+								   Classes="textBoxLabel" />
+						<NumericUpDown Text="{Binding MaxRentalDays}"
+									   Value="1"
+									   FormatString="0"
+									   Minimum="1" />
 					</StackPanel>
 
-
-					<!--Sale Offer Fields-->
-					<StackPanel Spacing="10" IsVisible="{Binding IsSaleOffer}">
-						<TextBlock Text="Unit Price" Classes="textBoxLabel" />
-						<NumericUpDown
-						Text="{Binding PricePerItem}"
-						Value="1"
-						FormatString="0.000"
-						Minimum="1"
-						Watermark="Enter price per one item"/>
+					<!-- Sale Offer Fields -->
+					<StackPanel Spacing="10"
+								IsVisible="{Binding IsSaleOffer}">
+						<TextBlock Text="Unit Price"
+								   Classes="textBoxLabel" />
+						<NumericUpDown Text="{Binding PricePerItem}"
+									   Value="1"
+									   FormatString="0.000"
+									   Minimum="1"
+									   Watermark="Enter price per one item" />
 					</StackPanel>
 
-					<!--Deliveries-->
+					<!-- Deliveries -->
 					<StackPanel Spacing="10">
-						<TextBlock Text="Parcel Lockers:" FontWeight="700"/>
+
+						<!-- Parcel lockers -->
+						<TextBlock Text="Parcel Lockers:"
+								   FontWeight="700" />
 						<ItemsControl ItemsSource="{Binding ParcelLockerGroups}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
 									<StackPanel>
-										<TextBlock Text="{Binding Carrier}"/>
+										<TextBlock Text="{Binding Carrier}" />
 										<ItemsControl ItemsSource="{Binding Options}">
 											<ItemsControl.ItemTemplate>
 												<DataTemplate x:CompileBindings="false">
-													<Grid ColumnDefinitions="auto, *, auto">
+													<Grid ColumnDefinitions="auto,*,auto">
 														<StackPanel Orientation="Horizontal">
 															<RadioButton GroupName="{Binding Carrier}"
-																		 IsChecked="{Binding }"/>
-															<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+																		 IsChecked="{Binding}" />
+															<TextBlock Text="{Binding Name}"
+																	   VerticalAlignment="Center" />
 														</StackPanel>
-														<TextBlock VerticalAlignment="Center" Grid.Column="2" Text="{Binding PriceAndCurrency}"/>
+														<TextBlock Grid.Column="2"
+																   VerticalAlignment="Center"
+																   Text="{Binding PriceAndCurrency}" />
 													</Grid>
 												</DataTemplate>
 											</ItemsControl.ItemTemplate>
@@ -107,47 +123,52 @@
 							</ItemsControl.ItemTemplate>
 						</ItemsControl>
 
-
-
-						<TextBlock Text="Courier:" FontWeight="700"/>
+						<!-- Courier -->
+						<TextBlock Text="Courier:"
+								   FontWeight="700" />
 						<ItemsControl ItemsSource="{Binding CourierDeliveries}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
 									<StackPanel Spacing="10">
-										<Grid ColumnDefinitions="auto, *, auto">
+										<Grid ColumnDefinitions="auto,*,auto">
 											<StackPanel Orientation="Horizontal">
-												<CheckBox
-												x:CompileBindings="false"
-												IsThreeState="false"
-												Command="{Binding DataContext.ToggleCourierDeliveryCommand,
-												RelativeSource={RelativeSource AncestorType=UserControl}}"
-												CommandParameter="{Binding}"/>
-												<TextBlock Text="{Binding Name}" Grid.Column="1"  VerticalAlignment="Center"/>
+												<CheckBox x:CompileBindings="false"
+														  IsThreeState="False"
+														  Command="{Binding DataContext.ToggleCourierDeliveryCommand,
+														  RelativeSource={RelativeSource AncestorType=UserControl}}"
+														  CommandParameter="{Binding}" />
+												<TextBlock Text="{Binding Name}"
+														   VerticalAlignment="Center" />
 											</StackPanel>
-											<TextBlock Grid.Column="2" Text="{Binding PriceAndCurrency}"  VerticalAlignment="Center"/>
+											<TextBlock Grid.Column="2"
+													   Text="{Binding PriceAndCurrency}"
+													   VerticalAlignment="Center" />
 										</Grid>
 									</StackPanel>
 								</DataTemplate>
 							</ItemsControl.ItemTemplate>
 						</ItemsControl>
 
-
-						<TextBlock Text="Pickup Point:" FontWeight="700"/>
+						<!-- Pickup point -->
+						<TextBlock Text="Pickup Point:"
+								   FontWeight="700" />
 						<ItemsControl ItemsSource="{Binding PickupPointDeliveries}">
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
 									<StackPanel>
-										<Grid ColumnDefinitions="auto, *, auto">
+										<Grid ColumnDefinitions="auto,*,auto">
 											<StackPanel Orientation="Horizontal">
-												<CheckBox
-												x:CompileBindings="false"
-												IsThreeState="false"
-												Command="{Binding DataContext.TogglePickupDeliveryCommand,
-												RelativeSource={RelativeSource AncestorType=UserControl}}"
-												CommandParameter="{Binding}"/>
-												<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+												<CheckBox x:CompileBindings="false"
+														  IsThreeState="False"
+														  Command="{Binding DataContext.TogglePickupDeliveryCommand,
+														  RelativeSource={RelativeSource AncestorType=UserControl}}"
+														  CommandParameter="{Binding}" />
+												<TextBlock Text="{Binding Name}"
+														   VerticalAlignment="Center" />
 											</StackPanel>
-											<TextBlock Grid.Column="2" Text="{Binding PriceAndCurrency}" VerticalAlignment="Center"/>
+											<TextBlock Grid.Column="2"
+													   Text="{Binding PriceAndCurrency}"
+													   VerticalAlignment="Center" />
 										</Grid>
 									</StackPanel>
 								</DataTemplate>
@@ -155,21 +176,24 @@
 						</ItemsControl>
 					</StackPanel>
 
-					<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
+					<!-- Error -->
+					<TextBlock
+					Text="{Binding Error}"
+					FontFamily="{DynamicResource RalewayBold}"
+					Foreground="{DynamicResource ErrorBrush}"
+					TextWrapping="Wrap" />
 
-					<!--Action Buttons-->
+					<!-- Action Buttons -->
 					<StackPanel Grid.Row="2"
 								Orientation="Horizontal"
 								HorizontalAlignment="Right"
 								Spacing="8">
-						<Button
-						Content="Cancel"
-						Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-						Path=CloseDialogCommand}"
-						CommandParameter="False" />
-						<Button
-						Content="Save"
-						Command="{Binding SaveCommand}" />
+						<Button Content="Cancel"
+								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
+								Path=CloseDialogCommand}"
+								CommandParameter="False" />
+						<Button Content="Save"
+								Command="{Binding SaveCommand}" />
 					</StackPanel>
 				</StackPanel>
 			</Grid>

@@ -44,6 +44,8 @@
 
 		<Color x:Key="GrayAccent">#26293f</Color>
 
+		<Color x:Key="TextLight">#1E1E1E</Color>
+
 		<!-- Colors -->
 		<Color x:Key="BackgroundLight">#FFFFFF</Color>
 		<Color x:Key="BackgroundDark">#121212</Color>
@@ -54,7 +56,7 @@
 		<Color x:Key="SecondaryLight">#8B5CF6</Color>
 		<Color x:Key="SecondaryDark">#00FFC6</Color>
 
-		<Color x:Key="TextLight">#1E1E1E</Color>
+
 		<Color x:Key="TextDark">#E5E7EB</Color>
 
 		<Color x:Key="TextMuted">#6B7280</Color>
@@ -79,7 +81,6 @@
 		<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
 		<SolidColorBrush x:Key="SecondaryLightBrush" Color="{StaticResource SecondaryLight}" />
 		<SolidColorBrush x:Key="SecondaryDarkBrush" Color="{StaticResource SecondaryDark}" />
-		<SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}" />
 		<SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
 		<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
 		<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
@@ -92,33 +93,12 @@
 		<SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackground}"/>
 		<SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccent}"/>
 		<SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccent}"/>
+		<SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}" />
 		<SolidColorBrush x:Key="GrayAccentBrush" Color="{StaticResource GrayAccent}"/>
 
 		<LinearGradientBrush x:Key="ButtonGradient" StartPoint="0%, 100%" EndPoint="100%, 0%">
 			<GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
 			<GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
-		</LinearGradientBrush>
-
-		<LinearGradientBrush x:Key="TopbarGradient"
-							 StartPoint="0%, 0%"
-							 EndPoint="100%, 0%">
-
-			<GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
-			<GradientStop Offset="0.3" Color="{DynamicResource SecondaryLight}" />
-
-			<GradientStop Offset="1"   Color="{DynamicResource Primary}" />
-
-		</LinearGradientBrush>
-
-		<LinearGradientBrush x:Key="SidebarGradient"
-							 StartPoint="0%, 0%"
-							 EndPoint="100%, 100%">
-
-			<GradientStop Offset="0"   Color="{DynamicResource SecondaryLight}" />
-			<GradientStop Offset="0.6" Color="{DynamicResource SecondaryLight}" />
-
-			<GradientStop Offset="1"   Color="{DynamicResource Primary}" />
-
 		</LinearGradientBrush>
 
 		<!-- Fonts -->

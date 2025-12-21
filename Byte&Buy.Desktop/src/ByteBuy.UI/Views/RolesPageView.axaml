@@ -11,7 +11,8 @@
     <Grid>
         <Grid x:Name="Root" RowDefinitions="50,50,*,50" >
             <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
-                <Label Grid.Column="0" Classes="pageTitle" Content="Roles" Foreground="White" />
+                <TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"  Text="Roles"/>
+
                 <Button
                     Command="{Binding AddCommand}"
                     VerticalAlignment="Top"

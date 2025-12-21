@@ -12,12 +12,12 @@
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Border CornerRadius="2" BorderThickness="2" Background="{DynamicResource BackgroundLightBrush}" BorderBrush="{DynamicResource ButtonGradient}"
+	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
 			MinHeight="200" MinWidth="400">
 		<Grid RowDefinitions="30,*,*">
 			<Border
 			Grid.Row="0"
-			Background="{DynamicResource ButtonGradient}"
+			Background="{DynamicResource PrimaryBrush}"
 			Height="30"
 			VerticalAlignment="Top">
 				<TextBlock Text="{Binding DialogTitle}"
@@ -29,7 +29,6 @@
 			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
 				<TextBlock Text="Category Name" Classes="textBoxLabel" />
 				<TextBox
-				Foreground="{DynamicResource TextLightBrush}"
 				Text="{Binding Name}"
 				TextWrapping="Wrap"
 				Watermark="Name" />
