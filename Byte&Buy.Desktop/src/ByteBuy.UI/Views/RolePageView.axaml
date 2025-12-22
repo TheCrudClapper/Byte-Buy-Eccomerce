@@ -10,6 +10,9 @@
 
 	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<Style Selector="TextBlock">
+			<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
+		</Style>
 	</UserControl.Styles>
 
 	<Grid>
@@ -30,18 +33,16 @@
 
 						<!-- Header -->
 						<Grid ColumnDefinitions="*,Auto,*">
-							<Label Grid.Column="0"
-								   Content="Role System Guide"
-								   Classes="sectionLabel"
-								   HorizontalAlignment="Left" />
-
+							<TextBlock Text="Role System Guide" Grid.Column="0" Classes="sectionLabel"/>
 							<Button Grid.Column="2"
 									Command="{Binding ToggleTutorialCommand}"
 									HorizontalAlignment="Right">
 								<Image Source="{SvgImage /Assets/Images/regular/up-down-solid-full.svg}"
-									   Width="20" Height="20" />
+									   Width="15" Height="15" />
 							</Button>
 						</Grid>
+
+
 
 						<!-- Collapsible content -->
 						<StackPanel Grid.Row="1"
@@ -57,27 +58,27 @@
 								in our system a specific role has access to and what actions can be taken.
 							</TextBlock>
 
-							<TextBlock TextAlignment="Center" Margin="0,8,0,0">
+							<TextBlock TextAlignment="Center" Margin="0,8,0,0" FontFamily="{DynamicResource OpenSansMedium}" >
 								In the ByteBuy system, permissions follow this structure:
 							</TextBlock>
 
-							<TextBlock TextAlignment="Center">
+							<TextBlock TextAlignment="Center" FontFamily="{DynamicResource OpenSansBold}">
 								<Bold>[resource]:[action]:[scope?]</Bold>
 							</TextBlock>
 
 							<StackPanel Spacing="6" Margin="0,8,0,0">
 
 								<TextBlock TextWrapping="Wrap">
-									• <Bold>[resource]</Bold> – defines the global resource, such as roles, users, orders, etc.
+									• <Bold FontFamily="{DynamicResource OpenSansBold}">[resource]</Bold> – defines the global resource, such as roles, users, orders, etc.
 								</TextBlock>
 
 								<TextBlock TextWrapping="Wrap">
-									• <Bold>[action]</Bold> – defines what the permission owner can do with the resource,
+									• <Bold FontFamily="{DynamicResource OpenSansBold}">[action]</Bold> – defines what the permission owner can do with the resource,
 									such as read, write, update, delete.
 								</TextBlock>
 
 								<TextBlock TextWrapping="Wrap">
-									• <Bold>[scope]</Bold> – refines the action, e.g.:
+									• <Bold FontFamily="{DynamicResource OpenSansBold}">[scope]</Bold> – refines the action, e.g.:
 									<LineBreak />
 									<Italic>many</Italic> – refers to collections
 									<LineBreak />

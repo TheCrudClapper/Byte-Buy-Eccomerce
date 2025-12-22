@@ -2,13 +2,6 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<Design.PreviewWith>
 		<Border Padding="20">
-			<StackPanel>
-				<ComboBox>
-					<ComboBoxItem>
-						<TextBlock Text="Test"/>
-					</ComboBoxItem>
-				</ComboBox>
-			</StackPanel>
 
 		</Border>
 	</Design.PreviewWith>
@@ -27,9 +20,9 @@
 		<Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
 	</Style>
 
-
 	<!--Highlightable border-->
 	<Style Selector="Border.highlightable:pointerover">
 		<Setter Property="BoxShadow" Value="0 0 10 1 Purple"/>
 	</Style>
+
 </Styles>

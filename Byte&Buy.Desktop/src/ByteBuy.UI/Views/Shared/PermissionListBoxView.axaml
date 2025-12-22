@@ -7,18 +7,20 @@
 			 x:Class="ByteBuy.UI.Views.Shared.PermissionListBoxView"
 			 x:DataType="vm:PermissionListBoxViewModel">
 
+
+
 	<UserControl.Styles>
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Grid RowDefinitions="20,*">
-		<Grid Grid.Row="0" ColumnDefinitions="10*, 70*, 20*">
-			<TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="Nr."/>
-			<TextBlock Grid.Column="1" Text="Permission" HorizontalAlignment="Left"/>
-			<TextBlock Grid.Column="2" HorizontalAlignment="Left" Text="Allow"/>
-		</Grid>
 
-		<ListBox Grid.Row="1" SelectionMode="Multiple"
+	<Grid RowDefinitions="20,*" ColumnDefinitions="10*, 70*, 20*">
+		<TextBlock Grid.Column="0"  Text="Nr."/>
+		<TextBlock Grid.Column="1" Text="Permission"/>
+		<TextBlock Grid.Column="2"  Text="Allow"/>
+
+		<ListBox Grid.Row="1"
+				 Grid.ColumnSpan="3" SelectionMode="Multiple"
 				 ItemsSource="{Binding Permissions}">
 
 			<!--Overriding Styles-->
@@ -39,10 +41,11 @@
 					<Grid ColumnDefinitions="10*, 70*, 20*">
 						<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding RowNumber}" />
 						<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" />
-						<CheckBox Grid.Column="2" IsChecked="{Binding IsSelected}" />
+						<CheckBox Grid.Column="2" Margin="10,0,0,0" IsChecked="{Binding IsSelected}" />
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
 	</Grid>
+
 </UserControl>

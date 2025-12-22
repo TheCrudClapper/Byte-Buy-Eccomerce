@@ -20,7 +20,7 @@
 			<TextBlock  FontFamily="RalewayBold" Grid.Column="3" HorizontalAlignment="Left" Text="Revoke"/>
 		</Grid>
 
-		<ListBox Grid.Row="1" SelectionMode="Single"
+		<ListBox Grid.Row="1" SelectionMode="Multiple"
 				 ItemsSource="{Binding Permissions}">
 
 			<!--Overriding Styles-->

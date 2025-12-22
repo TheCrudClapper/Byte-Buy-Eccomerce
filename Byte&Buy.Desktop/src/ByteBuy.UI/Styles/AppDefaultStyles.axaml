@@ -158,7 +158,7 @@
 	</Style>
 
 	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
-		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Background" Value="Gray"/>
 	</Style>
@@ -166,8 +166,10 @@
 
 	<!-- ComboBox Styles -->
 	<Style Selector="ComboBox">
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource TextMuted}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}" />
 	</Style>
 
 	<Style Selector="ComboBox:pointerover, ComboBox:focus">
@@ -176,9 +178,10 @@
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
 	</Style>
 
+
 	<Style Selector="ComboBox:disabled Border#Background">
 		<Setter Property="Background" Value="Gray"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
 	</Style>
 
 	<Style Selector="TextBlock.pageTitle">
@@ -200,21 +203,21 @@
 		<Setter Property="CornerRadius" Value="10"/>
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
 	</Style>
 
 	<Style Selector="DataGridRow">
-		<Setter Property="Background" Value="#2d3059"/>
-		<Setter Property="Foreground" Value="White"/>
+		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
 	</Style>
 
 	<Style Selector="DataGridColumnHeader">
 		<Setter Property="FontSize" Value="14"/>
-		<Setter Property="Foreground" Value="White"/>
-		<Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
-		<Setter Property="FontWeight" Value="600"/>
-		<Setter Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
+		<Setter Property="FontFamily" Value="{DynamicResource RalewayBold}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
 	</Style>
 
 	<!-- Default error styles used from documentation -->

@@ -93,22 +93,25 @@
 			</StackPanel>
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
-				</Button>
-				<Label Content="1 of 32"
-					   FontSize="15"
-					   Foreground="{DynamicResource TextLightBrush}"
-					   FontWeight="600"
-					   VerticalAlignment="Center" />
-				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
-				</Button>
-			</StackPanel>
+					<Button>
+						<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+					</Button>
+					<TextBlock
+					Margin="5,0,5,0"
+					Text="1 of 32"
+					FontSize="15"
+					FontWeight="600"
+					FontFamily="{DynamicResource RalewayMedium}"
+					VerticalAlignment="Center"
+					Foreground="{DynamicResource TextPrimaryBrush}"/>
+					<Button>
+						<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+					</Button>
+				</StackPanel>
 
 		</Grid>
 		<views:AlertView
