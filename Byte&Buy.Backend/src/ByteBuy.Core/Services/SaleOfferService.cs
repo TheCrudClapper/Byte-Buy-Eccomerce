@@ -1,12 +1,10 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.RentOffer;
 using ByteBuy.Core.DTO.SaleOffer;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using static ByteBuy.Core.Specification.RentOfferSpecifications;
 using static ByteBuy.Core.Specification.SaleOfferSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -27,7 +25,7 @@ public class SaleOfferService : ISaleOfferService
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
 
         var stockUpdateResult = item.SubstractStock(request.QuantityAvailable);
-        if(stockUpdateResult.IsFailure)
+        if (stockUpdateResult.IsFailure)
             return Result.Failure<CreatedResponse>(stockUpdateResult.Error);
 
         var saleOfferResult = SaleOffer.Create(
@@ -40,7 +38,7 @@ public class SaleOfferService : ISaleOfferService
             return Result.Failure<CreatedResponse>(saleOfferResult.Error);
 
         var saleOffer = saleOfferResult.Value;
-        
+
         saleOffer
             .AssignDeliveriesToOffer(request.OtherDeliveriesIds);
 
@@ -62,7 +60,7 @@ public class SaleOfferService : ISaleOfferService
             return Result.Failure(Error.NotFound);
 
         var stockUpdateResult = item.AddStock(saleOffer.QuantityAvailable);
-        if(stockUpdateResult.IsFailure)
+        if (stockUpdateResult.IsFailure)
             return Result.Failure(stockUpdateResult.Error);
 
         saleOffer.Deactivate();

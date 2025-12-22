@@ -5,7 +5,6 @@ using ByteBuy.Core.DTO.Category;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using ByteBuy.Core.ServiceContracts.Base;
 using ByteBuy.Services.DTO.Category;
 
 namespace ByteBuy.Core.Services;

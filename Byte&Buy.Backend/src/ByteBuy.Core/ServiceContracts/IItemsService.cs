@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Item;
+﻿using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

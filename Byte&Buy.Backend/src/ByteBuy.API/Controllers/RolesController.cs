@@ -9,7 +9,7 @@ namespace ByteBuy.API.Controllers;
 [ApiController]
 [Resource("roles")]
 [Route("api/[controller]")]
-public class RolesController 
+public class RolesController
     : CrudControllerBase<Guid, RoleAddRequest, RoleUpdateRequest, RoleResponse>
 {
     private readonly IRoleService _roleService;

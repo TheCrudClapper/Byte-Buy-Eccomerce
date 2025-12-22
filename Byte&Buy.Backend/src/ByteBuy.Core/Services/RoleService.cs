@@ -6,7 +6,6 @@ using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using ByteBuy.Core.ServiceContracts.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Services;

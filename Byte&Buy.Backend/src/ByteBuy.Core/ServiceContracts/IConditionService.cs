@@ -1,11 +1,10 @@
-﻿using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Condition;
+﻿using ByteBuy.Core.DTO.Condition;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IConditionService 
+public interface IConditionService
     : IBaseCrudService<Guid, ConditionAddRequest, ConditionUpdateRequest, ConditionResponse>,
       ISelectableService<Guid>
 {

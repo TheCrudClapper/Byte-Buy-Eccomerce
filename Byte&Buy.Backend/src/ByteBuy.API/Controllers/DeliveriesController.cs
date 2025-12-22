@@ -10,7 +10,7 @@ namespace ByteBuy.API.Controllers;
 [Resource("deliveries")]
 [Route("api/[controller]")]
 [ApiController]
-public class DeliveriesController 
+public class DeliveriesController
     : CrudControllerBase<Guid, DeliveryAddRequest, DeliveryUpdateRequest, DeliveryResponse>
 {
     private readonly IDeliveryService _deliveryService;

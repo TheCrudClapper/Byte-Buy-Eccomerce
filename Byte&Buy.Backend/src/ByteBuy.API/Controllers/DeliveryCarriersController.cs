@@ -1,7 +1,6 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Core.DTO.DeliveryCarrier;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +11,8 @@ namespace ByteBuy.API.Controllers;
 [Resource("deliverycarriers")]
 [Route("api/[controller]")]
 [ApiController]
-public class DeliveryCarriersController 
-    : CrudControllerBase<Guid, DeliveryCarrierAddRequest, DeliveryCarrierUpdateRequest ,DeliveryCarrierResponse>
+public class DeliveryCarriersController
+    : CrudControllerBase<Guid, DeliveryCarrierAddRequest, DeliveryCarrierUpdateRequest, DeliveryCarrierResponse>
 {
     private readonly IDeliveryCarrierService _carrierService;
     public DeliveryCarriersController(IDeliveryCarrierService carrierService) : base(carrierService)

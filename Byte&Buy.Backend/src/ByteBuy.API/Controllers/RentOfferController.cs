@@ -2,7 +2,6 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.RentOffer;
-using ByteBuy.Core.DTO.SaleOffer;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +13,7 @@ namespace ByteBuy.API.Controllers;
 public class RentOfferController : BaseApiController
 {
     private readonly IRentOfferService _rentOfferService;
-    public RentOfferController(IRentOfferService rentOfferService) 
+    public RentOfferController(IRentOfferService rentOfferService)
         => _rentOfferService = rentOfferService;
 
     [HttpPost]

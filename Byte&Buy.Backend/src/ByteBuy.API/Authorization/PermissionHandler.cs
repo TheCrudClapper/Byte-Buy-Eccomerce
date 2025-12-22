@@ -35,6 +35,6 @@ public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
         }
 
         if (await _permissionService.HasPermissionAsync(userIdGuid, permissionName))
-        context.Succeed(requirement);
+            context.Succeed(requirement);
     }
 }

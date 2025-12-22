@@ -10,7 +10,7 @@ namespace ByteBuy.API.Controllers;
 [Resource("employees")]
 [ApiController]
 [Route("api/[controller]")]
-public class EmployeesController 
+public class EmployeesController
     : CrudControllerBase<Guid, EmployeeAddRequest, EmployeeUpdateRequest, EmployeeResponse>
 {
     private readonly IEmployeeService _employeeService;

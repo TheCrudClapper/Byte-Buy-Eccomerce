@@ -1,11 +1,10 @@
-﻿using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Country;
+﻿using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface ICountryService 
+public interface ICountryService
     : IBaseCrudService<Guid, CountryAddRequest, CountryUpdateRequest, CountryResponse>,
       ISelectableService<Guid>
 {

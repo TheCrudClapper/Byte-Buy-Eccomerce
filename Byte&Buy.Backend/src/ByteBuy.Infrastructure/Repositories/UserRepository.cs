@@ -15,4 +15,3 @@ public class UserRepository : BaseRepository, IUserRepository
             .AnyAsync(e => e.Email == email, ct);
     }
 }
- 

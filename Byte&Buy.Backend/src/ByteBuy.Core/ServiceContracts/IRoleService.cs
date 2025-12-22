@@ -4,7 +4,7 @@ using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IRoleService 
+public interface IRoleService
     : IBaseCrudService<Guid, RoleAddRequest, RoleUpdateRequest, RoleResponse>,
       ISelectableService<Guid>
 {

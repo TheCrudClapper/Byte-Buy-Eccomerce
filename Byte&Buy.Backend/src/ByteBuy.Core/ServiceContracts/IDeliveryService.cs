@@ -5,8 +5,8 @@ using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;
 
-public interface IDeliveryService 
-    : IBaseCrudService<Guid,DeliveryAddRequest, DeliveryUpdateRequest, DeliveryResponse>,
+public interface IDeliveryService
+    : IBaseCrudService<Guid, DeliveryAddRequest, DeliveryUpdateRequest, DeliveryResponse>,
       ISelectableService<Guid>
 {
 

@@ -163,7 +163,7 @@ public class PortalUserService : IPortalUserService
     {
         var portalUser = await _portalUserRepository.GetPortalUserWithAllDataByIdAsync(id, ct);
 
-        return portalUser is null 
+        return portalUser is null
             ? Result.Failure<PortalUserResponse>(Error.NotFound)
             : portalUser.ToPortalUserResponse();
     }

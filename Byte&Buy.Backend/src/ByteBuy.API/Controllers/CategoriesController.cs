@@ -1,6 +1,5 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Category;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ namespace ByteBuy.API.Controllers;
 [Resource("categories")]
 [Route("api/[controller]")]
 [ApiController]
-public class CategoriesController 
+public class CategoriesController
     : CrudControllerBase<Guid, CategoryAddRequest, CategoryUpdateRequest, CategoryResponse>
 {
     private readonly ICategoryService _categoryService;

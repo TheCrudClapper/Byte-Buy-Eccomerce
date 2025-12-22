@@ -15,7 +15,7 @@ public static class RentOfferSpecifications
         }
     }
 
-    public sealed class RentOfferToRentOfferResponseSpec: Specification<RentOffer, RentOfferResponse>
+    public sealed class RentOfferToRentOfferResponseSpec : Specification<RentOffer, RentOfferResponse>
     {
         public RentOfferToRentOfferResponseSpec(Guid id)
         {

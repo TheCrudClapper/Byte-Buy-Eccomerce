@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.RentOffer;
-using ByteBuy.Core.DTO.SaleOffer;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

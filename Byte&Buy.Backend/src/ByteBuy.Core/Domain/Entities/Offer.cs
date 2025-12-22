@@ -17,7 +17,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public DateTime? DateDeleted { get; set; }
 
     protected Offer() { }
-    
+
     protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable)
     {
         ItemId = itemId;
@@ -49,7 +49,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
 
     public void AssignDeliveriesToOffer(IEnumerable<Guid> deliveryIds)
     {
-        foreach(var deliveryId in deliveryIds)
+        foreach (var deliveryId in deliveryIds)
         {
             OfferDeliveries.Add(OfferDelivery.Create(Id, deliveryId));
         }

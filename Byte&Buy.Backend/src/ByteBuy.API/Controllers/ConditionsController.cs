@@ -10,7 +10,7 @@ namespace ByteBuy.API.Controllers;
 [Resource("conditions")]
 [Route("api/[controller]")]
 [ApiController]
-public class ConditionsController 
+public class ConditionsController
     : CrudControllerBase<Guid, ConditionAddRequest, ConditionUpdateRequest, ConditionResponse>
 {
     private readonly IConditionService _conditionService;

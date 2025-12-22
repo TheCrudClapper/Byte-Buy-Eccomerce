@@ -16,5 +16,5 @@ public interface IBaseCrudService<TId, TAddRequest, TUpdateRequest, TResponse>
     Task<Result<CreatedResponse>> AddAsync(TAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(TId id, TUpdateRequest request);
     Task<Result> DeleteAsync(TId id);
-    Task<Result<TResponse>> GetByIdAsync(TId id,  CancellationToken ct = default);
+    Task<Result<TResponse>> GetByIdAsync(TId id, CancellationToken ct = default);
 }

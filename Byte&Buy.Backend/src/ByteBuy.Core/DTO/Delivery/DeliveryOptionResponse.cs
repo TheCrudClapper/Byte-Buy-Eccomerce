@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
-
-namespace ByteBuy.Core.DTO.Delivery;
+﻿namespace ByteBuy.Core.DTO.Delivery;
 
 public record DeliveryOptionResponse
     (Guid Id,
