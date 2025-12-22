@@ -25,6 +25,7 @@ public static class DependencyInjection
         services.AddSingleton<IImageService, ImageService>();
         services.AddSingleton<IDeliveryCarrierService, DeliveryCarrierService>();
         services.AddSingleton<ISaleOfferService, SaleOfferService>();
+        services.AddSingleton<IRentOfferService, RentOfferService>();
         return services;
     }
 }

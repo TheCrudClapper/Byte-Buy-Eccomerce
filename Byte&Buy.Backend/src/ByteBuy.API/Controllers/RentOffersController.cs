@@ -10,10 +10,10 @@ namespace ByteBuy.API.Controllers;
 [Resource("rentoffers")]
 [Route("api/[controller]")]
 [ApiController]
-public class RentOfferController : BaseApiController
+public class RentOffersController : BaseApiController
 {
     private readonly IRentOfferService _rentOfferService;
-    public RentOfferController(IRentOfferService rentOfferService)
+    public RentOffersController(IRentOfferService rentOfferService)
         => _rentOfferService = rentOfferService;
 
     [HttpPost]

@@ -9,5 +9,5 @@ public interface IRentOfferService : IBaseService
     Task<Result<CreatedResponse>> Add(RentOfferAddRequest request);
     Task<Result<UpdatedResponse>> Update(Guid id, RentOfferUpdateRequest request);
     Task<Result<RentOfferResponse>> GetById(Guid id);
-    Task<Result<IEnumerable<RentOffer>>> GetList();
+    Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetList();
 }

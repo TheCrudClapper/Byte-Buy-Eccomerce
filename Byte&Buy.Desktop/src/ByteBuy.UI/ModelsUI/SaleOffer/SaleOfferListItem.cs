@@ -9,6 +9,6 @@ public class SaleOfferListItem : IListItem
     public Guid Id { get; init; }
     public string ItemName { get; set; } = string.Empty;
     public int QuantityAvailable { get; set; }
-    public string CreatedByName { get; set; } = string.Empty;
+    public string CreatorEmail { get; set; } = string.Empty;
     public string PriceAndCurrencyPerItem { get; set; } = string.Empty;
 }

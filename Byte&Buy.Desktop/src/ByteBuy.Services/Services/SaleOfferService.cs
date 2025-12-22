@@ -10,8 +10,16 @@ public class SaleOfferService(ISaleOfferHttpClient httpClient) : ISaleOfferServi
 {
     public async Task<Result<CreatedResponse>> Add(SaleOfferAddRequest request)
         => await httpClient.PostSaleOffer(request);
-    public Task<Result> DeleteById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+
+    public async Task<Result> DeleteById(Guid id)
+        => await httpClient.DeleteByIdAsync(id);
+
+    public async Task<Result<SaleOfferResponse>> GetById(Guid id)
+        => await httpClient.GetByIdAsync(id);
+     
+    public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetList()
+        => await httpClient.GetListAsync();
+
+    public async Task<Result<UpdatedResponse>> Update(Guid id, SaleOfferUpdateRequest request)
+        => await httpClient.PutRentOfferAsync(id, request);
 }

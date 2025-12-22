@@ -14,7 +14,10 @@ public class RentOfferHttpClient : HttpClientBase, IRentOfferHttpClient
          => await DeleteAsync($"{resource}/{id}");
 
     public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id)
-        => await GetAsync<RentOfferResponse>($"{resource}/{id}"); 
+        => await GetAsync<RentOfferResponse>($"{resource}/{id}");
+
+    public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync()
+        => await GetAsync<IReadOnlyCollection<RentOfferListResponse>>($"{resource}/list");
 
     public async Task<Result<CreatedResponse>> PostRentOfferAsync(RentOfferAddRequest request)
         => await PostAsync<CreatedResponse>(resource, request);

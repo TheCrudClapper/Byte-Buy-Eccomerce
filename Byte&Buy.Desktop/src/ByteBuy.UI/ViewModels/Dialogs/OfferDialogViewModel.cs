@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
 public partial class OfferDialogViewModel(IDeliveryService deliveryService,
-    ISaleOfferService saleOfferService)
+    ISaleOfferService saleOfferService,
+    IRentOfferService rentOfferService)
     : DialogSingleViewModel("Publish Offer")
 {
     #region MVVM Properties
@@ -96,14 +97,13 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         else
         {
             var request = OfferMappings.MapToRentAddRequest(this);
-            var response = await saleOfferService.Add(request);
+            var response = await rentOfferService.Add(request);
             if (!response.Success)
             {
                 Error = response.Error!.Description;
                 return false;
             }
         }
-
         return true;
     }
 

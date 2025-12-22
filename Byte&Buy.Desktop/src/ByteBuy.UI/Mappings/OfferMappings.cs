@@ -2,6 +2,8 @@
 using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.UI.ModelsUI.Delivery;
+using ByteBuy.UI.ModelsUI.RentOffer;
+using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.ViewModels.Dialogs;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -62,4 +64,31 @@ public static class OfferMappings
 
     private static List<Guid> MapOtherDeliveries(IEnumerable<DeliveryOptionResponse> list)
         => list.Select(d => d.Id).ToList();
+
+    public static RentOfferListItem ToListItem(this RentOfferListResponse response, int index)
+    {
+        return new RentOfferListItem
+        {
+            Id = response.Id,
+            ItemName = response.ItemName,
+            MaxRentalDays = response.MaxRentalDays,
+            QuantityAvailable = response.QuantityAvailable,
+            RowNumber = index + 1,
+            PriceAndCurrencyPerDay = $"{response.Amount} {response.Currency}",
+            CreatorEmail = response.CreatorEmail,
+        };
+    }
+
+    public static SaleOfferListItem ToListItem(this SaleOfferListResponse response, int index)
+    {
+        return new SaleOfferListItem
+        {
+            Id = response.Id,
+            ItemName = response.ItemName,
+            QuantityAvailable = response.QuantityAvailable,
+            RowNumber = index + 1,
+            PriceAndCurrencyPerItem = $"{response.PricePerItem} {response.Currency}",
+            CreatorEmail = response.CreatorEmail,
+        };
+    }
 }

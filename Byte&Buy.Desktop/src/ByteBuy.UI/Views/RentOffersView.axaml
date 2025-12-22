@@ -61,7 +61,7 @@
 						<DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*" />
 						<DataGridTextColumn Header="Quantity" Binding="{Binding QuantityAvailable}" Width="*" />
 						<DataGridTextColumn Header="Unit Price per Day" Binding="{Binding PriceAndCurrencyPerDay}" Width="*" />
-						<DataGridTextColumn Header="Created By" Binding="{Binding CreatedByName}" Width="*" />
+						<DataGridTextColumn Header="Created By" Binding="{Binding CreatorEmail}" Width="*" />
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
