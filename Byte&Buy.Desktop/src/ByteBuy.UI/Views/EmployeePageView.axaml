@@ -42,7 +42,7 @@
 								<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
 									   Height="15"
 									   Width="15" />
-								<TextBlock Text="Add Logo"
+								<TextBlock Text="Add Profile Picture"
                                            Classes="textBoxLabel" />
 							</StackPanel>
 

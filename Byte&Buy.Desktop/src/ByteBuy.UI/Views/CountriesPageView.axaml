@@ -13,7 +13,6 @@
 	</UserControl.Styles>
 
 	<Grid>
-
 		<Grid RowDefinitions="50,*,50">
 			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
 				<Label Content="Filters" />
@@ -34,12 +33,12 @@
 			<StackPanel Grid.Row="1">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
-						   FontWeight="600"
-						   Foreground="{DynamicResource TextLightBrush}"
+						   FontFamily="{DynamicResource RalewayMedium}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
 					<Label Content="{Binding ItemsCount}"
-						   FontWeight="700"
-						   Foreground="{DynamicResource TextLightBrush}"
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
 				</StackPanel>
 
@@ -68,8 +67,6 @@
 										Command="{Binding DataContext.EditCommand,
 										RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
-										FontSize="10"
-										Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
 											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
 												   Width="16" Height="16" />
@@ -78,11 +75,9 @@
 										<Button
 										Command="{Binding DataContext.DeleteCommand,
 										RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										FontSize="10"
-										Foreground="{DynamicResource BackgroundLightBrush}">
-											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-												   Width="16" Height="16" />
+										CommandParameter="{Binding}">
+										<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+											   Width="16" Height="16" />
 										</Button>
 									</StackPanel>
 								</DataTemplate>
@@ -94,19 +89,22 @@
 
 			</StackPanel>
 
-			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>
-				<Label Content="1 of 32"
-					   FontSize="15"
-					   Foreground="{DynamicResource TextLightBrush}"
-					   FontWeight="600"
-					   VerticalAlignment="Center" />
+				<TextBlock
+				Margin="5,0,5,0"
+				Text="1 of 32"
+				FontSize="15"
+				FontWeight="600"
+				FontFamily="{DynamicResource RalewayMedium}"
+				VerticalAlignment="Center"
+				Foreground="{DynamicResource TextPrimaryBrush}"/>
 				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>

@@ -1,15 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 Background="Transparent"
-              xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:DeliveryCarriersViewModel"
-             x:Class="ByteBuy.UI.Views.DeliveryCarriersView">
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:DataType="vm:DeliveryCarriersViewModel"
+			 x:Class="ByteBuy.UI.Views.DeliveryCarriersView">
 
-  <UserControl.Styles>
+	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
@@ -33,13 +33,14 @@
 			<StackPanel Grid.Row="1">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
-						   FontWeight="600"
-						   Foreground="{DynamicResource TextLightBrush}"
+						   FontFamily="{DynamicResource RalewayMedium}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
 					<Label Content="{Binding ItemsCount}"
-						   FontWeight="700"
-						   Foreground="{DynamicResource TextLightBrush}"
-						   HorizontalAlignment="Right" />
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Center"/>
 				</StackPanel>
 
 				<!-- Data Grid Containing All Items -->

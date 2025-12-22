@@ -13,114 +13,113 @@
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
-	<Grid>
+		<Grid>
+			<Grid RowDefinitions="50,*,50">
+				<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
+					<Label Content="Filters" />
+					<Button
+					Grid.Column="2"
+					Command="{Binding AddCommand}"
+					VerticalAlignment="Top"
+					HorizontalAlignment="Right">
+						<StackPanel Orientation="Horizontal">
+							<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+								   Width="15" Height="15" />
+						</StackPanel>
 
-		<Grid RowDefinitions="50,*,50">
-			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
-				<Label Content="Filters" />
-				<Button
-				Grid.Column="2"
-				Command="{Binding AddCommand}"
-				VerticalAlignment="Top"
-				HorizontalAlignment="Right">
-					<StackPanel Orientation="Horizontal">
-						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-							   Width="15" Height="15" />
+					</Button>
+				</Grid>
+
+				<!-- Fetched items count -->
+				<StackPanel Grid.Row="1">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+						<Label Content="Records fetched:"
+							   FontFamily="{DynamicResource RalewayMedium}"
+							   Foreground="{DynamicResource TextPrimaryBrush}"
+							   HorizontalAlignment="Right" />
+						<Label Content="{Binding ItemsCount}"
+							   FontFamily="{DynamicResource RalewayBold}"
+							   Foreground="{DynamicResource TextPrimaryBrush}"
+							   HorizontalAlignment="Right" />
 					</StackPanel>
+					<!-- Data Grid Containing All Items -->
+					<DataGrid
+					x:Name="ItemsGrid"
+					ItemsSource="{Binding Items}"
+					AutoGenerateColumns="False"
+					SelectedItem="{Binding SelectedItem}"
+					GridLinesVisibility="All"
+					IsReadOnly="True"
+					HeadersVisibility="All"
+					CanUserSortColumns="True"
+					CanUserResizeColumns="True"
+					RowHeight="36">
 
-				</Button>
-			</Grid>
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+							<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+							<DataGridTextColumn Header="Currency" Binding="{Binding Currency}" Width="*" />
+							<DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*" />
+							<DataGridTemplateColumn Header="Actions">
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
+											<Button
+											Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+											CommandParameter="{Binding}"
+											Margin="0,0,5,0">
 
-			<!-- Fetched items count -->
-			<StackPanel Grid.Row="1">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-					<Label Content="Records fetched:"
-						   FontWeight="600"
-						   Foreground="{DynamicResource TextLightBrush}"
-						   HorizontalAlignment="Right" />
-					<Label Content="{Binding ItemsCount}"
-						   FontWeight="700"
-						   Foreground="{DynamicResource TextLightBrush}"
-						   HorizontalAlignment="Right" />
+												<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+													   Width="16" Height="16"/>
+											</Button>
+
+											<Button
+											Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+											CommandParameter="{Binding}">
+
+												<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+													   Width="16" Height="16"/>
+											</Button>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+
+					</DataGrid>
+
 				</StackPanel>
-				<!-- Data Grid Containing All Items -->
-				<DataGrid
-				x:Name="ItemsGrid"
-				ItemsSource="{Binding Items}"
-				AutoGenerateColumns="False"
-				SelectedItem="{Binding SelectedItem}"
-				GridLinesVisibility="All"
-				IsReadOnly="True"
-				HeadersVisibility="All"
-				CanUserSortColumns="True"
-				CanUserResizeColumns="True"
-				RowHeight="36">
 
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-						<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-						<DataGridTextColumn Header="Currency" Binding="{Binding Currency}" Width="*" />
-						<DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*" />
-						<DataGridTemplateColumn Header="Actions">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate>
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
-										<Button
-										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
-										Margin="0,0,5,0">
+				<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+					<Button>
+						<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+					</Button>
+					<TextBlock
+					Margin="5,0,5,0"
+					Text="1 of 32"
+					FontSize="15"
+					FontWeight="600"
+					FontFamily="{DynamicResource RalewayMedium}"
+					VerticalAlignment="Center"
+					Foreground="{DynamicResource TextPrimaryBrush}"/>
+					<Button>
+						<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+					</Button>
+				</StackPanel>
 
-											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
-												   Width="16" Height="16"/>
-										</Button>
-
-										<Button
-										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										FontSize="10"
-										Foreground="{DynamicResource BackgroundLightBrush}">
-
-											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-												   Width="16" Height="16"/>
-										</Button>
-									</StackPanel>
-								</DataTemplate>
-							</DataGridTemplateColumn.CellTemplate>
-						</DataGridTemplateColumn>
-					</DataGrid.Columns>
-
-				</DataGrid>
-
-			</StackPanel>
-
-			<StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
-				</Button>
-				<Label Content="1 of 32"
-					   FontSize="15"
-					   Foreground="{DynamicResource TextLightBrush}"
-					   FontWeight="600"
-					   VerticalAlignment="Center" />
-				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
-				</Button>
-			</StackPanel>
-
+			</Grid>
+			<views:AlertView
+			DataContext="{Binding Alert}"
+			IsVisible="{Binding IsVisible}"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			Height="70"
+			Width="400"
+			Margin="0,20,20,40"
+			ZIndex="10" />
 		</Grid>
-		<views:AlertView
-		DataContext="{Binding Alert}"
-		IsVisible="{Binding IsVisible}"
-		HorizontalAlignment="Right"
-		VerticalAlignment="Bottom"
-		Height="70"
-		Width="400"
-		Margin="0,20,20,40"
-		ZIndex="10" />
-	</Grid>
 </UserControl>

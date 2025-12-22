@@ -1,85 +1,86 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-        <Border Padding="20">
-            <ListBox SelectionMode="Multiple">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="10*, 80*, 10*">
-                            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="1" />
-                            <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="users:read" />
-                            <CheckBox Grid.Column="2" IsChecked="True"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox></ListBox>
-            </ListBox>
-        </Border>
-    </Design.PreviewWith>
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<ListBox SelectionMode="Multiple">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="10*, 80*, 10*">
+							<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="1" />
+							<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="users:read" />
+							<CheckBox Grid.Column="2" IsChecked="True"/>
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<ListBox></ListBox>
+			</ListBox>
+		</Border>
+	</Design.PreviewWith>
 
-    <!-- Add Styles Here -->
-    <Style Selector="TextBlock.sectionLabel">
-        <Setter Property="FontFamily" Value="{DynamicResource RalewayBold}"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontWeight" Value="700"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
-    </Style>
-    
+	<!-- Add Styles Here -->
+	<Style Selector="TextBlock.sectionLabel">
+		<Setter Property="FontFamily" Value="{DynamicResource RalewayBold}"/>
+		<Setter Property="FontSize" Value="20"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+	</Style>
+
 	<!-- Text Block Label -->
-    <Style Selector="TextBlock.textBoxLabel">
+	<Style Selector="TextBlock.textBoxLabel">
 		<Setter Property="FontSize" Value="14"/>
 		<Setter Property="FontWeight" Value="600"/>
 		<Setter Property="FontFamily" Value="{DynamicResource RalewayMedium}"/>
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 	</Style>
 
-    <Style Selector="TextBox.textBox, ComboBox">
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="600"/>
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Width" Value="220"/>
-    </Style>
-    
-   <Style Selector="ListBox">
-       <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-       <Setter Property="BorderThickness" Value="0"/>
-       <Setter Property="Padding" Value="5"/>
-       <Setter Property="FontWeight" Value="600"/>
-   </Style>
-    
-    <Style Selector="ListBoxItem">
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-        <Setter Property="Padding" Value="2"/>
-        <Setter Property="Margin" Value="1"/>
-    </Style>
-    
-    <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
-    </Style>
+	<Style Selector="TextBox.textBox, ComboBox">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+		<Setter Property="Width" Value="220"/>
+	</Style>
 
-    <Style Selector="ListBoxItem:pressed /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource SecondaryLightBrush}"/>
-    </Style>
-    
-    <Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
-    </Style>
-    
-    <Style Selector="Border.sectionBorder">
-        <Setter Property="Padding" Value="10"/>
-        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
-        <Setter Property="CornerRadius" Value="10"/>
-    </Style>
+	<Style Selector="ListBox">
+		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+		<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Padding" Value="5"/>
+		<Setter Property="FontWeight" Value="600"/>
+	</Style>
 
-    <Style Selector="Image.sectionMarker">
+	<Style Selector="ListBoxItem">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+		<Setter Property="Padding" Value="2"/>
+		<Setter Property="Margin" Value="1"/>
+	</Style>
+
+	<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}"/>
+	</Style>
+
+	<Style Selector="ListBoxItem:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
+	</Style>
+
+	<Style Selector="ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
+	</Style>
+
+	<Style Selector="Border.sectionBorder">
+		<Setter Property="Padding" Value="10"/>
+		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+		<Setter Property="CornerRadius" Value="10"/>
+	</Style>
+
+	<Style Selector="Image.sectionMarker">
 		<Setter Property="Height" Value="15"/>
 		<Setter Property="Width" Value="15"/>
-        <Setter Property="Margin" Value="0,0,5,0"/>
-    </Style>
+		<Setter Property="Margin" Value="0,0,5,0"/>
+	</Style>
 </Styles>

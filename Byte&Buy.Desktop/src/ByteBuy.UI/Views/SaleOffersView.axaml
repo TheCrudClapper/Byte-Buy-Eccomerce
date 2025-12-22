@@ -1,15 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="using:ByteBuy.UI.Views.Shared"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="using:ByteBuy.UI.Views.Shared"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 Background="Transparent"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.SaleOffersView"
-             x:DataType="vm:SaleOffersViewModel">
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.SaleOffersView"
+			 x:DataType="vm:SaleOffersViewModel">
 
- 	<UserControl.Styles>
+	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
@@ -34,12 +34,12 @@
 			<StackPanel Grid.Row="1">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
-						   FontWeight="600"
-						   Foreground="{DynamicResource TextLightBrush}"
+						   FontFamily="{DynamicResource RalewayMedium}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
 					<Label Content="{Binding ItemsCount}"
-						   FontWeight="700"
-						   Foreground="{DynamicResource TextLightBrush}"
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
 				</StackPanel>
 
@@ -69,7 +69,6 @@
 										<Button
 										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
-										FontSize="10" Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
 
 											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
@@ -79,8 +78,7 @@
 										<Button
 										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
-										FontSize="10"
-										Foreground="{DynamicResource BackgroundLightBrush}">
+										FontSize="10">
 
 											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
 												   Width="16" Height="16"/>
@@ -97,17 +95,20 @@
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-left-solid-full.svg}"
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>
-				<Label Content="1 of 32"
-					   FontSize="15"
-					   Foreground="{DynamicResource TextLightBrush}"
-					   FontWeight="600"
-					   VerticalAlignment="Center" />
+				<TextBlock
+				Margin="5,0,5,0"
+				Text="1 of 32"
+				FontSize="15"
+				FontWeight="600"
+				FontFamily="{DynamicResource RalewayMedium}"
+				VerticalAlignment="Center"
+				Foreground="{DynamicResource TextPrimaryBrush}"/>
 				<Button>
-					<Image Source="{SvgImage /Assets/Images/regular/chevron-right-solid-full.svg}"
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>

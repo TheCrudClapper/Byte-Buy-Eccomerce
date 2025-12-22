@@ -1,36 +1,51 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Shared"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.Shared.PermissionGrantRevokeView"
-             x:DataType="vm:PermissionListBoxViewModel">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Shared"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.Shared.PermissionGrantRevokeView"
+			 x:DataType="vm:PermissionListBoxViewModel">
 
-    <UserControl.Styles>
-        <StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-    </UserControl.Styles>
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
 
-    <Grid RowDefinitions="20,*">
-        <Grid Grid.Row="0" ColumnDefinitions="10*, 50*, 20*, 20*">
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="Nr."/>
-            <TextBlock Grid.Column="1" Text="Permission" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Column="2" HorizontalAlignment="Left" Text="Grant"/>
-            <TextBlock Grid.Column="3" HorizontalAlignment="Left" Text="Revoke"/>
-        </Grid>
-        
-        <ListBox Grid.Row="1" SelectionMode="Multiple"
-                 ItemsSource="{Binding Permissions}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="10*, 50*, 20*, 20*">
-                        <TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding RowNumber}" />
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Name}" />
-                        <CheckBox Grid.Column="2"  HorizontalAlignment="Center" IsChecked="{Binding IsGranted}" />
-                        <CheckBox Grid.Column="3"  HorizontalAlignment="Center" IsChecked="{Binding IsRevoked}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+
+	<Grid RowDefinitions="20,*">
+		<Grid Grid.Row="0" ColumnDefinitions="10*, 50*, 20*, 20*">
+			<TextBlock FontFamily="RalewayBold" Grid.Column="0" HorizontalAlignment="Left" Text="Nr."/>
+			<TextBlock  FontFamily="RalewayBold"  Grid.Column="1" Text="Permission" HorizontalAlignment="Left"/>
+			<TextBlock  FontFamily="RalewayBold"  Grid.Column="2" HorizontalAlignment="Left" Text="Grant"/>
+			<TextBlock  FontFamily="RalewayBold" Grid.Column="3" HorizontalAlignment="Left" Text="Revoke"/>
+		</Grid>
+
+		<ListBox Grid.Row="1" SelectionMode="Single"
+				 ItemsSource="{Binding Permissions}">
+
+			<!--Overriding Styles-->
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+					<Setter Property="Background" Value="Transparent" />
+				</Style>
+				<Style Selector="ListBoxItem:selected:focus /template/ ContentPresenter">
+					<Setter Property="Background" Value="Transparent" />
+				</Style>
+				<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+					<Setter Property="Background" Value="Transparent" />
+				</Style>
+			</ListBox.Styles>
+
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid ColumnDefinitions="10*, 50*, 20*, 20*">
+						<TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding RowNumber}" />
+						<TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Name}" />
+						<CheckBox Grid.Column="2"  HorizontalAlignment="Center" IsChecked="{Binding IsGranted}" />
+						<CheckBox Grid.Column="3"  HorizontalAlignment="Center" IsChecked="{Binding IsRevoked}" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</Grid>
 </UserControl>

@@ -259,8 +259,4 @@
 			</DataTemplate>
 		</Setter>
 	</Style>
-
-	<Style Selector="TextBox:has-errors /template/ Border#PART_BorderElement">
-		<Setter Property="BorderThickness" Value="2" />
-	</Style>
 </Styles>
