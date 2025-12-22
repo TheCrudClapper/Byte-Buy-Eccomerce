@@ -5,6 +5,7 @@ using ByteBuy.Core.DTO.RentOffer;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.RentOfferSpecifications;
 namespace ByteBuy.Core.Services;
 
 public class RentOfferService : IRentOfferService
@@ -39,7 +40,7 @@ public class RentOfferService : IRentOfferService
         var rentOffer = rentOfferResult.Value;
 
         rentOffer
-            .AssignDeliveriesToOffer(request.SelectedDeliveriesIds);
+            .AssignDeliveriesToOffer(request.OtherDeliveriesIds);
 
         await _rentOfferRepository.AddAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
@@ -70,9 +71,21 @@ public class RentOfferService : IRentOfferService
         return Result.Success();
     }
 
-    public Task<Result<RentOfferResponse>> GetById(Guid id, CancellationToken ct = default)
+    public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var spec = new RentOfferToRentOfferResponseSpec(id);
+        var rentOfferDto = await _rentOfferRepository.GetBySpecAsync(spec, ct);
+
+        return rentOfferDto is null
+            ? Result.Failure<RentOfferResponse>(Error.NotFound)
+            : rentOfferDto;
+    }
+
+    public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct = default)
+    {
+        var spec = new RentOfferToRentOfferListResponseSpec();
+        var rentOfferDtoList = await _rentOfferRepository.GetListBySpecAsync(spec, ct);
+        return rentOfferDtoList;
     }
 
     public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)

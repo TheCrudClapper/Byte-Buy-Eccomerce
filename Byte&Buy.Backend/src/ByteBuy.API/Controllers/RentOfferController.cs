@@ -18,18 +18,22 @@ public class RentOfferController : BaseApiController
         => _rentOfferService = rentOfferService;
 
     [HttpPost]
-    public virtual async Task<ActionResult<CreatedResponse>> PostAsync(RentOfferAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostAsync(RentOfferAddRequest request)
         => HandleResult(await _rentOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id}")]
-    public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, RentOfferUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, RentOfferUpdateRequest request)
         => HandleResult(await _rentOfferService.UpdateAsync(id, request));
 
     [HttpDelete("{id}")]
-    public virtual async Task<IActionResult> DeleteAsync(Guid id)
+    public async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _rentOfferService.DeleteAsync(id));
 
     [HttpGet("{id}")]
-    public virtual async Task<ActionResult<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => HandleResult(await _rentOfferService.GetById(id, cancellationToken));
+    public async Task<ActionResult<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct)
+        => HandleResult(await _rentOfferService.GetByIdAsync(id, ct));
+
+    [HttpGet("list")]
+    public async Task<ActionResult<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct)
+        => HandleResult(await _rentOfferService.GetListAsync(ct));
 }

@@ -10,5 +10,7 @@ public interface IRentOfferService
     Task<Result<CreatedResponse>> AddAsync(Guid userId, RentOfferAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request);
     Task<Result> DeleteAsync(Guid id);
-    Task<Result<RentOfferResponse>> GetById(Guid id, CancellationToken ct = default);
+    Task<Result<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct = default);
 }
+

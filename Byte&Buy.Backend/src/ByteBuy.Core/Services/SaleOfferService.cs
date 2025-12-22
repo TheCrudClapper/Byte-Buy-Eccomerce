@@ -1,10 +1,13 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
+using ByteBuy.Core.DTO.RentOffer;
 using ByteBuy.Core.DTO.SaleOffer;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.RentOfferSpecifications;
+using static ByteBuy.Core.Specification.SaleOfferSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -37,9 +40,9 @@ public class SaleOfferService : ISaleOfferService
             return Result.Failure<CreatedResponse>(saleOfferResult.Error);
 
         var saleOffer = saleOfferResult.Value;
-
+        
         saleOffer
-            .AssignDeliveriesToOffer(request.SelectedDeliveriesIds);
+            .AssignDeliveriesToOffer(request.OtherDeliveriesIds);
 
         await _saleOfferRepository.AddAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
@@ -70,9 +73,22 @@ public class SaleOfferService : ISaleOfferService
         return Result.Success();
     }
 
-    public Task<Result<SaleOfferResponse>> GetById(Guid id, CancellationToken ct = default)
+    public async Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var spec = new SaleOfferToSaleOfferResponseSpec(id);
+        var saleOfferDto = await _saleOfferRepository.GetBySpecAsync(spec, ct);
+
+        return saleOfferDto is null
+            ? Result.Failure<SaleOfferResponse>(Error.NotFound)
+            : saleOfferDto;
+    }
+
+    public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetListAsync(CancellationToken ct = default)
+    {
+        var spec = new SaleOfferToSaleOfferListResponseSpec();
+        var saleOfferDtoList = await _saleOfferRepository.GetListBySpecAsync(spec, ct);
+
+        return saleOfferDtoList;
     }
 
     public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)

@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Delivery;
-using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels.Base;
@@ -12,7 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
-public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISaleOfferService saleOfferService)
+public partial class OfferDialogViewModel(IDeliveryService deliveryService,
+    ISaleOfferService saleOfferService)
     : DialogSingleViewModel("Publish Offer")
 {
     #region MVVM Properties
@@ -83,9 +84,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
     {
         if (IsSaleOffer)
         {
-            var selectedDeliveries = SelectedOtherDeliveries.Select(d => d.Id).ToList();
-            var request = new SaleOfferAddRequest(SelectedItem?.Id ?? Guid.Empty, QuantityAvaliable, PricePerDay, null, selectedDeliveries);
 
+            var request = OfferMappings.MapToSaleAddRequest(this);
             var response = await saleOfferService.Add(request);
             if (!response.Success)
             {
@@ -95,8 +95,13 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
         }
         else
         {
-            var selectedDeliveries = SelectedOtherDeliveries.Select(d => d.Id).ToList();
-
+            var request = OfferMappings.MapToRentAddRequest(this);
+            var response = await saleOfferService.Add(request);
+            if (!response.Success)
+            {
+                Error = response.Error!.Description;
+                return false;
+            }
         }
 
         return true;
