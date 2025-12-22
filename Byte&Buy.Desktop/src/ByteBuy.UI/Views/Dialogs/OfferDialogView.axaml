@@ -134,7 +134,7 @@
 											<StackPanel Orientation="Horizontal">
 												<CheckBox x:CompileBindings="false"
 														  IsThreeState="False"
-														  Command="{Binding DataContext.ToggleCourierDeliveryCommand,
+														  Command="{Binding DataContext.ToggleSelectedDeliveryCommand,
 														  RelativeSource={RelativeSource AncestorType=UserControl}}"
 														  CommandParameter="{Binding}" />
 												<TextBlock Text="{Binding Name}"
@@ -160,7 +160,7 @@
 											<StackPanel Orientation="Horizontal">
 												<CheckBox x:CompileBindings="false"
 														  IsThreeState="False"
-														  Command="{Binding DataContext.TogglePickupDeliveryCommand,
+														  Command="{Binding DataContext.ToggleSelectedDeliveryCommand,
 														  RelativeSource={RelativeSource AncestorType=UserControl}}"
 														  CommandParameter="{Binding}" />
 												<TextBlock Text="{Binding Name}"

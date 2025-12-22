@@ -1,11 +1,9 @@
-﻿
-namespace ByteBuy.Core.DTO.RentOffer;
+﻿namespace ByteBuy.Services.DTO.SaleOffer;
 
-public record RentOfferResponse(
+public record SaleOfferResponse(
     Guid Id,
     Guid ItemId,
     int QuantityAvailable,
-    decimal PricePerDay,
-    int MaxRentalDays,
+    decimal PricePerItem,
     IEnumerable<Guid>? ParcelLockerDeliveries,
     IEnumerable<Guid> OtherDeliveriesIds);

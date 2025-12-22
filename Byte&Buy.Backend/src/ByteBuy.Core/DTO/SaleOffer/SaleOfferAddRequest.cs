@@ -1,7 +1,10 @@
-﻿namespace ByteBuy.Core.DTO.SaleOffer;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.SaleOffer;
 
 public record SaleOfferAddRequest(
-    Guid ItemId,
-    int QuantityAvailable,
-    decimal PricePerItem,
-    IEnumerable<Guid> SelectedDeliveriesIds);
+    [Required] Guid ItemId,
+    [Required] int QuantityAvailable,
+    [Required] decimal PricePerItem,
+    IEnumerable<Guid>? ParcelLockerDeliveries,
+    [Required] IEnumerable<Guid> OtherDeliveriesIds);

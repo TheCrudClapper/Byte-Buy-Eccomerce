@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ByteBuy.Core.DTO.SaleOffer;
+namespace ByteBuy.Services.DTO.SaleOffer;
 
 public record SaleOfferUpdateRequest(
     [Required] Guid ItemId,

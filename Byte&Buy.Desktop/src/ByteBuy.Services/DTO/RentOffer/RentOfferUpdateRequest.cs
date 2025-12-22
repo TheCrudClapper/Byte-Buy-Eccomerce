@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ByteBuy.Core.DTO.RentOffer;
+namespace ByteBuy.Services.DTO.RentOffer;
 
-public record RentOfferAddRequest(
+public record RentOfferUpdateRequest(
     [Required] Guid ItemId,
     [Required] int QuantityAvailable,
     [Required] decimal PricePerDay,

@@ -44,11 +44,10 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
     private ObservableCollection<DeliveryOptionResponse> _pickupPointDeliveries = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _selectedCourierDeliveries = [];
+    private ObservableCollection<DeliveryOptionResponse> _selectedOtherDeliveries = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _selectedPickupDeliveries = [];
-
+    private ObservableCollection<ParcelLockerCarrierGroup> _selectedParcelLockerDeliveries = [];
     #endregion
 
     public override Task InitializeForEdit(Guid id)
@@ -61,7 +60,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
         var deliveries = await deliveryService.GetAvaliableDeliveries();
 
         //Group parcel by carrier so user can select only one parcel locker delivery option per carrier
-        ParcelLockerGroups= new ObservableCollection<ParcelLockerCarrierGroup>(
+        ParcelLockerGroups = new ObservableCollection<ParcelLockerCarrierGroup>(
             deliveries.Value.ParcelLockerDeliveries
             .GroupBy(d => d.Carrier)
             .Select(g => new ParcelLockerCarrierGroup()
@@ -84,8 +83,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
     {
         if (IsSaleOffer)
         {
-            var selectedDeliveries = SelectedCourierDeliveries.Select(d => d.Id).ToList();
-            var request = new SaleOfferAddRequest(SelectedItem?.Id ?? Guid.Empty, QuantityAvaliable, PricePerDay, selectedDeliveries);
+            var selectedDeliveries = SelectedOtherDeliveries.Select(d => d.Id).ToList();
+            var request = new SaleOfferAddRequest(SelectedItem?.Id ?? Guid.Empty, QuantityAvaliable, PricePerDay, null, selectedDeliveries);
 
             var response = await saleOfferService.Add(request);
             if (!response.Success)
@@ -95,7 +94,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
             }
         }
         else
-        { 
+        {
+            var selectedDeliveries = SelectedOtherDeliveries.Select(d => d.Id).ToList();
 
         }
 
@@ -109,26 +109,14 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService, ISal
 
     [RelayCommand]
     private void ChangeOfferType()
-    {
-        IsSaleOffer = !IsSaleOffer;
-    }
+       => IsSaleOffer = !IsSaleOffer;
 
     [RelayCommand]
-    private void TogglePickupDelivery(DeliveryOptionResponse delivery)
+    private void ToggleSelectedDelivery(DeliveryOptionResponse delivery)
     {
-        if (SelectedPickupDeliveries.Contains(delivery))
-            SelectedPickupDeliveries.Remove(delivery);
+        if (SelectedOtherDeliveries.Contains(delivery))
+            SelectedOtherDeliveries.Remove(delivery);
         else
-            SelectedPickupDeliveries.Add(delivery);
+            SelectedOtherDeliveries.Add(delivery);
     }
-        
-    [RelayCommand]
-    private void ToggleCourierDelivery(DeliveryOptionResponse delivery)
-    {
-        if (SelectedCourierDeliveries.Contains(delivery))
-            SelectedCourierDeliveries.Remove(delivery);
-        else
-            SelectedCourierDeliveries.Add(delivery);
-    }
-    
 }

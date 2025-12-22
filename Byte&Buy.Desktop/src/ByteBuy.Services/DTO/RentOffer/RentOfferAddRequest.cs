@@ -1,8 +1,8 @@
-﻿
-namespace ByteBuy.Core.DTO.RentOffer;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record RentOfferResponse(
-    Guid Id,
+namespace ByteBuy.Services.DTO.RentOffer;
+
+public record RentOfferAddRequest(
     Guid ItemId,
     int QuantityAvailable,
     decimal PricePerDay,

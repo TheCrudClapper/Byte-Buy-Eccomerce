@@ -1,5 +1,11 @@
-﻿namespace ByteBuy.Core.DTO.RentOffer;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class RentOfferUpdateRequest
-{
-}
+namespace ByteBuy.Core.DTO.RentOffer;
+
+public record RentOfferUpdateRequest(
+    [Required] Guid ItemId,
+    [Required] int QuantityAvailable,
+    [Required] decimal PricePerDay,
+    [Required] int MaxRentalDays,
+    IEnumerable<Guid>? ParcelLockerDeliveries,
+    [Required] IEnumerable<Guid> OtherDeliveriesIds);

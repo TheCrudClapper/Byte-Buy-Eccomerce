@@ -4,4 +4,5 @@ public record SaleOfferAddRequest(
     Guid ItemId,
     int QuantityAvailable,
     decimal PricePerItem,
-    IEnumerable<Guid> SelectedDeliveriesIds);
+    IEnumerable<Guid>? ParcelLockerDeliveries,
+    IEnumerable<Guid> OtherDeliveriesIds);
