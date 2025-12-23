@@ -54,22 +54,27 @@
 											   Source="{SvgImage /Assets/Images/regular/file-image-regular-full.svg}"/>
 										<TextBlock Text="No images"
 												   FontSize="20"
+												   FontFamily="{DynamicResource OpenSansBold}"
+												   Foreground="{DynamicResource TextLightBrush}"
 												   VerticalAlignment="Center"/>
 									</StackPanel>
 									<TextBlock FontWeight="DemiBold"
 											   HorizontalAlignment="Center"
+											   FontFamily="{DynamicResource OpenSansMedium}"
+											   Foreground="{DynamicResource TextLightBrush}"
 											   FontSize="14"
 											   Text="To add new images click + icon above or drag and drop files to gray container"/>
 								</StackPanel>
+
 								<ScrollViewer HorizontalScrollBarVisibility="Auto"
 											  VerticalScrollBarVisibility="Disabled">
+
 									<ItemsControl ItemsSource="{Binding Images}">
 										<ItemsControl.ItemsPanel>
 											<ItemsPanelTemplate>
 												<StackPanel Orientation="Horizontal"/>
 											</ItemsPanelTemplate>
 										</ItemsControl.ItemsPanel>
-
 										<ItemsControl.ItemTemplate>
 											<DataTemplate>
 												<StackPanel
@@ -79,6 +84,8 @@
 												Width="170">
 													<Grid Width="170" Height="170" Margin="0,0,0,5">
 														<Image
+														Width="170"
+														Height="170"
 														Stretch="UniformToFill"
 														Source="{Binding Preview}"/>
 														<Button

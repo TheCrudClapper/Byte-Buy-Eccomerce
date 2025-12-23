@@ -39,23 +39,26 @@
 
 					<!-- Offer type -->
 					<CheckBox HorizontalAlignment="Right"
+							  IsVisible="{Binding !IsEditMode}"
 							  Foreground="{DynamicResource TextLightBrush}"
 							  Command="{Binding ChangeOfferTypeCommand}"
 							  Content="Sale Offer" />
 
 					<!-- Selected item -->
 					<TextBlock Text="Selected Stock Item"
+							   IsVisible="{Binding !IsEditMode}"
 							   Classes="textBoxLabel"
 							   HorizontalAlignment="Stretch" />
 					<TextBox IsEnabled="False"
+							 IsVisible="{Binding !IsEditMode}"
 							 Text="{Binding SelectedItem.Name}"
 							 TextWrapping="Wrap" />
 
 					<!-- Units -->
 					<TextBlock Text="Units"
 							   Classes="textBoxLabel" />
-					<NumericUpDown Text="{Binding QuantityAvaliable}"
-								   Value="1"
+					<NumericUpDown Value="{Binding QuantityAvaliable}"
+								   Watermark="Enter avaliable quantity for rental"
 								   FormatString="0"
 								   Minimum="1" />
 
@@ -64,17 +67,16 @@
 								IsVisible="{Binding !IsSaleOffer}">
 						<TextBlock Text="Rental Price per Day"
 								   Classes="textBoxLabel" />
-						<NumericUpDown Text="{Binding PricePerDay}"
-									   Value="1"
+						<NumericUpDown Value="{Binding PricePerDay}"
 									   FormatString="0.000"
 									   Minimum="1"
 									   Watermark="Enter price per one day of rental period" />
 
 						<TextBlock Text="Max Rental Days"
 								   Classes="textBoxLabel" />
-						<NumericUpDown Text="{Binding MaxRentalDays}"
-									   Value="1"
+						<NumericUpDown Value="{Binding MaxRentalDays}"
 									   FormatString="0"
+									   Watermark="Enter maximum days of rental period"
 									   Minimum="1" />
 					</StackPanel>
 
@@ -83,8 +85,7 @@
 								IsVisible="{Binding IsSaleOffer}">
 						<TextBlock Text="Unit Price"
 								   Classes="textBoxLabel" />
-						<NumericUpDown Text="{Binding PricePerItem}"
-									   Value="1"
+						<NumericUpDown Value="{Binding PricePerItem}"
 									   FormatString="0.000"
 									   Minimum="1"
 									   Watermark="Enter price per one item" />

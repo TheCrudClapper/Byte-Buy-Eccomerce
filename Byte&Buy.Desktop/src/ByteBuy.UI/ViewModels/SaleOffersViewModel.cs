@@ -1,9 +1,11 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.RentOffer;
 using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -23,9 +25,20 @@ public class SaleOffersViewModel(AlertViewModel alert,
         throw new System.NotImplementedException();
     }
 
-    protected override Task Edit(SaleOfferListItem item)
+    protected override async Task Edit(SaleOfferListItem item)
     {
-        throw new System.NotImplementedException();
+        var result = await DialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
+            {
+                if (vm is OfferDialogViewModel offerVm)
+                    await offerVm.InitializeForEdit(item.Id);
+            });
+
+        if (result is bool ok && ok)
+        {
+            Alert.ShowSuccessAlert("Successfully updated offer!");
+            await LoadData();
+        }
     }
 
     public override async Task LoadData()

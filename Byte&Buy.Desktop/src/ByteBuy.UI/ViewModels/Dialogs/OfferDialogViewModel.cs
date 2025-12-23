@@ -1,5 +1,7 @@
-﻿using ByteBuy.Services.DTO.Delivery;
+﻿using Avalonia;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.Services.Services;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.Items;
@@ -10,6 +12,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
 public partial class OfferDialogViewModel(IDeliveryService deliveryService,
@@ -52,9 +55,35 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private ObservableCollection<ParcelLockerCarrierGroup> _selectedParcelLockerDeliveries = [];
     #endregion
 
-    public override Task InitializeForEdit(Guid id)
+    public override async Task InitializeForEdit(Guid id)
     {
-        throw new NotImplementedException();
+        IsSaleOffer = true;
+        IsEditMode = true;
+        EditingItemId = id;
+        await InitializeAsync();
+        var result = await saleOfferService.GetById(id);
+        if (!result.Success)
+        {
+            Error = result.Error!.Description;
+            return;
+        }
+
+        OfferMappings.MapFromSaleResponse(this, result.Value);
+    }
+
+    public async Task InitializeForRentEdit(Guid id)
+    {
+        IsEditMode = true;
+        EditingItemId = id;
+        await InitializeAsync();
+        var result = await rentOfferService.GetById(id);
+        if (!result.Success)
+        {
+            Error = result.Error!.Description;
+            return;
+        }
+
+        OfferMappings.MapFromRentResponse(this, result.Value);
     }
 
     public async Task InitializeAsync()
@@ -107,9 +136,30 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         return true;
     }
 
-    protected override Task<bool> UpdateItem()
+    protected override async Task<bool> UpdateItem()
     {
-        throw new NotImplementedException();
+        if (IsSaleOffer)
+        {
+            var request = OfferMappings.MapToSaleUpdateRequest(this);
+            var response = await saleOfferService.Update(EditingItemId!.Value, request);
+            if (!response.Success)
+            {
+                Error = response.Error!.Description;
+                return false;
+            }
+        }
+        else
+        {
+            var request = OfferMappings.MapToRentUpdateRequest(this);
+            var response = await rentOfferService.Update(EditingItemId!.Value, request);
+            if (!response.Success)
+            {
+                Error = response.Error!.Description;
+                return false;
+            }
+        }
+
+        return true;
     }
 
     [RelayCommand]

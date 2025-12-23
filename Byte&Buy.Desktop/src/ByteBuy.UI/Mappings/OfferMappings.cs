@@ -1,13 +1,14 @@
-﻿using ByteBuy.Services.DTO.Delivery;
+﻿using AvaloniaEdit.Utils;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.RentOffer;
 using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.ViewModels.Dialogs;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ByteBuy.UI.Mappings;
@@ -90,5 +91,46 @@ public static class OfferMappings
             PriceAndCurrencyPerItem = $"{response.PricePerItem} {response.Currency}",
             CreatorEmail = response.CreatorEmail,
         };
+    }
+
+    public static void MapFromRentResponse(this OfferDialogViewModel vm, RentOfferResponse response)
+    {
+        var allDeliveries = vm.PickupPointDeliveries
+            .Concat(vm.CourierDeliveries)
+            .ToList();
+
+        var selected = allDeliveries
+        .Where(d => response.OtherDeliveriesIds.Contains(d.Id))
+        .ToList();
+
+        vm.MaxRentalDays = response.MaxRentalDays;
+        vm.QuantityAvaliable = response.QuantityAvailable;
+        vm.PricePerDay = response.PricePerDay;
+
+        vm.SelectedOtherDeliveries.Clear();
+
+        foreach(var delivery in selected)
+            vm.SelectedOtherDeliveries.Add(delivery);
+
+        vm.ChangeOfferTypeCommand.Execute(vm);
+    }
+
+    public static void MapFromSaleResponse(this OfferDialogViewModel vm, SaleOfferResponse response)
+    {
+        var allDeliveries = vm.PickupPointDeliveries
+           .Concat(vm.CourierDeliveries)
+           .ToList();
+
+        var selected = allDeliveries
+        .Where(d => response.OtherDeliveriesIds.Contains(d.Id))
+        .ToList();
+
+        vm.PricePerItem = response.PricePerItem;
+        vm.QuantityAvaliable = response.QuantityAvailable;
+
+        vm.SelectedOtherDeliveries.Clear();
+        foreach (var delivery in selected)
+            vm.SelectedOtherDeliveries.Add(delivery);
+
     }
 }
