@@ -1,6 +1,4 @@
-﻿using AvaloniaEdit.Utils;
-using ByteBuy.Services.DTO.Delivery;
-using ByteBuy.Services.DTO.RentOffer;
+﻿using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.RentOffer;
@@ -8,7 +6,6 @@ using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.ViewModels.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ByteBuy.UI.Mappings;
@@ -22,17 +19,16 @@ public static class OfferMappings
             vm.QuantityAvaliable,
             vm.PricePerItem,
             MapParcelLockers(vm.SelectedParcelLockerDeliveries),
-            MapOtherDeliveries(vm.SelectedOtherDeliveries));
+            MapOtherDeliveries(vm));
     }
 
     public static SaleOfferUpdateRequest MapToSaleUpdateRequest(this OfferDialogViewModel vm)
     {
         return new SaleOfferUpdateRequest(
-            vm.SelectedItem?.Id ?? Guid.Empty,
             vm.QuantityAvaliable,
             vm.PricePerItem,
             MapParcelLockers(vm.SelectedParcelLockerDeliveries),
-            MapOtherDeliveries(vm.SelectedOtherDeliveries));
+            MapOtherDeliveries(vm));
     }
 
     public static RentOfferAddRequest MapToRentAddRequest(this OfferDialogViewModel vm)
@@ -43,19 +39,17 @@ public static class OfferMappings
             vm.PricePerDay,
             vm.MaxRentalDays,
             MapParcelLockers(vm.SelectedParcelLockerDeliveries),
-            MapOtherDeliveries(vm.SelectedOtherDeliveries));
+            MapOtherDeliveries(vm));
     }
 
     public static RentOfferUpdateRequest MapToRentUpdateRequest(this OfferDialogViewModel vm)
     {
         return new RentOfferUpdateRequest(
-            vm.SelectedItem?.Id ?? Guid.Empty,
             vm.QuantityAvaliable,
             vm.PricePerDay,
             vm.MaxRentalDays,
             MapParcelLockers(vm.SelectedParcelLockerDeliveries),
-            MapOtherDeliveries(vm.SelectedOtherDeliveries));
-
+            MapOtherDeliveries(vm));
     }
 
     private static List<Guid> MapParcelLockers(IEnumerable<ParcelLockerCarrierGroup> list)
@@ -63,8 +57,12 @@ public static class OfferMappings
             .Select(p => p.SelectedOption!.Id)
             .ToList();
 
-    private static List<Guid> MapOtherDeliveries(IEnumerable<DeliveryOptionResponse> list)
-        => list.Select(d => d.Id).ToList();
+    private static List<Guid> MapOtherDeliveries(OfferDialogViewModel vm)
+        => vm.CourierDeliveries
+            .Concat(vm.PickupPointDeliveries)
+            .Where(d => d.IsSelected)
+            .Select(d => d.Id)
+            .ToList();
 
     public static RentOfferListItem ToListItem(this RentOfferListResponse response, int index)
     {
@@ -95,42 +93,30 @@ public static class OfferMappings
 
     public static void MapFromRentResponse(this OfferDialogViewModel vm, RentOfferResponse response)
     {
-        var allDeliveries = vm.PickupPointDeliveries
-            .Concat(vm.CourierDeliveries)
-            .ToList();
+        var selectedIds = response.OtherDeliveriesIds.ToHashSet();
 
-        var selected = allDeliveries
-        .Where(d => response.OtherDeliveriesIds.Contains(d.Id))
-        .ToList();
+        foreach (var d in vm.CourierDeliveries)
+            d.IsSelected = selectedIds.Contains(d.Id);
+
+        foreach (var d in vm.PickupPointDeliveries)
+            d.IsSelected = selectedIds.Contains(d.Id);
 
         vm.MaxRentalDays = response.MaxRentalDays;
         vm.QuantityAvaliable = response.QuantityAvailable;
         vm.PricePerDay = response.PricePerDay;
-
-        vm.SelectedOtherDeliveries.Clear();
-
-        foreach(var delivery in selected)
-            vm.SelectedOtherDeliveries.Add(delivery);
-
-        vm.ChangeOfferTypeCommand.Execute(vm);
     }
 
     public static void MapFromSaleResponse(this OfferDialogViewModel vm, SaleOfferResponse response)
     {
-        var allDeliveries = vm.PickupPointDeliveries
-           .Concat(vm.CourierDeliveries)
-           .ToList();
+        var selectedIds = response.OtherDeliveriesIds.ToHashSet();
 
-        var selected = allDeliveries
-        .Where(d => response.OtherDeliveriesIds.Contains(d.Id))
-        .ToList();
+        foreach (var d in vm.CourierDeliveries)
+            d.IsSelected = selectedIds.Contains(d.Id);
+
+        foreach (var d in vm.PickupPointDeliveries)
+            d.IsSelected = selectedIds.Contains(d.Id);
 
         vm.PricePerItem = response.PricePerItem;
         vm.QuantityAvaliable = response.QuantityAvailable;
-
-        vm.SelectedOtherDeliveries.Clear();
-        foreach (var delivery in selected)
-            vm.SelectedOtherDeliveries.Add(delivery);
-
     }
 }

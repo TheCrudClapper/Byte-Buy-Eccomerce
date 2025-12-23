@@ -1,0 +1,112 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    <!--Brand Logo-->
+    <a class="navbar-brand" href="#">Byte&Buy</a>
+
+    <!--Toggler-->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!--Left Side-->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!--Only Visible in Collapse-->
+      <form class="d-flex search-form d-lg-none my-3" role="search">
+        <input class="form-control" type="search" placeholder="Search products..." aria-label="Search">
+        <button class="btn btn-outline-primary search-button" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house fa-lg"></i>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-users fa-lg"></i>About Us</a>
+        </li>
+      </ul>
+
+      <!--Search Form-->
+      <form class="d-none d-lg-flex search-form" role="search">
+        <input class="form-control" type="search" placeholder="Search products..." aria-label="Search">
+        <button class="btn btn-outline-primary search-button" type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <!--Right Side-->
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-heart fa-lg"></i>
+            <span class="d-inline d-lg-none">
+              Favourites
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fa-solid fa-cart-shopping fa-lg"></i>
+            <span class="d-inline d-lg-none">
+              Cart
+            </span>
+          </a>
+        </li>
+
+        <!--Account Actions Dropdown-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-user fa-lg"></i>
+            <span>
+              Account
+            </span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-id-card-clip"></i>
+                Profile
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Sell
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                Rent
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-repeat"></i>
+                Your Rentals
+              </a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-truck-fast"></i>
+                Orders
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>

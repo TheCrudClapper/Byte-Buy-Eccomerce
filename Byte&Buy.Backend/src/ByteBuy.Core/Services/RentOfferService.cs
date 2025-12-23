@@ -19,6 +19,9 @@ public class RentOfferService : IRentOfferService
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, RentOfferAddRequest request)
     {
+        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
+            return Result.Failure<CreatedResponse>(OfferErrors.DeliveryRequired);
+
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
         if (item is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
@@ -39,8 +42,7 @@ public class RentOfferService : IRentOfferService
 
         var rentOffer = rentOfferResult.Value;
 
-        rentOffer
-            .AssignDeliveriesToOffer(request.OtherDeliveriesIds);
+        rentOffer.AssignDeliveriesToOffer(request.OtherDeliveriesIds);
 
         await _rentOfferRepository.AddAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
@@ -88,8 +90,48 @@ public class RentOfferService : IRentOfferService
         return rentOfferDtoList;
     }
 
-    public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
     {
-        throw new NotImplementedException();
+        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
+            return Result.Failure<UpdatedResponse>(OfferErrors.DeliveryRequired);
+
+        var offer = await _rentOfferRepository.GetAggregateAsync(id);
+        if(offer is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var item = await _itemRepository.GetByIdAsync(offer.ItemId);
+        if(item is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
+        if(quantityDiff != 0)
+        {
+            Result stockUpdateResult;
+            if(quantityDiff > 0)
+                stockUpdateResult = item.SubstractStock(quantityDiff);
+            else
+                stockUpdateResult = item.AddStock(-quantityDiff);
+
+            if (stockUpdateResult.IsFailure)
+                return Result.Failure<UpdatedResponse>(stockUpdateResult.Error);
+        }
+
+        var updateResult = offer.Update(
+            request.QuantityAvailable,
+            request.PricePerDay,
+            request.MaxRentalDays);
+
+        if (updateResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
+
+        var deliveryUpdateResult = offer.UpdateDeliveries(request.OtherDeliveriesIds);
+        if (deliveryUpdateResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(deliveryUpdateResult.Error);
+
+        await _rentOfferRepository.UpdateAsync(offer);
+        await _itemRepository.UpdateAsync(item);
+        await _rentOfferRepository.CommitAsync();
+
+        return offer.ToUpdatedResponse();
     }
 }

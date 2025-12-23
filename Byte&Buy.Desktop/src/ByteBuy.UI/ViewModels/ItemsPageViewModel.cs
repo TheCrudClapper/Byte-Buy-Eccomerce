@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Items;
@@ -7,6 +8,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,11 +46,18 @@ public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemServi
     [RelayCommand]
     protected async Task Publish(ItemListItem item)
     {
-        await DialogNavigation.OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
+        var result = await DialogNavigation.OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
         {
             if (vm is OfferDialogViewModel offerVm)
                 await offerVm.InitializeForAdd(item);
         });
+
+
+        if (result is bool ok && ok)
+        {
+            Alert.ShowSuccessAlert("Successfully updated published offer!");
+            await LoadData();
+        }
     }
 
     public override async Task LoadData()

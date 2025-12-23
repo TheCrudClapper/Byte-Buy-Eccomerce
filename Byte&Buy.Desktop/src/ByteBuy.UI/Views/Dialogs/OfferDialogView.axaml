@@ -135,9 +135,7 @@
 											<StackPanel Orientation="Horizontal">
 												<CheckBox x:CompileBindings="false"
 														  IsThreeState="False"
-														  Command="{Binding DataContext.ToggleSelectedDeliveryCommand,
-														  RelativeSource={RelativeSource AncestorType=UserControl}}"
-														  CommandParameter="{Binding}" />
+														  IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
 												<TextBlock Text="{Binding Name}"
 														   VerticalAlignment="Center" />
 											</StackPanel>
@@ -161,9 +159,7 @@
 											<StackPanel Orientation="Horizontal">
 												<CheckBox x:CompileBindings="false"
 														  IsThreeState="False"
-														  Command="{Binding DataContext.ToggleSelectedDeliveryCommand,
-														  RelativeSource={RelativeSource AncestorType=UserControl}}"
-														  CommandParameter="{Binding}" />
+														  IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
 												<TextBlock Text="{Binding Name}"
 														   VerticalAlignment="Center" />
 											</StackPanel>

@@ -8,6 +8,7 @@ using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Components.Web;
 using static ByteBuy.Core.Specification.ItemsSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -110,6 +111,9 @@ public class ItemsService : IItemsService
 
     public async Task<Result> DeleteAsync(Guid id)
     {
+        if (await _itemRepository.HasActiveRelationsAsync(id))
+            return Result.Failure(ItemErrors.InUse);
+
         var aggregate = await _itemRepository.GetAggregateAsync(id);
         if (aggregate is null)
             return Result.Failure(Error.NotFound);

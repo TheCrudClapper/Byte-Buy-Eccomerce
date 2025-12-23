@@ -5,4 +5,5 @@ public record DeliveryOptionResponse
     string Name,
     string Carrier,
     string DeliveryChannel,
-    string PriceAndCurrency);
+    decimal Amount,
+    string Currency);

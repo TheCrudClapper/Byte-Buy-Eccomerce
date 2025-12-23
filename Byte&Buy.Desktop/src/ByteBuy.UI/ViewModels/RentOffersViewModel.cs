@@ -36,7 +36,7 @@ public class RentOffersViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            Alert.ShowSuccessAlert("Successfully updated offer!");
             await LoadData();
         }
     }

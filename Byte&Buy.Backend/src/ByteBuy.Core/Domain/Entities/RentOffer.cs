@@ -52,7 +52,6 @@ public class RentOffer : Offer
     }
 
     public Result Update(
-        Guid itemId,
         int quantityAvailable,
         decimal pricePerDay,
         int maxRentalDays)
@@ -67,7 +66,6 @@ public class RentOffer : Offer
 
         var money = moneyResult.Value;
 
-        ItemId = itemId;
         PricePerDay = money;
         MaxRentalDays = maxRentalDays;
         QuantityAvailable = quantityAvailable;

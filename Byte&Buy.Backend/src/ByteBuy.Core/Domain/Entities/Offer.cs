@@ -47,11 +47,45 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public void AssignDeliveriesToOffer(IEnumerable<Guid> deliveryIds)
+    /// <summary>
+    /// Assigns deliveries to NEWLY created Offer
+    /// </summary>
+    /// <param name="newDeliveryIds"></param>
+    public void AssignDeliveriesToOffer(IEnumerable<Guid> newDeliveryIds)
     {
-        foreach (var deliveryId in deliveryIds)
+        foreach (var deliveryId in newDeliveryIds)
         {
             OfferDeliveries.Add(OfferDelivery.Create(Id, deliveryId));
         }
+    }
+
+    /// <summary>
+    /// Updates already existing offer's deliveries
+    /// </summary>
+    /// <param name="newDeliveryIds">Ids of deliveries to be assigned to offer</param>
+    /// <returns></returns>
+    public Result UpdateDeliveries(IEnumerable<Guid> newDeliveryIds)
+    {
+        //Deactivate those deliveries that are not in new set
+        foreach(var offerDelivery in OfferDeliveries)
+        {
+            if (!newDeliveryIds.Contains(offerDelivery.DeliveryId))
+                offerDelivery.Deactivate();
+        }
+
+        //If offer offerDelivery is found within collection (even soft deleted) - reactivate
+        //If new offerDelivery id is provied and not in collection - add
+        foreach(var deliveryId in newDeliveryIds)
+        {
+            var existing = OfferDeliveries
+                .FirstOrDefault(d => d.DeliveryId == deliveryId);
+
+            if (existing is null)
+                OfferDeliveries.Add(OfferDelivery.Create(Id, deliveryId));
+            else
+                existing.Reactivate();
+        }
+
+        return Result.Success();
     }
 }

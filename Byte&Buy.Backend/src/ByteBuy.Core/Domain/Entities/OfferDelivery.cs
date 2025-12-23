@@ -28,6 +28,12 @@ public class OfferDelivery : AuditableEntity, ISoftDeletable
         DateDeleted = DateTime.UtcNow;
     }
 
+    public void Reactivate()
+    {
+        IsActive = true;
+        DateDeleted = null;
+    }
+
     public static OfferDelivery Create(Guid offerId, Guid deliveryId)
         => new OfferDelivery(offerId, deliveryId);
 }

@@ -1,0 +1,58 @@
+.container-fluid{
+    background: linear-gradient(30deg, var(--cta-gradient-start), var(--cta-gradient-end));
+}
+.container {
+    color: var(--text);
+    font-weight: 500;
+}
+.register-window{
+    padding: 50px;
+    border-radius: 6px;
+    background: var(--bg);
+}
+
+.brand-section{
+  background: linear-gradient(30deg, var(--cta-gradient-start), var(--cta-gradient-end));
+  background-clip: text;
+  color: transparent;
+}
+
+a{
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover{
+    color: var(--secondary);
+}
+
+.divider{
+    
+    border-color: var(--text-muted);
+}
+
+.separator {
+    display: flex;
+    font-weight: 500;
+    align-items: center;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+    .separator::before,
+    .separator::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid var(--text-muted);
+    }
+
+    .separator:not(:empty)::before {
+        margin-right: 10px;
+    }
+
+    .separator:not(:empty)::after {
+        margin-left: 10px;
+    }
+

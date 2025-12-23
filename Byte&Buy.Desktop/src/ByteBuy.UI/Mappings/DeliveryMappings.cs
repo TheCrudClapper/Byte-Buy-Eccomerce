@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.UI.ModelsUI.Delivery;
 
 namespace ByteBuy.UI.Mappings;
@@ -14,6 +15,18 @@ public static class DeliveryMappings
             Id = dto.Id,
             Name = dto.Name,
             RowNumber = index + 1
+        };
+    }
+
+    public static DeliveryOption ToDeliveryOption(this DeliveryOptionResponse dto)
+    {
+        return new DeliveryOption
+        {
+            Carrier = dto.Carrier,
+            DeliveryChannel = dto.DeliveryChannel,
+            Id = dto.Id,
+            Name = dto.Name,
+            PriceAndCurrency = $"{dto.Amount} {dto.Currency}"
         };
     }
 }

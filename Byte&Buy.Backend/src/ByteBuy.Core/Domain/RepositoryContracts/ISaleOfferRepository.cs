@@ -5,4 +5,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface ISaleOfferRepository : IRepositoryBase<SaleOffer>
 {
+    Task<SaleOffer?> GetAggregateAsync(Guid id, CancellationToken ct = default);
 }

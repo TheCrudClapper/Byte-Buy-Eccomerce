@@ -35,22 +35,19 @@ public class SaleOffer : Offer
     }
 
     public Result Update(
-       Guid itemId,
        int quantityAvailable,
-       decimal pricePerDay,
-       int maxRentalDays)
+       decimal pricePerItem)
     {
         var validationResult = ValidateBasicInfo(quantityAvailable);
         if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 
-        var moneyResult = Money.Create(pricePerDay);
+        var moneyResult = Money.Create(pricePerItem);
         if (moneyResult.IsFailure)
             return Result.Failure(moneyResult.Error);
 
         var money = moneyResult.Value;
 
-        ItemId = itemId;
         PricePerItem = money;
         QuantityAvailable = quantityAvailable;
         DateEdited = DateTime.UtcNow;

@@ -3,7 +3,6 @@
 namespace ByteBuy.Services.DTO.RentOffer;
 
 public record RentOfferUpdateRequest(
-    [Required] Guid ItemId,
     [Required] int QuantityAvailable,
     [Required] decimal PricePerDay,
     [Required] int MaxRentalDays,

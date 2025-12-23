@@ -41,7 +41,8 @@ public static class DeliveryMappings
             delivery.Name,
             delivery.DeliveryCarrier.Name,
             delivery.Channel.GetDescription(),
-            $"{delivery.Price.Amount} {delivery.Price.Currency}"
+            delivery.Price.Amount,
+            delivery.Price.Currency
             );
 
     public static List<DeliveryOptionResponse> MapDeliveries(

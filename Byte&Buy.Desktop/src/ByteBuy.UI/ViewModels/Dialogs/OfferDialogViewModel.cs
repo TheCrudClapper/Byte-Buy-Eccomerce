@@ -43,13 +43,10 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private ObservableCollection<ParcelLockerCarrierGroup> _parcelLockerGroups = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _courierDeliveries = [];
+    private ObservableCollection<DeliveryOption> _courierDeliveries = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _pickupPointDeliveries = [];
-
-    [ObservableProperty]
-    private ObservableCollection<DeliveryOptionResponse> _selectedOtherDeliveries = [];
+    private ObservableCollection<DeliveryOption> _pickupPointDeliveries = [];
 
     [ObservableProperty]
     private ObservableCollection<ParcelLockerCarrierGroup> _selectedParcelLockerDeliveries = [];
@@ -97,11 +94,11 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
             .Select(g => new ParcelLockerCarrierGroup()
             {
                 Carrier = g.Key,
-                Options = new ObservableCollection<DeliveryOptionResponse>(g)
+                Options = new ObservableCollection<DeliveryOption>(g.Select(d => d.ToDeliveryOption()).ToList())
             }));
 
-        CourierDeliveries = new ObservableCollection<DeliveryOptionResponse>(deliveries.Value.CourierDeliveries ?? []);
-        PickupPointDeliveries = new ObservableCollection<DeliveryOptionResponse>(deliveries.Value.PickupPointDeliveries ?? []);
+        CourierDeliveries = new ObservableCollection<DeliveryOption>(deliveries.Value.CourierDeliveries.Select(d => d.ToDeliveryOption()).ToList());
+        PickupPointDeliveries = new ObservableCollection<DeliveryOption>(deliveries.Value.PickupPointDeliveries.Select(d => d.ToDeliveryOption()).ToList());
     }
 
     public async Task InitializeForAdd(ItemListItem item)
@@ -112,6 +109,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
 
     protected override async Task<bool> AddItem()
     {
+        bool isValid = Validate();
+        if (!isValid) return false;
         if (IsSaleOffer)
         {
 
@@ -138,6 +137,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
 
     protected override async Task<bool> UpdateItem()
     {
+        bool isValid = Validate();
+        if (!isValid) return false;
         if (IsSaleOffer)
         {
             var request = OfferMappings.MapToSaleUpdateRequest(this);
@@ -166,12 +167,13 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private void ChangeOfferType()
        => IsSaleOffer = !IsSaleOffer;
 
-    [RelayCommand]
-    private void ToggleSelectedDelivery(DeliveryOptionResponse delivery)
+    public bool Validate()
     {
-        if (SelectedOtherDeliveries.Contains(delivery))
-            SelectedOtherDeliveries.Remove(delivery);
-        else
-            SelectedOtherDeliveries.Add(delivery);
+        if (!CourierDeliveries.Any(cd => cd.IsSelected) && !PickupPointDeliveries.Any(cd => cd.IsSelected))
+        {
+            Error = "At least one delivery is required";
+            return false;
+        }
+        return true;    
     }
 }

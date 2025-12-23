@@ -19,4 +19,7 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
            .FirstOrDefaultAsync(i => i.Id == itemId, ct);
     }
 
+    public async Task<bool> HasActiveRelationsAsync(Guid itemId)
+        => await _context.Items.AnyAsync(i => i.Offers.Any());
+    
 }
