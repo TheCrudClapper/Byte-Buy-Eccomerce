@@ -108,18 +108,18 @@ public class RentOfferService : IRentOfferService
             return Result.Failure<UpdatedResponse>(OfferErrors.DeliveryRequired);
 
         var offer = await _rentOfferRepository.GetAggregateAsync(id);
-        if(offer is null)
+        if (offer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var item = await _itemRepository.GetByIdAsync(offer.ItemId);
-        if(item is null)
+        if (item is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
-        if(quantityDiff != 0)
+        if (quantityDiff != 0)
         {
             Result stockUpdateResult;
-            if(quantityDiff > 0)
+            if (quantityDiff > 0)
                 stockUpdateResult = item.SubstractStock(quantityDiff);
             else
                 stockUpdateResult = item.AddStock(-quantityDiff);

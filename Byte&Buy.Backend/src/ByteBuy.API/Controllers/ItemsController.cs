@@ -22,7 +22,7 @@ public class ItemsController : BaseApiController
         => HandleResult(await _itemsService.AddAsync(request));
 
     [HttpPut("{id}")]
-    public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm]ItemUpdateRequest request)
+    public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] ItemUpdateRequest request)
         => HandleResult(await _itemsService.UpdateAsync(id, request));
 
     [HttpDelete("{id}")]

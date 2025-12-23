@@ -8,7 +8,6 @@ using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Components.Web;
 using static ByteBuy.Core.Specification.ItemsSpecifications;
 
 namespace ByteBuy.Core.Services;

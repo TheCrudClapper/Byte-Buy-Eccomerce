@@ -67,7 +67,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public Result UpdateDeliveries(IEnumerable<Guid> newDeliveryIds)
     {
         //Deactivate those deliveries that are not in new set
-        foreach(var offerDelivery in OfferDeliveries)
+        foreach (var offerDelivery in OfferDeliveries)
         {
             if (!newDeliveryIds.Contains(offerDelivery.DeliveryId))
                 offerDelivery.Deactivate();
@@ -75,7 +75,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
 
         //If offer offerDelivery is found within collection (even soft deleted) - reactivate
         //If new offerDelivery id is provied and not in collection - add
-        foreach(var deliveryId in newDeliveryIds)
+        foreach (var deliveryId in newDeliveryIds)
         {
             var existing = OfferDeliveries
                 .FirstOrDefault(d => d.DeliveryId == deliveryId);

@@ -39,20 +39,20 @@ public static class DeliveryValidationHelper
         if (deliveries.Count != allIds.Count)
             return Result.Failure<IReadOnlyCollection<Delivery>>(Error.NotFound);
 
-        if(parcelLockersIds.Count > 0)
+        if (parcelLockersIds.Count > 0)
         {
             var parcelDeliveries = deliveries
                 .Where(d => parcelLockersIds.Contains(d.Id))
                 .ToList();
 
-            if(parcelDeliveries.Any(d => d.Channel != DeliveryChannelEnum.ParcelLocker))
+            if (parcelDeliveries.Any(d => d.Channel != DeliveryChannelEnum.ParcelLocker))
                 return Result.Failure<IReadOnlyCollection<Delivery>>(OfferErrors.InvalidParcelLockerChannel);
 
             var multiplePerCarrier = parcelDeliveries
                 .GroupBy(d => d.DeliveryCarrierId)
                 .FirstOrDefault(g => g.Count() > 1);
 
-            if(multiplePerCarrier is not null)
+            if (multiplePerCarrier is not null)
                 return Result.Failure<IReadOnlyCollection<Delivery>>(OfferErrors.MultipleParcelLockersPerCarrier);
         }
 

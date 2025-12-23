@@ -21,5 +21,5 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
 
     public async Task<bool> HasActiveRelationsAsync(Guid itemId)
         => await _context.Items.AnyAsync(i => i.Offers.Any());
-    
+
 }

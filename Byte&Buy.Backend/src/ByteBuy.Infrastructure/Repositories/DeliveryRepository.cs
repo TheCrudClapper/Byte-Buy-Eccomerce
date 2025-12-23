@@ -15,13 +15,6 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
             .AnyAsync(d => d.Name == name && d.Id != excludedId);
     }
 
-    public async Task<IEnumerable<Delivery>> GetAllAsync(CancellationToken ct)
-    {
-        return await _context.Deliveries
-            .Include(d => d.DeliveryCarrier)
-            .ToListAsync(ct);
-    }
-
     public async Task<IReadOnlyCollection<Delivery>> GetAllByIdsAsync(IEnumerable<Guid> ids, CancellationToken ct = default)
     {
         return await _context.Deliveries
