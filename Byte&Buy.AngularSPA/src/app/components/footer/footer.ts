@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyInfoApiService } from '../../services/companyInfo/company-info-api-service';
-import { CompanyInfoResponse } from '../../models/companyInfo/CompanyInfoResponse';
+import { CompanyInfoResponse } from '../../models/companyInfo/companyInfoResponse';
 
 @Component({
   selector: 'app-footer',
