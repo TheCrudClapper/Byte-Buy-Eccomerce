@@ -3,6 +3,8 @@ using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Core.Extensions;
+using Microsoft.AspNetCore.Http;
+using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -45,14 +47,33 @@ public static class DeliveryMappings
             delivery.Price.Currency
             );
 
+    public static Expression<Func<Delivery, DeliveryListResponse>> DeliveryListResponseProjection
+        => d => new DeliveryListResponse(
+            d.Id,
+            d.Name,
+            d.Price.Currency,
+            d.Price.Amount,
+            d.DeliveryCarrier.Name);
+
+    public static Expression<Func<Delivery, SelectListItemResponse<Guid>>> DeliverySelectListProjection
+        => d => new SelectListItemResponse<Guid>(d.Id, d.Name);
+
+    public static Expression<Func<Delivery, DeliveryOptionResponse>> DeliveryOptionResponseProjection
+        => d => new DeliveryOptionResponse(
+            d.Id,
+            d.Name,
+            d.DeliveryCarrier.Name,
+            d.Channel.ToString(),
+            d.Price.Amount,
+            d.Price.Currency);
+
     public static List<DeliveryOptionResponse> MapDeliveries(
-    IEnumerable<Delivery> deliveries,
+    IEnumerable<DeliveryOptionResponse> deliveries,
     DeliveryChannelEnum channel)
     {
         return deliveries
-            .Where(d => d.Channel == channel)
+            .Where(d => d.DeliveryChannel == channel.ToString())
             .OrderBy(d => d.Name)
-            .Select(d => d.ToDeliveryOptionResponse())
             .ToList();
     }
 }

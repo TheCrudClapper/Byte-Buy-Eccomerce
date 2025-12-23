@@ -22,6 +22,13 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
             .ToListAsync(ct);
     }
 
+    public async Task<IReadOnlyCollection<Delivery>> GetAllByIdsAsync(IEnumerable<Guid> ids, CancellationToken ct = default)
+    {
+        return await _context.Deliveries
+            .Where(i => ids.Contains(i.Id))
+            .ToListAsync(ct);
+    }
+
     public override async Task<Delivery?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         return await _context.Deliveries

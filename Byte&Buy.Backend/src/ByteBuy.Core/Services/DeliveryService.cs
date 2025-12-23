@@ -7,6 +7,7 @@ using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.DeliverySpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -111,18 +112,14 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
     {
-        var deliveries = await _deliveryRepository.GetAllAsync(ct);
-
-        return deliveries.Select(d => d.ToSelectListItemResponse())
-            .ToList();
+        var spec = new DeliveryToSelectListItemSpec();
+        return await _deliveryRepository.GetListBySpecAsync(spec, ct);
     }
 
-
-    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default)
     {
-        var deliveries = await _deliveryRepository.GetAllAsync(ct);
-        return deliveries.Select(d => d.ToDeliveryListResponse())
-            .ToList().AsReadOnly();
+        var spec = new DeliveryToDeliveryListResponseSpec();
+        return await _deliveryRepository.GetListBySpecAsync(spec, ct);
     }
 
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()
@@ -133,16 +130,17 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct)
     {
-        var deliveries = await _deliveryRepository.GetAllAsync(ct);
+        var spec = new DeliveryToDeliveryOptionResponseSpec();
+        var deliveries = await _deliveryRepository.GetListBySpecAsync(spec, ct);
 
-        var dev = new DeliveryOptionsResponse
+        var response = new DeliveryOptionsResponse
         {
             ParcelLockerDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.ParcelLocker),
             CourierDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.Courier),
             PickupPointDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.PickupPoint)
         };
 
-        return dev;
+        return response;
     }
 
     //Helpers

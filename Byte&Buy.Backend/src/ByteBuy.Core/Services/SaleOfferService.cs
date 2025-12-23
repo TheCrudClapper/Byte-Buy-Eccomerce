@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.SaleOffer;
+using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -12,11 +13,16 @@ namespace ByteBuy.Core.Services;
 public class SaleOfferService : ISaleOfferService
 {
     private readonly IItemRepository _itemRepository;
+    private readonly IDeliveryRepository _deliveryRepository;
     private readonly ISaleOfferRepository _saleOfferRepository;
-    public SaleOfferService(IItemRepository itemRepository, ISaleOfferRepository saleOfferRepository)
+    public SaleOfferService(
+        IItemRepository itemRepository,
+        ISaleOfferRepository saleOfferRepository,
+        IDeliveryRepository deliveryRepository)
     {
         _itemRepository = itemRepository;
         _saleOfferRepository = saleOfferRepository;
+        _deliveryRepository = deliveryRepository;
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, SaleOfferAddRequest request)
     {
@@ -26,6 +32,14 @@ public class SaleOfferService : ISaleOfferService
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
         if (item is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
+
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+           request.ParcelLockerDeliveries,
+           request.OtherDeliveriesIds,
+           _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<CreatedResponse>(validatedDeliveries.Error);
 
         var stockUpdateResult = item.SubstractStock(request.QuantityAvailable);
         if (stockUpdateResult.IsFailure)
@@ -43,7 +57,7 @@ public class SaleOfferService : ISaleOfferService
         var saleOffer = saleOfferResult.Value;
 
         saleOffer
-            .AssignDeliveriesToOffer(request.OtherDeliveriesIds);
+            .AssignDeliveriesToOffer(validatedDeliveries.Value.Select(d => d.Id));
 
         await _saleOfferRepository.AddAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
@@ -125,7 +139,17 @@ public class SaleOfferService : ISaleOfferService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        var deliveryUpdateResult = offer.UpdateDeliveries(request.OtherDeliveriesIds);
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+          request.ParcelLockerDeliveries,
+          request.OtherDeliveriesIds,
+          _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
+
+        var deliveryUpdateResult = offer
+            .UpdateDeliveries(validatedDeliveries.Value.Select(d => d.Id));
+
         if (deliveryUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(deliveryUpdateResult.Error);
 
@@ -135,4 +159,6 @@ public class SaleOfferService : ISaleOfferService
 
         return offer.ToUpdatedResponse();
     }
+
+
 }

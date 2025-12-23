@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.RentOffer;
+using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -11,11 +12,14 @@ namespace ByteBuy.Core.Services;
 public class RentOfferService : IRentOfferService
 {
     private readonly IRentOfferRepository _rentOfferRepository;
+    private readonly IDeliveryRepository _deliveryRepository;
     private readonly IItemRepository _itemRepository;
-    public RentOfferService(IRentOfferRepository rentOfferRepo, IItemRepository itemRepo)
+    public RentOfferService(IRentOfferRepository rentOfferRepo, IItemRepository itemRepo,
+        IDeliveryRepository deliveryRepository)
     {
         _rentOfferRepository = rentOfferRepo;
         _itemRepository = itemRepo;
+        _deliveryRepository = deliveryRepository;
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, RentOfferAddRequest request)
     {
@@ -25,6 +29,14 @@ public class RentOfferService : IRentOfferService
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
         if (item is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
+
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+           request.ParcelLockerDeliveries,
+           request.OtherDeliveriesIds,
+           _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<CreatedResponse>(validatedDeliveries.Error);
 
         var stockUpdateResult = item.SubstractStock(request.QuantityAvailable);
         if (stockUpdateResult.IsFailure)
@@ -42,7 +54,7 @@ public class RentOfferService : IRentOfferService
 
         var rentOffer = rentOfferResult.Value;
 
-        rentOffer.AssignDeliveriesToOffer(request.OtherDeliveriesIds);
+        rentOffer.AssignDeliveriesToOffer(validatedDeliveries.Value.Select(i => i.Id));
 
         await _rentOfferRepository.AddAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
@@ -124,7 +136,15 @@ public class RentOfferService : IRentOfferService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        var deliveryUpdateResult = offer.UpdateDeliveries(request.OtherDeliveriesIds);
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+           request.ParcelLockerDeliveries,
+           request.OtherDeliveriesIds,
+           _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
+
+        var deliveryUpdateResult = offer.UpdateDeliveries(validatedDeliveries.Value.Select(d => d.Id));
         if (deliveryUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(deliveryUpdateResult.Error);
 

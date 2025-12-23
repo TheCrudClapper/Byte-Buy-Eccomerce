@@ -15,19 +15,8 @@
 
 	<Grid>
 		<Grid RowDefinitions="50,*,50">
-			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
+			<Grid Grid.ColumnDefinitions="*,*" Grid.Row="0">
 				<Label Content="Filters" />
-				<Button
-				Grid.Column="2"
-				Command="{Binding AddCommand}"
-				VerticalAlignment="Top"
-				HorizontalAlignment="Right">
-					<StackPanel Orientation="Horizontal">
-						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-							   Width="15" Height="15" />
-					</StackPanel>
-
-				</Button>
 			</Grid>
 
 			<!-- Fetched items count -->
