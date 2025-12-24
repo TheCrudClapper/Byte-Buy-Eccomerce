@@ -23,7 +23,7 @@ public class EmployeesController
 
     [HttpGet("list")]
     public async Task<ActionResult<EmployeeListResponse>> GetEmployeesList(CancellationToken ct)
-        => HandleResult(await _employeeService.GetEmployeesListAsync(ct));
+        => HandleResult(await _employeeService.GetEmployeesListAsync(CurrentUserId,ct));
 
     [HttpGet("me")]
     //[HasPermission("employee:read:me")]

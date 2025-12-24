@@ -168,9 +168,15 @@ public class EmployeeService : IEmployeeService
         return employeeDto;
     }
 
-    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesListAsync(CancellationToken ct = default)
+    /// <summary>
+    /// Get list of all employees except current logged user
+    /// </summary>
+    /// <param name="excludedUserId">User Id corresponding to current user</param>
+    /// <param name="ct">Cancelation for stopping async operations</param>
+    /// <returns>A Dto list of employees within company</returns>
+    public async Task<Result<IReadOnlyCollection<EmployeeListResponse>>> GetEmployeesListAsync(Guid excludedUserId, CancellationToken ct = default)
     {
-        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(), ct);
+        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(excludedUserId), ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request)

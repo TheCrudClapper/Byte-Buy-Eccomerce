@@ -14,5 +14,5 @@ public interface IEmployeeService : IBaseCrudService<Guid, EmployeeAddRequest, E
 {
     Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(Guid employeeId, CancellationToken ct = default);
     Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request);
-    Task<Result<IEnumerable<EmployeeListResponse>>> GetEmployeesListAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<EmployeeListResponse>>> GetEmployeesListAsync(Guid excludedUserId, CancellationToken ct = default);
 }

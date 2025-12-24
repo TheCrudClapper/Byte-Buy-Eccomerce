@@ -30,9 +30,10 @@ public static class EmployeeSpecifications
 
     public sealed class EmployeeToEmployeeListDtoSpec : Specification<Employee, EmployeeListResponse>
     {
-        public EmployeeToEmployeeListDtoSpec()
+        public EmployeeToEmployeeListDtoSpec(Guid excludedUserId)
         {
             Query.AsNoTracking()
+                .Where(e => e.Id != excludedUserId)
                 .Select(EmployeeMappings.EmployeeListProjection);
         }
     }
