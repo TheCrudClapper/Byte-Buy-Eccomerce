@@ -1,12 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface IPortalUserRepository
+public interface IPortalUserRepository : IRepositoryBase<PortalUser>
 {
-    Task<IReadOnlyCollection<PortalUser>> GetPortalUsersWithRolesAsync(CancellationToken ct = default);
-    Task<PortalUser?> GetPortalUserWithAllDataByIdAsync(Guid userId, CancellationToken ct = default);
-    Task<PortalUser?> GetPortalUserWithAddress(Guid userId, CancellationToken ct = default);
     Task<PortalUser?> GetAggregateAsync(Guid userId, CancellationToken ct = default);
-    Task UpdateAsync(PortalUser portalUser);
 }

@@ -8,6 +8,7 @@ using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
+using static ByteBuy.Core.Specification.PortalUserSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -85,6 +86,12 @@ public class PortalUserService : IPortalUserService
 
         var user = userResult.Value;
 
+        var cartResult = Cart.Create(user);
+        if (cartResult.IsFailure)
+            return Result.Failure<CreatedResponse>(cartResult.Error);
+
+        user.AssignCart(cartResult.Value);
+
         var identityResult = await _userManager.CreateAsync(user, request.Password);
         if (!identityResult.Succeeded)
             return identityResult.ToResult<CreatedResponse>();
@@ -142,39 +149,40 @@ public class PortalUserService : IPortalUserService
             return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         await _portalUserRepository.UpdateAsync(user);
+        await _portalUserRepository.CommitAsync();
 
         return user.ToUpdatedResponse();
     }
 
     public async Task<Result> DeleteAsync(Guid id)
     {
-        var portalUser = await _portalUserRepository.GetPortalUserWithAddress(id);
+        var spec = new PortalUserWithAddressAndPermissionSpec(id);
+        var portalUser = await _portalUserRepository.GetBySpecAsync(spec);
         if (portalUser is null)
             return Result.Failure(Error.NotFound);
 
         portalUser.Deactivate();
 
         await _portalUserRepository.UpdateAsync(portalUser);
+        await _portalUserRepository.CommitAsync();
 
         return Result.Success();
     }
 
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var portalUser = await _portalUserRepository.GetPortalUserWithAllDataByIdAsync(id, ct);
+        var spec = new PortalUserToPortalUserReponseSpec(id);
+        var portalUserDto = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
-        return portalUser is null
+        return portalUserDto is null
             ? Result.Failure<PortalUserResponse>(Error.NotFound)
-            : portalUser.ToPortalUserResponse();
+            : portalUserDto;
     }
 
     public async Task<Result<IReadOnlyCollection<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default)
     {
-        var portalUsers = await _portalUserRepository.GetPortalUsersWithRolesAsync(ct);
-
-        return portalUsers
-            .Select(p => p.ToPortalUserListResponse())
-            .ToList();
+        var spec = new PortalUserToPortalUserListResponseSpec();
+        return await _portalUserRepository.GetListBySpecAsync(spec, ct);
     }
 
     private async Task<Result> UpdateUserRoleAsync(ApplicationUser user, ApplicationRole newRole)

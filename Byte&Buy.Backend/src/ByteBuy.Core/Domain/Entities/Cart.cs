@@ -26,6 +26,9 @@ public class Cart : AuditableEntity, ISoftDeletable
 
     public static Result<Cart> Create(PortalUser user)
     {
+        if (user is null)
+            return Result.Failure<Cart>(Error.Validation("User cannot be null"));
+
         return Result.Success(new Cart(user));
     }
 }

@@ -62,17 +62,18 @@ public class AuthService : IAuthService
 
         var user = userResult.Value;
 
+        var cartResult = Cart.Create(user);
+        if (cartResult.IsFailure)
+            return Result.Failure(cartResult.Error);
+
+        user.AssignCart(cartResult.Value);
+
         var identityResult = await _userManager
             .CreateAsync(user, request.Password);
 
         if (!identityResult.Succeeded)
             return identityResult.ToResult();
-
-        var cartResult = Cart.Create(user);
-        if (cartResult.IsFailure)
-            return cartResult;
-
-        user.AssignCart(cartResult.Value);
+       
         const string defaultRoleName = "PortalUser";
 
         //var roleResult = ApplicationRole.Create(defaultRoleName);
@@ -84,7 +85,6 @@ public class AuthService : IAuthService
         //    await _roleManager.CreateAsync(roleResult.Value);
 
         await _userManager.AddToRoleAsync(user, defaultRoleName);
-
         return Result.Success();
     }
 }
