@@ -125,7 +125,7 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
-    public async Task<Result<IEnumerable<AddressResponse>>> GetUserAddressesAsync(Guid userId, CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<AddressResponse>>> GetUserAddressesAsync(Guid userId, CancellationToken ct)
         => await _addressRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
 
 

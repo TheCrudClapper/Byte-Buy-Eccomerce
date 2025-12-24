@@ -22,7 +22,7 @@ public class RoleRepository : BaseRepository, IRoleRepository
             .AnyAsync(r => r.Name == roleName, ct);
     }
 
-    public async Task<IEnumerable<ApplicationRole>> GetAllAsync(CancellationToken ct)
+    public async Task<IReadOnlyCollection<ApplicationRole>> GetAllAsync(CancellationToken ct)
     {
         return await _context.Roles
             .AsNoTracking()
@@ -36,7 +36,7 @@ public class RoleRepository : BaseRepository, IRoleRepository
             .FirstOrDefaultAsync(r => r.Id == roleId, ct);
     }
 
-    public async Task<IEnumerable<Guid>> GetPermissionIdsByRoleIdAsync(Guid roleId, CancellationToken ct)
+    public async Task<IReadOnlyCollection<Guid>> GetPermissionIdsByRoleIdAsync(Guid roleId, CancellationToken ct)
     {
         return await _context.RolePermissions
             .Where(rp => rp.RoleId == roleId)
@@ -53,7 +53,7 @@ public class RoleRepository : BaseRepository, IRoleRepository
             .FirstOrDefaultAsync(r => r.Id == roleId, ct);
     }
 
-    public async Task<IEnumerable<RolePermission>> GetAllRolePermissionsAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<RolePermission>> GetAllRolePermissionsAsync(CancellationToken ct = default)
     {
         return await _context.RolePermissions
             .ToListAsync(ct);

@@ -16,7 +16,7 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
             .AnyAsync(c => c.Name == name && c.Id != excludedId);
     }
 
-    public async Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct)
+    public async Task<IReadOnlyCollection<Condition>> GetAllAsync(CancellationToken ct)
     {
         return await _context.Conditions
             .ToListAsync(ct);

@@ -78,7 +78,7 @@ public class CategoryService : ICategoryService
             : category.ToCategoryResponse();
     }
 
-    public async Task<Result<IEnumerable<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct)
     {
         var categories = await _categoryRepository.GetAllAsync(ct);
         return categories.Select(c => c.ToCategoryListResponse()).ToList();

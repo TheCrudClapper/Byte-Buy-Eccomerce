@@ -8,6 +8,6 @@ public interface IConditionService
     : IBaseCrudService<Guid, ConditionAddRequest, ConditionUpdateRequest, ConditionResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsListAsync(CancellationToken ct = default);
-    Task<Result<IEnumerable<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<ConditionListResponse>>> GetConditionsListAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default);
 }

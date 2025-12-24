@@ -8,5 +8,5 @@ public interface ICountryService
     : IBaseCrudService<Guid, CountryAddRequest, CountryUpdateRequest, CountryResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default);
 }

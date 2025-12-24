@@ -8,5 +8,5 @@ public interface IRoleService
     : IBaseCrudService<Guid, RoleAddRequest, RoleUpdateRequest, RoleResponse>,
       ISelectableService<Guid>
 {
-    public Task<Result<IEnumerable<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default);
+    public Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default);
 }

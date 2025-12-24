@@ -81,7 +81,7 @@ public class RoleService : IRoleService
         return Result.Success();
     }
 
-    public async Task<Result<IEnumerable<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default)
     {
         var roles = await _roleRepository.GetAllAsync(ct);
         var rolePermissions = await _roleRepository.GetAllRolePermissionsAsync(ct);

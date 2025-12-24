@@ -7,5 +7,5 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IPortalUserService
     : IBaseCrudService<Guid, PortalUserAddRequest, PortalUserUpdateRequest, PortalUserResponse>
 {
-    Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default);
 }

@@ -78,7 +78,7 @@ public class CountryService : ICountryService
             : country.ToCountryResponse();
     }
 
-    public async Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default)
     {
         var countries = await _countryRepository.GetAllAsync(ct);
         return countries.Select(c => c.ToCountryResponse()).ToList();

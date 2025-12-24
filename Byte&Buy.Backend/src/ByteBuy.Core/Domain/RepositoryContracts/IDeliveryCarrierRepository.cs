@@ -7,5 +7,5 @@ public interface IDeliveryCarrierRepository : IRepositoryBase<DeliveryCarrier>
 {
     Task<bool> HasActiveRelationsAsync(Guid carrierId);
     Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? exludeId = null);
-    Task<IEnumerable<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default);
 }

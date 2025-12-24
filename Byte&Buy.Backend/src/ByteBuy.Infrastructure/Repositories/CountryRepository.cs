@@ -16,7 +16,7 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
             .AnyAsync(c => c.Id != excludedId && (c.Name == name || c.Code == code));
     }
 
-    public async Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Country>> GetAllAsync(CancellationToken ct = default)
     {
         return await _context.Countries
             .ToListAsync(ct);

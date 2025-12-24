@@ -6,6 +6,6 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 public interface IConditionRepository : IRepositoryBase<Condition>
 {
     Task<bool> HasActiveRelations(Guid conditionId);
-    Task<IEnumerable<Condition>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<Condition>> GetAllAsync(CancellationToken ct = default);
     Task<bool> ExistWithNameAsync(string name, Guid? excludedId = null);
 }

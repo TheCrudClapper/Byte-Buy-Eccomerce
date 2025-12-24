@@ -98,7 +98,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
             .ToList();
     }
 
-    public async Task<Result<IEnumerable<DeliveryCarrierResponse>>> GetDeliveryCarriersList(
+    public async Task<Result<IReadOnlyCollection<DeliveryCarrierResponse>>> GetDeliveryCarriersList(
         CancellationToken ct = default)
     {
         var carriers = await _deliveryCarrierRepository.GetAllAsync(ct);

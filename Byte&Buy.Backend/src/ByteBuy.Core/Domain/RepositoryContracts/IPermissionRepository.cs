@@ -14,6 +14,6 @@ public interface IPermissionRepository
     Task<bool> HasUserOrRolePermissionAsync(Guid userId, Guid permissionId);
     Task<Permission?> GetByIdAsync(Guid permissionId, CancellationToken ct = default);
     Task<Permission?> GetByNameAsync(string name, CancellationToken ct = default);
-    Task<IEnumerable<Permission>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<Permission>> GetAllAsync(CancellationToken ct = default);
 
 }

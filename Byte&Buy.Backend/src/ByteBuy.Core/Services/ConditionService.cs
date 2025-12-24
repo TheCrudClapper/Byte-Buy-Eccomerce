@@ -78,14 +78,14 @@ public class ConditionService : IConditionService
         return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
     }
 
-    public async Task<Result<IEnumerable<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default)
     {
         var conditions = await _conditionRepository.GetAllAsync(ct);
         return conditions.Select(c => c.ToConditionResponse())
             .ToList();
     }
 
-    public async Task<Result<IEnumerable<ConditionListResponse>>> GetConditionsListAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<ConditionListResponse>>> GetConditionsListAsync(CancellationToken ct = default)
     {
         var condtions = await _conditionRepository.GetAllAsync(ct);
         return condtions.Select(c => c.ToConditionListResponse()).ToList();

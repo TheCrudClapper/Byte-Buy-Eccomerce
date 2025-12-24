@@ -8,5 +8,5 @@ public interface IDeliveryCarrierService
     : IBaseCrudService<Guid, DeliveryCarrierAddRequest, DeliveryCarrierUpdateRequest, DeliveryCarrierResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<IEnumerable<DeliveryCarrierResponse>>> GetDeliveryCarriersList(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<DeliveryCarrierResponse>>> GetDeliveryCarriersList(CancellationToken ct = default);
 }

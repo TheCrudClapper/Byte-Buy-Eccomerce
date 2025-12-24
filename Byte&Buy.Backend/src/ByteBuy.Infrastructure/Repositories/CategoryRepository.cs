@@ -16,7 +16,7 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
             .AnyAsync(c => c.Name == name && c.Id != excludedId);
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken ct)
+    public async Task<IReadOnlyCollection<Category>> GetAllAsync(CancellationToken ct)
     {
         return await _context.Categories
             .ToListAsync(ct);

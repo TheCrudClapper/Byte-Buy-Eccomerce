@@ -168,7 +168,7 @@ public class PortalUserService : IPortalUserService
             : portalUser.ToPortalUserResponse();
     }
 
-    public async Task<Result<IEnumerable<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default)
     {
         var portalUsers = await _portalUserRepository.GetPortalUsersWithRolesAsync(ct);
 

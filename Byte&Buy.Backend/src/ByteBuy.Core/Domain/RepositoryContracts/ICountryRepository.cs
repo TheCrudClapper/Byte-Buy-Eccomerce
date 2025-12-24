@@ -7,5 +7,5 @@ public interface ICountryRepository : IRepositoryBase<Country>
 {
     Task<bool> HasActiveRelationsAsync(Guid countryId);
     Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludedId = null);
-    Task<IEnumerable<Country>> GetAllAsync(CancellationToken ct = default);
+    Task<IReadOnlyCollection<Country>> GetAllAsync(CancellationToken ct = default);
 }

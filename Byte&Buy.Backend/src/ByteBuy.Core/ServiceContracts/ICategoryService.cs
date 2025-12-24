@@ -9,5 +9,5 @@ public interface ICategoryService
     : IBaseCrudService<Guid, CategoryAddRequest, CategoryUpdateRequest, CategoryResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<IEnumerable<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct = default);
 }

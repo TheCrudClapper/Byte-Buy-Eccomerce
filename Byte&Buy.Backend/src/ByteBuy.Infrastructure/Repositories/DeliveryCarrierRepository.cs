@@ -12,7 +12,7 @@ public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDel
     public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludeId = null)
         => await _context.DeliveryCarriers
             .AnyAsync(dc => dc.Id != excludeId && (dc.Name == name || dc.Code == code));
-    public async Task<IEnumerable<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default)
         => await _context.DeliveryCarriers.ToListAsync(ct);
 
     public async Task<bool> HasActiveRelationsAsync(Guid carrierId)

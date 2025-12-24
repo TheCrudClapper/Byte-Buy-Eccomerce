@@ -38,7 +38,7 @@ public class PortalUserRepository : BaseRepository, IPortalUserRepository
             .FirstOrDefaultAsync(p => p.Id == userId, ct);
     }
 
-    public async Task<IEnumerable<PortalUser>> GetPortalUsersWithRolesAsync(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<PortalUser>> GetPortalUsersWithRolesAsync(CancellationToken ct = default)
     {
         return await _context.PortalUsers
             .Include(p => p.UserRoles)
