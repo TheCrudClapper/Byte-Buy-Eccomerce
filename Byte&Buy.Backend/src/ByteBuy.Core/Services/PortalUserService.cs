@@ -14,7 +14,7 @@ namespace ByteBuy.Core.Services;
 
 public class PortalUserService : IPortalUserService
 {
-    private readonly IAddressRepository _addressRepository;
+    private readonly IAddressReadRepository _addressRepository;
     private readonly IPasswordService _passwordService;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IUserRepository _userRepository;
@@ -30,7 +30,7 @@ public class PortalUserService : IPortalUserService
         ICountryRepository countryRepository,
         IAddressValidationService addressValidator,
         IPasswordService passwordService,
-        IAddressRepository addressRepository)
+        IAddressReadRepository addressRepository)
     {
         _portalUserRepository = portalUserRepository;
         _userRepository = userRepository;

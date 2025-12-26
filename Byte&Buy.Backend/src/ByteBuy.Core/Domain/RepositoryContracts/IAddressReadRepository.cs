@@ -3,7 +3,6 @@ using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface IAddressRepository : IRepositoryBase<Address>
+public interface IAddressReadRepository : IRepositoryBase<Address>
 {
-    Task<bool> DoesAddressWithLabelExists(Guid userId, string label);
 }

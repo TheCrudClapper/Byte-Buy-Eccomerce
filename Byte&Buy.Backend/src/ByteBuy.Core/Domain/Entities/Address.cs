@@ -13,8 +13,8 @@ public class Address : AuditableEntity, ISoftDeletable
     public string PostalCity { get; private set; } = null!;
     public string PostalCode { get; private set; } = null!;
     public string? FlatNumber { get; private set; }
-    public Guid? UserId { get; private set; }
-    public PortalUser? User { get; private set; }
+    public Guid UserId { get; private set; }
+    public PortalUser User { get; private set; } = null!;
     public Guid CountryId { get; private set; }
     public Country Country { get; private set; } = null!;
     public bool IsDefault { get; private set; }

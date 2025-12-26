@@ -18,6 +18,15 @@ public static class PortalUserSpecifications
         }
     }
 
+    public sealed class PortalUserWithAddressSpec : Specification<PortalUser>
+    {
+        public PortalUserWithAddressSpec(Guid id)
+        {
+            Query.Where(p => p.Id == id)
+                .Include(p => p.Addresses);
+        }
+    }
+
     public sealed class PortalUserToPortalUserReponseSpec : Specification<PortalUser, PortalUserResponse>
     {
         public PortalUserToPortalUserReponseSpec(Guid id)

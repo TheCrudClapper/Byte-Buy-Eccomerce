@@ -1,4 +1,7 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.ResultTypes;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -81,5 +84,90 @@ public sealed class PortalUser : ApplicationUser
     {
         address.AssignToUser(this);
         Addresses.Add(address);
+    }
+
+    public Result<Address> AddAddress(
+    string label,
+    string city,
+    string street,
+    string houseNumber,
+    string postalCity,
+    string postalCode,
+    string? flatNumber,
+    Country country,
+    bool isDefault,
+    IAddressValidationService validator)
+    {
+        var addressResult = Address.Create(
+            label,
+            city,
+            street,
+            houseNumber,
+            postalCity,
+            postalCode,
+            flatNumber,
+            country,
+            isDefault,
+            validator);
+
+        if (addressResult.IsFailure)
+            return Result.Failure<Address>(addressResult.Error);
+
+        var address = addressResult.Value;
+
+        if (Addresses.Any(a => a.Label == address.Label))
+            return Result.Failure<Address>(AddressErrors.DuplicateLabel);
+
+        if (isDefault)
+        {
+            var currentDefault = Addresses.FirstOrDefault(a => a.IsDefault);
+            currentDefault?.UnmarkAsDefault();
+            address.MarkAsDefault();
+        }
+        address.AssignToUser(this);
+        Addresses.Add(address);
+
+        return address;
+    }
+
+    public Result UpdateAddress(
+        Guid addressId, string label, string city, string street, string houseNumber, string postalCity,
+        string postalCode, string? flatNumber, Country country, bool isDefault, IAddressValidationService validator)
+    {
+        var address = Addresses.FirstOrDefault(a => a.Id == addressId);
+        if (address is null)
+            return Result.Failure(Error.NotFound);
+
+        if (Addresses.Any(a => a.Id != addressId && a.Label == label))
+            return Result.Failure(AddressErrors.DuplicateLabel);
+
+        if (address.IsDefault && !address.IsDefault)
+            return Result.Failure(AddressErrors.CannotUnsetCurrentDefault);
+
+        if (!address.IsDefault && isDefault)
+        {
+            var currentDefault = Addresses.FirstOrDefault(a => a.IsDefault);
+            currentDefault?.UnmarkAsDefault();
+        }
+
+        var result = address.Update(
+           label, city, street, houseNumber,
+           postalCity, postalCode, flatNumber,
+           country, isDefault, validator);
+
+        return result;
+    }
+
+    public Result RemoveAddress(Guid addressId)
+    {
+        var address = Addresses.FirstOrDefault(a => a.Id == addressId);
+        if (address is null)
+            return Result.Failure(Error.NotFound);
+
+        if (address.IsDefault)
+            return Result.Failure(AddressErrors.CannotDeleteCurrentDefault);
+
+        address.Deactivate();
+        return Result.Success();
     }
 }

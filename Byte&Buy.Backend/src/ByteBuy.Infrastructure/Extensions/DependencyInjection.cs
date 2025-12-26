@@ -20,7 +20,6 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-        services.AddScoped<ICartRepository, CartRepository>();
         services.AddScoped<ICompanyInfoRepository, CompanyInfoRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IPermissionRepository, PermissionRepository>();
@@ -30,7 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IDeliveryRepository, DeliveryRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IPortalUserRepository, PortalUserRepository>();
-        services.AddScoped<IAddressRepository, AddressRepository>();
+        services.AddScoped<IAddressReadRepository, AddressRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IDeliveryCarrierRepository, DeliveryCarrierRepository>();
         services.AddScoped<IImageStorage, ImageStorage>();

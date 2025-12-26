@@ -15,7 +15,6 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
 
     public AuthService(UserManager<ApplicationUser> userManager,
-        ICartRepository cartRepository,
         ITokenService tokenService,
         IUserRepository userRepository)
     {
