@@ -125,10 +125,6 @@ public class PortalUserService : IPortalUserService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        var addressUpdateResult = await HandleAddressUpdateAsync(user, request.Address);
-        if (addressUpdateResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(addressUpdateResult.Error);
-
         if (!string.IsNullOrWhiteSpace(request.Password))
         {
             var validation = await _passwordService.ValidateAsync(user, request.Password);
@@ -203,61 +199,6 @@ public class PortalUserService : IPortalUserService
         var add = await _userManager.AddToRoleAsync(user, newRole.Name!);
         if (!add.Succeeded)
             return add.ToResult();
-
-        return Result.Success();
-    }
-
-    private async Task<Result> HandleAddressUpdateAsync(PortalUser user, UserAddressUpdateRequest? request)
-    {
-        if (request == null)
-            return Result.Success();
-
-        var country = await _countryRepository.GetByIdAsync(request.CountryId);
-        if (country is null)
-            return Result.Failure(Error.NotFound);
-
-        if (request.Id == Guid.Empty)
-        {
-            var addressResult = Address.Create(
-                request.Label,
-                request.City,
-                request.Street,
-                request.HouseNumber,
-                request.PostalCity,
-                request.PostalCode,
-                request.FlatNumber,
-                country,
-                true,
-                _addressValidator);
-
-            if (addressResult.IsFailure)
-                return Result.Failure(addressResult.Error);
-
-            var newAddress = addressResult.Value;
-            user.AssignAddress(newAddress);
-        }
-        else
-        {
-            var address = await _addressRepository.GetByIdAsync(request.Id);
-            if (address is null)
-                return Result.Failure(Error.NotFound);
-
-            var addressUpdateResult = address.Update(
-                request.Label,
-                request.City,
-                request.Street,
-                request.HouseNumber,
-                request.PostalCity,
-                request.PostalCode,
-                request.FlatNumber,
-                country,
-                true,
-                _addressValidator
-                );
-
-            if (addressUpdateResult.IsFailure)
-                return Result.Failure(addressUpdateResult.Error);
-        }
 
         return Result.Success();
     }

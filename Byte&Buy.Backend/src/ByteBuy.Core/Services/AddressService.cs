@@ -15,7 +15,7 @@ namespace ByteBuy.Core.Services;
 public class AddressService : IAddressService
 {
     private readonly IPortalUserRepository _portalUserRepository;
-    private readonly IAddressReadRepository _addressRepository;
+    private readonly IAddressReadRepository _addressReadRepository;
     private readonly ICountryRepository _countryRepository;
     private readonly IAddressValidationService _addressValidator;
     public AddressService(IAddressReadRepository addressRepository,
@@ -24,7 +24,7 @@ public class AddressService : IAddressService
         IPortalUserRepository portalUserRepository)
     {
         _portalUserRepository = portalUserRepository;
-        _addressRepository = addressRepository;
+        _addressReadRepository = addressRepository;
         _addressValidator = addressValidator;
         _countryRepository = countryRepository;
     }
@@ -95,12 +95,13 @@ public class AddressService : IAddressService
         await _portalUserRepository.UpdateAsync(user);
         await _portalUserRepository.CommitAsync();
 
-        return user.ToUpdatedResponse();
+        var updated = user.Addresses.Single(a => a.Id == addressId);
+        return updated.ToUpdatedResponse();
     }
 
     public async Task<Result<AddressResponse>> GetUserAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
     {
-        var addressDto = await _addressRepository.GetBySpecAsync(new UserAddresToDtoSpec(userId, addressId), ct);
+        var addressDto = await _addressReadRepository.GetBySpecAsync(new UserAddresToDtoSpec(userId, addressId), ct);
         if (addressDto is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
@@ -109,7 +110,7 @@ public class AddressService : IAddressService
 
     public async Task<Result<AddressResponse>> GetByIdAsync(Guid addressId, CancellationToken ct = default)
     {
-        var addressDto = await _addressRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
+        var addressDto = await _addressReadRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
         if (addressDto is null)
             return Result.Failure<AddressResponse>(Error.NotFound);
 
@@ -117,7 +118,7 @@ public class AddressService : IAddressService
     }
 
     public async Task<Result<IReadOnlyCollection<AddressResponse>>> GetUserAddressesAsync(Guid userId, CancellationToken ct)
-        => await _addressRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
+        => await _addressReadRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
 
 
     public async Task<Result> DeleteUserAddressAsync(Guid userId, Guid addressId)
