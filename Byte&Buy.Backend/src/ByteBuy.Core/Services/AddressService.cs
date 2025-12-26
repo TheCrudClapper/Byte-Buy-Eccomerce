@@ -47,7 +47,7 @@ public class AddressService : IAddressService
             request.PostalCity,
             request.PostalCode,
             request.FlatNumber,
-            country,
+            country.Id,
             request.IsDefault,
             _addressValidator
             );
@@ -83,7 +83,7 @@ public class AddressService : IAddressService
             request.PostalCity,
             request.PostalCode,
             request.FlatNumber,
-            country,
+            country.Id,
             request.IsDefault,
             _addressValidator
             );

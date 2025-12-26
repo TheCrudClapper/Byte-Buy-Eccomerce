@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Services.DTO.Address;
-using ByteBuy.Services.DTO.Shared;
-using ByteBuy.Services.ResultTypes;
+﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;

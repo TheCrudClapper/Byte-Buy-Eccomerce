@@ -90,7 +90,7 @@ public sealed class PortalUser : ApplicationUser
     string postalCity,
     string postalCode,
     string? flatNumber,
-    Country country,
+    Guid countryId,
     bool isDefault,
     IAddressValidationService validator)
     {
@@ -102,7 +102,7 @@ public sealed class PortalUser : ApplicationUser
             postalCity,
             postalCode,
             flatNumber,
-            country,
+            countryId,
             isDefault,
             validator);
 
@@ -128,7 +128,7 @@ public sealed class PortalUser : ApplicationUser
 
     public Result UpdateAddress(
         Guid addressId, string label, string city, string street, string houseNumber, string postalCity,
-        string postalCode, string? flatNumber, Country country, bool isDefault, IAddressValidationService validator)
+        string postalCode, string? flatNumber, Guid countryId, bool isDefault, IAddressValidationService validator)
     {
         var address = Addresses.FirstOrDefault(a => a.Id == addressId);
         if (address is null)
@@ -149,7 +149,7 @@ public sealed class PortalUser : ApplicationUser
         var result = address.Update(
            label, city, street, houseNumber,
            postalCity, postalCode, flatNumber,
-           country, isDefault, validator);
+           countryId, isDefault, validator);
 
         return result;
     }

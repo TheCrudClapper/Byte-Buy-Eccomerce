@@ -63,7 +63,7 @@ public class PortalUserService : IPortalUserService
             request.Address.PostalCity,
             request.Address.PostalCode,
             request.Address.FlatNumber,
-            country,
+            country.Id,
             true,
             _addressValidator);
 

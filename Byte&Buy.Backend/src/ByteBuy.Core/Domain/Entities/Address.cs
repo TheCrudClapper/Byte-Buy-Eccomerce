@@ -25,7 +25,7 @@ public class Address : AuditableEntity, ISoftDeletable
     private Address(string label, string city,
         string street, string houseNumber,
         string postalCity, string postalCode,
-        string? flatNumber, Country country, bool isDefault)
+        string? flatNumber, Guid countryId, bool isDefault)
     {
         Label = label;
         City = city;
@@ -34,8 +34,7 @@ public class Address : AuditableEntity, ISoftDeletable
         PostalCity = postalCity;
         PostalCode = postalCode;
         FlatNumber = flatNumber;
-        Country = country;
-        CountryId = country.Id;
+        CountryId = countryId;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
         IsDefault = isDefault;
@@ -58,21 +57,18 @@ public class Address : AuditableEntity, ISoftDeletable
     }
 
     public static Result<Address> Create(string label, string city, string street,
-        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault,
+        string houseNumber, string postalCity, string postalCode, string? flatNumber, Guid countryId, bool isDefault,
         IAddressValidationService validator)
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
         if (validationResult.IsFailure)
             return Result.Failure<Address>(validationResult.Error);
 
-        if (country is null)
-            return Result.Failure<Address>(Error.Validation("Country can't be null"));
-
-        return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, country, isDefault);
+        return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, countryId, isDefault);
     }
 
     public Result Update(string label, string city, string street,
-        string houseNumber, string postalCity, string postalCode, string? flatNumber, Country country, bool isDefault,
+        string houseNumber, string postalCity, string postalCode, string? flatNumber, Guid countryId, bool isDefault,
         IAddressValidationService validator)
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
@@ -87,8 +83,7 @@ public class Address : AuditableEntity, ISoftDeletable
         PostalCode = postalCode;
         FlatNumber = flatNumber;
         IsDefault = isDefault;
-        Country = country;
-        CountryId = country.Id;
+        CountryId = countryId;
         DateEdited = DateTime.UtcNow;
 
         return Result.Success();
