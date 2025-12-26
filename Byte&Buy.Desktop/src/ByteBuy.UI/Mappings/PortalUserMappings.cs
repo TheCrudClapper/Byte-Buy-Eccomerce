@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.PortalUser;
+﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.PortalUser;
 using ByteBuy.UI.ModelsUI.PortalUser;
 using ByteBuy.UI.ViewModels;
@@ -35,17 +35,7 @@ public static class PortalUserMappings
     /// <returns>Ready to use DTO</returns>
     public static PortalUserAddRequest MapToAddRequest(PortalUserPageViewModel vm)
     {
-        var address = new UserAddressAddRequest(
-                vm.SelectedCountry!.Id,
-                vm.Label,
-                vm.Street,
-                vm.HouseNumber,
-                vm.PostalCode,
-                vm.PostalCity,
-                vm.City,
-                vm.FlatNumber
-                );
-
+        var address = MapToAddressAddRequest(vm);
         var request = new PortalUserAddRequest
             (
                 vm.SelectedRole!.Id,
@@ -69,25 +59,6 @@ public static class PortalUserMappings
     /// <returns>Ready to use DTO</returns>
     public static PortalUserUpdateRequest MapToUpdateRequest(PortalUserPageViewModel vm)
     {
-        UserAddressUpdateRequest? address;
-        if (vm.IsAddressIncluded)
-        {
-            address = new UserAddressUpdateRequest(
-              vm.AddressEditId!.Value,
-              vm.SelectedCountry!.Id,
-              vm.Label,
-              vm.Street,
-              vm.HouseNumber,
-              vm.PostalCode,
-              vm.PostalCity,
-              vm.City,
-              vm.FlatNumber
-          );
-        }
-        else
-            address = null;
-
-
         var request = new PortalUserUpdateRequest(
                 vm.SelectedRole!.Id,
                 vm.FirstName,
@@ -95,12 +66,38 @@ public static class PortalUserMappings
                 vm.Email,
                 vm.Password,
                 vm.PhoneNumber,
-                address,
                 vm.PermissionListBox.ExtractGrantedPermissions(),
                 vm.PermissionListBox.ExtractRevokedPermissions()
             );
 
         return request;
+    }
+
+    public static AddressAddRequest MapToAddressAddRequest(this PortalUserPageViewModel vm)
+    {
+        return new AddressAddRequest(vm.SelectedCountry?.Id ?? Guid.Empty,
+            vm.Label,
+            vm.Street,
+            vm.HouseNumber,
+            vm.PostalCode,
+            vm.PostalCity,
+            vm.City,
+            vm.FlatNumber,
+            true);
+    }
+
+    public static AddressUpdateRequest MapToAddressUpdateRequest(this PortalUserPageViewModel vm)
+    {
+        return new AddressUpdateRequest(
+            vm.SelectedCountry?.Id ?? Guid.Empty,
+            vm.Label,
+            vm.Street,
+            vm.HouseNumber,
+            vm.PostalCode,
+            vm.PostalCity,
+            vm.City,
+            vm.FlatNumber,
+            true);
     }
 
     /// <summary>
@@ -121,7 +118,7 @@ public static class PortalUserMappings
         vm.Street = response.Address?.Street ?? string.Empty;
         vm.HouseNumber = response.Address?.HouseNumber ?? string.Empty;
         vm.FlatNumber = response.Address?.FlatNumber;
-        vm.AddressEditId = response.Address?.Id ?? Guid.Empty;
+        vm.AddressEditId = response.Address?.Id ?? null;
         vm.City = response.Address?.City ?? string.Empty;
         vm.PostalCode = response.Address?.PostalCode ?? string.Empty;
         vm.PostalCity = response.Address?.PostalCity ?? string.Empty;

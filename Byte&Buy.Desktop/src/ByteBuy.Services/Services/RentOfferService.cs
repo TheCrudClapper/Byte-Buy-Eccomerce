@@ -9,7 +9,7 @@ namespace ByteBuy.Services.Services;
 public class RentOfferService(IRentOfferHttpClient httpClient) : IRentOfferService
 {
     public async Task<Result<CreatedResponse>> Add(RentOfferAddRequest request)
-        =>  await httpClient.PostRentOfferAsync(request);
+        => await httpClient.PostRentOfferAsync(request);
 
     public async Task<Result> DeleteById(Guid id)
         => await httpClient.DeleteByIdAsync(id);

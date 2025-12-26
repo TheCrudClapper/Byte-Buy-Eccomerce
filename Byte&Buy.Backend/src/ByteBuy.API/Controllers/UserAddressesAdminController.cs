@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/users/{userId:guid}/addresses")]
 [ApiController]
 public class UserAddressesAdminController : BaseApiController
 {

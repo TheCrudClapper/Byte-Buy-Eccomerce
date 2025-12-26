@@ -1,7 +1,6 @@
 ﻿namespace ByteBuy.Services.DTO.Address;
 
 public record AddressUpdateRequest(
-    Guid Id,
     Guid CountryId,
     string Label,
     string Street,
@@ -9,5 +8,6 @@ public record AddressUpdateRequest(
     string PostalCode,
     string PostalCity,
     string City,
-    string? FlatNumber
+    string? FlatNumber,
+    bool IsDefault
 );

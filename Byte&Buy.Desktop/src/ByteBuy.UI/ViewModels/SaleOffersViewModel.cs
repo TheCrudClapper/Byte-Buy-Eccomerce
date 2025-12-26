@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.RentOffer;
 using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;

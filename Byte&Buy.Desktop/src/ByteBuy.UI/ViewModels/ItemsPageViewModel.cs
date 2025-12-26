@@ -1,5 +1,4 @@
-﻿using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Items;
@@ -8,7 +7,6 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;

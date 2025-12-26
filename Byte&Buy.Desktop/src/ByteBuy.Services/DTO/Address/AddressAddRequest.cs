@@ -8,5 +8,6 @@ public record AddressAddRequest(
     string PostalCode,
     string PostalCity,
     string City,
-    string? FlatNumber
+    string? FlatNumber,
+    bool IsDefault
 );

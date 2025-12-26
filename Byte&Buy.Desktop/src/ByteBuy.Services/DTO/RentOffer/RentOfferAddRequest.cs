@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Services.DTO.RentOffer;
+﻿namespace ByteBuy.Services.DTO.RentOffer;
 
 public record RentOfferAddRequest(
     Guid ItemId,

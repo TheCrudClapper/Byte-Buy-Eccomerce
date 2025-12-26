@@ -1,7 +1,5 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.ResultTypes;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Metrics;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -28,9 +26,7 @@ public sealed class PortalUser : ApplicationUser
     {
         base.Deactivate();
         foreach (var address in Addresses)
-        {
             address.Deactivate();
-        }
     }
 
     public static Result<PortalUser> CreateWithAddress(
@@ -141,7 +137,7 @@ public sealed class PortalUser : ApplicationUser
         if (Addresses.Any(a => a.Id != addressId && a.Label == label))
             return Result.Failure(AddressErrors.DuplicateLabel);
 
-        if (address.IsDefault && !address.IsDefault)
+        if (address.IsDefault && !isDefault)
             return Result.Failure(AddressErrors.CannotUnsetCurrentDefault);
 
         if (!address.IsDefault && isDefault)

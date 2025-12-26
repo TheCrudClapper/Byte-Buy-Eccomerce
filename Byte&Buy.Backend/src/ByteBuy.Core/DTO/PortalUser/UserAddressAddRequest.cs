@@ -12,4 +12,6 @@ public record UserAddressAddRequest(
 [Required, MaxLength(20)] string PostalCode,
 [Required, MaxLength(50)] string PostalCity,
 [Required, MaxLength(50)] string City,
-[MaxLength(10)] string? FlatNumber);
+[MaxLength(10)] string? FlatNumber,
+[Required] bool IsDefault
+);

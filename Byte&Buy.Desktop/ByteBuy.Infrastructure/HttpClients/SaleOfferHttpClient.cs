@@ -5,7 +5,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class SaleOfferHttpClient : HttpClientBase ,ISaleOfferHttpClient
+public class SaleOfferHttpClient : HttpClientBase, ISaleOfferHttpClient
 {
     private const string resource = "saleoffers";
     public SaleOfferHttpClient(HttpClient httpClient) : base(httpClient) { }

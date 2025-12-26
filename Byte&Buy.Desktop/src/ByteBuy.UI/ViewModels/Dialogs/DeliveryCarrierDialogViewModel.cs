@@ -1,7 +1,5 @@
-﻿using ByteBuy.Core.DTO.Country;
-using ByteBuy.Services.DTO.DeliveryCarrier;
+﻿using ByteBuy.Services.DTO.DeliveryCarrier;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.Services.Services;
 using ByteBuy.UI.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;

@@ -1,5 +1,4 @@
-﻿using ByteBuy.Services.DTO.RentOffer;
-using ByteBuy.Services.DTO.SaleOffer;
+﻿using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ResultTypes;
 

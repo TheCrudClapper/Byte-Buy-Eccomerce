@@ -16,7 +16,7 @@ public class SaleOfferService(ISaleOfferHttpClient httpClient) : ISaleOfferServi
 
     public async Task<Result<SaleOfferResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
-     
+
     public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetList()
         => await httpClient.GetListAsync();
 

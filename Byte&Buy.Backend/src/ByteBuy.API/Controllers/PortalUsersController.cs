@@ -19,5 +19,4 @@ public class PortalUsersController
     [HttpGet("list")]
     public async Task<ActionResult<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct)
         => HandleResult(await _portalUserService.GetPortalUsersListAsync(ct));
-
 }

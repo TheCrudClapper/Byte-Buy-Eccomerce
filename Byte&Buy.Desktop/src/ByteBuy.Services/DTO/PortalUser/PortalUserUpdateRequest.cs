@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.DTO.PortalUser;
-
-namespace ByteBuy.Services.DTO.PortalUser;
+﻿namespace ByteBuy.Services.DTO.PortalUser;
 
 public record PortalUserUpdateRequest(
     Guid RoleId,
@@ -9,7 +7,6 @@ public record PortalUserUpdateRequest(
     string Email,
     string? Password,
     string? PhoneNumber,
-    UserAddressUpdateRequest? Address,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
 );

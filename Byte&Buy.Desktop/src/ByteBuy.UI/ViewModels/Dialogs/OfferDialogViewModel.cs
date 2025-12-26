@@ -1,7 +1,4 @@
-﻿using Avalonia;
-using ByteBuy.Services.DTO.Delivery;
-using ByteBuy.Services.ServiceContracts;
-using ByteBuy.Services.Services;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.ModelsUI.Items;
@@ -12,7 +9,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
 public partial class OfferDialogViewModel(IDeliveryService deliveryService,
@@ -174,6 +170,6 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
             Error = "At least one delivery is required";
             return false;
         }
-        return true;    
+        return true;
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [Resource("addresses")]
-[Route("api/[controller]")]
+[Route("api/users/addresses")]
 [ApiController]
 public class MyAddressesController : BaseApiController
 {
@@ -17,6 +17,7 @@ public class MyAddressesController : BaseApiController
     public MyAddressesController(IAddressService addressService)
        => _addressService = addressService;
 
+    [HttpPost]
     public async Task<ActionResult<CreatedResponse>> PostAddress(AddressAddRequest request)
         => HandleResult(await _addressService.AddAsync(CurrentUserId, request));
 

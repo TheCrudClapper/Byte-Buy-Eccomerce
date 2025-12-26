@@ -1,8 +1,8 @@
-﻿using ByteBuy.Services.DTO.Delivery;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace ByteBuy.UI.ModelsUI.Delivery;
+
 public partial class DeliveryOption : ObservableObject
 {
     public Guid Id { get; set; }

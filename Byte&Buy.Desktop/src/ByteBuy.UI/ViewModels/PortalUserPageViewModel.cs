@@ -1,14 +1,18 @@
-﻿using ByteBuy.Services.DTO.Shared;
+﻿using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Services.DTO.Address;
+using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
@@ -95,14 +99,17 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private readonly IRoleService _roleService;
     private readonly ICountryService _countryService;
     private readonly IPortalUserService _portalUserService;
+    private readonly IAddressService _addressService;
     public PortalUserPageViewModel(AlertViewModel alert,
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
         IPortalUserService userService,
+        IAddressService addressService,
         ICountryService countryService) : base(alert)
     {
         PermissionListBox = listBox;
         _roleService = roleService;
+        _addressService = addressService;
         _countryService = countryService;
         _portalUserService = userService;
     }
@@ -143,7 +150,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         }
 
         var request = PortalUserMappings.MapToAddRequest(this);
-
         var result = await _portalUserService.Add(request);
         HandleResult(result, "Successfullt added new user!");
     }
@@ -165,6 +171,31 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         PermissionListBox.ClearSelectedPermissions();
     }
 
+    [RelayCommand]
+    private async Task SaveAddress()
+    {
+        ValidateAllProperties();
+        if (AddressEditId is null)
+        {
+            var address = PortalUserMappings.MapToAddressAddRequest(this);
+            var result = await _addressService.AddAsync(
+                EditingItemId.GetValueOrDefault(),
+                address);
+
+            HandleResult(result, "Successfully assigned address for user");
+        }
+        else
+        {
+            var address = PortalUserMappings.MapToAddressUpdateRequest(this);
+            var result = await _addressService.UpdateAsync(
+                EditingItemId.GetValueOrDefault(),
+                AddressEditId.GetValueOrDefault(),
+                address);
+
+            HandleResult(result, "Successfully edited user's address");
+        }
+    }
+
     public async Task InitializeForEdit(Guid itemId)
     {
         EditingItemId = itemId;
@@ -176,7 +207,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         if (!ok || value is null)
             return;
 
-        IsAddressIncluded = value.Address is null ? false : true;
+        IsAddressIncluded = value.Address is not null;
         PortalUserMappings.MapFromResponse(this, value);
     }
 
