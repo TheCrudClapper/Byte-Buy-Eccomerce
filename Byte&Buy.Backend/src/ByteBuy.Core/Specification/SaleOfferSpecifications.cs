@@ -11,7 +11,8 @@ public static class SaleOfferSpecifications
     {
         public SaleOfferToSaleOfferListResponseSpec()
         {
-            Query.Select(SaleOfferMappings.SaleOfferListProjection);
+            Query.AsNoTracking()
+                 .Select(SaleOfferMappings.SaleOfferListProjection);
         }
     }
 
@@ -19,8 +20,9 @@ public static class SaleOfferSpecifications
     {
         public SaleOfferToSaleOfferResponseSpec(Guid id)
         {
-            Query.Where(so => so.Id == id)
-                .Select(SaleOfferMappings.SaleOfferResponseProjection);
+            Query.AsNoTracking()
+                 .Where(so => so.Id == id)
+                 .Select(SaleOfferMappings.SaleOfferResponseProjection);
         }
     }
 }

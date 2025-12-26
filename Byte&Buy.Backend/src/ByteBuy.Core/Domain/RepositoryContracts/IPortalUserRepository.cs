@@ -5,5 +5,4 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IPortalUserRepository : IRepositoryBase<PortalUser>
 {
-    Task<PortalUser?> GetAggregateAsync(Guid userId, CancellationToken ct = default);
 }

@@ -11,7 +11,8 @@ public static class RentOfferSpecifications
     {
         public RentOfferToRentOfferListResponseSpec()
         {
-            Query.Select(RentOfferMappings.RentOfferListProjection);
+            Query.AsNoTracking()
+                 .Select(RentOfferMappings.RentOfferListProjection);
         }
     }
 
@@ -19,8 +20,9 @@ public static class RentOfferSpecifications
     {
         public RentOfferToRentOfferResponseSpec(Guid id)
         {
-            Query.Where(ro => ro.Id == id)
-                .Select(RentOfferMappings.RentOfferResponseProjection);
+            Query.AsNoTracking()
+                 .Where(ro => ro.Id == id)
+                 .Select(RentOfferMappings.RentOfferResponseProjection);
         }
     }
 }

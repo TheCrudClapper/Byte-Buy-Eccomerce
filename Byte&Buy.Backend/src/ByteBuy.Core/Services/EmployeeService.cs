@@ -103,6 +103,8 @@ public class EmployeeService : IEmployeeService
             request.Country,
             request.FlatNumber,
             request.PhoneNumber,
+            request.GrantedPermissionIds,
+            request.RevokedPermissionIds,
             _addressValidator);
 
         if (updateResult.IsFailure)
@@ -122,10 +124,6 @@ public class EmployeeService : IEmployeeService
         var roleChange = await UpdateEmployeeRoleAsync(employee, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
-
-        var permissionResult = employee.SetPermissionOverrides(request.RevokedPermissionIds, request.GrantedPermissionIds);
-        if (permissionResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
         await _employeeRepository.CommitAsync();

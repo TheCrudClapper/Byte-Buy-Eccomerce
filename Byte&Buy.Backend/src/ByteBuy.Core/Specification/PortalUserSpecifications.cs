@@ -8,6 +8,16 @@ namespace ByteBuy.Core.Specification;
 
 public static class PortalUserSpecifications
 {
+    public sealed class PortalUserAggregateSpec : Specification<PortalUser>
+    {
+        public PortalUserAggregateSpec(Guid id)
+        {
+            Query.IgnoreQueryFilters()
+                .Where(p => p.Id == id)
+                .Include(p => p.UserPermissions)
+                .Include(p => p.Addresses);
+        }
+    }
     public sealed class PortalUserWithAddressAndPermissionSpec : Specification<PortalUser>
     {
         public PortalUserWithAddressAndPermissionSpec(Guid id)

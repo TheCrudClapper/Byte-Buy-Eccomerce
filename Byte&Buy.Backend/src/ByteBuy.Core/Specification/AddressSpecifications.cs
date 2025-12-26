@@ -26,8 +26,9 @@ public static class AddressSpecifications
     {
         public UserAddresToDtoSpec(Guid userId, Guid addressId)
         {
-            Query.Where(a => a.Id == addressId && a.UserId == userId)
-                .Select(AddressMappings.AddressDtoProjection);
+            Query.AsNoTracking()
+                .Where(a => a.Id == addressId && a.UserId == userId)
+                 .Select(AddressMappings.AddressDtoProjection);
         }
     }
 
@@ -35,8 +36,9 @@ public static class AddressSpecifications
     {
         public AddresToDtoSpec(Guid addressId)
         {
-            Query.Where(a => a.Id == addressId)
-                .Select(AddressMappings.AddressDtoProjection);
+            Query.AsNoTracking()
+                 .Where(a => a.Id == addressId)
+                 .Select(AddressMappings.AddressDtoProjection);
         }
     }
 
@@ -46,6 +48,7 @@ public static class AddressSpecifications
         {
             Query
            .Where(a => a.UserId == userId)
+           .AsNoTracking()
            .Select(AddressMappings.AddressDtoProjection);
         }
     }

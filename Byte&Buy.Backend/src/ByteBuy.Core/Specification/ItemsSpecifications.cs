@@ -10,7 +10,8 @@ public static class ItemsSpecifications
     {
         public CompanyItemsToItemListResponseSpec()
         {
-            Query.Where(i => i.IsCompanyItem)
+            Query.AsNoTracking()
+                 .Where(i => i.IsCompanyItem)
                  .Select(ItemsMappings.ItemListResponseProjection);
         }
     }
@@ -18,8 +19,9 @@ public static class ItemsSpecifications
     {
         public CompanyItemToItemResponseDtoSpec(Guid id)
         {
-            Query.Where(i => i.Id == id && i.IsCompanyItem)
-                .Select(ItemsMappings.ItemResponseProjection);
+            Query.AsNoTracking()
+                 .Where(i => i.Id == id && i.IsCompanyItem)
+                 .Select(ItemsMappings.ItemResponseProjection);
         }
     }
 }

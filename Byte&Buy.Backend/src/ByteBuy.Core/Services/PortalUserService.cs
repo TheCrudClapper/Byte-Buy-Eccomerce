@@ -14,7 +14,6 @@ namespace ByteBuy.Core.Services;
 
 public class PortalUserService : IPortalUserService
 {
-    private readonly IAddressReadRepository _addressRepository;
     private readonly IPasswordService _passwordService;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IUserRepository _userRepository;
@@ -29,8 +28,7 @@ public class PortalUserService : IPortalUserService
         RoleManager<ApplicationRole> roleManager,
         ICountryRepository countryRepository,
         IAddressValidationService addressValidator,
-        IPasswordService passwordService,
-        IAddressReadRepository addressRepository)
+        IPasswordService passwordService)
     {
         _portalUserRepository = portalUserRepository;
         _userRepository = userRepository;
@@ -39,7 +37,6 @@ public class PortalUserService : IPortalUserService
         _addressValidator = addressValidator;
         _countryRepository = countryRepository;
         _passwordService = passwordService;
-        _addressRepository = addressRepository;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(PortalUserAddRequest request)
@@ -105,7 +102,9 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
     {
-        var user = await _portalUserRepository.GetAggregateAsync(id);
+        var spec = new PortalUserAggregateSpec(id);
+        var user = await _portalUserRepository.GetBySpecAsync(spec);
+
         if (user is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -120,7 +119,9 @@ public class PortalUserService : IPortalUserService
             request.FirstName,
             request.LastName,
             request.Email,
-            request.PhoneNumber);
+            request.PhoneNumber,
+            request.GrantedPermissionIds,
+            request.RevokedPermissionIds);
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
@@ -139,10 +140,6 @@ public class PortalUserService : IPortalUserService
         var roleChange = await UpdateUserRoleAsync(user, newRole);
         if (roleChange.IsFailure)
             return Result.Failure<UpdatedResponse>(roleChange.Error);
-
-        var permissionResult = user.SetPermissionOverrides(request.RevokedPermissionIds, request.GrantedPermissionIds);
-        if (permissionResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         await _portalUserRepository.UpdateAsync(user);
         await _portalUserRepository.CommitAsync();

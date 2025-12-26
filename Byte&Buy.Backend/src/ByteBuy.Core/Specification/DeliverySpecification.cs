@@ -12,7 +12,8 @@ public static class DeliverySpecifications
     {
         public DeliveryToDeliveryListResponseSpec()
         {
-            Query.Select(DeliveryMappings.DeliveryListResponseProjection);
+            Query.AsNoTracking()
+                .Select(DeliveryMappings.DeliveryListResponseProjection);
         }
     }
 
@@ -20,7 +21,8 @@ public static class DeliverySpecifications
     {
         public DeliveryToSelectListItemSpec()
         {
-            Query.Select(DeliveryMappings.DeliverySelectListProjection);
+            Query.AsNoTracking()
+                .Select(DeliveryMappings.DeliverySelectListProjection);
         }
     }
 
@@ -28,7 +30,8 @@ public static class DeliverySpecifications
     {
         public DeliveryToDeliveryOptionResponseSpec()
         {
-            Query.Select(DeliveryMappings.DeliveryOptionResponseProjection);
+            Query.AsNoTracking()
+                .Select(DeliveryMappings.DeliveryOptionResponseProjection);
         }
     }
 }

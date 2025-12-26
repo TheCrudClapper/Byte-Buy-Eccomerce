@@ -56,7 +56,9 @@ public sealed class PortalUser : ApplicationUser
         string firstName,
         string lastName,
         string email,
-        string? phoneNumber)
+        string? phoneNumber,
+        IEnumerable<Guid>? grantedPermissionIds,
+        IEnumerable<Guid>? revokedPermissionIds)
     {
         var validationResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
         if (validationResult.IsFailure)
@@ -67,6 +69,10 @@ public sealed class PortalUser : ApplicationUser
         Email = email;
         DateEdited = DateTime.UtcNow;
         PhoneNumber = phoneNumber;
+
+        var permissionOverrideResult = SetPermissionOverrides(revokedPermissionIds, grantedPermissionIds);
+        if (permissionOverrideResult.IsFailure)
+            return Result.Failure(permissionOverrideResult.Error);
 
         return Result.Success();
     }

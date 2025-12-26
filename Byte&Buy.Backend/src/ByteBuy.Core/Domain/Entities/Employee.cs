@@ -79,6 +79,8 @@ public sealed class Employee : ApplicationUser
         string country,
         string? flatNumber,
         string? phoneNumber,
+        IEnumerable<Guid>? grantedPermissionIds,
+        IEnumerable<Guid>? revokedPermissionIds,
         IAddressValidationService validator)
     {
 
@@ -98,6 +100,10 @@ public sealed class Employee : ApplicationUser
         Email = email;
         HomeAddress = addressResult.Value;
         DateEdited = DateTime.UtcNow;
+
+        var permissionOverrideResult = SetPermissionOverrides(revokedPermissionIds, grantedPermissionIds);
+        if (permissionOverrideResult.IsFailure)
+            return Result.Failure(permissionOverrideResult.Error);
 
         return Result.Success();
     }
