@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO;
+﻿using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts.Base;

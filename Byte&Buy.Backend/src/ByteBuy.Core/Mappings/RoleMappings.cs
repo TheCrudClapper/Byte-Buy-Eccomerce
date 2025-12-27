@@ -1,17 +1,18 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
+using ByteBuy.Core.DTO.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
 public static class RoleMappings
 {
-    public static SelectListItemResponse<Guid> ToSelectListItemResponse(this ApplicationRole role)
-        => new SelectListItemResponse<Guid>(role.Id, role.Name!);
+    //Deprecated
+    //public static SelectListItemResponse<Guid> ToSelectListItemResponse(this ApplicationRole role)
+    //    => new SelectListItemResponse<Guid>(role.Id, role.Name!);
 
-    public static RoleResponse ToRoleResponse(this ApplicationRole role, IEnumerable<Guid> permissionIds)
-        => new RoleResponse(role.Id, role.Name!, permissionIds);
+    //public static RoleResponse ToRoleResponse(this ApplicationRole role, IReadOnlyCollection<Guid> permissionIds)
+    //    => new RoleResponse(role.Id, role.Name!, permissionIds);
 
     public static CreatedResponse ToCreatedResponse(this ApplicationRole role)
         => new CreatedResponse(role.Id, role.DateCreated);
@@ -20,8 +21,7 @@ public static class RoleMappings
         => new UpdatedResponse(role.Id, role.DateEdited!.Value);
 
 
-    //LINQ TO DB
-
+    //LINQ TO SQL
     public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> RoleToSelectListItemProjection
         => r => new SelectListItemResponse<Guid>(r.Id, r.Name!);
 

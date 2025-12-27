@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Employee;
+using ByteBuy.Core.DTO.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

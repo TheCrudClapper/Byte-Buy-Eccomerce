@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;

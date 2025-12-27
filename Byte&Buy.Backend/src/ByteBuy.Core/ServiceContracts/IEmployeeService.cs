@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.DTO;
-using ByteBuy.Core.DTO.Employee;
+﻿using ByteBuy.Core.DTO.Employee;
+using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

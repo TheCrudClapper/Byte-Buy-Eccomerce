@@ -106,7 +106,7 @@
 													<Grid ColumnDefinitions="auto,*,auto">
 														<StackPanel Orientation="Horizontal">
 															<RadioButton GroupName="{Binding Carrier}"
-																		 IsChecked="{Binding}" />
+																		 IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 															<TextBlock Text="{Binding Name}"
 																	   VerticalAlignment="Center" />
 														</StackPanel>

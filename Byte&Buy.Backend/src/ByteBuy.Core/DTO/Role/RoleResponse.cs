@@ -2,4 +2,4 @@
 
 namespace ByteBuy.Core.DTO.Role;
 
-public record RoleResponse(Guid Id, string Name, [Required] IEnumerable<Guid> PermissionIds);
+public record RoleResponse(Guid Id, string Name, [Required] IReadOnlyCollection<Guid> PermissionIds);

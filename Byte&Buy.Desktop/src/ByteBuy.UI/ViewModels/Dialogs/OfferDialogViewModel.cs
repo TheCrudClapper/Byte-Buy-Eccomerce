@@ -43,9 +43,6 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
 
     [ObservableProperty]
     private ObservableCollection<DeliveryOption> _pickupPointDeliveries = [];
-
-    [ObservableProperty]
-    private ObservableCollection<ParcelLockerCarrierGroup> _selectedParcelLockerDeliveries = [];
     #endregion
 
     public override async Task InitializeForEdit(Guid id)

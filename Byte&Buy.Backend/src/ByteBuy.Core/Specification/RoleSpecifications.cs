@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
+using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;

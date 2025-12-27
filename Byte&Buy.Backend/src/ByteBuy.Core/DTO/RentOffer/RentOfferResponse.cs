@@ -7,5 +7,5 @@ public record RentOfferResponse(
     int QuantityAvailable,
     decimal PricePerDay,
     int MaxRentalDays,
-    IEnumerable<Guid>? ParcelLockerDeliveries,
-    IEnumerable<Guid> OtherDeliveriesIds);
+    IReadOnlyCollection<Guid>? ParcelLockerDeliveries,
+    IReadOnlyCollection<Guid> OtherDeliveriesIds);

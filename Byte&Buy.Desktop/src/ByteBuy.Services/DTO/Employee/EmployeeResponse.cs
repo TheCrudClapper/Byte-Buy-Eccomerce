@@ -13,7 +13,7 @@ public record EmployeeResponse(
     string Country,
     string? FlatNumber,
     string? PhoneNumber,
-    IEnumerable<Guid> GrantedPermissionIds,
-    IEnumerable<Guid> RevokedPermissionIds
+    IReadOnlyCollection<Guid> GrantedPermissionIds,
+    IReadOnlyCollection<Guid> RevokedPermissionIds
 );
 

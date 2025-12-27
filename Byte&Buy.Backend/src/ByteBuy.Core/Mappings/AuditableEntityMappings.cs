@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.EntityContracts;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Condition;
+using ByteBuy.Core.DTO.Shared;
 
 namespace ByteBuy.Core.Mappings;
 

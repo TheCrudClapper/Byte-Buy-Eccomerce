@@ -5,5 +5,5 @@ public record SaleOfferResponse(
     Guid ItemId,
     int QuantityAvailable,
     decimal PricePerItem,
-    IEnumerable<Guid>? ParcelLockerDeliveries,
-    IEnumerable<Guid> OtherDeliveriesIds);
+    IReadOnlyCollection<Guid>? ParcelLockerDeliveries,
+    IReadOnlyCollection<Guid> OtherDeliveriesIds);

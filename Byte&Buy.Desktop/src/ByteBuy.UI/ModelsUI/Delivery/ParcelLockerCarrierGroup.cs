@@ -9,7 +9,4 @@ public partial class ParcelLockerCarrierGroup : ObservableObject
 
     [ObservableProperty]
     public ObservableCollection<DeliveryOption> _options = [];
-
-    [ObservableProperty]
-    public DeliveryOption? _selectedOption;
 }

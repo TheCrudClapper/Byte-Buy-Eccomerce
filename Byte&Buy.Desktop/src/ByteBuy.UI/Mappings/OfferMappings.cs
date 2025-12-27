@@ -18,7 +18,7 @@ public static class OfferMappings
             vm.SelectedItem?.Id ?? Guid.Empty,
             vm.QuantityAvaliable,
             vm.PricePerItem,
-            MapParcelLockers(vm.SelectedParcelLockerDeliveries),
+            MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
 
@@ -27,7 +27,7 @@ public static class OfferMappings
         return new SaleOfferUpdateRequest(
             vm.QuantityAvaliable,
             vm.PricePerItem,
-            MapParcelLockers(vm.SelectedParcelLockerDeliveries),
+            MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
 
@@ -38,7 +38,7 @@ public static class OfferMappings
             vm.QuantityAvaliable,
             vm.PricePerDay,
             vm.MaxRentalDays,
-            MapParcelLockers(vm.SelectedParcelLockerDeliveries),
+            MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
 
@@ -48,13 +48,15 @@ public static class OfferMappings
             vm.QuantityAvaliable,
             vm.PricePerDay,
             vm.MaxRentalDays,
-            MapParcelLockers(vm.SelectedParcelLockerDeliveries),
+            MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
 
     private static List<Guid> MapParcelLockers(IEnumerable<ParcelLockerCarrierGroup> list)
-        => list.Where(p => p.SelectedOption is not null)
-            .Select(p => p.SelectedOption!.Id)
+        => list
+            .SelectMany(p => p.Options)
+            .Where(o => o.IsSelected)
+            .Select(p => p.Id)
             .ToList();
 
     private static List<Guid> MapOtherDeliveries(OfferDialogViewModel vm)
@@ -94,6 +96,18 @@ public static class OfferMappings
     public static void MapFromRentResponse(this OfferDialogViewModel vm, RentOfferResponse response)
     {
         var selectedIds = response.OtherDeliveriesIds.ToHashSet();
+
+        if(response.ParcelLockerDeliveries is not null
+            && response.ParcelLockerDeliveries.Count > 0){
+            foreach (var d in vm.ParcelLockerGroups)
+            {
+                foreach (var d2 in d.Options)
+                {
+                    if (response.ParcelLockerDeliveries.Contains(d2.Id))
+                        d2.IsSelected = true;
+                }
+            }
+        }
 
         foreach (var d in vm.CourierDeliveries)
             d.IsSelected = selectedIds.Contains(d.Id);

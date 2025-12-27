@@ -9,6 +9,5 @@ public sealed record ItemResponse(
         string Name,
         string Description,
         int StockQuantity,
-
         IReadOnlyCollection<ImageResponse> Images
     );

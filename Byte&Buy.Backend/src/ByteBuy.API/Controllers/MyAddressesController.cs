@@ -1,8 +1,8 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 

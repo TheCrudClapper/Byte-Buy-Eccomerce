@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.DeliveryCarrier;
+using ByteBuy.Core.DTO.Shared;
 
 namespace ByteBuy.Core.Mappings;
 

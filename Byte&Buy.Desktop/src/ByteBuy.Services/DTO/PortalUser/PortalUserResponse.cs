@@ -10,6 +10,6 @@ public record PortalUserResponse(
     string Email,
     string? PhoneNumber,
     AddressResponse? Address,
-    IEnumerable<Guid> GrantedPermissionIds,
-    IEnumerable<Guid> RevokedPermissionIds
+    IReadOnlyCollection<Guid> GrantedPermissionIds,
+    IReadOnlyCollection<Guid> RevokedPermissionIds
 );
