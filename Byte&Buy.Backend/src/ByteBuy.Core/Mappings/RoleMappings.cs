@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Role;
+using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -18,4 +19,14 @@ public static class RoleMappings
     public static UpdatedResponse ToUpdatedResponse(this ApplicationRole role)
         => new UpdatedResponse(role.Id, role.DateEdited!.Value);
 
+
+    //LINQ TO DB
+
+    public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> RoleToSelectListItemProjection
+        => r => new SelectListItemResponse<Guid>(r.Id, r.Name!);
+
+    public static Expression<Func<ApplicationRole, RoleResponse>> RoleToRoleResponseProjection
+        => r => new RoleResponse(r.Id,
+            r.Name!,
+            r.RolePermissions.Select(rp => rp.PermissionId).ToList());
 }

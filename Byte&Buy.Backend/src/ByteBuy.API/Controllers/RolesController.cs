@@ -18,11 +18,11 @@ public class RolesController
 
     [HttpGet("options")]
     //[HasPermission("role:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectListAsync(ct));
 
     [HttpGet]
     //[HasPermission("role:read:many")]
-    public async Task<ActionResult<IEnumerable<RoleResponse>>> GetRoles(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<RoleResponse>>> GetRoles(CancellationToken ct)
         => HandleResult(await _roleService.GetAllRolesAsync(ct));
 }

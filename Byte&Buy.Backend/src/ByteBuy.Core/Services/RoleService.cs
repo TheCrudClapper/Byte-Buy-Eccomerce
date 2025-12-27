@@ -7,6 +7,7 @@ using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
+using static ByteBuy.Core.Specification.RoleSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -23,7 +24,7 @@ public class RoleService : IRoleService
 
     public async Task<Result<CreatedResponse>> AddAsync(RoleAddRequest request)
     {
-        if (await _roleRepository.ExistsAsync(request.Name))
+        if (await _roleRepository.ExistsBynameAsync(request.Name))
             return Result.Failure<CreatedResponse>(RoleErrors.RoleAlreadyExist);
 
         var roleResult = ApplicationRole
@@ -43,17 +44,14 @@ public class RoleService : IRoleService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RoleUpdateRequest request)
     {
-        var role = await _roleRepository.GetAggregateAsync(id);
+        var spec = new RoleWithRolePermissionsSpec(id);
+        var role = await _roleRepository.GetBySpecAsync(spec);
         if (role is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        var roleResult = role.Update(request.Name);
+        var roleResult = role.Update(request.Name, request.PermissionIds);
         if (roleResult.IsFailure)
             return Result.Failure<UpdatedResponse>(roleResult.Error);
-
-        var permissionResult = role.SetPermissions(request.PermissionIds);
-        if (permissionResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(permissionResult.Error);
 
         var identityUpdate = await _roleManager.UpdateAsync(role);
         if (!identityUpdate.Succeeded)
@@ -67,7 +65,8 @@ public class RoleService : IRoleService
         if (await _roleRepository.DoesRoleHaveActiveUsers(id))
             return Result.Failure(RoleErrors.RoleHasActiveUsers);
 
-        var role = await _roleRepository.GetByIdAsync(id);
+        var spec = new RoleWithRolePermissionsSpec(id, false);
+        var role = await _roleRepository.GetBySpecAsync(spec);
 
         if (role is null)
             return Result.Failure(Error.NotFound);
@@ -83,39 +82,23 @@ public class RoleService : IRoleService
 
     public async Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default)
     {
-        var roles = await _roleRepository.GetAllAsync(ct);
-        var rolePermissions = await _roleRepository.GetAllRolePermissionsAsync(ct);
-
-        var groupedPermissions = rolePermissions
-            .GroupBy(rp => rp.RoleId)
-            .ToDictionary(g => g.Key, g => g.Select(x => x.PermissionId).ToList());
-
-        var roleDtos = roles.Select(role =>
-        {
-            groupedPermissions.TryGetValue(role.Id, out var permissions);
-            return role.ToRoleResponse(permissions ?? []);
-        })
-        .ToList();
-
-        return roleDtos;
+        var spec = new RoleToRoleResponseSpec();
+        return await _roleRepository.GetListBySpecAsync(spec, ct);
     }
 
     public async Task<Result<RoleResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var role = await _roleRepository.GetByIdAsync(id, ct);
-        if (role is null)
-            return Result.Failure<RoleResponse>(Error.NotFound);
+        var spec = new RoleToRoleResponseSpec(id);
+        var roleDto = await _roleRepository.GetBySpecAsync(spec, ct);
 
-        var permissionIds = await _roleRepository.GetPermissionIdsByRoleIdAsync(id);
-
-        return role.ToRoleResponse(permissionIds);
+        return roleDto is null
+            ? Result.Failure<RoleResponse>(Error.NotFound)
+            : roleDto;
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {
-        var roles = await _roleRepository.GetAllAsync(ct);
-
-        return roles.Select(item => item.ToSelectListItemResponse())
-            .ToList();
+        var spec = new RoleToSelectListItemResponseSpec();
+        return await _roleRepository.GetListBySpecAsync(spec, ct);
     }
 }

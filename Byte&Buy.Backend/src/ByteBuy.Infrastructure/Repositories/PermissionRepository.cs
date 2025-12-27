@@ -1,11 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class PermissionRepository : BaseRepository, IPermissionRepository
+public class PermissionRepository : EfBaseRepository<Permission>, IPermissionRepository
 {
     public PermissionRepository(ApplicationDbContext context) : base(context) { }
 
@@ -30,12 +31,6 @@ public class PermissionRepository : BaseRepository, IPermissionRepository
             .AnyAsync(rp => rp.PermissionId == permissionId);
 
         return hasRolePermission;
-    }
-
-    public async Task<Permission?> GetByIdAsync(Guid permissionId, CancellationToken ct)
-    {
-        return await _context.Permissions
-            .FirstOrDefaultAsync(p => p.Id == permissionId, ct);
     }
 
     public async Task<Permission?> GetByNameAsync(string name, CancellationToken ct)

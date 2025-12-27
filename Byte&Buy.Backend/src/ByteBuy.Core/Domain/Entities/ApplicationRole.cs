@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
+public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
 {
     public ICollection<RolePermission> RolePermissions { get; private set; } = new List<RolePermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; private set; } = new List<ApplicationUserRole>();
@@ -74,7 +74,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
         }
     }
 
-    public Result Update(string name)
+    public Result Update(string name, IEnumerable<Guid> permissionIds)
     {
         var validationResult = Validate(name);
         if (validationResult.IsFailure)
@@ -83,15 +83,17 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable
         Name = name;
         DateEdited = DateTime.UtcNow;
 
+        var permissionSetResult = SetPermissions(permissionIds);
+        if (permissionSetResult.IsFailure)
+            return permissionSetResult;
+
         return Result.Success();
     }
 
     private void DeactiveAllRolePermissions()
     {
-        foreach (var rolePerm in RolePermissions)
-        {
-            rolePerm.Deactivate();
-        }
+        foreach (var rolePerm in RolePermissions)   
+            rolePerm.Deactivate();   
     }
 
     public Result SetPermissions(IEnumerable<Guid> PermissionIds)
