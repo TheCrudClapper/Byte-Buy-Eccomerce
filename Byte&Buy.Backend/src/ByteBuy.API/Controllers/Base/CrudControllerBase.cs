@@ -26,15 +26,15 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync(TAddRequest request)
         => HandleResult(await _service.AddAsync(request));
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(TId id, TUpdateRequest request)
         => HandleResult(await _service.UpdateAsync(id, request));
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public virtual async Task<IActionResult> DeleteAsync(TId id)
         => HandleResult(await _service.DeleteAsync(id));
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     //[HasPermission("{resource}:read")]
     public virtual async Task<ActionResult<TResponse>> GetByIdAsync(TId id, CancellationToken cancellationToken)
         => HandleResult(await _service.GetByIdAsync(id, cancellationToken));

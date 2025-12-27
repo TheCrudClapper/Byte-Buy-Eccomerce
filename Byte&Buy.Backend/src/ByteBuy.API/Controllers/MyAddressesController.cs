@@ -26,7 +26,7 @@ public class MyAddressesController : BaseApiController
         => HandleResult(await _addressService.UpdateAsync(addressId, CurrentUserId, request));
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AddressResponse>>> GetUserAdresses(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<AddressResponse>>> GetUserAdresses(CancellationToken ct)
         => HandleResult(await _addressService.GetUserAddressesAsync(CurrentUserId, ct));
 
     [HttpGet("{addressId:guid}")]

@@ -19,16 +19,16 @@ public class ConditionsController
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
-    public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<ConditionListResponse>>> GetCategoriesList(CancellationToken ct)
        => HandleResult(await _conditionService.GetConditionsListAsync(ct));
 
     [HttpGet]
     //[HasPermission("condition:read:many")]
-    public async Task<ActionResult<IEnumerable<ConditionResponse>>> GetConditions(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<ConditionResponse>>> GetConditions(CancellationToken ct)
         => HandleResult(await _conditionService.GetConditionsAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("condition:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _conditionService.GetSelectListAsync(ct));
 }

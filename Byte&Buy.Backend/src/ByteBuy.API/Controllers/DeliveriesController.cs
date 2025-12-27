@@ -21,12 +21,12 @@ public class DeliveriesController
 
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]
-    public async Task<ActionResult<IEnumerable<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetDeliveriesListAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("delivery:read:options")]
-    public async Task<ActionResult<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectListAsync(ct));
 
     [HttpGet("available")]

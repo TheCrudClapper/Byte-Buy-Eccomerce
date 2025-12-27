@@ -1,5 +1,6 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Country;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,11 @@ public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, C
 
     [HttpGet]
     //[HasPermission("country:read:many")]
-    public async Task<ActionResult<IEnumerable<CountryResponse>>> GetCountries(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<CountryResponse>>> GetCountries(CancellationToken ct)
         => HandleResult(await _countryService.GetCountriesAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("country:read:options")]
-    public async Task<ActionResult> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectListAsync(ct));
 }

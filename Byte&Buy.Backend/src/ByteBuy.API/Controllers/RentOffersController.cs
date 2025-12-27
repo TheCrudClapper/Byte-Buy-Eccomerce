@@ -20,15 +20,15 @@ public class RentOffersController : BaseApiController
     public async Task<ActionResult<CreatedResponse>> PostAsync(RentOfferAddRequest request)
         => HandleResult(await _rentOfferService.AddAsync(CurrentUserId, request));
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, RentOfferUpdateRequest request)
         => HandleResult(await _rentOfferService.UpdateAsync(id, request));
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _rentOfferService.DeleteAsync(id));
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct)
         => HandleResult(await _rentOfferService.GetByIdAsync(id, ct));
 

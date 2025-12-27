@@ -18,11 +18,11 @@ public class EmployeesController
         => _employeeService = employeeService;
 
     [HttpPut("address")]
-    public async Task<ActionResult<UpdatedResponse>> PutEmployeeAddress(Guid employeeId, EmployeeAddressUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutEmployeeAddress(EmployeeAddressUpdateRequest request)
         => HandleResult(await _employeeService.UpdateEmployeeAddressAsync(CurrentUserId, request));
 
     [HttpGet("list")]
-    public async Task<ActionResult<EmployeeListResponse>> GetEmployeesList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<EmployeeListResponse>>> GetEmployeesList(CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployeesListAsync(CurrentUserId, ct));
 
     [HttpGet("me")]

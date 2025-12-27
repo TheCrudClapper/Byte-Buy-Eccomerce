@@ -17,6 +17,6 @@ public class PortalUsersController
        => _portalUserService = portalUserService;
 
     [HttpGet("list")]
-    public async Task<ActionResult<IEnumerable<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<PortalUserListResponse>>> GetPortalUsersList(CancellationToken ct)
         => HandleResult(await _portalUserService.GetPortalUsersListAsync(ct));
 }

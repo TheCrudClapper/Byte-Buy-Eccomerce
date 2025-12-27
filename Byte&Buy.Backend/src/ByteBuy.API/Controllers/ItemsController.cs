@@ -21,15 +21,15 @@ public class ItemsController : BaseApiController
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] ItemAddRequest request)
         => HandleResult(await _itemsService.AddAsync(request));
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] ItemUpdateRequest request)
         => HandleResult(await _itemsService.UpdateAsync(id, request));
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public virtual async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _itemsService.DeleteAsync(id));
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     //[HasPermission("{resource}:read")]
     public virtual async Task<ActionResult<ItemResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         => HandleResult(await _itemsService.GetByIdAsync(id, cancellationToken));

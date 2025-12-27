@@ -20,15 +20,15 @@ public class SaleOffersController : BaseApiController
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync(SaleOfferAddRequest request)
         => HandleResult(await _saleOfferService.AddAsync(CurrentUserId, request));
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, SaleOfferUpdateRequest request)
         => HandleResult(await _saleOfferService.UpdateAsync(id, request));
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     public virtual async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _saleOfferService.DeleteAsync(id));
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public virtual async Task<ActionResult<SaleOfferResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         => HandleResult(await _saleOfferService.GetByIdAsync(id, cancellationToken));
 

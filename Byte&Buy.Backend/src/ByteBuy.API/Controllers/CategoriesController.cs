@@ -1,7 +1,9 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
+using ByteBuy.Core.DTO;
 using ByteBuy.Core.DTO.Category;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Services.DTO.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
@@ -19,11 +21,11 @@ public class CategoriesController
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
-    public async Task<ActionResult> GetCategoriesList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<CategoryListResponse>>> GetCategoriesList(CancellationToken ct)
         => HandleResult(await _categoryService.GetCategoriesListAsync(ct));
 
     [HttpGet("options")]
     //[HasPermission("category:read:options")]
-    public async Task<ActionResult> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _categoryService.GetSelectListAsync(ct));
 }
