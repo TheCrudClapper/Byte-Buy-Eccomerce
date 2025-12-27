@@ -26,9 +26,6 @@ public class SaleOfferService : ISaleOfferService
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, SaleOfferAddRequest request)
     {
-        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
-            return Result.Failure<CreatedResponse>(OfferErrors.DeliveryRequired);
-
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
         if (item is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
@@ -49,15 +46,13 @@ public class SaleOfferService : ISaleOfferService
             request.ItemId,
             userId,
             request.QuantityAvailable,
-            request.PricePerItem);
+            request.PricePerItem,
+            validatedDeliveries.Value.Select(d => d.Id));
 
         if (saleOfferResult.IsFailure)
             return Result.Failure<CreatedResponse>(saleOfferResult.Error);
 
         var saleOffer = saleOfferResult.Value;
-
-        saleOffer
-            .AssignDeliveriesToOffer(validatedDeliveries.Value.Select(d => d.Id));
 
         await _saleOfferRepository.AddAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
@@ -101,16 +96,11 @@ public class SaleOfferService : ISaleOfferService
     public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetListAsync(CancellationToken ct = default)
     {
         var spec = new SaleOfferToSaleOfferListResponseSpec();
-        var saleOfferDtoList = await _saleOfferRepository.GetListBySpecAsync(spec, ct);
-
-        return saleOfferDtoList;
+        return await _saleOfferRepository.GetListBySpecAsync(spec, ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
     {
-        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
-            return Result.Failure<UpdatedResponse>(OfferErrors.DeliveryRequired);
-
         var offer = await _saleOfferRepository.GetAggregateAsync(id);
         if (offer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -118,6 +108,14 @@ public class SaleOfferService : ISaleOfferService
         var item = await _itemRepository.GetByIdAsync(offer.ItemId);
         if (item is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+          request.ParcelLockerDeliveries,
+          request.OtherDeliveriesIds,
+          _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
         var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
         if (quantityDiff != 0)
@@ -134,24 +132,11 @@ public class SaleOfferService : ISaleOfferService
 
         var updateResult = offer.Update(
             request.QuantityAvailable,
-            request.PricePerItem);
+            request.PricePerItem,
+            validatedDeliveries.Value.Select(d => d.Id));
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
-
-        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
-          request.ParcelLockerDeliveries,
-          request.OtherDeliveriesIds,
-          _deliveryRepository);
-
-        if (validatedDeliveries.IsFailure)
-            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
-
-        var deliveryUpdateResult = offer
-            .UpdateDeliveries(validatedDeliveries.Value.Select(d => d.Id));
-
-        if (deliveryUpdateResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(deliveryUpdateResult.Error);
 
         await _saleOfferRepository.UpdateAsync(offer);
         await _itemRepository.UpdateAsync(item);

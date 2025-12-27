@@ -27,9 +27,7 @@
 						Height="30"
 						VerticalAlignment="Top">
 					<TextBlock Text="{Binding DialogTitle}"
-							   VerticalAlignment="Center"
-							   Margin="5,0"
-							   Foreground="{DynamicResource TextPrimaryBrush}" />
+							   Classes="dialogTitle" />
 				</Border>
 
 				<!-- Form Fields -->
@@ -40,7 +38,7 @@
 					<!-- Offer type -->
 					<CheckBox HorizontalAlignment="Right"
 							  IsVisible="{Binding !IsEditMode}"
-							  Foreground="{DynamicResource TextLightBrush}"
+							  Foreground="{DynamicResource TextPrimaryBrush}"
 							  Command="{Binding ChangeOfferTypeCommand}"
 							  Content="Sale Offer" />
 

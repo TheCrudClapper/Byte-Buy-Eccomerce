@@ -21,9 +21,7 @@
 			Height="30"
 			VerticalAlignment="Top">
 				<TextBlock Text="{Binding DialogTitle}"
-						   VerticalAlignment="Center"
-						   Margin="5,0"
-						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+							Classes="dialogTitle"/>
 			</Border>
 
 			<StackPanel Margin="20" Spacing="10" Grid.Row="1">

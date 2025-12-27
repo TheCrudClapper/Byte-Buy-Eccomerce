@@ -26,8 +26,13 @@ public static class DeliveryValidationHelper
         IEnumerable<Guid> otherDeliveries,
         IDeliveryRepository deliveryRepository)
     {
-        var parcelLockersIds = (parcelLockers ?? Enumerable.Empty<Guid>()).Distinct().ToList();
-        var otherDeliveriesIds = otherDeliveries.Distinct().ToList();
+        var parcelLockersIds = (parcelLockers ?? Enumerable.Empty<Guid>())
+            .Distinct()
+            .ToList();
+
+        var otherDeliveriesIds = otherDeliveries
+            .Distinct()
+            .ToList();
 
         //Merging two lists in order to download just the deliveries we need
         var allIds = parcelLockersIds.Concat(otherDeliveriesIds).Distinct().ToList();
@@ -48,6 +53,7 @@ public static class DeliveryValidationHelper
             if (parcelDeliveries.Any(d => d.Channel != DeliveryChannelEnum.ParcelLocker))
                 return Result.Failure<IReadOnlyCollection<Delivery>>(OfferErrors.InvalidParcelLockerChannel);
 
+            //only one parcel locker can be selected per carrier
             var multiplePerCarrier = parcelDeliveries
                 .GroupBy(d => d.DeliveryCarrierId)
                 .FirstOrDefault(g => g.Count() > 1);

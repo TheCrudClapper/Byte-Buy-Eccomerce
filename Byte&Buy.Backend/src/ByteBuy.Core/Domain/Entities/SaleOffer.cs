@@ -19,7 +19,8 @@ public class SaleOffer : Offer
     public static Result<SaleOffer> Create(Guid itemId,
      Guid createdByUserId,
      int quantityAvailable,
-     decimal pricePerItem)
+     decimal pricePerItem,
+     IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = ValidateBasicInfo(quantityAvailable);
         if (validationResult.IsFailure)
@@ -31,12 +32,16 @@ public class SaleOffer : Offer
 
         var money = moneyResult.Value;
 
-        return new SaleOffer(itemId, createdByUserId, quantityAvailable, money);
+        var saleOffer = new SaleOffer(itemId, createdByUserId, quantityAvailable, money);
+        saleOffer.AssignDeliveriesToOffer(deliveriesIds);
+
+        return saleOffer;
     }
 
     public Result Update(
        int quantityAvailable,
-       decimal pricePerItem)
+       decimal pricePerItem,
+       IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = ValidateBasicInfo(quantityAvailable);
         if (validationResult.IsFailure)
@@ -51,6 +56,11 @@ public class SaleOffer : Offer
         PricePerItem = money;
         QuantityAvailable = quantityAvailable;
         DateEdited = DateTime.UtcNow;
+
+        var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);
+        if (deliveryUpdateResult.IsFailure)
+            return deliveryUpdateResult;
+
         return Result.Success();
     }
 

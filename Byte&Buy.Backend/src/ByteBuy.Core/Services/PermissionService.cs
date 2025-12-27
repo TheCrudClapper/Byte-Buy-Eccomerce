@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO;
-using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.PermissionSpecifications;

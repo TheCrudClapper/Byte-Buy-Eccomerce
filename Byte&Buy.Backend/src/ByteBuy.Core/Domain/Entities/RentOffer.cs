@@ -36,7 +36,8 @@ public class RentOffer : Offer
         Guid createdByUserId,
         int quantityAvailable,
         decimal pricePerDay,
-        int maxRentalDays)
+        int maxRentalDays,
+        IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = Validate(quantityAvailable, maxRentalDays);
         if (validationResult.IsFailure)
@@ -48,13 +49,17 @@ public class RentOffer : Offer
 
         var money = moneyResult.Value;
 
-        return new RentOffer(itemId, createdByUserId, quantityAvailable, money, maxRentalDays);
+        var rentOffer = new RentOffer(itemId, createdByUserId, quantityAvailable, money, maxRentalDays);
+        rentOffer.AssignDeliveriesToOffer(deliveriesIds);
+
+        return rentOffer;
     }
 
     public Result Update(
         int quantityAvailable,
         decimal pricePerDay,
-        int maxRentalDays)
+        int maxRentalDays,
+        IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = Validate(quantityAvailable, maxRentalDays);
         if (validationResult.IsFailure)
@@ -70,6 +75,10 @@ public class RentOffer : Offer
         MaxRentalDays = maxRentalDays;
         QuantityAvailable = quantityAvailable;
         DateEdited = DateTime.UtcNow;
+
+        var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);
+        if (deliveryUpdateResult.IsFailure)
+            return deliveryUpdateResult;
 
         return Result.Success();
     }

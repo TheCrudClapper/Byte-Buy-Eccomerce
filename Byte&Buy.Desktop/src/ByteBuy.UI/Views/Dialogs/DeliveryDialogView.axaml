@@ -26,9 +26,7 @@
 					Height="30"
 					VerticalAlignment="Top">
 				<TextBlock Text="{Binding DialogTitle}"
-						   VerticalAlignment="Center"
-						   Margin="5,0"
-						   Foreground="{DynamicResource TextPrimaryBrush}"/>
+						   Classes="dialogTitle"/>
 			</Border>
 
 			<!-- Content -->

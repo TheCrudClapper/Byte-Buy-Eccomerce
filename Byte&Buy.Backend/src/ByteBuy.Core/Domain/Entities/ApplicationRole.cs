@@ -92,8 +92,8 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
 
     private void DeactiveAllRolePermissions()
     {
-        foreach (var rolePerm in RolePermissions)   
-            rolePerm.Deactivate();   
+        foreach (var rolePerm in RolePermissions)
+            rolePerm.Deactivate();
     }
 
     public Result SetPermissions(IEnumerable<Guid> PermissionIds)

@@ -54,9 +54,8 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public void AssignDeliveriesToOffer(IEnumerable<Guid> newDeliveryIds)
     {
         foreach (var deliveryId in newDeliveryIds)
-        {
             OfferDeliveries.Add(OfferDelivery.Create(Id, deliveryId));
-        }
+
     }
 
     /// <summary>

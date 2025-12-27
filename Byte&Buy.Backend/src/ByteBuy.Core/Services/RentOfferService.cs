@@ -23,9 +23,6 @@ public class RentOfferService : IRentOfferService
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, RentOfferAddRequest request)
     {
-        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
-            return Result.Failure<CreatedResponse>(OfferErrors.DeliveryRequired);
-
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
         if (item is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
@@ -47,14 +44,13 @@ public class RentOfferService : IRentOfferService
             userId,
             request.QuantityAvailable,
             request.PricePerDay,
-            request.MaxRentalDays);
+            request.MaxRentalDays,
+            validatedDeliveries.Value.Select(i => i.Id));
 
         if (rentOfferResult.IsFailure)
             return Result.Failure<CreatedResponse>(rentOfferResult.Error);
 
         var rentOffer = rentOfferResult.Value;
-
-        rentOffer.AssignDeliveriesToOffer(validatedDeliveries.Value.Select(i => i.Id));
 
         await _rentOfferRepository.AddAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
@@ -98,15 +94,11 @@ public class RentOfferService : IRentOfferService
     public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct = default)
     {
         var spec = new RentOfferToRentOfferListResponseSpec();
-        var rentOfferDtoList = await _rentOfferRepository.GetListBySpecAsync(spec, ct);
-        return rentOfferDtoList;
+        return await _rentOfferRepository.GetListBySpecAsync(spec, ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
     {
-        if (request.OtherDeliveriesIds is null || !request.OtherDeliveriesIds.Any())
-            return Result.Failure<UpdatedResponse>(OfferErrors.DeliveryRequired);
-
         var offer = await _rentOfferRepository.GetAggregateAsync(id);
         if (offer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -114,6 +106,14 @@ public class RentOfferService : IRentOfferService
         var item = await _itemRepository.GetByIdAsync(offer.ItemId);
         if (item is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+           request.ParcelLockerDeliveries,
+           request.OtherDeliveriesIds,
+           _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
         var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
         if (quantityDiff != 0)
@@ -131,22 +131,11 @@ public class RentOfferService : IRentOfferService
         var updateResult = offer.Update(
             request.QuantityAvailable,
             request.PricePerDay,
-            request.MaxRentalDays);
+            request.MaxRentalDays,
+            validatedDeliveries.Value.Select(d => d.Id));
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
-
-        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
-           request.ParcelLockerDeliveries,
-           request.OtherDeliveriesIds,
-           _deliveryRepository);
-
-        if (validatedDeliveries.IsFailure)
-            return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
-
-        var deliveryUpdateResult = offer.UpdateDeliveries(validatedDeliveries.Value.Select(d => d.Id));
-        if (deliveryUpdateResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(deliveryUpdateResult.Error);
 
         await _rentOfferRepository.UpdateAsync(offer);
         await _itemRepository.UpdateAsync(item);

@@ -13,7 +13,7 @@
 
 	<Border CornerRadius="2"
 			BorderThickness="2"
-			Background="{DynamicResource BackgroundLightBrush}"
+			Background="{DynamicResource CardBackgroundBrush}"
 			BorderBrush="{DynamicResource ButtonGradient}"
 			MinHeight="150"
 			MinWidth="400">
@@ -25,9 +25,7 @@
 					Height="30"
 					VerticalAlignment="Top">
 				<TextBlock Text="{Binding DialogTitle}"
-						   VerticalAlignment="Center"
-						   Margin="5,0"
-						   Foreground="{DynamicResource BackgroundLightBrush}"/>
+						   Classes="dialogTitle"/>
 			</Border>
 
 			<Grid Grid.Row="1"
@@ -53,8 +51,9 @@
 					<!--Dialog Message-->
 					<TextBlock Grid.Column="1"
 							   HorizontalAlignment="Left"
-							   Foreground="{DynamicResource TextLightBrush}"
+							   Foreground="{DynamicResource TextPrimaryBrush}"
 							   FontSize="15"
+							   FontFamily="{DynamicResource OpenSansMedium}"
 							   TextWrapping="Wrap"
 							   VerticalAlignment="Center"
 							   Text="{Binding Message}" />
