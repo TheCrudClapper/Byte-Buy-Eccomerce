@@ -31,6 +31,8 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     {
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
+        foreach(var od in OfferDeliveries)
+            od.Deactivate();
     }
 
     public void DeactivateForPortalUser()

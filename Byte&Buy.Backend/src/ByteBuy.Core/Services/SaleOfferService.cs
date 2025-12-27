@@ -63,7 +63,8 @@ public class SaleOfferService : ISaleOfferService
 
     public async Task<Result> DeleteAsync(Guid id)
     {
-        var saleOffer = await _saleOfferRepository.GetByIdAsync(id);
+        var spec = new SaleOfferWithOfferDeliveriesSpec(id, false);
+        var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
         if (saleOffer is null)
             return Result.Failure(Error.NotFound);
 
@@ -101,11 +102,12 @@ public class SaleOfferService : ISaleOfferService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
     {
-        var offer = await _saleOfferRepository.GetAggregateAsync(id);
-        if (offer is null)
+        var spec = new SaleOfferWithOfferDeliveriesSpec(id);
+        var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
+        if (saleOffer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        var item = await _itemRepository.GetByIdAsync(offer.ItemId);
+        var item = await _itemRepository.GetByIdAsync(saleOffer.ItemId);
         if (item is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -117,7 +119,7 @@ public class SaleOfferService : ISaleOfferService
         if (validatedDeliveries.IsFailure)
             return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
-        var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
+        var quantityDiff = request.QuantityAvailable - saleOffer.QuantityAvailable;
         if (quantityDiff != 0)
         {
             Result stockUpdateResult;
@@ -130,7 +132,7 @@ public class SaleOfferService : ISaleOfferService
                 return Result.Failure<UpdatedResponse>(stockUpdateResult.Error);
         }
 
-        var updateResult = offer.Update(
+        var updateResult = saleOffer.Update(
             request.QuantityAvailable,
             request.PricePerItem,
             validatedDeliveries.Value.Select(d => d.Id));
@@ -138,11 +140,11 @@ public class SaleOfferService : ISaleOfferService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _saleOfferRepository.UpdateAsync(offer);
+        await _saleOfferRepository.UpdateAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
         await _saleOfferRepository.CommitAsync();
 
-        return offer.ToUpdatedResponse();
+        return saleOffer.ToUpdatedResponse();
     }
 
 

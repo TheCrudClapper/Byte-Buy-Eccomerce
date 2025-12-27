@@ -93,18 +93,21 @@ public static class OfferMappings
         };
     }
 
-    public static void MapFromRentResponse(this OfferDialogViewModel vm, RentOfferResponse response)
+    private static void MapCommonDeliveries(this OfferDialogViewModel vm,
+    IReadOnlyCollection<Guid> otherDeliveriesIds,
+    IReadOnlyCollection<Guid>? parcelLockerIds)
     {
-        var selectedIds = response.OtherDeliveriesIds.ToHashSet();
+        var selectedIds = otherDeliveriesIds.ToHashSet();
+        var parcelLockers = parcelLockerIds?.ToHashSet() ?? [];
 
-        if(response.ParcelLockerDeliveries is not null
-            && response.ParcelLockerDeliveries.Count > 0){
-            foreach (var d in vm.ParcelLockerGroups)
+        if (parcelLockers.Count > 0)
+        {
+            foreach (var parcelLockerList in vm.ParcelLockerGroups)
             {
-                foreach (var d2 in d.Options)
+                foreach (var deliveryOption in parcelLockerList.Options)
                 {
-                    if (response.ParcelLockerDeliveries.Contains(d2.Id))
-                        d2.IsSelected = true;
+                    if (parcelLockers.Contains(deliveryOption.Id))
+                        deliveryOption.IsSelected = true;
                 }
             }
         }
@@ -114,7 +117,11 @@ public static class OfferMappings
 
         foreach (var d in vm.PickupPointDeliveries)
             d.IsSelected = selectedIds.Contains(d.Id);
+    }
 
+    public static void MapFromRentResponse(this OfferDialogViewModel vm, RentOfferResponse response)
+    {
+        MapCommonDeliveries(vm, response.OtherDeliveriesIds, response.ParcelLockerDeliveries);
         vm.MaxRentalDays = response.MaxRentalDays;
         vm.QuantityAvaliable = response.QuantityAvailable;
         vm.PricePerDay = response.PricePerDay;
@@ -122,14 +129,7 @@ public static class OfferMappings
 
     public static void MapFromSaleResponse(this OfferDialogViewModel vm, SaleOfferResponse response)
     {
-        var selectedIds = response.OtherDeliveriesIds.ToHashSet();
-
-        foreach (var d in vm.CourierDeliveries)
-            d.IsSelected = selectedIds.Contains(d.Id);
-
-        foreach (var d in vm.PickupPointDeliveries)
-            d.IsSelected = selectedIds.Contains(d.Id);
-
+        MapCommonDeliveries(vm, response.OtherDeliveriesIds, response.ParcelLockerDeliveries);
         vm.PricePerItem = response.PricePerItem;
         vm.QuantityAvaliable = response.QuantityAvailable;
     }

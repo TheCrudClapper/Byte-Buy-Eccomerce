@@ -105,7 +105,8 @@
 												<DataTemplate x:CompileBindings="false">
 													<Grid ColumnDefinitions="auto,*,auto">
 														<StackPanel Orientation="Horizontal">
-															<RadioButton GroupName="{Binding Carrier}"
+															<RadioButton IsThreeState="True" 
+															GroupName="{Binding Carrier}"
 																		 IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 															<TextBlock Text="{Binding Name}"
 																	   VerticalAlignment="Center" />

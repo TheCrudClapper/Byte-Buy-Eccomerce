@@ -25,4 +25,16 @@ public static class SaleOfferSpecifications
                  .Select(SaleOfferMappings.SaleOfferResponseProjection);
         }
     }
+
+    public sealed class SaleOfferWithOfferDeliveriesSpec : Specification<SaleOffer>
+    {
+        public SaleOfferWithOfferDeliveriesSpec(Guid id, bool ignoreQueryFilters = true)
+        {
+            if (ignoreQueryFilters)
+                Query.IgnoreQueryFilters();
+
+            Query.Where(ro => ro.Id == id)
+                 .Include(ro => ro.OfferDeliveries);
+        }
+    }
 }

@@ -25,4 +25,16 @@ public static class RentOfferSpecifications
                  .Select(RentOfferMappings.RentOfferResponseProjection);
         }
     }
+
+    public sealed class RentOfferWithOfferDeliveriesSpec : Specification<RentOffer>
+    {
+        public RentOfferWithOfferDeliveriesSpec(Guid id, bool ignorQueryFilters = true)
+        {
+            if (ignorQueryFilters)
+                Query.IgnoreQueryFilters();
+
+            Query.Where(ro => ro.Id == id)
+                 .Include(ro => ro.OfferDeliveries);          
+        }
+    }
 }
