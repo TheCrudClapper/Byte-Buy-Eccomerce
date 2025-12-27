@@ -4,7 +4,7 @@
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<StackPanel>
-				<Button>Save</Button>
+
 			</StackPanel>
 
 
@@ -170,11 +170,24 @@
 		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
 		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}" />
+		<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
+	</Style>
+
+	<Style Selector="ComboBox TextBlock">
+		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}"/>
+	</Style>
+
+	<Style Selector="ComboBoxItem TextBlock">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+	</Style>
+
+	<Style Selector="ComboBoxItem">
+		<Setter Property="Background" Value="{DynamicResource GrayAccentBrush}"/>
 	</Style>
 
 	<Style Selector="ComboBox:pointerover, ComboBox:focus">
 		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
-		<Setter Property="Foreground" Value="{DynamicResource TextLightBrush}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
 	</Style>
 

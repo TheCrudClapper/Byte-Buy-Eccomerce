@@ -51,8 +51,8 @@
 						 TextWrapping="Wrap"
 						 Watermark="Description" />
 
-				<!-- Combo section -->
-				<Grid RowDefinitions="Auto,10,Auto,10,Auto,10,Auto"
+				<!-- Combo Boxes -->
+				<Grid RowDefinitions="*,10,*,10,*,10,*"
 					  ColumnDefinitions="*,*">
 
 					<!-- Delivery Carrier -->
@@ -60,11 +60,12 @@
 							   Grid.Column="0"
 							   Text="Delivery Carrier"
 							   Classes="textBoxLabel" />
-					<StackPanel Grid.Row="2"
-								Grid.Column="0"
-								Margin="0,0,5,0"
-								Orientation="Horizontal">
+					<Grid Grid.Row="2"
+						  Grid.Column="0"
+						  ColumnDefinitions="auto, *"
+						  Margin="0,0,5,0">
 						<Button VerticalAlignment="Stretch"
+								Grid.Column="0"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
 								Command="{Binding ClearSelectedCarrierCommand}">
@@ -72,15 +73,17 @@
 								   Height="15"
 								   Width="15"/>
 						</Button>
-						<ComboBox ItemsSource="{Binding DeliveryCarriers}"
-								  SelectedItem="{Binding SelectedDeliveryCarrier}">
+						<ComboBox
+						Grid.Column="1"
+						ItemsSource="{Binding DeliveryCarriers}"
+						SelectedItem="{Binding SelectedDeliveryCarrier}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
 									<TextBlock Text="{Binding Title}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
-					</StackPanel>
+					</Grid>
 
 					<!-- Delivery Type -->
 					<TextBlock Grid.Row="0"
@@ -88,11 +91,12 @@
 							   Text="Delivery Type"
 							   Margin="5,0,0,0"
 							   Classes="textBoxLabel" />
-					<StackPanel Grid.Row="2"
-								Grid.Column="1"
-								Margin="5,0,0,0"
-								Orientation="Horizontal">
+					<Grid Grid.Row="2"
+						  Grid.Column="2"
+						  ColumnDefinitions="auto, *"
+						  Margin="0,0,5,0">
 						<Button VerticalAlignment="Stretch"
+								Grid.Column="0"
 								HorizontalAlignment="Stretch"
 								CornerRadius="5,0,0,5"
 								Command="{Binding ClearSelectedChannelCommand}">
@@ -101,14 +105,15 @@
 								   Width="15"/>
 						</Button>
 						<ComboBox ItemsSource="{Binding DeliveryChannels}"
-								  SelectedItem="{Binding SelectedChannel}">
+								  SelectedItem="{Binding SelectedChannel}"
+								  Grid.Column="1">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
 									<TextBlock Text="{Binding Title}" />
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
-					</StackPanel>
+					</Grid>
 
 					<!-- Parcel Locker Size -->
 					<TextBlock Grid.Row="4"
@@ -116,13 +121,14 @@
 							   Grid.ColumnSpan="2"
 							   Text="Parcel Locker Size"
 							   Classes="textBoxLabel" />
-					<StackPanel Grid.Row="6"
+					<Grid Grid.Row="6"
 								Grid.Column="0"
 								Grid.ColumnSpan="2"
 								Margin="0,0,5,0"
-								Orientation="Horizontal">
+								ColumnDefinitions="Auto,*">
 						<Button VerticalAlignment="Stretch"
 								HorizontalAlignment="Stretch"
+								Grid.Column="0"
 								CornerRadius="5,0,0,5"
 								Command="{Binding ClearSelectedSizeCommand}">
 							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
@@ -130,6 +136,7 @@
 								   Width="15"/>
 						</Button>
 						<ComboBox ItemsSource="{Binding ParcelLockerSize}"
+								 Grid.Column="1"
 								  SelectedItem="{Binding SelectedSize}">
 							<ComboBox.ItemTemplate>
 								<DataTemplate>
@@ -137,7 +144,7 @@
 								</DataTemplate>
 							</ComboBox.ItemTemplate>
 						</ComboBox>
-					</StackPanel>
+					</Grid>
 				</Grid>
 
 				<!-- Price -->
