@@ -3,6 +3,7 @@ using ByteBuy.Core.DTO;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.PermissionSpecifications;
 
 namespace ByteBuy.Core.Services;
 
@@ -16,9 +17,8 @@ public class PermissionService : IPermissionService
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
     {
-        var permissions = await _permissionRepository.GetAllAsync(ct);
-        return permissions.Select(p => p.ToSelectListItemResponse())
-            .ToList();
+        var spec = new PermissionToSelectListItemSpec();
+        return await _permissionRepository.GetListBySpecAsync(spec);
     }
 
     public async Task<bool> HasPermissionAsync(Guid userId, string permissionName)

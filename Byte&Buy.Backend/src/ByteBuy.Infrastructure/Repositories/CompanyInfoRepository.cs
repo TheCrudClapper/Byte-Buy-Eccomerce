@@ -1,19 +1,14 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CompanyInfoRepository : BaseRepository, ICompanyInfoRepository
+public class CompanyInfoRepository : EfBaseRepository<CompanyInfo>, ICompanyInfoRepository
 {
     public CompanyInfoRepository(ApplicationDbContext context) : base(context) { }
-
-    public async Task AddAsync(CompanyInfo companyInfo)
-    {
-        await _context.CompanyInfo.AddAsync(companyInfo);
-        await _context.SaveChangesAsync();
-    }
 
     public async Task<bool> ExistAsync(CancellationToken ct = default)
     {
@@ -25,11 +20,5 @@ public class CompanyInfoRepository : BaseRepository, ICompanyInfoRepository
         //There is only one record of company details in whole db
         return await _context.CompanyInfo
             .FirstOrDefaultAsync();
-    }
-
-    public async Task UpdateAsync(CompanyInfo companyInfo)
-    {
-        _context.CompanyInfo.Update(companyInfo);
-        await _context.SaveChangesAsync();
     }
 }

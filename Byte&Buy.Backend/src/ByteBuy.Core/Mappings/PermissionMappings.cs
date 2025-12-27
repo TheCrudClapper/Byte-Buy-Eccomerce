@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO;
+using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -9,4 +10,7 @@ public static class PermissionMappings
     {
         return new SelectListItemResponse<Guid>(permission.Id, permission.Name);
     }
+
+    public static Expression<Func<Permission, SelectListItemResponse<Guid>>> SelectListItemResponseProjection
+        => p => new SelectListItemResponse<Guid>(p.Id, p.Name);
 }

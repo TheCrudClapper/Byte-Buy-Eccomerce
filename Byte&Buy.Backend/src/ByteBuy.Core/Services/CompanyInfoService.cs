@@ -43,6 +43,7 @@ public class CompanyInfoService : ICompanyInfoService
             return Result.Failure<CreatedResponse>(createResult.Error);
 
         await _companyInfoRepository.AddAsync(createResult.Value);
+        await _companyInfoRepository.CommitAsync();
 
         return createResult.Value.ToCreatedResponse();
     }
@@ -80,6 +81,8 @@ public class CompanyInfoService : ICompanyInfoService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _companyInfoRepository.UpdateAsync(companyInfo);
+        await _companyInfoRepository.CommitAsync();
+
         return companyInfo.ToUpdatedResponse();
     }
 }
