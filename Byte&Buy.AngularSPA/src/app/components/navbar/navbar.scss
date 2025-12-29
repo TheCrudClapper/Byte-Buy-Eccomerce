@@ -1,6 +1,7 @@
 .navbar {
   background-color: var(--card-bg);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  font-family: 'raleway-bold';
 }
 
 .navbar-brand {
@@ -41,6 +42,7 @@
 .search-form {
   flex: 1;
   margin-right: 0 !important;
+  font-family: 'open-sans-medium';
   max-width: 500px;
   min-width: 280px;
 }

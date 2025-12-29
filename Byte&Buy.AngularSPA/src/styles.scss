@@ -1,3 +1,47 @@
+//Fonts
+@font-face {
+  font-family: open-sans-medium;
+  src: url(app/assets/fonts/open-sans-medium.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: open-sans-bold;
+  src: url(app/assets/fonts/open-sans-bold.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: open-sans-variable;
+  src: url(app/assets/fonts/open-sans-variable.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: raleway-bold;
+  src: url(app/assets/fonts/raleway-bold.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: raleway-medium;
+  src: url(app/assets/fonts/raleway-medium.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: raleway-variable;
+  src: url(app/assets/fonts/raleway-variable.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
 //Light Theme
 .theme-modern-light {
   --bg: #FFFFFF;
@@ -13,6 +57,19 @@
   --error: #EF4444;
   --outline-color: rgba(96, 17, 140, 0.35);
   --test: #181226;
+}
+
+.theme-modern-primary{
+  --background: #17182a;
+  --hover-accent: #3b255a;
+  --primary-accent: #8B5CF6;
+  --secondary-accent: #60118C;
+  --gray-accent: #26293f;
+  --text-primary: #ffffff;
+  --text-secondary: #1E1E1E;
+  --card-background: #2d3059;
+  --success: #22C55E;
+  --error: #EF4444;
 }
 
 //Dark Theme

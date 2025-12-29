@@ -38,7 +38,7 @@
 
 		<Color x:Key="CardBackground">#2d3059</Color>
 
-		<Color x:Key="SecondaryAccent">#8B5CF6</Color>
+		<Color x:Key="SecondaryAccent">#60118C</Color>
 
 		<Color x:Key="PrimaryAccent">#8B5CF6</Color>
 
