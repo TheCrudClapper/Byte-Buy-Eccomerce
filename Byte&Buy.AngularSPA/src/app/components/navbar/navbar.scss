@@ -3,6 +3,7 @@
   border-bottom: 1px solid black;
   box-shadow: 0px 0px 5px 0px black;
   font-family: 'raleway-bold';
+  font-size: 14px;
 }
 
 .navbar-brand {
@@ -56,6 +57,7 @@
   color: var(--text-primary);
   background-color: var(--card-background);
   padding: 10px, 0px;
+  font-size: 14px;
 }
 
 .dropdown-item:hover {
@@ -65,12 +67,12 @@
 
 .search-form input {
   flex: 1;
+  font-size: 14px;
   font-weight: 500;
-  border-radius: 20px 0 0 20px;
+  border-radius: 10px 0 0 10px;
 }
 
 .search-form .btn {
-  border-radius: 0 20px 20px 0;
-  border: 1px solid var(--);
+  border-radius: 0 10px 10px 0;
+  border: 1px solid var(--secondary-accent);
 }
-
