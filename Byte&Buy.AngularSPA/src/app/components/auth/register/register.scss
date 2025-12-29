@@ -1,35 +1,21 @@
-.container-fluid{
-    background: linear-gradient(30deg, var(--cta-gradient-start), var(--cta-gradient-end));
-}
 .container {
-    color: var(--text);
+    color: var(--text-primary);
     font-weight: 500;
 }
+
 .register-window{
     padding: 50px;
     border-radius: 6px;
-    background: var(--bg);
+    border: 1px solid var(--primary-accent);
+    background: var(--card-background);
+
 }
 
 .brand-section{
-  background: linear-gradient(30deg, var(--cta-gradient-start), var(--cta-gradient-end));
+  background: var(--text-primary);
   background-clip: text;
+  font-family: 'raleway-bold';
   color: transparent;
-}
-
-a{
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-a:hover{
-    color: var(--secondary);
-}
-
-.divider{
-    
-    border-color: var(--text-muted);
 }
 
 .separator {
@@ -37,7 +23,7 @@ a:hover{
     font-weight: 500;
     align-items: center;
     text-align: center;
-    color: var(--text-muted);
+    color: var(--text-primary);
     font-size: 16px;
 }
 
@@ -45,7 +31,7 @@ a:hover{
     .separator::after {
         content: "";
         flex: 1;
-        border-bottom: 1px solid var(--text-muted);
+        border-bottom: 1px solid var(--text-primary);
     }
 
     .separator:not(:empty)::before {

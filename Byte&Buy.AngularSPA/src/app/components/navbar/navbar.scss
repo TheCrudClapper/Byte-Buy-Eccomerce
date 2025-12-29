@@ -1,13 +1,14 @@
 .navbar {
-  background-color: var(--card-bg);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  background-color: var(--card-background);
+  border-bottom: 1px solid black;
+  box-shadow: 0px 0px 5px 0px black;
   font-family: 'raleway-bold';
 }
 
 .navbar-brand {
   font-weight: 700;
   font-size: 1.55rem;
-  color: linear-gradient(90deg, var(--cta-gradient-start), var(--cta-gradient-end));
+  color: var(--text-primary);
 }
 
 .navbar-collapse {
@@ -20,10 +21,14 @@
   align-items: center;
   font-weight: 500;
   gap: 0.4rem;
-  color: var(--text);
+  color: var(--text-primary);
   transition: color 0.3s ease;
   display: flex;
   align-items: center;
+}
+
+.nav-link.dropdown-toggle.show{
+  color: var(--primary-accent);
 }
 
 .nav-link i {
@@ -32,29 +37,30 @@
 }
 
 .nav-link:hover {
-  color: var(--secondary);
-}
-
-.navbar-icon {
-  color: var(--text);
+  color: var(--primary-accent);
 }
 
 .search-form {
   flex: 1;
   margin-right: 0 !important;
-  font-family: 'open-sans-medium';
+  font-family: 'raleway-medium';
   max-width: 500px;
   min-width: 280px;
 }
 
+.dropdown-menu.show{
+  background-color: var(--card-background);
+}
+
 .dropdown-item {
-  font-weight: 500;
-  color: var(--text);
+  color: var(--text-primary);
+  background-color: var(--card-background);
+  padding: 10px, 0px;
 }
 
 .dropdown-item:hover {
-  color: var(--primary);
-  background-color: var(--card-bg);
+  color: var(--primary-accent);
+  background-color: var(--card-background);
 }
 
 .search-form input {
@@ -65,6 +71,6 @@
 
 .search-form .btn {
   border-radius: 0 20px 20px 0;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--);
 }
 

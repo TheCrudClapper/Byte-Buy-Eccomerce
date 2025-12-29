@@ -1,12 +1,16 @@
 footer {
-    border-top: 1px solid var(--outline-color);
-    background: var(--card-bg);
-    color: var(--text);
+    border-top: 1px solid black;
+    background: var(--card-background);
+    color: var(--text-primary);
     font-family: 'raleway-medium';
+    box-shadow: 0px 0px 5px 0px black;
+}
+
+.footer-section-title{
+    font-family: 'raleway-bold';
 }
 
 .footer-list {
-    font-weight: 400;
     list-style-type: none;
     padding: 0;
 }
@@ -14,31 +18,30 @@ footer {
 .socials-icon {
     color: #fff;
     border-radius: 20%;
-    padding: 7px;
-    background-color: var(--primary);
-    transition: color 0.3s ease;
+    padding: 10px;
+    background-color: var(--primary-accent);
     transition: background-color 0.3s ease;
-    border: 1px solid transparent;
+    border: 1px solid var(--secondary-accent);
 }
 
 .socials-icon:hover {
-    color: var(--secondary);
-    background: #fff;
-    border: 1px solid var(--secondary);
+    background-color: var(--hover-accent) !important;
+    color: var(--text-primary);
+    border-color: var(--secondary-accent);
 }
 
 .spacer {
-    border: 1px solid var(--text-muted);
+    border: 1px solid var(--primary-accent);
 }
 
 .footer-link {
     font-weight: 600;
     margin-right: 15px;
-    color: var(--text);
+    color: var(--text-primary);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .footer-link:hover {
-    color: var(--secondary);
+    color: var(--primary-accent);
 }
