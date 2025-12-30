@@ -137,7 +137,7 @@
                     <!-- Price -->
                     <div class="row">
                         <div class="col-12">
-                            <p class="price">39,00 PLN</p>
+                            <p class="price">{{ price | number:'1.2-2' }} {{ currency }}</p>
                             <span class="badge seller-badge me-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{isSellerCompany ? "Company" : "Private Person"}}

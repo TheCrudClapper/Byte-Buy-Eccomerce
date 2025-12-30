@@ -17,20 +17,28 @@ export class SaleDetails {
 
   deliveryOptions: DeliveryOption[]  = [
       {
-        name: 'InPost Paczkomat S',
+        name: 'InPost Parcel Locker - S',
         priceAndCurrency: '10.95 PLN',
         carrier: 'Inpost',
         deliveryChannel: 'Parcel Locker'
       },
       {
-        name: 'Kurier DPD',
+        name: 'Courier DPD',
         priceAndCurrency: '10.95 PLN',
         carrier: 'DPD',
+        deliveryChannel: 'Courier'
+      },
+      {
+        name: 'Courier DHL',
+        priceAndCurrency: '10.95 PLN',
+        carrier: 'DHL',
         deliveryChannel: 'Courier'
       }
     ];
 
   quantity: number = 56;
+  price: number = 49.99;
+  currency: string = "PLN"
   condition: string = "Used";
   category: string = "CPU";
   quantityAvaliable: number = 69;
