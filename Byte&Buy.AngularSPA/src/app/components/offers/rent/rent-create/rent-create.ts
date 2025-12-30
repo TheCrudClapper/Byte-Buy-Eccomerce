@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-rent-create',
   imports: [],
   templateUrl: './rent-create.html',
-  styleUrl: './rent-create.scss',
+  styleUrls: [
+    './rent-create.scss',
+    '../../shared/offers-shared-styles.scss']
 })
 export class RentCreate {
 

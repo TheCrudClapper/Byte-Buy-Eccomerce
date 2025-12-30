@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-sale-create',
   imports: [],
   templateUrl: './sale-create.html',
-  styleUrl: './sale-create.scss',
+  styleUrls: [
+    './sale-create.scss',
+    '../../shared/offers-shared-styles.scss']
 })
 export class SaleCreate {
 

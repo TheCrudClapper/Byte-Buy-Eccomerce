@@ -27,77 +27,87 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
-            ],
-            "styles": [
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "ByteBuy.AngularSPA:build:production"
-            },
-            "development": {
-              "buildTarget": "ByteBuy.AngularSPA:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
+              },
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+                "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+                "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "src/styles.scss"
+              ],
+              "scripts": [
+                "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              ]
+            },
+            "configurations": {
+              "production": {
+                "budgets": [
+                  {
+                    "type": "initial",
+                    "maximumWarning": "500kB",
+                    "maximumError": "1MB"
+                  },
+                  {
+                    "type": "anyComponentStyle",
+                    "maximumWarning": "4kB",
+                    "maximumError": "8kB"
+                  }
+                ],
+                "outputHashing": "all"
+              },
+              "development": {
+                "optimization": false,
+                "extractLicenses": false,
+                "sourceMap": true
+              }
+            },
+            "defaultConfiguration": "production"
+          },
+          "serve": {
+            "builder": "@angular/build:dev-server",
+            "configurations": {
+              "production": {
+                "buildTarget": "ByteBuy.AngularSPA:build:production"
+              },
+              "development": {
+                "buildTarget": "ByteBuy.AngularSPA:build:development"
+              }
+            },
+            "defaultConfiguration": "development"
+          },
+          "extract-i18n": {
+            "builder": "@angular/build:extract-i18n"
+          },
+          "test": {
+            "builder": "@angular/build:karma",
+            "options": {
+              "polyfills": [
+                "zone.js",
+                "zone.js/testing"
+              ],
+              "tsConfig": "tsconfig.spec.json",
+              "inlineStyleLanguage": "scss",
+              "assets": [
+                {
+                  "glob": "**/*",
+                  "input": "public"
+                },
+                {
+                  "glob": "**/*",
+                  "input": "src/assets",
+                  "output": "/assets"
+                }
+              ],
+              "styles": [
+                "src/styles.scss"
+              ]
+            }
           }
         }
       }
     }
   }
-}

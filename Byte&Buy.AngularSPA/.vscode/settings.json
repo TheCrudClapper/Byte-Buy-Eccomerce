@@ -1,0 +1,23 @@
+{
+    "editor.defaultFormatter": "Angular.ng-template",
+    "editor.fontFamily": "consol",
+    "telemetry.editStats.enabled": false,
+    "angular.forceStrictTemplates": false,
+    "angular.suggest.includeAutomaticOptionalChainCompletions": true,
+    "workbench.colorTheme": "Aura Dark (Soft Text)",
+    "workbench.editor.decorations.colors": true,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.preferredDarkColorTheme": "Visual Studio Dark",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
+}

@@ -1,0 +1,124 @@
+.page-wrapper {
+  width: 75%;
+  margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+  .page-wrapper {
+    width: 100%;
+  }
+}
+
+.page-title {
+  font-family: 'raleway-bold';
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.content-section {
+  background: var(--card-background);
+  border-radius: 10px;
+  color: var(--text-primary);
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: 0px 5px 5px 2px black;
+}
+
+.content-section-title {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.content-section-description {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.inner-container {
+  padding: 40px;
+  background-color: var(--gray-accent);
+  text-align: center;
+  border: 1px solid var(--primary-accent);
+  border-radius: 5px;
+
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.link {
+  font-family: 'raleway-bold';
+  font-size: 14px;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.link:hover {
+  color: var(--primary-accent);
+  cursor: pointer;
+}
+
+.price {
+  font-size: 38px;
+  font-family: 'open-sans-medium';
+}
+
+.offer-details-title {
+  font-size: 18px;
+  font-family: 'open-sans-medium';
+}
+
+.seller-badge {
+  border: 1px solid var(--primary-accent);
+  font-family: 'open-sans-medium';
+}
+
+span {
+  font-family: 'open-sans-medium';
+  font-size: 14px;
+}
+
+table {
+  font-size: 14px;
+}
+
+td{
+  background-color: transparent !important;
+  color: var(--text-primary);
+  font-family: 'open-sans-medium';
+  border-top: 1px solid;
+  border-color: var(--gray-accent);
+}
+
+#imageCarousel .carousel-inner {
+  border-radius: 10px;
+  aspect-ratio: 4 / 3;
+}
+
+#imageCarousel .carousel-item img,
+#carouselExample .carousel-item img {
+  width: 100%;
+  border-radius: 10px;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+
+.description{
+  font-family: 'open-sans-medium';
+}
+
+a{
+  font-family: 'open-sans-medium';
+  text-decoration: none;
+  transition: color 0.3s;
+  color: var(--text-primary);
+}
+
+a:hover{
+  cursor: pointer;
+  color: var(--primary-accent);  
+}

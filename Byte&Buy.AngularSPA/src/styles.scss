@@ -43,7 +43,7 @@
 }
 
 
-.theme-modern-primary{
+.theme-modern-primary {
   --background: #17182a;
   --hover-accent: #3b255a;
   --primary-accent: #8B5CF6;
@@ -56,7 +56,7 @@
   --error: #EF4444;
 }
 
-body{
+body {
   background-color: var(--background);
 }
 
@@ -92,43 +92,91 @@ body{
   box-shadow: 0 0 4px var(--outline-color);
 }
 
-label{
+label {
   font-size: 14px;
   font-family: 'raleway-bold';
 }
 
-.checkbox{
+.checkbox {
   font-size: 16px !important;
 }
 
-.text-normal-size{
+.text-normal-size {
   font-size: 14px !important;
 }
 
-input{
+input {
   font-size: 14px !important;
   font-family: 'open-sans-medium';
 }
 
 //Inputs
-input:focus{
-    outline: none;
-    box-shadow: 0 0 5px var(--primary-accent) !important;
-    border-color: var(--primary-accent) !important;
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-accent) !important;
+  border-color: var(--primary-accent) !important;
 }
 
 input:checked {
-    background-color: var(--primary-accent) !important;
-    outline: none;
-    box-shadow: 0 0 5px var(--primary-accent) !important;
-    border-color: var(--primary-accent) !important;
+  background-color: var(--primary-accent) !important;
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-accent) !important;
+  border-color: var(--primary-accent) !important;
 }
 
 //Validation Errors
-.validation-errors{
+.validation-errors {
   font-size: 14px;
   font-family: 'raleway-bold';
-    color: var(--error);
-    font-weight: 450;
+  color: var(--error);
+  font-weight: 450;
 }
 
+p {
+  font-family: 'raleway-bold';
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-accent) !important;
+  border-color: var(--primary-accent) !important;
+}
+
+.form-select {
+  font-size: 14px;
+  font-family: 'open-sans-medium';
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--primary-accent) !important;
+  border-color: var(--primary-accent) !important;
+}
+
+.input-group-text{
+  font-family: 'open-sans-medium';
+  font-size: 14px;
+}
+
+//hide basic file picker
+#file-input{
+  position: absolute;
+   width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+//new plus button
+.file-button{
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.file-button:hover{
+  cursor: pointer;
+  color: var(--primary-accent);
+}
