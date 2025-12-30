@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DeliveryOption } from '../../shared/delivery-option';
 import { CommonModule } from '@angular/common';
+import { SellerInfo } from "../../shared/seller-info/seller-info";
 
 @Component({
   selector: 'app-sale-details',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SellerInfo],
   templateUrl: './sale-details.html',
   styleUrls: [
     './sale-details.scss',
@@ -44,14 +45,7 @@ export class SaleDetails {
   quantityAvaliable: number = 69;
   title: string = "Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM";
   isSellerCompany: boolean = false;
-  sellerEmail: string = "wojciechmucha12@gmail.com";
-  sellerCreated: string = "2025-12-12";
-  sellerCity: string = "Siedlce";
-  sellerPostalCode: string = "33-322";
-  sellerPostalCity: string = "Korzenna";
-  sellerPhone: string = "724075416";
-  sellerName: string = "Wojciech";
-
+  
   description: string = `   🔥 Unleash Elite Performance – AMD Ryzen 7 5700X3D 🔥
 
                             Experience next-level computing with
@@ -80,11 +74,6 @@ export class SaleDetails {
 
   get descriptionWithBr(): string {
     return this.description.trim().replace(/\n/g, '<br>');
-  }
-
-  googleMapsLink(): string {
-    const query = (this.sellerCity + '+' + this.sellerPostalCity + '+' + this.sellerPostalCode);
-    return this.googleApiBase + query;
   }
 
   addToCart(): void {

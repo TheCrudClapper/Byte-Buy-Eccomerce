@@ -106,7 +106,6 @@ td{
   display: block;
 }
 
-
 .description{
   font-family: 'open-sans-medium';
 }
@@ -121,4 +120,8 @@ a{
 a:hover{
   cursor: pointer;
   color: var(--primary-accent);  
+}
+
+.sticky-top{
+  z-index: 1 !important;
 }

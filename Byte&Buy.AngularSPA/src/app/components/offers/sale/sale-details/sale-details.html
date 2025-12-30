@@ -61,61 +61,7 @@
             </div>
 
             <!-- Seller informations -->
-            <div class="content-section">
-                <div class="row gy-3">
-                    <div class="col-12">
-                        <p class="content-section-title mb-2">Seller Information</p>
-                    </div>
-
-                    <div class="col-6 border-end pe-3">
-
-                        <p class="d-block">
-                            <i class="fa-regular fa-user" style="color: #ffffff;"></i>
-                            <span class="ms-2 fw-bold">Sells: </span>
-                            <span>{{sellerName}}</span>
-                        </p>
-
-                        <p class="d-block">
-                            <i class="fa-regular fa-envelope" style="color: #ffffff;"></i>
-                            <span class="ms-2 fw-bold">Email: </span>
-                            <span>
-                                <a [href]="'mailto:' + sellerEmail">
-                                    {{sellerEmail}}
-                                </a>
-                            </span>
-                        </p>
-
-                        <p class="d-block">
-                            <i class="fa-solid fa-hourglass" style="color: #ffffff;"></i>
-                            <span class="ms-2 fw-bold">Account created: </span>
-                            <span>{{sellerCreated}}</span>
-                        </p>
-
-                    </div>
-                    <div class="col-6">
-
-                        <p class="d-block">
-                            <i class="fa-solid fa-map-location-dot" style="color: #ffffff;"></i>
-                            <span class="ms-2">
-                                <a [href]="googleMapsLink()" target="_blank">
-                                    {{sellerCity}}, {{sellerPostalCity}} {{sellerPostalCode}}
-                                </a>
-                            </span>
-                        </p>
-
-                        <p class="d-block">
-                            <i class="fa-solid fa-phone" style="color: #ffffff;"></i>
-                            <span class="ms-2 fw-bold">Phone: </span>
-                            <span>
-                                <a [href]="'tel:' + sellerPhone">
-                                    {{sellerPhone}}
-                                </a>
-                            </span>
-                        </p>
-
-                    </div>
-                </div>
-            </div>
+           <app-seller-info></app-seller-info>
 
         </div>
 
