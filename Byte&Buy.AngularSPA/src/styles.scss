@@ -125,9 +125,9 @@ input:checked {
 }
 
 //Validation Errors
-.validation-errors {
-  font-size: 14px;
-  font-family: 'raleway-bold';
+.validation-error {
+  font-size: 12px !important;
+  font-family: 'raleway-bold' !important;
   color: var(--error);
   font-weight: 450;
 }
