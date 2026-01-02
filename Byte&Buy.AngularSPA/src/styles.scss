@@ -180,3 +180,37 @@ textarea:focus {
   cursor: pointer;
   color: var(--primary-accent);
 }
+
+.content-section {
+  background: var(--card-background);
+  border-radius: 10px;
+  color: var(--text-primary);
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: 0px 5px 5px 2px black;
+}
+
+.content-section-title {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.content-section-description {
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.inner-container {
+  padding: 40px;
+  background-color: var(--gray-accent);
+  text-align: center;
+  border: 1px solid var(--primary-accent);
+  border-radius: 5px;
+
+}
+
+.page-title {
+  font-family: 'raleway-bold';
+  font-size: 18px;
+  color: var(--text-primary);
+}

@@ -8,6 +8,7 @@ import { SaleCreate } from './components/offers/sale/sale-create/sale-create';
 import { SaleEdit } from './components/offers/sale/sale-edit/sale-edit';
 import { SaleDetails } from './components/offers/sale/sale-details/sale-details';
 import { Home } from './components/home/home';
+import { ProfileIndex } from './components/profile/profile-index/profile-index';
 
 export const routes: Routes = [
     { path: '', component: Home},
@@ -18,5 +19,6 @@ export const routes: Routes = [
     { path: 'offers/rent/:id/details', component: RentDetails}, 
     { path: 'offers/sale/create', component: SaleCreate}, 
     { path: 'offers/sale/:id/edit', component: SaleEdit}, 
-    { path: 'offers/sale/:id/details', component: SaleDetails}
+    { path: 'offers/sale/:id/details', component: SaleDetails},
+    { path: 'profile', component: ProfileIndex}
 ];

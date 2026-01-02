@@ -1,0 +1,19 @@
+
+.bold-text{
+    font-family: 'raleway-bold';
+}
+.default-font-size{
+  font-size: 14px;
+}
+.primary-background{
+    background-color: var(--primary-accent);
+}
+.action-tile{
+    font-family: 'open-sans-medium';
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--gray-accent);
+}
+.action-tile:hover{
+    background-color: var(--hover-accent);
+}
