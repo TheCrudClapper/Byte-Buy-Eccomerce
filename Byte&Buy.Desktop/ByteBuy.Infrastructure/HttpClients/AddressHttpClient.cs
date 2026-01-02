@@ -10,9 +10,6 @@ public class AddressHttpClient : HttpClientBase, IAddressHttpClient
     private const string resource = "users";
     public AddressHttpClient(HttpClient httpClient) : base(httpClient) { }
 
-    public async Task<Result<CreatedResponse>> PostUserAddressAsync(Guid userId, AddressAddRequest request)
-        => await PostAsync<CreatedResponse>($"{resource}/{userId}/addresses", request);
-
-    public async Task<Result<UpdatedResponse>> PutUserAddressAsync(Guid userId, Guid addressId, AddressUpdateRequest request)
-        => await PutAsync<UpdatedResponse>($"{resource}/{userId}/addresses/{addressId}", request);
+    public async Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request)
+        => await PutAsync<UpdatedResponse>($"{resource}/{userId}/home-address", request);
 }

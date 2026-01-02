@@ -102,7 +102,7 @@
                         </Grid>
 
                         <!--Address Form Section-->
-                        <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70">
+                        <Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
                             <StackPanel Grid.Row="0"
                                         Grid.ColumnSpan="2"
                                         Orientation="Horizontal">
@@ -143,10 +143,16 @@
                                 <TextBox Text="{Binding PostalCode}" />
                             </StackPanel>
 
-                            <StackPanel Grid.Row="3" Grid.Column="2">
+                            <StackPanel Grid.Row="4" Grid.Column="0">
                                 <TextBlock Text="Country"
                                            Classes="textBoxLabel" />
                                 <TextBox Text="{Binding Country}" />
+                            </StackPanel>
+
+                             <StackPanel Grid.Row="3" Grid.Column="2">
+                                <TextBlock Text="Postal City"
+                                           Classes="textBoxLabel" />
+                                <TextBox Text="{Binding PostalCity}" />
                             </StackPanel>
                         </Grid>
 

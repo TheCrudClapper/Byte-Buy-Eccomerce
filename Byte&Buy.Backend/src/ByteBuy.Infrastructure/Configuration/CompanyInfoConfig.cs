@@ -8,12 +8,13 @@ public class CompanyInfoConfig : IEntityTypeConfiguration<CompanyInfo>
 {
     public void Configure(EntityTypeBuilder<CompanyInfo> builder)
     {
-        builder.OwnsOne(ci => ci.Address, ci =>
+        builder.OwnsOne(ci => ci.CompanyAddress, ci =>
         {
             ci.Property(prop => prop.City).HasMaxLength(50).IsRequired();
             ci.Property(prop => prop.Street).HasMaxLength(50).IsRequired();
             ci.Property(prop => prop.Country).HasMaxLength(50).IsRequired();
             ci.Property(prop => prop.PostalCode).HasMaxLength(50).IsRequired();
+            ci.Property(p => p.PostalCity).HasMaxLength(50);
             ci.Property(prop => prop.HouseNumber).HasMaxLength(20).IsRequired();
         });
 

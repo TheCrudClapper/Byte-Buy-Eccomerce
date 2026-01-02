@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.Employee;
+﻿using ByteBuy.Core.DTO.AddressValueObj;
+
+namespace ByteBuy.Core.DTO.Employee;
 
 /// <summary>
 /// Represents the response data for an employee, including personal and address information.
@@ -9,13 +11,8 @@ public record EmployeeResponse(
     string FirstName,
     string LastName,
     string Email,
-    string Street,
-    string HouseNumber,
-    string PostalCode,
-    string City,
-    string Country,
-    string? FlatNumber,
-    string? PhoneNumber,
+    HomeAddressDto HomeAddress,
+    string PhoneNumber,
     IReadOnlyCollection<Guid> GrantedPermissionIds,
     IReadOnlyCollection<Guid> RevokedPermissionIds
 );

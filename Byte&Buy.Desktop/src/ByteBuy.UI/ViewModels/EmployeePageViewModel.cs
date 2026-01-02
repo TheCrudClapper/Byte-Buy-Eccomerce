@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -31,6 +32,11 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
     [ObservableProperty]
     [Required]
+    [MaxLength(50)]
+    private string _postalCity = string.Empty;
+
+    [ObservableProperty]
+    [Required]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
@@ -45,23 +51,26 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     private string _city = string.Empty;
 
     [ObservableProperty]
-    [Required]
-    [MaxLength(50)]
-    private string _country = string.Empty;
-
-    [ObservableProperty]
     [MaxLength(10)]
     private string? _flatNumber = string.Empty;
 
     [ObservableProperty]
+    [Required]
     [MaxLength(15)]
-    private string? _phoneNumber = string.Empty;
+    private string _phoneNumber = string.Empty;
 
     [ObservableProperty]
     private string _password = string.Empty;
 
     [ObservableProperty]
-    [Required(ErrorMessage = "Choose employee's role")]
+    private ObservableCollection<SelectListItemResponse<Guid>> _countries = [];
+
+    [ObservableProperty]
+    [Required]
+    private SelectListItemResponse<Guid>? _selectedCountry;
+
+    [ObservableProperty]
+    [Required(ErrorMessage = "Choose employee's roles")]
     private SelectListItemResponse<Guid>? _selectedRole;
 
     [ObservableProperty] private ObservableCollection<SelectListItemResponse<Guid>> _roles = [];
@@ -70,6 +79,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
     private readonly IEmployeeService _employeeService;
     private readonly IRoleService _roleService;
+    private readonly ICountryService _countryService;
 
     public PermissionGrantRevokeViewModel PermissionListBox { get; }
 
@@ -77,24 +87,29 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         IRoleService roleService,
         IEmployeeService employeeService,
         PermissionGrantRevokeViewModel permissionListBox,
+        ICountryService countryService,
         AlertViewModel alert) : base(alert)
     {
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
         _roleService = roleService;
+        _countryService = countryService;
     }
 
     protected override async Task InitializeAsync()
     {
         var permissionListBoxTask = PermissionListBox.InitializeAsync();
+        var countriesTask = _countryService.GetSelectList();
         var roleTask = _roleService.GetSelectList();
 
-        await Task.WhenAll(permissionListBoxTask, roleTask);
+        await Task.WhenAll(permissionListBoxTask, roleTask, countriesTask);
 
         await permissionListBoxTask;
-        var role = await roleTask;
+        var roles = await roleTask;
+        var countries = await countriesTask;
 
-        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(role.Value ?? []);
+        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Value ?? []);
+        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);
     }
     protected override void Clear()
     {
@@ -103,6 +118,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         SelectedRole = null;
         HouseNumber = string.Empty;
         Email = string.Empty;
+        PhoneNumber = string.Empty;
         PostalCode = string.Empty;
         City = string.Empty;
         Street = string.Empty;

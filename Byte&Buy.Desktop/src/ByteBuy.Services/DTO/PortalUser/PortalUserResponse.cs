@@ -9,7 +9,7 @@ public record PortalUserResponse(
     string LastName,
     string Email,
     string? PhoneNumber,
-    AddressResponse? Address,
+    HomeAddressDto? HomeAddress,
     IReadOnlyCollection<Guid> GrantedPermissionIds,
     IReadOnlyCollection<Guid> RevokedPermissionIds
 );

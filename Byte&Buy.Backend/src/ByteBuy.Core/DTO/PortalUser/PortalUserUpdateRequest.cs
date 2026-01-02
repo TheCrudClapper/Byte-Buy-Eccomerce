@@ -10,8 +10,4 @@ public record PortalUserUpdateRequest(
     string? Password,
     [MaxLength(15)] string? PhoneNumber,
     IEnumerable<Guid>? GrantedPermissionIds,
-    IEnumerable<Guid>? RevokedPermissionIds
-    );
-
-
-
+    IEnumerable<Guid>? RevokedPermissionIds);

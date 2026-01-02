@@ -3,6 +3,6 @@ using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface IAddressReadRepository : IRepositoryBase<Address>
+public interface IAddressReadRepository : IRepositoryBase<ShippingAddress>
 {
 }

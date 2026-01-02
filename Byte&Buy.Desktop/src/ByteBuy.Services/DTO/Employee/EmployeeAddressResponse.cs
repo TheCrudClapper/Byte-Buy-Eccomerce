@@ -7,5 +7,5 @@ public record EmployeeAddressResponse(
     string City,
     string Country,
     string? FlatNumber,
-    string? PhoneNumber
+    string PhoneNumber
     );

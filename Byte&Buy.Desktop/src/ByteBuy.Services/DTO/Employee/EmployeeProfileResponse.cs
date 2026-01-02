@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+
+namespace ByteBuy.Services.DTO.Employee;
 
 public record EmployeeProfileResponse(
     Guid Id,
@@ -6,11 +8,6 @@ public record EmployeeProfileResponse(
     string FirstName,
     string LastName,
     string Email,
-    string Street,
-    string HouseNumber,
-    string PostalCode,
-    string City,
-    string Country,
-    string? FlatNumber,
-    string? PhoneNumber
+    string PhoneNumber,
+    HomeAddressDto HomeAddress
 );

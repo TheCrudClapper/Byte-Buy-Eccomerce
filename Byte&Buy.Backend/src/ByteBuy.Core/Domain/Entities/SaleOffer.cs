@@ -11,7 +11,8 @@ public class SaleOffer : Offer
         Guid itemId,
         Guid createdByUserId,
         int quantityAvailable,
-        Money pricePerItem) : base(itemId, createdByUserId, quantityAvailable)
+        Money pricePerItem,
+        AddressValueObject offerAddress) : base(itemId, createdByUserId, quantityAvailable, offerAddress)
     {
         PricePerItem = pricePerItem;
     }
@@ -20,6 +21,7 @@ public class SaleOffer : Offer
      Guid createdByUserId,
      int quantityAvailable,
      decimal pricePerItem,
+     AddressValueObject offerAddress,
      IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = ValidateBasicInfo(quantityAvailable);
@@ -32,7 +34,7 @@ public class SaleOffer : Offer
 
         var money = moneyResult.Value;
 
-        var saleOffer = new SaleOffer(itemId, createdByUserId, quantityAvailable, money);
+        var saleOffer = new SaleOffer(itemId, createdByUserId, quantityAvailable, money, offerAddress);
         saleOffer.AssignDeliveriesToOffer(deliveriesIds);
 
         return saleOffer;

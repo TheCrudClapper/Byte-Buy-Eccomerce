@@ -7,9 +7,9 @@ namespace ByteBuy.Core.Mappings;
 public static class AddressMappings
 {
     //In memory Mappings
-    public static AddressResponse ToAddressResponse(this Address address)
+    public static ShippingAddressResponse ToAddressResponse(this ShippingAddress address)
     {
-        return new AddressResponse(
+        return new ShippingAddressResponse(
             address.Id,
             address.CountryId,
             address.Label,
@@ -24,8 +24,8 @@ public static class AddressMappings
     }
 
     //Ef db projections
-    public static Expression<Func<Address, AddressResponse>> AddressDtoProjection
-        => a => new AddressResponse(
+    public static Expression<Func<ShippingAddress, ShippingAddressResponse>> AddressDtoProjection
+        => a => new ShippingAddressResponse(
            a.Id,
            a.CountryId,
            a.Label,

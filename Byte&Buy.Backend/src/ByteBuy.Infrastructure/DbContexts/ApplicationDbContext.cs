@@ -24,7 +24,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<RentOffer> RentOffers { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Condition> Conditions { get; set; }
-    public DbSet<Address> Addresses { get; set; }
+    public DbSet<ShippingAddress> ShippingAddresses { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartOffer> CartOffers { get; set; }
     public DbSet<Country> Countries { get; set; }

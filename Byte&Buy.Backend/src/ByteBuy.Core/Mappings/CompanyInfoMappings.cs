@@ -14,13 +14,14 @@ public static class CompanyInfoMappings
             company.Email,
             company.Phone,
             company.Slogan,
-            new AddressDto(
-                company.Address.Street,
-                company.Address.HouseNumber,
-                company.Address.PostalCode,
-                company.Address.City,
-                company.Address.Country,
-                company.Address.FlatNumber
+            new HomeAddressDto(
+                company.CompanyAddress.Street,
+                company.CompanyAddress.HouseNumber,
+                company.CompanyAddress.PostalCity,
+                company.CompanyAddress.PostalCode,
+                company.CompanyAddress.City,
+                company.CompanyAddress.Country,
+                company.CompanyAddress.FlatNumber
                 )
             );
 

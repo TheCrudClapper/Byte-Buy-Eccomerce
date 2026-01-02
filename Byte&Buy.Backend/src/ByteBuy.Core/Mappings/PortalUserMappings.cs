@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.DTO.Shared;
 using System.Linq.Expressions;
@@ -21,10 +22,10 @@ public static class PortalUserMappings
     //        );
     //}
 
-    //AddAsync nullable for addres bc user don't have to add address while registering
+    //AddUserShippingAddressAsync nullable for addres bc user don't have to add address while registering
     //public static PortalUserResponse ToPortalUserResponse(this PortalUser user)
     //{
-    //    var defaultAddress = user.Addresses?
+    //    var defaultAddress = user.ShippingAddresses?
     //     .FirstOrDefault(a => a.IsDefault)
     //     ?.ToAddressResponse() ?? null;
 
@@ -70,20 +71,17 @@ public static class PortalUserMappings
             p.LastName,
             p.Email!,
             p.PhoneNumber,
-            p.Addresses
-                .Where(a => a.IsDefault)
-                .Select(a => new AddressResponse(
-                    a.Id,
-                    a.CountryId,
-                    a.Label,
-                    a.Street,
-                    a.HouseNumber,
-                    a.PostalCity,
-                    a.PostalCode,
-                    a.City,
-                    a.FlatNumber,
-                    a.IsDefault
-                    )).FirstOrDefault(),
+            p.HomeAddress == null 
+            ? null 
+            : new HomeAddressDto(
+                p.HomeAddress.Street,
+                p.HomeAddress.HouseNumber,
+                p.HomeAddress.PostalCity,
+                p.HomeAddress.PostalCode,
+                p.HomeAddress.City,
+                p.HomeAddress.Country,
+                p.HomeAddress.FlatNumber
+                ),
             p.UserPermissions.Where(up => up.IsGranted).Select(up => up.PermissionId).ToList(),
             p.UserPermissions.Where(up => !up.IsGranted).Select(up => up.PermissionId).ToList());
 

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Views.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class PasswordChangeViewModel(IEmployeeService employeeService)
+public partial class PasswordChangeViewModel(IEmployeeService employeeService, AlertViewModel alert)
     : ObservableValidator
 {
     [ObservableProperty]
@@ -41,10 +42,10 @@ public partial class PasswordChangeViewModel(IEmployeeService employeeService)
         if (HasErrors)
             return;
 
-        var request = new PasswordChangeRequest(NewPassword!, CurrentPassword!, ConfirmPassword!);
+        var request = new PasswordChangeRequest(NewPassword, CurrentPassword, ConfirmPassword);
         var response = await employeeService.ChangePassword(request);
         if (!response.Success)
-            Error = response.Error!.Description;
+            Error = response?.Error?.Description ?? "Error occured";
     }
 
     [RelayCommand]

@@ -6,6 +6,7 @@ using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
 using static ByteBuy.Core.Specification.SaleOfferSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -13,14 +14,17 @@ namespace ByteBuy.Core.Services;
 public class SaleOfferService : ISaleOfferService
 {
     private readonly IItemRepository _itemRepository;
+    private readonly ICompanyInfoRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly ISaleOfferRepository _saleOfferRepository;
     public SaleOfferService(
         IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
+        ICompanyInfoRepository companyInfoRepository,
         IDeliveryRepository deliveryRepository)
     {
         _itemRepository = itemRepository;
+        _companyInfoRepository = companyInfoRepository;
         _saleOfferRepository = saleOfferRepository;
         _deliveryRepository = deliveryRepository;
     }
@@ -42,11 +46,17 @@ public class SaleOfferService : ISaleOfferService
         if (stockUpdateResult.IsFailure)
             return Result.Failure<CreatedResponse>(stockUpdateResult.Error);
 
+        var spec = new CompanyInfoToAddressValueObject();
+        var companyAddress = await _companyInfoRepository.GetBySpecAsync(spec);
+        if (companyAddress is null)
+            return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
+
         var saleOfferResult = SaleOffer.Create(
             request.ItemId,
             userId,
             request.QuantityAvailable,
             request.PricePerItem,
+            companyAddress,
             validatedDeliveries.Value.Select(d => d.Id));
 
         if (saleOfferResult.IsFailure)

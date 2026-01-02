@@ -1,6 +1,6 @@
-﻿namespace ByteBuy.Services.DTO.Address;
+﻿namespace ByteBuy.Core.DTO.PortalUser;
 
-public record AddressResponse(
+public record ShippingAddressResponse(
     Guid Id,
     Guid CountryId,
     string Label,
@@ -11,4 +11,5 @@ public record AddressResponse(
     string City,
     string? FlatNumber,
     bool IsDefault
-);
+    );
+

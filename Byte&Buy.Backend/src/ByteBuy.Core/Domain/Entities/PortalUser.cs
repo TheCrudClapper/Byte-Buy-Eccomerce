@@ -1,12 +1,13 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
 public sealed class PortalUser : ApplicationUser
 {
-    public ICollection<Address> Addresses { get; private set; } = new List<Address>();
-    public ICollection<Order> Orders { get; private set; } = new List<Order>();
+    public ICollection<ShippingAddress> ShippingAddresses { get; private set; } = [];
+    public ICollection<Order> Orders { get; private set; } = [];
     public Cart Cart { get; private set; } = null!;
 
     private PortalUser(string firstName, string lastName, string email, string? phoneNumber)
@@ -25,7 +26,7 @@ public sealed class PortalUser : ApplicationUser
     public override void Deactivate()
     {
         base.Deactivate();
-        foreach (var address in Addresses)
+        foreach (var address in ShippingAddresses)
             address.Deactivate();
     }
 
@@ -34,9 +35,16 @@ public sealed class PortalUser : ApplicationUser
         string lastName,
         string email,
         string? phoneNumber,
-        Address address,
+        string street,
+        string houseNumber,
+        string postalCity,
+        string postalCode,
+        string city,
+        string country,
+        string? flatNumber,
         IEnumerable<Guid>? revokedPermissions,
-        IEnumerable<Guid>? grantedPermissions)
+        IEnumerable<Guid>? grantedPermissions,
+        IAddressValidationService validator)
     {
         var portalUserResult = Create(firstName, lastName, email, phoneNumber);
         if (portalUserResult.IsFailure)
@@ -44,10 +52,19 @@ public sealed class PortalUser : ApplicationUser
 
         var user = portalUserResult.Value;
 
-        if (address is null)
-            return Result.Failure<PortalUser>(Error.Validation("Address can't be null!"));
+        var addressResult = user.SetHomeAddress(
+            street,
+            houseNumber,
+            postalCity,
+            postalCode,
+            city,
+            country,
+            flatNumber,
+            validator);
 
-        user.AssignAddress(address);
+        if (addressResult.IsFailure)
+            return Result.Failure<PortalUser>(addressResult.Error);
+
         user.AssignPermissionsToUser(revokedPermissions ?? [], grantedPermissions ?? []);
         return user;
     }
@@ -77,18 +94,40 @@ public sealed class PortalUser : ApplicationUser
         return Result.Success();
     }
 
+    // Used for creating new value object for home address
+    public Result SetHomeAddress(
+        string street,
+        string houseNumber,
+        string postalCity,
+        string postalCode,
+        string city,
+        string country,
+        string? flatNumber,
+        IAddressValidationService validator)
+    {
+        var addressResult = AddressValueObject.Create(
+           street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
+
+        if (addressResult.IsFailure)
+            return Result.Failure(addressResult.Error);
+
+        HomeAddress = addressResult.Value;
+        DateEdited = DateTime.UtcNow;
+        return Result.Success();
+    }
+
     public void AssignCart(Cart cart)
     {
         Cart = cart;
     }
 
-    public void AssignAddress(Address address)
+    public void AssignShippingAddress(ShippingAddress address)
     {
         address.AssignToUser(this);
-        Addresses.Add(address);
+        ShippingAddresses.Add(address);
     }
 
-    public Result<Address> AddAddress(
+    public Result<ShippingAddress> AddShippingAddress(
     string label,
     string city,
     string street,
@@ -100,7 +139,7 @@ public sealed class PortalUser : ApplicationUser
     bool isDefault,
     IAddressValidationService validator)
     {
-        var addressResult = Address.Create(
+        var addressResult = ShippingAddress.Create(
             label,
             city,
             street,
@@ -113,34 +152,34 @@ public sealed class PortalUser : ApplicationUser
             validator);
 
         if (addressResult.IsFailure)
-            return Result.Failure<Address>(addressResult.Error);
+            return Result.Failure<ShippingAddress>(addressResult.Error);
 
         var address = addressResult.Value;
 
-        if (Addresses.Any(a => a.Label == address.Label))
-            return Result.Failure<Address>(AddressErrors.DuplicateLabel);
+        if (ShippingAddresses.Any(a => a.Label == address.Label))
+            return Result.Failure<ShippingAddress>(AddressErrors.DuplicateLabel);
 
         if (isDefault)
         {
-            var currentDefault = Addresses.FirstOrDefault(a => a.IsDefault);
+            var currentDefault = ShippingAddresses.FirstOrDefault(a => a.IsDefault);
             currentDefault?.UnmarkAsDefault();
             address.MarkAsDefault();
         }
         address.AssignToUser(this);
-        Addresses.Add(address);
+        ShippingAddresses.Add(address);
 
         return address;
     }
 
-    public Result UpdateAddress(
+    public Result UpdateShippingAddress(
         Guid addressId, string label, string city, string street, string houseNumber, string postalCity,
         string postalCode, string? flatNumber, Guid countryId, bool isDefault, IAddressValidationService validator)
     {
-        var address = Addresses.FirstOrDefault(a => a.Id == addressId);
+        var address = ShippingAddresses.FirstOrDefault(a => a.Id == addressId);
         if (address is null)
             return Result.Failure(Error.NotFound);
 
-        if (Addresses.Any(a => a.Id != addressId && a.Label == label))
+        if (ShippingAddresses.Any(a => a.Id != addressId && a.Label == label))
             return Result.Failure(AddressErrors.DuplicateLabel);
 
         if (address.IsDefault && !isDefault)
@@ -148,7 +187,7 @@ public sealed class PortalUser : ApplicationUser
 
         if (!address.IsDefault && isDefault)
         {
-            var currentDefault = Addresses.FirstOrDefault(a => a.IsDefault);
+            var currentDefault = ShippingAddresses.FirstOrDefault(a => a.IsDefault);
             currentDefault?.UnmarkAsDefault();
         }
 
@@ -160,9 +199,9 @@ public sealed class PortalUser : ApplicationUser
         return result;
     }
 
-    public Result RemoveAddress(Guid addressId)
+    public Result RemoveShippingAddress(Guid addressId)
     {
-        var address = Addresses.FirstOrDefault(a => a.Id == addressId);
+        var address = ShippingAddresses.FirstOrDefault(a => a.Id == addressId);
         if (address is null)
             return Result.Failure(Error.NotFound);
 

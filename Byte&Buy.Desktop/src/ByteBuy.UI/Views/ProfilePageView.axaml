@@ -106,7 +106,7 @@
 						</Grid>
 
 						<!-- Address Info -->
-						<Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
+						<Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70,70">
 							<StackPanel Grid.Row="0"
 										Grid.ColumnSpan="2"
 										Orientation="Horizontal">
@@ -149,9 +149,9 @@
 							</StackPanel>
 
 							<StackPanel Grid.Row="3" Grid.Column="2">
-								<TextBlock Text="Country"
+								<TextBlock Text="Postal City"
 										   Classes="textBoxLabel" />
-								<TextBox Text="{Binding Country}" />
+								<TextBox Text="{Binding PostalCity}" />
 							</StackPanel>
 
 							<StackPanel Grid.Row="4" Grid.Column="0">
@@ -160,7 +160,13 @@
 								<TextBox Text="{Binding PhoneNumber}" />
 							</StackPanel>
 
-							<StackPanel Grid.Row="4"
+							<StackPanel Grid.Row="4" Grid.Column="2">
+								<TextBlock Text="Country"
+										   Classes="textBoxLabel" />
+								<TextBox Text="{Binding Country}" />
+							</StackPanel>
+
+							<StackPanel Grid.Row="5"
 										Grid.Column="2"
 										HorizontalAlignment="Right"
 										Orientation="Horizontal"

@@ -16,7 +16,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.DropColumn(
                 name: "PlaceName",
-                table: "Addresses");
+                table: "ShippingAddresses");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
@@ -132,7 +132,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Street",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
@@ -141,7 +141,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "PostalCode",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(20)",
                 maxLength: 20,
                 nullable: false,
@@ -150,7 +150,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "PostalCity",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
@@ -159,7 +159,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "HouseNumber",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(20)",
                 maxLength: 20,
                 nullable: false,
@@ -168,7 +168,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "City",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
@@ -176,14 +176,14 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "FlatNumber",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(10)",
                 maxLength: 10,
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "Label",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
@@ -308,15 +308,15 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.DropColumn(
                 name: "City",
-                table: "Addresses");
+                table: "ShippingAddresses");
 
             migrationBuilder.DropColumn(
                 name: "FlatNumber",
-                table: "Addresses");
+                table: "ShippingAddresses");
 
             migrationBuilder.DropColumn(
                 name: "Label",
-                table: "Addresses");
+                table: "ShippingAddresses");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
@@ -329,7 +329,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Street",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -338,7 +338,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "PostalCode",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -347,7 +347,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "PostalCity",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -356,7 +356,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "HouseNumber",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -365,7 +365,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "PlaceName",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "text",
                 nullable: false,
                 defaultValue: "");

@@ -6,17 +6,21 @@ using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
 using static ByteBuy.Core.Specification.RentOfferSpecifications;
 namespace ByteBuy.Core.Services;
 
 public class RentOfferService : IRentOfferService
 {
     private readonly IRentOfferRepository _rentOfferRepository;
+    private readonly ICompanyInfoRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly IItemRepository _itemRepository;
     public RentOfferService(IRentOfferRepository rentOfferRepo, IItemRepository itemRepo,
-        IDeliveryRepository deliveryRepository)
+        IDeliveryRepository deliveryRepository,
+        ICompanyInfoRepository companyInfoRepository)
     {
+        _companyInfoRepository = companyInfoRepository;
         _rentOfferRepository = rentOfferRepo;
         _itemRepository = itemRepo;
         _deliveryRepository = deliveryRepository;
@@ -39,12 +43,18 @@ public class RentOfferService : IRentOfferService
         if (stockUpdateResult.IsFailure)
             return Result.Failure<CreatedResponse>(stockUpdateResult.Error);
 
+        var spec = new CompanyInfoToAddressValueObject();
+        var companyAddress = await _companyInfoRepository.GetBySpecAsync(spec);
+        if (companyAddress is null)
+            return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
+
         var rentOfferResult = RentOffer.Create(
             request.ItemId,
             userId,
             request.QuantityAvailable,
             request.PricePerDay,
             request.MaxRentalDays,
+            companyAddress,
             validatedDeliveries.Value.Select(i => i.Id));
 
         if (rentOfferResult.IsFailure)

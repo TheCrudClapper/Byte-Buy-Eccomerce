@@ -25,7 +25,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Address", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ShippingAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("ShippingAddresses");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationRole", b =>
@@ -1099,16 +1099,16 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.ToTable("SaleOrderItems", (string)null);
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Address", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ShippingAddress", b =>
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.Country", "Country")
-                        .WithMany("Addresses")
+                        .WithMany("ShippingAddresses")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "User")
-                        .WithMany("Addresses")
+                        .WithMany("ShippingAddresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
@@ -1222,7 +1222,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CompanyInfo", b =>
                 {
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "Address", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "ShippingAddress", b1 =>
                         {
                             b1.Property<Guid>("CompanyInfoId")
                                 .HasColumnType("uuid");
@@ -1263,7 +1263,7 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("CompanyInfoId");
                         });
 
-                    b.Navigation("Address")
+                    b.Navigation("ShippingAddress")
                         .IsRequired();
                 });
 
@@ -1371,7 +1371,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "ShippingAddress", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "ShippingAddress", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
@@ -1623,7 +1623,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Employee", b =>
                 {
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObj", "HomeAddress", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "HomeAddress", b1 =>
                         {
                             b1.Property<Guid>("EmployeeId")
                                 .HasColumnType("uuid");
@@ -1806,7 +1806,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Country", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("ShippingAddresses");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Delivery", b =>
@@ -1851,7 +1851,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PortalUser", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("ShippingAddresses");
 
                     b.Navigation("Cart")
                         .IsRequired();

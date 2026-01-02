@@ -168,7 +168,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
+                name: "ShippingAddresses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -445,12 +445,12 @@ namespace ByteBuy.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_CountryId",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -524,7 +524,7 @@ namespace ByteBuy.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Addresses");
+                name: "ShippingAddresses");
 
             migrationBuilder.DropTable(
                 name: "Images");

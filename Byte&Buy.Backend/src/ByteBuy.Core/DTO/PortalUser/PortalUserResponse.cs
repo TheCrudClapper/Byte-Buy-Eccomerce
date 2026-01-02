@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.PortalUser;
+﻿using ByteBuy.Core.DTO.AddressValueObj;
+
+namespace ByteBuy.Core.DTO.PortalUser;
 
 public record PortalUserResponse(
     Guid Id,
@@ -7,7 +9,7 @@ public record PortalUserResponse(
     string LastName,
     string Email,
     string? PhoneNumber,
-    AddressResponse? Address,
+    HomeAddressDto? HomeAddress,
     IReadOnlyCollection<Guid> GrantedPermissionIds,
     IReadOnlyCollection<Guid> RevokedPermissionIds
     );

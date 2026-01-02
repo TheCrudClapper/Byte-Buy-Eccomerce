@@ -2,8 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Address;
 
-public record AddressUpdateRequest(
-    [Required] Guid Id,
+public record ShippingAddressAddRequest(
     [Required] Guid CountryId,
     [Required, MaxLength(50)] string Label,
     [Required, MaxLength(50)] string Street,
@@ -14,4 +13,3 @@ public record AddressUpdateRequest(
     [MaxLength(10)] string? FlatNumber,
     [Required] bool IsDefault
     );
-

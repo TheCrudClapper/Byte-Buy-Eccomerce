@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ByteBuy.Core.DTO.AddressValueObj;
+using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.DTO.Employee;
 
@@ -10,13 +11,8 @@ public record EmployeeUpdateRequest(
     [Required, MaxLength(50)] string FirstName,
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,
+    [Required] HomeAddressDto HomeAddress,
     string Password,
-    [Required, MaxLength(50)] string Street,
-    [Required, MaxLength(10)] string HouseNumber,
-    [Required, MaxLength(20)] string PostalCode,
-    [Required, MaxLength(50)] string City,
-    [Required, MaxLength(50)] string Country,
-    [MaxLength(15)] string PhoneNumber,
-    [MaxLength(10)] string? FlatNumber,
+    [Required, MaxLength(15)] string PhoneNumber,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds);

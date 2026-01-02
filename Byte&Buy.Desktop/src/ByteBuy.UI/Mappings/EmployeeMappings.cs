@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+using ByteBuy.Services.DTO.Employee;
 using ByteBuy.UI.ModelsUI.Employee;
 using ByteBuy.UI.ViewModels;
 using System.Linq;
@@ -29,12 +30,7 @@ public static class EmployeeMappings
             vm.Email,
             vm.Password,
             vm.PhoneNumber,
-            vm.Street,
-            vm.HouseNumber,
-            vm.PostalCode,
-            vm.City,
-            vm.Country,
-            vm.FlatNumber,
+            MapAddress(vm),
             vm.PermissionListBox.ExtractGrantedPermissions(),
             vm.PermissionListBox.ExtractRevokedPermissions()
             );
@@ -48,14 +44,9 @@ public static class EmployeeMappings
             vm.FirstName,
             vm.LastName,
             vm.Email,
-            vm.Street,
-            vm.HouseNumber,
-            vm.PostalCode,
-            vm.City,
-            vm.Country,
-            vm.PhoneNumber,
-            vm.FlatNumber,
+            MapAddress(vm),
             vm.Password,
+            vm.PhoneNumber,
             vm.PermissionListBox.ExtractGrantedPermissions(),
             vm.PermissionListBox.ExtractRevokedPermissions()
             );
@@ -67,15 +58,29 @@ public static class EmployeeMappings
         vm.LastName = response.LastName;
         vm.Email = response.Email;
         vm.PhoneNumber = response.PhoneNumber;
-        vm.Street = response.Street;
-        vm.HouseNumber = response.HouseNumber;
-        vm.FlatNumber = response.FlatNumber;
-        vm.PostalCode = response.PostalCode;
-        vm.City = response.City;
-        vm.Country = response.Country;
+        vm.Street = response.HomeAddress.Street;
+        vm.HouseNumber = response.HomeAddress.HouseNumber;
+        vm.FlatNumber = response.HomeAddress.FlatNumber;
+        vm.PostalCity = response.HomeAddress.PostalCity;
+        vm.PostalCode = response.HomeAddress.PostalCode;
+        vm.City = response.HomeAddress.City;
+        vm.SelectedCountry = vm.Countries.FirstOrDefault(c => c.Title == response.HomeAddress.Country);
         vm.SelectedRole = vm.Roles.FirstOrDefault(r => r.Id == response.RoleId);
-
         vm.PermissionListBox.SetSelectedPermissions(response.RevokedPermissionIds.ToList(),
             response.GrantedPermissionIds.ToList());
+    }
+
+    public static HomeAddressDto MapAddress(this EmployeePageViewModel vm)
+    {
+        return new HomeAddressDto
+        {
+            FlatNumber = vm.FlatNumber,
+            Country = vm.SelectedCountry?.Title ?? "Unknown",
+            HouseNumber = vm.HouseNumber,
+            City = vm.City,
+            PostalCity = vm.PostalCity,
+            Street = vm.Street,
+            PostalCode = vm.PostalCode
+        };
     }
 }

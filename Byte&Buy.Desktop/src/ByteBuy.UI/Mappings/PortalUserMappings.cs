@@ -35,7 +35,7 @@ public static class PortalUserMappings
     /// <returns>Ready to use DTO</returns>
     public static PortalUserAddRequest MapToAddRequest(PortalUserPageViewModel vm)
     {
-        var address = MapToAddressAddRequest(vm);
+        var address = MapToHomeAddress(vm);
         var request = new PortalUserAddRequest
             (
                 vm.SelectedRole!.Id,
@@ -73,31 +73,18 @@ public static class PortalUserMappings
         return request;
     }
 
-    public static AddressAddRequest MapToAddressAddRequest(this PortalUserPageViewModel vm)
+    public static HomeAddressDto MapToHomeAddress(this PortalUserPageViewModel vm)
     {
-        return new AddressAddRequest(vm.SelectedCountry?.Id ?? Guid.Empty,
-            vm.Label,
-            vm.Street,
-            vm.HouseNumber,
-            vm.PostalCode,
-            vm.PostalCity,
-            vm.City,
-            vm.FlatNumber,
-            true);
-    }
-
-    public static AddressUpdateRequest MapToAddressUpdateRequest(this PortalUserPageViewModel vm)
-    {
-        return new AddressUpdateRequest(
-            vm.SelectedCountry?.Id ?? Guid.Empty,
-            vm.Label,
-            vm.Street,
-            vm.HouseNumber,
-            vm.PostalCode,
-            vm.PostalCity,
-            vm.City,
-            vm.FlatNumber,
-            true);
+        return new HomeAddressDto
+        {
+            City = vm.City,
+            Country = vm.SelectedCountry?.Title ?? "Unknown",
+            FlatNumber = vm.FlatNumber,
+            Street = vm.Street,
+            HouseNumber = vm.HouseNumber,
+            PostalCode = vm.PostalCode,
+            PostalCity = vm.PostalCity
+        };
     }
 
     /// <summary>
@@ -110,19 +97,17 @@ public static class PortalUserMappings
         vm.FirstName = response.FirstName;
         vm.LastName = response.LastName;
         vm.SelectedCountry = vm.Countries
-            .FirstOrDefault(c => c.Id == response.Address?.CountryId);
+            .FirstOrDefault(c => c.Title == response.HomeAddress?.Country);
         vm.SelectedRole = vm.Roles
             .FirstOrDefault(r => r.Id == response.RoleId);
         vm.Email = response.Email;
         vm.PhoneNumber = response.PhoneNumber;
-        vm.Street = response.Address?.Street ?? string.Empty;
-        vm.HouseNumber = response.Address?.HouseNumber ?? string.Empty;
-        vm.FlatNumber = response.Address?.FlatNumber;
-        vm.AddressEditId = response.Address?.Id ?? null;
-        vm.City = response.Address?.City ?? string.Empty;
-        vm.PostalCode = response.Address?.PostalCode ?? string.Empty;
-        vm.PostalCity = response.Address?.PostalCity ?? string.Empty;
-        vm.Label = response.Address?.Label ?? string.Empty;
+        vm.Street = response.HomeAddress?.Street ?? string.Empty;
+        vm.HouseNumber = response.HomeAddress?.HouseNumber ?? string.Empty;
+        vm.FlatNumber = response.HomeAddress?.FlatNumber;
+        vm.City = response.HomeAddress?.City ?? string.Empty;
+        vm.PostalCode = response.HomeAddress?.PostalCode ?? string.Empty;
+        vm.PostalCity = response.HomeAddress?.PostalCity ?? string.Empty;
         vm.PermissionListBox.SetSelectedPermissions(response.RevokedPermissionIds.ToList(),
             response.GrantedPermissionIds.ToList());
     }

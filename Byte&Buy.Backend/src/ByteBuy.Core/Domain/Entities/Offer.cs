@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
@@ -10,6 +11,8 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
     public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    public AddressValueObject OwnerAddressSnapshot = null!;
     public int QuantityAvailable { get; set; }
     public Guid CreatedByUserId { get; set; }
     public ApplicationUser CreatedBy { get; set; } = null!;
@@ -18,11 +21,12 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
 
     protected Offer() { }
 
-    protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable)
+    protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable, AddressValueObject offerAddress)
     {
         ItemId = itemId;
         CreatedByUserId = createdByUserId;
         QuantityAvailable = quantityAvailable;
+        OwnerAddressSnapshot = offerAddress;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
     }

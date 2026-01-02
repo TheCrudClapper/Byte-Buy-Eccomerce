@@ -12,7 +12,7 @@ namespace ByteBuy.Infrastructure.Migrations
         {
             migrationBuilder.AddColumn<bool>(
                 name: "IsDefault",
-                table: "Addresses",
+                table: "ShippingAddresses",
                 type: "boolean",
                 nullable: false,
                 defaultValue: false);
@@ -23,7 +23,7 @@ namespace ByteBuy.Infrastructure.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "IsDefault",
-                table: "Addresses");
+                table: "ShippingAddresses");
         }
     }
 }

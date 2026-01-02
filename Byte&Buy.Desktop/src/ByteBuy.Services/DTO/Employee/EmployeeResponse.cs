@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+
+namespace ByteBuy.Services.DTO.Employee;
 
 public record EmployeeResponse(
     Guid Id,
@@ -6,13 +8,8 @@ public record EmployeeResponse(
     string FirstName,
     string LastName,
     string Email,
-    string Street,
-    string HouseNumber,
-    string PostalCode,
-    string City,
-    string Country,
-    string? FlatNumber,
-    string? PhoneNumber,
+    HomeAddressDto HomeAddress,
+    string PhoneNumber,
     IReadOnlyCollection<Guid> GrantedPermissionIds,
     IReadOnlyCollection<Guid> RevokedPermissionIds
 );

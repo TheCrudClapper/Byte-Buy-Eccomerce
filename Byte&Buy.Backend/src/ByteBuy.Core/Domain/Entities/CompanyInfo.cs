@@ -13,7 +13,7 @@ public class CompanyInfo : AuditableEntity
 {
     public string CompanyName { get; private set; } = null!;
     public string TIN { get; private set; } = null!;
-    public AddressValueObj Address { get; private set; } = null!;
+    public AddressValueObject CompanyAddress { get; private set; } = null!;
     public string Email { get; private set; } = null!;
     public string Phone { get; private set; } = null!;
     public string Slogan { get; private set; } = null!;
@@ -26,9 +26,9 @@ public class CompanyInfo : AuditableEntity
         string email,
         string phone,
         string slogan,
-        AddressValueObj address)
+        AddressValueObject address)
     {
-        Address = address;
+        CompanyAddress = address;
         CompanyName = companyName;
         TIN = tin;
         Email = email;
@@ -69,6 +69,7 @@ public class CompanyInfo : AuditableEntity
     string slogan,
     string street,
     string houseNumber,
+    string postalCity,
     string postalCode,
     string city,
     string country,
@@ -79,7 +80,7 @@ public class CompanyInfo : AuditableEntity
         if (validationResult.IsFailure)
             return Result.Failure<CompanyInfo>(validationResult.Error);
 
-        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
+        var addressResult = AddressValueObject.Create(street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
             return Result.Failure<CompanyInfo>(addressResult.Error);
 
@@ -94,6 +95,7 @@ public class CompanyInfo : AuditableEntity
     string slogan,
     string street,
     string houseNumber,
+    string postalCity,
     string postalCode,
     string city,
     string country,
@@ -104,7 +106,7 @@ public class CompanyInfo : AuditableEntity
         if (validationResult.IsFailure)
             return Result.Failure<CompanyInfo>(validationResult.Error);
 
-        var addressResult = AddressValueObj.Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
+        var addressResult = AddressValueObject.Create(street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
             return Result.Failure<CompanyInfo>(addressResult.Error);
 
@@ -113,7 +115,7 @@ public class CompanyInfo : AuditableEntity
         Email = email;
         Phone = phone;
         Slogan = slogan;
-        Address = addressResult.Value;
+        CompanyAddress = addressResult.Value;
         DateEdited = DateTime.UtcNow;
 
         return Result.Success();

@@ -8,14 +8,6 @@ public class EmployeeConfig : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.OwnsOne(e => e.HomeAddress, a =>
-        {
-            a.Property(p => p.City).HasMaxLength(50);
-            a.Property(p => p.Street).HasMaxLength(50);
-            a.Property(p => p.PostalCode).HasMaxLength(20);
-            a.Property(p => p.HouseNumber).HasMaxLength(10);
-            a.Property(p => p.Country).HasMaxLength(50);
-            a.Property(p => p.FlatNumber).HasMaxLength(10);
-        });
+        
     }
 }

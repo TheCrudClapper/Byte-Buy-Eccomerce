@@ -4,19 +4,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ByteBuy.Infrastructure.Configuration;
 /// <summary>
-/// Class that configures keys, relationships in Address entity
+/// Class that configures keys, relationships in ShippingAddress entity
 /// </summary>
-public class AddressConfig : IEntityTypeConfiguration<Address>
+public class AddressConfig : IEntityTypeConfiguration<ShippingAddress>
 {
-    public void Configure(EntityTypeBuilder<Address> builder)
+    public void Configure(EntityTypeBuilder<ShippingAddress> builder)
     {
+        builder.ToTable("ShippingAddresses");
+
         builder.HasOne(a => a.Country)
             .WithMany(c => c.Addresses)
             .HasForeignKey(a => a.CountryId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(a => a.User)
-            .WithMany(u => u.Addresses)
+            .WithMany(u => u.ShippingAddresses)
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 

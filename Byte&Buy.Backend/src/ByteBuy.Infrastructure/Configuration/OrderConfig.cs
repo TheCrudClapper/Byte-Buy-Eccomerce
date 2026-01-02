@@ -33,6 +33,7 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             o.Property(p => p.City).HasMaxLength(50);
             o.Property(p => p.Street).HasMaxLength(50);
             o.Property(p => p.PostalCode).HasMaxLength(20);
+            o.Property(p => p.PostalCity).HasMaxLength(50);
             o.Property(p => p.HouseNumber).HasMaxLength(10);
             o.Property(p => p.Country).HasMaxLength(50);
             o.Property(p => p.FlatNumber).HasMaxLength(10);

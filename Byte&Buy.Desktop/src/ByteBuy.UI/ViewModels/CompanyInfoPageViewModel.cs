@@ -20,6 +20,11 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
 
     [ObservableProperty]
     [Required]
+    [MaxLength(50)]
+    private string _postalCity = string.Empty;
+
+    [ObservableProperty]
+    [Required]
     [MaxLength(20)]
     private string _tin = string.Empty;
 
@@ -43,7 +48,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
 
     [ObservableProperty]
     [Required]
-    [MaxLength(50)]
+    [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
@@ -85,6 +90,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
         FlatNumber = string.Empty;
         Country = string.Empty;
         PhoneNumber = string.Empty;
+        PostalCity = string.Empty;
     }
 
     public async Task LoadData()

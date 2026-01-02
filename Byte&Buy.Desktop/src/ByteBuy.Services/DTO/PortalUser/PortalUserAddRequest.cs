@@ -9,7 +9,7 @@ public record PortalUserAddRequest(
     string Email,
     string Password,
     string? PhoneNumber,
-    AddressAddRequest Address,
+    HomeAddressDto HomeAddress,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
 );

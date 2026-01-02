@@ -8,5 +8,5 @@ public record CompanyInfoResponse(
     string Email,
     string PhoneNumber,
     string Slogan,
-    AddressDto Address
+    HomeAddressDto Address
 );

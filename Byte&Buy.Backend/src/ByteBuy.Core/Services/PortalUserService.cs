@@ -17,7 +17,6 @@ public class PortalUserService : IPortalUserService
     private readonly IPasswordService _passwordService;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IUserRepository _userRepository;
-    private readonly ICountryRepository _countryRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IAddressValidationService _addressValidator;
     private readonly RoleManager<ApplicationRole> _roleManager;
@@ -26,7 +25,6 @@ public class PortalUserService : IPortalUserService
         IUserRepository userRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
-        ICountryRepository countryRepository,
         IAddressValidationService addressValidator,
         IPasswordService passwordService)
     {
@@ -35,7 +33,6 @@ public class PortalUserService : IPortalUserService
         _userManager = userManager;
         _roleManager = roleManager;
         _addressValidator = addressValidator;
-        _countryRepository = countryRepository;
         _passwordService = passwordService;
     }
 
@@ -48,35 +45,21 @@ public class PortalUserService : IPortalUserService
         if (role is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
 
-        var country = await _countryRepository.GetByIdAsync(request.Address.CountryId);
-        if (country is null)
-            return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.NotFound);
-
-        var addressResult = Address.Create(
-            request.Address.Label,
-            request.Address.City,
-            request.Address.Street,
-            request.Address.HouseNumber,
-            request.Address.PostalCity,
-            request.Address.PostalCode,
-            request.Address.FlatNumber,
-            country.Id,
-            true,
-            _addressValidator);
-
-        if (addressResult.IsFailure)
-            return Result.Failure<CreatedResponse>(addressResult.Error);
-
-        var address = addressResult.Value;
-
         var userResult = PortalUser.CreateWithAddress(
             request.FirstName,
             request.LastName,
             request.Email,
             request.PhoneNumber,
-            address,
+            request.HomeAddress.Street,
+            request.HomeAddress.HouseNumber,
+            request.HomeAddress.PostalCity,
+            request.HomeAddress.PostalCode,
+            request.HomeAddress.City,
+            request.HomeAddress.Country,
+            request.HomeAddress.FlatNumber,
             request.RevokedPermissionIds,
-            request.GrantedPermissionIds);
+            request.GrantedPermissionIds,
+            _addressValidator);
 
         if (userResult.IsFailure)
             return Result.Failure<CreatedResponse>(userResult.Error);
@@ -102,7 +85,7 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
     {
-        var spec = new PortalUserAggregateSpec(id);
+        var spec = new PortalUserWithPermissionsSpec(id);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
 
         if (user is null)

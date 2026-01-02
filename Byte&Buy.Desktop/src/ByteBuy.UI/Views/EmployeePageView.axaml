@@ -158,11 +158,25 @@
 							</StackPanel>
 
 							<StackPanel Grid.Row="3" Grid.Column="2">
-								<TextBlock Text="Country" Classes="textBoxLabel" />
-								<TextBox Text="{Binding Country}" />
+								<TextBlock Text="Postal City" Classes="textBoxLabel" />
+								<TextBox Text="{Binding PostalCity}" />
 							</StackPanel>
 
 							<StackPanel Grid.Row="4" Grid.Column="0">
+								<TextBlock Text="Country"
+										   Classes="textBoxLabel" />
+								<ComboBox
+								ItemsSource="{Binding Countries}"
+								SelectedItem="{Binding SelectedCountry, Mode=TwoWay}">
+									<ComboBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding Title}" />
+										</DataTemplate>
+									</ComboBox.ItemTemplate>
+								</ComboBox>
+							</StackPanel>
+
+							<StackPanel Grid.Row="4" Grid.Column="2">
 								<TextBlock Text="Phone Number" Classes="textBoxLabel" />
 								<TextBox Text="{Binding PhoneNumber}" />
 							</StackPanel>
@@ -186,7 +200,7 @@
 										Grid.Column="2"
 										HorizontalAlignment="Right"
 										Orientation="Horizontal"
-										Margin="0,0,0,10">
+										VerticalAlignment="Center">
 								<Button
 								Command="{Binding ClearCommand}"
 								VerticalAlignment="Bottom"

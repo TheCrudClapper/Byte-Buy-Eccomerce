@@ -6,7 +6,6 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public sealed class Employee : ApplicationUser
 {
-    public AddressValueObj HomeAddress { get; private set; } = null!;
     private Employee(string firstName, string lastName, string email, string? phoneNumber)
         : base(firstName, lastName, email, phoneNumber) { }
 
@@ -15,6 +14,7 @@ public sealed class Employee : ApplicationUser
         string email,
         string street,
         string houseNumber,
+        string postalCity,
         string postalCode,
         string city,
         string country,
@@ -28,8 +28,8 @@ public sealed class Employee : ApplicationUser
         if (validatioResult.IsFailure)
             return Result.Failure<Employee>(validatioResult.Error);
 
-        var addressResult = AddressValueObj
-            .Create(street, houseNumber, postalCode, city, country, flatNumber, validator);
+        var addressResult = AddressValueObject
+            .Create(street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure<Employee>(addressResult.Error);
@@ -43,9 +43,10 @@ public sealed class Employee : ApplicationUser
         return employee;
     }
 
-    public Result ChangeAddress(
+    public Result ChangeHomeAddress(
         string street,
         string houseNumber,
+        string postalCity,
         string postalCode,
         string city,
         string country,
@@ -53,8 +54,8 @@ public sealed class Employee : ApplicationUser
         string? phoneNumber,
         IAddressValidationService validator)
     {
-        var addressResult = AddressValueObj.Create(
-            street, houseNumber, postalCode, city, country, flatNumber, validator);
+        var addressResult = AddressValueObject.Create(
+            street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure(addressResult.Error);
@@ -74,6 +75,7 @@ public sealed class Employee : ApplicationUser
         string email,
         string street,
         string houseNumber,
+        string postalCity,
         string postalCode,
         string city,
         string country,
@@ -88,8 +90,8 @@ public sealed class Employee : ApplicationUser
         if (validatioResult.IsFailure)
             return Result.Failure(validatioResult.Error);
 
-        var addressResult = AddressValueObj.Create(
-            street, houseNumber, postalCode, city, country, flatNumber, validator);
+        var addressResult = AddressValueObject.Create(
+            street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
 
         if (addressResult.IsFailure)
             return Result.Failure(addressResult.Error);

@@ -4,7 +4,7 @@ using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
-public class Address : AuditableEntity, ISoftDeletable
+public class ShippingAddress : AuditableEntity, ISoftDeletable
 {
     public string Label { get; private set; } = null!;
     public string City { get; private set; } = null!;
@@ -21,8 +21,8 @@ public class Address : AuditableEntity, ISoftDeletable
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
-    private Address() { }
-    private Address(string label, string city,
+    private ShippingAddress() { }
+    private ShippingAddress(string label, string city,
         string street, string houseNumber,
         string postalCity, string postalCode,
         string? flatNumber, Guid countryId, bool isDefault)
@@ -43,28 +43,25 @@ public class Address : AuditableEntity, ISoftDeletable
     public static Result Validate(string label, string city, string street, string houseNumber,
         string postalCity, string postalCode, string? flatNumber, IAddressValidationService validator)
     {
-        var validatorResult = validator.Validate(street, houseNumber, postalCode, city, flatNumber);
+        var validatorResult = validator.Validate(street, houseNumber, postalCity, postalCode, city, flatNumber);
         if (validatorResult.IsFailure)
             return validatorResult;
 
         if (string.IsNullOrWhiteSpace(label) || label.Length > 50)
             return Result.Failure(Error.Validation("Label is required and must be at most 50 characters."));
 
-        if (string.IsNullOrWhiteSpace(postalCity) || postalCity.Length > 50)
-            return Result.Failure(Error.Validation("PostalCity is required and must be at most 50 characters."));
-
         return Result.Success();
     }
 
-    public static Result<Address> Create(string label, string city, string street,
+    public static Result<ShippingAddress> Create(string label, string city, string street,
         string houseNumber, string postalCity, string postalCode, string? flatNumber, Guid countryId, bool isDefault,
         IAddressValidationService validator)
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
         if (validationResult.IsFailure)
-            return Result.Failure<Address>(validationResult.Error);
+            return Result.Failure<ShippingAddress>(validationResult.Error);
 
-        return new Address(label, city, street, houseNumber, postalCity, postalCode, flatNumber, countryId, isDefault);
+        return new ShippingAddress(label, city, street, houseNumber, postalCity, postalCode, flatNumber, countryId, isDefault);
     }
 
     public Result Update(string label, string city, string street,
@@ -73,7 +70,7 @@ public class Address : AuditableEntity, ISoftDeletable
     {
         var validationResult = Validate(label, city, street, houseNumber, postalCity, postalCode, flatNumber, validator);
         if (validationResult.IsFailure)
-            return Result.Failure<Address>(validationResult.Error);
+            return Result.Failure<ShippingAddress>(validationResult.Error);
 
         Label = label;
         City = city;

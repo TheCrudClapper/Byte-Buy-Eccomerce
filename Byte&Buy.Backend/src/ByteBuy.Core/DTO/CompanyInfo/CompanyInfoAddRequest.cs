@@ -9,5 +9,5 @@ public record CompanyInfoAddRequest(
 [Required, MaxLength(50)] string Email,
 [Required, MaxLength(16)] string PhoneNumber,
 [MaxLength(30)] string Slogan,
-[Required] AddressDto Address
+[Required] HomeAddressDto Address
 );

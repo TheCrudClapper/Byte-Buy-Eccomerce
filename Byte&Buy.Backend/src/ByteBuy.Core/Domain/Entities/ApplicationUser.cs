@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
 namespace ByteBuy.Core.Domain.Entities;
@@ -17,6 +18,9 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
     public ICollection<UserPermission> UserPermissions { get; protected set; } = new List<UserPermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; protected set; } = new List<ApplicationUserRole>();
     public ICollection<Offer> Offers { get; protected set; } = new List<Offer>();
+
+    //ShippingAddress to be used in billing, localization of offers.
+    public AddressValueObject? HomeAddress { get; protected set; }
     public bool IsActive { get; protected set; }
     public DateTime DateCreated { get; protected set; }
     public DateTime? DateEdited { get; protected set; }

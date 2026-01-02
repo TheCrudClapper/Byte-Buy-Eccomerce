@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
@@ -33,6 +34,11 @@ public partial class ProfilePageViewModel : PageViewModel
 
     [ObservableProperty]
     [Required]
+    [MaxLength(50)]
+    private string _postalCity = string.Empty;
+
+    [ObservableProperty]
+    [Required]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
@@ -58,7 +64,7 @@ public partial class ProfilePageViewModel : PageViewModel
     [ObservableProperty]
     [DataType(DataType.PhoneNumber)]
     [MaxLength(15)]
-    private string? _phoneNumber = string.Empty;
+    private string _phoneNumber = string.Empty;
     #endregion
 
     private readonly IEmployeeService _employeeService;
@@ -79,13 +85,22 @@ public partial class ProfilePageViewModel : PageViewModel
         if (HasErrors)
             return;
 
+        var address = new HomeAddressDto()
+        {
+            PostalCity = PostalCity,
+            PostalCode = PostalCode,
+            HouseNumber = HouseNumber,
+            City = City,
+            Street = Street,
+            Country = Country,
+            FlatNumber = FlatNumber        
+        };
         var request = new EmployeeAddressUpdateRequest(
-            Street, HouseNumber, PostalCode, City, Country, FlatNumber, PhoneNumber
+            address, PhoneNumber
         );
 
         var result = await _employeeService.UpdateAddress(request);
         HandleResult(result, "Address updated successfully !");
-
     }
 
     [RelayCommand]

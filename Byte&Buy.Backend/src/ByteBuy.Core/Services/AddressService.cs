@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Address;
+using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
@@ -28,9 +29,9 @@ public class AddressService : IAddressService
         _countryRepository = countryRepository;
     }
 
-    public async Task<Result<CreatedResponse>> AddAsync(Guid userId, AddressAddRequest request)
+    public async Task<Result<CreatedResponse>> AddUserShippingAddressAsync(Guid userId, ShippingAddressAddRequest request)
     {
-        var spec = new PortalUserWithAddressSpec(userId);
+        var spec = new PortalUserWithShippingAddressesSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
         if (user is null)
             return Result.Failure<CreatedResponse>(Error.NotFound);
@@ -39,7 +40,7 @@ public class AddressService : IAddressService
         if (country is null)
             return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.NotFound);
 
-        var addressResult = user.AddAddress(
+        var addressResult = user.AddShippingAddress(
             request.Label,
             request.City,
             request.Street,
@@ -63,9 +64,9 @@ public class AddressService : IAddressService
         return address.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid addressId, Guid userId, AddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateUserShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request)
     {
-        var spec = new PortalUserWithAddressSpec(userId);
+        var spec = new PortalUserWithShippingAddressesSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
         if (user is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
@@ -74,7 +75,7 @@ public class AddressService : IAddressService
         if (country is null)
             return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.NotFound);
 
-        var updateResult = user.UpdateAddress(
+        var updateResult = user.UpdateShippingAddress(
             addressId,
             request.Label,
             request.City,
@@ -94,41 +95,65 @@ public class AddressService : IAddressService
         await _portalUserRepository.UpdateAsync(user);
         await _portalUserRepository.CommitAsync();
 
-        var updated = user.Addresses.Single(a => a.Id == addressId);
+        var updated = user.ShippingAddresses.Single(a => a.Id == addressId);
         return updated.ToUpdatedResponse();
     }
 
-    public async Task<Result<AddressResponse>> GetUserAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
+    public async Task<Result<UpdatedResponse>> SetHomeUserAddress(Guid userId, HomeAddressDto request)
     {
-        var addressDto = await _addressReadRepository.GetBySpecAsync(new UserAddresToDtoSpec(userId, addressId), ct);
+        var user = await _portalUserRepository.GetByIdAsync(userId);
+        if (user is null)
+            return Result.Failure<UpdatedResponse>(Error.NotFound);
+
+        var homeAddressResult = user.SetHomeAddress(
+            request.Street,
+            request.HouseNumber,
+            request.PostalCity,
+            request.PostalCode,
+            request.City,
+            request.Country,
+            request.FlatNumber,
+            _addressValidator);
+
+        if (homeAddressResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(homeAddressResult.Error);
+
+        await _portalUserRepository.UpdateAsync(user);
+        await _portalUserRepository.CommitAsync();
+        return user.ToUpdatedResponse();
+    }
+
+    public async Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
+    {
+        var addressDto = await _addressReadRepository.GetBySpecAsync(new UserWithShippingAddresToDtoSpec(userId, addressId), ct);
         if (addressDto is null)
-            return Result.Failure<AddressResponse>(Error.NotFound);
+            return Result.Failure<ShippingAddressResponse>(Error.NotFound);
 
         return addressDto;
     }
 
-    public async Task<Result<AddressResponse>> GetByIdAsync(Guid addressId, CancellationToken ct = default)
+    public async Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct = default)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
         if (addressDto is null)
-            return Result.Failure<AddressResponse>(Error.NotFound);
+            return Result.Failure<ShippingAddressResponse>(Error.NotFound);
 
         return addressDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<AddressResponse>>> GetUserAddressesAsync(Guid userId, CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAddressesAsync(Guid userId, CancellationToken ct)
         => await _addressReadRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
 
 
-    public async Task<Result> DeleteUserAddressAsync(Guid userId, Guid addressId)
+    public async Task<Result> DeleteUserShippingAddressAsync(Guid userId, Guid addressId)
     {
-        var spec = new PortalUserWithAddressSpec(userId);
+        var spec = new PortalUserWithShippingAddressesSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
 
         if (user is null)
             return Result.Failure(Error.NotFound);
 
-        var result = user.RemoveAddress(addressId);
+        var result = user.RemoveShippingAddress(addressId);
         if (result.IsFailure)
             return result;
 

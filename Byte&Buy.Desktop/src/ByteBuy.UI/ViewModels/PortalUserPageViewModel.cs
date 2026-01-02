@@ -22,10 +22,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private string _firstName = string.Empty;
 
     [ObservableProperty]
-    [RequiredIf(nameof(IsAddressIncluded))]
-    private Guid? _addressEditId = Guid.Empty;
-
-    [ObservableProperty]
     [Required] private string _lastName = string.Empty;
 
     [ObservableProperty]
@@ -57,11 +53,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _city = string.Empty;
-
-    [ObservableProperty]
-    [RequiredIf(nameof(IsAddressIncluded))]
-    [MaxLength(50)]
-    private string _label = string.Empty;
 
     [ObservableProperty]
     private string? _flatNumber = string.Empty;
@@ -96,12 +87,12 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private readonly IRoleService _roleService;
     private readonly ICountryService _countryService;
     private readonly IPortalUserService _portalUserService;
-    private readonly IAddressService _addressService;
+    private readonly IHomeAddressService _addressService;
     public PortalUserPageViewModel(AlertViewModel alert,
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
         IPortalUserService userService,
-        IAddressService addressService,
+        IHomeAddressService addressService,
         ICountryService countryService) : base(alert)
     {
         PermissionListBox = listBox;
@@ -172,25 +163,9 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private async Task SaveAddress()
     {
         ValidateAllProperties();
-        if (AddressEditId is null)
-        {
-            var address = PortalUserMappings.MapToAddressAddRequest(this);
-            var result = await _addressService.AddAsync(
-                EditingItemId.GetValueOrDefault(),
-                address);
-
-            HandleResult(result, "Successfully assigned address for user");
-        }
-        else
-        {
-            var address = PortalUserMappings.MapToAddressUpdateRequest(this);
-            var result = await _addressService.UpdateAsync(
-                EditingItemId.GetValueOrDefault(),
-                AddressEditId.GetValueOrDefault(),
-                address);
-
-            HandleResult(result, "Successfully edited user's address");
-        }
+        var address = PortalUserMappings.MapToHomeAddress(this);
+        var result = await _addressService.SetHomeAddress(EditingItemId.GetValueOrDefault(), address);
+        HandleResult(result, "Successfully assigned address for user");
     }
 
     public async Task InitializeForEdit(Guid itemId)
@@ -204,7 +179,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         if (!ok || value is null)
             return;
 
-        IsAddressIncluded = value.Address is not null;
+        IsAddressIncluded = value.HomeAddress is not null;
         PortalUserMappings.MapFromResponse(this, value);
     }
 
@@ -218,7 +193,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
             ClearErrors(nameof(City));
             ClearErrors(nameof(PostalCity));
             ClearErrors(nameof(SelectedCountry));
-            ClearErrors(nameof(Label));
         }
         else
         {
@@ -228,7 +202,6 @@ public partial class PortalUserPageViewModel : ViewModelSingle
             ValidateProperty(City, nameof(City));
             ValidateProperty(PostalCity, nameof(PostalCity));
             ValidateProperty(SelectedCountry, nameof(SelectedCountry));
-            ValidateProperty(Label, nameof(Label));
         }
     }
 }

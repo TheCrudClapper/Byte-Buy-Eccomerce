@@ -25,7 +25,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Address", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ShippingAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +75,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("ShippingAddresses");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationRole", b =>
@@ -913,16 +913,16 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUserRole");
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Address", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ShippingAddress", b =>
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.Country", "Country")
-                        .WithMany("Addresses")
+                        .WithMany("ShippingAddresses")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("ByteBuy.Core.Domain.Entities.ApplicationUser", "User")
-                        .WithMany("Addresses")
+                        .WithMany("ShippingAddresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
 
@@ -1425,7 +1425,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("ShippingAddresses");
 
                     b.Navigation("Cart")
                         .IsRequired();
@@ -1456,7 +1456,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Country", b =>
                 {
-                    b.Navigation("Addresses");
+                    b.Navigation("ShippingAddresses");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Delivery", b =>

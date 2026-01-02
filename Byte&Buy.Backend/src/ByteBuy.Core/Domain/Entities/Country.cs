@@ -8,7 +8,7 @@ public class Country : AuditableEntity, ISoftDeletable
     public string Name { get; private set; } = null!;
     public string Code { get; private set; } = null!;
 
-    public ICollection<Address> Addresses { get; private set; } = new List<Address>();
+    public ICollection<ShippingAddress> Addresses { get; private set; } = new List<ShippingAddress>();
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 

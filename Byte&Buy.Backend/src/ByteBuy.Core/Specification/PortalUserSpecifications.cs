@@ -15,7 +15,7 @@ public static class PortalUserSpecifications
             Query.IgnoreQueryFilters()
                 .Where(p => p.Id == id)
                 .Include(p => p.UserPermissions)
-                .Include(p => p.Addresses);
+                .Include(p => p.ShippingAddresses);
         }
     }
     public sealed class PortalUserWithAddressAndPermissionSpec : Specification<PortalUser>
@@ -24,16 +24,25 @@ public static class PortalUserSpecifications
         {
             Query.Where(p => p.Id == id)
                 .Include(p => p.UserPermissions)
-                .Include(p => p.Addresses);
+                .Include(p => p.ShippingAddresses);
         }
     }
 
-    public sealed class PortalUserWithAddressSpec : Specification<PortalUser>
+    public sealed class PortalUserWithPermissionsSpec : Specification<PortalUser>
     {
-        public PortalUserWithAddressSpec(Guid id)
+        public PortalUserWithPermissionsSpec(Guid id)
         {
             Query.Where(p => p.Id == id)
-                .Include(p => p.Addresses);
+                .Include(p => p.UserPermissions);
+        }
+    }
+
+    public sealed class PortalUserWithShippingAddressesSpec : Specification<PortalUser>
+    {
+        public PortalUserWithShippingAddressesSpec(Guid id)
+        {
+            Query.Where(p => p.Id == id)
+                .Include(p => p.ShippingAddresses);
         }
     }
 

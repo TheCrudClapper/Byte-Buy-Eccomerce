@@ -9,5 +9,5 @@ public class CompanyInfoUpdateRequest
     public string TIN { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string PhoneNumber { get; set; } = null!;
-    public AddressDto Address { get; set; } = null!;
+    public HomeAddressDto Address { get; set; } = null!;
 }

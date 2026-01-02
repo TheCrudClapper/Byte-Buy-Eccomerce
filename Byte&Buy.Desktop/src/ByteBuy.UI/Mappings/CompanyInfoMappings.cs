@@ -13,6 +13,7 @@ public static class CompanyInfoMappings
         vm.Tin = response.TIN;
         vm.HouseNumber = response.Address.HouseNumber;
         vm.Email = response.Email;
+        vm.PostalCity = response.Address.PostalCity;
         vm.PostalCode = response.Address.PostalCode;
         vm.City = response.Address.City;
         vm.Street = response.Address.Street;
@@ -30,10 +31,11 @@ public static class CompanyInfoMappings
             PhoneNumber = vm.PhoneNumber,
             TIN = vm.Tin,
             Slogan = vm.Slogan,
-            Address = new AddressDto()
+            Address = new HomeAddressDto()
             {
                 City = vm.City,
                 PostalCode = vm.PostalCode,
+                PostalCity = vm.PostalCity,
                 Country = vm.Country,
                 FlatNumber = vm.FlatNumber,
                 Street = vm.Street,

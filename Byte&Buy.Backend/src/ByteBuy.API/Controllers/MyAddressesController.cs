@@ -1,6 +1,7 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Address;
+using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ServiceContracts;
@@ -8,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
-[Resource("addresses")]
-[Route("api/users/addresses")]
+[Resource("my-addresses")]
+[Route("api/users")]
 [ApiController]
 public class MyAddressesController : BaseApiController
 {
@@ -17,24 +18,28 @@ public class MyAddressesController : BaseApiController
     public MyAddressesController(IAddressService addressService)
        => _addressService = addressService;
 
-    [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostAddress(AddressAddRequest request)
-        => HandleResult(await _addressService.AddAsync(CurrentUserId, request));
+    [HttpPut("home-address")]
+    public async Task<ActionResult<UpdatedResponse>> PutHomeAddresAsync(HomeAddressDto request)
+       => HandleResult(await _addressService.SetHomeUserAddress(CurrentUserId, request));
 
-    [HttpPut("{addressId:guid}")]
-    public async Task<ActionResult<UpdatedResponse>> PutAddress(Guid addressId, AddressUpdateRequest request)
-        => HandleResult(await _addressService.UpdateAsync(addressId, CurrentUserId, request));
+    [HttpPost("shipping-addresses")]
+    public async Task<ActionResult<CreatedResponse>> PostShippingAddress(ShippingAddressAddRequest request)
+        => HandleResult(await _addressService.AddUserShippingAddressAsync(CurrentUserId, request));
 
-    [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<AddressResponse>>> GetUserAdresses(CancellationToken ct)
-        => HandleResult(await _addressService.GetUserAddressesAsync(CurrentUserId, ct));
+    [HttpPut("shipping-addresses/{addressId:guid}")]
+    public async Task<ActionResult<UpdatedResponse>> PutShippingAddress(Guid addressId, ShippingAddressUpdateRequest request)
+        => HandleResult(await _addressService.UpdateUserShippingAddressAsync(addressId, CurrentUserId, request));
 
-    [HttpGet("{addressId:guid}")]
-    public async Task<ActionResult<AddressResponse>> GetUserAddress(Guid addressId, CancellationToken ct)
-        => HandleResult(await _addressService.GetUserAddressAsync(addressId, CurrentUserId, ct));
+    [HttpGet("shipping-addresses")]
+    public async Task<ActionResult<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAdresses(CancellationToken ct)
+        => HandleResult(await _addressService.GetUserShippingAddressesAsync(CurrentUserId, ct));
 
-    [HttpDelete("{addressId:guid}")]
-    public async Task<ActionResult> DeleteUserAddress(Guid addressId)
-        => HandleResult(await _addressService.DeleteUserAddressAsync(addressId, CurrentUserId));
+    [HttpGet("shipping-addresses/{addressId:guid}")]
+    public async Task<ActionResult<ShippingAddressResponse>> GetUserShippingAddress(Guid addressId, CancellationToken ct)
+        => HandleResult(await _addressService.GetUserShippingAddressAsync(addressId, CurrentUserId, ct));
+
+    [HttpDelete("shipping-addresses/{addressId:guid}")]
+    public async Task<ActionResult> DeleteUserShippingAddress(Guid addressId)
+        => HandleResult(await _addressService.DeleteUserShippingAddressAsync(addressId, CurrentUserId));
 
 }

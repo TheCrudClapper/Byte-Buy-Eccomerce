@@ -5,7 +5,7 @@ using ByteBuy.Infrastructure.Repositories.Base;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class AddressRepository : EfBaseRepository<Address>, IAddressReadRepository
+public class AddressRepository : EfBaseRepository<ShippingAddress>, IAddressReadRepository
 {
     public AddressRepository(ApplicationDbContext context) : base(context) { }
 }

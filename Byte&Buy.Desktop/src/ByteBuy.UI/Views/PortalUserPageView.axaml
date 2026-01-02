@@ -130,8 +130,8 @@
 										IsVisible="{Binding IsEditMode}"
 										IsEnabled="{Binding IsEditMode}"
 										HorizontalAlignment="Right"
-										Orientation="Horizontal"
-										Margin="0,0,0,10">
+										VerticalAlignment="Center"
+										Orientation="Horizontal">
 								<Button
 								Command="{Binding ClearCommand}"
 								VerticalAlignment="Bottom"
@@ -177,14 +177,8 @@
 						<Grid ColumnDefinitions="*,20,*,"
 							  RowDefinitions="70,70,70,70,70"
 							  IsVisible="{Binding IsAddressIncluded}">
-							<StackPanel Grid.Row="0" Grid.Column="0">
-								<TextBlock Text="Label"
-										   Classes="textBoxLabel" />
-								<TextBox Text="{Binding Label}"
-										 IsEnabled="{Binding IsAddressIncluded}" />
-							</StackPanel>
 
-							<StackPanel Grid.Row="0" Grid.Column="2">
+							<StackPanel Grid.Row="0" Grid.Column="0">
 								<TextBlock Text="Street"
 										   Classes="textBoxLabel" />
 								<TextBox Text="{Binding Street}"
@@ -219,14 +213,14 @@
 										 IsEnabled="{Binding IsAddressIncluded}" />
 							</StackPanel>
 
-							<StackPanel Grid.Row="3" Grid.Column="0">
+							<StackPanel Grid.Row="0" Grid.Column="2">
 								<TextBlock Text="City"
 										   Classes="textBoxLabel" />
 								<TextBox Text="{Binding City}"
 										 IsEnabled="{Binding IsAddressIncluded}" />
 							</StackPanel>
 
-							<StackPanel Grid.Row="3" Grid.Column="2">
+							<StackPanel Grid.Row="3" Grid.Column="0">
 								<TextBlock Text="Country"
 										   Classes="textBoxLabel" />
 								<ComboBox
@@ -241,12 +235,12 @@
 								</ComboBox>
 							</StackPanel>
 
-							<StackPanel Grid.Row="5"
+							<StackPanel Grid.Row="3"
 										IsVisible="{Binding IsEditMode}"
 										Grid.Column="2"
+										VerticalAlignment="Center"
 										HorizontalAlignment="Right"
-										Orientation="Horizontal"
-										Margin="0,0,0,10">
+										Orientation="Horizontal">
 								<Button
 								Command="{Binding ClearCommand}"
 								IsEnabled="{Binding IsAddressIncluded}"
@@ -260,13 +254,13 @@
 								Content="Save Address" />
 							</StackPanel>
 
-							<StackPanel Grid.Row="5"
+							<StackPanel Grid.Row="3"
 										Grid.Column="2"
 										IsVisible="{Binding !IsEditMode}"
 										IsEnabled="{Binding !IsEditMode}"
 										HorizontalAlignment="Right"
-										Orientation="Horizontal"
-										Margin="0,0,0,10">
+										VerticalAlignment="Center"
+										Orientation="Horizontal">
 								<Button
 								Command="{Binding ClearCommand}"
 								VerticalAlignment="Bottom"

@@ -10,7 +10,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddCoreLayer(this IServiceCollection services)
     {
-        //AddAsync Application Services
+        //AddUserShippingAddressAsync Application Services
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IEmployeeService, EmployeeService>();
@@ -30,7 +30,7 @@ public static class DependencyInjection
         services.AddScoped<ISaleOfferService, SaleOfferService>();
         services.AddScoped<IRentOfferService, RentOfferService>();
 
-        //AddAsync Domain Services
+        //AddUserShippingAddressAsync Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();
         return services;
     }

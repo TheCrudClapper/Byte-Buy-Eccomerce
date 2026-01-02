@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+
+namespace ByteBuy.Services.DTO.Employee;
 
 /// <summary>
 /// Represents a request to update an employee's personal and contact information.
@@ -8,14 +10,8 @@ public record EmployeeUpdateRequest(
     string FirstName,
     string LastName,
     string Email,
-    string Street,
-    string HouseNumber,
-    string PostalCode,
-    string City,
-    string Country,
-    string? PhoneNumber,
-    string? FlatNumber,
+    HomeAddressDto HomeAddress,
     string Password,
+    string PhoneNumber,
     IEnumerable<Guid>? GrantedPermissionIds,
-    IEnumerable<Guid>? RevokedPermissionIds
-    );
+    IEnumerable<Guid>? RevokedPermissionIds);

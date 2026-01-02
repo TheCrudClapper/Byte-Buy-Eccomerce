@@ -25,7 +25,7 @@ builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProv
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 // -----------------------------
-// AddAsync Identity
+// Add Identity
 // -----------------------------
 builder.Services.AddIdentity();
 // -----------------------------

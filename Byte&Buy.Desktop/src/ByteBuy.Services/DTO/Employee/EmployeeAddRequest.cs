@@ -1,4 +1,7 @@
-﻿namespace ByteBuy.Services.DTO.Employee;
+﻿using ByteBuy.Services.DTO.Address;
+using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Services.DTO.Employee;
 
 public record EmployeeAddRequest(
     Guid RoleId,
@@ -6,13 +9,8 @@ public record EmployeeAddRequest(
     string LastName,
     string Email,
     string Password,
-    string? PhoneNumber,
-    string Street,
-    string HouseNumber,
-    string PostalCode,
-    string City,
-    string Country,
-    string? FlatNumber,
+    string PhoneNumber,
+    HomeAddressDto HomeAddress,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds
 );

@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Services.DTO.Address;
 
-public record AddressUpdateRequest(
+public record ShippingAddressAddRequest(
     Guid CountryId,
     string Label,
     string Street,

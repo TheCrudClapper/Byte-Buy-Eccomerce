@@ -6,7 +6,7 @@ namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications
 {
-    public sealed class CurrentDefaultAddressSpec : Specification<Address>
+    public sealed class CurrentDefaultAddressSpec : Specification<ShippingAddress>
     {
         public CurrentDefaultAddressSpec(Guid userId)
         {
@@ -14,7 +14,7 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserAddresSpec : Specification<Address>
+    public sealed class UserAddresSpec : Specification<ShippingAddress>
     {
         public UserAddresSpec(Guid userId, Guid addressId)
         {
@@ -22,9 +22,9 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserAddresToDtoSpec : Specification<Address, AddressResponse>
+    public sealed class UserWithShippingAddresToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
-        public UserAddresToDtoSpec(Guid userId, Guid addressId)
+        public UserWithShippingAddresToDtoSpec(Guid userId, Guid addressId)
         {
             Query.AsNoTracking()
                 .Where(a => a.Id == addressId && a.UserId == userId)
@@ -32,7 +32,7 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class AddresToDtoSpec : Specification<Address, AddressResponse>
+    public sealed class AddresToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
         public AddresToDtoSpec(Guid addressId)
         {
@@ -42,7 +42,7 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserAddressesToDtoSpec : Specification<Address, AddressResponse>
+    public sealed class UserAddressesToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
         public UserAddressesToDtoSpec(Guid userId)
         {
