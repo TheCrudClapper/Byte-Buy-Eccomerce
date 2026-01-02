@@ -9,6 +9,9 @@ import { SaleEdit } from './components/offers/sale/sale-edit/sale-edit';
 import { SaleDetails } from './components/offers/sale/sale-details/sale-details';
 import { Home } from './components/home/home';
 import { ProfileIndex } from './components/profile/profile-index/profile-index';
+import { PersonalInfo } from './components/profile/personal-info/personal-info/personal-info';
+import { Addresses } from './components/profile/addresses/addresses/addresses';
+import { MyOffers } from './components/profile/my-offers/my-offers/my-offers';
 
 export const routes: Routes = [
     { path: '', component: Home},
@@ -20,5 +23,14 @@ export const routes: Routes = [
     { path: 'offers/sale/create', component: SaleCreate}, 
     { path: 'offers/sale/:id/edit', component: SaleEdit}, 
     { path: 'offers/sale/:id/details', component: SaleDetails},
-    { path: 'profile', component: ProfileIndex}
+    {
+        path: 'profile',
+        component: ProfileIndex,
+        children: [
+            { path: '', redirectTo: 'personal-info', pathMatch: 'full' },
+            { path: 'personal-info', component: PersonalInfo },
+            { path: 'addresses', component: Addresses},
+            { path: 'my-offers', component: MyOffers}
+        ]
+    }
 ];

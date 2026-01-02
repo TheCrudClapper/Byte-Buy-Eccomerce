@@ -12,31 +12,45 @@
                 <span class="bold-text default-font-size">wojceichmucha12@gmail.com</span>
             </div>
             <div class="content-section">
-                <div class="px-3 py-3 action-tile">
-                    <a>Personal Information</a>
-                </div>
-                <div class="px-3 py-3 action-tile">
-                    <a>My Offers</a>
-                </div>
-                <div class="px-3 py-3 action-tile">
-                    <a>Addresses</a>
-                </div>
-                <div class="px-3 py-3 action-tile">
-                    <a>Purchase History</a>
-                </div>
-                <div class="px-3 py-3 action-tile">
-                    <a>Rentals</a>
-                </div>
-                <div class="px-3 py-3 action-tile">
-                    <a>Logout</a>
-                </div>
+                <a class="action-link" [routerLink]="['/profile/personal-info']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="px-3 py-3 action-tile">
+                        Personal Information
+                    </div>
+                </a>
+                <a class="action-link" [routerLink]="['/profile/my-offers']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="px-3 py-3 action-tile">
+                        My Offers
+                    </div>
+                </a>
+                <a class="action-link" [routerLink]="['/profile/addresses']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="px-3 py-3 action-tile">
+                        Addresses
+                    </div>
+                </a>
+                <a class="action-link">
+                    <div class="px-3 py-3 action-tile">
+                        Purchase History
+                    </div>
+                </a>
+                <a class="action-link">
+                    <div class="px-3 py-3 action-tile">
+                        Rentals
+                    </div>
+                </a>
+                <a class="action-link">
+                    <div class="px-3 py-3 action-tile">
+                        Logout
+                    </div>
+                </a>
             </div>
-
         </div>
 
         <!-- Right Side -->
         <div class="col-9">
-            <app-personal-info></app-personal-info>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

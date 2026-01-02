@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PersonalInfo } from "../personal-info/personal-info/personal-info";
+import { RouterOutlet, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [PersonalInfo],
+  imports: [RouterOutlet, RouterLinkActive, RouterLinkWithHref],
   templateUrl: './profile-index.html',
   styleUrl: './profile-index.scss',
 })
