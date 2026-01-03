@@ -12,6 +12,7 @@ import { ProfileIndex } from './components/profile/profile-index/profile-index';
 import { PersonalInfo } from './components/profile/personal-info/personal-info/personal-info';
 import { Addresses } from './components/profile/addresses/addresses/addresses';
 import { MyOffers } from './components/profile/my-offers/my-offers/my-offers';
+import { OfferBrowser } from './components/offers/browser/offer-browser/offer-browser';
 
 export const routes: Routes = [
     { path: '', component: Home},
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'offers/sale/create', component: SaleCreate}, 
     { path: 'offers/sale/:id/edit', component: SaleEdit}, 
     { path: 'offers/sale/:id/details', component: SaleDetails},
+    { path: 'offers', component: OfferBrowser},
     {
         path: 'profile',
         component: ProfileIndex,

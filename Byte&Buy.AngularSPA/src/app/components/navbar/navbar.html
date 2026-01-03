@@ -12,13 +12,17 @@
 
     <!--Left Side-->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
       <!--Only Visible in Collapse-->
-      <form class="d-flex search-form d-lg-none my-3" role="search">
-        <input class="form-control" type="search" placeholder="Search products..." aria-label="Search">
-        <button class="btn btn-outline-primary search-button" type="submit">
+      <div class="d-flex search-form d-lg-none my-3">
+        <input class="form-control" #searchInput type="search" placeholder="Search products..." aria-label="Search">
+
+        <button class="btn btn-outline-primary search-button" type="button" (click)="onSearch(searchInput.value)">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
-      </form>
+      </div>
+
+
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -65,7 +69,7 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a routerLink="profile"  class="dropdown-item">
+              <a routerLink="profile" class="dropdown-item">
                 <i class="fa-solid fa-id-card-clip"></i>
                 Profile
               </a>
@@ -85,7 +89,7 @@
               </a>
             </li>
 
-             <li>
+            <li>
               <a routerLink="offers/rent/:id/details" class="dropdown-item">
                 <i class="fa-solid fa-id-card-clip"></i>
                 Rent Details
