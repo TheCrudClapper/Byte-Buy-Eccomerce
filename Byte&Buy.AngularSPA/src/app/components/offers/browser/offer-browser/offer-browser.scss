@@ -10,24 +10,47 @@ hr {
     border: none;
     border-radius: 20px;
 }
+
 .page-input-narrow {
-  width: 60px;
-  padding-right: 4px; 
-  text-align: center;
-  padding-left: 4px;
+    width: 60px;
+    padding-right: 4px;
+    text-align: center;
+    padding-left: 4px;
 }
-.page-button{
+
+.page-button {
     background-color: transparent;
     border: unset;
     color: var(--text-primary);
 }
-.page-button:hover{
+
+.page-button:hover {
     color: var(--primary-accent);
 }
-.badge{
+
+.badge {
     background-color: var(--primary-accent);
 }
-.offer-title{
+
+.offer-badge {
+    font-size: 12px !important;
+}
+
+
+.offer-image {
+    width: 100%;
+    height: 130px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+.location span {
+    font-size: 12px;
+}
+
+.offer-title {
     font-size: 16px;
     font-family: 'raleway-bold';
 }
