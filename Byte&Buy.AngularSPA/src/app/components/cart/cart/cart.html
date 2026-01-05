@@ -1,5 +1,13 @@
 <div class="container">
-    <div class="row  my-5">
+    @if(cartItems.length == 0){
+    <div class="empty-cart-container my-5">
+        <i class="fa-solid fa-basket-shopping fa-10x d-block" style="color: #ffffff;"></i>
+        <p class="empty-cart-title text-primary open-sans-medium ">Your cart is empty!</p>
+        <span class="fs-14-px">Looks like you haven't added anything to your cart <span class="fw-bold">yet.</span></span>
+    </div>
+    }
+    @else {
+    <div class="row my-5">
         <!-- Cart Items List -->
         <div class="col-8">
             <div class="content-section text-center">
@@ -51,4 +59,6 @@
         </div>
 
     </div>
+    }
+
 </div>

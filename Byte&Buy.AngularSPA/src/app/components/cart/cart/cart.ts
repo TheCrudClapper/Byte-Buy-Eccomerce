@@ -9,6 +9,7 @@ import { CartItem } from "../../../features/cart/components/cart-item/cart-item"
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
+
 export class Cart {
   cartItems: CartItemModel[] = [
     {
@@ -18,6 +19,14 @@ export class Cart {
       unitPrice: 3500 ,
       quantity: 2,
       imageUrl: "test4.jpg"
+    },
+    {
+      id: Guid.create(),
+      offerTitle: "GTX 1080 TI Used",
+      offerType: "Rent Offer",
+      unitPrice: 50,
+      quantity: 3,
+      imageUrl: "test.jpg"
     }
   ]
 }
