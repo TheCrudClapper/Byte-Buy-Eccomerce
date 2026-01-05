@@ -42,7 +42,29 @@
   font-style: normal;
 }
 
+.fs-16-px{
+  font-size: 16px;
+}
 
+.fs-14-px{
+  font-size: 14px;
+}
+
+.open-sans-medium{
+  font-family: 'open-sans-medium';
+}
+
+.open-sans-bold{
+  font-family: 'open-sans-bold';
+}
+
+.raleway-bold{
+  font-family: 'raleway-bold';
+}
+
+.raleway-medium{
+  font-family: 'raleway-medium';
+}
 .theme-modern-primary {
   --background: #17182a;
   --hover-accent: #3b255a;
@@ -218,4 +240,7 @@ textarea:focus {
 
 span{
   color: var(--text-primary);
+}
+.badge{
+  background-color: var(--primary-accent);
 }

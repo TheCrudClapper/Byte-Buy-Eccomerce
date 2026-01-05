@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormsModule, FormArray } from '@angular/forms';
-import { SelectListItemResponse } from '../../../../services/DTO/select-list-item-response';
+import { SelectListItemResponse } from '../../../../shared/dto/select-list-item-response';
 
 @Component({
   selector: 'app-rent-create',

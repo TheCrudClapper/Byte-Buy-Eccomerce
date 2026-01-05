@@ -1,4 +1,4 @@
-import { AddressValueObj } from "../address/addressValueObj";
+import { AddressValueObj } from "../../../shared/dto/addressValueObj";
 
 export interface CompanyInfoResponse {
    companyName :string;
