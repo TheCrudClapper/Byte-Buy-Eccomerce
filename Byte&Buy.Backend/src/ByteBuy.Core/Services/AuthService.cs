@@ -73,7 +73,7 @@ public class AuthService : IAuthService
         if (!identityResult.Succeeded)
             return identityResult.ToResult();
 
-        const string defaultRoleName = "PortalUser";
+        const string defaultRoleName = "Portal User";
 
         //var roleResult = ApplicationRole.Create(defaultRoleName);
 

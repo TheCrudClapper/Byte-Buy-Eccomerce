@@ -10,25 +10,29 @@
             </div>
 
             <!--Login Form-->
-            <form>
+            <form [formGroup]="registerForm" (submit)="onSubmit()">
                 <div class="mb-3">
                     <label for="nputFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="inputFirstName">
+                    <input type="text" class="form-control" formControlName="firstName" id="inputFirstName">
                 </div>
                 <div class="mb-3">
                     <label for="inputLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="inputLastName">
+                    <input type="text" class="form-control" formControlName="lastName" id="inputLastName">
                 </div>
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail">
+                    <input type="email" class="form-control" formControlName="email" id="inputEmail">
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="inputPassword">
-                    <span class="validation-errors g-0">Password must be at least 10 characters</span>
+                    <input type="password" class="form-control" formControlName="password" id="inputPassword">
+                    <!-- <span class="validation-errors g-0">Password must be at least 10 characters</span> -->
                 </div>
 
+                @if(errorMessage){
+                    <span class="validation-error">{{ errorMessage }}</span>
+                }
+                
                 <!--Log in Button-->
                 <div class="mb-3">
                     <button type="submit" class="btn w-100">Register</button>

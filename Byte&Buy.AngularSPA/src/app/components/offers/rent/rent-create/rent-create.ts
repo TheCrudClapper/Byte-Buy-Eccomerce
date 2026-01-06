@@ -1,12 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { Guid } from 'guid-typescript';
-import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormsModule, FormArray } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { SelectListItemResponse } from '../../../../shared/dto/select-list-item-response';
+import { ShowErrorPipe } from '../../../../core/pipes/show-error-pipe';
 
 @Component({
   selector: 'app-rent-create',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ShowErrorPipe],
   templateUrl: './rent-create.html',
+  standalone: true,
   styleUrls: [
     './rent-create.scss',
     '../../shared/offers-shared-styles.scss']
@@ -36,20 +38,13 @@ export class RentCreate {
   });
   
   submit() :void{
+    console.log(56);
     if(this.rentForm.invalid){
       this.rentForm.markAllAsTouched();
       return;
     };
   }
 
-  getControl(path: string){
-    return this.rentForm.get(path)!;
-  }
-
-  shouldShowError(path: string): boolean{
-    const control = this.getControl(path);
-    return control.invalid && (control.touched || control.dirty);
-  }
-
 }
+
 
