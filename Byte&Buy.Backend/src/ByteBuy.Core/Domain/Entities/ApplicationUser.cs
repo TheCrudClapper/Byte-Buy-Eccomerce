@@ -29,6 +29,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
     private ApplicationUser() { }
     protected ApplicationUser(string firstName, string lastName, string email, string? phoneNumber)
     {
+        Id = Guid.NewGuid();
         FirstName = firstName;
         LastName = lastName;
         Email = email;

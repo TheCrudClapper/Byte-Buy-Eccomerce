@@ -11,13 +11,16 @@ namespace ByteBuy.Core.Services;
 public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
+    private readonly ICartRepository _cartRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
 
     public AuthService(UserManager<ApplicationUser> userManager,
+        ICartRepository cartRepository,
         ITokenService tokenService,
         IUserRepository userRepository)
     {
+        _cartRepository = cartRepository;
         _userManager = userManager;
         _tokenService = tokenService;
         _userRepository = userRepository;
@@ -59,31 +62,23 @@ public class AuthService : IAuthService
         if (userResult.IsFailure)
             return userResult;
 
-        var user = userResult.Value;
-
-        var cartResult = Cart.Create(user);
+        var cartResult = Cart.Create(userResult.Value.Id);
         if (cartResult.IsFailure)
             return Result.Failure(cartResult.Error);
 
-        user.AssignCart(cartResult.Value);
+        userResult.Value.AttachCart(cartResult.Value.Id);
 
         var identityResult = await _userManager
-            .CreateAsync(user, request.Password);
+            .CreateAsync(userResult.Value, request.Password);
 
         if (!identityResult.Succeeded)
             return identityResult.ToResult();
 
         const string defaultRoleName = "Portal User";
 
-        //var roleResult = ApplicationRole.Create(defaultRoleName);
-
-        //if(roleResult.IsFailure)
-        //    return roleResult;
-
-        //if (!await _roleManager.RoleExistsAsync(defaultRoleName))
-        //    await _roleManager.CreateAsync(roleResult.Value);
-
-        await _userManager.AddToRoleAsync(user, defaultRoleName);
+        await _cartRepository.AddAsync(cartResult.Value);
+        await _cartRepository.CommitAsync();
+        await _userManager.AddToRoleAsync(userResult.Value, defaultRoleName);
         return Result.Success();
     }
 }

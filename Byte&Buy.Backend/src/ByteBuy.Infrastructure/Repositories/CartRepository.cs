@@ -1,11 +1,14 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class RentOfferRepository : EfBaseRepository<RentOffer>, IRentOfferRepository
+public class CartRepository : EfBaseRepository<Cart>, ICartRepository
 {
-    public RentOfferRepository(ApplicationDbContext context) : base(context) { }
+    public CartRepository(ApplicationDbContext context) : base(context)
+    {
+    }
 }

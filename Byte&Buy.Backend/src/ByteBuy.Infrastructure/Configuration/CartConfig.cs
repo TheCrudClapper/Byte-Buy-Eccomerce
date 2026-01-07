@@ -13,6 +13,8 @@ public class CartConfig : IEntityTypeConfiguration<Cart>
             .HasForeignKey<Cart>(c => c.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.HasIndex(c => c.UserId);
+
         builder.OwnsOne(c => c.TotalItemsValue, c =>
         {
             c.Property(prop => prop.Amount).HasColumnName("TotalItemsValue_Amount").HasPrecision(18, 3).IsRequired();

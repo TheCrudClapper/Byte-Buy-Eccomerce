@@ -66,11 +66,11 @@ public class PortalUserService : IPortalUserService
 
         var user = userResult.Value;
 
-        var cartResult = Cart.Create(user);
+        var cartResult = Cart.Create(user.Id);
         if (cartResult.IsFailure)
             return Result.Failure<CreatedResponse>(cartResult.Error);
 
-        user.AssignCart(cartResult.Value);
+        user.AttachCart(cartResult.Value.Id);
 
         var identityResult = await _userManager.CreateAsync(user, request.Password);
         if (!identityResult.Succeeded)

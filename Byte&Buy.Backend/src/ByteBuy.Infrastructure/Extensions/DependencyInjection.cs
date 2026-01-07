@@ -35,6 +35,7 @@ public static class DependencyInjection
         services.AddScoped<IImageStorage, ImageStorage>();
         services.AddScoped<ISaleOfferRepository, SaleOfferRepository>();
         services.AddScoped<IRentOfferRepository, RentOfferRepository>();
+        services.AddScoped<ICartRepository, CartRepository>();
 
         return services;
     }

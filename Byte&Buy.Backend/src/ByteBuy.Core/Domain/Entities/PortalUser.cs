@@ -8,6 +8,8 @@ public sealed class PortalUser : ApplicationUser
 {
     public ICollection<ShippingAddress> ShippingAddresses { get; private set; } = [];
     public ICollection<Order> Orders { get; private set; } = [];
+    public Guid CartId { get; private set; }
+    //EF Navigation Property ONLY
     public Cart Cart { get; private set; } = null!;
 
     private PortalUser(string firstName, string lastName, string email, string? phoneNumber)
@@ -116,9 +118,12 @@ public sealed class PortalUser : ApplicationUser
         return Result.Success();
     }
 
-    public void AssignCart(Cart cart)
+    public void AttachCart(Guid cartId)
     {
-        Cart = cart;
+        if (cartId == Guid.Empty)
+            throw new ArgumentException("CartId cannot be empty", nameof(cartId));
+
+        CartId = cartId;
     }
 
     public void AssignShippingAddress(ShippingAddress address)
