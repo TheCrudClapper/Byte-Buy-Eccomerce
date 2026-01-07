@@ -9,9 +9,6 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public Guid ItemId { get; set; }
     public Item Item { get; set; } = null!;
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
-    public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
-    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-
     public AddressValueObject OwnerAddressSnapshot = null!;
     public int QuantityAvailable { get; set; }
     public Guid CreatedByUserId { get; set; }
@@ -19,6 +16,9 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
+    //EF Navigation Properties ONLY
+    public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
+    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     protected Offer() { }
 
     protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable, AddressValueObject offerAddress)

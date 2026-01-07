@@ -2,7 +2,7 @@ using ByteBuy.API.Authorization;
 using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
-using ByteBuy.Infrastructure;
+using ByteBuy.Infrastructure.Extensions;
 using EquipmentService.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 

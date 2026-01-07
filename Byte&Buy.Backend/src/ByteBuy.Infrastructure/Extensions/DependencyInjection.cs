@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ByteBuy.Infrastructure;
+namespace ByteBuy.Infrastructure.Extensions;
 
 public static class DependencyInjection
 {
@@ -36,6 +36,7 @@ public static class DependencyInjection
         services.AddScoped<ISaleOfferRepository, SaleOfferRepository>();
         services.AddScoped<IRentOfferRepository, RentOfferRepository>();
         services.AddScoped<ICartRepository, CartRepository>();
+        services.AddScoped<IOfferRepository, OfferRepository>();
 
         return services;
     }

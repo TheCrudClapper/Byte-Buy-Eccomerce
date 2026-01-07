@@ -15,6 +15,7 @@ namespace ByteBuy.Core.Services;
 public class PortalUserService : IPortalUserService
 {
     private readonly IPasswordService _passwordService;
+    private readonly ICartRepository _cartRepository;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IUserRepository _userRepository;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -23,6 +24,7 @@ public class PortalUserService : IPortalUserService
     public PortalUserService(
         IPortalUserRepository portalUserRepository,
         IUserRepository userRepository,
+        ICartRepository cartRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
         IAddressValidationService addressValidator,
@@ -33,6 +35,7 @@ public class PortalUserService : IPortalUserService
         _userManager = userManager;
         _roleManager = roleManager;
         _addressValidator = addressValidator;
+        _cartRepository = cartRepository;
         _passwordService = passwordService;
     }
 
@@ -137,9 +140,15 @@ public class PortalUserService : IPortalUserService
         if (portalUser is null)
             return Result.Failure(Error.NotFound);
 
+        var userCart = await _cartRepository.GetAggregateByIdAsync(portalUser.CartId);
+        if(userCart is null)
+            return Result.Failure(CartErrors.CartNotFound);
+
         portalUser.Deactivate();
+        userCart.Deactivate();
 
         await _portalUserRepository.UpdateAsync(portalUser);
+        await _cartRepository.UpdateAsync(userCart);
         await _portalUserRepository.CommitAsync();
 
         return Result.Success();

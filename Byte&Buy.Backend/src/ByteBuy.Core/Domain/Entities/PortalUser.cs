@@ -7,10 +7,12 @@ namespace ByteBuy.Core.Domain.Entities;
 public sealed class PortalUser : ApplicationUser
 {
     public ICollection<ShippingAddress> ShippingAddresses { get; private set; } = [];
-    public ICollection<Order> Orders { get; private set; } = [];
     public Guid CartId { get; private set; }
-    //EF Navigation Property ONLY
+
+
+    //EF Navigation Properties ONLY
     public Cart Cart { get; private set; } = null!;
+    public ICollection<Order> Orders { get; private set; } = [];
 
     private PortalUser(string firstName, string lastName, string email, string? phoneNumber)
         : base(firstName, lastName, email, phoneNumber) { }

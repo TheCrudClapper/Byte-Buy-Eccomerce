@@ -2,11 +2,10 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CartRepository : EfBaseRepository<Cart>, ICartRepository
+public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
 {
-    public CartRepository(ApplicationDbContext context) : base(context) { }
+    public OfferRepository(ApplicationDbContext context) : base(context) { }
 }

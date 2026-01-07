@@ -17,6 +17,8 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
     public string LastName { get; protected set; } = null!;
     public ICollection<UserPermission> UserPermissions { get; protected set; } = new List<UserPermission>();
     public ICollection<ApplicationUserRole> UserRoles { get; protected set; } = new List<ApplicationUserRole>();
+
+    //EF Navigation Property ONLY
     public ICollection<Offer> Offers { get; protected set; } = new List<Offer>();
 
     //ShippingAddress to be used in billing, localization of offers.
