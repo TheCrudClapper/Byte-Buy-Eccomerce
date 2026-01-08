@@ -5,13 +5,13 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class CartOffer : AuditableEntity, ISoftDeletable
 {
-    public int Quantity { get; set; }
-    public Guid CartId { get; set; }
-    public Guid OfferId { get; set; }
-    public Cart Cart { get; set; } = null!;
-    public Offer Offer { get; set; } = null!;
-    public bool IsActive { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public int Quantity { get; protected set; }
+    public Guid CartId { get; protected set; }
+    public Guid OfferId { get; protected set; }
+    public Cart Cart { get; protected set; } = null!;
+    public Offer Offer { get; protected set; } = null!;
+    public bool IsActive { get; protected set; }
+    public DateTime? DateDeleted { get; protected set; }
 
     protected CartOffer() { }
 
@@ -29,6 +29,17 @@ public class CartOffer : AuditableEntity, ISoftDeletable
         if (quantity <= 0)
             return Result.Failure(CartErrors.QuantityInvalid);
 
+        return Result.Success();
+    }
+
+    public Result SetQuantity(int quantity)
+    {
+        var validate = Validate(quantity);
+        if (validate.IsFailure)
+            return validate;
+
+        Quantity = quantity;
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 

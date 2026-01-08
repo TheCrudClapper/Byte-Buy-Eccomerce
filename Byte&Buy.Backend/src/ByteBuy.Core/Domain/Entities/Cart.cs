@@ -64,8 +64,9 @@ public class Cart : AuditableEntity, ISoftDeletable
         }
         else
         {
-            existingCartOffer.Quantity = requestedQuantity;
-            existingCartOffer.DateEdited = DateTime.UtcNow;
+            var quantityResult = existingCartOffer.SetQuantity(requestedQuantity);
+            if (quantityResult.IsFailure)
+                return quantityResult;
         }
 
         var totalsResult = RecalculateTotals();
@@ -101,8 +102,9 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (quantity > saleOffer.QuantityAvailable)
             return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
-        cartOffer.Quantity = quantity;
-        cartOffer.DateEdited = DateTime.UtcNow;
+        var quantityResult = cartOffer.SetQuantity(quantity);
+        if (quantityResult.IsFailure)
+            return quantityResult;
 
         var totalsResult = RecalculateTotals();
         if (totalsResult.IsFailure)
@@ -146,9 +148,11 @@ public class Cart : AuditableEntity, ISoftDeletable
         }
         else
         {
-            existingCartOffer.DateEdited = DateTime.UtcNow;
-            existingCartOffer.Quantity = requestedQuantity;
-            existingCartOffer.RentalDays = rentalDays;
+            var changeResult = existingCartOffer
+                .ChangeQuantityAndRentalDays(requestedQuantity, rentalDays);
+
+            if (changeResult.IsFailure)
+                return changeResult;
         }
 
         var totalsResult = RecalculateTotals();
@@ -189,9 +193,10 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (quantity > rentOffer.QuantityAvailable)
             return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
-        cartOffer.Quantity = quantity;
-        cartOffer.RentalDays = rentalDays;
-        cartOffer.DateEdited = DateTime.UtcNow;
+        var changeResult = cartOffer
+               .ChangeQuantityAndRentalDays(quantity, rentalDays);
+        if (changeResult.IsFailure)
+            return changeResult;
 
         var totalsResult = RecalculateTotals();
         if (totalsResult.IsFailure)
@@ -204,7 +209,7 @@ public class Cart : AuditableEntity, ISoftDeletable
     {
         var cartItem = CartOffers.FirstOrDefault(item => item.Id == cartItemId);
         if (cartItem is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CartErrors.OfferNotInCart);
 
         cartItem.Deactivate();
 
@@ -215,7 +220,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public Result RecalculateTotals()
+    private Result RecalculateTotals()
     {
         decimal itemsTotal = 0;
 
