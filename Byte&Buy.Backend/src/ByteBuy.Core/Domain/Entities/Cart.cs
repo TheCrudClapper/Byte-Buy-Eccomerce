@@ -226,28 +226,23 @@ public class Cart : AuditableEntity, ISoftDeletable
 
     private Result RecalculateTotals()
     {
-        decimal itemsTotal = 0;
-
+        Money ItemsTotal = Money.Zero;
         foreach (var co in CartOffers)
         {
             if (co is RentCartOffer rent)
             {
                 var rentOffer = (RentOffer)co.Offer;
-                itemsTotal += co.Quantity * rent.RentalDays * rentOffer.PricePerDay.Amount;
+                ItemsTotal += co.Quantity * rent.RentalDays * rentOffer.PricePerDay;
             }
             if (co is SaleCartOffer sale)
             {
                 var saleOffer = (SaleOffer)co.Offer;
-                itemsTotal += co.Quantity * saleOffer.PricePerItem.Amount;
+                ItemsTotal += co.Quantity * saleOffer.PricePerItem;
             }
         }
 
-        var moneyResult = Money.Create(itemsTotal);
-        if (moneyResult.IsFailure)
-            return moneyResult;
-
-        TotalCartValue = moneyResult.Value;
-        TotalItemsValue = moneyResult.Value;
+        TotalCartValue = ItemsTotal;
+        TotalItemsValue = ItemsTotal;
 
         return Result.Success();
     }
