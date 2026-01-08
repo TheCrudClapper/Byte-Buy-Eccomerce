@@ -20,7 +20,7 @@ public class RentCartOffer : CartOffer
             return Result.Failure<RentCartOffer>(validateResult.Error);
 
         if (rentalDays <= 0)
-            return Result.Failure<RentCartOffer>(Error.Validation("Rental period must have at least one day !"));
+            return Result.Failure<RentCartOffer>(CartErrors.RentalDaysInvalid);
 
         return new RentCartOffer(cartId, offerId, quantity, rentalDays);
     }
@@ -28,7 +28,7 @@ public class RentCartOffer : CartOffer
     public Result ChangeRentalDays(int rentalDays)
     {
         if (rentalDays <= 0)
-            return Result.Failure<RentCartOffer>(Error.Validation("Rental period must have at least one day !"));
+            return Result.Failure<RentCartOffer>(CartErrors.RentalDaysInvalid);
 
         RentalDays = rentalDays;
         DateEdited = DateTime.UtcNow;

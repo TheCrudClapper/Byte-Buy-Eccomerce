@@ -14,7 +14,7 @@ public static class AuthErrors
     public static readonly Error EmailAlreadyTaken = new(
        ErrorType.Conflict, "Auth.EmailAlreadyTaken", "This Email is already taken");
 
-    public static readonly Error AccessDenied = new (
+    public static readonly Error AccessDenied = new(
         ErrorType.Unauthorized, "Auth.AccessDenied", "User of given credentials can't access this resource");
 
     public static readonly Error PasswordsDontMatch = new(

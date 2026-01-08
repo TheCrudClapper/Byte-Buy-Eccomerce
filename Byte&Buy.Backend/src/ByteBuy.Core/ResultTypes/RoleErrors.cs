@@ -13,4 +13,10 @@ public static class RoleErrors
 
     public static readonly Error HasActiveUsers = new(
         ErrorType.Conflict, "Role.HasActiveUsers", "Cannot delete a role with active users !");
+
+    public static readonly Error InvalidName =
+        Error.Validation("Role.Name", "Name is required and must be at most 20 characters.");
+
+    public static readonly Error PermissionIsRequired =
+        Error.Validation("Role.Permission", "Role need to have at least one permission");
 }

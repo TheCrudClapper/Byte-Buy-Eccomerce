@@ -34,7 +34,7 @@ public class Image : AuditableEntity, ISoftDeletable
     {
         var validationResult = Validate(altText);
         if (validationResult.IsFailure)
-            return Result.Failure<Image>(validationResult.Error);
+            return Result.Failure(validationResult.Error);
 
         AltText = altText;
         return Result.Success();
@@ -43,7 +43,7 @@ public class Image : AuditableEntity, ISoftDeletable
     private static Result Validate(string altText)
     {
         if (string.IsNullOrWhiteSpace(altText) || altText.Length > 50)
-            return Result.Failure(Error.Validation("Alernative Text is required and must be at most 50 characters."));
+            return Result.Failure(ImageErrors.AltTextInvalid);
 
         return Result.Success();
     }
@@ -55,7 +55,7 @@ public class Image : AuditableEntity, ISoftDeletable
             return Result.Failure<Image>(validationResult.Error);
 
         if (string.IsNullOrWhiteSpace(imagePath))
-            return Result.Failure<Image>(Error.Validation("Image Path is required"));
+            return Result.Failure<Image>(ImageErrors.ImagePathInvalid);
 
         return new Image(imagePath, altText);
     }

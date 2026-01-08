@@ -143,7 +143,7 @@ public class PortalUserService : IPortalUserService
 
         var cartSpec = new CartAggregateByUserIdSpec(portalUser.Id);
         var userCart = await _cartRepository.GetBySpecAsync(cartSpec);
-        if(userCart is null)
+        if (userCart is null)
             return Result.Failure(CartErrors.NotFound);
 
         portalUser.Deactivate();

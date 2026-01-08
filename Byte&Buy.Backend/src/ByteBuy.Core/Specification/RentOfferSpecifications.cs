@@ -34,7 +34,7 @@ public static class RentOfferSpecifications
                 Query.IgnoreQueryFilters();
 
             Query.Where(ro => ro.Id == id)
-                 .Include(ro => ro.OfferDeliveries);          
+                 .Include(ro => ro.OfferDeliveries);
         }
     }
 }

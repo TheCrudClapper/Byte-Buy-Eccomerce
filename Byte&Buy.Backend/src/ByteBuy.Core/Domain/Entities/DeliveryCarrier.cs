@@ -33,9 +33,9 @@ public class DeliveryCarrier : AuditableEntity, ISoftDeletable
     public static Result Validate(string name, string code)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 50)
-            return Result.Failure(Error.Validation("Name is required and must be 50 characters max"));
+            return Result.Failure(DeliveryCarrierErrors.NameInvalid);
         if (string.IsNullOrWhiteSpace(code) || code.Length > 20)
-            return Result.Failure(Error.Validation("Code is required and must be 20 characters max"));
+            return Result.Failure(DeliveryCarrierErrors.CodeInvalid);
 
         return Result.Success();
     }

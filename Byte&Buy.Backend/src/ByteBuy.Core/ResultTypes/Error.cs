@@ -21,14 +21,14 @@ public enum ErrorType
 /// <param name="Description"></param>
 public sealed record Error(ErrorType Type, string Code, string Description)
 {
-    public static readonly Error None 
+    public static readonly Error None
         = new(ErrorType.Unexpected, "None", string.Empty);
 
-    public static readonly Error NullValue 
+    public static readonly Error NullValue
         = new(ErrorType.Validation, "Common.NullValue", "NullValue");
 
-    public static readonly Error NotFound 
-        = new(ErrorType.NotFound, "Common.NotFound" ,"Resource of given Id doesn't exist");
+    public static readonly Error NotFound
+        = new(ErrorType.NotFound, "Common.NotFound", "Resource of given Id doesn't exist");
 
     public static Error Validation(string code, string message)
         => new(ErrorType.Validation, code, message);

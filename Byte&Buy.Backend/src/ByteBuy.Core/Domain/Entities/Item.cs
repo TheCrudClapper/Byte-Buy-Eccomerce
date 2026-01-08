@@ -45,13 +45,13 @@ public class Item : AuditableEntity, ISoftDeletable
     public static Result Validate(string name, string description, int stockQuantity)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 75)
-            return Result.Failure(Error.Validation("Name is required and must be at most 75 characters."));
+            return Result.Failure(ItemErrors.NameInvalid);
 
         if (string.IsNullOrWhiteSpace(description) || description.Length > 2000)
-            return Result.Failure(Error.Validation("Description is required and must be at most 2000 characters."));
+            return Result.Failure(ItemErrors.DescriptionInvalid);
 
         if (stockQuantity < 1)
-            return Result.Failure(Error.Validation("Quantity can'tbe lower than 1."));
+            return Result.Failure(ItemErrors.StockQuantityInvalid);
 
         return Result.Success();
     }
@@ -109,7 +109,7 @@ public class Item : AuditableEntity, ISoftDeletable
     {
         var image = Images.FirstOrDefault(i => i.Id == imageId);
         if (image is null)
-            return Result.Failure(Error.Validation("Image of given Id was not found"));
+            return Result.Failure(ItemErrors.ImageNotFound);
 
         var altTextResult = image.ChangeImageAltText(altText);
         if (altTextResult.IsFailure)
@@ -121,10 +121,10 @@ public class Item : AuditableEntity, ISoftDeletable
     public Result SubstractStock(int quantity)
     {
         if (quantity < 1)
-            return Result.Failure(Error.Validation("Quantity must be at least 1."));
+            return Result.Failure(ItemErrors.StockQuantityInvalid);
 
         if (quantity > StockQuantity)
-            return Result.Failure(Error.Validation("Not enough stock."));
+            return Result.Failure(ItemErrors.StockNotEnough);
 
         StockQuantity -= quantity;
         return Result.Success();
@@ -133,11 +133,12 @@ public class Item : AuditableEntity, ISoftDeletable
     public Result AddStock(int quantity)
     {
         if (quantity < 1)
-            return Result.Failure(Error.Validation("Quantity must be at least 1."));
+            return Result.Failure(ItemErrors.StockQuantityInvalid);
 
         StockQuantity += quantity;
         return Result.Success();
     }
+
     public Result AddImage(string imagePath, string altText)
     {
         var imageResult = Image.Create(imagePath, altText);
@@ -162,8 +163,6 @@ public class Item : AuditableEntity, ISoftDeletable
     private void DeactivateAllImages()
     {
         foreach (Image image in Images)
-        {
             image.Deactivate();
-        }
     }
 }

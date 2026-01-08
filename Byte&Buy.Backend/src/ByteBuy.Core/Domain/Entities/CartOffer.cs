@@ -27,11 +27,11 @@ public class CartOffer : AuditableEntity, ISoftDeletable
     public static Result Validate(int quantity)
     {
         if (quantity <= 0)
-            return Result.Failure(Error.Validation("Quantity must be greater than 0."));
+            return Result.Failure(CartErrors.QuantityInvalid);
 
         return Result.Success();
     }
-        
+
     public void Deactivate()
     {
         if (!IsActive)

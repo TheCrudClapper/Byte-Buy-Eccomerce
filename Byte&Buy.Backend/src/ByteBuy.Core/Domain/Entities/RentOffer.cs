@@ -28,7 +28,7 @@ public class RentOffer : Offer
             return Result.Failure(basicValidation.Error);
 
         if (maxRentalDays < 1)
-            return Result.Failure(Error.Validation("Max rental days must be higher than 0"));
+            return Result.Failure(OfferErrors.MaxRentalDaysInvalid);
 
         return Result.Success();
     }

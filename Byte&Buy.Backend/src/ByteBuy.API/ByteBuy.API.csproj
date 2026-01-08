@@ -33,6 +33,7 @@
     <Folder Include="wwwroot\NewFolder1\" />
     <Folder Include="wwwroot\NewFolder2\" />
     <Folder Include="wwwroot\NewFolder3\" />
+    <Folder Include="wwwroot\NewFolder4\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 

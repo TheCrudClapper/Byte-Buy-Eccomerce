@@ -54,15 +54,15 @@ public class Condition : AuditableEntity, ISoftDeletable
     public static Result Validate(string name, string? description)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 20)
-            return Result.Failure(Error.Validation("Name is required and must be at most 20 characters."));
+            return Result.Failure(ConditionErrors.NameInvalid);
 
         if (description is not null)
         {
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure(Error.Validation("Description cannot contain only whitespace."));
+                return Result.Failure(ConditionErrors.DescriptionContentInvalid);
 
             if (description?.Length > 50)
-                return Result.Failure(Error.Validation("Description must be at most 50 characters."));
+                return Result.Failure(ConditionErrors.DescriptionLengthInvalid);
         }
 
         return Result.Success();

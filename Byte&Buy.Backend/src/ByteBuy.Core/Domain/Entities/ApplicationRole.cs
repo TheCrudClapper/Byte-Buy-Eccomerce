@@ -24,7 +24,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
     private static Result Validate(string Name)
     {
         if (string.IsNullOrWhiteSpace(Name) || Name.Length > 20)
-            return Result.Failure(Error.Validation("Name is required and must be at most 20 characters."));
+            return Result.Failure(RoleErrors.InvalidName);
 
         return Result.Success();
     }
@@ -54,7 +54,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
         var role = new ApplicationRole(name);
 
         if (permissionIds is null || !permissionIds.Any())
-            return Result.Failure<ApplicationRole>(Error.Validation("Role need to have at least one Permission"));
+            return Result.Failure<ApplicationRole>(RoleErrors.PermissionIsRequired);
 
         role.AssignPermissionsToRole(permissionIds);
 
@@ -99,7 +99,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
     public Result SetPermissions(IEnumerable<Guid> PermissionIds)
     {
         if (!PermissionIds.Any() || PermissionIds is null)
-            return Result.Failure(Error.Validation("Role need to have at least one Permission"));
+            return Result.Failure(RoleErrors.PermissionIsRequired);
 
         var newPermissionIds = PermissionIds.Distinct().ToList();
 

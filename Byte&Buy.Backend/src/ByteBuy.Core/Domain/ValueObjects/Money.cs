@@ -18,13 +18,13 @@ public sealed class Money
     public static Result<Money> Create(decimal amount, string currency = "PLN")
     {
         if (amount < 1)
-            return Result.Failure<Money>(Error.Validation("Amount of money can't 0 or negative"));
+            return Result.Failure<Money>(MoneyErrors.AmountInvalid);
 
         if (string.IsNullOrWhiteSpace(currency))
-            return Result.Failure<Money>(Error.Validation("Currency can't be null"));
+            return Result.Failure<Money>(MoneyErrors.EmptyCurrency);
 
         if (currency.Length > 3)
-            return Result.Failure<Money>(Error.Validation("Currency must consist of 3 characters"));
+            return Result.Failure<Money>(MoneyErrors.CurrencyInvalid);
 
         return new Money(amount, currency.ToUpper());
     }

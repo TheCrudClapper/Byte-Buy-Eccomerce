@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.AddressValueObj;
 
 namespace ByteBuy.Core.Specification;
 

@@ -22,7 +22,7 @@ public class CompanyInfoService : ICompanyInfoService
     public async Task<Result<CreatedResponse>> AddAsync(CompanyInfoAddRequest request)
     {
         if (await _companyInfoRepository.ExistAsync())
-            return Result.Failure<CreatedResponse>(CompanyInfoErrors.DuplicateCompanyInfoObjects);
+            return Result.Failure<CreatedResponse>(CompanyInfoErrors.DuplicateCompanyInfo);
 
         var createResult = CompanyInfo.Create(
             request.CompanyName,

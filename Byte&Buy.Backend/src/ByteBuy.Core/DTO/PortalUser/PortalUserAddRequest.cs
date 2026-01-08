@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.AddressValueObj;
+﻿using ByteBuy.Core.DTO.AddressValueObj;
 using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.DTO.PortalUser;

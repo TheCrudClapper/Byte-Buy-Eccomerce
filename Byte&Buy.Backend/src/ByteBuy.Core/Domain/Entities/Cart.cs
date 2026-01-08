@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
-using System;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -32,7 +31,7 @@ public class Cart : AuditableEntity, ISoftDeletable
     public static Result<Cart> Create(Guid userId)
     {
         if (userId == Guid.Empty)
-            return Result.Failure<Cart>(Error.Validation("UserId cannot be empty"));
+            return Result.Failure<Cart>(CartErrors.EmptyUserId);
 
         return Result.Success(new Cart(userId));
     }
@@ -40,10 +39,10 @@ public class Cart : AuditableEntity, ISoftDeletable
     public Result AddSaleCartOffer(SaleOffer saleOffer, int quantity)
     {
         if (saleOffer is null)
-            return Result.Failure(Error.Validation("Offer can't be null"));
+            return Result.Failure(CartErrors.NullOffer);
 
         if (quantity <= 0)
-            return Result.Failure(Error.Validation("Quantity must be greater than 0."));
+            return Result.Failure(CartErrors.QuantityInvalid);
 
         var existingCartOffer = CartOffers
             .OfType<SaleCartOffer>()
@@ -53,7 +52,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         var requestedQuantity = currentExistingQuantity + quantity;
 
         if (requestedQuantity > saleOffer.QuantityAvailable)
-            return Result.Failure(Error.Validation("Requested quantity exceedes avaliable quantity !"));
+            return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
         if (existingCartOffer is null)
         {
@@ -79,14 +78,14 @@ public class Cart : AuditableEntity, ISoftDeletable
     public Result UpdateSaleCartOffer(SaleOffer saleOffer, Guid cartItemId, int quantity)
     {
         if (saleOffer is null)
-            return Result.Failure(Error.Validation("Offer can't be null"));
+            return Result.Failure(CartErrors.NullOffer);
 
         var cartOffer = CartOffers
             .OfType<SaleCartOffer>()
             .FirstOrDefault(co => co.Id == cartItemId);
 
         if (cartOffer is null)
-            return Result.Failure(Error.Validation("Given offer doesn't exists in your cart"));
+            return Result.Failure(CartErrors.OfferNotInCart);
 
         //in this case, we delete item from cart
         if (quantity <= 0)
@@ -94,13 +93,13 @@ public class Cart : AuditableEntity, ISoftDeletable
             cartOffer.Deactivate();
 
             var result = RecalculateTotals();
-            if(result.IsFailure) return result;
+            if (result.IsFailure) return result;
 
             return Result.Success();
         }
 
-        if(quantity > saleOffer.QuantityAvailable)
-            return Result.Failure(Error.Validation("Requested quantity exceedes avaliable quantity !"));
+        if (quantity > saleOffer.QuantityAvailable)
+            return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
         cartOffer.Quantity = quantity;
         cartOffer.DateEdited = DateTime.UtcNow;
@@ -115,16 +114,16 @@ public class Cart : AuditableEntity, ISoftDeletable
     public Result AddRentCartOffer(RentOffer rentOffer, int quantity, int rentalDays)
     {
         if (rentOffer is null)
-            return Result.Failure(Error.Validation("Offer can't be null"));
+            return Result.Failure(CartErrors.NullOffer);
 
         if (quantity <= 0)
-            return Result.Failure(Error.Validation("Quantity must be greater than 0."));
+            return Result.Failure(CartErrors.QuantityInvalid);
 
         if (rentalDays <= 0)
-            return Result.Failure(Error.Validation("Rental period must have at least one day !"));
+            return Result.Failure(CartErrors.RentalDaysInvalid);
 
         if (rentalDays > rentOffer.MaxRentalDays)
-            return Result.Failure(Error.Validation("You can't rent item for longer than avaliable!"));
+            return Result.Failure(CartErrors.RentalDaysTooHigh);
 
         var existingCartOffer = CartOffers
             .OfType<RentCartOffer>()
@@ -135,7 +134,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         var requestedQuantity = currentExistingQuantity + quantity;
 
         if (requestedQuantity > rentOffer.QuantityAvailable)
-            return Result.Failure(Error.Validation("Requested quantity exceedes avaliable quantity !"));
+            return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
         if (existingCartOffer is null)
         {
@@ -161,15 +160,15 @@ public class Cart : AuditableEntity, ISoftDeletable
 
     public Result UpdateRentCartOffer(RentOffer rentOffer, Guid cartItemId, int quantity, int rentalDays)
     {
-        if(rentOffer is null)
-            return Result.Failure(Error.Validation("Offer can't be null"));
+        if (rentOffer is null)
+            return Result.Failure(CartErrors.NullOffer);
 
         var cartOffer = CartOffers
             .OfType<RentCartOffer>()
             .FirstOrDefault(co => co.Id == cartItemId);
 
-        if(cartOffer is null)
-            return Result.Failure(Error.Validation("Given offer doesn't exists in your cart"));
+        if (cartOffer is null)
+            return Result.Failure(CartErrors.OfferNotInCart);
 
         if (quantity <= 0)
         {
@@ -181,18 +180,20 @@ public class Cart : AuditableEntity, ISoftDeletable
             return Result.Success();
         }
 
-        if (rentalDays <= 0 || rentalDays > rentOffer.MaxRentalDays)
-            return Result.Failure(Error
-                .Validation($"Rental period must have at least one day but not more than {rentOffer.MaxRentalDays}"));
+        if (rentalDays <= 0)
+            return Result.Failure(CartErrors.RentalDaysInvalid);
+
+        if (rentalDays > rentOffer.MaxRentalDays)
+            return Result.Failure(CartErrors.RentalDaysTooHigh);
 
         if (quantity > rentOffer.QuantityAvailable)
-            return Result.Failure(Error.Validation("Requested quantity exceedes avaliable quantity !"));
+            return Result.Failure(CartErrors.RequestedQuantityTooHigh);
 
         cartOffer.Quantity = quantity;
         cartOffer.RentalDays = rentalDays;
         cartOffer.DateEdited = DateTime.UtcNow;
 
-        var totalsResult =  RecalculateTotals();
+        var totalsResult = RecalculateTotals();
         if (totalsResult.IsFailure)
             return totalsResult;
 

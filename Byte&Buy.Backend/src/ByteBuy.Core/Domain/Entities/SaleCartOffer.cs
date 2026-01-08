@@ -6,9 +6,9 @@ public class SaleCartOffer : CartOffer
 {
     private SaleCartOffer() { }
     private SaleCartOffer(Guid cartId, Guid offerId, int quantity)
-      : base(cartId, offerId, quantity){ }
+      : base(cartId, offerId, quantity) { }
 
-    public static Result<SaleCartOffer> Create(Guid cartId,  Guid offerId, int quantity)
+    public static Result<SaleCartOffer> Create(Guid cartId, Guid offerId, int quantity)
     {
         var validateResult = Validate(quantity);
         if (validateResult.IsFailure)

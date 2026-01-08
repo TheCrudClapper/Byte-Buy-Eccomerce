@@ -35,7 +35,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     {
         IsActive = false;
         DateDeleted = DateTime.UtcNow;
-        foreach(var od in OfferDeliveries)
+        foreach (var od in OfferDeliveries)
             od.Deactivate();
     }
 
@@ -49,7 +49,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public static Result ValidateBasicInfo(int quantityAvailable)
     {
         if (quantityAvailable < 1)
-            return Result.Failure(Error.Validation("Quantity must be higher than 0"));
+            return Result.Failure(OfferErrors.QuantityAvaliableInvalid);
         return Result.Success();
     }
 

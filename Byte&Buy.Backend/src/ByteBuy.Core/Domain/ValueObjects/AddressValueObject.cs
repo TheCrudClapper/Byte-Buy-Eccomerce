@@ -41,7 +41,7 @@ public class AddressValueObject
             return validatorResult;
 
         if (string.IsNullOrWhiteSpace(country) || country.Length > 50)
-            return Result.Failure(Error.Validation("Country is required and must be at most 50 characters."));
+            return Result.Failure(AddressErrors.CountryInvalid);
 
         return Result.Success();
     }

@@ -1,6 +1,5 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Cart;
-using ByteBuy.Core.DTO.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +13,7 @@ public class CartController : BaseApiController
     private readonly ICartService _cartService;
     public CartController(ICartService cartService)
     {
-        _cartService = cartService;    
+        _cartService = cartService;
     }
 
     [HttpDelete("{cartOfferId:guid}")]

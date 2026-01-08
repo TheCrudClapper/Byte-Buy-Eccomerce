@@ -54,19 +54,17 @@ public class Category : AuditableEntity, ISoftDeletable
     private static Result Validate(string name, string? description)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 20)
-            return Result.Failure(Error.Validation("Name is required and must be at most 20 characters."));
+            return Result.Failure(CategoryErrors.NameInvalid);
 
         if (description is not null)
         {
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure(Error.Validation("Description cannot contain only whitespace."));
+                return Result.Failure(CategoryErrors.DescriptionContentInvalid);
 
             if (description?.Length > 50)
-                return Result.Failure(Error.Validation("Description must be at most 50 characters."));
+                return Result.Failure(CategoryErrors.DescriptionLengthInvalid);
         }
 
         return Result.Success();
     }
-
-
 }

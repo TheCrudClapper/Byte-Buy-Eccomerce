@@ -53,18 +53,18 @@ public class Delivery : AuditableEntity, ISoftDeletable
         DeliveryChannelEnum channel)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 50)
-            return Result.Failure(Error.Validation("Name is required and must be at most 50 characters."));
+            return Result.Failure(DeliveryErrors.NameInvalid);
 
         if (channel is not DeliveryChannelEnum.ParcelLocker && size is not null)
-            return Result.Failure(Error.Validation("Parcel size is allowed only for parcel lockers"));
+            return Result.Failure(DeliveryErrors.ParcelSizeInvalid);
 
         if (description is not null)
         {
             if (string.IsNullOrWhiteSpace(description))
-                return Result.Failure(Error.Validation("Description cannot contain only whitespace."));
+                return Result.Failure(DeliveryErrors.DescriptionContentInvalid);
 
             if (description?.Length > 50)
-                return Result.Failure(Error.Validation("Description must be at most 50 characters."));
+                return Result.Failure(DeliveryErrors.DescriptionLengthInvalid);
         }
 
         return Result.Success();

@@ -6,10 +6,14 @@
 public static class ImageErrors
 {
     public static readonly Error WrongImageExtensions = new(
-        ErrorType.Validation, "Image.WrongImageExtension", "Images must have only .jpg, .jpeg, .png  extensions !");
+        ErrorType.Validation,
+        "Image.WrongImageExtension",
+        "Images must have only .jpg, .jpeg, .png  extensions !");
 
     public static readonly Error UnauthorizedAccess = new(
-        ErrorType.Unauthorized, "Image.UnauthorizedAccess", "You are not allowed to modify these images.");
+        ErrorType.Unauthorized,
+        "Image.UnauthorizedAccess",
+        "You are not allowed to modify these images.");
 
     public static readonly Error StorageFailure = new(
         ErrorType.Unexpected,
@@ -20,4 +24,12 @@ public static class ImageErrors
        ErrorType.Unexpected,
        "Image.FolderDoesNotExist",
        "Could not save new images.");
+
+    public static readonly Error AltTextInvalid = Error.Validation(
+       "Image.AltText",
+       "Alternative text is required and must be at most 50 characters.");
+
+    public static readonly Error ImagePathInvalid = Error.Validation(
+       "Image.Path",
+       "Image path is required.");
 }

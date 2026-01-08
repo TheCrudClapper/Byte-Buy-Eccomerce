@@ -13,4 +13,14 @@ public static class CategoryErrors
 
     public static readonly Error HasActiveItems = new(
         ErrorType.Conflict, "Category.HasActiveItems", "Category is actively used, cannot delete");
+
+    public static readonly Error NameInvalid = Error.Validation(
+        "Category.Name", "Name is required and must be at most 20 characters.");
+
+    public static readonly Error DescriptionContentInvalid = Error.Validation(
+        "Category.Description", "Description cannot contain only whitespace.");
+
+    public static readonly Error DescriptionLengthInvalid = Error.Validation(
+        "Category.Description", "Description must be at most 50 characters.");
+    
 }

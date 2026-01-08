@@ -4,17 +4,19 @@ public static class PortalUserErrors
 {
     public static readonly Error DuplicateShippingAddressLabel = new(
         ErrorType.Conflict,
-        "PortalUser.Address.DuplicateShippingAddressLabel",
+        "PortalUser.ShippingAddress.DuplicateShippingAddressLabel",
         "Shipping address with this label already exists.");
 
     public static readonly Error CannotUnsetCurrentDefault = new(
         ErrorType.Conflict,
-        "PortalUser.Address.CannotUnsetCurrentDefault",
+        "PortalUser.ShippingAddress.CannotUnsetCurrentDefault",
         "Cannot unset the default address. Please set another address as default first.");
 
     public static readonly Error CannotDeleteCurrentDefault = new(
         ErrorType.Conflict,
-        "PortalUser.Address.CannotDeleteCurrentDefault",
+        "PortalUser.ShippingAddress.CannotDeleteCurrentDefault",
         "Cannot delete the default address. Please set another address as default first.");
 
+    public static readonly Error ShippingAddressLabelInvalid =
+        Error.Validation("PortalUser.ShippingAddress", "Label is required and must be at most 50 characters.");
 }

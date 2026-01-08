@@ -71,8 +71,8 @@ public static class PortalUserMappings
             p.LastName,
             p.Email!,
             p.PhoneNumber,
-            p.HomeAddress == null 
-            ? null 
+            p.HomeAddress == null
+            ? null
             : new HomeAddressDto(
                 p.HomeAddress.Street,
                 p.HomeAddress.HouseNumber,

@@ -48,7 +48,7 @@ public class ShippingAddress : AuditableEntity, ISoftDeletable
             return validatorResult;
 
         if (string.IsNullOrWhiteSpace(label) || label.Length > 50)
-            return Result.Failure(Error.Validation("Label is required and must be at most 50 characters."));
+            return Result.Failure(PortalUserErrors.ShippingAddressLabelInvalid);
 
         return Result.Success();
     }

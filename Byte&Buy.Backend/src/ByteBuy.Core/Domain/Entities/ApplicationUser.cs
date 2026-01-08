@@ -45,16 +45,16 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
     protected static Result ValidateBasicInfo(string firstName, string lastName, string email, string? phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            return Result.Failure(Error.Validation("First name cannot be empty!"));
+            return Result.Failure(CommonUserErrors.FirstNameInvalid);
         if (string.IsNullOrWhiteSpace(lastName))
-            return Result.Failure(Error.Validation("Last name cannot be empty!"));
+            return Result.Failure(CommonUserErrors.LastNameInvalid);
         if (string.IsNullOrWhiteSpace(email) || !email.Contains('@'))
-            return Result.Failure(Error.Validation("Email is in invalid format!"));
+            return Result.Failure(CommonUserErrors.EmailInvalid);
         if (phoneNumber is not null)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
             {
-                return Result.Failure(Error.Validation("Phone number can't be a whitespace and not longer that 15 characters"));
+                return Result.Failure(CommonUserErrors.PhoneNumberInvalid);
             }
         }
         return Result.Success();
@@ -79,7 +79,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
         {
             if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
             {
-                return Result.Failure(Error.Validation("Phone number can't be a whitespace and not longer that 15 characters"));
+                return Result.Failure(CommonUserErrors.PhoneNumberInvalid);
             }
             else
             {

@@ -57,10 +57,10 @@ public class Country : AuditableEntity, ISoftDeletable
     public static Result Validate(string name, string code)
     {
         if (string.IsNullOrEmpty(name) || name.Length > 50)
-            return Result.Failure(Error.Validation("Name is required and must be at most 50 characters."));
+            return Result.Failure(CountryErrors.NameInvalid);
 
         if (string.IsNullOrEmpty(code) || code.Length > 3)
-            return Result.Failure(Error.Validation("Code is required and must be at most 3 characters."));
+            return Result.Failure(CountryErrors.CodeInvalid);
 
         return Result.Success();
     }

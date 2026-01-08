@@ -13,4 +13,15 @@ public static class ConditionErrors
 
     public static readonly Error HasActiveItems = new(
         ErrorType.Conflict, "Condition.HasActiveItems", "Condition is assigned to active items, cannot delete");
+
+    public static readonly Error NameInvalid = Error.Validation(
+        "Condition.Name", "Name is required and must be at most 20 characters.");
+
+    public static readonly Error DescriptionContentInvalid = Error.Validation(
+        "Condition.Description", "Description cannot contain only whitespace.");
+
+    public static readonly Error DescriptionLengthInvalid = Error.Validation(
+        "Condition.Description", "Description must be at most 50 characters.");
+
+
 }

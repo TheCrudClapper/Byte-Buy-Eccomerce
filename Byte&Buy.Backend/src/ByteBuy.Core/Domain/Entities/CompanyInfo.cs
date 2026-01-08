@@ -44,19 +44,19 @@ public class CompanyInfo : AuditableEntity
        string slogan)
     {
         if (string.IsNullOrWhiteSpace(companyName) || companyName.Length > 50)
-            return Result.Failure(Error.Validation("Company name is required and must be at most 50 characters."));
+            return Result.Failure(CompanyInfoErrors.CompanyNameInvalid);
 
         if (string.IsNullOrWhiteSpace(tin) || tin.Length > 20)
-            return Result.Failure(Error.Validation("TIN is required and must be at most 20 characters."));
+            return Result.Failure(CompanyInfoErrors.TinInvalid);
 
         if (string.IsNullOrWhiteSpace(email) || email.Length > 50)
-            return Result.Failure(Error.Validation("Email is required and must be at most 50 characters."));
+            return Result.Failure(CompanyInfoErrors.EmailInvalid);
 
         if (string.IsNullOrWhiteSpace(phone) || phone.Length > 16)
-            return Result.Failure(Error.Validation("Phone is required and must be at most 16 characters."));
+            return Result.Failure(CompanyInfoErrors.PhoneInvalid);
 
         if (!string.IsNullOrWhiteSpace(slogan) && slogan.Length > 30)
-            return Result.Failure(Error.Validation("Slogan must be at most 30 characters."));
+            return Result.Failure(CompanyInfoErrors.SloganInvalid);
 
         return Result.Success();
     }
