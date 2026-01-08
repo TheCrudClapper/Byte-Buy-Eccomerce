@@ -8,6 +8,7 @@ using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
+using static ByteBuy.Core.Specification.CartSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -140,9 +141,10 @@ public class PortalUserService : IPortalUserService
         if (portalUser is null)
             return Result.Failure(Error.NotFound);
 
-        var userCart = await _cartRepository.GetAggregateByIdAsync(portalUser.CartId);
+        var cartSpec = new CartAggregateByUserIdSpec(portalUser.Id);
+        var userCart = await _cartRepository.GetBySpecAsync(cartSpec);
         if(userCart is null)
-            return Result.Failure(CartErrors.CartNotFound);
+            return Result.Failure(CartErrors.NotFound);
 
         portalUser.Deactivate();
         userCart.Deactivate();

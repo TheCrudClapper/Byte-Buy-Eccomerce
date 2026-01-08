@@ -164,7 +164,7 @@ public sealed class PortalUser : ApplicationUser
         var address = addressResult.Value;
 
         if (ShippingAddresses.Any(a => a.Label == address.Label))
-            return Result.Failure<ShippingAddress>(AddressErrors.DuplicateLabel);
+            return Result.Failure<ShippingAddress>(PortalUserErrors.DuplicateShippingAddressLabel);
 
         if (isDefault)
         {
@@ -187,10 +187,10 @@ public sealed class PortalUser : ApplicationUser
             return Result.Failure(Error.NotFound);
 
         if (ShippingAddresses.Any(a => a.Id != addressId && a.Label == label))
-            return Result.Failure(AddressErrors.DuplicateLabel);
+            return Result.Failure(PortalUserErrors.DuplicateShippingAddressLabel);
 
         if (address.IsDefault && !isDefault)
-            return Result.Failure(AddressErrors.CannotUnsetCurrentDefault);
+            return Result.Failure(PortalUserErrors.CannotUnsetCurrentDefault);
 
         if (!address.IsDefault && isDefault)
         {
@@ -213,7 +213,7 @@ public sealed class PortalUser : ApplicationUser
             return Result.Failure(Error.NotFound);
 
         if (address.IsDefault)
-            return Result.Failure(AddressErrors.CannotDeleteCurrentDefault);
+            return Result.Failure(PortalUserErrors.CannotDeleteCurrentDefault);
 
         address.Deactivate();
         return Result.Success();

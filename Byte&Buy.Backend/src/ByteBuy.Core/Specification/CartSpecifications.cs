@@ -15,4 +15,13 @@ public static class CartSpecifications
                 .ThenInclude(co => co.Offer);
         }
     }
+
+    public sealed class CartAggregateByUserIdSpec : Specification<Cart>
+    {
+        public CartAggregateByUserIdSpec(Guid userId)
+        {
+            Query.Where(c => c.UserId == userId)
+                .Include(c => c.CartOffers);
+        }
+    }
 }
