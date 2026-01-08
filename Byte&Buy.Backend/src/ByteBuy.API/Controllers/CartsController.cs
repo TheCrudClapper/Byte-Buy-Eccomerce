@@ -8,10 +8,10 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CartController : BaseApiController
+public class CartsController : BaseApiController
 {
     private readonly ICartService _cartService;
-    public CartController(ICartService cartService)
+    public CartsController(ICartService cartService)
         =>  _cartService = cartService;
 
     [HttpDelete("{cartOfferId:guid}")]
@@ -33,4 +33,8 @@ public class CartController : BaseApiController
     [HttpPut("rent-offer/{cartOfferId:guid}")]
     public async Task<ActionResult<CreatedResponse>> PutRentCartOffer(Guid cartOfferId, RentCartOfferUpdateRequest request)
         => HandleResult(await _cartService.UpdateRentCartOffer(CurrentUserId, cartOfferId, request));
+
+    [HttpGet("summary")]
+    public async Task<ActionResult<CartSummaryResponse>> GetCartSummary()
+        => HandleResult(await _cartService.GetCartSummary(CurrentUserId));
 }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,15 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
         return await _context.Deliveries
             .Include(d => d.DeliveryCarrier)
             .FirstOrDefaultAsync(d => d.Id == id, ct);
+    }
+
+    public async Task<List<decimal>> GetCheapestCostByOfferIds(IEnumerable<Guid> offerIds)
+    {
+        return await _context.OfferDeliveries
+            .Where(od => offerIds.Contains(od.OfferId))
+            .GroupBy(od => od.OfferId)
+            .Select(g => g.Min(od => od.Delivery.Price.Amount))
+            .ToListAsync();
     }
 
     public async Task<bool> HasActiveRelations(Guid deliveryId)

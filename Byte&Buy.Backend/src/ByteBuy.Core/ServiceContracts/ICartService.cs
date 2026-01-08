@@ -9,5 +9,6 @@ public interface ICartService
     Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request);
     Task<Result> UpdateRentCartOffer(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request);
     Task<Result> UpdateSaleCartOffer(Guid userId, Guid cartItemId, SaleCartOfferUpdateRequest request);
+    Task<Result<CartSummaryResponse>> GetCartSummary(Guid userId);
     Task<Result> DeleteCartOffer(Guid userId, Guid cartItemId);
 }

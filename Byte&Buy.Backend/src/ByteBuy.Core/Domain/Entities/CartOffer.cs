@@ -43,6 +43,13 @@ public class CartOffer : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
+    //used only in Add scenarios of cart offer to load 
+    //navigation prop used in price recalculation
+    internal void AssignOffer(Offer offer)
+    {
+        Offer = offer;
+    }
+
     public void Deactivate()
     {
         if (!IsActive)

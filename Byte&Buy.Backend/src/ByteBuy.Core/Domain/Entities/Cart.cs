@@ -60,6 +60,8 @@ public class Cart : AuditableEntity, ISoftDeletable
             if (createResult.IsFailure)
                 return Result.Failure(createResult.Error);
 
+            //Used for READONLY purposes
+            createResult.Value.AssignOffer(saleOffer);
             CartOffers.Add(createResult.Value);
         }
         else
@@ -144,6 +146,8 @@ public class Cart : AuditableEntity, ISoftDeletable
             if (createResult.IsFailure)
                 return Result.Failure(createResult.Error);
 
+            //Used for READONLY purposes
+            createResult.Value.AssignOffer(rentOffer);
             CartOffers.Add(createResult.Value);
         }
         else
