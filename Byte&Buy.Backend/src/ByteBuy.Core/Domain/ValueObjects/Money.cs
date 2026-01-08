@@ -38,6 +38,11 @@ public sealed class Money : IEquatable<Money>
             throw new InvalidOperationException("Cannot operate on different currencies !");
     }
 
+    public Money Multiply(decimal multiplier)
+    {
+        return new Money(Amount * multiplier, Currency);
+    }
+
     public static Money operator +(Money a, Money b)
     {
         EnusureSameCurrency(a, b);

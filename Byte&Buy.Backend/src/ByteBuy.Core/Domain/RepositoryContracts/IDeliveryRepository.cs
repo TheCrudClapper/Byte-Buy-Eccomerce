@@ -9,5 +9,5 @@ public interface IDeliveryRepository : IRepositoryBase<Delivery>
     Task<bool> HasActiveRelations(Guid deliveryId);
     Task<bool> ExistWithNameAsync(string name, Guid? exludeId = null);
     Task<IReadOnlyCollection<Delivery>> GetAllByIdsAsync(IEnumerable<Guid> ids, CancellationToken ct = default);
-    Task<List<decimal>> GetCheapestCostByOfferIds(IEnumerable<Guid> offerIds);
+    Task<List<Money>> GetCheapestCostByOfferIds(IEnumerable<Guid> offerIds);
 }

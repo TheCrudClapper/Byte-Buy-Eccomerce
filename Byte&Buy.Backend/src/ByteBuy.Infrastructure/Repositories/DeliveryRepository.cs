@@ -30,12 +30,16 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
             .FirstOrDefaultAsync(d => d.Id == id, ct);
     }
 
-    public async Task<List<decimal>> GetCheapestCostByOfferIds(IEnumerable<Guid> offerIds)
+    public async Task<List<Money>> GetCheapestCostByOfferIds(IEnumerable<Guid> offerIds)
     {
         return await _context.OfferDeliveries
+            .AsNoTracking()
             .Where(od => offerIds.Contains(od.OfferId))
             .GroupBy(od => od.OfferId)
-            .Select(g => g.Min(od => od.Delivery.Price.Amount))
+                .Select(g => g
+                    .OrderBy(od => od.Delivery.Price.Amount)
+                    .Select(od => od.Delivery.Price)
+                    .First())
             .ToListAsync();
     }
 

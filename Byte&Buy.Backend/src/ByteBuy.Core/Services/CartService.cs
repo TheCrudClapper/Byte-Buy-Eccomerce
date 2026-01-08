@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Cart;
 using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.Mappings;
@@ -98,19 +99,33 @@ public class CartService : ICartService
         var itemsQuantity = 0;
         foreach(var item in cart.CartOffers)
             itemsQuantity += item.Quantity;
+        
+        var offerIds = cart.CartOffers
+            .Select(co => co.OfferId)
+            .Distinct()
+            .ToList();
 
-        var offerIds = cart.CartOffers.Select(co => co.OfferId);
-        var cheapestDeliveries = await _deliveryRepository.GetCheapestCostByOfferIds(offerIds);
-        var cheapestDeliverySum = cheapestDeliveries.Sum();
+        //Get cheapest delivery per offer in cart
+        //When user has two offers one rental one sell but the same offer -> one delivery cost
+        //When user has different offers from one seller -> each offer has its delivery cost
+        var cheapestDeliveries = await _deliveryRepository
+            .GetCheapestCostByOfferIds(offerIds);
 
-        var totalCost = cheapestDeliverySum + cart.TotalItemsValue.Amount;
-        var taxValue = (totalCost * 23) / 100;
+        //one currency used in cart 
+        var currency = cart.TotalItemsValue.Currency;
 
-        return new CartSummaryResponse(itemsQuantity,
+        Money cheapestDeliveriesSum = cheapestDeliveries
+            .Aggregate(Money.Zero, (sum, delivery) => sum + delivery);
+
+        var totalCost = cheapestDeliveriesSum + cart.TotalItemsValue;
+        var taxValue = totalCost.Multiply(0.23m);
+
+        return new CartSummaryResponse(
+            itemsQuantity,
             cart.TotalItemsValue.ToMoneyDto(),
-            new MoneyDto(taxValue, "PLN"),
-            new MoneyDto(cheapestDeliverySum, "PLN"),
-            new MoneyDto(totalCost, "PLN"));
+            taxValue.ToMoneyDto(),
+            cheapestDeliveriesSum.ToMoneyDto(),
+            totalCost.ToMoneyDto());
     }
 
     public async Task<Result> UpdateRentCartOffer(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request)

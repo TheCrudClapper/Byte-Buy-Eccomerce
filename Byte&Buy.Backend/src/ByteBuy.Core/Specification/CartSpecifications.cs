@@ -18,10 +18,19 @@ public static class CartSpecifications
 
     public sealed class CartAggregateByUserIdSpec : Specification<Cart>
     {
-        public CartAggregateByUserIdSpec(Guid userId)
+        public CartAggregateByUserIdSpec(Guid userId, bool includeOffer = false)
         {
-            Query.Where(c => c.UserId == userId)
-                .Include(c => c.CartOffers);
+            if (includeOffer)
+            {
+                Query.Where(c => c.UserId == userId)
+                     .Include(c => c.CartOffers)
+                     .ThenInclude(c => c.Offer);
+            }
+            else
+            {
+                Query.Where(c => c.UserId == userId)
+                    .Include(c => c.CartOffers);
+            }   
         }
     }
 }
