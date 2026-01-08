@@ -42,7 +42,7 @@ public class PortalUserService : IPortalUserService
     public async Task<Result<CreatedResponse>> AddAsync(PortalUserAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<CreatedResponse>(AuthErrors.AccountExists);
+            return Result.Failure<CreatedResponse>(AuthErrors.EmailAlreadyTaken);
 
         var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (role is null)
@@ -99,7 +99,7 @@ public class PortalUserService : IPortalUserService
             return Result.Failure<UpdatedResponse>(RoleErrors.NotFound);
 
         if (user.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<UpdatedResponse>(AuthErrors.AccountExists);
+            return Result.Failure<UpdatedResponse>(AuthErrors.EmailAlreadyTaken);
 
         var updateResult = user.Update(
             request.FirstName,

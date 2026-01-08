@@ -37,7 +37,7 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
-            return Result.Failure<TokenResponse>(AuthErrors.LoginFailed);
+            return Result.Failure<TokenResponse>(AuthErrors.NotFound);
 
         if (user is not TUser)
             return Result.Failure<TokenResponse>(AuthErrors.AccessDenied);
@@ -54,7 +54,7 @@ public class AuthService : IAuthService
     public async Task<Result> RegisterPortalUser(RegisterRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure(AuthErrors.AccountExists);
+            return Result.Failure(AuthErrors.EmailAlreadyTaken);
 
         var userResult = PortalUser
             .Create(request.FirstName, request.LastName, request.Email, null);
@@ -79,6 +79,7 @@ public class AuthService : IAuthService
         await _cartRepository.AddAsync(cartResult.Value);
         await _cartRepository.CommitAsync();
         await _userManager.AddToRoleAsync(userResult.Value, defaultRoleName);
+
         return Result.Success();
     }
 }

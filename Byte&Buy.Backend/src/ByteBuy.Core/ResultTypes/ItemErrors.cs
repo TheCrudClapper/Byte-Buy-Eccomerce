@@ -1,10 +1,13 @@
 ﻿namespace ByteBuy.Core.ResultTypes;
 
-public class ItemErrors
+/// <summary>
+/// Class describes errors that might occur while working with item aggregate
+/// </summary>
+public static class ItemErrors
 {
-    public static readonly Error NotFound
-        = new Error(404, "Item of given Id doesn't exists");
+    public static readonly Error NotFound = new(
+        ErrorType.NotFound, "Item.NotFound", "Item is not found");
 
-    public static readonly Error InUse
-        = new Error(400, "This Item is used, cannot be deleted");
+    public static readonly Error HasActiveOffers = new (
+        ErrorType.Conflict, "Item.HasActiveOffers", "This Item is used, cannot be deleted");
 }

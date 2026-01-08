@@ -5,6 +5,6 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IRoleRepository : IRepositoryBase<ApplicationRole>
 {
-    Task<bool> ExistsBynameAsync(string roleName, CancellationToken ct = default);
+    Task<bool> ExistsByNameAsync(string roleName, CancellationToken ct = default);
     Task<bool> DoesRoleHaveActiveUsers(Guid roleId);
 }

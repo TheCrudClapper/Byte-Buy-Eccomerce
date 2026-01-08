@@ -1,6 +1,7 @@
 ﻿using ByteBuy.API.Extensions;
 using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 namespace ByteBuy.API.Controllers.Base;
 
 /// <summary>
@@ -22,8 +23,12 @@ public class BaseApiController : ControllerBase
     [NonAction]
     public ActionResult HandleResult<T>(Result<T> result)
     {
+        var statusCode = MapToStatusCode(result.Error);
         return result.IsFailure
-            ? Problem(statusCode: result.Error.ErrorCode, detail: result.Error.Description)
+            ? Problem(
+                statusCode: (int)statusCode,
+                title: result.Error.Code,
+                detail: result.Error.Description)
             : Ok(result.Value);
     }
 
@@ -38,9 +43,26 @@ public class BaseApiController : ControllerBase
     [NonAction]
     public ActionResult HandleResult(Result result)
     {
+        var statusCode = MapToStatusCode(result.Error);
+
         return result.IsFailure
-            ? Problem(statusCode: result.Error.ErrorCode, detail: result.Error.Description)
+            ? Problem(
+                statusCode: (int)statusCode,
+                title: result.Error.Code,
+                detail: result.Error.Description)
             : NoContent();
     }
+
+    private static HttpStatusCode MapToStatusCode(Error error)
+        => error.Type switch
+        {
+            ErrorType.Validation => HttpStatusCode.BadRequest,
+            ErrorType.NotFound => HttpStatusCode.NotFound,
+            ErrorType.Conflict => HttpStatusCode.Conflict,
+            ErrorType.Unauthorized => HttpStatusCode.Unauthorized,
+            ErrorType.Forbidden => HttpStatusCode.Forbidden,
+            _ => HttpStatusCode.InternalServerError,
+        };
+
 }
 

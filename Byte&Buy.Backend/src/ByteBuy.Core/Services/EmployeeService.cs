@@ -40,7 +40,7 @@ public class EmployeeService : IEmployeeService
     public async Task<Result<CreatedResponse>> AddAsync(EmployeeAddRequest request)
     {
         if (await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<CreatedResponse>(AuthErrors.AccountExists);
+            return Result.Failure<CreatedResponse>(AuthErrors.EmailAlreadyTaken);
 
         var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (applicationRole is null)
@@ -91,7 +91,7 @@ public class EmployeeService : IEmployeeService
             return Result.Failure<UpdatedResponse>(RoleErrors.NotFound);
 
         if (employee.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email))
-            return Result.Failure<UpdatedResponse>(AuthErrors.AccountExists);
+            return Result.Failure<UpdatedResponse>(AuthErrors.EmailAlreadyTaken);
 
         var updateResult = employee.Update(
             request.FirstName,

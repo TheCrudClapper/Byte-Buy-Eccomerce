@@ -111,7 +111,7 @@ public class ItemsService : IItemsService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _itemRepository.HasActiveRelationsAsync(id))
-            return Result.Failure(ItemErrors.InUse);
+            return Result.Failure(ItemErrors.HasActiveOffers);
 
         var aggregate = await _itemRepository.GetAggregateAsync(id);
         if (aggregate is null)

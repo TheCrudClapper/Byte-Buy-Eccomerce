@@ -24,8 +24,8 @@ public class RoleService : IRoleService
 
     public async Task<Result<CreatedResponse>> AddAsync(RoleAddRequest request)
     {
-        if (await _roleRepository.ExistsBynameAsync(request.Name))
-            return Result.Failure<CreatedResponse>(RoleErrors.RoleAlreadyExist);
+        if (await _roleRepository.ExistsByNameAsync(request.Name))
+            return Result.Failure<CreatedResponse>(RoleErrors.AlreadyExist);
 
         var roleResult = ApplicationRole
             .Create(request.Name, request.PermissionIds);
@@ -47,7 +47,7 @@ public class RoleService : IRoleService
         var spec = new RoleWithRolePermissionsSpec(id);
         var role = await _roleRepository.GetBySpecAsync(spec);
         if (role is null)
-            return Result.Failure<UpdatedResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(RoleErrors.NotFound);
 
         var roleResult = role.Update(request.Name, request.PermissionIds);
         if (roleResult.IsFailure)
@@ -63,13 +63,13 @@ public class RoleService : IRoleService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _roleRepository.DoesRoleHaveActiveUsers(id))
-            return Result.Failure(RoleErrors.RoleHasActiveUsers);
+            return Result.Failure(RoleErrors.HasActiveUsers);
 
         var spec = new RoleWithRolePermissionsSpec(id, false);
         var role = await _roleRepository.GetBySpecAsync(spec);
 
         if (role is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(RoleErrors.NotFound);
 
         role.Deactivate();
 
@@ -92,7 +92,7 @@ public class RoleService : IRoleService
         var roleDto = await _roleRepository.GetBySpecAsync(spec, ct);
 
         return roleDto is null
-            ? Result.Failure<RoleResponse>(Error.NotFound)
+            ? Result.Failure<RoleResponse>(RoleErrors.NotFound)
             : roleDto;
     }
 

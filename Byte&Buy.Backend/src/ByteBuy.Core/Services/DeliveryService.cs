@@ -89,7 +89,7 @@ public class DeliveryService : IDeliveryService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _deliveryRepository.HasActiveRelations(id))
-            return Result.Failure(DeliveryErrors.InUse);
+            return Result.Failure(DeliveryErrors.HasActiveRelations);
 
         var delivery = await _deliveryRepository.GetByIdAsync(id);
         if (delivery is null)

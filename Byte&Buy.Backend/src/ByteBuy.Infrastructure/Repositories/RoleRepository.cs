@@ -16,7 +16,7 @@ public class RoleRepository : EfBaseRepository<ApplicationRole>, IRoleRepository
             .AnyAsync(ur => ur.RoleId == roleId && ur.User.IsActive);
     }
 
-    public async Task<bool> ExistsBynameAsync(string roleName, CancellationToken ct)
+    public async Task<bool> ExistsByNameAsync(string roleName, CancellationToken ct)
     {
         return await _context.Roles
             .AsNoTracking()

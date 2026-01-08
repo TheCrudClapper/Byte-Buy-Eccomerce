@@ -1,7 +1,10 @@
 ﻿namespace ByteBuy.Core.ResultTypes;
 
+/// <summary>
+/// Class describes errors that might occur while working with company information
+/// </summary>
 public static class CompanyInfoErrors
 {
-    public static readonly Error MultipleCompanyInfos = new Error(
-        400, "There is already an company info in database, update it");
+    public static readonly Error DuplicateCompanyInfoObjects = new(
+        ErrorType.Conflict, "CompanyInfo.DuplicateCompanyInfoObjects", "Company information is already defined, update it");
 }

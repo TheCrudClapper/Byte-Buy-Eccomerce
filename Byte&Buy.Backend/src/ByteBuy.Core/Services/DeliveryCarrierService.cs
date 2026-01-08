@@ -66,7 +66,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _deliveryCarrierRepository.HasActiveRelationsAsync(id))
-            return Result.Failure(DeliveryCarrierErrors.InUse);
+            return Result.Failure(DeliveryCarrierErrors.HasActiveDeliveries);
 
         var carrier = await _deliveryCarrierRepository.GetByIdAsync(id);
         if (carrier is null)

@@ -17,10 +17,10 @@ public class ApplicationUserService : IApplicationUserService
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(AuthErrors.NotFound);
 
         if (!string.Equals(request.ConfirmPassword, request.NewPassword, StringComparison.Ordinal))
-            return Result.Failure(ApplicationUserErrors.PasswordsDontMatch);
+            return Result.Failure(AuthErrors.PasswordsDontMatch);
 
         var identityResult = await _userManager
             .ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);

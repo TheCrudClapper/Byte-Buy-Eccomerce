@@ -30,7 +30,7 @@ public class CartService : ICartService
             return Result.Failure(Error.NotFound);
 
         if (offer.CreatedByUserId == userId)
-            return Result.Failure(CartErrors.CannotAddSelfOfferToCart);
+            return Result.Failure(CartErrors.SelfOfferCartAdd);
 
         var result = cart.AddRentCartOffer(rentOffer, request.Quantity, request.RentalDays);
         if (result.IsFailure)
@@ -54,7 +54,7 @@ public class CartService : ICartService
             return Result.Failure(Error.NotFound);
 
         if (offer.CreatedByUserId == userId)
-            return Result.Failure(CartErrors.CannotAddSelfOfferToCart);
+            return Result.Failure(CartErrors.SelfOfferCartAdd);
 
         var result = cart.AddSaleCartOffer(saleOffer, request.Quantity);
         if (result.IsFailure)

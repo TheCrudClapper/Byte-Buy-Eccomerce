@@ -51,7 +51,7 @@ public class ConditionService : IConditionService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _conditionRepository.HasActiveRelations(id))
-            return Result.Failure(ConditionErrors.InUse);
+            return Result.Failure(ConditionErrors.HasActiveItems);
 
         var condition = await _conditionRepository.GetByIdAsync(id);
         if (condition is null)

@@ -57,7 +57,7 @@ public class CountryService : ICountryService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _countryRepository.HasActiveRelationsAsync(id))
-            return Result.Failure(DeliveryCarrierErrors.InUse);
+            return Result.Failure(DeliveryCarrierErrors.HasActiveDeliveries);
 
         var country = await _countryRepository.GetByIdAsync(id);
         if (country is null)

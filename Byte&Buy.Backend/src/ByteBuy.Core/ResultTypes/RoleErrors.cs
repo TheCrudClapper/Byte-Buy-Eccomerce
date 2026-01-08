@@ -1,13 +1,16 @@
 ﻿namespace ByteBuy.Core.ResultTypes;
 
-public class RoleErrors
+/// <summary>
+/// Class describes errors that might occur while working with system's roles
+/// </summary>
+public static class RoleErrors
 {
-    public static readonly Error RoleAlreadyExist = new Error(
-        409, "Role of given name already exitst");
+    public static readonly Error NotFound = new(
+       ErrorType.NotFound, "Role.NotFound", "Role is not found");
 
-    public static readonly Error NotFound = new Error(
-       404, "Role provided doesnt exists");
+    public static readonly Error AlreadyExist = new(
+        ErrorType.Conflict, "Role.RoleAlreadyExists", "Role of given name already exists");
 
-    public static readonly Error RoleHasActiveUsers = new Error(
-        400, "Can't delete role with active users!");
+    public static readonly Error HasActiveUsers = new(
+        ErrorType.Conflict, "Role.HasActiveUsers", "Cannot delete a role with active users !");
 }
