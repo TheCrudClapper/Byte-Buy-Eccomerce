@@ -107,7 +107,7 @@ public class ImageStorage : IImageStorage
     public void RollbackSavedFiles(IEnumerable<string> paths, ImageTypeEnum type)
     {
         var basePath = GetCombinedPath(type);
-        foreach(var path in paths)
+        foreach (var path in paths)
         {
             var fullPath = Path.Combine(basePath, Path.GetFileName(path));
             if (File.Exists(fullPath))

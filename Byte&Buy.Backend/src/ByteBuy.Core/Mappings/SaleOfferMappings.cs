@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Image;
 using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using System.Linq.Expressions;

@@ -42,7 +42,7 @@ public static class SaleOfferSpecifications
     {
         public UserSaleOfferAggregateSpec(Guid userId, Guid id, bool ignoreQueryFilters = true)
         {
-            if(ignoreQueryFilters)
+            if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();
 
             Query.Where(so => so.CreatedByUserId == userId && so.Id == id)

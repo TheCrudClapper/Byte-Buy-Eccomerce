@@ -103,8 +103,8 @@ public class ItemsService : IItemsService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
         }
 
-        ////delete from disk
-        //var imageDeletionResult = _imageService.DeleteImagesPhysically(request, aggregate);
+        //delete from disk
+        //var imageDeletionResult = _imageService.DeleteImages(drafts.Select(i => i.ImagePath).ToList(), ImageTypeEnum.Items);
         //if (imageDeletionResult.IsFailure)
         //    return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
 

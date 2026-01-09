@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -217,7 +215,7 @@ public class Item : AuditableEntity, ISoftDeletable
 
     private bool HasAtLeastOneActiveImage()
         => Images.Any(img => img.IsActive);
-    
+
     private void DeactivateAllImages()
     {
         foreach (Image image in Images)

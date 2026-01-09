@@ -38,11 +38,4 @@ public static class RentOfferSpecifications
         }
     }
 
-    public sealed class UserRentOfferWithOfferDeliveriesSpec : Specification<RentOffer>
-    {
-        public UserRentOfferWithOfferDeliveriesSpec(Guid userId, Guid id)
-        {
-            
-        }
-    }
 }

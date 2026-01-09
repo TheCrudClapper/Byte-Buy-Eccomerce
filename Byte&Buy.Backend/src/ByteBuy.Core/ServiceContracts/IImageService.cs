@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Abstractions;
 using ByteBuy.Core.DTO.Image;
-using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
