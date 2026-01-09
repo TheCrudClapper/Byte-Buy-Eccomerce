@@ -1,4 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
@@ -56,11 +58,11 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
-        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, false);
+    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IList<ImageDraft> images)
+        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, false);
 
-    public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
-        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, true);
+    public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IList<ImageDraft> images)
+        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, true);
 
     private static Result<Item> CreateInternal(
     string name,
@@ -68,6 +70,7 @@ public class Item : AuditableEntity, ISoftDeletable
     Guid categoryId,
     Guid conditionId,
     int stockQuantity,
+    IList<ImageDraft> images,
     bool isCompanyItem)
     {
 
@@ -75,13 +78,22 @@ public class Item : AuditableEntity, ISoftDeletable
         if (validationResult.IsFailure)
             return Result.Failure<Item>(validationResult.Error);
 
-        return new Item(
-            name,
-            description,
-            categoryId,
-            conditionId,
-            stockQuantity,
-            isCompanyItem);
+        var item = new Item(
+           name,
+           description,
+           categoryId,
+           conditionId,
+           stockQuantity,
+           isCompanyItem);
+
+        foreach (var image in images)
+        {
+            var imageAddResult = item.AddImage(image.ImagePath, image.AltText);
+            if (imageAddResult.IsFailure)
+                return Result.Failure<Item>(imageAddResult.Error);
+        }
+
+        return item;
     }
 
     public Result Update(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)

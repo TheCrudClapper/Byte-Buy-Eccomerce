@@ -13,4 +13,6 @@ public record UserRentOfferResponse(
    int QuantityAvailable,
    MoneyDto PricePerDay,
    int MaxRentalDays,
-   IReadOnlyCollection<ImageResponse> Images);
+   IReadOnlyCollection<ImageResponse> Images,
+   IReadOnlyCollection<Guid>? ParcelLockerDeliveries,
+   IReadOnlyCollection<Guid> OtherDeliveriesIds);

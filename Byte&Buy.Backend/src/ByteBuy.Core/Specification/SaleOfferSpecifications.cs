@@ -33,8 +33,31 @@ public static class SaleOfferSpecifications
             if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();
 
-            Query.Where(ro => ro.Id == id)
-                 .Include(ro => ro.OfferDeliveries);
+            Query.Where(so => so.Id == id)
+                 .Include(so => so.OfferDeliveries);
+        }
+    }
+
+    public sealed class UserSaleOfferAggregateSpec : Specification<SaleOffer>
+    {
+        public UserSaleOfferAggregateSpec(Guid userId, Guid id, bool ignoreQueryFilters = true)
+        {
+            if(ignoreQueryFilters)
+                Query.IgnoreQueryFilters();
+
+            Query.Where(so => so.CreatedByUserId == userId && so.Id == id)
+                .Include(so => so.OfferDeliveries);
+        }
+    }
+
+    public sealed class UserSaleOfferAsResponseDtoSpec : Specification<SaleOffer, UserSaleOfferResponse>
+    {
+        public UserSaleOfferAsResponseDtoSpec(Guid userId, Guid id)
+        {
+            Query
+                .AsNoTracking()
+                .Where(so => so.CreatedByUserId == userId && so.Id == id)
+                .Select(SaleOfferMappings.UserSaleOfferResponseProjection);
         }
     }
 }

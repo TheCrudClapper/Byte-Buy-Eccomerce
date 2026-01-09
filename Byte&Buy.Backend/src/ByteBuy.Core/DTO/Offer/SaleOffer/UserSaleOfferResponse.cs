@@ -9,8 +9,8 @@ public record UserSaleOfferResponse(
    Guid ConditionId,
    string Name,
    string Description,
-   int StockQuantity,
    int QuantityAvailable,
    MoneyDto PricePerItem,
-   int MaxRentalDays,
-   IReadOnlyCollection<ImageResponse> Images);
+   IReadOnlyCollection<ImageResponse> Images,
+   IReadOnlyCollection<Guid>? ParcelLockerDeliveries,
+   IReadOnlyCollection<Guid> OtherDeliveriesIds);

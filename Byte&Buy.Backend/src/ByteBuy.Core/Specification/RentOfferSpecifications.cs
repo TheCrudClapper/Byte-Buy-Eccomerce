@@ -37,4 +37,12 @@ public static class RentOfferSpecifications
                  .Include(ro => ro.OfferDeliveries);
         }
     }
+
+    public sealed class UserRentOfferWithOfferDeliveriesSpec : Specification<RentOffer>
+    {
+        public UserRentOfferWithOfferDeliveriesSpec(Guid userId, Guid id)
+        {
+            
+        }
+    }
 }

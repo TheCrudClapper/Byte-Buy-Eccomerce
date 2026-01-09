@@ -49,7 +49,6 @@ public class ImageStorage : IImageStorage
         }
 
         return Result.Success();
-
     }
 
     public static Result ValidateExtensions(IReadOnlyList<IFormFile> files)

@@ -7,8 +7,8 @@ namespace ByteBuy.Core.Domain.Entities;
 public abstract class Offer : AuditableEntity, ISoftDeletable
 {
     public Guid ItemId { get; set; }
-    public Item Item { get; set; } = null!;
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
+
     public AddressValueObject OwnerAddressSnapshot = null!;
     public int QuantityAvailable { get; set; }
     public Guid CreatedByUserId { get; set; }
@@ -19,6 +19,8 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     //EF Navigation Properties ONLY
     public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public Item Item { get; set; } = null!;
+
     protected Offer() { }
 
     protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable, AddressValueObject offerAddress)
@@ -39,13 +41,6 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
             od.Deactivate();
     }
 
-    public void DeactivateForPortalUser()
-    {
-        IsActive = false;
-        DateDeleted = DateTime.UtcNow;
-        Item.Deactivate();
-    }
-
     public static Result ValidateBasicInfo(int quantityAvailable)
     {
         if (quantityAvailable < 1)
@@ -61,7 +56,6 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     {
         foreach (var deliveryId in newDeliveryIds)
             OfferDeliveries.Add(OfferDelivery.Create(Id, deliveryId));
-
     }
 
     /// <summary>

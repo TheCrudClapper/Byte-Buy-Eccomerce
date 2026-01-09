@@ -13,8 +13,7 @@ public static class ItemsMappings
             i.Images.Count,
             i.StockQuantity,
             i.Condition.Name,
-            i.Category.Name
-            );
+            i.Category.Name);
 
     public static Expression<Func<Item, ItemResponse>> ItemResponseProjection =>
         i => new ItemResponse(
@@ -24,8 +23,8 @@ public static class ItemsMappings
             i.Name,
             i.Description,
             i.StockQuantity,
-            i.Images.AsQueryable()
+            i.Images
+                .AsQueryable()
                 .Select(ImageMappings.ImageResponseProjection)
-                .ToList()
-            );
+                .ToList());
 }

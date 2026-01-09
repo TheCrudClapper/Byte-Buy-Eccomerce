@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [Resource("my-addresses")]
-[Route("api/users")]
+[Route("api/me/")]
 [ApiController]
-public class MyAddressesController : BaseApiController
+public class AddressesController : BaseApiController
 {
     private readonly IAddressService _addressService;
-    public MyAddressesController(IAddressService addressService)
+    public AddressesController(IAddressService addressService)
        => _addressService = addressService;
 
     [HttpPut("home-address")]

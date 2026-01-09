@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using System.Linq.Expressions;
 
@@ -22,6 +24,28 @@ public static class SaleOfferMappings
             so.Item.Id,
             so.QuantityAvailable,
             so.PricePerItem.Amount,
+            so.OfferDeliveries
+                .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+                .Select(d => d.DeliveryId)
+                .ToList(),
+            so.OfferDeliveries
+                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+                .Select(d => d.DeliveryId)
+                .ToList());
+
+    public static Expression<Func<SaleOffer, UserSaleOfferResponse>> UserSaleOfferResponseProjection
+        => so => new UserSaleOfferResponse(
+            so.Id,
+            so.Item.CategoryId,
+            so.Item.ConditionId,
+            so.Item.Name,
+            so.Item.Description,
+            so.QuantityAvailable,
+            new MoneyDto(so.PricePerItem.Amount, so.PricePerItem.Currency),
+            so.Item.Images
+                .AsQueryable()
+                .Select(ImageMappings.ImageResponseProjection)
+                .ToList(),
             so.OfferDeliveries
                 .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
                 .Select(d => d.DeliveryId)

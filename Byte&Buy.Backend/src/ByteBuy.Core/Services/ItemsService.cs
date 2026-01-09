@@ -2,7 +2,7 @@
 using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Abstractions;
+using ByteBuy.Core.DTO.Image;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
@@ -15,44 +15,53 @@ namespace ByteBuy.Core.Services;
 public class ItemsService : IItemsService
 {
     private readonly IItemRepository _itemRepository;
-    private readonly IConditionRepository _conditionRepository;
-    private readonly ICategoryRepository _categoryRepository;
     private readonly IImageStorage _imageStorage;
+    private readonly IImageService _imageService;
+    private readonly IItemValidationService _itemValidationService;
 
     public ItemsService(IItemRepository itemRepository,
-        IConditionRepository conditionRepository,
-        ICategoryRepository categoryRepository,
-        IImageStorage imageStorage)
+        IImageStorage imageStorage,
+        IItemValidationService itemValidationService,
+        IImageService imageService)
     {
         _itemRepository = itemRepository;
-        _conditionRepository = conditionRepository;
-        _categoryRepository = categoryRepository;
+        _itemValidationService = itemValidationService;
         _imageStorage = imageStorage;
+        _imageService = imageService;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
     {
-        var validateRelatedEntities =
-            await CheckCountryAndConditionExistsAsync(request.CategoryId, request.ConditionId);
+        var validationResult = await _itemValidationService
+            .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
 
-        if (validateRelatedEntities.IsFailure)
-            return Result.Failure<CreatedResponse>(validateRelatedEntities.Error);
+        if (validationResult.IsFailure)
+            return Result.Failure<CreatedResponse>(validationResult.Error);
+
+        var imagesResult = await _imageService.SaveNewImagesAsync(request.Images, ImageTypeEnum.Items);
+        if (imagesResult.IsFailure)
+            return Result.Failure<CreatedResponse>(imagesResult.Error);
+
+        var drafts = imagesResult.Value
+            .Select(item => new ImageDraft(item.ImagePath, item.AltText))
+            .ToList();
 
         var itemCreationResult = Item.CreateCompanyItem(
             request.Name,
             request.Description,
             request.CategoryId,
             request.ConditionId,
-            request.StockQuantity);
+            request.StockQuantity,
+            drafts);
 
         if (itemCreationResult.IsFailure)
+        {
+            _imageService.RollbackImageSave(drafts.Select(item => item.ImagePath)
+                .ToList());
             return Result.Failure<CreatedResponse>(itemCreationResult.Error);
+        }
 
         var item = itemCreationResult.Value;
-
-        var imagesResult = await HandleNewImagesAsync(request.Images, item);
-        if (imagesResult.IsFailure)
-            return Result.Failure<CreatedResponse>(imagesResult.Error);
 
         await _itemRepository.AddAsync(item);
         await _itemRepository.CommitAsync();
@@ -66,41 +75,39 @@ public class ItemsService : IItemsService
         if (aggregate is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        var validateRelatedEntities =
-            await CheckCountryAndConditionExistsAsync(request.CategoryId, request.ConditionId);
+        var validationResult = await _itemValidationService
+            .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
 
-        if (validateRelatedEntities.IsFailure)
-            return Result.Failure<UpdatedResponse>(validateRelatedEntities.Error);
+        if (validationResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(validationResult.Error);
 
         var updateResult = aggregate.Update(
             request.Name,
             request.Description,
             request.CategoryId,
             request.ConditionId,
-            request.StockQuantity
-            );
+            request.StockQuantity);
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         //adding new image
-        if (request.NewImages is not null && request.NewImages.Count > 0)
+        if (request.NewImages?.Count > 0)
         {
-            var imagesResult = await HandleNewImagesAsync(request.NewImages, aggregate);
+            var imagesResult = await _imageService.SaveNewImagesAsync(request.NewImages, ImageTypeEnum.Items);
             if (imagesResult.IsFailure)
                 return Result.Failure<UpdatedResponse>(imagesResult.Error);
         }
 
         //delete from disk
-        var imageDeletionResult = DeleteImagesPhysically(request, aggregate);
+        var imageDeletionResult = _imageService.DeleteImagesPhysically(request, aggregate);
         if (imageDeletionResult.IsFailure)
             return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
 
         //marking as deleted or updating images metadata
-        var imageHandlinResult = UpdateOrMarkAsDeletedExistingImages(request, aggregate);
+        var imageHandlinResult = _imageService.UpdateOrMarkAsDeletedExistingImages(request, aggregate);
         if (imageHandlinResult.IsFailure)
             return Result.Failure<UpdatedResponse>(imageHandlinResult.Error);
-
 
         await _itemRepository.UpdateAsync(aggregate);
         await _itemRepository.CommitAsync();
@@ -135,90 +142,5 @@ public class ItemsService : IItemsService
     }
 
     public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsListAsync(CancellationToken ct)
-    {
-        return await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
-    }
-
-    // HELPERS //
-    private async Task<Result> CheckCountryAndConditionExistsAsync(Guid categoryId, Guid conditionId)
-    {
-        if (!await _categoryRepository.ExistsByCondition(cat => cat.Id == categoryId))
-            return Result.Failure(CategoryErrors.NotFound);
-
-        if (!await _conditionRepository.ExistsByCondition(con => con.Id == conditionId))
-            return Result.Failure(ConditionErrors.NotFound);
-
-        return Result.Success();
-    }
-
-    private Result DeleteImagesPhysically(ItemUpdateRequest request, Item aggregate)
-    {
-        var deletedIds = request.ExistingImages
-            .Where(i => i.IsDeleted)
-            .Select(i => i.Id)
-            .ToList();
-
-        var deletedPaths = aggregate.GetImagePathsByIds(deletedIds);
-
-        if (deletedPaths.Count > 0)
-        {
-            var deletedResult = _imageStorage.DeleteFromDirectory(deletedPaths);
-            if (deletedResult.IsFailure)
-                return Result.Failure(deletedResult.Error);
-        }
-
-        return Result.Success();
-    }
-
-    private static Result UpdateOrMarkAsDeletedExistingImages(ItemUpdateRequest request, Item aggregate)
-    {
-        foreach (var image in request.ExistingImages)
-        {
-            if (image.IsDeleted)
-                aggregate.DeleteImagesById(image.Id);
-            else
-            {
-                var changeResult = aggregate.ChangeImageAltText(image.Id, image.AltText);
-                if (changeResult.IsFailure)
-                    return Result.Failure(changeResult.Error);
-            }
-        }
-
-        return Result.Success();
-    }
-
-    /// <summary>
-    /// Processes and saves a collection of new images for the specified item, associating each imageId with the item
-    /// using its provided metadata.
-    /// </summary>
-    /// <typeparam name="TImageDto">The type of the imageId data transfer object. Must implement the IImageRequestDto interface.</typeparam>
-    /// <param name="images">A list of imageId data transfer objects containing the imageId files and associated metadata to be added to the
-    /// item. Cannot be null.</param>
-    /// <param name="item">The item to which the images will be associated. Cannot be null.</param>
-    /// <returns>A Result indicating whether the images were successfully saved and associated with the item. Returns a failure
-    /// result if any imageId could not be saved or added.</returns>
-    private async Task<Result> HandleNewImagesAsync<TImageDto>(IList<TImageDto> images, Item item)
-        where TImageDto : IImageRequestDto
-    {
-
-        var files = images.Select(i => i.Image).ToList();
-
-        var imageSaveResult = await _imageStorage.SaveToDirectoryAsync(files, ImageTypeEnum.Items);
-        if (imageSaveResult.IsFailure)
-            return Result.Failure(imageSaveResult.Error);
-
-        var paths = imageSaveResult.Value;
-        for (int i = 0; i < images.Count; i++)
-        {
-            var imgReq = images[i];
-            var path = paths[i];
-
-            var result = item.AddImage(path, imgReq.AltText);
-            if (result.IsFailure)
-                return Result.Failure(result.Error);
-        }
-
-        return Result.Success();
-    }
-
+        => await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
 }
