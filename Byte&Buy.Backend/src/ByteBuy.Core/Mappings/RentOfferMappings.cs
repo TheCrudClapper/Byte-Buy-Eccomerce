@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.RentOffer;
+using ByteBuy.Core.DTO.Offer.RentOffer;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

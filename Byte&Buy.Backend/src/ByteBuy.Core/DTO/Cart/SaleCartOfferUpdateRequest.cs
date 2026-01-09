@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.Cart;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Cart;
 
 public record SaleCartOfferUpdateRequest(
-    int Quantity);
+    [Required, Range(1, int.MaxValue)] int Quantity);

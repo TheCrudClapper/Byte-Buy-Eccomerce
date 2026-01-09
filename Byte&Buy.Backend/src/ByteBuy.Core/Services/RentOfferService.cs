@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.RentOffer;
+using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;

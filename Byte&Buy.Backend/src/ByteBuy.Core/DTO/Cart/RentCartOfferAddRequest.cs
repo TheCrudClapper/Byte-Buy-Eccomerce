@@ -1,7 +1,9 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace ByteBuy.Core.DTO.Cart;
 
 public record RentCartOfferAddRequest(
-    int Quantity,
-    Guid OfferId,
-    int RentalDays);
+    [Required, Range(1, int.MaxValue)] int Quantity,
+    [Required] Guid OfferId,
+    [Required, Range(1, int.MaxValue)] int RentalDays);

@@ -1,5 +1,4 @@
-﻿
-namespace ByteBuy.Core.DTO.RentOffer;
+﻿namespace ByteBuy.Core.DTO.Offer.RentOffer;
 
 public record RentOfferResponse(
     Guid Id,

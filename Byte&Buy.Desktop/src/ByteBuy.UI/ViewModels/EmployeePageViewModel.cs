@@ -56,6 +56,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
     [ObservableProperty]
     [Required]
+    [Phone]
     [MaxLength(15)]
     private string _phoneNumber = string.Empty;
 

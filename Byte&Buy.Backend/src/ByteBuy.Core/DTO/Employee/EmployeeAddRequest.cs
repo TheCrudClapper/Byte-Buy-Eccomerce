@@ -11,7 +11,7 @@ public record EmployeeAddRequest(
     [Required, MaxLength(50)] string LastName,
     [Required, EmailAddress] string Email,
     [Required, MinLength(8)] string Password,
-    [Required, MaxLength(15)] string PhoneNumber,
+    [Required, MaxLength(15), Phone] string PhoneNumber,
     [Required] HomeAddressDto HomeAddress,
     IEnumerable<Guid>? GrantedPermissionIds,
     IEnumerable<Guid>? RevokedPermissionIds

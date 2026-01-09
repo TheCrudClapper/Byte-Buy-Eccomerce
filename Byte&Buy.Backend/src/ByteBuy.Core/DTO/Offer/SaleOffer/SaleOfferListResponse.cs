@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.DTO.SaleOffer;
+﻿namespace ByteBuy.Core.DTO.Offer.SaleOffer;
 
 public record SaleOfferListResponse(Guid Id,
     string ItemName,

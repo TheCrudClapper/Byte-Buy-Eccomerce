@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.RentOffer;
+﻿using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
 

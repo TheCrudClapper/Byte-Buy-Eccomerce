@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.SaleOffer;
+using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;

@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Cart;
-using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -97,9 +96,9 @@ public class CartService : ICartService
             return Result.Failure<CartSummaryResponse>(CartErrors.NotFound);
 
         var itemsQuantity = 0;
-        foreach(var item in cart.CartOffers)
+        foreach (var item in cart.CartOffers)
             itemsQuantity += item.Quantity;
-        
+
         var offerIds = cart.CartOffers
             .Select(co => co.OfferId)
             .Distinct()
@@ -183,5 +182,5 @@ public class CartService : ICartService
         return Result.Success();
     }
 
-    
+
 }

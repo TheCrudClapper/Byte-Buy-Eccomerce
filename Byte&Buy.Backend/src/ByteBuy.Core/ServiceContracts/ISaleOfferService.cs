@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.SaleOffer;
+﻿using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
 

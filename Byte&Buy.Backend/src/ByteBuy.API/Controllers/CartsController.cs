@@ -12,7 +12,7 @@ public class CartsController : BaseApiController
 {
     private readonly ICartService _cartService;
     public CartsController(ICartService cartService)
-        =>  _cartService = cartService;
+        => _cartService = cartService;
 
     [HttpDelete("{cartOfferId:guid}")]
     public async Task<IActionResult> DeleteCartOffer(Guid cartOfferId)

@@ -22,5 +22,5 @@ public static class CategoryErrors
 
     public static readonly Error DescriptionLengthInvalid = Error.Validation(
         "Category.Description", "Description must be at most 50 characters.");
-    
+
 }
