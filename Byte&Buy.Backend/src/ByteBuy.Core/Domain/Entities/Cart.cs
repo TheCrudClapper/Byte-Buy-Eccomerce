@@ -227,7 +227,11 @@ public class Cart : AuditableEntity, ISoftDeletable
     private Result RecalculateTotals()
     {
         Money ItemsTotal = Money.Zero;
-        foreach (var co in CartOffers)
+        var activeCartOffers = CartOffers
+            .Where(cartOffer => cartOffer.IsActive)
+            .ToList();
+
+        foreach (var co in activeCartOffers)
         {
             if (co is RentCartOffer rent)
             {
