@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Image;
 using System.Linq.Expressions;
 
@@ -12,4 +13,9 @@ public static class ImageMappings
            i.ImagePath,
            i.AltText
            );
+
+    public static ExistingImageUpdate ToExistingImageUpdate(this ExistingImageUpdateRequest dto)
+    {
+        return new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
+    }
 }

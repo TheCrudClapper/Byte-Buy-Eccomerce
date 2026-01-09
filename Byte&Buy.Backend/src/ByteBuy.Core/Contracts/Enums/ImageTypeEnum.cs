@@ -4,5 +4,6 @@ public enum ImageTypeEnum
 {
     Items,
     Employees,
-    CompanyLogo
+    CompanyLogo,
+    PortalUsers,
 }

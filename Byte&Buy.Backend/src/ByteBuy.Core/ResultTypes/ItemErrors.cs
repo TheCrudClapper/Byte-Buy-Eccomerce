@@ -31,4 +31,8 @@ public static class ItemErrors
         "Item.StockQuantity",
         "Not enough stock.");
 
+    public static readonly Error ImageRequired = Error.Validation(
+        "Item.Image",
+        "At least one image is required for item !");
+
 }

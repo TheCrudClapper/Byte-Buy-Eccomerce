@@ -9,6 +9,6 @@ public record ItemUpdateRequest(
       [Required, MaxLength(75)] string Name,
       [Required, MaxLength(2000)] string Description,
       [Required] int StockQuantity,
-      IList<ExistingImageUpdateRequest> ExistingImages,
-      IList<ImageAddRequest>? NewImages
+      IEnumerable<ExistingImageUpdateRequest> ExistingImages,
+      IEnumerable<ImageAddRequest>? NewImages
     );

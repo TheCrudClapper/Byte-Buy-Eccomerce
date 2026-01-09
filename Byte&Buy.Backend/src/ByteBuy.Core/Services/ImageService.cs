@@ -16,37 +16,13 @@ public class ImageService : IImageService
         _imageStorage = imageStorage;
     }
 
-    public Result DeleteImagesPhysically(ItemUpdateRequest request, Item aggregate)
+    public Result DeleteImages(IList<string> imagePaths, ImageTypeEnum type)
     {
-        var deletedIds = request.ExistingImages
-            .Where(i => i.IsDeleted)
-            .Select(i => i.Id)
-            .ToList();
-
-        var deletedPaths = aggregate.GetImagePathsByIds(deletedIds);
-
-        if (deletedPaths.Count > 0)
+        if (imagePaths.Count > 0)
         {
-            var deletedResult = _imageStorage.DeleteFromDirectory(deletedPaths);
+            var deletedResult = _imageStorage.DeleteFromDirectory(imagePaths, type);
             if (deletedResult.IsFailure)
                 return Result.Failure(deletedResult.Error);
-        }
-
-        return Result.Success();
-    }
-
-    public Result UpdateOrMarkAsDeletedExistingImages(ItemUpdateRequest request, Item aggregate)
-    {
-        foreach (var image in request.ExistingImages)
-        {
-            if (image.IsDeleted)
-                aggregate.DeleteImagesById(image.Id);
-            else
-            {
-                var changeResult = aggregate.ChangeImageAltText(image.Id, image.AltText);
-                if (changeResult.IsFailure)
-                    return Result.Failure(changeResult.Error);
-            }
         }
 
         return Result.Success();
@@ -62,12 +38,15 @@ public class ImageService : IImageService
     /// <param name="item">The item to which the images will be associated. Cannot be null.</param>
     /// <returns>A Result indicating whether the images were successfully saved and associated with the item. Returns a failure
     /// result if any imageId could not be saved or added.</returns>
-    public async Task<Result<IReadOnlyList<SavedImage>>> SaveNewImagesAsync<TImageDto>(IList<TImageDto> images, ImageTypeEnum imageType) where TImageDto : IImageRequestDto
+    public async Task<Result<IReadOnlyList<SavedImage>>> SaveNewImagesAsync<TImageDto>(IEnumerable<TImageDto>? images, ImageTypeEnum imageType)
+        where TImageDto : IImageRequestDto
     {
-        if (images is null || images.Count == 0)
+        if (images is null || !images.Any())
             return Result.Success<IReadOnlyList<SavedImage>>([]);
 
-        var files = images
+        var newImages = images.ToList();
+
+        var files = newImages
             .Select(i => i.Image)
             .ToList();
 
@@ -76,17 +55,17 @@ public class ImageService : IImageService
             return Result.Failure<IReadOnlyList<SavedImage>>(imageSaveResult.Error);
 
         IList<SavedImage> savedImages = [];
-        
-        for(int i = 0; i < images.Count; i++)
+
+        for (int i = 0; i < newImages.Count; i++)
         {
             var path = imageSaveResult.Value[i];
-            var altText = images[i].AltText;
+            var altText = newImages[i].AltText;
             savedImages.Add(new SavedImage(path, altText));
         }
 
         return savedImages.AsReadOnly();
     }
 
-    public void RollbackImageSave(IList<string> imagePaths)
-        => _imageStorage.DeleteFromDirectory(imagePaths);
+    public void RollbackImageSave(IList<string> imagePaths, ImageTypeEnum type)
+        => _imageStorage.DeleteFromDirectory(imagePaths, type);
 }

@@ -10,11 +10,10 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IImageService
 {
     Task<Result<IReadOnlyList<SavedImage>>> SaveNewImagesAsync<TImageDto>(
-        IList<TImageDto> images,
+        IEnumerable<TImageDto>? images,
         ImageTypeEnum imageType)
         where TImageDto : IImageRequestDto;
 
-    void RollbackImageSave(IList<string> imagePaths);
-    Result DeleteImagesPhysically(ItemUpdateRequest request, Item aggregate);
-    Result UpdateOrMarkAsDeletedExistingImages(ItemUpdateRequest request, Item aggregate);
+    void RollbackImageSave(IList<string> imagePaths, ImageTypeEnum type);
+    Result DeleteImages(IList<string> imagePaths, ImageTypeEnum type);
 }

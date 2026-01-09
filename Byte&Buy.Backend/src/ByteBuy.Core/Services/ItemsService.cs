@@ -1,8 +1,7 @@
-﻿using ByteBuy.Core.Contracts;
-using ByteBuy.Core.Contracts.Enums;
+﻿using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
@@ -15,18 +14,15 @@ namespace ByteBuy.Core.Services;
 public class ItemsService : IItemsService
 {
     private readonly IItemRepository _itemRepository;
-    private readonly IImageStorage _imageStorage;
     private readonly IImageService _imageService;
     private readonly IItemValidationService _itemValidationService;
 
     public ItemsService(IItemRepository itemRepository,
-        IImageStorage imageStorage,
         IItemValidationService itemValidationService,
         IImageService imageService)
     {
         _itemRepository = itemRepository;
         _itemValidationService = itemValidationService;
-        _imageStorage = imageStorage;
         _imageService = imageService;
     }
 
@@ -56,8 +52,8 @@ public class ItemsService : IItemsService
 
         if (itemCreationResult.IsFailure)
         {
-            _imageService.RollbackImageSave(drafts.Select(item => item.ImagePath)
-                .ToList());
+            var paths = drafts.Select(item => item.ImagePath).ToList();
+            _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
             return Result.Failure<CreatedResponse>(itemCreationResult.Error);
         }
 
@@ -81,33 +77,36 @@ public class ItemsService : IItemsService
         if (validationResult.IsFailure)
             return Result.Failure<UpdatedResponse>(validationResult.Error);
 
+        var imagesResult = await _imageService.SaveNewImagesAsync(request.NewImages, ImageTypeEnum.Items);
+        if (imagesResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(imagesResult.Error);
+
+        var drafts = imagesResult.Value
+            .Select(item => new ImageDraft(item.ImagePath, item.AltText))
+            .ToList();
+
         var updateResult = aggregate.Update(
             request.Name,
             request.Description,
             request.CategoryId,
             request.ConditionId,
-            request.StockQuantity);
+            request.StockQuantity,
+            drafts,
+            request.ExistingImages
+                .Select(i => i.ToExistingImageUpdate()));
+
 
         if (updateResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(updateResult.Error);
-
-        //adding new image
-        if (request.NewImages?.Count > 0)
         {
-            var imagesResult = await _imageService.SaveNewImagesAsync(request.NewImages, ImageTypeEnum.Items);
-            if (imagesResult.IsFailure)
-                return Result.Failure<UpdatedResponse>(imagesResult.Error);
+            var pathsToRollback = drafts.Select(d => d.ImagePath).ToList();
+            _imageService.RollbackImageSave(pathsToRollback, ImageTypeEnum.Items);
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
         }
 
-        //delete from disk
-        var imageDeletionResult = _imageService.DeleteImagesPhysically(request, aggregate);
-        if (imageDeletionResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
-
-        //marking as deleted or updating images metadata
-        var imageHandlinResult = _imageService.UpdateOrMarkAsDeletedExistingImages(request, aggregate);
-        if (imageHandlinResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(imageHandlinResult.Error);
+        ////delete from disk
+        //var imageDeletionResult = _imageService.DeleteImagesPhysically(request, aggregate);
+        //if (imageDeletionResult.IsFailure)
+        //    return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
 
         await _itemRepository.UpdateAsync(aggregate);
         await _itemRepository.CommitAsync();

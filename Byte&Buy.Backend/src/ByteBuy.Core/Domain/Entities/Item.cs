@@ -1,7 +1,8 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.ResultTypes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -58,10 +59,10 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IList<ImageDraft> images)
+    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IEnumerable<ImageDraft> images)
         => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, false);
 
-    public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IList<ImageDraft> images)
+    public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IEnumerable<ImageDraft> images)
         => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, true);
 
     private static Result<Item> CreateInternal(
@@ -70,7 +71,7 @@ public class Item : AuditableEntity, ISoftDeletable
     Guid categoryId,
     Guid conditionId,
     int stockQuantity,
-    IList<ImageDraft> images,
+    IEnumerable<ImageDraft> images,
     bool isCompanyItem)
     {
 
@@ -86,6 +87,9 @@ public class Item : AuditableEntity, ISoftDeletable
            stockQuantity,
            isCompanyItem);
 
+        if (!images.Any())
+            return Result.Failure<Item>(ItemErrors.ImageRequired);
+
         foreach (var image in images)
         {
             var imageAddResult = item.AddImage(image.ImagePath, image.AltText);
@@ -96,7 +100,14 @@ public class Item : AuditableEntity, ISoftDeletable
         return item;
     }
 
-    public Result Update(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity)
+    public Result Update(
+        string name,
+        string description,
+        Guid categoryId,
+        Guid conditionId,
+        int stockQuantity,
+        IEnumerable<ImageDraft>? newImages,
+        IEnumerable<ExistingImageUpdate> existingImages)
     {
         var validationResult = Validate(name, description, stockQuantity);
         if (validationResult.IsFailure)
@@ -108,13 +119,46 @@ public class Item : AuditableEntity, ISoftDeletable
         ConditionId = conditionId;
         StockQuantity = stockQuantity;
 
+        if (newImages is not null && newImages.Any())
+        {
+            foreach (var image in newImages)
+            {
+                var imageAddResult = AddImage(image.ImagePath, image.AltText);
+                if (imageAddResult.IsFailure)
+                    return Result.Failure<Item>(imageAddResult.Error);
+            }
+        }
+
+        var imageResult = UpdateOrMarkAsDeletedExistingImages(existingImages);
+        if (imageResult.IsFailure)
+            return imageResult;
+
+        if (!HasAtLeastOneActiveImage())
+            return Result.Failure(ItemErrors.ImageRequired);
+
         return Result.Success();
     }
 
-    public void DeleteImagesById(Guid imageId)
+    // Deletes image when marked as deleted or change their metadata
+    private Result UpdateOrMarkAsDeletedExistingImages(IEnumerable<ExistingImageUpdate> existingImages)
     {
-        var image = Images.FirstOrDefault(i => i.Id == imageId);
-        image?.Deactivate();
+        foreach (var existing in existingImages)
+        {
+            var img = Images.FirstOrDefault(i => i.Id == existing.Id);
+            if (img is null) continue;
+
+            if (existing.IsDeleted)
+            {
+                img.Deactivate();
+            }
+            else
+            {
+                var changeResult = ChangeImageAltText(existing.Id, existing.AltText);
+                if (changeResult.IsFailure)
+                    return Result.Failure(changeResult.Error);
+            }
+        }
+        return Result.Success();
     }
 
     public Result ChangeImageAltText(Guid imageId, string altText)
@@ -164,14 +208,16 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public IList<string> GetImagePathsByIds(IList<Guid> ids)
+    public IReadOnlyList<string> GetImagePathsByIds(IList<Guid> ids)
     {
-        var paths = new List<string>();
         return Images.Where(img => ids.Contains(img.Id))
             .Select(img => img.ImagePath)
             .ToList();
     }
 
+    private bool HasAtLeastOneActiveImage()
+        => Images.Any(img => img.IsActive);
+    
     private void DeactivateAllImages()
     {
         foreach (Image image in Images)

@@ -21,20 +21,20 @@ public class ImageStorage : IImageStorage
         {
             ImageTypeEnum.Items => Path.Combine(root, "Items"),
             ImageTypeEnum.Employees => Path.Combine(root, "Employees"),
+            ImageTypeEnum.CompanyLogo => Path.Combine(root, "CompanyLogo"),
+            ImageTypeEnum.PortalUsers => Path.Combine(root, "PortalUsers"),
             _ => root,
         };
     }
 
-    public Result DeleteFromDirectory(IList<string> imagePaths)
+    public Result DeleteFromDirectory(IEnumerable<string> imagePaths, ImageTypeEnum type)
     {
         try
         {
             foreach (var imagePath in imagePaths)
             {
-                var normalized = imagePath.Replace('/', Path.DirectorySeparatorChar);
-
-                var fullPath = Path.Combine(_env.WebRootPath, "Images", normalized);
-                Console.WriteLine($"fullPath: {fullPath}");
+                var basePath = GetCombinedPath(type);
+                var fullPath = Path.Combine(basePath, Path.GetFileName(imagePath));
                 if (File.Exists(fullPath))
                     File.Delete(fullPath);
             }
@@ -46,20 +46,6 @@ public class ImageStorage : IImageStorage
         catch (IOException)
         {
             return Result.Failure(ImageErrors.StorageFailure);
-        }
-
-        return Result.Success();
-    }
-
-    public static Result ValidateExtensions(IReadOnlyList<IFormFile> files)
-    {
-        string[] allowedExtensions = [".jpg", ".jpeg", ".png"];
-
-        foreach (var file in files)
-        {
-            var extension = Path.GetExtension(file.FileName);
-            if (string.IsNullOrWhiteSpace(extension) || !allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
-                return Result.Failure(ImageErrors.WrongImageExtensions);
         }
 
         return Result.Success();
@@ -111,12 +97,36 @@ public class ImageStorage : IImageStorage
     {
         foreach (var relativePath in paths)
         {
-            var normalized = relativePath.Replace('/', Path.DirectorySeparatorChar);
-            var fullPath = Path.Combine(basePath, Path.GetFileName(normalized));
+            var fullPath = Path.Combine(basePath, Path.GetFileName(relativePath));
 
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
         }
+    }
+
+    public void RollbackSavedFiles(IEnumerable<string> paths, ImageTypeEnum type)
+    {
+        var basePath = GetCombinedPath(type);
+        foreach(var path in paths)
+        {
+            var fullPath = Path.Combine(basePath, Path.GetFileName(path));
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+        }
+    }
+
+    private static Result ValidateExtensions(IReadOnlyList<IFormFile> files)
+    {
+        string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+
+        foreach (var file in files)
+        {
+            var extension = Path.GetExtension(file.FileName);
+            if (string.IsNullOrWhiteSpace(extension) || !allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
+                return Result.Failure(ImageErrors.WrongImageExtensions);
+        }
+
+        return Result.Success();
     }
 
 }
