@@ -34,6 +34,7 @@ public class Item : AuditableEntity, ISoftDeletable
 
     private Item(string name, string description, Guid categoryId, Guid conditionId, bool isCompanyItem, int stockQuantity = 0)
     {
+        Id = Guid.NewGuid();
         Name = name;
         Description = description;
         CategoryId = categoryId;

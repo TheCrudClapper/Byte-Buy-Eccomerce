@@ -9,7 +9,6 @@ public record UserRentOfferResponse(
    Guid ConditionId,
    string Name,
    string Description,
-   int StockQuantity,
    int QuantityAvailable,
    MoneyDto PricePerDay,
    int MaxRentalDays,

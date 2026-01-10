@@ -33,7 +33,8 @@ public static class DependencyInjection
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<IUserSaleOfferService, UserSaleOfferService>();
         services.AddScoped<IImageService, ImageService>();
-        services.AddScoped<IItemValidationService, ItemValidationService>();
+        services.AddScoped<IItemValidationService, ItemHelperService>();
+        services.AddScoped<IUserRentOfferService, UserRentOfferService>();
 
         //AddUserShippingAddressAsync Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();

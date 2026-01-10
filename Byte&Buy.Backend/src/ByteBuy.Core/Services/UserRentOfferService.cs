@@ -3,47 +3,48 @@ using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Image;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
-using static ByteBuy.Core.Specification.SaleOfferSpecifications;
+using static ByteBuy.Core.Specification.RentOfferSpecifications;
 
 namespace ByteBuy.Core.Services;
 
-public class UserSaleOfferService : IUserSaleOfferService
+public class UserRentOfferService : IUserRentOfferService
 {
-    private readonly ISaleOfferRepository _saleOfferRepository;
+    private readonly IRentOfferRepository _rentOfferRepository;
     private readonly IItemRepository _itemRepository;
     private readonly IImageService _imageService;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly IItemValidationService _itemValidationService;
-    public UserSaleOfferService(IItemRepository itemRepository,
-        ISaleOfferRepository saleOfferRepository,
+
+    public UserRentOfferService(IItemRepository itemRepository,
+        IRentOfferRepository rentOfferRepository,
         IItemValidationService itemValidation,
         IImageService imageService,
         IDeliveryRepository deliveryRepository,
         IPortalUserRepository portalUserRepository)
     {
+
         _itemRepository = itemRepository;
-        _saleOfferRepository = saleOfferRepository;
+        _rentOfferRepository = rentOfferRepository;
         _itemValidationService = itemValidation;
         _imageService = imageService;
         _deliveryRepository = deliveryRepository;
         _portalUserRepository = portalUserRepository;
     }
-
-    public async Task<Result<CreatedResponse>> AddAsync(Guid userId, UserSaleOfferAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(Guid userId, UserRentOfferAddRequest request)
     {
         var validation = await ValidateCountryConditonDelivery(
-            request.CategoryId,
-            request.ConditionId,
-            request.ParcelLockerDeliveries,
-            request.OtherDeliveriesIds);
+           request.CategoryId,
+           request.ConditionId,
+           request.ParcelLockerDeliveries,
+           request.OtherDeliveriesIds);
 
         if (validation.IsFailure)
             return Result.Failure<CreatedResponse>(validation.Error);
@@ -75,67 +76,68 @@ public class UserSaleOfferService : IUserSaleOfferService
             return Result.Failure<CreatedResponse>(PortalUserErrors.HomeAddressNotSet);
 
         var deliveryIds = request.OtherDeliveriesIds
-            .Concat(request.ParcelLockerDeliveries ?? []);
+          .Concat(request.ParcelLockerDeliveries ?? []);
 
-        var saleOfferResult = SaleOffer.Create(
-                item.Id,
-                userId,
-                request.QuantityAvailable,
-                request.PricePerItem,
-                homeAddress,
-                deliveryIds);
+        var rentOfferResult = RentOffer.Create(
+            item.Id,
+            userId,
+            request.QuantityAvailable,
+            request.PricePerDay,
+            request.MaxRentalDays,
+            homeAddress,
+            deliveryIds);
 
-        if (saleOfferResult.IsFailure)
-            return Result.Failure<CreatedResponse>(saleOfferResult.Error);
+        if (rentOfferResult.IsFailure)
+            return Result.Failure<CreatedResponse>(rentOfferResult.Error);
 
-        var saleOffer = saleOfferResult.Value;
+        var rentOffer = rentOfferResult.Value;
 
         await _itemRepository.AddAsync(item);
-        await _saleOfferRepository.AddAsync(saleOffer);
-        await _saleOfferRepository.CommitAsync();
+        await _rentOfferRepository.AddAsync(rentOffer);
+        await _rentOfferRepository.CommitAsync();
 
-        return saleOffer.ToCreatedResponse();
+        return rentOffer.ToCreatedResponse();
     }
 
     public async Task<Result> DeleteAsync(Guid userId, Guid id)
     {
-        var spec = new UserSaleOfferAggregateSpec(userId, id);
-        var offer = await _saleOfferRepository.GetBySpecAsync(spec);
+        var spec = new UserRentOfferAggregateSpec(userId, id);
+        var offer = await _rentOfferRepository.GetBySpecAsync(spec);
         if (offer is null)
             return Result.Failure(OfferErrors.NotFound);
 
         var item = await _itemRepository.GetAggregateAsync(offer.ItemId);
         if (item is null)
-            return Result.Failure(OfferErrors.NotFound);
+            return Result.Failure(OfferErrors.ItemNotFound);
 
         offer.Deactivate();
         item.Deactivate();
 
         await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.UpdateAsync(offer);
-        await _saleOfferRepository.CommitAsync();
+        await _rentOfferRepository.UpdateAsync(offer);
+        await _rentOfferRepository.CommitAsync();
 
         return Result.Success();
     }
 
-    public async Task<Result<UserSaleOfferResponse>> GetByIdAsync(Guid userId, Guid id, CancellationToken ct = default)
+    public async Task<Result<UserRentOfferResponse>> GetByIdAsync(Guid userId, Guid id, CancellationToken ct = default)
     {
-        var spec = new UserSaleOfferAsResponseDtoSpec(userId, id);
-        var offerDto = await _saleOfferRepository.GetBySpecAsync(spec, ct);
+        var spec = new UserRentOfferToResponseSpec(userId, id);
+        var dto = await _rentOfferRepository.GetBySpecAsync(spec);
 
-        return offerDto is null
-            ? Result.Failure<UserSaleOfferResponse>(OfferErrors.NotFound)
-            : offerDto;
+        return dto is null
+            ? Result.Failure<UserRentOfferResponse>(OfferErrors.NotFound)
+            : dto;
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid userid, Guid id, UserSaleOfferUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid userId, Guid id, UserRentOfferUpdateRequest request)
     {
-        var spec = new SaleOfferWithOfferAggregate(id);
-        var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
-        if (saleOffer is null)
+        var spec = new UserRentOfferAggregateSpec(userId, id);
+        var rentOffer = await _rentOfferRepository.GetBySpecAsync(spec);
+        if (rentOffer is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.NotFound);
 
-        var item = await _itemRepository.GetAggregateAsync(saleOffer.ItemId);
+        var item = await _itemRepository.GetAggregateAsync(rentOffer.ItemId);
         if (item is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.ItemNotFound);
 
@@ -170,19 +172,20 @@ public class UserSaleOfferService : IUserSaleOfferService
         var deliveryIds = request.OtherDeliveriesIds
            .Concat(request.ParcelLockerDeliveries ?? []);
 
-        var offerUpdateResult = saleOffer.Update(
+        var offerUpdateResult = rentOffer.Update(
             request.QuantityAvailable,
-            request.PricePerItem,
+            request.PricePerDay,
+            rentOffer.MaxRentalDays,
             deliveryIds);
 
         if (offerUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(offerUpdateResult.Error);
 
         await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.UpdateAsync(saleOffer);
-        await _saleOfferRepository.CommitAsync();
+        await _rentOfferRepository.UpdateAsync(rentOffer);
+        await _rentOfferRepository.CommitAsync();
 
-        return saleOffer.ToUpdatedResponse();
+        return rentOffer.ToUpdatedResponse();
     }
 
     private async Task<Result> ValidateCountryConditonDelivery(Guid categoryId,

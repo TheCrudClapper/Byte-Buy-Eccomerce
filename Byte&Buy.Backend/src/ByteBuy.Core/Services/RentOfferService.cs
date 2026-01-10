@@ -71,14 +71,14 @@ public class RentOfferService : IRentOfferService
 
     public async Task<Result> DeleteAsync(Guid id)
     {
-        var spec = new RentOfferWithOfferDeliveriesSpec(id, false);
+        var spec = new RentOfferAggregateSpec(id, false);
         var rentOffer = await _rentOfferRepository.GetBySpecAsync(spec);
         if (rentOffer is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(OfferErrors.NotFound);
 
         var item = await _itemRepository.GetByIdAsync(rentOffer.ItemId);
         if (item is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(OfferErrors.ItemNotFound);
 
         var stockUpdateResult = item.AddStock(rentOffer.QuantityAvailable);
         if (stockUpdateResult.IsFailure)
@@ -110,7 +110,7 @@ public class RentOfferService : IRentOfferService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
     {
-        var spec = new RentOfferWithOfferDeliveriesSpec(id);
+        var spec = new RentOfferAggregateSpec(id);
         var offer = await _rentOfferRepository.GetBySpecAsync(spec);
         if (offer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);

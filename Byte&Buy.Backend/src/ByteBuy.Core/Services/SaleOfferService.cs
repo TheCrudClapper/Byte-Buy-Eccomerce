@@ -73,7 +73,7 @@ public class SaleOfferService : ISaleOfferService
 
     public async Task<Result> DeleteAsync(Guid id)
     {
-        var spec = new SaleOfferWithOfferDeliveriesSpec(id, false);
+        var spec = new SaleOfferWithOfferAggregate(id, false);
         var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
         if (saleOffer is null)
             return Result.Failure(Error.NotFound);
@@ -112,7 +112,7 @@ public class SaleOfferService : ISaleOfferService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
     {
-        var spec = new SaleOfferWithOfferDeliveriesSpec(id);
+        var spec = new SaleOfferWithOfferAggregate(id);
         var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
         if (saleOffer is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.NotFound);

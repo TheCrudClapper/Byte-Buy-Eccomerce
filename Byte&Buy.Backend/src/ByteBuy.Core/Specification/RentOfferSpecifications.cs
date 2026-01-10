@@ -26,11 +26,29 @@ public static class RentOfferSpecifications
         }
     }
 
-    public sealed class RentOfferWithOfferDeliveriesSpec : Specification<RentOffer>
+    public sealed class UserRentOfferAggregateSpec : Specification<RentOffer>
     {
-        public RentOfferWithOfferDeliveriesSpec(Guid id, bool ignorQueryFilters = true)
+        public UserRentOfferAggregateSpec(Guid userId, Guid id)
         {
-            if (ignorQueryFilters)
+            Query.Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
+                .Include(ro => ro.OfferDeliveries);
+        }
+    }
+
+    public sealed class UserRentOfferToResponseSpec : Specification<RentOffer, UserRentOfferResponse>
+    {
+        public UserRentOfferToResponseSpec(Guid userId, Guid id)
+        {
+            Query.Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
+                .Select(RentOfferMappings.UserRentOfferResponseProjection);
+        }
+    }
+
+    public sealed class RentOfferAggregateSpec : Specification<RentOffer>
+    {
+        public RentOfferAggregateSpec(Guid id, bool ignoreQueryFilters = true)
+        {
+            if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();
 
             Query.Where(ro => ro.Id == id)

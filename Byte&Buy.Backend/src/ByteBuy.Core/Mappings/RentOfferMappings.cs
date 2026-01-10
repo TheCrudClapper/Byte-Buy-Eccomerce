@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using System.Linq.Expressions;
 
@@ -33,4 +34,27 @@ public static class RentOfferMappings
                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
                .Select(d => d.DeliveryId)
                .ToList());
+
+    public static Expression<Func<RentOffer, UserRentOfferResponse>> UserRentOfferResponseProjection
+        => ro => new UserRentOfferResponse(
+            ro.Id,
+            ro.Item.CategoryId,
+            ro.Item.ConditionId,
+            ro.Item.Name,
+            ro.Item.Description,
+            ro.QuantityAvailable,
+            new MoneyDto(ro.PricePerDay.Amount, ro.PricePerDay.Currency),
+            ro.MaxRentalDays,
+            ro.Item.Images
+                .AsQueryable()
+                .Select(ImageMappings.ImageResponseProjection)
+                .ToList(),
+             ro.OfferDeliveries
+                .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+                .Select(d => d.DeliveryId)
+                .ToList(),
+            ro.OfferDeliveries
+                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+                .Select(d => d.DeliveryId)
+                .ToList());
 }

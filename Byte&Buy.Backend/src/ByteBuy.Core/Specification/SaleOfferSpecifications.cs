@@ -26,9 +26,9 @@ public static class SaleOfferSpecifications
         }
     }
 
-    public sealed class SaleOfferWithOfferDeliveriesSpec : Specification<SaleOffer>
+    public sealed class SaleOfferWithOfferAggregate : Specification<SaleOffer>
     {
-        public SaleOfferWithOfferDeliveriesSpec(Guid id, bool ignoreQueryFilters = true)
+        public SaleOfferWithOfferAggregate(Guid id, bool ignoreQueryFilters = true)
         {
             if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();

@@ -4,12 +4,12 @@ using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;
 
-public class ItemValidationService : IItemValidationService
+public class ItemHelperService : IItemValidationService
 {
     private readonly IConditionRepository _conditionRepository;
     private readonly ICategoryRepository _categoryRepository;
 
-    public ItemValidationService(IConditionRepository conditionRepository, ICategoryRepository categoryRepository)
+    public ItemHelperService(IConditionRepository conditionRepository, ICategoryRepository categoryRepository)
     {
         _categoryRepository = categoryRepository;
         _conditionRepository = conditionRepository;
