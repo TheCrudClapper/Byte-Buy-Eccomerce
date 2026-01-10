@@ -1,7 +1,5 @@
-﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Item;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;

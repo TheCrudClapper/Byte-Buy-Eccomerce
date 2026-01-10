@@ -3,7 +3,7 @@ using ByteBuy.Core.Extensions;
 
 namespace ByteBuy.Core.Helpers;
 
-public class EnumToSelectListMapper
+public static class EnumToSelectListMapper
 {
     public static IReadOnlyCollection<SelectListItemResponse<int>> EnumToSelectLists<TEnum>()
         where TEnum : struct, Enum

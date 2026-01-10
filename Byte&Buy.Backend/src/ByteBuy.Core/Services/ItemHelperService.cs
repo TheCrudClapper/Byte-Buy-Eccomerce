@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -13,14 +14,17 @@ public class ItemHelperService : IItemHelperService
     private readonly IConditionRepository _conditionRepository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly IImageService _imageService;
+    private readonly IDeliveryRepository _deliveryRepository;
 
     public ItemHelperService(IConditionRepository conditionRepository,
         ICategoryRepository categoryRepository,
-        IImageService imageService)
+        IImageService imageService,
+        IDeliveryRepository deliveryRepository)
     {
         _categoryRepository = categoryRepository;
         _conditionRepository = conditionRepository;
         _imageService = imageService;
+        _deliveryRepository = deliveryRepository;
     }
 
     public async Task<Result> ValidateCategoryAndCondition(Guid categoryId, Guid conditionId)
@@ -52,4 +56,28 @@ public class ItemHelperService : IItemHelperService
     {
         _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
     }
+
+    public async Task<Result> ValidateCountryConditonDelivery(Guid categoryId,
+        Guid conditionId, IEnumerable<Guid>? parcelLockerDeliveries,
+        IEnumerable<Guid> otherDeliveries)
+    {
+        var validation = await ValidateCategoryAndCondition(categoryId, conditionId);
+
+        if (validation.IsFailure)
+            return Result.Failure(validation.Error);
+
+        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
+           parcelLockerDeliveries,
+           otherDeliveries,
+           _deliveryRepository);
+
+        if (validatedDeliveries.IsFailure)
+            return Result.Failure(validatedDeliveries.Error);
+
+        return Result.Success();
+    }
+
+    public IEnumerable<Guid> MergeDeliveryIds(IEnumerable<Guid> otherDeliveries, IEnumerable<Guid>? parcelLockerDeliveries)
+        => otherDeliveries.Concat(parcelLockerDeliveries ?? []);
+
 }

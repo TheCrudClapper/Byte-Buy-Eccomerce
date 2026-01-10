@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
-using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -16,24 +15,21 @@ public class UserSaleOfferService : IUserSaleOfferService
     private readonly ISaleOfferRepository _saleOfferRepository;
     private readonly IItemRepository _itemRepository;
     private readonly IPortalUserRepository _portalUserRepository;
-    private readonly IDeliveryRepository _deliveryRepository;
     private readonly IItemHelperService _itemHelperService;
     public UserSaleOfferService(IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
         IItemHelperService itemValidation,
-        IDeliveryRepository deliveryRepository,
         IPortalUserRepository portalUserRepository)
     {
         _itemRepository = itemRepository;
         _saleOfferRepository = saleOfferRepository;
         _itemHelperService = itemValidation;
-        _deliveryRepository = deliveryRepository;
         _portalUserRepository = portalUserRepository;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, UserSaleOfferAddRequest request)
     {
-        var validation = await ValidateCountryConditonDelivery(
+        var validation = await _itemHelperService.ValidateCountryConditonDelivery(
             request.CategoryId,
             request.ConditionId,
             request.ParcelLockerDeliveries,
@@ -68,8 +64,8 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (homeAddress is null)
             return Result.Failure<CreatedResponse>(PortalUserErrors.HomeAddressNotSet);
 
-        var deliveryIds = request.OtherDeliveriesIds
-            .Concat(request.ParcelLockerDeliveries ?? []);
+        var deliveryIds = _itemHelperService
+            .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
         var saleOfferResult = SaleOffer.Create(
                 item.Id,
@@ -133,7 +129,7 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (item is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.ItemNotFound);
 
-        var validation = await ValidateCountryConditonDelivery(
+        var validation = await _itemHelperService.ValidateCountryConditonDelivery(
             request.CategoryId,
             request.ConditionId,
             request.ParcelLockerDeliveries,
@@ -161,8 +157,8 @@ public class UserSaleOfferService : IUserSaleOfferService
             return Result.Failure<UpdatedResponse>(itemUpdateResult.Error);
         }
 
-        var deliveryIds = request.OtherDeliveriesIds
-           .Concat(request.ParcelLockerDeliveries ?? []);
+        var deliveryIds = _itemHelperService
+            .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
         var offerUpdateResult = saleOffer.Update(
             request.QuantityAvailable,
@@ -177,27 +173,5 @@ public class UserSaleOfferService : IUserSaleOfferService
         await _saleOfferRepository.CommitAsync();
 
         return saleOffer.ToUpdatedResponse();
-    }
-
-    private async Task<Result> ValidateCountryConditonDelivery(Guid categoryId,
-        Guid conditionId,
-        IEnumerable<Guid>? parcelLockerDeliveries,
-        IEnumerable<Guid> otherDeliveries)
-    {
-        var validation = await _itemHelperService
-           .ValidateCategoryAndCondition(categoryId, conditionId);
-
-        if (validation.IsFailure)
-            return Result.Failure(validation.Error);
-
-        var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
-           parcelLockerDeliveries,
-           otherDeliveries,
-           _deliveryRepository);
-
-        if (validatedDeliveries.IsFailure)
-            return Result.Failure(validatedDeliveries.Error);
-
-        return Result.Success();
     }
 }
