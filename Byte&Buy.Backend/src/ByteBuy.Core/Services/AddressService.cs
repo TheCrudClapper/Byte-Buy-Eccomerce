@@ -123,6 +123,16 @@ public class AddressService : IAddressService
         return user.ToUpdatedResponse();
     }
 
+    public async Task<Result<HomeAddressDto>> GetUserHomeAddress(Guid userId, CancellationToken ct = default)
+    {
+        var spec = new UserHomeAddressSpec(userId);
+        var address = await _portalUserRepository.GetBySpecAsync(spec);
+
+        return address is null
+            ? Result.Failure<HomeAddressDto>(PortalUserErrors.HomeAddressNotSet)
+            : address.ToHomeAddressDto();
+    }
+
     public async Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new UserWithShippingAddresToDtoSpec(userId, addressId), ct);
@@ -161,4 +171,6 @@ public class AddressService : IAddressService
         await _portalUserRepository.CommitAsync();
         return Result.Success();
     }
+
+
 }

@@ -115,11 +115,11 @@ public class SaleOfferService : ISaleOfferService
         var spec = new SaleOfferWithOfferDeliveriesSpec(id);
         var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
         if (saleOffer is null)
-            return Result.Failure<UpdatedResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(OfferErrors.NotFound);
 
         var item = await _itemRepository.GetByIdAsync(saleOffer.ItemId);
         if (item is null)
-            return Result.Failure<UpdatedResponse>(Error.NotFound);
+            return Result.Failure<UpdatedResponse>(OfferErrors.ItemNotFound);
 
         var validatedDeliveries = await DeliveryValidationHelper.ValidateAllDeliveriesAsync(
           request.ParcelLockerDeliveries,

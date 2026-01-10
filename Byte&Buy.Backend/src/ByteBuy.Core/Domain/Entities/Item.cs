@@ -4,6 +4,16 @@ using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
+/// <summary>
+/// Item is an aggreagte that has list of image entities. Item spans two business contexts
+/// 
+/// A - Item in context of company is an warehouse resource, that company workers can manage,
+/// add, substract, delete. It exposes an api to manipulate stock - that is only avaliable when
+/// item IsCompanyItem.
+/// 
+/// B - Item in context of user represents basic information about given offer.
+/// 
+/// </summary>
 public class Item : AuditableEntity, ISoftDeletable
 {
     public string Name { get; set; } = null!;
@@ -14,20 +24,21 @@ public class Item : AuditableEntity, ISoftDeletable
     public Condition Condition { get; set; } = null!;
     public int StockQuantity { get; set; }
     public ICollection<Image> Images { get; set; } = new List<Image>();
-    public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     public bool IsCompanyItem { get; set; }
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
+    //EF Navigation Only
+    public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     private Item() { }
 
-    private Item(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, bool isCompanyItem)
+    private Item(string name, string description, Guid categoryId, Guid conditionId, bool isCompanyItem, int stockQuantity = 0)
     {
         Name = name;
         Description = description;
         CategoryId = categoryId;
         ConditionId = conditionId;
-        StockQuantity = stockQuantity;
+        StockQuantity = isCompanyItem ? stockQuantity : 0;
         IsActive = true;
         IsCompanyItem = isCompanyItem;
         DateCreated = DateTime.UtcNow;
@@ -43,7 +54,15 @@ public class Item : AuditableEntity, ISoftDeletable
         DeactivateAllImages();
     }
 
-    public static Result Validate(string name, string description, int stockQuantity)
+    private static Result ValidateCompanyItem(string name, string description, int stockQuantity)
+    {
+        if (stockQuantity < 1)
+            return Result.Failure(ItemErrors.StockQuantityInvalid);
+
+        return ValidateCommon(name, description);
+    }
+
+    private static Result ValidateCommon(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 75)
             return Result.Failure(ItemErrors.NameInvalid);
@@ -51,17 +70,28 @@ public class Item : AuditableEntity, ISoftDeletable
         if (string.IsNullOrWhiteSpace(description) || description.Length > 2000)
             return Result.Failure(ItemErrors.DescriptionInvalid);
 
-        if (stockQuantity < 1)
-            return Result.Failure(ItemErrors.StockQuantityInvalid);
-
         return Result.Success();
     }
 
-    public static Result<Item> Create(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IEnumerable<ImageDraft> images)
-        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, false);
+    //Static factory method that creates item in user context
+    public static Result<Item> CreateUserItem(string name, string description, Guid categoryId, Guid conditionId, IEnumerable<ImageDraft> images)
+    {
+        var validationResult = ValidateCommon(name, description);
+        if (validationResult.IsFailure)
+            return Result.Failure<Item>(validationResult.Error);
 
+        return CreateInternal(name, description, categoryId, conditionId, 0, images, false);
+    }
+
+    //Static factory method that creates item in company context
     public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IEnumerable<ImageDraft> images)
-        => CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, true);
+    {
+        var validationResult = ValidateCompanyItem(name, description, stockQuantity);
+        if (validationResult.IsFailure)
+            return Result.Failure<Item>(validationResult.Error);
+
+        return CreateInternal(name, description, categoryId, conditionId, stockQuantity, images, true);
+    }
 
     private static Result<Item> CreateInternal(
     string name,
@@ -72,18 +102,13 @@ public class Item : AuditableEntity, ISoftDeletable
     IEnumerable<ImageDraft> images,
     bool isCompanyItem)
     {
-
-        var validationResult = Validate(name, description, stockQuantity);
-        if (validationResult.IsFailure)
-            return Result.Failure<Item>(validationResult.Error);
-
         var item = new Item(
            name,
            description,
            categoryId,
            conditionId,
-           stockQuantity,
-           isCompanyItem);
+           isCompanyItem,
+           stockQuantity);
 
         if (!images.Any())
             return Result.Failure<Item>(ItemErrors.ImageRequired);
@@ -98,7 +123,22 @@ public class Item : AuditableEntity, ISoftDeletable
         return item;
     }
 
-    public Result Update(
+    public Result UpdateUserItem(
+        string name,
+        string description,
+        Guid categoryId,
+        Guid conditionId,
+        IEnumerable<ImageDraft>? newImages,
+        IEnumerable<ExistingImageUpdate> existingImages)
+    {
+        var validationResult = ValidateCommon(name, description);
+        if (validationResult.IsFailure)
+            return Result.Failure(validationResult.Error);
+
+        return UpdateInternal(name, description, categoryId, conditionId, 0, newImages, existingImages);
+    }
+
+    public Result UpdateCompanyItem(
         string name,
         string description,
         Guid categoryId,
@@ -107,10 +147,23 @@ public class Item : AuditableEntity, ISoftDeletable
         IEnumerable<ImageDraft>? newImages,
         IEnumerable<ExistingImageUpdate> existingImages)
     {
-        var validationResult = Validate(name, description, stockQuantity);
+        var validationResult = ValidateCompanyItem(name, description, stockQuantity);
         if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 
+        return UpdateInternal(name, description, categoryId, conditionId, stockQuantity, newImages, existingImages);
+    }
+
+
+    private Result UpdateInternal(
+        string name,
+        string description,
+        Guid categoryId,
+        Guid conditionId,
+        int stockQuantity,
+        IEnumerable<ImageDraft>? newImages,
+        IEnumerable<ExistingImageUpdate> existingImages)
+    {
         Name = name;
         Description = description;
         CategoryId = categoryId;
@@ -137,7 +190,7 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    // Deletes image when marked as deleted or change their metadata
+    // deletes image when marked as deleted or change their metadata
     private Result UpdateOrMarkAsDeletedExistingImages(IEnumerable<ExistingImageUpdate> existingImages)
     {
         foreach (var existing in existingImages)
@@ -174,6 +227,9 @@ public class Item : AuditableEntity, ISoftDeletable
 
     public Result SubstractStock(int quantity)
     {
+        if (!IsCompanyItem)
+            return Result.Failure(ItemErrors.StockNotSupported);
+
         if (quantity < 1)
             return Result.Failure(ItemErrors.StockQuantityInvalid);
 
@@ -186,6 +242,9 @@ public class Item : AuditableEntity, ISoftDeletable
 
     public Result AddStock(int quantity)
     {
+        if (!IsCompanyItem)
+            return Result.Failure(ItemErrors.StockNotSupported);
+
         if (quantity < 1)
             return Result.Failure(ItemErrors.StockQuantityInvalid);
 

@@ -18,4 +18,10 @@ public static class ImageMappings
     {
         return new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
     }
+
+    public static ImageDraft ToImageDraft(this SavedImage image)
+    {
+        return new ImageDraft(image.ImagePath, image.AltText);
+    }
 }
+

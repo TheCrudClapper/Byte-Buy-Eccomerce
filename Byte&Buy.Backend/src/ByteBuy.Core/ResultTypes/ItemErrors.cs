@@ -35,4 +35,6 @@ public static class ItemErrors
         "Item.Image",
         "At least one image is required for item !");
 
+    public static readonly Error StockNotSupported = Error.Validation(
+        "Item.StockQuantity", "You are not a company, thus stock mainpulation is not supported");
 }

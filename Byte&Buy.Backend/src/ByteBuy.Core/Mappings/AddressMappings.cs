@@ -1,4 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.PortalUser;
 using System.Linq.Expressions;
 
@@ -37,4 +39,16 @@ public static class AddressMappings
            a.FlatNumber,
            a.IsDefault
             );
+
+    public static HomeAddressDto ToHomeAddressDto(this AddressValueObject vo)
+    {
+        return new HomeAddressDto(
+            vo.Street,
+            vo.HouseNumber,
+            vo.PostalCity,
+            vo.PostalCode,
+            vo.City,
+            vo.Country,
+            vo.FlatNumber);
+    }
 }

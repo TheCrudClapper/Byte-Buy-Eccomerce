@@ -39,7 +39,7 @@ public class ItemsService : IItemsService
             return Result.Failure<CreatedResponse>(imagesResult.Error);
 
         var drafts = imagesResult.Value
-            .Select(item => new ImageDraft(item.ImagePath, item.AltText))
+            .Select(x => x.ToImageDraft())
             .ToList();
 
         var itemCreationResult = Item.CreateCompanyItem(
@@ -85,7 +85,7 @@ public class ItemsService : IItemsService
             .Select(item => new ImageDraft(item.ImagePath, item.AltText))
             .ToList();
 
-        var updateResult = aggregate.Update(
+        var updateResult = aggregate.UpdateCompanyItem(
             request.Name,
             request.Description,
             request.CategoryId,

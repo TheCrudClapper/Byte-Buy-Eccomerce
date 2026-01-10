@@ -1,24 +1,35 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications
 {
-    public sealed class CurrentDefaultAddressSpec : Specification<ShippingAddress>
+    public sealed class CurrentDefaultShippingAddressSpec : Specification<ShippingAddress>
     {
-        public CurrentDefaultAddressSpec(Guid userId)
+        public CurrentDefaultShippingAddressSpec(Guid userId)
         {
             Query.Where(a => a.UserId == userId && a.IsDefault);
         }
     }
 
-    public sealed class UserAddresSpec : Specification<ShippingAddress>
+    public sealed class UserShippingAddresSpec : Specification<ShippingAddress>
     {
-        public UserAddresSpec(Guid userId, Guid addressId)
+        public UserShippingAddresSpec(Guid userId, Guid addressId)
         {
             Query.Where(a => a.Id == addressId && a.UserId == userId);
+        }
+    }
+
+    public sealed class UserHomeAddressSpec : Specification<PortalUser, AddressValueObject?>
+    {
+        public UserHomeAddressSpec(Guid userId)
+        {
+            Query.AsNoTracking()
+                .Where(u => u.Id == userId)
+                .Select(u => u.HomeAddress);
         }
     }
 

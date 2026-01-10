@@ -19,4 +19,7 @@ public static class PortalUserErrors
 
     public static readonly Error ShippingAddressLabelInvalid =
         Error.Validation("PortalUser.ShippingAddress", "Label is required and must be at most 50 characters.");
+
+    public static readonly Error HomeAddressNotSet =
+        Error.Validation("PortalUser.HomeAddress", "You need to set home address in order to publish offers.");
 }

@@ -23,6 +23,9 @@ public static class OfferErrors
         "Cart.Quantity",
         "Quantity must be greater than 0.");
 
+    public static readonly Error ItemNotFound = Error.Validation(
+        "Offer.Item", "Item is not found");
+
     public static readonly Error MaxRentalDaysInvalid = Error.Validation(
         "RentOffer.MaxRentalDays", "Max rental days must be higher than 0.");
 }

@@ -8,7 +8,6 @@ public record UserSaleOfferAddRequest(
     [Required] Guid ConditionId,
     [Required, MaxLength(75)] string Name,
     [Required, MaxLength(2000)] string Description,
-    [Required] int StockQuantity,
     [Required] int QuantityAvailable,
     [Required] decimal PricePerItem,
     [Required] IEnumerable<ImageAddRequest> Images,
