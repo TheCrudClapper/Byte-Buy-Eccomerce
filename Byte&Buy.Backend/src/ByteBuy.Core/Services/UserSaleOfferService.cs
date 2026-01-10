@@ -1,8 +1,5 @@
-﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Image;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Helpers;
@@ -18,21 +15,18 @@ public class UserSaleOfferService : IUserSaleOfferService
 {
     private readonly ISaleOfferRepository _saleOfferRepository;
     private readonly IItemRepository _itemRepository;
-    private readonly IImageService _imageService;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IDeliveryRepository _deliveryRepository;
-    private readonly IItemValidationService _itemValidationService;
+    private readonly IItemHelperService _itemHelperService;
     public UserSaleOfferService(IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
-        IItemValidationService itemValidation,
-        IImageService imageService,
+        IItemHelperService itemValidation,
         IDeliveryRepository deliveryRepository,
         IPortalUserRepository portalUserRepository)
     {
         _itemRepository = itemRepository;
         _saleOfferRepository = saleOfferRepository;
-        _itemValidationService = itemValidation;
-        _imageService = imageService;
+        _itemHelperService = itemValidation;
         _deliveryRepository = deliveryRepository;
         _portalUserRepository = portalUserRepository;
     }
@@ -48,7 +42,7 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (validation.IsFailure)
             return Result.Failure<CreatedResponse>(validation.Error);
 
-        var draftsResult = await SaveImageAndCreateDrafts(request.Images);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.Images);
         if (draftsResult.IsFailure)
             return Result.Failure<CreatedResponse>(draftsResult.Error);
 
@@ -61,8 +55,8 @@ public class UserSaleOfferService : IUserSaleOfferService
 
         if (itemCreationResult.IsFailure)
         {
-            var paths = draftsResult.Value.Select(item => item.ImagePath).ToList();
-            _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
+            var pathsToRollback = draftsResult.Value.Select(item => item.ImagePath).ToList();
+            _itemHelperService.RollbackImageSave(pathsToRollback);
             return Result.Failure<CreatedResponse>(itemCreationResult.Error);
         }
 
@@ -148,7 +142,7 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (validation.IsFailure)
             return Result.Failure<UpdatedResponse>(validation.Error);
 
-        var draftsResult = await SaveImageAndCreateDrafts(request.NewImages);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.NewImages);
         if (draftsResult.IsFailure)
             return Result.Failure<UpdatedResponse>(draftsResult.Error);
 
@@ -163,7 +157,7 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (itemUpdateResult.IsFailure)
         {
             var paths = draftsResult.Value.Select(item => item.ImagePath).ToList();
-            _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
+            _itemHelperService.RollbackImageSave(paths);
             return Result.Failure<UpdatedResponse>(itemUpdateResult.Error);
         }
 
@@ -190,7 +184,7 @@ public class UserSaleOfferService : IUserSaleOfferService
         IEnumerable<Guid>? parcelLockerDeliveries,
         IEnumerable<Guid> otherDeliveries)
     {
-        var validation = await _itemValidationService
+        var validation = await _itemHelperService
            .ValidateCategoryAndCondition(categoryId, conditionId);
 
         if (validation.IsFailure)
@@ -205,19 +199,5 @@ public class UserSaleOfferService : IUserSaleOfferService
             return Result.Failure(validatedDeliveries.Error);
 
         return Result.Success();
-    }
-
-    private async Task<Result<IReadOnlyList<ImageDraft>>> SaveImageAndCreateDrafts(IEnumerable<ImageAddRequest>? newImages)
-    {
-        if (newImages is null || !newImages.Any())
-            return Array.Empty<ImageDraft>();
-
-        var imagesResult = await _imageService.SaveNewImagesAsync(newImages, ImageTypeEnum.Items);
-        if (imagesResult.IsFailure)
-            return Result.Failure<IReadOnlyList<ImageDraft>>(imagesResult.Error);
-
-        return imagesResult.Value
-            .Select(x => x.ToImageDraft())
-            .ToList();
     }
 }

@@ -14,33 +14,26 @@ namespace ByteBuy.Core.Services;
 public class ItemsService : IItemsService
 {
     private readonly IItemRepository _itemRepository;
-    private readonly IImageService _imageService;
-    private readonly IItemValidationService _itemValidationService;
+    private readonly IItemHelperService _itemHelperService;
 
     public ItemsService(IItemRepository itemRepository,
-        IItemValidationService itemValidationService,
-        IImageService imageService)
+        IItemHelperService itemValidationService)
     {
         _itemRepository = itemRepository;
-        _itemValidationService = itemValidationService;
-        _imageService = imageService;
+        _itemHelperService = itemValidationService;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
     {
-        var validationResult = await _itemValidationService
+        var validationResult = await _itemHelperService
             .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
 
         if (validationResult.IsFailure)
             return Result.Failure<CreatedResponse>(validationResult.Error);
 
-        var imagesResult = await _imageService.SaveNewImagesAsync(request.Images, ImageTypeEnum.Items);
-        if (imagesResult.IsFailure)
-            return Result.Failure<CreatedResponse>(imagesResult.Error);
-
-        var drafts = imagesResult.Value
-            .Select(x => x.ToImageDraft())
-            .ToList();
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.Images);
+        if (draftsResult.IsFailure)
+            return Result.Failure<CreatedResponse>(draftsResult.Error);
 
         var itemCreationResult = Item.CreateCompanyItem(
             request.Name,
@@ -48,12 +41,12 @@ public class ItemsService : IItemsService
             request.CategoryId,
             request.ConditionId,
             request.StockQuantity,
-            drafts);
+            draftsResult.Value);
 
         if (itemCreationResult.IsFailure)
         {
-            var paths = drafts.Select(item => item.ImagePath).ToList();
-            _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
+            var pathsToRollback = draftsResult.Value.Select(item => item.ImagePath).ToList();
+            _itemHelperService.RollbackImageSave(pathsToRollback);
             return Result.Failure<CreatedResponse>(itemCreationResult.Error);
         }
 
@@ -71,19 +64,15 @@ public class ItemsService : IItemsService
         if (aggregate is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        var validationResult = await _itemValidationService
+        var validationResult = await _itemHelperService
             .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
 
         if (validationResult.IsFailure)
             return Result.Failure<UpdatedResponse>(validationResult.Error);
 
-        var imagesResult = await _imageService.SaveNewImagesAsync(request.NewImages, ImageTypeEnum.Items);
-        if (imagesResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(imagesResult.Error);
-
-        var drafts = imagesResult.Value
-            .Select(item => new ImageDraft(item.ImagePath, item.AltText))
-            .ToList();
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.NewImages);
+        if (draftsResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(draftsResult.Error);
 
         var updateResult = aggregate.UpdateCompanyItem(
             request.Name,
@@ -91,15 +80,15 @@ public class ItemsService : IItemsService
             request.CategoryId,
             request.ConditionId,
             request.StockQuantity,
-            drafts,
+            draftsResult.Value,
             request.ExistingImages
                 .Select(i => i.ToExistingImageUpdate()));
 
 
         if (updateResult.IsFailure)
         {
-            var pathsToRollback = drafts.Select(d => d.ImagePath).ToList();
-            _imageService.RollbackImageSave(pathsToRollback, ImageTypeEnum.Items);
+            var pathsToRollback = draftsResult.Value.Select(d => d.ImagePath).ToList();
+            _itemHelperService.RollbackImageSave(pathsToRollback);
             return Result.Failure<UpdatedResponse>(updateResult.Error);
         }
 
