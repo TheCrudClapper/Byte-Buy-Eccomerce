@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CompanyInfoResponse } from '../api-dto/companyInfoResponse';
+import { CompanyInfoResponse } from '../api-dto/company-info-response';
 
 @Injectable({
   providedIn: 'root',
