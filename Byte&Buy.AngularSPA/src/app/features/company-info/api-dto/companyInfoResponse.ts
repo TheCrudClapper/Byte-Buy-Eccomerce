@@ -1,4 +1,4 @@
-import { AddressValueObj } from "../../../shared/dto/addressValueObj";
+import { HomeAddressDto } from "../../../shared/dto/home-address-dto";
 
 export interface CompanyInfoResponse {
    companyName :string;
@@ -6,5 +6,5 @@ export interface CompanyInfoResponse {
    TIN :string;
    email :string;
    phone :string;
-   address :AddressValueObj;
+   address :HomeAddressDto;
 }

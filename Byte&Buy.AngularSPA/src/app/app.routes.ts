@@ -14,6 +14,7 @@ import { Addresses } from './components/profile/addresses/addresses/addresses';
 import { MyOffers } from './components/profile/my-offers/my-offers/my-offers';
 import { OfferBrowser } from './components/offers/browser/offer-browser/offer-browser';
 import { Cart } from './components/cart/cart/cart';
+import { Fobidden } from './components/information/forbidden/fobidden/fobidden';
 
 export const routes: Routes = [
     { path: '', component: Home},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'offers/sale/:id/edit', component: SaleEdit}, 
     { path: 'offers/sale/:id/details', component: SaleDetails},
     { path: 'cart', component: Cart},
+    { path: 'forbidden', component: Fobidden },
     { path: 'offers', component: OfferBrowser},
     {
         path: 'profile',
