@@ -13,6 +13,7 @@ export class AuthService {
   private readonly resourceUri = "http://localhost:5099/api/auth";
   private loggedInSubject$ = new BehaviorSubject<boolean>(false);
   private loggedIn$ = this.loggedInSubject$.asObservable();
+  
 
   constructor(private httpClient: HttpClient){
     this.loggedInSubject$.next(!!localStorage.getItem('token'));

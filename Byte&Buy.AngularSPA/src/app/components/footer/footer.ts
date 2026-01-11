@@ -22,6 +22,7 @@ export class Footer implements OnInit{
       city: "PLACEHOLDER",
       flatNumber: "PLACEHOLDER",
       country: "PLACEHOLDER",
+      postalCity: "PLACEHOLDER",
       houseNumber: "PLACEHOLDER",
       street: "PLACEHOLDER",
       postalCode: "PLACEHOLDER"

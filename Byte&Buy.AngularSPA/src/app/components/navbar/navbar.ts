@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterModule } from "@angular/router";
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +10,18 @@ import { Router, RouterLink, RouterModule } from "@angular/router";
   standalone: true
 })
 export class Navbar {
-  constructor(private router: Router) {}
+  constructor(private router: Router, protected auth: AuthService) {}
 
-  onSearch(phrase: string) {
-  console.log(52);
-  this.router.navigate(['/offers'], {
-    queryParams: { phrase }
-  });
-}
+    onSearch(phrase: string) {
+    this.router.navigate(['/offers'], {
+      queryParams: { phrase }
+    });
+  }
+
+  onLogout(): void{
+    this.auth.logout();
+    this.router.navigate(['login']);
+  }
+
 }
 

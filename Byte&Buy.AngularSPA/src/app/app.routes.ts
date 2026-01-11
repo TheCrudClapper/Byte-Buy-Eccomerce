@@ -15,28 +15,36 @@ import { MyOffers } from './components/profile/my-offers/my-offers/my-offers';
 import { OfferBrowser } from './components/offers/browser/offer-browser/offer-browser';
 import { Cart } from './components/cart/cart/cart';
 import { Fobidden } from './components/information/forbidden/fobidden/fobidden';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     { path: '', component: Home},
     { path: 'login', component: Login},
     { path: 'register', component: Register},
-    { path: 'offers/rent/create', component: RentCreate}, 
-    { path: 'offers/rent/:id/edit', component: RentEdit}, 
-    { path: 'offers/rent/:id/details', component: RentDetails}, 
-    { path: 'offers/sale/create', component: SaleCreate}, 
-    { path: 'offers/sale/:id/edit', component: SaleEdit}, 
-    { path: 'offers/sale/:id/details', component: SaleDetails},
-    { path: 'cart', component: Cart},
+    {
+        canActivate: [authGuard],
+        path: '',
+        children: [
+            { path: 'offers/rent/create', component: RentCreate}, 
+            { path: 'offers/rent/:id/edit', component: RentEdit}, 
+            { path: 'offers/rent/:id/details', component: RentDetails}, 
+            { path: 'offers/sale/create', component: SaleCreate}, 
+            { path: 'offers/sale/:id/edit', component: SaleEdit}, 
+            { path: 'offers/sale/:id/details', component: SaleDetails},
+            { path: 'cart', component: Cart},
+            {
+                path: 'profile',
+                component: ProfileIndex,
+                children: [
+                    { path: '', redirectTo: 'personal-info', pathMatch: 'full' },
+                    { path: 'personal-info', component: PersonalInfo },
+                    { path: 'addresses', component: Addresses},
+                    { path: 'my-offers', component: MyOffers}
+                ]
+            }
+        ]
+    },
     { path: 'forbidden', component: Fobidden },
     { path: 'offers', component: OfferBrowser},
-    {
-        path: 'profile',
-        component: ProfileIndex,
-        children: [
-            { path: '', redirectTo: 'personal-info', pathMatch: 'full' },
-            { path: 'personal-info', component: PersonalInfo },
-            { path: 'addresses', component: Addresses},
-            { path: 'my-offers', component: MyOffers}
-        ]
-    }
+    
 ];

@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth-service';
 import { LoginRequest } from '../../../core/dto/login-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../core/dto/problem-details';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,9 @@ export class Login {
     password: new FormControl('', Validators.required)
   })
 
+  constructor(private router: Router){
+
+  }
   errorMessage: string | null = null;
 
   onSubmit() {
@@ -29,13 +33,11 @@ export class Login {
       return;
     }
 
+    console.log("clicke");
     const request = this.loginForm.getRawValue() as LoginRequest;
 
     this.authService.login(request).subscribe({
-      next: tokenResponse => {
-        this.errorMessage = null;
-        alert(tokenResponse?.token);
-      },
+      next: () => this.router.navigate(['']),
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
         this.errorMessage = problem?.detail ?? "Something went wrong";
