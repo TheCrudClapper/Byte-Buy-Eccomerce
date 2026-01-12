@@ -1,4 +1,4 @@
-<form [formGroup]="rentForm" (ngSubmit)="submit()">
+<form [formGroup]="rentForm" (ngSubmit)="onSubmit()">
     <div class="container">
         <div class="page-wrapper mt-5 mb-5">
             <div class="row">
@@ -44,9 +44,8 @@
                 <div class="row">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <input type="text" class="form-control" id="inputEmail" formControlName="name">
-                        @if (rentForm | showError:'name') 
-                        {
-                            <span class="validation-error">Title is required and must be between 16 and 75 characters</span>
+                        @if (getErrorMessage("name")) {
+                            <span class="validation-error">{{ getErrorMessage("name") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -54,9 +53,8 @@
                             <input type="number" formControlName="maxRentalDays" class="form-control">
                             <span class="input-group-text">DAYS</span>
                         </div>
-                        @if(rentForm | showError:'maxRentalDays')
-                        {
-                            <span class="validation-error">You need to provide max avaliable rental days</span>
+                         @if (getErrorMessage("maxRentalDays")) {
+                            <span class="validation-error">{{ getErrorMessage("maxRentalDays") }}</span>
                         }
                     </div>
                 </div>
@@ -74,26 +72,28 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedCategoryId">
                             <option [ngValue]="null" disabled>Select Category</option>
-                            @for (item of categories; track item.id) {
-                            <option [ngValue]="item.id">{{ item.title }}</option>
+                            @for (item of categoriesOptions$ | async; track item.id) {
+                                <option [ngValue]="item.id">
+                                    {{ item.title }}
+                                </option>
                             }
                         </select>
-                        @if(rentForm | showError:'selectedCategoryId')
-                        {
-                            <span class="validation-error">You need to select valid category</span>
+                         @if (getErrorMessage("selectedCategoryId")) {
+                            <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedConditionId">
                             <option [ngValue]="null" disabled>Select Condition</option>
-                            @for (item of conditions; track item.id)
+                            @for (item of conditionOptions$ | async; track item.id)
                             {
-                            <option [ngValue]="item.id">{{ item.title }}</option>
+                                <option [ngValue]="item.id">
+                                    {{ item.title }}
+                                </option>
                             }
                         </select>
-                        @if(rentForm | showError:'selectedConditionId')
-                        {
-                        <span class="validation-error">You need to select valid condition</span>
+                         @if (getErrorMessage("selectedConditionId")) {
+                            <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
                         }
                     </div>
                 </div>
@@ -114,16 +114,18 @@
                             <input type="number" class="form-control" formControlName="pricePerDay">
                             <span class="input-group-text">.00</span>
                         </div>
-                        @if(rentForm | showError: 'pricePerDay')
-                        {
-                            <span class="validation-error">You need to enter valid price per day</span>
+                        @if (getErrorMessage("pricePerDay")) {
+                            <span class="validation-error">{{ getErrorMessage("pricePerDay") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
-                            <input type="number" class="form-control">
+                            <input type="number" class="form-control" formControlName="quantityAvaliable">
                             <span class="input-group-text">PCS</span>
                         </div>
+                        @if (getErrorMessage("quantityAvaliable")) {
+                            <span class="validation-error">{{ getErrorMessage("quantityAvaliable") }}</span>
+                        }
                     </div>
                 </div>
             </div>
@@ -139,8 +141,12 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <textarea class="form-control" rows="8"></textarea>
+                        <textarea class="form-control" rows="8" formControlName="description"></textarea>
+                          @if (getErrorMessage("description")) {
+                            <span class="validation-error">{{ getErrorMessage("description") }}</span>
+                        }
                     </div>
+                    
                 </div>
             </div>
 
@@ -158,7 +164,11 @@
                     <div class="col-12 col-md-6">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
-                            <p class="d-inline align-middle">Siedlce 26, 33-322 Korzenna</p>
+                            @if(homeAddress){
+                                <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{ homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
+                            } @else{
+                                 <p class="d-inline align-middle">No home address set yet.</p>
+                            }
                         </div>
                         <div class="row">
                             <div class="col-12 pt-2">
@@ -179,8 +189,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-
+                    <div class="col-12 ">
+                            @for (item of deliveryOptions$ | async; track $index)
+                            {
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <input type="checkbox"
+                                               [checked]="item.id"
+                                               [value]="item.id"
+                                               (change)="toggleDelivery($event, item.id)"
+                                               class="form-check-input checkbox me-2"  />
+                                        <span>{{ item.name }}</span>
+                                    </div>
+                                    <span>{{ item.amount }} {{ item.currency }}</span>
+                                </div>
+                            }
                     </div>
                 </div>
             </div>

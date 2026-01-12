@@ -10,7 +10,7 @@
             </div>
 
             <!--Login Form-->
-            <form [formGroup]="registerForm" (submit)="onSubmit()">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="mb-3">
                     <label for="inputFirstName" class="form-label">First Name</label>
                     <input type="text" class="form-control" formControlName="firstName" id="inputFirstName">
