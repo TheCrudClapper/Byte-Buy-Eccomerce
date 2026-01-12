@@ -5,7 +5,8 @@ import { AuthService } from '../../../../core/services/auth/auth-service';
 import { ProblemDetails } from '../../../../core/api-dto/problem-details';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { shouldShowError } from '../../../../core/helpers/form-helper';
+import { getErrorMessage } from '../../../../core/helpers/form-helper';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,9 @@ import { shouldShowError } from '../../../../core/helpers/form-helper';
 export class RegisterPage {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
+
   errorMessage = signal<string>("");
+  loading = signal<boolean>(false);
 
   registerForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.maxLength(50), Validators.required]),
@@ -31,20 +34,25 @@ export class RegisterPage {
       return;
     }
 
+    this.loading.set(true);
+
     const request = this.registerForm.getRawValue() as RegisterRequest;
 
-    this.authService.register(request).subscribe({
+    this.authService.register(request)
+    .pipe(finalize(() => this.loading.set(false)))
+    .subscribe({
       next: () => {
         this.router.navigate(['login']);
       },
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
         this.errorMessage.set(problem?.detail?.replace(';', '\n') ?? "Something went wrong");
+        this.loading.set(false);
       }
     });
   }
 
-  shouldShowError(controlName: string): boolean{
-    return shouldShowError(this.registerForm, controlName);
+  getErrorMessage(path: string){
+    return getErrorMessage(this.registerForm, path);
   }
 }

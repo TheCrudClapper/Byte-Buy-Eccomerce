@@ -5,7 +5,8 @@ import { LoginRequest } from '../../../../core/api-dto/login-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../../core/api-dto/problem-details';
 import { Router } from '@angular/router';
-import { shouldShowError } from '../../../../core/helpers/form-helper';
+import {  getErrorMessage } from '../../../../core/helpers/form-helper';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,31 +19,39 @@ import { shouldShowError } from '../../../../core/helpers/form-helper';
 export class LoginPage {
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
+
   errorMessage = signal<string>("");
+  loading = signal<boolean>(false);
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
   })
 
-  onSubmit() {
+   onSubmit() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
 
+    this.loading.set(true);
     const request = this.loginForm.getRawValue() as LoginRequest;
 
-    this.authService.login(request).subscribe({
+    this.authService.login(request)
+    .pipe(finalize(() => this.loading.set(false))) 
+    .subscribe({  
       next: () => this.router.navigate(['']),
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
-        this.errorMessage.set(problem?.detail ?? "Something went wrong");
-      }
+        this.errorMessage.set(problem?.detail ?? 'Something went wrong');
+        this.loading.set(false);
+      },
+      complete: () => this.loading.set(false)
     });
   }
 
-  shouldShowError(controlName: string): boolean{
-    return shouldShowError(this.loginForm, controlName);
+  getErrorMessage(path: string){
+    return getErrorMessage(this.loginForm, path);
   }
+
 }
