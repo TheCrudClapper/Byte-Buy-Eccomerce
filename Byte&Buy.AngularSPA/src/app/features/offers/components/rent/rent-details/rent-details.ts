@@ -1,24 +1,35 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DeliveryOption } from '../../shared/delivery-option';
+import { DeliveryOption } from '../../../shared/delivery-option';
 import { CommonModule } from '@angular/common';
-import { SellerInfo } from "../../shared/seller-info/seller-info";
+import { SellerInfo } from '../../../shared/seller-info/seller-info';
 
 @Component({
   selector: 'app-sale-details',
   imports: [FormsModule, CommonModule, SellerInfo],
-  templateUrl: './sale-details.html',
+  templateUrl: './rent-details.html',
   styleUrls: [
-    './sale-details.scss',
-    '../../shared/offers-shared-styles.scss'],
+    './rent-details.scss',
+    '../../../shared/offers-shared-styles.scss'],
     standalone: true
 })
-export class SaleDetails {
-  googleApiBase = "https://www.google.com/maps/search/?api=1&query=";
 
+export class RentDetails {
   deliveryOptions: DeliveryOption[]  = [
       {
         name: 'InPost Parcel Locker - S',
+        priceAndCurrency: '10.95 PLN',
+        carrier: 'Inpost',
+        deliveryChannel: 'Parcel Locker'
+      },
+      {
+        name: 'InPost Parcel Locker - M',
+        priceAndCurrency: '10.95 PLN',
+        carrier: 'Inpost',
+        deliveryChannel: 'Parcel Locker'
+      },
+      {
+        name: 'InPost Parcel Locker - L',
         priceAndCurrency: '10.95 PLN',
         carrier: 'Inpost',
         deliveryChannel: 'Parcel Locker'
@@ -39,13 +50,16 @@ export class SaleDetails {
 
   quantity: number = 56;
   price: number = 49.99;
+  rentalDays: number = 5;
+
+  maxRentalDays: number = 10;
   currency: string = "PLN"
   condition: string = "Used";
   category: string = "CPU";
   quantityAvaliable: number = 69;
   title: string = "Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM";
   isSellerCompany: boolean = false;
-  
+
   description: string = `   🔥 Unleash Elite Performance – AMD Ryzen 7 5700X3D 🔥
 
                             Experience next-level computing with
@@ -80,4 +94,3 @@ export class SaleDetails {
     console.log(this.quantity);
   }
 }
-

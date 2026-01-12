@@ -1,4 +1,4 @@
-import { HomeAddressDto } from "../../shared/dto/home-address-dto";
+import { HomeAddressDto } from "../../shared/api-dto/home-address-dto";
 
 export interface CompanyInfoResponse {
    companyName :string;

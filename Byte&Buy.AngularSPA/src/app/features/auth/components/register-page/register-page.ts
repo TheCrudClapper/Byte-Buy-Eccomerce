@@ -1,19 +1,19 @@
 import { Component, inject, signal, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
-import { RegisterRequest } from '../../../core/api-dto/register-request';
-import { AuthService } from '../../../core/services/auth/auth-service';
-import { ProblemDetails } from '../../../core/api-dto/problem-details';
+import { RegisterRequest } from '../../../../core/api-dto/register-request';
+import { AuthService } from '../../../../core/services/auth/auth-service';
+import { ProblemDetails } from '../../../../core/api-dto/problem-details';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { shouldShowError } from '../../../core/helpers/form-helper';
+import { shouldShowError } from '../../../../core/helpers/form-helper';
 
 @Component({
   selector: 'app-register',
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
-  templateUrl: './register.html',
-  styleUrl: './register.scss',
+  templateUrl: './register-page.html',
+  styleUrl: './register-page.scss',
 })
-export class Register {
+export class RegisterPage {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
   errorMessage = signal<string>("");

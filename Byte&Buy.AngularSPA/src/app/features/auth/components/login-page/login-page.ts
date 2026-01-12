@@ -1,21 +1,21 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
-import { AuthService } from '../../../core/services/auth/auth-service';
-import { LoginRequest } from '../../../core/api-dto/login-request';
+import { AuthService } from '../../../../core/services/auth/auth-service';
+import { LoginRequest } from '../../../../core/api-dto/login-request';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../core/api-dto/problem-details';
+import { ProblemDetails } from '../../../../core/api-dto/problem-details';
 import { Router } from '@angular/router';
-import { shouldShowError } from '../../../core/helpers/form-helper';
+import { shouldShowError } from '../../../../core/helpers/form-helper';
 
 @Component({
   selector: 'app-login',
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
   standalone: true,
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './login-page.html',
+  styleUrl: './login-page.scss',
 })
 
-export class Login {
+export class LoginPage {
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
   errorMessage = signal<string>("");

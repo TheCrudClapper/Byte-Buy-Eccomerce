@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './sale-create.html',
   styleUrls: [
     './sale-create.scss',
-    '../../shared/offers-shared-styles.scss']
+    '../../../shared/offers-shared-styles.scss']
 })
 export class SaleCreate {
 

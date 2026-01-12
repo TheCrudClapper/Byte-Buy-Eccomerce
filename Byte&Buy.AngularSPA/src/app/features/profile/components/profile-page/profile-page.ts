@@ -4,9 +4,9 @@ import { RouterOutlet, RouterLinkActive, RouterLinkWithHref } from '@angular/rou
 @Component({
   selector: 'app-profile',
   imports: [RouterOutlet, RouterLinkActive, RouterLinkWithHref],
-  templateUrl: './profile-index.html',
-  styleUrl: './profile-index.scss',
+  templateUrl: './profile-page.html',
+  styleUrl: './profile-page.scss',
 })
-export class ProfileIndex {
+export class ProfilePage {
 
 }

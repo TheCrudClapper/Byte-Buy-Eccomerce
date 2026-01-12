@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-import { SelectListItemResponse } from '../../../../shared/dto/select-list-item-response';
-import { ShowErrorPipe } from '../../../../core/pipes/show-error-pipe';
+import { SelectListItemResponse } from '../../../../../shared/api-dto/select-list-item-response';
+import { ShowErrorPipe } from '../../../../../core/pipes/show-error-pipe';
 
 @Component({
   selector: 'app-rent-create',
@@ -11,7 +11,7 @@ import { ShowErrorPipe } from '../../../../core/pipes/show-error-pipe';
   standalone: true,
   styleUrls: [
     './rent-create.scss',
-    '../../shared/offers-shared-styles.scss']
+    '../../../shared/offers-shared-styles.scss']
 })
 export class RentCreate {
   categories: SelectListItemResponse[] = [
