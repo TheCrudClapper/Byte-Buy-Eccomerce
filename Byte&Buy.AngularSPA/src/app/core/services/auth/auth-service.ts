@@ -1,8 +1,8 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { TokenResponse } from '../dto/token-response';
-import { LoginRequest } from '../dto/login-request';
-import { RegisterRequest } from '../dto/register-request';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { TokenResponse } from '../../api-dto/token-response';
+import { LoginRequest } from '../../api-dto/login-request';
+import { RegisterRequest } from '../../api-dto/register-request';
+import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

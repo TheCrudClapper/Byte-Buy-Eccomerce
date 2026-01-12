@@ -14,11 +14,16 @@
                 <div class="mb-3">
                     <label for="inputEmail" class="form-label">Email</label>
                     <input type="email" class="form-control" formControlName="email" id="inputEmail">
+                    @if(shouldShowError('email')){
+                        <span class="validation-error">Email is required and must be valid.</span>
+                    }
                 </div>
                 <div class="mb-3">
                     <label for="inputPassword" class="form-label">Password</label>
                     <input type="password" class="form-control" formControlName="password" id="inputPassword">
-                    <!-- <span class="validation-error">Password must be at least 10 characters</span> -->
+                    @if(shouldShowError('password')){
+                        <span class="validation-error">Password must be at least 10 characters</span>
+                    }
                 </div>
 
                 <!--Form Check and Passwords Forgot Link-->
@@ -34,9 +39,8 @@
                     </div>
                 </div>
 
-                @if(errorMessage){
-                    <span class="validation-error">{{ errorMessage }}</span>
-                }
+                <span class="validation-error">{{ errorMessage() }}</span>
+               
                 
                 <!--Log in Button-->
                 <div class="mb-3">

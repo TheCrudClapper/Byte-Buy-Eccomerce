@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyInfoApiService } from '../../features/company-info/services/company-info-api-service';
-import { CompanyInfoResponse } from '../../features/company-info/api-dto/company-info-response';
+import { CompanyInfoApiService } from '../../../core/services/company-info/company-info-api-service';
+import { CompanyInfoResponse } from '../../../core/api-dto/company-info-response';
 
 @Component({
   selector: 'app-footer',
@@ -30,6 +30,7 @@ export class Footer implements OnInit{
   }
 
   constructor(private companyInfoService: CompanyInfoApiService) {}
+
   ngOnInit(){
     this.companyInfoService.getCompanyInfo().subscribe({
         next: (data) => {
