@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TokenResponse } from '../dto/token-response';
 import { LoginRequest } from '../dto/login-request';
 import { RegisterRequest } from '../dto/register-request';
@@ -11,12 +11,10 @@ import { HttpClient } from '@angular/common/http';
 
 export class AuthService {
   private readonly resourceUri = "http://localhost:5099/api/auth";
-  private loggedInSubject$ = new BehaviorSubject<boolean>(false);
-  private loggedIn$ = this.loggedInSubject$.asObservable();
-  
+  private readonly loggedIn = signal<boolean>(false);
 
   constructor(private httpClient: HttpClient){
-    this.loggedInSubject$.next(!!localStorage.getItem('token'));
+    this.loggedIn.set(!!localStorage.getItem('token'));
   }
 
   login(request: LoginRequest): Observable<TokenResponse> {
@@ -25,7 +23,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
-          this.loggedInSubject$.next(true);
+          this.loggedIn.set(true);
         })
       );
   }
@@ -36,10 +34,10 @@ export class AuthService {
 
   logout(): void{
     localStorage.removeItem('token');
-    this.loggedInSubject$.next(false);
+    this.loggedIn.set(false);
   }
 
   isLoggedIn(): boolean{
-    return this.loggedInSubject$.value;
+    return this.loggedIn();
   }
 }

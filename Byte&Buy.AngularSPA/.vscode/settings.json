@@ -4,7 +4,7 @@
     "telemetry.editStats.enabled": false,
     "angular.forceStrictTemplates": false,
     "angular.suggest.includeAutomaticOptionalChainCompletions": true,
-    "workbench.colorTheme": "Aura Dark (Soft Text)",
+    "workbench.colorTheme": "Tokyo Night Storm",
     "workbench.editor.decorations.colors": true,
     "workbench.iconTheme": "vscode-icons",
     "workbench.preferredDarkColorTheme": "Visual Studio Dark",

@@ -4,6 +4,7 @@ import { RegisterRequest } from '../../../core/dto/register-request';
 import { AuthService } from '../../../core/services/auth-service';
 import { ProblemDetails } from '../../../core/dto/problem-details';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class Register {
   private readonly authService: AuthService = inject(AuthService);
+  private readonly router: Router = inject(Router);
 
   registerForm: FormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.maxLength(50), Validators.required]),
@@ -32,8 +34,8 @@ export class Register {
     const request = this.registerForm.getRawValue() as RegisterRequest;
 
     this.authService.register(request).subscribe({
-      next: _ => {
-        alert("Successfully regstered");
+      next: () => {
+        this.router.navigate(['login']);
       },
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
