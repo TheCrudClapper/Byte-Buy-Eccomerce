@@ -20,5 +20,5 @@ export class PortalUserApiService {
   putUserBasicInfo(request: UserBasicInfoUpdateRequest): Observable<UpdatedResponse>{
     return this.httpClient.put<UpdatedResponse>(`${this.resourceUri}/me`, request);
   }
-
+  
 }

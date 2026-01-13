@@ -2,25 +2,37 @@
     <span class="page-title">Personal Information</span>
 </div>
 <div class="content-section">
-    <form>
+    <form [formGroup]="userInfoForm" (ngSubmit)="onUserInfoSubmit()">
         <div class="row mb-3">
             <div class="col-6">
                 <p class="content-section-title mb-1">First Name*</p>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" formControlName="firstName">
+                @if (getErrorMessage("firstName")) {
+                    <span class="validation-error">{{ getErrorMessage("firstName") }}</span>
+                }
             </div>
             <div class="col-6">
                 <p class="content-section-title mb-1">Last Name*</p>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" formControlName="lastName">
+                @if (getErrorMessage("lastName")) {
+                    <span class="validation-error">{{ getErrorMessage("lastName") }}</span>
+                }
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-6">
                 <p class="content-section-title mb-1">Email*</p>
-                <input type="email" class="form-control">
+                <input type="email" class="form-control" formControlName="email">
+                @if (getErrorMessage("email")) {
+                    <span class="validation-error">{{ getErrorMessage("email") }}</span>
+                }
             </div>
             <div class="col-6">
                 <p class="content-section-title mb-1">Phone*</p>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" formControlName="phoneNumber">
+                @if (getErrorMessage("phoneNumber")) {
+                    <span class="validation-error">{{ getErrorMessage("phoneNumber") }}</span>
+                }
             </div>
         </div>
         <div class="row">
@@ -32,8 +44,9 @@
 
     </form>
 </div>
+
 <div class="content-section">
-    <form>
+    <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
         <div class="row mb-3">
             <div class="col-6">
                 <p class="content-section-title mb-1">Current Password*</p>

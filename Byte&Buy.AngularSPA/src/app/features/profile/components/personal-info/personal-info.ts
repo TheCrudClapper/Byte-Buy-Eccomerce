@@ -1,16 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UsersApiService } from '../../services/users-api-service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserBasicInfoResponse } from '../../api-dto/user-basic-info-response';
 import { PortalUserApiService } from '../../services/portal user/portal-user-api-service';
+import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update-request';
+import { getErrorMessage } from '../../../../core/helpers/form-helper';
 
 @Component({
   selector: 'app-personal-info',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './personal-info.html',
+  standalone: true,
   styleUrl: './personal-info.scss',
 })
-export class PersonalInfo implements OnInit{
+export class PersonalInfo implements OnInit {
   private readonly userApiService: UsersApiService = inject(UsersApiService);
   private readonly portalUserApiService: PortalUserApiService = inject(PortalUserApiService);
 
@@ -28,29 +31,42 @@ export class PersonalInfo implements OnInit{
   });
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
   }
 
-  onPasswordSubmit(){
-    if(this.passwordForm.invalid){
+  onPasswordSubmit() {
+    if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
       return;
     }
   }
-  
-  onUserInfoSubmit(){
-    if(this.userInfoForm.invalid){
+
+  onUserInfoSubmit() {
+    if (this.userInfoForm.invalid) {
       this.userInfoForm.markAllAsTouched();
       return;
     }
 
     const data = this.userInfoForm.value;
 
-    const payload: UserBasicInfoResponse = {
+    const payload: UserBasicInfoUpdateRequest = {
       email: data.email,
       firstName: data.firstName,
       phoneNumber: data.phoneNumber,
       lastName: data.lastName,
     }
+
+    this.portalUserApiService.putUserBasicInfo(payload).subscribe({
+      next: (response) => {
+        console.log(response.dateUpdated);
+      },
+      error: () => {
+        console.log("gowno");
+      }
+    });
+  }
+
+  getErrorMessage(path: string) {
+    return getErrorMessage(this.userInfoForm, path);
   }
 }

@@ -37,6 +37,7 @@ public sealed class PortalUser : ApplicationUser
         LastName = lastName;
         PhoneNumber = phoneNumber;
         Email = email;
+        UserName = email;
 
         return Result.Success(validationResult);
     }
@@ -102,6 +103,7 @@ public sealed class PortalUser : ApplicationUser
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        UserName = email;
         DateEdited = DateTime.UtcNow;
         PhoneNumber = phoneNumber;
 

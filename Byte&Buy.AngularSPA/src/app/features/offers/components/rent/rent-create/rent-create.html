@@ -253,15 +253,15 @@
                         @if(parcelLockerDeliveries().length !== 0){
                         <p class="content-section-title mt-3">Pickup Point</p>
                         @for (item of courierDeliveries(); track $index)
-                            {
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <input type="checkbox" class="form-check-input checkbox me-2" />
-                                    <span>{{ item.name }}</span>
-                                </div>
-                                <span>{{ item.amount }} {{ item.currency }}</span>
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
                             </div>
-                            }
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
                         }
                     </div>
                 </div>
