@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.ApplicationUser;
 using ByteBuy.Core.Extensions;
+using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +18,7 @@ public class ApplicationUserService : IApplicationUserService
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null)
-            return Result.Failure(AuthErrors.NotFound);
+            return Result.Failure(CommonUserErrors.NotFound);
 
         if (!string.Equals(request.ConfirmPassword, request.NewPassword, StringComparison.Ordinal))
             return Result.Failure(AuthErrors.PasswordsDontMatch);
@@ -29,5 +30,14 @@ public class ApplicationUserService : IApplicationUserService
             return identityResult.ToResult();
 
         return Result.Success();
+    }
+
+    public async Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        if (user == null)
+            return Result.Failure<UserBasicInfoResponse>(CommonUserErrors.NotFound);
+
+        return user.ToUserBasicInfoResponse();
     }
 }

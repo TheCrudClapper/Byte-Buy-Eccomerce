@@ -7,13 +7,6 @@ namespace ByteBuy.Core.Mappings;
 
 public static class RoleMappings
 {
-    //Deprecated
-    //public static SelectListItemResponse<Guid> ToSelectListItemResponse(this ApplicationRole role)
-    //    => new SelectListItemResponse<Guid>(role.Id, role.Name!);
-
-    //public static RoleResponse ToRoleResponse(this ApplicationRole role, IReadOnlyCollection<Guid> permissionIds)
-    //    => new RoleResponse(role.Id, role.Name!, permissionIds);
-
     public static CreatedResponse ToCreatedResponse(this ApplicationRole role)
         => new CreatedResponse(role.Id, role.DateCreated);
 

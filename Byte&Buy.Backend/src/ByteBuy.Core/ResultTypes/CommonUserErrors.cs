@@ -2,6 +2,9 @@
 
 public static class CommonUserErrors
 {
+    public static readonly Error NotFound = new(
+        ErrorType.NotFound, "User.NotFound", "User is not found");
+
     public static readonly Error FirstNameInvalid = Error.Validation(
         "User.FirstName", "First name is required.");
 

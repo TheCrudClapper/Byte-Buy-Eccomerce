@@ -38,5 +38,5 @@ export class DeliveryApiService {
   getAvaliableDeliveries(): Observable<DeliveryOptionsResponse>{
     return this.httpClient.get<DeliveryOptionsResponse>(`${this.resourceUri}/available`);
   }
-  
+
 }

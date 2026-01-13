@@ -18,4 +18,8 @@ public class UsersController : BaseApiController
     [HttpPut("password")]
     public async Task<IActionResult> ChangeUserPassword(PasswordChangeRequest request)
         => HandleResult(await _userService.ChangePassword(CurrentUserId, request));
+
+    [HttpGet("me")]
+    public async Task<ActionResult<UserBasicInfoResponse>> GetUserBasicInfo()
+        => HandleResult(await _userService.GetBasicUserInfoAsync(CurrentUserId));
 }
