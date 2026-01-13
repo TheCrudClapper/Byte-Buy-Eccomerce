@@ -7,7 +7,7 @@ import { HomeAddressDto } from '../../../shared/api-dto/home-address-dto';
   providedIn: 'root',
 })
 export class AddressApiService {
-    private readonly resourceUri = "http://localhost:5099/api/me/";
+    private readonly resourceUri = "http://localhost:5099/api/me";
     private readonly httpClient: HttpClient = inject(HttpClient); 
 
     getHomeAddress(): Observable<HomeAddressDto>{

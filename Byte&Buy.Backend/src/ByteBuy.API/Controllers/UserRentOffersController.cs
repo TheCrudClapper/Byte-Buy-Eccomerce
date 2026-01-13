@@ -17,11 +17,11 @@ public class UserRentOffersController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostAsync(UserRentOfferAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] UserRentOfferAddRequest request)
         => HandleResult(await _rentOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, UserRentOfferUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm]UserRentOfferUpdateRequest request)
        => HandleResult(await _rentOfferService.UpdateAsync(CurrentUserId, id, request));
 
     [HttpGet("{id:guid}")]

@@ -15,21 +15,47 @@
                         <p class="content-section-description">Add images of maximum 5MB each in jpg, jpeg or png
                             formats.</p>
                     </div>
+
+                    <!-- Image Input-->
                     <div class="col-1 text-end">
-                        <input type="file" id="file-input" />
-                        <label for="file-input" class="file-button" multiple>
+                        <input type="file" id="file-input" hidden accept="image/png, image/jpeg"
+                            (change)="onImagesSelected($event)" multiple />
+                        <label for="file-input" class="file-button" [class.disabled]="images.length >= 10">
                             <i class="fa-solid fa-plus"></i>
                         </label>
                     </div>
                 </div>
-                <div class="inner-container">
-                    <div class="row">
-                        <div class="col-12">
-                            <i class="fa-regular fa-images fa-3x align-middle"></i>
-                            <p class="d-inline align-middle">Add up to 10 images per offer.</p>
+
+                <!-- Container for displaying imges -->
+                <div class="inner-container horizontal-scroll">
+                    <div class="images-row">
+                        @if(images.length === 0){
+                        <div class="d-flex justify-content-center align-items-center w-100 h-100 text-center">
+                            <i class="fa-regular fa-images fa-3x mb-2"></i>
+                            <p class="mb-0">Add up to 10 images per offer.</p>
                         </div>
+                        } @else{
+                        @for (item of images; track $index)
+                        {
+                        <div class="image-card">
+                            <div class="position-relative">
+                                <img [src]="item.preview" class="img-fluid rounded"
+                                    style="height: 130px; width: 100%; object-fit: cover; aspect-ratio: 4 / 4;" />
+                                <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                                    (click)="removeImage($index)">
+                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
+                                </button>
+
+                                <input type="text" maxlength="50" class="form-control mt-2"
+                                    placeholder="Alt text (optional)" [(ngModel)]="item.alt"
+                                    [ngModelOptions]="{ standalone: true }" />
+                            </div>
+                        </div>
+                        }
+                        }
                     </div>
                 </div>
+
             </div>
 
             <!-- Title -->
@@ -45,7 +71,7 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <input type="text" class="form-control" id="inputEmail" formControlName="name">
                         @if (getErrorMessage("name")) {
-                            <span class="validation-error">{{ getErrorMessage("name") }}</span>
+                        <span class="validation-error">{{ getErrorMessage("name") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -53,8 +79,8 @@
                             <input type="number" formControlName="maxRentalDays" class="form-control">
                             <span class="input-group-text">DAYS</span>
                         </div>
-                         @if (getErrorMessage("maxRentalDays")) {
-                            <span class="validation-error">{{ getErrorMessage("maxRentalDays") }}</span>
+                        @if (getErrorMessage("maxRentalDays")) {
+                        <span class="validation-error">{{ getErrorMessage("maxRentalDays") }}</span>
                         }
                     </div>
                 </div>
@@ -73,13 +99,13 @@
                         <select class="form-select" formControlName="selectedCategoryId">
                             <option [ngValue]="null" disabled>Select Category</option>
                             @for (item of categoriesOptions$ | async; track item.id) {
-                                <option [ngValue]="item.id">
-                                    {{ item.title }}
-                                </option>
+                            <option [ngValue]="item.id">
+                                {{ item.title }}
+                            </option>
                             }
                         </select>
-                         @if (getErrorMessage("selectedCategoryId")) {
-                            <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
+                        @if (getErrorMessage("selectedCategoryId")) {
+                        <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -87,13 +113,13 @@
                             <option [ngValue]="null" disabled>Select Condition</option>
                             @for (item of conditionOptions$ | async; track item.id)
                             {
-                                <option [ngValue]="item.id">
-                                    {{ item.title }}
-                                </option>
+                            <option [ngValue]="item.id">
+                                {{ item.title }}
+                            </option>
                             }
                         </select>
-                         @if (getErrorMessage("selectedConditionId")) {
-                            <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
+                        @if (getErrorMessage("selectedConditionId")) {
+                        <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
                         }
                     </div>
                 </div>
@@ -115,7 +141,7 @@
                             <span class="input-group-text">.00</span>
                         </div>
                         @if (getErrorMessage("pricePerDay")) {
-                            <span class="validation-error">{{ getErrorMessage("pricePerDay") }}</span>
+                        <span class="validation-error">{{ getErrorMessage("pricePerDay") }}</span>
                         }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
@@ -124,7 +150,7 @@
                             <span class="input-group-text">PCS</span>
                         </div>
                         @if (getErrorMessage("quantityAvaliable")) {
-                            <span class="validation-error">{{ getErrorMessage("quantityAvaliable") }}</span>
+                        <span class="validation-error">{{ getErrorMessage("quantityAvaliable") }}</span>
                         }
                     </div>
                 </div>
@@ -142,11 +168,11 @@
                 <div class="row">
                     <div class="col-12">
                         <textarea class="form-control" rows="8" formControlName="description"></textarea>
-                          @if (getErrorMessage("description")) {
-                            <span class="validation-error">{{ getErrorMessage("description") }}</span>
+                        @if (getErrorMessage("description")) {
+                        <span class="validation-error">{{ getErrorMessage("description") }}</span>
                         }
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -165,15 +191,19 @@
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
                             @if(homeAddress){
-                                <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{ homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
+                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
+                                homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
-                                 <p class="d-inline align-middle">No home address set yet.</p>
+                            <p class="d-inline align-middle">No home address set yet.</p>
                             }
                         </div>
                         <div class="row">
                             <div class="col-12 pt-2">
                                 <a class="link">Change Address</a>
                             </div>
+                            @if(homeAddress === null){
+                            <span class="validation-error">Home address is required to be set, befora publishing.</span>
+                            }
                         </div>
 
                     </div>
@@ -189,21 +219,50 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 ">
-                            @for (item of deliveryOptions$ | async; track $index)
+                    <div class="col-12">
+                        @if(parcelLockerDeliveries().length > 0){
+                        <p class="content-section-title">Parcel Lockers</p>
+                        @for (item of parcelLockerDeliveries(); track $index)
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12">
+                        @if(parcelLockerDeliveries().length > 0){
+                        <p class="content-section-title mt-3">Courier</p>
+                        @for (item of courierDeliveries(); track $index)
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12">
+                        @if(parcelLockerDeliveries().length !== 0){
+                        <p class="content-section-title mt-3">Pickup Point</p>
+                        @for (item of courierDeliveries(); track $index)
                             {
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <input type="checkbox"
-                                               [checked]="item.id"
-                                               [value]="item.id"
-                                               (change)="toggleDelivery($event, item.id)"
-                                               class="form-check-input checkbox me-2"  />
-                                        <span>{{ item.name }}</span>
-                                    </div>
-                                    <span>{{ item.amount }} {{ item.currency }}</span>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <input type="checkbox" class="form-check-input checkbox me-2" />
+                                    <span>{{ item.name }}</span>
                                 </div>
+                                <span>{{ item.amount }} {{ item.currency }}</span>
+                            </div>
                             }
+                        }
                     </div>
                 </div>
             </div>

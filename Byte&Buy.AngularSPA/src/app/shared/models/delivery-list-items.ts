@@ -3,6 +3,6 @@ export interface DeliveryListItem{
     id: Guid,
     name: string,
     currency: string;
-    amount: string;
+    amount: number;
     carrier: string;    
 }

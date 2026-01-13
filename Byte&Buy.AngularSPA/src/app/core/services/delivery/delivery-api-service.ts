@@ -5,6 +5,7 @@ import { SelectListItem } from '../../../shared/models/select-list-item';
 import { SelectListItemResponse } from '../../../shared/api-dto/select-list-item-response';
 import { DeliveryResponse } from '../../api-dto/delivery-response';
 import { DeliveryListItem } from '../../../shared/models/delivery-list-items';
+import { DeliveryOptionsResponse } from '../../../shared/api-dto/delivery-options-response';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class DeliveryApiService {
     );
   }
   
-  getDeliveriesList(): Observable<DeliveryListItem[]>{
+  getDeliveriesList(): Observable<DeliveryResponse[]>{
     return this.httpClient.get<DeliveryResponse[]>(`${this.resourceUri}/list`).pipe(
       map(response => response.map(item => ({
         id: item.id,
@@ -34,4 +35,8 @@ export class DeliveryApiService {
     );
   }
 
+  getAvaliableDeliveries(): Observable<DeliveryOptionsResponse>{
+    return this.httpClient.get<DeliveryOptionsResponse>(`${this.resourceUri}/available`);
+  }
+  
 }

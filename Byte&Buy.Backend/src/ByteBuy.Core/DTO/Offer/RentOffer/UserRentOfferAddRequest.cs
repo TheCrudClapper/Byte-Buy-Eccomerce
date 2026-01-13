@@ -8,7 +8,6 @@ public record UserRentOfferAddRequest(
    [Required] Guid ConditionId,
    [Required, MaxLength(75)] string Name,
    [Required, MaxLength(2000)] string Description,
-   [Required] int StockQuantity,
    [Required] int QuantityAvailable,
    [Required] decimal PricePerDay,
    [Required] int MaxRentalDays,
