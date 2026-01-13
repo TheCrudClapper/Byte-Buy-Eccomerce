@@ -27,6 +27,20 @@ public sealed class PortalUser : ApplicationUser
         return new PortalUser(firstName, lastName, email, phoneNumber);
     }
 
+    public Result UpdateBasicInfo(string firstName, string lastName, string email, string? phoneNumber)
+    {
+        var validationResult = ValidateBasicInfo(firstName, lastName, email, phoneNumber);
+        if (validationResult.IsFailure)
+            return Result.Failure<PortalUser>(validationResult.Error);
+
+        FirstName = firstName;
+        LastName = lastName;
+        PhoneNumber = phoneNumber;
+        Email = email;
+
+        return Result.Success(validationResult);
+    }
+
     public override void Deactivate()
     {
         base.Deactivate();

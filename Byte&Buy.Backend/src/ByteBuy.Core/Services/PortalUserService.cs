@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.ApplicationUser;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Extensions;
@@ -12,8 +13,8 @@ using static ByteBuy.Core.Specification.CartSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 
 namespace ByteBuy.Core.Services;
-
 public class PortalUserService : IPortalUserService
+
 {
     private readonly IPasswordService _passwordService;
     private readonly ICartRepository _cartRepository;
@@ -192,5 +193,38 @@ public class PortalUserService : IPortalUserService
             return add.ToResult();
 
         return Result.Success();
+    }
+
+    public async Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default)
+    {
+        var spec = new PortalUserToUserBasicInfoResponseSpec(userId);
+        var userInfo = await _portalUserRepository.GetBySpecAsync(spec, ct);
+
+        return userInfo is null
+            ? Result.Failure<UserBasicInfoResponse>(CommonUserErrors.NotFound)
+            : userInfo;
+    }
+
+    public async Task<Result<UpdatedResponse>> PutUserBasicInfo(Guid userId, UserBasicInfoUpdateRequest request)
+    {
+        var spec = new PortalUserSpec(userId);
+        var portalUser = await _portalUserRepository.GetBySpecAsync(spec);
+        if (portalUser is null)
+            return Result.Failure<UpdatedResponse>(CommonUserErrors.NotFound);
+
+        if (portalUser.Email != request.Email && await _userRepository.ExistByEmailAsync(request.Email))
+            return Result.Failure<UpdatedResponse>(AuthErrors.EmailAlreadyTaken);
+
+        var updateResult = portalUser.UpdateBasicInfo(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.PhoneNumber);
+
+        if (updateResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(updateResult.Error);
+
+        await _userManager.UpdateAsync(portalUser);
+        return portalUser.ToUpdatedResponse();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.AddressValueObj;
+using ByteBuy.Core.DTO.ApplicationUser;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.DTO.Shared;
 using System.Linq.Expressions;
@@ -43,4 +44,11 @@ public static class PortalUserMappings
             p.LastName,
             p.Email!,
             p.UserRoles.Select(ur => ur.Role.Name).FirstOrDefault() ?? "Unknown");
+
+    public static Expression<Func<PortalUser, UserBasicInfoResponse>> UserBasicInfoResponseProjection
+        => p => new UserBasicInfoResponse(
+            p.FirstName,
+            p.LastName,
+            p.Email!,
+            p.PhoneNumber);
 }

@@ -1,6 +1,7 @@
 ﻿
 using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.ApplicationUser;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
 
@@ -25,6 +26,14 @@ public static class PortalUserSpecifications
             Query.Where(p => p.Id == id)
                 .Include(p => p.UserPermissions)
                 .Include(p => p.ShippingAddresses);
+        }
+    }
+
+    public sealed class PortalUserSpec : Specification<PortalUser>
+    {
+        public PortalUserSpec(Guid id)
+        {
+            Query.Where(p => p.Id == id);
         }
     }
 
@@ -62,6 +71,15 @@ public static class PortalUserSpecifications
         {
             Query.AsNoTracking()
                 .Select(PortalUserMappings.PortalUserListResponseProjection);
+        }
+    }
+
+    public sealed class PortalUserToUserBasicInfoResponseSpec : Specification<PortalUser, UserBasicInfoResponse>
+    {
+        public PortalUserToUserBasicInfoResponseSpec(Guid id)
+        {
+            Query.Where(p => p.Id == id)
+                .Select(PortalUserMappings.UserBasicInfoResponseProjection);
         }
     }
 }

@@ -32,12 +32,5 @@ public class ApplicationUserService : IApplicationUserService
         return Result.Success();
     }
 
-    public async Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default)
-    {
-        var user = await _userManager.FindByIdAsync(userId.ToString());
-        if (user == null)
-            return Result.Failure<UserBasicInfoResponse>(CommonUserErrors.NotFound);
-
-        return user.ToUserBasicInfoResponse();
-    }
+  
 }
