@@ -7,19 +7,27 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnackbarService {
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
-  success(message: string){
-    this.snackBar.open(message, 'OK', {
+  success(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      panelClass: ['success']
-    })
+    });
   }
 
-  error(message: string){
-
+  error(message: string) {
+      this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
 
-  info(message: string){
-
+  info(message: string) {
+      this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+    });
   }
 }

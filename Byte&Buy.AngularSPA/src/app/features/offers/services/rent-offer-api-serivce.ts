@@ -18,14 +18,14 @@ export class RentOfferApiSerivce {
   }
 
   put(id: Guid, payload: FormData): Observable<UpdatedResponse>{
-    return this.httpClient.put<UpdatedResponse>(`${this.resourceUri}/{id}`, payload);
+    return this.httpClient.put<UpdatedResponse>(`${this.resourceUri}/${id}`, payload);
   }
 
   delete(id: Guid){
-    return this.httpClient.delete<UpdatedResponse>(`${this.resourceUri}/{id}`,);
+    return this.httpClient.delete<UpdatedResponse>(`${this.resourceUri}/${id}`,);
   }
 
   getById(id: Guid): Observable<UserRentOfferResponse>{
-    return this.httpClient.get<UserRentOfferResponse>(`${this.resourceUri}/{id}`);
+    return this.httpClient.get<UserRentOfferResponse>(`${this.resourceUri}/${id}`);
   }
 }

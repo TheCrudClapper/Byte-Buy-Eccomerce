@@ -11,9 +11,10 @@ import { DeliveryListItem } from '../../../../../shared/models/delivery-list-ite
 import { AddressApiService } from '../../../../../core/services/address/address-api-service';
 import { HomeAddressDto } from '../../../../../shared/api-dto/home-address-dto';
 import { RentOfferApiSerivce } from '../../../services/rent-offer-api-serivce';
-import { map, Observable } from 'rxjs';
+import { map, Observable, single } from 'rxjs';
 import { ImageItem } from '../../../models/image-item';
 import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
+import { SnackbarService } from '../../../../../core/services/snackbar/snackbar-service';
 
 @Component({
   selector: 'app-rent-create',
@@ -30,6 +31,7 @@ export class RentCreate implements OnInit {
   private readonly deliveryApiService = inject(DeliveryApiService);
   private readonly addressApiService = inject(AddressApiService);
   private readonly rentOfferApiService = inject(RentOfferApiSerivce);
+  private readonly snackbarService: SnackbarService = inject(SnackbarService);
 
   categoriesOptions$!: Observable<SelectListItem[]>;
   conditionOptions$!: Observable<SelectListItem[]>;
@@ -37,30 +39,28 @@ export class RentCreate implements OnInit {
   pickupPointDeliveries = signal<DeliveryListItem[]>([]);
   courierDeliveries = signal<DeliveryListItem[]>([]);
 
-  homeAddress!: HomeAddressDto;
+  homeAddress = signal<HomeAddressDto | null>(null); 
   images: ImageItem[] = [];
 
   rentForm: FormGroup = new FormGroup({
-    name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.min(16)]),
+    name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
     selectedCategoryId: new FormControl<string | null>(null, [Validators.required]),
     selectedConditionId: new FormControl<string | null>(null, [Validators.required]),
-    pricePerDay: new FormControl<number>(0.00, [Validators.required, Validators.min(1)]),
-    quantityAvailable: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
-    maxRentalDays: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
+    pricePerDay: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
-    parcelLockerIds: new FormArray<FormControl<Guid>>([]),
+    parcelLockerDeliveries: new FormArray<FormControl<Guid | null>>([]),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
-    images: new FormControl<File[] | null>(null, [Validators.required, Validators.minLength(1)])
   });
-
 
 
   ngOnInit(): void {
     this.categoriesOptions$ = this.categoryApiService.getSelectList();
     this.conditionOptions$ = this.conditionApiService.getSelectList();
 
-    this.addressApiService.getHomeAddress().subscribe(response => {
-      this.homeAddress = response;
+    this.addressApiService.getHomeAddress().subscribe(address => {
+      this.homeAddress.set(address);
     });
 
     this.deliveryApiService.getAvaliableDeliveries()
@@ -84,34 +84,53 @@ export class RentCreate implements OnInit {
     fd.append('MaxRentalDays', form.maxRentalDays.toString());
 
     this.images.forEach((img, index) => {
-      fd.append(`Images[${index}].File`, img.file, img.file.name);
-      fd.append(`Images[${index}].Alt`, img.alt || '');
+      fd.append(`Images[${index}].Image`, img.file, img.file.name);
+      fd.append(`Images[${index}].AltText`, img.alt || '');
     });
 
-    form.selectedOtherDeliveriesIds.forEach((id: Guid, index: number) => {
+    form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, id.toString());
     });
-
     return fd;
   }
 
   onSubmit(): void {
     if (this.rentForm.invalid) {
       this.rentForm.markAllAsTouched();
-      console.log("didnt pass");
       return;
     };
-    console.log("passed");
+
+    if (!this.homeAddress()) {
+      this.snackbarService.success("To add offer you need to add address !");
+      return;
+    }
+
     const payload = this.buildFormData();
 
     this.rentOfferApiService.post(payload).subscribe({
       next: () => {
-        console.log("wokrs");
+        this.snackbarService.success("Successfully published offer!");
       },
       error: () => {
-        console.log("error");
+        this.snackbarService.success("Gowno nie dziala");
       }
     })
+  }
+
+  onDeliveryToggle(id: Guid, checked: boolean): void {
+    const array = this.rentForm.get('otherDeliveriesIds') as FormArray
+
+    if (checked)
+      array.push(new FormControl(id));
+    else {
+      const index = array.controls.findIndex(c => c.value === id);
+      if (index !== -1) {
+        array.removeAt(index);
+      }
+    }
+
+    array.markAsTouched();
+    array.updateValueAndValidity();
   }
 
   getErrorMessage(path: string) {

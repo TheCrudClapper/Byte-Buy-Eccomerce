@@ -39,6 +39,12 @@ public class UserRentOfferService : IUserRentOfferService
         if (validation.IsFailure)
             return Result.Failure<CreatedResponse>(validation.Error);
 
+        var spec = new UserHomeAddressSpec(userId);
+        var homeAddress = await _portalUserRepository.GetBySpecAsync(spec);
+
+        if (homeAddress is null)
+            return Result.Failure<CreatedResponse>(PortalUserErrors.HomeAddressNotSet);
+
         var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.Images);
         if (draftsResult.IsFailure)
             return Result.Failure<CreatedResponse>(draftsResult.Error);
@@ -58,12 +64,6 @@ public class UserRentOfferService : IUserRentOfferService
         }
 
         var item = itemCreationResult.Value;
-
-        var spec = new UserHomeAddressSpec(userId);
-        var homeAddress = await _portalUserRepository.GetBySpecAsync(spec);
-
-        if (homeAddress is null)
-            return Result.Failure<CreatedResponse>(PortalUserErrors.HomeAddressNotSet);
 
         var deliveryIds = _itemHelperService
             .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);

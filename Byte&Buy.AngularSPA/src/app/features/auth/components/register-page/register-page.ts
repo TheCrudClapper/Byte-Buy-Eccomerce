@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { finalize } from 'rxjs';
+import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ import { finalize } from 'rxjs';
 export class RegisterPage {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
+  private readonly snackBarService = inject(SnackbarService);
 
   errorMessage = signal<string>("");
   loading = signal<boolean>(false);
@@ -42,6 +44,7 @@ export class RegisterPage {
     .pipe(finalize(() => this.loading.set(false)))
     .subscribe({
       next: () => {
+        this.snackBarService.success("Successfully registered!");
         this.router.navigate(['login']);
       },
       error: (error: HttpErrorResponse) => {

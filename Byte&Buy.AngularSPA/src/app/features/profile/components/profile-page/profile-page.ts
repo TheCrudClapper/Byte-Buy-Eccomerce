@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
-
+import { Component, inject } from '@angular/core';
+import { RouterOutlet, RouterLinkActive, RouterLinkWithHref, Router } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth/auth-service';
 @Component({
   selector: 'app-profile',
   imports: [RouterOutlet, RouterLinkActive, RouterLinkWithHref],
@@ -8,5 +8,12 @@ import { RouterOutlet, RouterLinkActive, RouterLinkWithHref } from '@angular/rou
   styleUrl: './profile-page.scss',
 })
 export class ProfilePage {
-
+  private readonly auth: AuthService = inject(AuthService);
+  private readonly router: Router = inject(Router);
+  
+  onLogout(): void{
+    this.auth.logout();
+    this.router.navigate(['login']);
+  }
+  
 }

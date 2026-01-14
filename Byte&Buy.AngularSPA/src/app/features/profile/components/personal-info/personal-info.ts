@@ -6,7 +6,6 @@ import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { PasswordChangeRequest } from '../../api-dto/password-change-request';
 import { finalize } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
 
 @Component({
@@ -48,8 +47,6 @@ export class PersonalInfo implements OnInit {
       return;
     }
 
-    this.snackBarService.success("Jakub ma fajne cycuszki");
-
     this.passwordDataLoading.set(true);
     const data = this.passwordForm.value;
 
@@ -62,8 +59,8 @@ export class PersonalInfo implements OnInit {
     this.userApiService.changePassword(payload)
     .pipe(finalize(() => {this.passwordDataLoading.set(false)}))
     .subscribe({
-      next: (response) => {
-        console.log('updated');
+      next: () => {
+        this.snackBarService.success("Successfully updated password !");
       }
     })
   }
@@ -85,7 +82,7 @@ export class PersonalInfo implements OnInit {
 
     this.portalUserApiService.putUserBasicInfo(payload).subscribe({
       next: (response) => {
-        console.log(response.dateUpdated);
+        this.snackBarService.success("Successfully updated user data !");
       },
       error: () => {
         console.log("gowno");

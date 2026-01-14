@@ -146,11 +146,11 @@
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
-                            <input type="number" class="form-control" formControlName="quantityAvaliable">
+                            <input type="number" class="form-control" formControlName="quantityAvailable">
                             <span class="input-group-text">PCS</span>
                         </div>
-                        @if (getErrorMessage("quantityAvaliable")) {
-                        <span class="validation-error">{{ getErrorMessage("quantityAvaliable") }}</span>
+                        @if (getErrorMessage("quantityAvailable")) {
+                        <span class="validation-error">{{ getErrorMessage("quantityAvailable") }}</span>
                         }
                     </div>
                 </div>
@@ -190,19 +190,19 @@
                     <div class="col-12 col-md-6">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
-                            @if(homeAddress){
-                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
-                                homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
+                            @if(homeAddress()){
+                            <p class="d-inline align-middle">{{ homeAddress()?.city}} {{homeAddress()?.houseNumber}}, {{
+                                homeAddress()?.postalCode}} {{ homeAddress()?.postalCity }}</p>
                             } @else{
-                            <p class="d-inline align-middle">No home address set yet.</p>
+                                <p class="d-inline align-middle">No home address set yet.</p>
                             }
                         </div>
                         <div class="row">
                             <div class="col-12 pt-2">
                                 <a class="link">Change Address</a>
                             </div>
-                            @if(homeAddress === null){
-                            <span class="validation-error">Home address is required to be set, befora publishing.</span>
+                            @if(!homeAddress()){
+                                <span class="validation-error">Home address is required to be set, befora publishing.</span>
                             }
                         </div>
 
@@ -256,7 +256,9 @@
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <input type="checkbox"
+                                       (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                       class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
                             <span>{{ item.amount }} {{ item.currency }}</span>
