@@ -6,6 +6,8 @@ import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { PasswordChangeRequest } from '../../api-dto/password-change-request';
 import { finalize } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
 
 @Component({
   selector: 'app-personal-info',
@@ -17,6 +19,7 @@ import { finalize } from 'rxjs';
 export class PersonalInfo implements OnInit {
   private readonly userApiService: UsersApiService = inject(UsersApiService);
   private readonly portalUserApiService: PortalUserApiService = inject(PortalUserApiService);
+  private readonly snackBarService: SnackbarService = inject(SnackbarService);
 
   userDataLoading = signal<boolean>(false);
   passwordDataLoading = signal<boolean>(false);
@@ -44,6 +47,8 @@ export class PersonalInfo implements OnInit {
       this.passwordForm.markAllAsTouched();
       return;
     }
+
+    this.snackBarService.success("Jakub ma fajne cycuszki");
 
     this.passwordDataLoading.set(true);
     const data = this.passwordForm.value;
