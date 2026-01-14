@@ -4,5 +4,5 @@ public record UserBasicInfoResponse(
     string FirstName,
     string LastName,
     string Email,
-    string? Phone);
+    string? PhoneNumber);
 

@@ -50,8 +50,8 @@ export class LoginPage {
     });
   }
 
+
   getErrorMessage(path: string){
     return getErrorMessage(this.loginForm, path);
   }
-
 }

@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { UsersApiService } from '../../services/users-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserBasicInfoResponse } from '../../api-dto/user-basic-info-response';
 import { PortalUserApiService } from '../../services/portal user/portal-user-api-service';
 import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update-request';
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
+import { PasswordChangeRequest } from '../../api-dto/password-change-request';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-personal-info',
@@ -16,6 +17,9 @@ import { getErrorMessage } from '../../../../core/helpers/form-helper';
 export class PersonalInfo implements OnInit {
   private readonly userApiService: UsersApiService = inject(UsersApiService);
   private readonly portalUserApiService: PortalUserApiService = inject(PortalUserApiService);
+
+  userDataLoading = signal<boolean>(false);
+  passwordDataLoading = signal<boolean>(false);
 
   passwordForm: FormGroup = new FormGroup({
     currentPassword: new FormControl<string>("", [Validators.required, Validators.minLength(8)]),
@@ -31,7 +35,8 @@ export class PersonalInfo implements OnInit {
   });
 
   ngOnInit(): void {
-    
+    this.userDataLoading.set(true);
+    this.loadBasicInfo();
   }
 
   onPasswordSubmit() {
@@ -39,6 +44,23 @@ export class PersonalInfo implements OnInit {
       this.passwordForm.markAllAsTouched();
       return;
     }
+
+    this.passwordDataLoading.set(true);
+    const data = this.passwordForm.value;
+
+    const payload: PasswordChangeRequest = {
+      confirmPassword: data.confirmPassword,
+      newPassword: data.newPassword,
+      currentPassword: data.currentPassword,
+    }
+
+    this.userApiService.changePassword(payload)
+    .pipe(finalize(() => {this.passwordDataLoading.set(false)}))
+    .subscribe({
+      next: (response) => {
+        console.log('updated');
+      }
+    })
   }
 
   onUserInfoSubmit() {
@@ -66,7 +88,25 @@ export class PersonalInfo implements OnInit {
     });
   }
 
-  getErrorMessage(path: string) {
+  loadBasicInfo(): void {
+    this.portalUserApiService.getUserBasicInfo()
+      .pipe(finalize(() => this.userDataLoading.set(false)))
+      .subscribe(response =>  
+        { this.userInfoForm.patchValue(
+        {
+          firstName: response.firstName,
+          lastName: response.lastName,
+          email: response.email,
+          phoneNumber: response.phoneNumber ?? null
+        })
+    });
+  }
+
+  getUserErrorMessage(path: string) {
     return getErrorMessage(this.userInfoForm, path);
+  }
+
+  getPasswordErroMessage(path: string){
+    return getErrorMessage(this.passwordForm, path);
   }
 }

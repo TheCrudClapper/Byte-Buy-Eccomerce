@@ -7,15 +7,15 @@
             <div class="col-6">
                 <p class="content-section-title mb-1">First Name*</p>
                 <input type="text" class="form-control" formControlName="firstName">
-                @if (getErrorMessage("firstName")) {
-                    <span class="validation-error">{{ getErrorMessage("firstName") }}</span>
+                @if (getUserErrorMessage("firstName")) {
+                    <span class="validation-error">{{ getUserErrorMessage("firstName") }}</span>
                 }
             </div>
             <div class="col-6">
                 <p class="content-section-title mb-1">Last Name*</p>
                 <input type="text" class="form-control" formControlName="lastName">
-                @if (getErrorMessage("lastName")) {
-                    <span class="validation-error">{{ getErrorMessage("lastName") }}</span>
+                @if (getUserErrorMessage("lastName")) {
+                    <span class="validation-error">{{ getUserErrorMessage("lastName") }}</span>
                 }
             </div>
         </div>
@@ -23,22 +23,23 @@
             <div class="col-6">
                 <p class="content-section-title mb-1">Email*</p>
                 <input type="email" class="form-control" formControlName="email">
-                @if (getErrorMessage("email")) {
-                    <span class="validation-error">{{ getErrorMessage("email") }}</span>
+                @if (getUserErrorMessage("email")) {
+                    <span class="validation-error">{{ getUserErrorMessage("email") }}</span>
                 }
             </div>
             <div class="col-6">
                 <p class="content-section-title mb-1">Phone*</p>
                 <input type="text" class="form-control" formControlName="phoneNumber">
-                @if (getErrorMessage("phoneNumber")) {
-                    <span class="validation-error">{{ getErrorMessage("phoneNumber") }}</span>
+                @if (getUserErrorMessage("phoneNumber")) {
+                    <span class="validation-error">{{ getUserErrorMessage("phoneNumber") }}</span>
                 }
             </div>
         </div>
         <div class="row">
             <div class="col-12 text-end">
                 <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit">Save Changes</button>
+                <button class="btn" type="submit" [disabled]="userInfoForm.invalid || userDataLoading()">Save
+                    Changes</button>
             </div>
         </div>
 
@@ -50,21 +51,31 @@
         <div class="row mb-3">
             <div class="col-6">
                 <p class="content-section-title mb-1">Current Password*</p>
-                <input type="text" class="form-control">
+                <input type="password" class="form-control" formControlName="currentPassword">
+                @if (getPasswordErroMessage("currentPassword")) {
+                    <span class="validation-error">{{ getPasswordErroMessage("currentPassword") }}</span>
+                }
             </div>
             <div class="col-6">
                 <p class="content-section-title mb-1">New Password*</p>
-                <input type="text" class="form-control">
+                <input type="password" class="form-control" formControlName="newPassword">
+                @if (getPasswordErroMessage("newPassword")) {
+                    <span class="validation-error">{{ getPasswordErroMessage("newPassword") }}</span>
+                }
             </div>
         </div>
         <div class="row mb-3 align-items-end">
             <div class="col-6">
                 <p class="content-section-title mb-1">Confirm Password*</p>
-                <input type="email" class="form-control">
+                <input type="password" class="form-control" formControlName="confirmPassword">
+                @if (getPasswordErroMessage("confirmPassword")) {
+                    <span class="validation-error">{{ getPasswordErroMessage("confirmPassword") }}</span>
+                }
             </div>
             <div class="col-6 text-end align-bottom">
                 <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit">Change Password</button>
+                <button class="btn" type="submit" [disabled]="passwordForm.invalid || passwordDataLoading()">Change
+                    Password</button>
             </div>
         </div>
     </form>
