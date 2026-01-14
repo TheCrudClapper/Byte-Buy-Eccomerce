@@ -1,3 +1,59 @@
 <div class="content-section">
     <span class="page-title">Addresses</span>
 </div>
+<div class="content-section">
+    <p class="content-section-title">Home Address</p>
+    <p class="content-section-description">
+        Home address is used for billing and is being used in offer to determine location of package.
+    </p>
+    <form [formGroup]="homeAddressForm" (ngSubmit)="onHomeAddressSubmit()">
+        <div class="row mb-3">
+            <div class="col-6">
+                <p class="content-section-title mb-1">Street</p>
+                <input type="text" class="form-control" formControlName="street">
+                <span class="validation-error">{{ getHomeError('street') ?? ''}}</span>
+            </div>
+            <div class="col-6">
+                <p class="content-section-title mb-1">House Number</p>
+                <input type="text" class="form-control" formControlName="houseNumber">
+                <span class="validation-error">{{ getHomeError('houseNumber') ?? ''}}</span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                <p class="content-section-title mb-1">Postal City</p>
+                <input type="text" class="form-control" formControlName="postalCity">
+                <span class="validation-error">{{ getHomeError('postalCity') ?? ''}}</span>
+            </div>
+            <div class="col-6">
+                <p class="content-section-title mb-1">Postal Code</p>
+                <input type="text" class="form-control" formControlName="postalCode">
+                <span class="validation-error">{{ getHomeError('postalCode') ?? ''}}</span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                <p class="content-section-title mb-1">City</p>
+                <input type="text" class="form-control" formControlName="city">
+                <span class="validation-error">{{ getHomeError('city') ?? ''}}</span>
+            </div>
+            <div class="col-6">
+                <p class="content-section-title mb-1">Country</p>
+                <input type="text" class="form-control" formControlName="country">
+                <span class="validation-error">{{ getHomeError('country') ?? ''}}</span>
+            </div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <div class="col-6">
+                <p class="content-section-title mb-1">Flat Number</p>
+                <input type="text" class="form-control" formControlName="flatNumber">
+                <span class="validation-error">{{ getHomeError('flatNumber') ?? ''}}</span>
+            </div>
+            <div class="col-6 text-end align-bottom">
+                <button class="btn me-2" type="reset">Reset</button>
+                <button class="btn" type="submit" [disabled]="isLoading() || this.homeAddressForm.invalid">Save
+                    Changes</button>
+            </div>
+        </div>
+    </form>
+</div>
