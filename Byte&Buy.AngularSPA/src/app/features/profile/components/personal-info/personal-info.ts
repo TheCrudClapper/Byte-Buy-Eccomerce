@@ -6,7 +6,7 @@ import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { PasswordChangeRequest } from '../../api-dto/password-change-request';
 import { finalize } from 'rxjs';
-import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
+import { ToastService } from '../../../../core/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-personal-info',
@@ -18,7 +18,7 @@ import { SnackbarService } from '../../../../core/services/snackbar/snackbar-ser
 export class PersonalInfo implements OnInit {
   private readonly userApiService: UsersApiService = inject(UsersApiService);
   private readonly portalUserApiService: PortalUserApiService = inject(PortalUserApiService);
-  private readonly snackBarService: SnackbarService = inject(SnackbarService);
+  private readonly snackBarService: ToastService = inject(ToastService);
 
   userDataLoading = signal<boolean>(false);
   passwordDataLoading = signal<boolean>(false);

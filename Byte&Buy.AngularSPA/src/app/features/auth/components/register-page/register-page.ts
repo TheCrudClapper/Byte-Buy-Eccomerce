@@ -7,18 +7,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { finalize } from 'rxjs';
-import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
+import { ToastService } from '../../../../core/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-register',
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './register-page.html',
+  standalone: true,
   styleUrl: './register-page.scss',
 })
 export class RegisterPage {
   private readonly authService: AuthService = inject(AuthService);
   private readonly router: Router = inject(Router);
-  private readonly snackBarService = inject(SnackbarService);
+  private readonly snackBarService = inject(ToastService);
 
   errorMessage = signal<string>("");
   loading = signal<boolean>(false);

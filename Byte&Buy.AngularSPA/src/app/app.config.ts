@@ -2,8 +2,9 @@ import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListen
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; //
+import { ToastrModule } from 'ngx-toastr';
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +16,13 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     importProvidersFrom(
-      MatSnackBarModule
+      BrowserAnimationsModule,
+      ToastrModule.forRoot({
+        timeOut: 3000,
+        positionClass: 'toast-bottom-right',
+        preventDuplicates: true,
+        closeButton: true
+      })
     )
   ]
 };

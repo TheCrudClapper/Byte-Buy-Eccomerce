@@ -172,7 +172,6 @@
                         <span class="validation-error">{{ getErrorMessage("description") }}</span>
                         }
                     </div>
-
                 </div>
             </div>
 
@@ -194,7 +193,7 @@
                             <p class="d-inline align-middle">{{ homeAddress()?.city}} {{homeAddress()?.houseNumber}}, {{
                                 homeAddress()?.postalCode}} {{ homeAddress()?.postalCity }}</p>
                             } @else{
-                                <p class="d-inline align-middle">No home address set yet.</p>
+                            <p class="d-inline align-middle">No home address set yet.</p>
                             }
                         </div>
                         <div class="row">
@@ -202,7 +201,7 @@
                                 <a class="link">Change Address</a>
                             </div>
                             @if(!homeAddress()){
-                                <span class="validation-error">Home address is required to be set, befora publishing.</span>
+                            <span class="validation-error">Home address is required to be set, befora publishing.</span>
                             }
                         </div>
 
@@ -256,9 +255,8 @@
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox"
-                                       (change)="onDeliveryToggle(item.id, $event.target.checked)"
-                                       class="form-check-input checkbox me-2" />
+                                <input type="checkbox" (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                    class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
                             <span>{{ item.amount }} {{ item.currency }}</span>

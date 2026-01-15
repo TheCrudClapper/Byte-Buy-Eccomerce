@@ -2,9 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { AddressApiService } from '../../../../core/services/address/address-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getErrorMessage } from '../../../../core/helpers/form-helper';
-import { finalize, Observable } from 'rxjs';
+import { finalize } from 'rxjs';
 import { HomeAddressDto } from '../../../../shared/api-dto/home-address-dto';
-import { SnackbarService } from '../../../../core/services/snackbar/snackbar-service';
+import { ToastService } from '../../../../core/services/snackbar/toast-service';
 import { SelectListItem } from '../../../../shared/models/select-list-item';
 import { CountryApiService } from '../../../../core/services/country/country-api-service';
 import { ShippingAddressListItem } from '../../model/shipping-address-list-item';
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 export class Addresses implements OnInit {
   private readonly addressApiService: AddressApiService = inject(AddressApiService);
   private readonly countriesApiService: CountryApiService = inject(CountryApiService);
-  private readonly snackbarService: SnackbarService = inject(SnackbarService);
+  private readonly snackbarService: ToastService = inject(ToastService);
 
   isLoading = signal<boolean>(false);
   countriesList = signal<SelectListItem[]>([]);

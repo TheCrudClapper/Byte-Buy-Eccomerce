@@ -3,13 +3,14 @@ import { getErrorMessage } from '../../../../../core/helpers/form-helper';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
 import { AddressApiService } from '../../../../../core/services/address/address-api-service';
-import { SnackbarService } from '../../../../../core/services/snackbar/snackbar-service';
+import { ToastService } from '../../../../../core/services/snackbar/toast-service';
 import { CommonModule } from '@angular/common';
 import { ShippingAddressResponse } from '../../../api-dto/shipping-address-response';
 import { Guid } from 'guid-typescript';
 import { ShippingAddressUpdateRequest } from '../../../api-dto/shipping-address-update-request';
 import { ShippingAddressAddRequest } from '../../../api-dto/shipping-address-add-request';
 import { SelectListItem } from '../../../../../shared/models/select-list-item';
+
 @Component({
   selector: 'app-shipping-address-dialog',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
@@ -27,7 +28,7 @@ export class ShippingAddressDialog {
   @Output() onSaved = new EventEmitter<void>();
 
   private addressApiService = inject(AddressApiService);
-  private snackbarService = inject(SnackbarService);
+  private snackbarService = inject(ToastService);
 
   shippingForm!: FormGroup;
   loading = signal<boolean>(false);

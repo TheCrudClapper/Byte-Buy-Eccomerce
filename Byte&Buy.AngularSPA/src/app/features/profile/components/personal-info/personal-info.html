@@ -1,45 +1,57 @@
 <div class="content-section">
     <span class="page-title">Personal Information</span>
 </div>
+
 <div class="content-section">
+    <p class="content-section-title">Basic Information</p>
+    <p class="content-section-description">
+        Update basic information about your account including email and phone number.
+    </p>
     <form [formGroup]="userInfoForm" (ngSubmit)="onUserInfoSubmit()">
+
         <div class="row mb-3">
             <div class="col-6">
-                <p class="content-section-title mb-1">First Name*</p>
-                <input type="text" class="form-control" formControlName="firstName">
+                <label for="firstName" class="form-label">First Name*</label>
+                <input id="firstName" type="text" class="form-control" formControlName="firstName">
                 @if (getUserErrorMessage("firstName")) {
                     <span class="validation-error">{{ getUserErrorMessage("firstName") }}</span>
                 }
             </div>
+
             <div class="col-6">
-                <p class="content-section-title mb-1">Last Name*</p>
-                <input type="text" class="form-control" formControlName="lastName">
+                <label for="lastName" class="form-label">Last Name*</label>
+                <input id="lastName" type="text" class="form-control" formControlName="lastName">
                 @if (getUserErrorMessage("lastName")) {
                     <span class="validation-error">{{ getUserErrorMessage("lastName") }}</span>
                 }
             </div>
         </div>
+
         <div class="row mb-3">
             <div class="col-6">
-                <p class="content-section-title mb-1">Email*</p>
-                <input type="email" class="form-control" formControlName="email">
+                <label for="email" class="form-label">Email*</label>
+                <input id="email" type="email" class="form-control" autocomplete="address-level1" formControlName="email">
                 @if (getUserErrorMessage("email")) {
                     <span class="validation-error">{{ getUserErrorMessage("email") }}</span>
                 }
             </div>
+
             <div class="col-6">
-                <p class="content-section-title mb-1">Phone*</p>
-                <input type="text" class="form-control" formControlName="phoneNumber">
+                <label for="phoneNumber" class="form-label">Phone*</label>
+                <input id="phoneNumber" type="text" class="form-control" formControlName="phoneNumber">
                 @if (getUserErrorMessage("phoneNumber")) {
                     <span class="validation-error">{{ getUserErrorMessage("phoneNumber") }}</span>
                 }
             </div>
         </div>
+
         <div class="row">
             <div class="col-12 text-end">
                 <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit" [disabled]="userInfoForm.invalid || userDataLoading()">Save
-                    Changes</button>
+                <button class="btn" type="submit"
+                        [disabled]="userInfoForm.invalid || userDataLoading()">
+                    Save Changes
+                </button>
             </div>
         </div>
 
@@ -47,36 +59,47 @@
 </div>
 
 <div class="content-section">
+    <p class="content-section-title">Password Change</p>
+    <p class="content-section-description">
+        You can update your password by providing old, new and confirmed one.
+    </p>
     <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
+
         <div class="row mb-3">
             <div class="col-6">
-                <p class="content-section-title mb-1">Current Password*</p>
-                <input type="password" class="form-control" formControlName="currentPassword">
+                <label for="currentPassword" class="form-label">Current Password*</label>
+                <input id="currentPassword" type="password" class="form-control" formControlName="currentPassword">
                 @if (getPasswordErroMessage("currentPassword")) {
                     <span class="validation-error">{{ getPasswordErroMessage("currentPassword") }}</span>
                 }
             </div>
+
             <div class="col-6">
-                <p class="content-section-title mb-1">New Password*</p>
-                <input type="password" class="form-control" formControlName="newPassword">
+                <label for="newPassword" class="form-label">New Password*</label>
+                <input id="newPassword" type="password" class="form-control" formControlName="newPassword">
                 @if (getPasswordErroMessage("newPassword")) {
                     <span class="validation-error">{{ getPasswordErroMessage("newPassword") }}</span>
                 }
             </div>
         </div>
+
         <div class="row mb-3 align-items-end">
             <div class="col-6">
-                <p class="content-section-title mb-1">Confirm Password*</p>
-                <input type="password" class="form-control" formControlName="confirmPassword">
+                <label for="confirmPassword" class="form-label">Confirm Password*</label>
+                <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword">
                 @if (getPasswordErroMessage("confirmPassword")) {
                     <span class="validation-error">{{ getPasswordErroMessage("confirmPassword") }}</span>
                 }
             </div>
-            <div class="col-6 text-end align-bottom">
+
+            <div class="col-6 text-end">
                 <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit" [disabled]="passwordForm.invalid || passwordDataLoading()">Change
-                    Password</button>
+                <button class="btn" type="submit"
+                        [disabled]="passwordForm.invalid || passwordDataLoading()">
+                    Change Password
+                </button>
             </div>
         </div>
+
     </form>
 </div>

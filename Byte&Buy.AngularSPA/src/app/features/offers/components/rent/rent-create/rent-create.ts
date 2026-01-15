@@ -14,7 +14,7 @@ import { RentOfferApiSerivce } from '../../../services/rent-offer-api-serivce';
 import { map, Observable, single } from 'rxjs';
 import { ImageItem } from '../../../models/image-item';
 import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
-import { SnackbarService } from '../../../../../core/services/snackbar/snackbar-service';
+import { ToastService } from '../../../../../core/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-rent-create',
@@ -31,7 +31,7 @@ export class RentCreate implements OnInit {
   private readonly deliveryApiService = inject(DeliveryApiService);
   private readonly addressApiService = inject(AddressApiService);
   private readonly rentOfferApiService = inject(RentOfferApiSerivce);
-  private readonly snackbarService: SnackbarService = inject(SnackbarService);
+  private readonly snackbarService: ToastService = inject(ToastService);
 
   categoriesOptions$!: Observable<SelectListItem[]>;
   conditionOptions$!: Observable<SelectListItem[]>;
