@@ -20,7 +20,7 @@ import { SelectListItem } from '../../../../../shared/models/select-list-item';
 export class ShippingAddressDialog {
   @Input() countries: SelectListItem[] = [];
 
-  @Input() visible = signal(false);
+  @Input() visible = signal<boolean>(false);
   @Output() visibleChange = new EventEmitter<boolean>();
 
   @Input() addressId: Guid | null = null;

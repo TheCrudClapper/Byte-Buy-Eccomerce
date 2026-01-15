@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, ReactiveFormsModule, ShippingAddressDialog],
   templateUrl: './addresses.html',
   styleUrl: './addresses.scss',
+  standalone: true
 })
 export class Addresses implements OnInit {
   private readonly addressApiService: AddressApiService = inject(AddressApiService);
