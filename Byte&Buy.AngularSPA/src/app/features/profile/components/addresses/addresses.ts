@@ -8,11 +8,13 @@ import { SnackbarService } from '../../../../core/services/snackbar/snackbar-ser
 import { SelectListItem } from '../../../../shared/models/select-list-item';
 import { CountryApiService } from '../../../../core/services/country/country-api-service';
 import { ShippingAddressListItem } from '../../model/shipping-address-list-item';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Guid } from 'guid-typescript';
+import { ShippingAddressDialog } from "../shipping-address-modal/shipping-address-dialog/shipping-address-dialog";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-addresses',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ShippingAddressDialog],
   templateUrl: './addresses.html',
   styleUrl: './addresses.scss',
 })
@@ -22,8 +24,10 @@ export class Addresses implements OnInit {
   private readonly snackbarService: SnackbarService = inject(SnackbarService);
 
   isLoading = signal<boolean>(false);
-  countriesList$!: Observable<SelectListItem[]>;
+  countriesList = signal<SelectListItem[]>([]);
   shippingAddresses = signal<ShippingAddressListItem[]>([]);
+  displayShippingDialog = signal<boolean>(false);
+  selectedShippingId: Guid | null = null;
 
   homeAddressForm: FormGroup = new FormGroup({
     street: new FormControl<string>("", Validators.required),
@@ -35,12 +39,17 @@ export class Addresses implements OnInit {
     flatNumber: new FormControl(""),
   });
 
+  ngOnInit(): void {
+    this.loadHomeAddress();
+    this.loadShippingAddresses();
+    this.loadCountries();
+  }
+
   onHomeAddressSubmit() {
     if (this.homeAddressForm.invalid) {
       this.homeAddressForm.markAllAsTouched();
       return;
     }
-
     var data = this.homeAddressForm.value;
     const payload: HomeAddressDto = {
       city: data.city,
@@ -63,13 +72,6 @@ export class Addresses implements OnInit {
           this.snackbarService.success("Something went wrong");
         }
       });
-  }
-
-  ngOnInit(): void {
-    this.loadHomeAddress();
-    this.loadShippingAddresses();
-    console.log(this.shippingAddresses());
-    this.countriesList$ = this.countriesApiService.getSelectList();
   }
 
   getHomeError(path: string) {
@@ -102,4 +104,40 @@ export class Addresses implements OnInit {
       });
   }
 
+  loadCountries(){
+    this.countriesApiService.getSelectList()
+    .subscribe({
+      next: data => { this.countriesList.set(data) }
+    });
+  }
+  showShippingDialog(id: Guid | null) {
+    this.selectedShippingId = id;
+    this.displayShippingDialog.set(true);
+  }
+
+  closeShippingDialog() {
+    this.displayShippingDialog.set(false);
+    this.selectedShippingId = null;
+  }
+
+  onShippingSaved() {
+    this.loadShippingAddresses();
+    this.closeShippingDialog();
+  }
+
+  deleteShippingAddress(id: Guid) {
+    if (confirm("Are you sure you want to delete this address ?")) {
+      this.addressApiService.deleteShippingAddress(id)
+        .subscribe({
+          next: () => {
+            const currentAddresses = this.shippingAddresses();
+            this.shippingAddresses.set(
+            currentAddresses.filter(address => address.id !== id));
+          },
+          error: () => {
+            alert("Failed to delete address");
+          }
+        });
+    }
+  }
 }

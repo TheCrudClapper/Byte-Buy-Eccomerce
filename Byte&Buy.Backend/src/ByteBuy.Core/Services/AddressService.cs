@@ -165,7 +165,7 @@ public class AddressService : IAddressService
         => await _addressReadRepository.GetListBySpecAsync(new UserAddressesToDtoSpec(userId), ct);
 
 
-    public async Task<Result> DeleteUserShippingAddressAsync(Guid userId, Guid addressId)
+    public async Task<Result> DeleteUserShippingAddressAsync(Guid addressId, Guid userId)
     {
         var spec = new PortalUserWithShippingAddressesSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);

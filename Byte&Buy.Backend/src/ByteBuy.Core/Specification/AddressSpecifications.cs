@@ -40,7 +40,7 @@ public static class AddressSpecifications
         {
             Query.AsNoTracking()
                 .Where(a => a.Id == addressId && a.UserId == userId)
-                 .Select(AddressMappings.AddressDtoProjection);
+                .Select(AddressMappings.AddressDtoProjection);
         }
     }
 
@@ -70,7 +70,7 @@ public static class AddressSpecifications
         public UserShippingAddressToList(Guid userId)
         {
             Query.Where(a => a.UserId == userId)
-                .Select(AddreesssMappings.ShippingAddressListProjection);
+                .Select(AddressMappings.ShippingAddressListProjection);
         }
     }
 

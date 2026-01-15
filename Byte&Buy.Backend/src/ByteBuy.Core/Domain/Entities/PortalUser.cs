@@ -144,12 +144,6 @@ public sealed class PortalUser : ApplicationUser
         CartId = cartId;
     }
 
-    public void AssignShippingAddress(ShippingAddress address)
-    {
-        address.AssignToUser(this);
-        ShippingAddresses.Add(address);
-    }
-
     public Result<ShippingAddress> AddShippingAddress(
     string label,
     string city,
@@ -182,12 +176,18 @@ public sealed class PortalUser : ApplicationUser
         if (ShippingAddresses.Any(a => a.Label == address.Label))
             return Result.Failure<ShippingAddress>(PortalUserErrors.DuplicateShippingAddressLabel);
 
-        if (isDefault)
+        //when there is not default address set, force the first one to be default
+        var currentDefault = ShippingAddresses.FirstOrDefault(a => a.IsDefault);
+        if (currentDefault is null)
         {
-            var currentDefault = ShippingAddresses.FirstOrDefault(a => a.IsDefault);
-            currentDefault?.UnmarkAsDefault();
             address.MarkAsDefault();
         }
+        else if(isDefault)
+        {
+            currentDefault.UnmarkAsDefault();
+            address.MarkAsDefault();
+        }
+
         address.AssignToUser(this);
         ShippingAddresses.Add(address);
 
@@ -200,7 +200,7 @@ public sealed class PortalUser : ApplicationUser
     {
         var address = ShippingAddresses.FirstOrDefault(a => a.Id == addressId);
         if (address is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(PortalUserErrors.ShippingAddressNotFound);
 
         if (ShippingAddresses.Any(a => a.Id != addressId && a.Label == label))
             return Result.Failure(PortalUserErrors.DuplicateShippingAddressLabel);

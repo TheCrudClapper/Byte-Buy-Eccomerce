@@ -44,7 +44,7 @@ public class AddressesController : BaseApiController
 
     [HttpGet("shipping-addresses/{addressId:guid}")]
     public async Task<ActionResult<ShippingAddressResponse>> GetUserShippingAddress(Guid addressId, CancellationToken ct)
-        => HandleResult(await _addressService.GetUserShippingAddressAsync(addressId, CurrentUserId, ct));
+        => HandleResult(await _addressService.GetUserShippingAddressAsync(CurrentUserId, addressId, ct));
 
     [HttpDelete("shipping-addresses/{addressId:guid}")]
     public async Task<ActionResult> DeleteUserShippingAddress(Guid addressId)

@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+.modal-backdrop {
+  @if visible {
+    display: block !important;
+    opacity: 0.5 !important;
+    z-index: 1040 !important;
+  }
+}
+
+.modal-title, .form-check-label, .form-label{
+  color: var(--text-primary);
+}
+
+.modal-content {
+  background-color: var(--card-background);
+}

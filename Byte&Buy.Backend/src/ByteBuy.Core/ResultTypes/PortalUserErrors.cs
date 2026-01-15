@@ -22,4 +22,7 @@ public static class PortalUserErrors
 
     public static readonly Error HomeAddressNotSet =
         Error.Validation("PortalUser.HomeAddress", "You need to set home address in order to publish offers.");
+
+    public static readonly Error ShippingAddressNotFound =
+        Error.Validation("PortalUser.ShippingAddress", "Given shipping address is not found");
 }

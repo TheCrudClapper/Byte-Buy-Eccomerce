@@ -1,0 +1,97 @@
+@if(visible()){
+<div class="modal-backdrop"></div>
+}
+<div class="modal fade" [ngClass]="{'show d-block': visible(), 'show': visible()}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'New' }} Shipping Address</h5>
+                <button type="button" class="btn-close" (click)="close()"></button>
+            </div>
+            @if(shippingForm){
+            <form [formGroup]="shippingForm" (ngSubmit)="save()">
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- Label -->
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Label</label>
+                            <input type="text" class="form-control" formControlName="label">
+                            <span class="validation-error">{{ getError('label') ?? ''}}</span>
+                        </div>
+
+                        <!-- Street and House NUmber -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Street</label>
+                            <input type="text" class="form-control" formControlName="street">
+                            <span class="validation-error">{{ getError('street') ?? ''}}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" formControlName="city">
+                            <span class="validation-error">{{ getError('city') ?? ''}}</span>
+                        </div>
+
+                        <!-- Postal City and City -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Postal City</label>
+                            <input type="text" class="form-control" formControlName="postalCity">
+                            <span class="validation-error">{{ getError('postalCity') ?? ''}}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Postal Code</label>
+                            <input type="text" class="form-control" formControlName="postalCode">
+                            <span class="validation-error">{{ getError('postalCode') ?? ''}}</span>
+                        </div>
+
+                        <!-- Flat number and check box -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">House Number</label>
+                            <input type="text" class="form-control" formControlName="houseNumber">
+                            <span class="validation-error">{{ getError('houseNumber') ?? ''}}</span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Flat Number</label>
+                            <input type="text" class="form-control" formControlName="flatNumber">
+                            <span class="validation-error">{{ getError('flatNumber') ?? ''}}</span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Country</label>
+                            <select class="form-select" formControlName="selectedCountryId">
+                                <option [ngValue]="null" disabled>Select Country</option>
+                                @for (item of countries; track $index)
+                                {
+                                <option [ngValue]="item.id">
+                                    {{ item.title }}
+                                </option>
+                                }
+                            </select>
+                            <span class="validation-error">{{ getError('selectedCountryId') ?? ''}}</span>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input checkbox" type="checkbox" formControlName="isDefault"
+                                    id="isDefault">
+                                <label class="form-check-label" for="isDefault">
+                                    Set as default shipping address
+                                </label>
+                            </div>
+                        </div>
+                        @if(error()){
+                            <span class="validation-error">{{ error() }}</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn" (click)="close()">Cancel</button>
+                    <button type="submit" class="btn" [disabled]="shippingForm.invalid || loading()">
+                        {{ isEditMode ? 'Update' : 'Create'}} Address
+                    </button>
+                </div>
+            </form>
+            }
+        </div>
+    </div>
+</div>
