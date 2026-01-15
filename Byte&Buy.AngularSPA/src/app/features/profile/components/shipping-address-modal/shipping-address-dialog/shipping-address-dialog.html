@@ -69,14 +69,12 @@
                             </select>
                             <span class="validation-error">{{ getError('selectedCountryId') ?? ''}}</span>
                         </div>
-                        <div class="col-6 mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input checkbox" type="checkbox" formControlName="isDefault"
-                                    id="isDefault">
-                                <label class="form-check-label" for="isDefault">
-                                    Set as default shipping address
-                                </label>
-                            </div>
+                        <div class="col-6 mb-3 d-flex align-items-center">
+                            <input class="form-check-input checkbox me-2" type="checkbox" formControlName="isDefault"
+                                id="isDefault">
+                            <label class="form-check-label " for="isDefault">
+                                Set as default shipping address
+                            </label>
                         </div>
                         @if(error()){
                         <span class="validation-error">{{ error() }}</span>

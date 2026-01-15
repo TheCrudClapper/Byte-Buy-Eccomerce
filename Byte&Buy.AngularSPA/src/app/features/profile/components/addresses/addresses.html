@@ -1,4 +1,4 @@
-<div class="content-section">
+<div class="content-section d-none d-md-block">
     <span class="page-title">Addresses</span>
 </div>
 <div class="content-section">
@@ -57,7 +57,7 @@
                 <span class="validation-error">{{ getHomeError('flatNumber') ?? '' }}</span>
             </div>
 
-            <div class="col-6 text-end">
+            <div class="col-12 text-end">
                 <button class="btn me-2" type="reset">Reset</button>
                 <button class="btn" type="submit"
                         [disabled]="isLoading() || homeAddressForm.invalid">
@@ -88,7 +88,7 @@
     <div class="row">
         @for (item of shippingAddresses(); track $index)
         {
-            <div class="col-3">
+            <div class="col-6 col-lg-3 g-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title fs-16-px">
