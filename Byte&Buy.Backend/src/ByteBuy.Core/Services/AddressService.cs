@@ -142,6 +142,16 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
+    public async Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct = default)
+    {
+        var spec = new UserShippingAddressToList(userId);
+        var addressDtoList = await _addressReadRepository.GetListBySpecAsync(spec);
+
+        return addressDtoList is null
+            ? Result.Failure<IReadOnlyCollection<ShippingAddressListResponse>>(CommonUserErrors.NotFound)
+            : addressDtoList;
+    }
+
     public async Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct = default)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new AddresToDtoSpec(addressId), ct);
@@ -171,6 +181,4 @@ public class AddressService : IAddressService
         await _portalUserRepository.CommitAsync();
         return Result.Success();
     }
-
-
 }

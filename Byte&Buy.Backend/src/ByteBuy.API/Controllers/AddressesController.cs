@@ -34,6 +34,10 @@ public class AddressesController : BaseApiController
     public async Task<ActionResult<UpdatedResponse>> PutShippingAddress(Guid addressId, ShippingAddressUpdateRequest request)
         => HandleResult(await _addressService.UpdateUserShippingAddressAsync(addressId, CurrentUserId, request));
 
+    [HttpGet("shipping-addresses/list")]
+    public async Task<ActionResult<ShippingAddressListResponse>> GetShippingAddressesList(CancellationToken ct)
+        => HandleResult(await _addressService.GetShippingAddressesList(CurrentUserId, ct));
+
     [HttpGet("shipping-addresses")]
     public async Task<ActionResult<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAdresses(CancellationToken ct)
         => HandleResult(await _addressService.GetUserShippingAddressesAsync(CurrentUserId, ct));

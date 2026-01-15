@@ -1,0 +1,22 @@
+.shipping-add{
+    transition: 0.3s ease;
+}
+.shipping-add:hover{
+    color: var(--primary-accent);     
+    cursor: pointer;
+}
+.card{
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--primary-accent);
+}
+.card-link{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: 0.3s ease;
+}
+.card-link:hover{
+    color: var(--primary-accent);
+}

@@ -57,3 +57,39 @@
         </div>
     </form>
 </div>
+<div class="content-section">
+    <div class="row">
+        <div class="col-6">
+            <p class="content-section-title">Shipping Addresses</p>
+        </div>
+        <div class="col-6 text-end">
+            <i class="fa-solid fa-plus shipping-add"></i>
+        </div>
+    </div>
+
+    <p class="content-section-description">
+        You can have multiple shipping addresses under your name. One address must be tagged as default to speed up
+        order creation.
+    </p>
+    @for (item of shippingAddresses(); track $index)
+    {
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title fs-16-px">
+                            @if(item.isDefault) { <i class="fa-regular fa-circle me-1"></i> }
+                            {{ item.label }}
+                        </h5>
+                        <p class="card-text open-sans-medium fs-14-px">
+                            {{ item.city}} {{item.houseNumber}} {{ item.flatNumber ? "/" + item.flatNumber : "" }} <br>
+                            {{ item.postalCity }} {{ item.postalCode }}
+                        </p>
+                        <a href="#" class="card-link">Delete</a>
+                        <a href="#" class="card-link">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

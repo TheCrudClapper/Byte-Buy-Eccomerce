@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.AddressValueObj;
 using ByteBuy.Core.DTO.PortalUser;
 using System.Linq.Expressions;
@@ -51,4 +52,16 @@ public static class AddressMappings
             vo.Country,
             vo.FlatNumber);
     }
+
+    public static Expression<Func<ShippingAddress, ShippingAddressListResponse>> ShippingAddressListProjection
+        => a => new ShippingAddressListResponse(
+            a.Id,
+            a.Label,
+            a.HouseNumber,
+            a.PostalCity,
+            a.PostalCode,
+            a.FlatNumber,
+            a.City,
+            a.IsDefault
+            );
 }

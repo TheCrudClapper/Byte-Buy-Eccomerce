@@ -14,6 +14,7 @@ public interface IAddressService
     Task<Result<UpdatedResponse>> SetHomeUserAddress(Guid userId, HomeAddressDto request);
     Task<Result<HomeAddressDto>> GetUserHomeAddress(Guid userId, CancellationToken ct = default);
     Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid addressId, Guid userId, CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAddressesAsync(Guid userId, CancellationToken ct = default);
     Task<Result> DeleteUserShippingAddressAsync(Guid addressId, Guid userId);
 }

@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Address;
 using ByteBuy.Core.DTO.PortalUser;
 using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
@@ -63,4 +64,15 @@ public static class AddressSpecifications
            .Select(AddressMappings.AddressDtoProjection);
         }
     }
+
+    public sealed class UserShippingAddressToList : Specification<ShippingAddress, ShippingAddressListResponse>
+    {
+        public UserShippingAddressToList(Guid userId)
+        {
+            Query.Where(a => a.UserId == userId)
+                .Select(AddreesssMappings.ShippingAddressListProjection);
+        }
+    }
+
+
 }
