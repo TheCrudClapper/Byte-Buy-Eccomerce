@@ -16,7 +16,7 @@ import { finalize } from 'rxjs';
   styleUrl: './login-page.scss',
 })
 
-export class LoginPage {
+export class LoginPage{
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -44,9 +44,7 @@ export class LoginPage {
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
         this.errorMessage.set(problem?.detail ?? 'Something went wrong');
-        this.loading.set(false);
-      },
-      complete: () => this.loading.set(false)
+      }
     });
   }
 

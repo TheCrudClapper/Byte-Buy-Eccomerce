@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; //
 import { ToastrModule } from 'ngx-toastr';
+import { problemDetailsInterceptor } from './core/interceptors/problem-details-interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -13,7 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([authInterceptor])
+      withInterceptors([authInterceptor]),
+      withInterceptors([problemDetailsInterceptor])
     ),
     importProvidersFrom(
       BrowserAnimationsModule,

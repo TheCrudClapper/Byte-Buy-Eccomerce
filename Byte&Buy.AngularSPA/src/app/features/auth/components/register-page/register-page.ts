@@ -51,7 +51,6 @@ export class RegisterPage {
       error: (error: HttpErrorResponse) => {
         const problem = error.error as ProblemDetails;
         this.errorMessage.set(problem?.detail?.replace(';', '\n') ?? "Something went wrong");
-        this.loading.set(false);
       }
     });
   }

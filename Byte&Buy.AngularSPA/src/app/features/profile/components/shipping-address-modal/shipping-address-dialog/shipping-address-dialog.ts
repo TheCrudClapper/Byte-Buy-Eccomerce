@@ -10,6 +10,8 @@ import { Guid } from 'guid-typescript';
 import { ShippingAddressUpdateRequest } from '../../../api-dto/shipping-address-update-request';
 import { ShippingAddressAddRequest } from '../../../api-dto/shipping-address-add-request';
 import { SelectListItem } from '../../../../../shared/models/select-list-item';
+import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-shipping-address-dialog',
@@ -85,8 +87,8 @@ export class ShippingAddressDialog {
           this.close();
           this.onSaved.emit();
         },
-        error: (err) => {
-          this.error.set("Failed to set address");
+        error: (err: ProblemDetails) => {
+          this.error.set(err.detail ?? `Failed to ${this.isEditMode ? 'update' : 'create'} address`);
         }
       });
   }
@@ -103,8 +105,8 @@ export class ShippingAddressDialog {
         next: (address) => {
           this.initForm(address);
         },
-        error: () => {
-          this.snackbarService.error("Failed to load address");
+        error: (err: ProblemDetails) => {
+          this.snackbarService.error(err.detail ?? "Failed to load address");
           this.close();
         }
       })

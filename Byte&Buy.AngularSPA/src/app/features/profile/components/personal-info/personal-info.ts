@@ -7,6 +7,7 @@ import { getErrorMessage } from '../../../../core/helpers/form-helper';
 import { PasswordChangeRequest } from '../../api-dto/password-change-request';
 import { finalize } from 'rxjs';
 import { ToastService } from '../../../../core/services/snackbar/toast-service';
+import { ProblemDetails } from '../../../../core/api-dto/problem-details';
 
 @Component({
   selector: 'app-personal-info',
@@ -61,6 +62,9 @@ export class PersonalInfo implements OnInit {
     .subscribe({
       next: () => {
         this.snackBarService.success("Successfully updated password !");
+      },
+      error: (err: ProblemDetails) => {
+        this.snackBarService.error(err.detail ?? "Failed to update password");
       }
     })
   }
@@ -82,10 +86,10 @@ export class PersonalInfo implements OnInit {
 
     this.portalUserApiService.putUserBasicInfo(payload).subscribe({
       next: (response) => {
-        this.snackBarService.success("Successfully updated user data !");
+        this.snackBarService.success("Successfully updated user data.");
       },
-      error: () => {
-        console.log("gowno");
+      error: (err: ProblemDetails) => {
+        this.snackBarService.error(err?.detail ?? "Failed to update user data.");
       }
     });
   }
