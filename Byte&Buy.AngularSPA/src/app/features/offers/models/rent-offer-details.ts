@@ -1,17 +1,18 @@
 import { Guid } from "guid-typescript";
-import { OfferSeller } from "./offer-seller";
 import { ImageResponse } from "../../../shared/api-dto/image-response";
+import { PrivateSeller } from "./private-seller";
+import { CompanySeller } from "./company-seller";
 
 export interface RentOfferDetails{
     id: Guid;
     maxRentalDays: number;
     quantityAvaliable: number; 
     pricePerDayAmount: number;
-    pricePerDayCurrency: number; 
+    pricePerDayCurrency: string; 
     condition: string;
     category: string;
     description: string;
     title: string;
-    seller: OfferSeller;
+    seller: PrivateSeller | CompanySeller
     images: ImageResponse[]
 }

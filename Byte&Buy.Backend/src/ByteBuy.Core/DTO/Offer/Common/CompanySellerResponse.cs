@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Offer.Common;
 
-public record CompanySeller(
+public record CompanySellerResponse(
     string CompanyName,
     string CompanyEmail,
     string City,

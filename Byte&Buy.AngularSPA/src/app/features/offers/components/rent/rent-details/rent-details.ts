@@ -1,14 +1,20 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DeliveryOption } from '../../../shared/delivery-option';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SellerInfo } from '../../../shared/seller-info/seller-info';
 import { Guid } from 'guid-typescript';
 import { ActivatedRoute } from '@angular/router';
+import { RentOfferDetails } from '../../../models/rent-offer-details';
+import { ToastService } from '../../../../../core/services/snackbar/toast-service';
+import { OfferApiService } from '../../../services/offer-api-service';
+import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+import { finalize } from 'rxjs';
+import { DeliveryOption } from '../../../shared/delivery-option';
+import { getErrorMessage } from '../../../../../core/helpers/form-helper';
 
 @Component({
   selector: 'app-sale-details',
-  imports: [FormsModule, CommonModule, SellerInfo],
+  imports: [FormsModule, CommonModule, SellerInfo, ReactiveFormsModule],
   templateUrl: './rent-details.html',
   styleUrls: [
     './rent-details.scss',
@@ -17,8 +23,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class RentDetails implements OnInit {
-  rentOfferId!: Guid;
   private readonly route = inject(ActivatedRoute);
+  private readonly offerService = inject(OfferApiService);
+  private readonly toastService = inject(ToastService);
+
+  rentOfferId!: Guid;
+  rentOfferDetails = signal<RentOfferDetails | null>(null);
+  loading = signal<boolean>(false);
+
+  cartForm: FormGroup = new FormGroup({
+    quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
+    rentalDays: new FormControl(1, [Validators.required, Validators.min(1)]),
+  });
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -27,6 +43,28 @@ export class RentDetails implements OnInit {
         this.rentOfferId = Guid.parse(id);
       }
     });
+    this.loadOffer();
+  }
+
+  loadOffer() {
+    this.loading.set(true);
+    this.offerService.getRentOfferDetails(this.rentOfferId)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          this.rentOfferDetails.set(data);
+        },
+        error: (err: ProblemDetails) => this.toastService.error(err.detail ?? "Failed to load offer")
+      })
+  };
+
+  getError(path: string){
+    return getErrorMessage(this.cartForm, path);
+  }
+  
+  addToCart(){
+
   }
 
   deliveryOptions: DeliveryOption[] = [
@@ -62,49 +100,7 @@ export class RentDetails implements OnInit {
     }
   ];
 
-  quantity: number = 56;
-  price: number = 49.99;
-  rentalDays: number = 5;
-
-  maxRentalDays: number = 10;
-  currency: string = "PLN"
-  condition: string = "Used";
-  category: string = "CPU";
-  quantityAvaliable: number = 69;
-  title: string = "Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM";
-  isSellerCompany: boolean = false;
-
-  description: string = `   🔥 Unleash Elite Performance – AMD Ryzen 7 5700X3D 🔥
-
-                            Experience next-level computing with
-                            the Ryzen 7 5700X3D, engineered for gamers, creators, and power users who demand maximum
-                            performance. Featuring AMD’s cutting-edge 3D V-Cache™ technology, this 8-core, 16-thread
-                            processor delivers exceptional speed, responsiveness, and multitasking capabilities.
-
-                            ⚙️ Key Features:
-
-                            3D V-Cache™ for up to 96MB L3 cache – massive boost in gaming and productivity workloads
-
-                            8 cores / 16 threads – seamless multitasking and high-performance computing
-
-                            Base Clock: 3.0 GHz | Boost Clock: Up to 4.1 GHz
-
-                            Socket AM4 – compatible with a wide range of motherboards
-
-                            Unlocked for overclocking – push your system to the limit
-
-                            🎮 Whether you're dominating in AAA titles or rendering high-res content, the Ryzen 5700X3D
-                            offers unmatched efficiency and power.
-
-                            🛒 Limited-time offer – grab yours now and elevate your rig with one of AMD’s most advanced
-                            desktop processors!`;
-
-
-  get descriptionWithBr(): string {
-    return this.description.trim().replace(/\n/g, '<br>');
-  }
-
-  addToCart(): void {
-    console.log(this.quantity);
+  get descriptionWithBr(): string | undefined {
+    return this.rentOfferDetails()?.description.trim().replace(/\n/g, '<br>');
   }
 }

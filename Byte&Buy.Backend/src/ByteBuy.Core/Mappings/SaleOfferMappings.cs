@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Money;
+using ByteBuy.Core.DTO.Offer.Common;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using System.Linq.Expressions;
 
@@ -53,4 +54,38 @@ public static class SaleOfferMappings
                 .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList());
+
+    public static Expression<Func<SaleOffer, SaleOfferDetailsResponse>> SaleOfferDetailsResponseProjection
+        => so => new SaleOfferDetailsResponse(
+            so.Id,
+            so.QuantityAvailable,
+            so.PricePerItem.ToMoneyDto(),
+            so.Item.Condition.Name,
+            so.Item.Category.Name,
+            so.Item.Description,
+            so.Item.Name,
+             so.CreatedBy is Employee
+                ? new CompanySellerResponse(
+                    ((Employee)so.CreatedBy).Company.CompanyName,
+                    ((Employee)so.CreatedBy).Company.Email,
+                    ((Employee)so.CreatedBy).Company.CompanyAddress.City,
+                    ((Employee)so.CreatedBy).Company.CompanyAddress.PostalCity,
+                    ((Employee)so.CreatedBy).Company.CompanyAddress.PostalCode,
+                    ((Employee)so.CreatedBy).Company.Phone,
+                    ((Employee)so.CreatedBy).Company.TIN
+                    )
+                : new PrivateSellerResponse(
+                    so.CreatedBy.FirstName,
+                    so.CreatedBy.Email!,
+                    so.CreatedBy.HomeAddress!.City,
+                    so.CreatedBy.HomeAddress.PostalCity,
+                    so.CreatedBy.HomeAddress.PostalCode,
+                    so.CreatedBy.PhoneNumber
+                    ),
+            so.Item.Images
+                .AsQueryable()
+                .Select(ImageMappings.ImageResponseProjection)
+                .ToList()
+            );
+
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [AllowAnonymous]
-[Route("api/[controller]")]
+[Route("api/offers")]
 [ApiController]
 public class OffersController : BaseApiController
 {

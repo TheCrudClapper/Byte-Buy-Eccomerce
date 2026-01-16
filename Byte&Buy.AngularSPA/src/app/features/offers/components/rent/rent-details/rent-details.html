@@ -5,7 +5,6 @@
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
-                        {{ rentOfferId }}
                         <div id="imageCarousel" class="carousel slide">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
@@ -49,11 +48,11 @@
                             <tbody>
                                 <tr>
                                     <td>Condition</td>
-                                    <td class="fw-bold">{{condition}}</td>
+                                    <td class="fw-bold">{{ rentOfferDetails()?.condition }}</td>
                                 </tr>
                                 <tr>
                                     <td>Category</td>
-                                    <td class="fw-bold">{{category}}</td>
+                                    <td class="fw-bold">{{ rentOfferDetails()?.category }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -74,7 +73,7 @@
                     <!-- Title + favourite button -->
                     <div class="row">
                         <div class="col-10">
-                            <p class="offer-details-title">{{title}}</p>
+                            <p class="offer-details-title">{{ rentOfferDetails()?.title }}</p>
                         </div>
                         <div class="col-2 text-end">
                             <i class="fa-regular fa-heart" style="color: #ffffff;"></i>
@@ -84,38 +83,44 @@
                     <!-- Price -->
                     <div class="row">
                         <div class="col-12">
-                            <p class="price">{{ price | number:'1.2-2' }} {{ currency }}</p>
+                            <p class="price">{{ rentOfferDetails()?.pricePerDayAmount }} {{
+                                rentOfferDetails()?.pricePerDayCurrency }}</p>
                             <span class="badge seller-badge me-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                                Seller: {{isSellerCompany ? "Company" : "Private Person"}}
+                                <!-- Seller: {{isSellerCompany ? "Company" : "Private Person"}} -->
                             </span>
                             <span class="badge seller-badge me-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
-                                Avaliable: {{quantityAvaliable}}
+                                Avaliable: {{rentOfferDetails()?.quantityAvaliable}}
                             </span>
                             <span class="badge seller-badge mt-2">
                                 <i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i>
-                                Max days per rental: {{maxRentalDays}}
+                                Max days per rental: {{ rentOfferDetails()?.maxRentalDays }}
                             </span>
                         </div>
                     </div>
 
-                    <div class="row mt-2 align-items-center pt-3">
-                        <div class="col-6">
-                            <span>Quantity</span>
-                            <input type="number" [(ngModel)]="quantity" min="1" class="form-control">
+                    <form [formGroup]="cartForm" (ngSubmit)="addToCart()">
+                        <div class="row mt-2 align-items-center pt-3">
+                            <div class="col-6">
+                                <span>Quantity</span>
+                                <input type="number" formControlName="quantity" class="form-control">
+                                <span class="validation-error"> {{ getError('quantity') }}</span>
+                            </div>
+                            <div class="col-6">
+                                <span>Rental Days</span>
+                                <input type="number" formControlName="rentalDays" class="form-control">
+                                <span class="validation-error"> {{ getError('rentalDays') }}</span>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button class="btn w-100">
+                                    <i class="fa-solid fa-cart-arrow-down me-1" style="color: #ffffff;"></i>
+                                    To Cart
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <span>Rental Days</span>
-                            <input type="number" [(ngModel)]="rentalDays" min="1" class="form-control">
-                        </div>
-                        <div class="col-12 mt-2">
-                            <button class="btn w-100" (click)="addToCart()">
-                                <i class="fa-solid fa-cart-arrow-down me-1" style="color: #ffffff;"></i>
-                                To Cart
-                            </button>
-                        </div>
-                    </div>
+                    </form>
+
                 </div>
 
                 <!-- Deliveries Section -->

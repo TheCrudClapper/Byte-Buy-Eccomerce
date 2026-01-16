@@ -5,5 +5,5 @@ export interface CompanySeller{
     city: string;
     postalCode: string;
     postalCity: string;
-    nip: string;
+    tin: string;
 }

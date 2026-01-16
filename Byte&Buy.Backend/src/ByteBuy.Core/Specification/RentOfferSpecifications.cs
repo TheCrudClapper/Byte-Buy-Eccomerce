@@ -56,5 +56,16 @@ public static class RentOfferSpecifications
         }
     }
 
+    public sealed class RentOfferDetailsSpec : Specification<RentOffer, RentOfferDetailsResponse>
+    {
+        public RentOfferDetailsSpec(Guid id)
+        {
+            Query
+                .AsNoTracking()
+                .Where(ro => ro.Id == id)
+                .Select(RentOfferMappings.RentOfferDetailsResponseProjection);
+        }
+    }
+
 
 }

@@ -60,4 +60,14 @@ public static class SaleOfferSpecifications
                 .Select(SaleOfferMappings.UserSaleOfferResponseProjection);
         }
     }
+
+    public sealed class SaleOfferDetailsResponseSpec : Specification<SaleOffer, SaleOfferDetailsResponse> 
+    {
+        public SaleOfferDetailsResponseSpec(Guid id)
+        {
+            Query.AsNoTracking()
+                .Where(so => so.Id == id)
+                .Select(SaleOfferMappings.SaleOfferDetailsResponseProjection);
+        }
+    }
 }
