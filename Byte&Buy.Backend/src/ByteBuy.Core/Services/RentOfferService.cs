@@ -13,12 +13,12 @@ namespace ByteBuy.Core.Services;
 public class RentOfferService : IRentOfferService
 {
     private readonly IRentOfferRepository _rentOfferRepository;
-    private readonly ICompanyInfoRepository _companyInfoRepository;
+    private readonly ICompanyRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly IItemRepository _itemRepository;
     public RentOfferService(IRentOfferRepository rentOfferRepo, IItemRepository itemRepo,
         IDeliveryRepository deliveryRepository,
-        ICompanyInfoRepository companyInfoRepository)
+        ICompanyRepository companyInfoRepository)
     {
         _companyInfoRepository = companyInfoRepository;
         _rentOfferRepository = rentOfferRepo;

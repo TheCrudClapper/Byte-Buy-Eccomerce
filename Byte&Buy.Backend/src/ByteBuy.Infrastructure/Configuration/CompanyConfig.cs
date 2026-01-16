@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ByteBuy.Infrastructure.Configuration;
 
-public class CompanyInfoConfig : IEntityTypeConfiguration<CompanyInfo>
+public class CompanyConfig : IEntityTypeConfiguration<Company>
 {
-    public void Configure(EntityTypeBuilder<CompanyInfo> builder)
+    public void Configure(EntityTypeBuilder<Company> builder)
     {
+        builder.ToTable("Company");
         builder.OwnsOne(ci => ci.CompanyAddress, ci =>
         {
             ci.Property(prop => prop.City).HasMaxLength(50).IsRequired();

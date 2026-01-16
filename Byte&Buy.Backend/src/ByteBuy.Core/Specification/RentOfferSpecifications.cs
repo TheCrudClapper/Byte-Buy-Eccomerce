@@ -56,4 +56,5 @@ public static class RentOfferSpecifications
         }
     }
 
+
 }

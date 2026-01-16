@@ -29,7 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IDeliveryCarrierService, DeliveryCarrierService>();
         services.AddScoped<ISaleOfferService, SaleOfferService>();
         services.AddScoped<IRentOfferService, RentOfferService>();
-        services.AddScoped<IOfferBrowserService, OfferBrowserService>();
+        services.AddScoped<IOfferReadService, OfferReadService>();
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<IUserSaleOfferService, UserSaleOfferService>();
         services.AddScoped<IImageService, ImageService>();

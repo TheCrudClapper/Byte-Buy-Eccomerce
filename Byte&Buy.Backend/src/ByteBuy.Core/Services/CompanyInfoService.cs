@@ -11,9 +11,9 @@ namespace ByteBuy.Core.Services;
 
 public class CompanyInfoService : ICompanyInfoService
 {
-    private readonly ICompanyInfoRepository _companyInfoRepository;
+    private readonly ICompanyRepository _companyInfoRepository;
     private readonly IAddressValidationService _addressValidator;
-    public CompanyInfoService(ICompanyInfoRepository companyInfo,
+    public CompanyInfoService(ICompanyRepository companyInfo,
         IAddressValidationService addressValidator)
     {
         _companyInfoRepository = companyInfo;
@@ -24,7 +24,7 @@ public class CompanyInfoService : ICompanyInfoService
         if (await _companyInfoRepository.ExistAsync())
             return Result.Failure<CreatedResponse>(CompanyInfoErrors.DuplicateCompanyInfo);
 
-        var createResult = CompanyInfo.Create(
+        var createResult = Company.Create(
             request.CompanyName,
             request.TIN,
             request.Email,

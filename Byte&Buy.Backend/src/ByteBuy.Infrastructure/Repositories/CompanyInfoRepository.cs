@@ -6,19 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CompanyInfoRepository : EfBaseRepository<CompanyInfo>, ICompanyInfoRepository
+public class CompanyInfoRepository : EfBaseRepository<Company>, ICompanyRepository
 {
     public CompanyInfoRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<bool> ExistAsync(CancellationToken ct = default)
     {
-        return await _context.CompanyInfo.AnyAsync(ct);
+        return await _context.Company.AnyAsync(ct);
     }
 
-    public async Task<CompanyInfo?> GetAsync(CancellationToken ct)
+    public async Task<Company?> GetAsync(CancellationToken ct)
     {
         //There is only one record of company details in whole db
-        return await _context.CompanyInfo
-            .FirstOrDefaultAsync();
+        return await _context.Company.FirstOrDefaultAsync(ct);
     }
 }

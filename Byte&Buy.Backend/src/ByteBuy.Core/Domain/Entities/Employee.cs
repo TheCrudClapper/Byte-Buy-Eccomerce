@@ -6,8 +6,15 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public sealed class Employee : ApplicationUser
 {
-    private Employee(string firstName, string lastName, string email, string? phoneNumber)
-        : base(firstName, lastName, email, phoneNumber) { }
+    public Guid CompanyId { get; private set; }
+    private Employee(string firstName, string lastName, string email, string? phoneNumber, Guid companyId)
+        : base(firstName, lastName, email, phoneNumber)
+    {
+        CompanyId = companyId;
+    }
+
+    //Navigation property
+    public Company Company { get; private set; } = null!;
 
     public static Result<Employee> Create(string firstName,
         string lastName,
@@ -20,6 +27,7 @@ public sealed class Employee : ApplicationUser
         string country,
         string? flatNumber,
         string? phoneNumber,
+        Guid companyId,
         IEnumerable<Guid>? revokedPermissions,
         IEnumerable<Guid>? grantedPermissions,
         IAddressValidationService validator)
@@ -34,7 +42,7 @@ public sealed class Employee : ApplicationUser
         if (addressResult.IsFailure)
             return Result.Failure<Employee>(addressResult.Error);
 
-        var employee = new Employee(firstName, lastName, email, phoneNumber);
+        var employee = new Employee(firstName, lastName, email, phoneNumber, companyId);
 
         employee.HomeAddress = addressResult.Value;
 

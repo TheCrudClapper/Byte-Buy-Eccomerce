@@ -3,8 +3,8 @@ using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
-public interface ICompanyInfoRepository : IRepositoryBase<CompanyInfo>
+public interface ICompanyRepository : IRepositoryBase<Company>
 {
     Task<bool> ExistAsync(CancellationToken ct = default);
-    Task<CompanyInfo?> GetAsync(CancellationToken ct = default);
+    Task<Company?> GetAsync(CancellationToken ct = default);
 }

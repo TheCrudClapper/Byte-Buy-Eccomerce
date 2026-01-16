@@ -14,13 +14,13 @@ namespace ByteBuy.Core.Services;
 public class SaleOfferService : ISaleOfferService
 {
     private readonly IItemRepository _itemRepository;
-    private readonly ICompanyInfoRepository _companyInfoRepository;
+    private readonly ICompanyRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly ISaleOfferRepository _saleOfferRepository;
     public SaleOfferService(
         IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
-        ICompanyInfoRepository companyInfoRepository,
+        ICompanyRepository companyInfoRepository,
         IDeliveryRepository deliveryRepository)
     {
         _itemRepository = itemRepository;

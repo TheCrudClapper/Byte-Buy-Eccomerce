@@ -6,7 +6,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class CompanyInfoMappings
 {
-    public static CompanyInfoResponse ToCompanyInfoResponse(this CompanyInfo company)
+    public static CompanyInfoResponse ToCompanyInfoResponse(this Company company)
     {
         return new CompanyInfoResponse(
             company.CompanyName,

@@ -9,7 +9,7 @@ namespace ByteBuy.Core.Domain.Entities;
 /// Represents unique information about the ByteBuy company.
 /// This entity cannot be deleted and only one instance exists in the system.
 /// </summary>
-public class CompanyInfo : AuditableEntity
+public class Company : AuditableEntity
 {
     public string CompanyName { get; private set; } = null!;
     public string TIN { get; private set; } = null!;
@@ -18,9 +18,12 @@ public class CompanyInfo : AuditableEntity
     public string Phone { get; private set; } = null!;
     public string Slogan { get; private set; } = null!;
 
-    private CompanyInfo() { }
+    //EF
+    public ICollection<Employee> Employees { get; private set; } = [];
 
-    private CompanyInfo(
+    private Company() { }
+
+    private Company(
         string companyName,
         string tin,
         string email,
@@ -61,7 +64,7 @@ public class CompanyInfo : AuditableEntity
         return Result.Success();
     }
 
-    public static Result<CompanyInfo> Create(
+    public static Result<Company> Create(
     string companyName,
     string tin,
     string email,
@@ -78,13 +81,13 @@ public class CompanyInfo : AuditableEntity
     {
         var validationResult = ValidateBasicInfo(companyName, tin, email, phone, slogan);
         if (validationResult.IsFailure)
-            return Result.Failure<CompanyInfo>(validationResult.Error);
+            return Result.Failure<Company>(validationResult.Error);
 
         var addressResult = AddressValueObject.Create(street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
-            return Result.Failure<CompanyInfo>(addressResult.Error);
+            return Result.Failure<Company>(addressResult.Error);
 
-        return new CompanyInfo(companyName, tin, email, phone, slogan, addressResult.Value);
+        return new Company(companyName, tin, email, phone, slogan, addressResult.Value);
     }
 
     public Result Update(
@@ -104,11 +107,11 @@ public class CompanyInfo : AuditableEntity
     {
         var validationResult = ValidateBasicInfo(companyName, tin, email, phone, slogan);
         if (validationResult.IsFailure)
-            return Result.Failure<CompanyInfo>(validationResult.Error);
+            return Result.Failure<Company>(validationResult.Error);
 
         var addressResult = AddressValueObject.Create(street, houseNumber, postalCity, postalCode, city, country, flatNumber, validator);
         if (addressResult.IsFailure)
-            return Result.Failure<CompanyInfo>(addressResult.Error);
+            return Result.Failure<Company>(addressResult.Error);
 
         CompanyName = companyName;
         TIN = tin;

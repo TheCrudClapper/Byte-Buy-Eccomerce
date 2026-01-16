@@ -6,7 +6,7 @@ namespace ByteBuy.Core.Specification;
 
 public static class CompanyInfoSpecifications
 {
-    public sealed class CompanyInfoToAddressValueObject : Specification<CompanyInfo, AddressValueObject>
+    public sealed class CompanyInfoToAddressValueObject : Specification<Company, AddressValueObject>
     {
         public CompanyInfoToAddressValueObject()
         {

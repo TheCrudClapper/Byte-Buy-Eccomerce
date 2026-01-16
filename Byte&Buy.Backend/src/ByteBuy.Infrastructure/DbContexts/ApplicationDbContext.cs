@@ -37,7 +37,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<RentOrderItem> RentOrderItems { get; set; }
     public DbSet<SaleCartOffer> SaleCartOffers { get; set; }
     public DbSet<SaleOrderItem> SaleOrderItems { get; set; }
-    public DbSet<CompanyInfo> CompanyInfo { get; set; }
+    public DbSet<Company> Company { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }
     public DbSet<DeliveryCarrier> DeliveryCarriers { get; set; }

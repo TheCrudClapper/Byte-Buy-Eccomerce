@@ -17,6 +17,7 @@ public class EmployeeService : IEmployeeService
     private readonly IUserRepository _userRepository;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IPasswordService _passwordService;
+    private readonly ICompanyRepository _companyRepository;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly IAddressValidationService _addressValidator;
@@ -27,6 +28,7 @@ public class EmployeeService : IEmployeeService
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
         IPasswordService passwordService,
+        ICompanyRepository companyRepository,
         IAddressValidationService addressValidator)
     {
         _userRepository = applicationUserRepository;
@@ -35,6 +37,7 @@ public class EmployeeService : IEmployeeService
         _employeeRepository = employeeRepository;
         _passwordService = passwordService;
         _addressValidator = addressValidator;
+        _companyRepository = companyRepository;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(EmployeeAddRequest request)
@@ -45,6 +48,10 @@ public class EmployeeService : IEmployeeService
         var applicationRole = await _roleManager.FindByIdAsync(request.RoleId.ToString());
         if (applicationRole is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
+
+        var company = await _companyRepository.GetAsync();
+        if (company is null)
+            return Result.Failure<CreatedResponse>(EmployeeErrors.CompanyNotFound);
 
         var employeeResult = Employee.Create(
             request.FirstName,
@@ -58,6 +65,7 @@ public class EmployeeService : IEmployeeService
             request.HomeAddress.Country,
             request.HomeAddress.FlatNumber,
             request.PhoneNumber,
+            company.Id,
             request.RevokedPermissionIds,
             request.GrantedPermissionIds,
             _addressValidator
