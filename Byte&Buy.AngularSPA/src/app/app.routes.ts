@@ -16,6 +16,7 @@ import { OfferBrowser } from './features/offers/components/offer-browser/offer-b
 import { Fobidden } from './shared/components/fobidden/fobidden';
 import { authGuard } from './core/guards/auth-guard';
 import { CartPage } from './features/cart/components/cart-page/cart-page/cart-page';
+import { NotFound } from './shared/components/not-found/not-found/not-found';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -26,11 +27,11 @@ export const routes: Routes = [
         path: '',
         children: [
             { path: 'offers/rent/create', component: RentCreate}, 
-            { path: 'offers/rent/:id/edit', component: RentEdit}, 
-            { path: 'offers/rent/:id/details', component: RentDetails}, 
+            { path: 'offers/rent/edit/:id', component: RentEdit}, 
+            { path: 'offers/rent/details/:id', component: RentDetails}, 
             { path: 'offers/sale/create', component: SaleCreate}, 
-            { path: 'offers/sale/:id/edit', component: SaleEdit}, 
-            { path: 'offers/sale/:id/details', component: SaleDetails},
+            { path: 'offers/sale/edit/:id', component: SaleEdit}, 
+            { path: 'offers/sale/details/:id', component: SaleDetails},
             { path: 'cart', component: CartPage},
             {
                 path: 'profile',
@@ -46,5 +47,5 @@ export const routes: Routes = [
     },
     { path: 'forbidden', component: Fobidden },
     { path: 'offers', component: OfferBrowser},
-    
+    { path: '**', component: NotFound }
 ];
