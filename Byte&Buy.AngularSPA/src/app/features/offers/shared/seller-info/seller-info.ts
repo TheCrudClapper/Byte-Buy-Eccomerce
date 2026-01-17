@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
+import { PrivateSeller } from '../../models/private-seller';
+import { CompanySeller } from '../../models/company-seller';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-seller-info',
-  imports: [],
+  imports: [CommonModule],
+  standalone: true,
   templateUrl: './seller-info.html',
   styleUrls: ['./seller-info.scss',
     '../../shared/offers-shared-styles.scss'
@@ -11,16 +15,16 @@ import { Component } from '@angular/core';
 export class SellerInfo {
   googleApiBase = "https://www.google.com/maps/search/?api=1&query=";
 
-  sellerEmail: string = "wojciechmucha12@gmail.com";
-  sellerCreated: string = "2025-12-12";
-  sellerCity: string = "Siedlce";
-  sellerPostalCode: string = "33-322";
-  sellerPostalCity: string = "Korzenna";
-  sellerPhone: string = "724075416";
-  sellerName: string = "Wojciech";
+  seller = input<PrivateSeller | CompanySeller | undefined>();
 
-  googleMapsLink(): string {
-    const query = (this.sellerCity + '+' + this.sellerPostalCity + '+' + this.sellerPostalCode);
-    return this.googleApiBase + query;
-  }
+  googleMapsLink = computed(() => {
+    const sellerData = this.seller();
+    if(!sellerData) return;
+
+    const query = `${sellerData.city}+${sellerData.postalCity}+${sellerData.postalCode}`;
+    return this.googleApiBase + encodeURIComponent(query);
+  });
 }
+
+
+

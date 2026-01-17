@@ -6,7 +6,7 @@ import { SellerInfo } from '../../../shared/seller-info/seller-info';
 
 @Component({
   selector: 'app-sale-details',
-  imports: [FormsModule, CommonModule, SellerInfo],
+  imports: [FormsModule, CommonModule],
   templateUrl: './sale-details.html',
   styleUrls: [
     './sale-details.scss',

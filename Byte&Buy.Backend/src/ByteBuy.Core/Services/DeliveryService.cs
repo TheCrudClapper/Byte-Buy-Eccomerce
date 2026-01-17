@@ -93,7 +93,7 @@ public class DeliveryService : IDeliveryService
 
         var delivery = await _deliveryRepository.GetByIdAsync(id);
         if (delivery is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(DeliveryErrors.NotFound);
 
         delivery.Deactivate();
 
@@ -149,5 +149,11 @@ public class DeliveryService : IDeliveryService
         return id.HasValue
             ? (ParcelSizeEnum)id.Value
             : null;
+    }
+
+    public async Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default)
+    {
+        var spec = new DeliveryToDeliveryListResponseSpec(offerId);
+        return await _deliveryRepository.GetListBySpecAsync(spec, ct);
     }
 }

@@ -5,5 +5,6 @@ export interface CompanySeller{
     city: string;
     postalCode: string;
     postalCity: string;
+    phone: string;
     tin: string;
 }

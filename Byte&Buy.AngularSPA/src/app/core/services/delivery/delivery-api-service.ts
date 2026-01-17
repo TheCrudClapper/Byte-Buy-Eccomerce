@@ -6,6 +6,7 @@ import { SelectListItemResponse } from '../../../shared/api-dto/select-list-item
 import { DeliveryResponse } from '../../api-dto/delivery-response';
 import { DeliveryListItem } from '../../../shared/models/delivery-list-items';
 import { DeliveryOptionsResponse } from '../../../shared/api-dto/delivery-options-response';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ import { DeliveryOptionsResponse } from '../../../shared/api-dto/delivery-option
 export class DeliveryApiService {
   private readonly resourceUri = "http://localhost:5099/api/deliveries";
   private readonly httpClient = inject(HttpClient);
-  
-  getSelectList(): Observable<SelectListItem[]>{
+
+  getSelectList(): Observable<SelectListItem[]> {
     return this.httpClient.get<SelectListItemResponse[]>(`${this.resourceUri}/options`).pipe(
       map(response => response.map(item => ({
         id: item.id,
@@ -22,20 +23,37 @@ export class DeliveryApiService {
       })))
     );
   }
-  
-  getDeliveriesList(): Observable<DeliveryResponse[]>{
+
+  getDeliveriesList(): Observable<DeliveryListItem[]> {
     return this.httpClient.get<DeliveryResponse[]>(`${this.resourceUri}/list`).pipe(
-      map(response => response.map(item => ({
-        id: item.id,
-        name: item.name,
-        currency: item.currency,
-        amount: item.amount,
-        carrier: item.carrier
-      })))
+      map((response: DeliveryResponse[]) =>
+        response.map((item: DeliveryResponse): DeliveryListItem => ({
+          id: item.id,
+          name: item.name,
+          currency: item.currency,
+          amount: item.amount,
+          carrier: item.carrier
+        }))
+      )
     );
   }
 
-  getAvaliableDeliveries(): Observable<DeliveryOptionsResponse>{
+  getDeliveriesListPerOffer(id: Guid): Observable<DeliveryListItem[]> {
+    return this.httpClient.get<DeliveryResponse[]>(`${this.resourceUri}/offer/${id}`).pipe(
+      map((response: DeliveryResponse[]) =>
+        response.map((item: DeliveryResponse): DeliveryListItem => ({
+          id: item.id,
+          name: item.name,
+          currency: item.currency,
+          amount: item.amount,
+          carrier: item.carrier
+        }))
+      )
+    );
+  }
+
+
+  getAvaliableDeliveries(): Observable<DeliveryOptionsResponse> {
     return this.httpClient.get<DeliveryOptionsResponse>(`${this.resourceUri}/available`);
   }
 

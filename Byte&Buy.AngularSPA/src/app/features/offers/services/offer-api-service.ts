@@ -4,6 +4,8 @@ import { map, Observable } from 'rxjs';
 import { RentOfferDetails } from '../models/rent-offer-details';
 import { Guid } from 'guid-typescript';
 import { RentOfferDetailsResponse } from '../api-dto/rent-offer-details-response';
+import { CompanySeller } from '../models/company-seller';
+import { PrivateSeller } from '../models/private-seller';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,10 @@ export class OfferApiService {
         category: dto.category,
         description: dto.description,
         title: dto.title,
-        seller: dto.seller, 
+         seller: {
+          ...dto.seller,
+          type: 'companyName' in dto.seller ? 'company' : 'private'
+        } as CompanySeller | PrivateSeller,
         images: dto.images
       }))
     );

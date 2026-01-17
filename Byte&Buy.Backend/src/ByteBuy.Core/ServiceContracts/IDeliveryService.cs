@@ -14,4 +14,5 @@ public interface IDeliveryService
     Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default);
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels();
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes();
+    Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default);
 }

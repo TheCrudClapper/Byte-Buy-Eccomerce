@@ -30,7 +30,7 @@ public static class DeliveryMappings
             .ToList();
     }
 
-    //LINQ to SQL Projections
+    //LINQ to DB Projections
     public static Expression<Func<Delivery, DeliveryListResponse>> DeliveryListResponseProjection
         => d => new DeliveryListResponse(
             d.Id,

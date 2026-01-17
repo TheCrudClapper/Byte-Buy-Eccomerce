@@ -10,8 +10,11 @@ public static class DeliverySpecifications
 {
     public class DeliveryToDeliveryListResponseSpec : Specification<Delivery, DeliveryListResponse>
     {
-        public DeliveryToDeliveryListResponseSpec()
+        public DeliveryToDeliveryListResponseSpec(Guid? offerId = null)
         {
+            if (offerId.HasValue)
+                Query.Where(d => d.OfferDeliveries.Any(od => od.OfferId == offerId && od.IsActive));
+            
             Query.AsNoTracking()
                 .Select(DeliveryMappings.DeliveryListResponseProjection);
         }

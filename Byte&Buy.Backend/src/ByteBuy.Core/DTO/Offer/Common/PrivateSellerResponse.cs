@@ -6,4 +6,5 @@ public record PrivateSellerResponse(
     string City,
     string PostalCity,
     string PostalCode,
-    string? Phone);
+    string? Phone,
+    DateTime AccountCreatedDate);

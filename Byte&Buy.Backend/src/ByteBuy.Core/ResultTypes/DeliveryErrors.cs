@@ -5,6 +5,10 @@
 /// </summary>
 public static class DeliveryErrors
 {
+
+    public static readonly Error NotFound = new(
+        ErrorType.NotFound, "Delivery.NotFound", "Delivery is not found");
+
     public static readonly Error AlreadyExists = new(
         ErrorType.Conflict, "Delivery.AlreadyExitst", "Delivery with this data already exists.");
 

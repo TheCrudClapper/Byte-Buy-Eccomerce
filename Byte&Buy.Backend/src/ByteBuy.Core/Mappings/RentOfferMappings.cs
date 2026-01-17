@@ -87,7 +87,8 @@ public static class RentOfferMappings
                     ro.CreatedBy.HomeAddress!.City,
                     ro.CreatedBy.HomeAddress.PostalCity,
                     ro.CreatedBy.HomeAddress.PostalCode,
-                    ro.CreatedBy.PhoneNumber
+                    ro.CreatedBy.PhoneNumber,
+                    ro.CreatedBy.DateCreated
                     ),
             ro.Item.Images
                 .AsQueryable()

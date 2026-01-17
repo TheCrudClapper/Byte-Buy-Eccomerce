@@ -6,4 +6,5 @@ export interface PrivateSeller{
     postalCode: string,
     postalCity: string,
     phone: string | null
+    accountCreatedDate: Date
 }

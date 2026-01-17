@@ -80,7 +80,8 @@ public static class SaleOfferMappings
                     so.CreatedBy.HomeAddress!.City,
                     so.CreatedBy.HomeAddress.PostalCity,
                     so.CreatedBy.HomeAddress.PostalCode,
-                    so.CreatedBy.PhoneNumber
+                    so.CreatedBy.PhoneNumber,
+                    so.CreatedBy.DateCreated
                     ),
             so.Item.Images
                 .AsQueryable()

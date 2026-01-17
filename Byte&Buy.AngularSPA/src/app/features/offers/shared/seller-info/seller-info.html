@@ -9,24 +9,33 @@
             <p class="d-block">
                 <i class="fa-regular fa-user" style="color: #ffffff;"></i>
                 <span class="ms-2 fw-bold">Sells: </span>
-                <span>{{sellerName}}</span>
+                <span>
+                    @if (seller(); as seller)
+                    {
+                    {{ seller.type === 'company' ? seller.companyName : seller.firstName }}
+                    }
+                </span>
             </p>
 
             <p class="d-block">
                 <i class="fa-regular fa-envelope" style="color: #ffffff;"></i>
                 <span class="ms-2 fw-bold">Email: </span>
                 <span>
-                    <a [href]="'mailto:' + sellerEmail">
-                        {{sellerEmail}}
-                    </a>
+                    @if (seller(); as seller)
+                    {
+                    {{ seller.type === 'company' ? seller.companyEmail : seller.email }}
+                    }
                 </span>
             </p>
 
-            <p class="d-block">
+            @if (seller(); as seller)
+            {
+            <p class="d-block" *ngIf="seller && 'accountCreatedDate' in seller">
                 <i class="fa-solid fa-hourglass" style="color: #ffffff;"></i>
                 <span class="ms-2 fw-bold">Account created: </span>
-                <span>{{sellerCreated}}</span>
+                <span>seller.accountCreatedDate</span>
             </p>
+            }
 
         </div>
         <div class="col-6">
@@ -35,7 +44,10 @@
                 <i class="fa-solid fa-map-location-dot" style="color: #ffffff;"></i>
                 <span class="ms-2">
                     <a [href]="googleMapsLink()" target="_blank">
-                        {{sellerCity}}, {{sellerPostalCity}} {{sellerPostalCode}}
+                        @if (seller(); as seller)
+                        {
+                        {{ seller.city + ', ' + seller.postalCity + ' ' + seller.postalCode }}
+                        }
                     </a>
                 </span>
             </p>
@@ -44,11 +56,24 @@
                 <i class="fa-solid fa-phone" style="color: #ffffff;"></i>
                 <span class="ms-2 fw-bold">Phone: </span>
                 <span>
-                    <a [href]="'tel:' + sellerPhone">
-                        {{sellerPhone}}
+
+                    @if (seller(); as seller)
+                    {
+                    <a [href]="'tel:'">
+                        {{ seller.phone ?? ''}}
                     </a>
+                    }
                 </span>
             </p>
+
+            @if (seller(); as seller)
+            {
+            <p class="d-block" *ngIf="seller && 'tin' in seller">
+                <i class="fa-regular fa-building" style="color: #ffffff;"></i>
+                <span class="ms-2 fw-bold">TIN: </span>
+                <span>{{ seller.tin }}</span>
+            </p>
+            }
 
         </div>
     </div>

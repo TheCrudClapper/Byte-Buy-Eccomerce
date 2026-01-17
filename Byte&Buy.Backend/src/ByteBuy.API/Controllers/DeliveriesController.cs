@@ -29,6 +29,10 @@ public class DeliveriesController
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectListAsync(ct));
 
+    [HttpGet("offer/{offerId:guid}")]
+    public async Task<ActionResult<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default)
+        => HandleResult(await _deliveryService.GetDeliveriesListPerOffer(offerId, ct));
+
     [HttpGet("available")]
     public async Task<ActionResult<DeliveryOptionsResponse>> GetAvailableDeliveries(CancellationToken ct)
         => HandleResult(await _deliveryService.GetAvaliableDeliveriesAsync(ct));
