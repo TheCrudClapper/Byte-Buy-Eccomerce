@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './seller-info.html',
   styleUrls: ['./seller-info.scss',
-    '../../shared/offers-shared-styles.scss'
+    '../../shared/styles/offers-shared-styles.scss'
   ],
 })
 export class SellerInfo {

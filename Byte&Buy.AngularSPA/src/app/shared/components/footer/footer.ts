@@ -1,6 +1,6 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
-import { CompanyInfoApiService } from '../../../core/services/company-info/company-info-api-service';
-import { CompanyInfoResponse } from '../../../core/api-dto/company-info-response';
+import { CompanyInfoApiService } from '../../../core/clients/company-info/company-info-api-service';
+import { CompanyInfoResponse } from '../../../core/dto/company/company-info-response';
 
 @Component({
   selector: 'app-footer',

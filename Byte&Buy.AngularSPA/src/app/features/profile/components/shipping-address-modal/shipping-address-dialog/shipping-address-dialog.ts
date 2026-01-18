@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, effect, EventEmitter, inject, Input, input, Output, signal } from '@angular/core';
-import { getErrorMessage } from '../../../../../core/helpers/form-helper';
+import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
-import { AddressApiService } from '../../../../../core/services/address/address-api-service';
-import { ToastService } from '../../../../../core/services/snackbar/toast-service';
+import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
+import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 import { CommonModule } from '@angular/common';
-import { ShippingAddressResponse } from '../../../api-dto/shipping-address-response';
+import { ShippingAddressResponse } from '../../../../../core/dto/shipping-address/shipping-address-response';
 import { Guid } from 'guid-typescript';
-import { ShippingAddressUpdateRequest } from '../../../api-dto/shipping-address-update-request';
-import { ShippingAddressAddRequest } from '../../../api-dto/shipping-address-add-request';
+import { ShippingAddressUpdateRequest } from '../../../../../core/dto/shipping-address/shipping-address-update-request';
+import { ShippingAddressAddRequest } from '../../../../../core/dto/shipping-address/shipping-address-add-request';
 import { SelectListItem } from '../../../../../shared/models/select-list-item';
-import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

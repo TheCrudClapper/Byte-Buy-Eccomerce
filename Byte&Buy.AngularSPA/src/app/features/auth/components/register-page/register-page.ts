@@ -1,13 +1,13 @@
 import { Component, inject, signal, Signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
-import { RegisterRequest } from '../../../../core/api-dto/register-request';
-import { AuthService } from '../../../../core/services/auth/auth-service';
-import { ProblemDetails } from '../../../../core/api-dto/problem-details';
+import { RegisterRequest } from '../../../../core/dto/auth/register-request';
+import { AuthService } from '../../../../core/clients/auth/auth-service';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { getErrorMessage } from '../../../../core/helpers/form-helper';
+import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 import { finalize } from 'rxjs';
-import { ToastService } from '../../../../core/services/snackbar/toast-service';
+import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-register',

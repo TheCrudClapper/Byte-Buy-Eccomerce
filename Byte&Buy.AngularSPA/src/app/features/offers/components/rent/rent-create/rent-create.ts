@@ -1,20 +1,20 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormArray, FormsModule } from '@angular/forms';
-import { getErrorMessage } from '../../../../../core/helpers/form-helper';
-import { CategoryApiService } from '../../../../../core/services/category/category-api-service';
-import { ConditionApiService } from '../../../../../core/services/condition/condition-api-service';
+import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
+import { CategoryApiService } from '../../../../../core/clients/category/category-api-service';
+import { ConditionApiService } from '../../../../../core/clients/condition/condition-api-service';
 import { CommonModule } from '@angular/common';
 import { SelectListItem } from '../../../../../shared/models/select-list-item';
-import { DeliveryApiService } from '../../../../../core/services/delivery/delivery-api-service';
+import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
 import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
-import { AddressApiService } from '../../../../../core/services/address/address-api-service';
-import { HomeAddressDto } from '../../../../../shared/api-dto/home-address-dto';
-import { RentOfferApiSerivce } from '../../../services/rent-offer-api-serivce';
+import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
+import { HomeAddressDto } from '../../../../../core/dto/home-address/home-address-dto';
+import { RentOfferApiSerivce } from '../../../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { map, Observable, single } from 'rxjs';
 import { ImageItem } from '../../../models/image-item';
 import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
-import { ToastService } from '../../../../../core/services/snackbar/toast-service';
+import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-rent-create',
@@ -23,7 +23,7 @@ import { ToastService } from '../../../../../core/services/snackbar/toast-servic
   standalone: true,
   styleUrls: [
     './rent-create.scss',
-    '../../../shared/offers-shared-styles.scss']
+    '../../../shared/styles/offers-shared-styles.scss']
 })
 export class RentCreate implements OnInit {
   private readonly categoryApiService = inject(CategoryApiService);

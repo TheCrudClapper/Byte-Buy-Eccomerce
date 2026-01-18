@@ -1,12 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
-import { AuthService } from '../../../../core/services/auth/auth-service';
-import { LoginRequest } from '../../../../core/api-dto/login-request';
+import { AuthService } from '../../../../core/clients/auth/auth-service';
+import { LoginRequest } from '../../../../core/dto/auth/login-request';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProblemDetails } from '../../../../core/api-dto/problem-details';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { Router } from '@angular/router';
-import {  getErrorMessage } from '../../../../core/helpers/form-helper';
 import { finalize } from 'rxjs';
+import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 
 @Component({
   selector: 'app-login',

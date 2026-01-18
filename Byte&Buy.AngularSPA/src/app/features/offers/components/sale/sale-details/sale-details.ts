@@ -3,9 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { SaleOfferDetails } from '../../../models/sale-offer-details';
 import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/base-offer-detail';
-import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { Guid } from 'guid-typescript';
-import { getErrorMessage } from '../../../../../core/helpers/form-helper';
+import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { SellerInfo } from '../../../shared/seller-info/seller-info';
 
 @Component({
@@ -14,7 +14,7 @@ import { SellerInfo } from '../../../shared/seller-info/seller-info';
   templateUrl: './sale-details.html',
   styleUrls: [
     './sale-details.scss',
-    '../../../shared/offers-shared-styles.scss'],
+    '../../../shared/styles/offers-shared-styles.scss'],
   standalone: true
 })
 export class SaleDetails extends BaseOfferDetail {

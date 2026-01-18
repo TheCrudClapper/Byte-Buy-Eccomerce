@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SellerInfo } from '../../../shared/seller-info/seller-info';
 import { Guid } from 'guid-typescript';
 import { RentOfferDetails } from '../../../models/rent-offer-details';
-import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
-import { getErrorMessage } from '../../../../../core/helpers/form-helper';
+import { ProblemDetails } from '../../../../../core/dto/problem-details';
+import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/base-offer-detail';
 
 @Component({
@@ -14,7 +14,7 @@ import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/ba
   templateUrl: './rent-details.html',
   styleUrls: [
     './rent-details.scss',
-    '../../../shared/offers-shared-styles.scss'],
+    '../../../shared/styles/offers-shared-styles.scss'],
   standalone: true
 })
 

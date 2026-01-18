@@ -1,13 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { UsersApiService } from '../../services/users-api-service';
+import { UsersApiService } from '../../../../core/clients/portal-user/users-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PortalUserApiService } from '../../services/portal user/portal-user-api-service';
-import { UserBasicInfoUpdateRequest } from '../../api-dto/user-basic-info-update-request';
-import { getErrorMessage } from '../../../../core/helpers/form-helper';
-import { PasswordChangeRequest } from '../../api-dto/password-change-request';
+import { PortalUserApiService } from '../../../../core/clients/portal-user/portal-user-api-service';
+import { UserBasicInfoUpdateRequest } from '../../../../core/dto/portal-user/user-basic-info-update-request';
+import { getErrorMessage } from '../../../../shared/helpers/form-helper';
+import { PasswordChangeRequest } from '../../../../core/dto/auth/password-change-request';
 import { finalize } from 'rxjs';
-import { ToastService } from '../../../../core/services/snackbar/toast-service';
-import { ProblemDetails } from '../../../../core/api-dto/problem-details';
+import { ToastService } from '../../../../shared/services/snackbar/toast-service';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 
 @Component({
   selector: 'app-personal-info',

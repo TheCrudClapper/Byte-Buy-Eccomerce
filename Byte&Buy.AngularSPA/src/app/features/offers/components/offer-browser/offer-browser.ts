@@ -7,7 +7,7 @@ import { RouterLink, RouterModule } from "@angular/router";
   templateUrl: './offer-browser.html',
   styleUrls: [
     './offer-browser.scss',
-    '../../shared/offers-shared-styles.scss'
+    '../../shared/styles/offers-shared-styles.scss'
   ],
 })
 export class OfferBrowser {

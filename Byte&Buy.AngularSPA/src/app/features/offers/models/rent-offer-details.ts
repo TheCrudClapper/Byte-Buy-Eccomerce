@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { ImageResponse } from "../../../shared/api-dto/image-response";
+import { ImageResponse } from "../../../core/dto/image/image-response";
 import { PrivateSeller } from "./private-seller";
 import { CompanySeller } from "./company-seller";
 

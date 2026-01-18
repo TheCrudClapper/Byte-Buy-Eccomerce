@@ -1,12 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { AddressApiService } from '../../../../core/services/address/address-api-service';
+import { AddressApiService } from '../../../../core/clients/address/address-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getErrorMessage } from '../../../../core/helpers/form-helper';
+import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 import { finalize } from 'rxjs';
-import { HomeAddressDto } from '../../../../shared/api-dto/home-address-dto';
-import { ToastService } from '../../../../core/services/snackbar/toast-service';
+import { HomeAddressDto } from '../../../../core/dto/home-address/home-address-dto';
+import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { SelectListItem } from '../../../../shared/models/select-list-item';
-import { CountryApiService } from '../../../../core/services/country/country-api-service';
+import { CountryApiService } from '../../../../core/clients/country/country-api-service';
 import { ShippingAddressListItem } from '../../model/shipping-address-list-item';
 import { Guid } from 'guid-typescript';
 import { ShippingAddressDialog } from "../shipping-address-modal/shipping-address-dialog/shipping-address-dialog";

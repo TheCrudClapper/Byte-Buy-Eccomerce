@@ -1,11 +1,11 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OfferApiService } from '../../../services/offer-api-service';
-import { ToastService } from '../../../../../core/services/snackbar/toast-service';
-import { DeliveryApiService } from '../../../../../core/services/delivery/delivery-api-service';
+import { OfferApiService } from '../../../../../core/clients/offers/common/offer-api-service';
+import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
+import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
 import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
 import { Guid } from 'guid-typescript';
-import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+import { ProblemDetails } from '../../../../../core/dto/problem-details';
 
 @Component({
   selector: 'app-base-offer-detail',
