@@ -1,0 +1,62 @@
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OfferApiService } from '../../../services/offer-api-service';
+import { ToastService } from '../../../../../core/services/snackbar/toast-service';
+import { DeliveryApiService } from '../../../../../core/services/delivery/delivery-api-service';
+import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
+import { Guid } from 'guid-typescript';
+import { ProblemDetails } from '../../../../../core/api-dto/problem-details';
+
+@Component({
+  selector: 'app-base-offer-detail',
+  imports: [],
+  template: ``,
+  styles: ``,
+})
+
+//Base abstract class for sale and rent offer details encapsulating common logic
+
+export abstract class BaseOfferDetail {
+  protected readonly route = inject(ActivatedRoute);
+  protected readonly offerService = inject(OfferApiService);
+  protected readonly toastService = inject(ToastService);
+  protected readonly deliveryService = inject(DeliveryApiService);
+  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly router = inject(Router);
+  
+  protected loading = signal<boolean>(false);
+  protected deliveries = signal<DeliveryListItem[]>([]);
+  protected offerId = signal<Guid | null>(null);
+
+  constructor() {
+    effect(() => {
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        this.offerId.set(Guid.parse(id));
+      }
+    });
+
+    effect(() => {
+      const id = this.offerId();
+      if (!id) return;
+
+      this.loading.set(true);
+      this.loadOffer(id);
+      this.loadDeliveries(id);
+    });
+  }
+
+  abstract addToCart(): void;
+  abstract loadOffer(id: Guid): void;
+  abstract get description(): string | undefined;
+
+  protected loadDeliveries(id: Guid) {
+    this.deliveryService.getDeliveriesListPerOffer(id)
+      .subscribe({
+        next: (data) => {
+          this.deliveries.set(data);
+        },
+        error: (err: ProblemDetails) => this.toastService.error(err.detail ?? "Failed to load deliveries")
+      })
+  }
+}

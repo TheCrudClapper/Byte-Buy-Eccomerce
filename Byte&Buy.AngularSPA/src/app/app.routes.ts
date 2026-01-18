@@ -17,6 +17,7 @@ import { Fobidden } from './shared/components/fobidden/fobidden';
 import { authGuard } from './core/guards/auth-guard';
 import { CartPage } from './features/cart/components/cart-page/cart-page/cart-page';
 import { NotFound } from './shared/components/not-found/not-found/not-found';
+import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-guard';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -27,11 +28,11 @@ export const routes: Routes = [
         path: '',
         children: [
             { path: 'offers/rent/create', component: RentCreate}, 
-            { path: 'offers/rent/edit/:id', component: RentEdit}, 
-            { path: 'offers/rent/details/:id', component: RentDetails}, 
+            { path: 'offers/rent/edit/:id', component: RentEdit, canMatch: [guidParameterGuard]}, 
+            { path: 'offers/rent/details/:id', component: RentDetails, canMatch: [guidParameterGuard]}, 
             { path: 'offers/sale/create', component: SaleCreate}, 
-            { path: 'offers/sale/edit/:id', component: SaleEdit}, 
-            { path: 'offers/sale/details/:id', component: SaleDetails},
+            { path: 'offers/sale/edit/:id', component: SaleEdit, canMatch: [guidParameterGuard]}, 
+            { path: 'offers/sale/details/:id', component: SaleDetails, canMatch: [guidParameterGuard]},
             { path: 'cart', component: CartPage},
             {
                 path: 'profile',
