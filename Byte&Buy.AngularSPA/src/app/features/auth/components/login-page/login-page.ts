@@ -41,13 +41,11 @@ export class LoginPage{
     .pipe(finalize(() => this.loading.set(false))) 
     .subscribe({  
       next: () => this.router.navigate(['']),
-      error: (error: HttpErrorResponse) => {
-        const problem = error.error as ProblemDetails;
-        this.errorMessage.set(problem?.detail ?? 'Something went wrong');
+      error: (error: ProblemDetails) => {
+        this.errorMessage.set(error.detail ?? 'Something went wrong');
       }
     });
   }
-
 
   getErrorMessage(path: string){
     return getErrorMessage(this.loginForm, path);

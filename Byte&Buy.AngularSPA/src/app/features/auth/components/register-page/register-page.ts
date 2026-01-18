@@ -48,9 +48,8 @@ export class RegisterPage {
         this.snackBarService.success("Successfully registered!");
         this.router.navigate(['login']);
       },
-      error: (error: HttpErrorResponse) => {
-        const problem = error.error as ProblemDetails;
-        this.errorMessage.set(problem?.detail?.replace(';', '\n') ?? "Something went wrong");
+      error: (error: ProblemDetails) => {
+        this.errorMessage.set(error?.detail?.replace(';', '\n') ?? "Something went wrong");
       }
     });
   }
