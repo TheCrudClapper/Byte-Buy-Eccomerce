@@ -80,17 +80,21 @@
                         <div class="col-12">
                             <p class="price">{{ rentOfferDetails()?.pricePerDayAmount }} {{
                                 rentOfferDetails()?.pricePerDayCurrency }}</p>
-                            <span class="badge seller-badge me-2">
+                            <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{rentOfferDetails()?.seller?.type == 'company' ? "Company" : "Private"}}
                             </span>
-                            <span class="badge seller-badge me-2">
+                            <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
                                 Avaliable: {{rentOfferDetails()?.quantityAvaliable}}
                             </span>
-                            <span class="badge seller-badge mt-2">
+                            <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i>
                                 Max days per rental: {{ rentOfferDetails()?.maxRentalDays }}
+                            </span>
+                            <span class="badge seller-badge mb-2 me-2">
+                                <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
+                                Rent Offer
                             </span>
                         </div>
                     </div>

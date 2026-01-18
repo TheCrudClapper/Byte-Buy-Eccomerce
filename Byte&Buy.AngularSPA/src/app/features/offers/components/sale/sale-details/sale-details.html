@@ -80,13 +80,17 @@
                         <div class="col-12">
                             <p class="price">{{ saleOfferDetails()?.pricePerItemAmount | number:'1.2-2' }} {{
                                 saleOfferDetails()?.pricePerItemCurrency }}</p>
-                            <span class="badge seller-badge me-2">
+                            <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{saleOfferDetails()?.seller?.type == 'company' ? "Company" : "Private Person"}}
                             </span>
-                            <span class="badge seller-badge">
+                            <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
                                 Avaliable: {{ saleOfferDetails()?.quantityAvaliable }}
+                            </span>
+                              <span class="badge seller-badge mb-2 me-2">
+                                <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
+                                Rent Offer
                             </span>
                         </div>
                     </div>
