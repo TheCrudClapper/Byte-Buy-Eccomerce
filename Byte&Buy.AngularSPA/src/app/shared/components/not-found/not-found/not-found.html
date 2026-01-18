@@ -1,10 +1,16 @@
 <div class="container d-flex h-100 align-items-center justify-content-center">
-    <div class="row">
+    <div class="row gy-2">
         <div class="col-12 text-center">
             <h1 class="open-sans-medium fw-bold header">Oops!</h1>
         </div>
         <div class="col-12 text-center">
             <p class="eror-type">404 - Resource or page not found</p>
+        </div>
+        <div class="col-12 text-center">
+            <p class="description">Sorry, we couldn't find page you are searching for.<br> But don't worry, you can find plenty of other things in our home page!</p>
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn" [routerLink]="['/']">Check out !</button>
         </div>
     </div>
 </div>

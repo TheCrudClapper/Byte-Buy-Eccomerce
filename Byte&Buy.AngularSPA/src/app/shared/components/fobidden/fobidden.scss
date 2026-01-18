@@ -1,0 +1,21 @@
+.container {
+    color: var(--text-primary);
+}
+
+.header {
+    font-size: 10rem;
+    text-shadow:
+        6px 2px 0 var(--primary-accent)
+}
+
+.eror-type {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-transform: uppercase !important;
+    font-family: 'open-sans-medium';
+}
+
+.description {
+    font-family: 'open-sans-medium';
+    font-size: 1rem;
+}
