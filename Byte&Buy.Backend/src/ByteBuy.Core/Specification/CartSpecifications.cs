@@ -39,6 +39,7 @@ public static class CartSpecifications
         public CartAggegateWithFullOffer(Guid userId)
         {
             Query.Where(c => c.UserId == userId)
+                .AsSplitQuery()
                 .Include(c => c.CartOffers)
                 .ThenInclude(c => c.Offer)
                     .ThenInclude(o => o.Item)

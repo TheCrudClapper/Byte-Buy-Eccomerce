@@ -1,0 +1,59 @@
+
+.offer-title {
+  font-size: 14px;
+  font-family: 'open-sans-bold';
+}
+
+.product-image {
+  height: 130px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: zoom-in;
+}
+
+.quantity-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  border: none;
+  background-color: transparent;
+  color: var(--text-primary);
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.qty-btn:hover{
+  color: var(--primary-accent);
+}
+
+.qty-input {
+  width: 40px;
+  color: var(--text-primary);
+  text-align: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+// Style for input type=number to hide increment/decrement arrows
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-arrows {
+  -moz-appearance: textfield;
+  appearance: textfiled;
+}

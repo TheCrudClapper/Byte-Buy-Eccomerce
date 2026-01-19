@@ -1,9 +1,10 @@
-<div class="container">
-    @if(cartItems.length == 0){
+<div class="container h-100">
+    @if(cartModel()?.items?.length === 0){
     <div class="empty-cart-container my-5">
         <i class="fa-solid fa-basket-shopping fa-10x d-block" style="color: #ffffff;"></i>
         <p class="empty-cart-title text-primary open-sans-medium ">Your cart is empty!</p>
-        <span class="fs-14-px">Looks like you haven't added anything to your cart <span class="fw-bold">yet.</span></span>
+        <span class="fs-14-px">Looks like you haven't added anything to your cart <span
+                class="fw-bold">yet.</span></span>
     </div>
     }
     @else {
@@ -27,9 +28,19 @@
                 </div>
             </div>
 
-            @for(item of cartItems; track item.id){
-                <app-cart-item [item]="item"></app-cart-item>
+            @for (item of cartModel()?.items; track $index)
+            {
+                @if(item.type == "sale")
+                {
+                    <app-sale-cart-offer [saleCartOffer]="item" (updated)="loadCart()"></app-sale-cart-offer>
+                }
+                @else
+                {
+                    <app-rent-cart-offer></app-rent-cart-offer>
+                }
+
             }
+
         </div>
 
         <div class="col-12 col-lg-4">
@@ -39,24 +50,36 @@
                 <hr>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Items</span>
-                    <span class="summary-value">8 pcs</span>
+                    <span class="summary-value">{{ cartModel()?.summary?.itemsQuantity }} pcs</span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Items Cost</span>
-                    <span class="summary-value">67,67 PLN</span>
+                    <span class="summary-value">
+                        {{ cartModel()?.summary?.totalItemsValue?.amount  | number:'1.2-2'}}
+                        {{ cartModel()?.summary?.totalItemsValue?.currency}}
+                    </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Shipping from</span>
-                    <span class="summary-value">67,67 PLN</span>
+                    <span class="summary-value">
+                        {{ cartModel()?.summary?.estimatedShippingCost?.amount  | number:'1.2-2'}}
+                        {{ cartModel()?.summary?.estimatedShippingCost?.currency}}
+                    </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Tax</span>
-                    <span class="summary-value">67,67 PLN</span>
+                    <span class="summary-value">
+                        {{ cartModel()?.summary?.taxValue?.amount | number:'1.2-2' }}
+                        {{ cartModel()?.summary?.taxValue?.currency}}
+                    </span>
                 </div>
                 <hr>
                 <div class="mb-3 d-flex justify-content-between ">
                     <p class="content-section-title fw-bold">Total Cost</p>
-                    <p class="total-cost" style="font-size: 16px;">267,67 PLN</p>
+                    <p class="total-cost" style="font-size: 16px;">
+                        {{ cartModel()?.summary?.totalCost?.amount | number:'1.2-2'  }}
+                        {{ cartModel()?.summary?.totalCost?.currency}}
+                    </p>
                 </div>
                 <button class="btn w-100">Checkout</button>
             </div>

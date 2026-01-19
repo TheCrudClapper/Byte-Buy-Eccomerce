@@ -3,34 +3,34 @@
         <div class="col-6">
             <div class="row align-items-center">
                 <div class="col-4">
-                    <img [src]="item.imageUrl" class="d-block img-fluid product-image" alt="...">
+                    <img class="d-block img-fluid product-image" alt="...">
                 </div>
                 <div class="col-8">
-                    <span class="offer-title">{{ item.offerTitle }}</span>
+                    <span class="offer-title">Test</span>
                     <br>
                     <span class="badge offer-badge">
                         <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                        {{ item.offerType }}
+                        Rent Offer
                     </span>
                 </div>
             </div>
         </div>
         <div class="col-2 d-flex align-items-center justify-content-center">
-            <span class="open-sans-medium fs-14-px">{{ item.unitPrice}} PLN</span>
+            <span class="open-sans-medium fs-14-px"> 100 PLN</span>
         </div>
         <div class="col-2 d-flex align-items-center justify-content-center">
             <div class="quantity-wrapper">
                 <button class="qty-btn">
                     <i class="fa-solid fa-minus"></i>
                 </button>
-                <input type="number" class="qty-input no-arrows" [value]="item.quantity" min="1" />
+                <input type="number" class="qty-input no-arrows" min="1" />
                 <button class="qty-btn">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
         </div>
         <div class="col-2 d-flex align-items-center justify-content-center">
-            <span class="open-sans-medium fs-14-px">{{ item.unitPrice * item.quantity }} PLN</span>
+            <span class="open-sans-medium fs-14-px">PLN</span>
         </div>
     </div>
 </div>

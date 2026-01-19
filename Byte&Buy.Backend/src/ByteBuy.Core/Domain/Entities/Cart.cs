@@ -78,17 +78,18 @@ public class Cart : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public Result UpdateSaleCartOffer(SaleOffer saleOffer, Guid cartItemId, int quantity)
+    public Result UpdateSaleCartOffer(Guid cartItemId, int quantity)
     {
-        if (saleOffer is null)
-            return Result.Failure(CartErrors.NullOffer);
-
         var cartOffer = CartOffers
             .OfType<SaleCartOffer>()
             .FirstOrDefault(co => co.Id == cartItemId);
 
         if (cartOffer is null)
             return Result.Failure(CartErrors.OfferNotInCart);
+
+        var offer = cartOffer.Offer;
+        if (offer is null || offer is not SaleOffer saleOffer)
+            return Result.Failure(CartErrors.NullOffer);
 
         //in this case, we delete item from cart
         if (quantity <= 0)
@@ -166,17 +167,18 @@ public class Cart : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public Result UpdateRentCartOffer(RentOffer rentOffer, Guid cartItemId, int quantity, int rentalDays)
+    public Result UpdateRentCartOffer(Guid cartItemId, int quantity, int rentalDays)
     {
-        if (rentOffer is null)
-            return Result.Failure(CartErrors.NullOffer);
-
         var cartOffer = CartOffers
             .OfType<RentCartOffer>()
             .FirstOrDefault(co => co.Id == cartItemId);
 
         if (cartOffer is null)
             return Result.Failure(CartErrors.OfferNotInCart);
+
+        var offer = cartOffer.Offer;
+        if (offer is null || offer is not RentOffer rentOffer)
+            return Result.Failure(CartErrors.NullOffer);
 
         if (quantity <= 0)
         {

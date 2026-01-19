@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Cart.CartItem;
 
-public record SaleCartOfferResponse : CartItemResponse
+public record SaleCartOfferResponse : CartOfferResponse
 {
     public MoneyDto PricePerItem { get; init; } = null!;
 }

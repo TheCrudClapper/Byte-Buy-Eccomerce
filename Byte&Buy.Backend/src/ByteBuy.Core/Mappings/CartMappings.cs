@@ -5,7 +5,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class CartMappings
 {
-    public static CartItemResponse ToCartItemResponse(this CartOffer cartOffer)
+    public static CartOfferResponse ToCartItemResponse(this CartOffer cartOffer)
     {
         return cartOffer switch
         {

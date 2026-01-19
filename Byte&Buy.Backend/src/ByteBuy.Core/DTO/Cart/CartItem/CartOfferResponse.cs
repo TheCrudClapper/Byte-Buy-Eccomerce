@@ -7,7 +7,7 @@ namespace ByteBuy.Core.DTO.Cart.CartItem;
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 [JsonDerivedType(typeof(SaleCartOfferResponse), "sale")]
 [JsonDerivedType(typeof(RentCartOfferResponse), "rent")]
-public abstract record CartItemResponse
+public abstract record CartOfferResponse
 {
     public Guid Id { get; init; }
     public ImageResponse Image { get; init; } = null!;

@@ -1,0 +1,47 @@
+<div class="content-section">
+    <form [formGroup]="cartForm" class="d-inline">
+    <div class="row">
+        <div class="col-6">
+            <div class="row align-items-center">
+                <div class="col-4">
+                    <img class="d-block img-fluid product-image" [src]="imageBaseUrl + saleCartOffer.image.imagePath"
+                        [alt]="saleCartOffer.image.altText">
+                </div>
+                <div class="col-8">
+                    <span class="offer-title">{{ saleCartOffer.title }}</span>
+                    <br>
+                    <span class="badge offer-badge">
+                        <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
+                        Sale Offer
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center justify-content-center">
+            <span class="open-sans-medium fs-14-px">
+                {{saleCartOffer.pricePerItem.amount | number:'1.2-2'}}
+                {{saleCartOffer.pricePerItem.currency}}
+            </span>
+        </div>
+
+        <div class="col-2 d-flex align-items-center justify-content-center">
+            <div class="quantity-wrapper">
+                <button type="button" class="qty-btn" (click)="decrement()">
+                    <i class="fa-solid fa-minus"></i>
+                </button>
+                <input type="number" class="qty-input no-arrows" formControlName="quantity" min="1" />
+                <button type="button" class="qty-btn" (click)="increment()">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-2 d-flex align-items-center justify-content-center">
+            <span class="open-sans-medium fs-14-px">
+                {{saleCartOffer.subtotal.amount | number:'1.2-2'}}
+                {{saleCartOffer.subtotal.currency}}
+            </span>
+        </div>
+    </div>
+    </form>
+</div>
