@@ -88,13 +88,29 @@ public class CartService : ICartService
         return Result.Success();
     }
 
-    public async Task<Result<CartSummaryResponse>> GetCartSummary(Guid userId)
+    public async Task<Result<CartResponse>> GetCart(Guid userId, CancellationToken ct = default)
     {
-        var spec = new CartAggregateByUserIdSpec(userId);
-        var cart = await _cartRepository.GetBySpecAsync(spec);
-        if (cart is null)
-            return Result.Failure<CartSummaryResponse>(CartErrors.NotFound);
+        var spec = new CartAggegateWithFullOffer(userId);
+        var cart = await _cartRepository.GetBySpecAsync(spec, ct);
 
+        if (cart is null)
+            return Result.Failure<CartResponse>(CartErrors.NotFound);
+
+        var cartSummaryResult = await CalculateCartSummary(cart);
+        if (cartSummaryResult.IsFailure)
+            return Result.Failure<CartResponse>(cartSummaryResult.Error);
+
+        var cartItems = cart.CartOffers
+            .Select(c => c.ToCartItemResponse())
+            .ToList();
+
+        return new CartResponse(
+            cartItems,
+            cartSummaryResult.Value);
+    }
+
+    public async Task<Result<CartSummaryResponse>> CalculateCartSummary(Cart cart)
+    {
         var itemsQuantity = 0;
         foreach (var item in cart.CartOffers)
             itemsQuantity += item.Quantity;
@@ -181,6 +197,5 @@ public class CartService : ICartService
 
         return Result.Success();
     }
-
 
 }

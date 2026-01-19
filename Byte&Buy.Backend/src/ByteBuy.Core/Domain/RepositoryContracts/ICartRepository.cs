@@ -5,4 +5,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface ICartRepository : IRepositoryBase<Cart>
 {
+  
 }

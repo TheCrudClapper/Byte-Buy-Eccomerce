@@ -7,6 +7,11 @@ namespace ByteBuy.Core.Mappings;
 
 public static class ImageMappings
 {
+    public static ImageResponse ToImageResponse(this Image image)
+    {
+        return new ImageResponse(image.Id, image.ImagePath, image.AltText);
+    }
+
     public static Expression<Func<Image, ImageResponse>> ImageResponseProjection =>
        i => new ImageResponse(
            i.Id,

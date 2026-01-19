@@ -33,4 +33,16 @@ public static class CartSpecifications
             }
         }
     }
+
+    public sealed class CartAggegateWithFullOffer : Specification<Cart>
+    {
+        public CartAggegateWithFullOffer(Guid userId)
+        {
+            Query.Where(c => c.UserId == userId)
+                .Include(c => c.CartOffers)
+                .ThenInclude(c => c.Offer)
+                    .ThenInclude(o => o.Item)
+                        .ThenInclude(i => i.Images);
+        }
+    }
 }

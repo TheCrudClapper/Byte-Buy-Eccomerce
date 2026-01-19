@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/carts")]
 [ApiController]
 public class CartsController : BaseApiController
 {
     private readonly ICartService _cartService;
     public CartsController(ICartService cartService)
         => _cartService = cartService;
+
 
     [HttpDelete("{cartOfferId:guid}")]
     public async Task<IActionResult> DeleteCartOffer(Guid cartOfferId)
@@ -34,7 +35,7 @@ public class CartsController : BaseApiController
     public async Task<ActionResult<CreatedResponse>> PutRentCartOffer(Guid cartOfferId, RentCartOfferUpdateRequest request)
         => HandleResult(await _cartService.UpdateRentCartOffer(CurrentUserId, cartOfferId, request));
 
-    [HttpGet("summary")]
-    public async Task<ActionResult<CartSummaryResponse>> GetCartSummary()
-        => HandleResult(await _cartService.GetCartSummary(CurrentUserId));
+    [HttpGet]
+    public async Task<ActionResult<CartResponse>> GetCart(CancellationToken ct = default)
+        => HandleResult(await _cartService.GetCart(CurrentUserId, ct));
 }

@@ -8,4 +8,6 @@ namespace ByteBuy.Infrastructure.Repositories;
 public class CartRepository : EfBaseRepository<Cart>, ICartRepository
 {
     public CartRepository(ApplicationDbContext context) : base(context) { }
+
+
 }
