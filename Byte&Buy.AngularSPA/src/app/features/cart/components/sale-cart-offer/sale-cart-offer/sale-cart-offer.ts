@@ -2,14 +2,14 @@ import { Component, DestroyRef, EventEmitter, inject, Input, input, OnInit, Outp
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { SaleCartOfferModel } from '../../../models/cart-offers/sale-cart-offer-model';
 import { DecimalPipe } from '@angular/common';
-import { FormControl, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormGroup, ɵInternalFormsSharedModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
-import { debounce } from '@angular/forms/signals';
-import { debounceTime, takeUntil } from 'rxjs';
+import { debounceTime} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SaleCartOfferUpdateRequest } from '../../../../../core/dto/cart/cart-item/sale-cart-offer-update-request';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartSummary } from '../../../models/cart-summary';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-sale-cart-offer',
@@ -20,8 +20,10 @@ import { CartSummary } from '../../../models/cart-summary';
 })
 export class SaleCartOffer implements OnInit {
   @Input() saleCartOffer!: SaleCartOfferModel;
-  @Output() updated = new EventEmitter<void>();
   @Output() summaryUpdated = new EventEmitter<CartSummary>();
+  @Output() removed = new EventEmitter<Guid>();
+
+  private lastValidQuantity!: number;
 
   private readonly cartApiService = inject(CartApiService);
   private readonly toastService = inject(ToastService);
@@ -32,19 +34,25 @@ export class SaleCartOffer implements OnInit {
   constructor(private builder: FormBuilder, private destroyRef: DestroyRef) { }
 
   ngOnInit(): void {
-
     this.cartForm = this.builder.group({
       quantity: [this.saleCartOffer.quantity]
     })
+
+    this.lastValidQuantity = this.saleCartOffer.quantity;
 
     this.cartForm.valueChanges.pipe(
       debounceTime(400),
       takeUntilDestroyed(this.destroyRef))
       .subscribe(x => {
-        if (this.cartForm.valid) {
-          this.tryUpdate(x.quantity)
-        }
+        if (this.cartForm.valid) { this.onQuantityChanged(x.quantity)}
       });
+  }
+
+  onQuantityChanged(quantity: number): void{
+    if(quantity <= 0)
+      this.tryRemove();
+    else
+      this.tryUpdate(quantity);
   }
 
   increment(): void {
@@ -64,17 +72,36 @@ export class SaleCartOffer implements OnInit {
 
     this.cartApiService.putSaleCartOffer(this.saleCartOffer.id, payload)
       .subscribe({
-        next: () => {
-          this.updated.emit();
+        next: (data: CartSummary) => {
+          this.summaryUpdated.emit(data);
+          //Locally updating subtotal 
+          this.saleCartOffer.subtotal = {
+            ...this.saleCartOffer.subtotal,
+            amount: quantity * this.saleCartOffer.pricePerItem.amount
+          }
           this.toastService.success("Updated Cart !");
         },
         error: (err: ProblemDetails) => {
+          this.rollbackQuantity();
           this.toastService.error(err?.detail ?? "Failed to update quantity");
         }
       })
   }
 
   tryRemove() {
-
+    this.cartApiService.deleteCartOffer(this.saleCartOffer.id).subscribe({
+      next: (data: CartSummary) => {
+        this.summaryUpdated.emit(data);
+        this.removed.emit(this.saleCartOffer.id)
+      },
+      error: (err: ProblemDetails) => {
+        this.toastService.error(err?.detail ?? "Failed to delete cart item");
+      }
+    });
   }
+
+  private rollbackQuantity(): void{
+    this.cartForm.patchValue({ quantity: this.lastValidQuantity }, { emitEvent: false });
+  }
+  
 }

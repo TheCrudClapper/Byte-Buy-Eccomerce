@@ -1,8 +1,10 @@
 import { CartResponse } from "../../../core/dto/cart/cart-response";
+import { CartSummaryResponse } from "../../../core/dto/cart/cart-summary-response";
 import { Cart } from "../models/cart";
 import { CartOffer } from "../models/cart-offers/cart-offer-alias";
 import { RentCartOfferModel } from "../models/cart-offers/rent-cart-offer-model";
 import { SaleCartOfferModel } from "../models/cart-offers/sale-cart-offer-model";
+import { CartSummary } from "../models/cart-summary";
 
 export function toCartModel(response: CartResponse): Cart {
     const items: CartOffer[] = response.cartOffers.map(item => {
@@ -47,4 +49,15 @@ export function toCartModel(response: CartResponse): Cart {
             totalCost: s.totalCost
         }
     }
+}
+
+export function toCartResponseModel(response: CartSummaryResponse): CartSummary {
+    return {
+        itemsQuantity: response.itemsQuantity,
+        totalItemsValue: response.totalItemsValue,
+        taxValue: response.taxValue,
+        estimatedShippingCost: response.estimatedShippingCost,
+        totalCost: response.totalCost
+    }
+
 }

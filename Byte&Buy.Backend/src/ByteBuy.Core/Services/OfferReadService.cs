@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Offer;
+using ByteBuy.Core.DTO.Offer.Common;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.ResultTypes;
@@ -13,15 +14,20 @@ public class OfferReadService : IOfferReadService
 {
     private readonly IRentOfferRepository _rentOfferRepository;
     private readonly ISaleOfferRepository _saleOfferRepository;
+    private readonly IOfferRepository _offerRepository;
     public OfferReadService(IRentOfferRepository rentOfferRepository,
-        ISaleOfferRepository saleOfferRepository)
+        ISaleOfferRepository saleOfferRepository,
+        IOfferRepository offerRepository)
     {
         _rentOfferRepository = rentOfferRepository;
         _saleOfferRepository = saleOfferRepository;
+        _offerRepository = offerRepository;
     }
-    public Task<Result<IReadOnlyCollection<OfferListResponse>>> BrowseAsync()
+
+    public async Task<Result<IReadOnlyCollection<OfferBrowserItemResponse>>> BrowseAsync(CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var offers = await _offerRepository.BrowseOffers(ct);
+        return Result.Success(offers);
     }
 
     public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)
@@ -41,4 +47,5 @@ public class OfferReadService : IOfferReadService
             ? Result.Failure<SaleOfferDetailsResponse>(OfferErrors.NotFound)
             : detailsDto;
     }
+
 }

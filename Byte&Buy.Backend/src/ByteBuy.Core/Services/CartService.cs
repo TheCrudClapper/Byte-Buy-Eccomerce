@@ -25,7 +25,7 @@ public class CartService : ICartService
 
     public async Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request)
     {
-        var spec = new CartAggregateWithOffersByUserIdSpec(userId);
+        var spec = new CartAggregateByUserIdSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure(Error.NotFound);
@@ -49,7 +49,7 @@ public class CartService : ICartService
 
     public async Task<Result> AddSaleCartOffer(Guid userId, SaleCartOfferAddRequest request)
     {
-        var spec = new CartAggregateWithOffersByUserIdSpec(userId);
+        var spec = new CartAggregateByUserIdSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure(Error.NotFound);

@@ -6,6 +6,9 @@ import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { DecimalPipe } from '@angular/common';
 import { SaleCartOffer } from '../../sale-cart-offer/sale-cart-offer/sale-cart-offer';
 import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-offer';
+import { CartSummary } from '../../../models/cart-summary';
+import { Guid } from 'guid-typescript';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -17,6 +20,9 @@ import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-o
 
 export class CartPage implements OnInit {
   private readonly cartApiService = inject(CartApiService);
+  private readonly router = inject(Router);
+  private lastValidCart!: Cart | null;
+
   cartModel = signal<Cart | null>(null);
 
   ngOnInit(): void {
@@ -25,8 +31,37 @@ export class CartPage implements OnInit {
 
   loadCart() {
     this.cartApiService.getCart().subscribe({
-      next: (data) => this.cartModel.set(toCartModel(data)),
+      next: (data) => {
+        this.cartModel.set(toCartModel(data))
+        this.snapshot();
+      },
+
       error: (err: ProblemDetails) => console.log(err.detail)
     });
+  }
+
+  //take snapshot of cart, in case update or delete methods when wrong
+  private snapshot() {
+    this.lastValidCart = this.cartModel() ? structuredClone(this.cartModel()) : null;
+  }
+
+  rollback(){
+    if(this.lastValidCart)
+      this.cartModel.set(this.lastValidCart);
+  }
+
+  //update cart summary using child components output
+  updateSummary(summary: CartSummary): void {
+    this.cartModel.update(cart =>
+      cart ? { ...cart, summary } : cart
+    );
+  }
+
+  removeItem(id: Guid): void {
+    this.cartModel.update(cart =>
+      cart
+        ? { ...cart, items: cart.items.filter(i => i.id !== id) }
+        : cart
+    );
   }
 }

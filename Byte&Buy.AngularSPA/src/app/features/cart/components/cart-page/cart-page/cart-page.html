@@ -32,7 +32,11 @@
             {
                 @if(item.type == "sale")
                 {
-                    <app-sale-cart-offer [saleCartOffer]="item" (updated)="loadCart()"></app-sale-cart-offer>
+                    <app-sale-cart-offer 
+                        [saleCartOffer]="item" 
+                        (summaryUpdated)="updateSummary($event)" 
+                        (removed)="removeItem($event)">
+                    </app-sale-cart-offer>
                 }
                 @else
                 {
