@@ -6,6 +6,7 @@ import { DeliveryApiService } from '../../../../../core/clients/delivery/deliver
 import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
+import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 
 @Component({
   selector: 'app-base-offer-detail',
@@ -19,6 +20,7 @@ import { ProblemDetails } from '../../../../../core/dto/problem-details';
 export abstract class BaseOfferDetail {
   protected readonly route = inject(ActivatedRoute);
   protected readonly offerService = inject(OfferApiService);
+  protected readonly cartService = inject(CartApiService);
   protected readonly toastService = inject(ToastService);
   protected readonly deliveryService = inject(DeliveryApiService);
   protected readonly imageBaseUrl = "http://localhost:5099/Images/";
