@@ -76,6 +76,11 @@ public sealed class Money : IEquatable<Money>
             .Combine(decimal.Round(Amount, 2, MidpointRounding.AwayFromZero), Currency);
     }
 
+    public Money Clone()
+    {
+        return new Money(Amount, Currency);
+    }
+
     public bool Equals(Money? other)
     {
         if (other is null)

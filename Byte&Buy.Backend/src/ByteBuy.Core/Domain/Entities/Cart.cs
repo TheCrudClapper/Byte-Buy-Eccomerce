@@ -247,8 +247,8 @@ public class Cart : AuditableEntity, ISoftDeletable
             }
         }
 
-        TotalCartValue = ItemsTotal;
-        TotalItemsValue = ItemsTotal;
+        TotalCartValue = ItemsTotal.Clone();
+        TotalItemsValue = ItemsTotal.Clone();
 
         return Result.Success();
     }
