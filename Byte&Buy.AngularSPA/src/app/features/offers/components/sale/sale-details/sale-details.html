@@ -90,7 +90,7 @@
                             </span>
                               <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                                Rent Offer
+                                Sale Offer
                             </span>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                     <form [formGroup]="cartForm">
                         <div class="row mt-2 align-items-center pt-3">
                             <div class="col-4">
-                                <input type="number" min="1" class="form-control" formControlName="quantity">
+                                <input type="number" min="1" class="form-control" [max]="saleOfferDetails()?.quantityAvaliable!" formControlName="quantity">
                                 <span class="validation-error"> {{ getError('quantity') }}</span>
                             </div>
                             <div class="col-8">
