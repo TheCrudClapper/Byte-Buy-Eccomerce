@@ -7,6 +7,8 @@ import { RentOfferDetails } from '../../../models/rent-offer-details';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/base-offer-detail';
+import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
+import { RentCartOfferAddRequest } from '../../../../../core/dto/cart/cart-item/rent-cart-offer-add-request';
 
 @Component({
   selector: 'app-rent-details',
@@ -19,7 +21,7 @@ import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/ba
 })
 
 export class RentDetails extends BaseOfferDetail {
-
+  private readonly cartApiService = inject(CartApiService);
 
   rentOfferDetails = signal<RentOfferDetails | null>(null);
   seller = computed(() => this.rentOfferDetails()?.seller);
@@ -35,7 +37,7 @@ export class RentDetails extends BaseOfferDetail {
         next: (data) => {
           this.rentOfferDetails.set(data);
         },
-         error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
+        error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
       })
   };
 
@@ -45,7 +47,22 @@ export class RentDetails extends BaseOfferDetail {
   }
 
   override addToCart(): void {
-    throw new Error('Method not implemented.');
+    if (this.cartForm.invalid) {
+      this.cartForm.markAllAsTouched;
+      return;
+    }
+
+    const data = this.cartForm.value;
+    const payload: RentCartOfferAddRequest = {
+      offerId: this.rentOfferDetails()?.id ?? Guid.create(),
+      quantity: data.quantity!,
+      rentalDays: data.rentalDays!
+    }
+
+    this.cartApiService.postRentCartOffer(payload).subscribe({
+      next: () => this.toastService.success("Successfully added to cart !"),
+      error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to add to cart")
+    });
   }
 
   getError(path: string) {

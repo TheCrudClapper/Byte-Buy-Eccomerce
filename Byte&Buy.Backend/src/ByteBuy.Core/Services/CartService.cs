@@ -25,14 +25,14 @@ public class CartService : ICartService
 
     public async Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request)
     {
-        var spec = new CartAggregateByUserIdSpec(userId);
+        var spec = new CartAggregateByUserIdSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CartErrors.NotFound);
 
         var offer = await _offerRepository.GetByIdAsync(request.OfferId);
         if (offer is not RentOffer rentOffer)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CartErrors.NullOffer);
 
         if (offer.CreatedByUserId == userId)
             return Result.Failure(CartErrors.SelfOfferCartAdd);
@@ -49,14 +49,14 @@ public class CartService : ICartService
 
     public async Task<Result> AddSaleCartOffer(Guid userId, SaleCartOfferAddRequest request)
     {
-        var spec = new CartAggregateByUserIdSpec(userId);
+        var spec = new CartAggregateByUserIdSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CartErrors.NotFound);
 
         var offer = await _offerRepository.GetByIdAsync(request.OfferId);
         if (offer is not SaleOffer saleOffer)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CartErrors.NullOffer);
 
         if (offer.CreatedByUserId == userId)
             return Result.Failure(CartErrors.SelfOfferCartAdd);

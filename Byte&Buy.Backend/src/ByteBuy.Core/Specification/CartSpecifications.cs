@@ -28,7 +28,7 @@ public static class CartSpecifications
             }
             else
             {
-                Query.Where(c => c.UserId == userId)
+               Query.Where(c => c.UserId == userId)
                     .Include(c => c.CartOffers);
             }
         }
