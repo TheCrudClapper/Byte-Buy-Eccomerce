@@ -1,7 +1,8 @@
 <div class="content-section mb-2">
     <div class="row">
         <div class="col-2 d-flex align-items-center justify-content-center">
-            <img [src]="offer.image.imagePath" class="d-block img-fluid offer-image" [alt]="offer.image.altText">
+            <img [src]="imageBaseUrl + offer.image.imagePath" class="d-block img-fluid offer-image"
+                [alt]="offer.image.altText">
         </div>
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
@@ -10,17 +11,17 @@
                 </a>
             </div>
             <div>
+                
                 <span>
                     <span class="d-block">
-                        <span class="fw-bold me-1">Condition:</span>
-                        <span class="me-3">{{ offer.condition }}</span>
-                        <span class="fw-bold me-1">Category:</span>
-                        <span class="">{{ offer.category }}</span>
+                        <span class="fw-bold me-1 fs-14-px">Condition:</span>
+                        <span class="me-3 fs-14-px">{{ offer.condition }}</span>
+                        <span class="fw-bold me-1 fs-14-px">Category:</span>
+                        <span class="fs-14-px">{{ offer.category }}</span>
                     </span>
                     <span class="fs-14-px open-sans-medium"> 
                         {{ offer.pricePerDay.amount| number:'1.2-2'}} {{ offer.pricePerDay.currency}} / day
                     </span>
-
                 </span>
 
             </div>
@@ -31,7 +32,7 @@
                         Seller: <span>{{ offer.isCompanyOffer ? 'Company' : 'Private Seller'}}</span>
                     </span>
                     <span class="badge offer-badge me-2">
-                        <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
+                        <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
                         Rent Offer
                     </span>
                 </span>

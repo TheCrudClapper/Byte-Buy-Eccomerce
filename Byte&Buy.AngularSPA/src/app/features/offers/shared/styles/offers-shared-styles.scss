@@ -13,19 +13,6 @@
   display: none;
 }
 
-.link {
-  font-family: 'raleway-bold';
-  font-size: 14px;
-  transition: color 0.3s ease;
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.link:hover {
-  color: var(--primary-accent);
-  cursor: pointer;
-}
-
 .price {
   font-size: 38px;
   font-family: 'open-sans-medium';
@@ -37,13 +24,14 @@
 }
 
 .seller-badge {
+  font-size: 14px !important;
   border: 1px solid var(--primary-accent);
   font-family: 'open-sans-medium';
 }
 
 span {
   font-family: 'open-sans-medium';
-  font-size: 14px;
+
 }
 
 table {
@@ -60,16 +48,23 @@ td{
 
 #imageCarousel .carousel-inner {
   border-radius: 10px;
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  height: 100%; 
+  overflow: hidden; 
+  position: relative;
 }
 
-#imageCarousel .carousel-item img,
-#carouselExample .carousel-item img {
+#imageCarousel .carousel-item {
   width: 100%;
-  border-radius: 10px;
-  height: 100% !important;
-  object-fit: cover !important;
+  height: 100%;
+}
+
+#imageCarousel .carousel-item img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover; 
   display: block;
+  border-radius: 10px;
 }
 
 .description{

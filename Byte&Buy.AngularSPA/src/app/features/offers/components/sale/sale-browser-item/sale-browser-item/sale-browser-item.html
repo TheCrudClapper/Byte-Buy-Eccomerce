@@ -12,13 +12,13 @@
             </div>
             <div>
                 <span>
-                    <span class="d-block parameters">
-                        <span class="fw-bold me-1">Condition:</span>
-                        <span class="me-3">{{ offer.condition }}</span>
-                        <span class="fw-bold me-1">Category:</span>
-                        <span class="">{{ offer.category }}</span>
+                    <span class="d-block">
+                        <span class="fw-bold me-1 fs-14-px">Condition:</span>
+                        <span class="me-3 fs-14-px">{{ offer.condition }}</span>
+                        <span class="fw-bold me-1 fs-14-px">Category:</span>
+                        <span class="fs-14-px">{{ offer.category }}</span>
                     </span>
-                    <span class="fs-16-px open-sans-medium">
+                    <span class="fs-14-px open-sans-medium">
                         {{ offer.pricePerItem.amount | number: '1.2-2'}} {{ offer.pricePerItem.currency}}
                     </span>
 
@@ -29,11 +29,11 @@
                 <span>
                     <span class="badge offer-badge me-2">
                         <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                        Seller: <span>{{ offer.isCompanyOffer ? 'Company' : 'Private Seller'}}</span>
+                        Seller: <span class="fs-12-px">{{ offer.isCompanyOffer ? 'Company' : 'Private Seller'}}</span>
                     </span>
                     <span class="badge offer-badge me-2">
                         <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                        Rent Offer
+                        Sale Offer
                     </span>
                 </span>
                 <span class="location">

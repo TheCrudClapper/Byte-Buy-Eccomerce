@@ -14,4 +14,5 @@ import { RentBrowserItemResponse } from '../../../../../../core/dto/offers/rent/
 })
 export class RentBrowserItem {
    @Input({ required: true }) offer!: RentBrowserItemResponse;
+   protected readonly imageBaseUrl = "http://localhost:5099/Images/";
 }
