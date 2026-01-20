@@ -108,7 +108,7 @@ public class ItemsService : IItemsService
 
         var aggregate = await _itemRepository.GetAggregateAsync(id);
         if (aggregate is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(ItemErrors.NotFound);
 
         aggregate.Deactivate();
 

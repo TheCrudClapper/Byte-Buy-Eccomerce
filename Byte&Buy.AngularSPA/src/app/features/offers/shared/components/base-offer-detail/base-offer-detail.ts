@@ -7,6 +7,7 @@ import { DeliveryListItem } from '../../../../../shared/models/delivery-list-ite
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-base-offer-detail',
@@ -30,7 +31,7 @@ export abstract class BaseOfferDetail {
   protected deliveries = signal<DeliveryListItem[]>([]);
   protected offerId = signal<Guid | null>(null);
 
-  constructor() {
+  constructor(protected builder: FormBuilder) {
     effect(() => {
       const id = this.route.snapshot.paramMap.get('id');
       if (id) {

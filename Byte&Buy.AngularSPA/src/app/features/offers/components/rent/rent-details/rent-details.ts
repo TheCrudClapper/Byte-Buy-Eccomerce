@@ -66,6 +66,6 @@ export class RentDetails extends BaseOfferDetail {
   }
 
   getError(path: string) {
-    getErrorMessage(this.cartForm, path);
+    return getErrorMessage(this.cartForm, path);
   }
 }

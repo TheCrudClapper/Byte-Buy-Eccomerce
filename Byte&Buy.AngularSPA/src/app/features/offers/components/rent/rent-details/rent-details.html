@@ -1,3 +1,4 @@
+@if(rentOfferDetails(); as offer){
 <div class="container my-5 ">
     <div class="row ">
         <!-- Left Column -->
@@ -8,24 +9,25 @@
                         <div id="imageCarousel" class="carousel slide">
                             <div class="carousel-inner">
 
-                                @for (item of rentOfferDetails()?.images; track $index)
+                                @for (item of offer.images; track $index)
                                 {
-                                <div class="carousel-item active ">
-                                    <img [src]="imageBaseUrl + item.imagePath" class="d-block w-100"
-                                        [alt]="item.altText">
+                                <div class="carousel-item" [class.active]="$index === 0">
+                                    <img [src]="imageBaseUrl + item.imagePath" class="d-block w-100" [alt]="item.altText">
                                 </div>
                                 }
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                            @if(offer.images.length > 1){
+                                <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
@@ -44,11 +46,11 @@
                             <tbody>
                                 <tr>
                                     <td>Condition</td>
-                                    <td class="fw-bold">{{ rentOfferDetails()?.condition }}</td>
+                                    <td class="fw-bold">{{ offer.condition }}</td>
                                 </tr>
                                 <tr>
                                     <td>Category</td>
-                                    <td class="fw-bold">{{ rentOfferDetails()?.category }}</td>
+                                    <td class="fw-bold">{{ offer.category }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,7 +70,7 @@
                     <!-- Title + favourite button -->
                     <div class="row">
                         <div class="col-10">
-                            <p class="offer-details-title">{{ rentOfferDetails()?.title }}</p>
+                            <p class="offer-details-title">{{ offer.title }}</p>
                         </div>
                         <div class="col-2 text-end">
                             <i class="fa-regular fa-heart" style="color: #ffffff;"></i>
@@ -78,19 +80,19 @@
                     <!-- Price -->
                     <div class="row">
                         <div class="col-12">
-                            <p class="price">{{ rentOfferDetails()?.pricePerDayAmount }} {{
-                                rentOfferDetails()?.pricePerDayCurrency }}</p>
+                            <p class="price">{{ offer.pricePerDayAmount | number: '1.2-2' }} {{
+                                offer.pricePerDayCurrency }}</p>
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                                Seller: {{rentOfferDetails()?.seller?.type == 'company' ? "Company" : "Private"}}
+                                Seller: {{offer.seller.type == 'company' ? "Company" : "Private"}}
                             </span>
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
-                                Avaliable: {{rentOfferDetails()?.quantityAvaliable}}
+                                Avaliable: {{offer.quantityAvaliable}}
                             </span>
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i>
-                                Max days per rental: {{ rentOfferDetails()?.maxRentalDays }}
+                                Max days per rental: {{ offer.maxRentalDays }}
                             </span>
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
@@ -129,15 +131,18 @@
                             <p class="content-section-title">Deliveries</p>
                         </div>
                     </div>
-                    @for (item of deliveries(); track $index)
+                    @if(deliveries(); as deliveries){
+                    @for (item of deliveries; track $index)
                     {
                     <div class="mb-1 d-flex justify-content-between">
                         <span>{{item.name}}</span>
                         <span>{{item.amount}} {{item.currency}}</span>
                     </div>
                     }
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+}

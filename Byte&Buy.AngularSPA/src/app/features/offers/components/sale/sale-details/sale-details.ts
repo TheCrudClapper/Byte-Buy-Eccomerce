@@ -1,5 +1,5 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SaleOfferDetails } from '../../../models/sale-offer-details';
 import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/base-offer-detail';
@@ -19,9 +19,14 @@ import { SaleCartOfferAddRequest } from '../../../../../core/dto/cart/cart-item/
   standalone: true
 })
 export class SaleDetails extends BaseOfferDetail {
-  cartForm = new FormGroup({
-    quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
-  });
+  cartForm!: FormGroup;
+
+  constructor(builder: FormBuilder) {
+    super(builder);
+    this.cartForm = this.builder.group({
+      quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
+    })
+  }
 
   saleOfferDetails = signal<SaleOfferDetails | null>(null);
   seller = computed(() => this.saleOfferDetails()?.seller);
@@ -46,7 +51,7 @@ export class SaleDetails extends BaseOfferDetail {
       this.cartForm.markAsTouched();
       return;
     }
-
+    
     const data = this.cartForm.get('quantity')!.value;
     const payload: SaleCartOfferAddRequest = {
       quantity: data!,
@@ -60,7 +65,7 @@ export class SaleDetails extends BaseOfferDetail {
   }
 
   getError(path: string) {
-    getErrorMessage(this.cartForm, path);
+    return getErrorMessage(this.cartForm, path);
   }
 }
 

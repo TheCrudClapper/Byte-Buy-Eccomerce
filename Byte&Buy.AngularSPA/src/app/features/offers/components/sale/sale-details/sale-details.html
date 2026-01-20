@@ -1,3 +1,4 @@
+@if(saleOfferDetails(); as offer){
 <div class="container my-5">
     <div class="row">
         <!-- Left Column -->
@@ -7,15 +8,16 @@
                     <div class="col-12">
                         <div id="imageCarousel" class="carousel slide">
                             <div class="carousel-inner">
-
-                                @for (item of saleOfferDetails()?.images; track $index)
+                                @for (item of offer.images; track $index)
                                 {
-                                <div class="carousel-item active ">
+                                <div class="carousel-item" [class.active]="$index === 0">
                                     <img [src]="imageBaseUrl + item.imagePath" class="d-block w-100"
-                                         [alt]="item.altText">
+                                        [alt]="item.altText">
                                 </div>
                                 }
                             </div>
+
+                            @if(offer.images.length > 1){
                             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
                                 data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -26,6 +28,8 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -44,11 +48,11 @@
                             <tbody>
                                 <tr>
                                     <td>Condition</td>
-                                    <td class="fw-bold">{{ saleOfferDetails()?.condition }}</td>
+                                    <td class="fw-bold">{{ offer.condition }}</td>
                                 </tr>
                                 <tr>
                                     <td>Category</td>
-                                    <td class="fw-bold">{{ saleOfferDetails()?.category}}</td>
+                                    <td class="fw-bold">{{ offer.category}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,7 +72,7 @@
                     <!-- Title plus favourite button -->
                     <div class="row">
                         <div class="col-10">
-                            <p class="offer-details-title">{{ saleOfferDetails()?.title }}</p>
+                            <p class="offer-details-title">{{ offer.title }}</p>
                         </div>
                         <div class="col-2 text-end">
                             <i class="fa-regular fa-heart" style="color: #ffffff;"></i>
@@ -78,17 +82,17 @@
                     <!-- Price -->
                     <div class="row">
                         <div class="col-12">
-                            <p class="price">{{ saleOfferDetails()?.pricePerItemAmount | number:'1.2-2' }} {{
-                                saleOfferDetails()?.pricePerItemCurrency }}</p>
+                            <p class="price">{{ offer.pricePerItemAmount | number:'1.2-2' }} {{
+                                offer.pricePerItemCurrency }}</p>
                             <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                                Seller: {{saleOfferDetails()?.seller?.type == 'company' ? "Company" : "Private Person"}}
+                                Seller: {{ offer.seller.type === 'company' ? "Company" : "Private Person"}}
                             </span>
                             <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
-                                Avaliable: {{ saleOfferDetails()?.quantityAvaliable }}
+                                Avaliable: {{ offer.quantityAvaliable }}
                             </span>
-                              <span class="badge seller-badge mb-2 me-2">
+                            <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
                                 Sale Offer
                             </span>
@@ -98,7 +102,7 @@
                     <form [formGroup]="cartForm">
                         <div class="row mt-2 align-items-center pt-3">
                             <div class="col-4">
-                                <input type="number" min="1" class="form-control" [max]="saleOfferDetails()?.quantityAvaliable!" formControlName="quantity">
+                                <input type="number" min="1" class="form-control" formControlName="quantity">
                                 <span class="validation-error"> {{ getError('quantity') }}</span>
                             </div>
                             <div class="col-8">
@@ -118,15 +122,18 @@
                             <p class="content-section-title">Deliveries</p>
                         </div>
                     </div>
-                    @for (item of deliveries(); track $index)
-                    {
-                    <div class="mb-1 d-flex justify-content-between">
-                        <span>{{item.name}}</span>
-                        <span>{{item.amount}} {{item.currency}}</span>
-                    </div>
+                    @if(deliveries(); as deliveries){
+                        @for (item of deliveries; track $index)
+                        {
+                        <div class="mb-1 d-flex justify-content-between">
+                            <span>{{item.name}}</span>
+                            <span>{{item.amount}} {{item.currency}}</span>
+                        </div>
+                        }
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+}

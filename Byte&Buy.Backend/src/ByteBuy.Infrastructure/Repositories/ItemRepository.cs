@@ -20,6 +20,8 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
     }
 
     public async Task<bool> HasActiveRelationsAsync(Guid itemId)
-        => await _context.Items.AnyAsync(i => i.Offers.Any());
+        => await _context.Items
+        .Where(i => i.Id == itemId)
+        .AnyAsync(i => i.Offers.Any());
 
 }
