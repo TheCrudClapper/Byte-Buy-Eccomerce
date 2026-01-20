@@ -11,19 +11,13 @@
     <div class="row my-5">
         <!-- Cart Items List -->
         <div class="col-12 col-lg-8">
-            <div class="content-section text-center">
+            <div class="content-section text-start">
                 <div class="row">
-                    <div class="col-6">
-                        <p class="my-0">Product</p>
-                    </div>
-                    <div class="col-2">
-                        <p class="m-0">Price</p>
-                    </div>
-                    <div class="col-2">
-                        <p class="m-0">Quantity</p>
-                    </div>
-                    <div class="col-2">
-                        <p class="m-0">Subtotal</p>
+                    <div class="col-12">
+                        <p class="my-0 page-title">
+                            Cart ( <span class="open-sans-medium">{{ cartModel()?.summary?.itemsQuantity }}</span> )
+                          
+                        </p>
                     </div>
                 </div>
             </div>
@@ -40,7 +34,11 @@
                 }
                 @else
                 {
-                    <app-rent-cart-offer></app-rent-cart-offer>
+                    <app-rent-cart-offer
+                        [rentCartOffer]="item"
+                        (summaryUpdated)="updateSummary($event)"
+                        (removed)="removeItem($event)">
+                    </app-rent-cart-offer>
                 }
 
             }
