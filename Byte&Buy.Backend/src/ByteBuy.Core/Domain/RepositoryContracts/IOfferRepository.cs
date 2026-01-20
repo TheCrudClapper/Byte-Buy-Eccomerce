@@ -6,5 +6,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IOfferRepository : IRepositoryBase<Offer>
 {
-    Task<IReadOnlyCollection<OfferBrowserItemResponse>> BrowseOffers(CancellationToken ct = default);
+    Task<IReadOnlyCollection<OfferBrowserItemResponse>> Browse();
 }

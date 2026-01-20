@@ -78,7 +78,7 @@ export class RentCartOffer implements OnInit {
     this.cartApiService.deleteCartOffer(id).subscribe({
       next: (data: CartSummary) => {
         this.summaryUpdated.emit(data);
-        this.removed.emit(this.rentCartOffer.id)
+        this.removed.emit(id)
       },
       error: (err: ProblemDetails) => {
         this.toastService.error(err?.detail ?? "Failed to delete cart item");

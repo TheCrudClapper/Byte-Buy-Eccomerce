@@ -86,10 +86,10 @@ export class SaleCartOffer implements OnInit {
   }
 
   tryRemove(id: Guid) {
-    this.cartApiService.deleteCartOffer(this.saleCartOffer.id).subscribe({
+    this.cartApiService.deleteCartOffer(id).subscribe({
       next: (data: CartSummary) => {
         this.summaryUpdated.emit(data);
-        this.removed.emit(this.saleCartOffer.id);
+        this.removed.emit(id);
         this.toastService.success("Item removed from cart");
       },
       error: (err: ProblemDetails) => {

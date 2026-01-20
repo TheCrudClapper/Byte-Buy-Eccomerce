@@ -8,6 +8,8 @@ import { CompanySeller } from '../../../../features/offers/models/company-seller
 import { PrivateSeller } from '../../../../features/offers/models/private-seller';
 import { SaleOfferDetails } from '../../../../features/offers/models/sale-offer-details';
 import { SaleOfferDetailsResponse } from '../../../dto/offers/sale/sale-offer-details-response';
+import { OfferBrowserItemResponse } from '../../../dto/offers/common/offer-browser-item-response';
+import { OfferUnion } from '../../../dto/offers/common/offer-browser-union';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +59,10 @@ export class OfferApiService {
           images: dto.images
         }))
       );
+  }
+
+  browseOffers(): Observable<OfferUnion[]>{
+    return this.httpClient.get<OfferUnion[]>(`${this.resourceUri}`); 
   }
 
 }

@@ -3,8 +3,10 @@ using ByteBuy.Core.DTO.Offer;
 using ByteBuy.Core.DTO.Offer.Common;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using static ByteBuy.Core.Specification.OfferSpecifications;
 using static ByteBuy.Core.Specification.RentOfferSpecifications;
 using static ByteBuy.Core.Specification.SaleOfferSpecifications;
 
@@ -26,8 +28,10 @@ public class OfferReadService : IOfferReadService
 
     public async Task<Result<IReadOnlyCollection<OfferBrowserItemResponse>>> BrowseAsync(CancellationToken ct)
     {
-        var offers = await _offerRepository.BrowseOffers(ct);
-        return Result.Success(offers);
+        var spec = new OfferBrowserSpec();
+        var offers = await _offerRepository.GetListBySpecAsync(spec, ct);
+        return offers.Select(o => o.ToResponse())
+            .ToList();
     }
 
     public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)

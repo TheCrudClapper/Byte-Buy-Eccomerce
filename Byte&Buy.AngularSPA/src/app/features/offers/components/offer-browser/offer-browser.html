@@ -129,7 +129,7 @@
         </div>
 
 
-        <!-- Sorting & Offer Section -->
+        <!-- Sorting and Offer Section -->
         <div class="col-12 col-lg-9">
             <span class="fw-bold">Offer Listings</span>
             <span> - 10 found</span>
@@ -163,95 +163,21 @@
             </div>
 
             <!-- Offer Section -->
-            <div class="content-section mb-2">
-                <div class="row">
-                    <div class="col-2 d-flex align-items-center justify-content-center">
-                        <img src="test2.jpg" class="d-block img-fluid offer-image" alt="...">
-                    </div>
-                    <div class="col-10 d-flex flex-column justify-content-between">
-                        <div>
-                            <!-- <span class="offer-title">Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM</span> -->
-                            <a class="offer-title" [routerLink]="['rent/details/019bc76c-1d00-745b-a268-d69308ccc3e4']">
-                                Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM 
-                            </a>
-                        </div>
-                        <div>
-                            <span>
-                                <span class="d-block">
-                                    <span class="fw-bold me-1">Condition:</span>
-                                    <span class="me-3">Very Good</span>
-                                    <span class="fw-bold me-1">Category:</span>
-                                    <span class="">Personal Computer</span>
-                                </span>
-                                <span>3999 PLN</span>
-                            </span>
+            @if(offers().length !== 0){
+            @for (item of offers(); track $index)
+            {
+                @if(item.type === 'rent'){
+                    <app-rent-browser-item [offer]="item">
+                    </app-rent-browser-item>
+                }
 
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span>
-                                <span class="badge offer-badge me-2">
-                                    <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                                    Seller: Private Person
-                                </span>
-                                <span class="badge offer-badge me-2">
-                                    <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                                    Sale Offer
-                                </span>
-                            </span>
-                            <span class="location">
-                                <i class="fa-solid fa-location-dot  me-1" style="color: #ffffff;"></i>
-                                <span>Siedlce, 33-322 Korzenna</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content-section mb-2">
-                <div class="row">
-                    <div class="col-2 d-flex align-items-center justify-content-center">
-                        <img src="test4.jpg" class="d-block img-fluid offer-image" alt="...">
-                    </div>
-                    <div class="col-10 d-flex flex-column justify-content-between">
-                        <div>
-                            <span class="offer-title">Komputer Ryzen 5 5600 + RTX 3070 Ti + 16Gb RAM</span>
-                        </div>
-                        <div>
-                            <span>
-                                <span class="d-block">
-                                    <span class="fw-bold me-1">Condition:</span>
-                                    <span class="me-3">Very Good</span>
-                                    <span class="fw-bold me-1">Category:</span>
-                                    <span class="me-3">Personal Computer</span>
-                                    <span class="fw-bold me-1">Max Rental Days:</span>
-                                    <span class="">10</span>
-                                </span>
-                                <span>
-                                    <span class="me-1">40 PLN / day</span>
-                                </span>
-
-                            </span>
-
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <span>
-                                <span class="badge offer-badge me-2">
-                                    <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
-                                    Seller: Private Person
-                                </span>
-                                <span class="badge offer-badge me-2">
-                                    <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                                    Rent Offer
-                                </span>
-                            </span>
-                            <span class="location">
-                                <i class="fa-solid fa-location-dot me-1" style="color: #ffffff;"></i>
-                                <span>Siedlce, 33-322 Korzenna</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
+                @if(item.type === 'sale'){
+                    <app-sale-browser-item [offer]="item">
+                    </app-sale-browser-item>
+                }
+                }
+            }
+            
         </div>
     </div>
 </div>

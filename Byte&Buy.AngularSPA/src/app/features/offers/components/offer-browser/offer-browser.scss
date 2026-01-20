@@ -31,26 +31,3 @@ hr {
 .badge {
     background-color: var(--primary-accent);
 }
-
-.offer-badge {
-    font-size: 12px !important;
-}
-
-
-.offer-image {
-    width: 100%;
-    height: 130px;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-
-.location span {
-    font-size: 12px;
-}
-
-.offer-title {
-    font-size: 16px;
-    font-family: 'raleway-bold';
-}

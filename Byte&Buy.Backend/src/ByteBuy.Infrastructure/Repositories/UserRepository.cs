@@ -16,4 +16,5 @@ public class UserRepository : EfBaseRepository<ApplicationUser>, IUserRepository
             .AsNoTracking()
             .AnyAsync(e => e.Email == email, ct);
     }
+
 }

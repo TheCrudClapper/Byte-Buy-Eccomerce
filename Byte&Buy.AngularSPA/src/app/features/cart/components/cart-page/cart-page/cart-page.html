@@ -24,7 +24,7 @@
 
             @for (item of cartModel()?.items; track $index)
             {
-                @if(item.type == "sale")
+                @if(item.type === "sale")
                 {
                     <app-sale-cart-offer 
                         [saleCartOffer]="item" 
