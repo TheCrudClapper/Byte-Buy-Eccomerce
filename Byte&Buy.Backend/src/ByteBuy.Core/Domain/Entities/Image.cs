@@ -8,7 +8,7 @@ public class Image : AuditableEntity, ISoftDeletable
     public string ImagePath { get; private set; } = null!;
     public Guid ItemId { get; private set; }
     public Item Item { get; private set; } = null!;
-    public string AltText { get; private set; } = null!;
+    public string? AltText { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
@@ -42,8 +42,11 @@ public class Image : AuditableEntity, ISoftDeletable
 
     private static Result Validate(string altText)
     {
-        if (string.IsNullOrWhiteSpace(altText) || altText.Length > 50)
-            return Result.Failure(ImageErrors.AltTextInvalid);
+        if (!string.IsNullOrEmpty(altText))
+        {
+            if (altText.Length > 50)
+                return Result.Failure(ImageErrors.AltTextInvalid);
+        }
 
         return Result.Success();
     }

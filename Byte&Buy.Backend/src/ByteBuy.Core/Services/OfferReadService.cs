@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Offer;
 using ByteBuy.Core.DTO.Offer.Common;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Offer.SaleOffer;

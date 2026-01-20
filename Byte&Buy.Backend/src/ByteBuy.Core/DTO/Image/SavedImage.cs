@@ -1,3 +1,3 @@
 ﻿namespace ByteBuy.Core.DTO.Image;
 
-public record SavedImage(string ImagePath, string AltText);
+public record SavedImage(string ImagePath, string? AltText);

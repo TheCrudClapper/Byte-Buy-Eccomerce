@@ -4,6 +4,6 @@ namespace ByteBuy.Core.DTO.Abstractions;
 
 public interface IImageRequestDto
 {
-    string AltText { get; }
+    string? AltText { get; }
     IFormFile Image { get; }
 }

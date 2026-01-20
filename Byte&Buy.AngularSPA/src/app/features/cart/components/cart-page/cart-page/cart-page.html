@@ -1,11 +1,12 @@
+@if(cartModel(); as cartModel){
 <div class="container h-100">
-    @if(cartModel()?.items?.length === 0){
-    <div class="empty-cart-container my-5">
-        <i class="fa-solid fa-basket-shopping fa-10x d-block" style="color: #ffffff;"></i>
-        <p class="empty-cart-title text-primary open-sans-medium ">Your cart is empty!</p>
-        <span class="fs-14-px">Looks like you haven't added anything to your cart <span
-                class="fw-bold">yet.</span></span>
-    </div>
+    @if(cartModel.items.length === 0){
+        <div class="empty-cart-container my-5">
+            <i class="fa-solid fa-basket-shopping fa-10x d-block" style="color: #ffffff;"></i>
+            <p class="empty-cart-title text-primary open-sans-medium ">Your cart is empty!</p>
+            <span class="fs-14-px">Looks like you haven't added anything to your cart <span
+                    class="fw-bold">yet.</span></span>
+        </div>
     }
     @else {
     <div class="row my-5">
@@ -15,32 +16,27 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="my-0 page-title">
-                            Cart ( <span class="open-sans-medium">{{ cartModel()?.summary?.itemsQuantity }}</span> )
-                          
+                            Cart ( <span class="open-sans-medium">{{ cartModel.summary.itemsQuantity }}</span> )
+
                         </p>
                     </div>
                 </div>
             </div>
 
-            @for (item of cartModel()?.items; track $index)
+            @for (item of cartModel.items; track $index)
             {
                 @if(item.type === "sale")
                 {
-                    <app-sale-cart-offer 
-                        [saleCartOffer]="item" 
-                        (summaryUpdated)="updateSummary($event)" 
-                        (removed)="removeItem($event)">
-                    </app-sale-cart-offer>
+                <app-sale-cart-offer [saleCartOffer]="item" (summaryUpdated)="updateSummary($event)"
+                    (removed)="removeItem($event)">
+                </app-sale-cart-offer>
                 }
                 @else
                 {
-                    <app-rent-cart-offer
-                        [rentCartOffer]="item"
-                        (summaryUpdated)="updateSummary($event)"
-                        (removed)="removeItem($event)">
-                    </app-rent-cart-offer>
+                <app-rent-cart-offer [rentCartOffer]="item" (summaryUpdated)="updateSummary($event)"
+                    (removed)="removeItem($event)">
+                </app-rent-cart-offer>
                 }
-
             }
 
         </div>
@@ -52,35 +48,35 @@
                 <hr>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Items</span>
-                    <span class="summary-value">{{ cartModel()?.summary?.itemsQuantity }} pcs</span>
+                    <span class="summary-value">{{ cartModel.summary.itemsQuantity }} pcs</span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Items Cost</span>
                     <span class="summary-value">
-                        {{ cartModel()?.summary?.totalItemsValue?.amount  | number:'1.2-2'}}
-                        {{ cartModel()?.summary?.totalItemsValue?.currency}}
+                        {{ cartModel.summary.totalItemsValue.amount | number:'1.2-2'}}
+                        {{ cartModel.summary.totalItemsValue.currency}}
                     </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Shipping from</span>
                     <span class="summary-value">
-                        {{ cartModel()?.summary?.estimatedShippingCost?.amount  | number:'1.2-2'}}
-                        {{ cartModel()?.summary?.estimatedShippingCost?.currency}}
+                        {{ cartModel.summary.estimatedShippingCost.amount | number:'1.2-2'}}
+                        {{ cartModel.summary.estimatedShippingCost.currency}}
                     </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Tax</span>
                     <span class="summary-value">
-                        {{ cartModel()?.summary?.taxValue?.amount | number:'1.2-2' }}
-                        {{ cartModel()?.summary?.taxValue?.currency}}
+                        {{ cartModel.summary.taxValue.amount | number:'1.2-2' }}
+                        {{ cartModel.summary.taxValue.currency}}
                     </span>
                 </div>
                 <hr>
                 <div class="mb-3 d-flex justify-content-between ">
                     <p class="content-section-title fw-bold">Total Cost</p>
                     <p class="total-cost" style="font-size: 16px;">
-                        {{ cartModel()?.summary?.totalCost?.amount | number:'1.2-2'  }}
-                        {{ cartModel()?.summary?.totalCost?.currency}}
+                        {{ cartModel.summary.totalCost.amount | number:'1.2-2' }}
+                        {{ cartModel.summary.totalCost.currency}}
                     </p>
                 </div>
                 <button class="btn w-100">Checkout</button>
@@ -90,4 +86,6 @@
     </div>
     }
 
+
 </div>
+}

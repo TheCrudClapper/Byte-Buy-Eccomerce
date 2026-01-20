@@ -20,8 +20,6 @@ import { Router } from '@angular/router';
 
 export class CartPage implements OnInit {
   private readonly cartApiService = inject(CartApiService);
-  private readonly router = inject(Router);
-  private lastValidCart!: Cart | null;
 
   cartModel = signal<Cart | null>(null);
 
@@ -33,21 +31,9 @@ export class CartPage implements OnInit {
     this.cartApiService.getCart().subscribe({
       next: (data) => {
         this.cartModel.set(toCartModel(data))
-        this.snapshot();
       },
-
       error: (err: ProblemDetails) => console.log(err.detail)
     });
-  }
-
-  //take snapshot of cart, in case update or delete methods when wrong
-  private snapshot() {
-    this.lastValidCart = this.cartModel() ? structuredClone(this.cartModel()) : null;
-  }
-
-  rollback(){
-    if(this.lastValidCart)
-      this.cartModel.set(this.lastValidCart);
   }
 
   //update cart summary using child components output
