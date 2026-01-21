@@ -17,11 +17,11 @@ public class UserSaleOffersController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostAsync(UserSaleOfferAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] UserSaleOfferAddRequest request)
         => HandleResult(await _saleOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, UserSaleOfferUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] UserSaleOfferUpdateRequest request)
        => HandleResult(await _saleOfferService.UpdateAsync(CurrentUserId, id, request));
 
     [HttpGet("{id:guid}")]

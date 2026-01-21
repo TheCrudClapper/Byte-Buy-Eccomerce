@@ -119,7 +119,6 @@ export class RentCreate implements OnInit {
     }
 
     const payload = this.buildFormData();
-    console.log(payload);
 
     this.rentOfferApiService.post(payload).subscribe({
       next: () => {
