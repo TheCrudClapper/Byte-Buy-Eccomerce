@@ -19,4 +19,15 @@ public static class OfferSpecifications
                     .ThenInclude(o => o.Images);
         }
     }
+
+    public sealed class UserOffersPanelSpec : Specification<Offer>
+    {
+        public UserOffersPanelSpec(Guid userId)
+        {
+            Query.AsNoTracking()
+                .Where(o => o.CreatedByUserId == userId)
+                .Include(o => o.Item)
+                    .ThenInclude(o => o.Images);
+        }
+    }
 }

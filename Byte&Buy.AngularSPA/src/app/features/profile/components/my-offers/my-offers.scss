@@ -1,0 +1,41 @@
+.offer-image {
+    width: 100%;
+    height: 130px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.offer-title {
+    font-size: 16px;
+    font-family: 'raleway-bold';
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: 0.3s ease;
+}
+
+.icon-btn {
+    background: none;
+    border: 2px solid var(--hover-accent);
+    transition: 0.3s ease;
+    border-radius: 7px;
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-btn i {
+    font-size: 16px;
+    color: var(--text-primary);
+    transition: 0.3s ease;
+}
+
+.icon-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--hover-accent)
+}

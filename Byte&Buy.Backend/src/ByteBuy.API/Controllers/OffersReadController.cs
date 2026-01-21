@@ -11,10 +11,10 @@ namespace ByteBuy.API.Controllers;
 [AllowAnonymous]
 [Route("api/offers")]
 [ApiController]
-public class OffersController : BaseApiController
+public class OffersReadController : BaseApiController
 {
     private readonly IOfferReadService _offerReadService;
-    public OffersController(IOfferReadService offerReadService)
+    public OffersReadController(IOfferReadService offerReadService)
     {
         _offerReadService = offerReadService;
     }
@@ -30,4 +30,8 @@ public class OffersController : BaseApiController
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<OfferBrowserItemResponse>>> GetOffers(CancellationToken ct)
         => HandleResult(await _offerReadService.BrowseAsync(ct));
+
+    [HttpGet("api/me/offers")]
+    public async Task<ActionResult<IReadOnlyCollection<UserPanelOfferResponse>>> GetUserOffers(CancellationToken ct)
+        => HandleResult(await _offerReadService.GetUserPanelOffers(CurrentUserId, ct));
 }

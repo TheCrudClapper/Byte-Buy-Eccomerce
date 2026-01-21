@@ -41,5 +41,35 @@ public static class OfferMappings
             _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
         };
     }
+
+    public static UserPanelOfferResponse ToUserOfferPanelResponse(this Offer offer)
+    {
+        return offer switch
+        {
+            SaleOffer saleOffer => new UserSalePanelResponse
+            {
+                Id = saleOffer.Id,
+                DateCreated = saleOffer.DateCreated,
+                DateEdited = saleOffer.DateEdited,
+                Image = saleOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
+                Title = saleOffer.Item.Name,
+                QuantityAvaliable = saleOffer.QuantityAvailable,
+                PricePerItem = saleOffer.PricePerItem.ToMoneyDto()
+            },
+            RentOffer rentOffer => new UserRentPanelResponse
+            {
+
+                Id = rentOffer.Id,
+                DateCreated = rentOffer.DateCreated,
+                DateEdited = rentOffer.DateEdited,
+                Image = rentOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
+                Title = rentOffer.Item.Name,
+                QuantityAvaliable = rentOffer.QuantityAvailable,
+                PricePerDay = rentOffer.PricePerDay.ToMoneyDto(),
+                MaxRentalDays = rentOffer.MaxRentalDays,
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
+        };
+    }
 }
 

@@ -51,4 +51,12 @@ public class OfferReadService : IOfferReadService
             : detailsDto;
     }
 
+    public async Task<Result<IReadOnlyCollection<UserPanelOfferResponse>>> GetUserPanelOffers(Guid userId, CancellationToken ct = default)
+    {
+        var spec = new UserOffersPanelSpec(userId);
+        var userOffers = await _offerRepository.GetListBySpecAsync(spec, ct);
+        return userOffers
+            .Select(uo => uo.ToUserOfferPanelResponse())
+            .ToList();
+    }
 }

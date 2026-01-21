@@ -11,11 +11,11 @@ import { DeliveryListItem } from '../../../../../shared/models/delivery-list-ite
 import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
 import { HomeAddressDto } from '../../../../../core/dto/home-address/home-address-dto';
 import { RentOfferApiSerivce } from '../../../../../core/clients/offers/rent/rent-offer-api-serivce';
-import { map, Observable, single } from 'rxjs';
 import { ImageItem } from '../../../models/image-item';
 import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rent-create',
