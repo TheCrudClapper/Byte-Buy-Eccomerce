@@ -15,6 +15,7 @@ import { map, Observable, single } from 'rxjs';
 import { ImageItem } from '../../../models/image-item';
 import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
+import { ProblemDetails } from '../../../../../core/dto/problem-details';
 
 @Component({
   selector: 'app-rent-create',
@@ -31,16 +32,18 @@ export class RentCreate implements OnInit {
   private readonly deliveryApiService = inject(DeliveryApiService);
   private readonly addressApiService = inject(AddressApiService);
   private readonly rentOfferApiService = inject(RentOfferApiSerivce);
-  private readonly snackbarService: ToastService = inject(ToastService);
+  private readonly toastService = inject(ToastService);
 
   categoriesOptions$!: Observable<SelectListItem[]>;
   conditionOptions$!: Observable<SelectListItem[]>;
-  parcelLockerDeliveries = signal<DeliveryListItem[]>([])
-  pickupPointDeliveries = signal<DeliveryListItem[]>([]);
-  courierDeliveries = signal<DeliveryListItem[]>([]);
+  deliveries = signal<{ parcel: DeliveryListItem[], courier: DeliveryListItem[], pickup: DeliveryListItem[] }>({
+    parcel: [],
+    courier: [],
+    pickup: []
+  });
 
-  homeAddress = signal<HomeAddressDto | null>(null); 
-  images: ImageItem[] = [];
+  homeAddress = signal<HomeAddressDto | null>(null);
+  images = signal<ImageItem[]>([]);
 
   rentForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
@@ -65,9 +68,11 @@ export class RentCreate implements OnInit {
 
     this.deliveryApiService.getAvaliableDeliveries()
       .subscribe(response => {
-        this.parcelLockerDeliveries.set(response.parcelLockerDeliveries.map(mapToListItem));
-        this.courierDeliveries.set(response.courierDeliveries.map(mapToListItem));
-        this.pickupPointDeliveries.set(response.pickupPointDeliveries.map(mapToListItem));
+        this.deliveries.set({
+          parcel: response.parcelLockerDeliveries.map(mapToListItem),
+          courier: response.courierDeliveries.map(mapToListItem),
+          pickup: response.pickupPointDeliveries.map(mapToListItem)
+        })
       });
   }
 
@@ -75,44 +80,53 @@ export class RentCreate implements OnInit {
     const form = this.rentForm.value;
     const fd = new FormData();
 
-    fd.append('CategoryId', form.selectedCategoryId || '');
-    fd.append('ConditionId', form.selectedConditionId || '');
+    fd.append('CategoryId', form.selectedCategoryId!);
+    fd.append('ConditionId', form.selectedConditionId!);
     fd.append('Name', form.name);
     fd.append('Description', form.description);
-    fd.append('QuantityAvailable', form.quantityAvailable.toString());
-    fd.append('PricePerDay', form.pricePerDay.toString());
-    fd.append('MaxRentalDays', form.maxRentalDays.toString());
+    fd.append('QuantityAvailable', String(form.quantityAvailable));
+    fd.append('PricePerDay', String(form.pricePerDay));
+    fd.append('MaxRentalDays', String(form.maxRentalDays));
 
-    this.images.forEach((img, index) => {
-      fd.append(`Images[${index}].Image`, img.file, img.file.name);
-      fd.append(`Images[${index}].AltText`, img.alt || '');
+    this.images().forEach((img, index) => {
+      fd.append(`Images[${index}].Image`, img.file);
+      if(img.alt){
+        fd.append(`Images[${index}].AltText`, img.alt);
+      }
     });
 
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
-      fd.append(`OtherDeliveriesIds[${index}]`, id.toString());
+      fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
+
     return fd;
   }
 
   onSubmit(): void {
+    if(this.images().length === 0){
+      this.toastService.error("Add at least one image");
+      return;
+    }
+
     if (this.rentForm.invalid) {
       this.rentForm.markAllAsTouched();
       return;
     };
 
     if (!this.homeAddress()) {
-      this.snackbarService.success("To add offer you need to add address !");
+      this.toastService.success("To add offer you need to add address !");
       return;
     }
 
     const payload = this.buildFormData();
+    console.log(payload);
 
     this.rentOfferApiService.post(payload).subscribe({
       next: () => {
-        this.snackbarService.success("Successfully published offer!");
+        this.toastService.success("Successfully published offer!");
       },
-      error: () => {
-        this.snackbarService.success("Gowno nie dziala");
+      error: (err: ProblemDetails) => {
+        this.toastService.success(err?.detail ?? "Failed to publish offer, try again later");
       }
     })
   }
@@ -150,11 +164,14 @@ export class RentCreate implements OnInit {
 
       const reader = new FileReader();
       reader.onload = () => {
-        this.images.push({
-          file,
-          preview: reader.result as string,
-          alt: ''
-        });
+        this.images.update(imgs => [
+          ...imgs,
+          {
+            file,
+            preview: reader.result as string,
+            alt: ''
+          }
+        ]);
       };
       reader.readAsDataURL(file);
     }
@@ -162,7 +179,7 @@ export class RentCreate implements OnInit {
   }
 
   removeImage(index: number): void {
-    this.images.splice(index, 1);
+    this.images.update(imgs => imgs.filter((_, i) => i !== index));
   }
 }
 

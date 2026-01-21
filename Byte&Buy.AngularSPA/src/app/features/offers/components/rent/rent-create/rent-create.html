@@ -6,7 +6,6 @@
                     <p class="page-title">Add offer for rental</p>
                 </div>
             </div>
-
             <!-- Images -->
             <div class="content-section">
                 <div class="row">
@@ -20,7 +19,7 @@
                     <div class="col-1 text-end">
                         <input type="file" id="file-input" hidden accept="image/png, image/jpeg"
                             (change)="onImagesSelected($event)" multiple />
-                        <label for="file-input" class="file-button" [class.disabled]="images.length >= 10">
+                        <label for="file-input" class="file-button" [class.disabled]="images().length >= 10">
                             <i class="fa-solid fa-plus"></i>
                         </label>
                     </div>
@@ -29,13 +28,13 @@
                 <!-- Container for displaying imges -->
                 <div class="inner-container horizontal-scroll">
                     <div class="images-row">
-                        @if(images.length === 0){
+                        @if(images().length === 0){
                         <div class="d-flex justify-content-center align-items-center w-100 h-100 text-center">
                             <i class="fa-regular fa-images fa-3x mb-2"></i>
                             <p class="mb-0">Add up to 10 images per offer.</p>
                         </div>
                         } @else{
-                        @for (item of images; track $index)
+                        @for (item of images(); track $index)
                         {
                         <div class="image-card">
                             <div class="position-relative">
@@ -175,6 +174,7 @@
                 </div>
             </div>
 
+            @if(homeAddress(); as homeAddress){
             <!-- Location -->
             <div class="content-section">
                 <div class="row">
@@ -189,27 +189,26 @@
                     <div class="col-12 col-md-6">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
-                            @if(homeAddress()){
-                            <p class="d-inline align-middle">{{ homeAddress()?.city}} {{homeAddress()?.houseNumber}}, {{
-                                homeAddress()?.postalCode}} {{ homeAddress()?.postalCity }}</p>
+                            @if(homeAddress){
+                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
+                                homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
-                            <p class="d-inline align-middle">No home address set yet.</p>
+                            <p class="d-inline align-middle">Home address is required to be set, befora publishing.</p>
                             }
                         </div>
                         <div class="row">
                             <div class="col-12 pt-2">
                                 <a class="link">Change Address</a>
                             </div>
-                            @if(!homeAddress()){
-                            <span class="validation-error">Home address is required to be set, befora publishing.</span>
-                            }
                         </div>
 
                     </div>
                 </div>
             </div>
+            }
 
             <!-- Deliveries-->
+            @if(deliveries(); as deliveries){
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
@@ -217,11 +216,12 @@
                         <p class="content-section-description">Select avaliable deliveries</p>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-12">
-                        @if(parcelLockerDeliveries().length > 0){
+                        @if(deliveries.parcel.length > 0){
                         <p class="content-section-title">Parcel Lockers</p>
-                        @for (item of parcelLockerDeliveries(); track $index)
+                        @for (item of deliveries.parcel; track $index)
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -234,13 +234,16 @@
                         }
                     </div>
                     <div class="col-12">
-                        @if(parcelLockerDeliveries().length > 0){
+                        @if(deliveries.courier.length > 0){
                         <p class="content-section-title mt-3">Courier</p>
-                        @for (item of courierDeliveries(); track $index)
+                        @for (item of deliveries.courier; track $index)
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <input type="checkbox"
+                                       [checked]="rentForm.value.otherDeliveriesIds?.includes(item.id)"
+                                       (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                       class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
                             <span>{{ item.amount }} {{ item.currency }}</span>
@@ -249,9 +252,9 @@
                         }
                     </div>
                     <div class="col-12">
-                        @if(parcelLockerDeliveries().length !== 0){
+                        @if(deliveries.pickup.length > 0){
                         <p class="content-section-title mt-3">Pickup Point</p>
-                        @for (item of courierDeliveries(); track $index)
+                        @for (item of deliveries.pickup; track $index)
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -266,12 +269,13 @@
                     </div>
                 </div>
             </div>
+            }
 
             <!-- Publish -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12 text-end">
-                        <button class="btn" type="submit">Publish</button>
+                        <button class="btn" type="submit" >Publish</button>
                     </div>
                 </div>
             </div>
