@@ -3,14 +3,15 @@ import { OfferApiService } from '../../../../core/clients/offers/common/offer-ap
 import { UserPanelOfferUnion } from '../../../../core/dto/offers/common/user-panel-union';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
 import { RentOfferApiSerivce } from '../../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { SaleOfferApiService } from '../../../../core/clients/offers/sale/sale-offer-api-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-offers',
-  imports: [DatePipe],
+  imports: [DatePipe, DecimalPipe, RouterLink],
   templateUrl: './my-offers.html',
   styleUrl: './my-offers.scss',
 })
@@ -19,6 +20,8 @@ export class MyOffers implements OnInit {
   private readonly rentOfferApiService = inject(RentOfferApiSerivce);
   private readonly saleOfferApiService = inject(SaleOfferApiService);
   private readonly toastService = inject(ToastService);
+  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+
 
   userOffers = signal<UserPanelOfferUnion[]>([]);
 

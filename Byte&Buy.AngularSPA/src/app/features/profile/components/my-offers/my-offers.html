@@ -6,13 +6,21 @@
 <div class="content-section mb-2">
     <div class="row">
         <div class="col-2 d-flex align-items-center justify-content-center">
-            <img [src]="" class="d-block img-fluid offer-image" [alt]="">
+            <img [src]="`${imageBaseUrl}${item.image.imagePath}`" class="d-block img-fluid offer-image"
+                [alt]="item.image.altText">
         </div>
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
-                <a class="offer-title">
+                @if(item.type === 'sale'){
+                <a class="offer-title" [routerLink]="[`/offers/sale/details/${item.id}`]">
                     {{ item.title }}
                 </a>
+                }
+                @else{
+                <a class="offer-title" [routerLink]="`/offers/rent/details/${item.id}`">
+                    {{ item.title }}
+                </a>
+                }
             </div>
             <div>
                 <span>
@@ -22,8 +30,27 @@
                         <span class="fw-bold me-1 fs-14-px">Last Edited:</span>
                         <span class="fs-14-px">{{ item.dateEdited ?? 'No recent updates'}}</span>
                     </span>
-                    <span class="fs-14-px open-sans-medium">
-                        12 PLN / day
+                    <span class="d-block">
+                        <span class="fw-bold me-1 fs-14-px">Quantity:</span>
+                        <span class="me-3 fs-14-px">{{ item.quantityAvaliable }}</span>
+                        @if(item.type === 'rent'){
+                        <span class="fw-bold me-1 fs-14-px">Price /day:</span>
+                        <span class="fs-14-px me-3">
+                            {{ item.pricePerDay.amount | number:'1.2-2'}} {{ item.pricePerDay.currency}}
+                        </span>
+
+                        <span class="fw-bold me-1 fs-14-px">Max rental days:</span>
+                        <span class="fs-14-px">
+                            {{ item.maxRentalDays }}
+                        </span>
+                        }
+                        @if(item.type === 'sale'){
+                        <span class="fw-bold me-1 fs-14-px">Price /unit:</span>
+                        <span class="fs-14-px me-3">
+                            {{ item.pricePerItem.amount | number:'1.2-2'}} {{ item.pricePerItem.currency}}
+                        </span>
+                        }
+
                     </span>
                 </span>
 
