@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RentBrowserItem } from '../rent/rent-browser-item/rent-browser-item/rent-browser-item';
 import { OfferUnion } from '../../../../core/dto/offers/common/offer-browser-union';
 import { SaleBrowserItem } from '../sale/sale-browser-item/sale-browser-item/sale-browser-item';
+import { RentOfferApiSerivce } from '../../../../core/clients/offers/rent/rent-offer-api-serivce';
+import { SaleOfferApiService } from '../../../../core/clients/offers/sale/sale-offer-api-service';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-offer-browser',
@@ -17,6 +20,7 @@ import { SaleBrowserItem } from '../sale/sale-browser-item/sale-browser-item/sal
 })
 export class OfferBrowser implements OnInit {
   private readonly offerApiService = inject(OfferApiService);
+
   offers = signal<OfferUnion[]>([]);
 
   ngOnInit(): void {
@@ -31,4 +35,6 @@ export class OfferBrowser implements OnInit {
       }
     })
   }
+
+
 }
