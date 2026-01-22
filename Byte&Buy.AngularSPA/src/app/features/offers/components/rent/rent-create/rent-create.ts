@@ -31,23 +31,23 @@ export class RentCreate extends BaseOfferForm {
 
 
   override buildFormData(): FormData {
-    const v = this.form.value;
+    const form = this.form.value;
     const fd = new FormData();
 
-    fd.append('Name', v.name!);
-    fd.append('CategoryId', v.selectedCategoryId!);
-    fd.append('ConditionId', v.selectedConditionId!);
-    fd.append('Description', v.description!);
-    fd.append('PricePerDay', String(v.pricePerDay));
-    fd.append('QuantityAvailable', String(v.quantityAvailable));
-    fd.append('MaxRentalDays', String(v.maxRentalDays));
+    fd.append('Name', form.name!);
+    fd.append('CategoryId', form.selectedCategoryId!);
+    fd.append('ConditionId', form.selectedConditionId!);
+    fd.append('Description', form.description!);
+    fd.append('PricePerDay', String(form.pricePerDay));
+    fd.append('QuantityAvailable', String(form.quantityAvailable));
+    fd.append('MaxRentalDays', String(form.maxRentalDays));
 
     this.images().forEach((img, i) => {
       fd.append(`Images[${i}].Image`, img.file!);
       if (img.alt) fd.append(`Images[${i}].AltText`, img.alt);
     });
 
-    v.otherDeliveriesIds?.forEach((id, i) =>
+    form.otherDeliveriesIds?.forEach((id, i) =>
       fd.append(`OtherDeliveriesIds[${i}]`, String(id))
     );
 

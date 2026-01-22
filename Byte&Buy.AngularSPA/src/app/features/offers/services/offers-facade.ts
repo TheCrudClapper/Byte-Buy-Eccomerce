@@ -33,8 +33,7 @@ export class OffersFacade {
   deliveries = signal<{
     parcel: DeliveryListItem[],
     courier: DeliveryListItem[],
-    pickup: DeliveryListItem[]
-  }>({
+    pickup: DeliveryListItem[]}>({
     parcel: [],
     courier: [],
     pickup: []

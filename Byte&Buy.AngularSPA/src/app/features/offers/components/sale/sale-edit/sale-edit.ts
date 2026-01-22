@@ -161,7 +161,7 @@ export class SaleEdit {
     }
 
 
-    
+
     if (!this.homeAddress()) {
       this.toastService.success("To add offer you need to add address !");
       return;
@@ -239,10 +239,10 @@ export class SaleEdit {
     });
   }
 
-  revertDelete(index: number): void{
+  revertDelete(index: number): void {
     this.images.update(imgs => {
       const img = imgs[index];
-      if(img.isDeleted)
+      if (img.isDeleted)
         img.isDeleted = false;
       return [...imgs];
     });

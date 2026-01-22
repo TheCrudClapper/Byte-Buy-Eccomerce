@@ -1,22 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { Guid } from 'guid-typescript';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ImageItem } from '../../../models/image-item';
-import { HomeAddressDto } from '../../../../../core/dto/home-address/home-address-dto';
-import { SelectListItem } from '../../../../../shared/models/select-list-item';
-import { Observable } from 'rxjs';
-import { CategoryApiService } from '../../../../../core/clients/category/category-api-service';
-import { ConditionApiService } from '../../../../../core/clients/condition/condition-api-service';
-import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
-import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
-import { RentOfferApiSerivce } from '../../../../../core/clients/offers/rent/rent-offer-api-serivce';
-import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
-import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
-import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
 import { CommonModule } from '@angular/common';
-import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
-import { SaleOfferApiService } from '../../../../../core/clients/offers/sale/sale-offer-api-service';
+import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
 
 @Component({
   selector: 'app-sale-create',
@@ -26,24 +12,9 @@ import { SaleOfferApiService } from '../../../../../core/clients/offers/sale/sal
     './sale-create.scss',
     '../../../shared/styles/offers-shared-styles.scss']
 })
-export class SaleCreate implements OnInit {
-  private readonly categoryApiService = inject(CategoryApiService);
-  private readonly conditionApiService = inject(ConditionApiService);
-  private readonly deliveryApiService = inject(DeliveryApiService);
-  private readonly addressApiService = inject(AddressApiService);
-  private readonly saleOfferService = inject(SaleOfferApiService);
-  private readonly toastService = inject(ToastService);
-
-  categoriesOptions$!: Observable<SelectListItem[]>;
-  conditionOptions$!: Observable<SelectListItem[]>;
-  deliveries = signal<{ parcel: DeliveryListItem[], courier: DeliveryListItem[], pickup: DeliveryListItem[] }>({
-    parcel: [],
-    courier: [],
-    pickup: []
-  });
-
-  homeAddress = signal<HomeAddressDto | null>(null);
-  images = signal<ImageItem[]>([]);
+export class SaleCreate extends BaseOfferForm {
+  override type: OfferType = 'sale';
+  override mode: OfferMode = 'add';
 
   form: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
@@ -57,25 +28,7 @@ export class SaleCreate implements OnInit {
   });
 
 
-  ngOnInit(): void {
-    this.categoriesOptions$ = this.categoryApiService.getSelectList();
-    this.conditionOptions$ = this.conditionApiService.getSelectList();
-
-    this.addressApiService.getHomeAddress().subscribe(address => {
-      this.homeAddress.set(address);
-    });
-
-    this.deliveryApiService.getAvaliableDeliveries()
-      .subscribe(response => {
-        this.deliveries.set({
-          parcel: response.parcelLockerDeliveries.map(mapToListItem),
-          courier: response.courierDeliveries.map(mapToListItem),
-          pickup: response.pickupPointDeliveries.map(mapToListItem)
-        })
-      });
-  }
-
-  private buildFormData(): FormData {
+  override buildFormData(): FormData {
     const form = this.form.value;
     const fd = new FormData();
 
@@ -86,97 +39,16 @@ export class SaleCreate implements OnInit {
     fd.append('QuantityAvailable', String(form.quantityAvailable));
     fd.append('PricePerItem', String(form.pricePerItem));
 
-    // this.images().forEach((img, index) => {
-    //   fd.append(`Images[${index}].Image`, img.file);
-    //   if (img.alt) {
-    //     fd.append(`Images[${index}].AltText`, img.alt);
-    //   }
-    // });
+    this.images().forEach((img, i) => {
+      fd.append(`Images[${i}].Image`, img.file!);
+      if (img.alt) fd.append(`Images[${i}].AltText`, img.alt);
+    });
 
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
 
     return fd;
-  }
-
-  onSubmit(): void {
-    if (this.images().length === 0) {
-      this.toastService.error("Add at least one image");
-      return;
-    }
-
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    };
-
-    if (!this.homeAddress()) {
-      this.toastService.success("To add offer you need to add address !");
-      return;
-    }
-
-    const payload = this.buildFormData();
-
-    this.saleOfferService.post(payload).subscribe({
-      next: () => {
-        this.toastService.success("Successfully published offer!");
-      },
-      error: (err: ProblemDetails) => {
-        this.toastService.success(err?.detail ?? "Failed to publish offer, try again later");
-      }
-    })
-  }
-
-  onDeliveryToggle(id: Guid, checked: boolean): void {
-    const array = this.form.get('otherDeliveriesIds') as FormArray
-
-    if (checked)
-      array.push(new FormControl(id));
-    else {
-      const index = array.controls.findIndex(c => c.value === id);
-      if (index !== -1) {
-        array.removeAt(index);
-      }
-    }
-
-    array.markAsTouched();
-    array.updateValueAndValidity();
-  }
-  
-  getErrorMessage(path: string) {
-    return getErrorMessage(this.form, path);
-  }
-
-  onImagesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files) return;
-
-    const files = Array.from(input.files);
-
-    for (const file of files) {
-      if (this.images.length >= 10) break;
-      if (!file.type.startsWith('image/')) continue;
-      if (file.size > 5 * 1024 * 1024) continue;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.images.update(imgs => [
-          ...imgs,
-          {
-            file,
-            preview: reader.result as string,
-            alt: ''
-          }
-        ]);
-      };
-      reader.readAsDataURL(file);
-    }
-    input.value = '';
-  }
-
-  removeImage(index: number): void {
-    this.images.update(imgs => imgs.filter((_, i) => i !== index));
   }
 }
 

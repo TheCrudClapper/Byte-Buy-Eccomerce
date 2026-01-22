@@ -47,6 +47,7 @@ export abstract class BaseOfferForm implements OnInit {
     )
   }
 
+  //needs to be overriden by edit components
   protected getOfferId(): Guid | undefined {
     return undefined;
   }

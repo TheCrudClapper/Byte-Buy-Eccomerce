@@ -8,8 +8,8 @@ export const API_ENDPOINTS = {
     //Carts
     carts: {
         base: '/carts',
-        saleOffer: '/sale-offer',
-        rentOffer: '/rent-offer'
+        saleOffer: '/carts/sale-offer',
+        rentOffer: '/carts/rent-offer'
     }
 
     
