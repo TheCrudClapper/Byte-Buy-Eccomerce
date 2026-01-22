@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="submit()">
     <div class="container">
         <div class="page-wrapper mt-5 mb-5">
             <div class="row">
@@ -53,8 +53,9 @@
                                     <i class="fa-solid fa-trash-arrow-up" style="color: #ffffff;"></i>
                                 </button>
                                 }
-                                <input type="text" maxlength="50" [class.input-disabled]="item.isDeleted!" [disabled]="item.isDeleted!"
-                                    class="form-control mt-2" placeholder="Alt text (optional)" [(ngModel)]="item.alt"
+                                <input type="text" maxlength="50" [class.input-disabled]="item.isDeleted!"
+                                    [disabled]="item.isDeleted!" class="form-control mt-2"
+                                    placeholder="Alt text (optional)" [(ngModel)]="item.alt"
                                     [ngModelOptions]="{ standalone: true }" />
                             </div>
                         </div>
@@ -95,7 +96,7 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedCategoryId">
                             <option [ngValue]="null" disabled selected>Select Category</option>
-                            @for (item of categoriesOptions$ | async; track item.id) {
+                            @for (item of facade.categories$ | async; track item.id) {
                             <option [ngValue]="item.id">
                                 {{ item.title }}
                             </option>
@@ -108,7 +109,7 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedConditionId">
                             <option [ngValue]="null" disabled>Select Condition</option>
-                            @for (item of conditionOptions$ | async; track item.id)
+                            @for (item of facade.conditions$ | async; track item.id)
                             {
                             <option [ngValue]="item.id">
                                 {{ item.title }}
@@ -172,7 +173,7 @@
                 </div>
             </div>
 
-            @if(homeAddress(); as homeAddress){
+            @if(facade.homeAddress(); as homeAddress){
             <!-- Location -->
             <div class="content-section">
                 <div class="row">
@@ -206,7 +207,7 @@
             }
 
             <!-- Deliveries-->
-            @if(deliveries(); as deliveries){
+            @if(facade.deliveries(); as deliveries){
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">

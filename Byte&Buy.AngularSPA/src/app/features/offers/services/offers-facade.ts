@@ -13,7 +13,13 @@ import { OfferMode, OfferType } from '../shared/components/base-offer-form/base-
 import { ImageItem } from '../models/image-item';
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../core/dto/problem-details';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-offer-response';
+import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
+
+export type EditOffer =
+  | { type: 'sale'; data: UserSaleOfferResponse }
+  | { type: 'rent'; data: UserRentOfferResponse };
 
 @Injectable({
   providedIn: 'root',
@@ -27,13 +33,16 @@ export class OffersFacade {
   private readonly rentApi = inject(RentOfferApiSerivce);
   public readonly toast = inject(ToastService);
 
+  readonly currentOffer = signal<EditOffer | null>(null);
+
   readonly categories$ = this.categoryApi.getSelectList();
   readonly conditions$ = this.conditionApi.getSelectList();
 
   deliveries = signal<{
     parcel: DeliveryListItem[],
     courier: DeliveryListItem[],
-    pickup: DeliveryListItem[]}>({
+    pickup: DeliveryListItem[]
+  }>({
     parcel: [],
     courier: [],
     pickup: []
@@ -51,6 +60,21 @@ export class OffersFacade {
         courier: r.courierDeliveries.map(mapToListItem),
         pickup: r.pickupPointDeliveries.map(mapToListItem),
       }));
+  }
+
+  loadOffer(type: OfferType, id: Guid): void {
+    if(type === 'sale'){
+      this.saleApi.getById(id).subscribe({
+        next: offer => this.currentOffer.set({ type: 'sale', data: offer}),
+        error: (err: ProblemDetails) => this.toast.error(err.detail ?? "Failed to load sale offer")
+      });
+    }
+    else{
+      this.rentApi.getById(id).subscribe({
+        next: offer => this.currentOffer.set({ type:'rent', data: offer}),
+        error: (err: ProblemDetails) => this.toast.error(err.detail ?? "Failed to load rent offer")
+      });
+    }    
   }
 
   submit(type: OfferType, mode: OfferMode,

@@ -1,23 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CategoryApiService } from '../../../../../core/clients/category/category-api-service';
-import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
-import { ConditionApiService } from '../../../../../core/clients/condition/condition-api-service';
-import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
-import { SaleOfferApiService } from '../../../../../core/clients/offers/sale/sale-offer-api-service';
-import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
-import { SelectListItem } from '../../../../../shared/models/select-list-item';
-import { Observable } from 'rxjs';
-import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
-import { HomeAddressDto } from '../../../../../core/dto/home-address/home-address-dto';
-import { ImageItem } from '../../../models/image-item';
 import { Guid } from 'guid-typescript';
-import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
-import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
-import { ProblemDetails } from '../../../../../core/dto/problem-details';
-import { ActivatedRoute, Router } from '@angular/router';
+import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
 import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-sale-offer-response';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-sale-edit',
@@ -26,46 +13,11 @@ import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-
   styleUrls: ['./sale-edit.scss',
     '../../../shared/styles/offers-shared-styles.scss']
 })
-export class SaleEdit {
-  protected readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly categoryApiService = inject(CategoryApiService);
-  private readonly conditionApiService = inject(ConditionApiService);
-  private readonly deliveryApiService = inject(DeliveryApiService);
-  private readonly addressApiService = inject(AddressApiService);
-  private readonly saleOfferService = inject(SaleOfferApiService);
-  private readonly toastService = inject(ToastService);
-  protected readonly imageBaseUrl = 'http://localhost:5099/Images/'
+export class SaleEdit extends BaseOfferForm implements OnInit {
+  override type: OfferType = 'sale';
+  override mode: OfferMode = 'edit'
 
-  categoriesOptions$!: Observable<SelectListItem[]>;
-  conditionOptions$!: Observable<SelectListItem[]>;
-  deliveries = signal<{ parcel: DeliveryListItem[], courier: DeliveryListItem[], pickup: DeliveryListItem[] }>({
-    parcel: [],
-    courier: [],
-    pickup: []
-  });
-
-  offerId = signal<Guid | null>(null);
-  homeAddress = signal<HomeAddressDto | null>(null);
-  images = signal<ImageItem[]>([]);
-
-  constructor() {
-    effect(() => {
-      const id = this.route.snapshot.paramMap.get('id');
-      if (!id) return;
-      this.offerId.set(Guid.parse(id));
-      this.loadSale(Guid.parse(id));
-    });
-
-    this.deliveryApiService.getAvaliableDeliveries()
-      .subscribe(response => {
-        this.deliveries.set({
-          parcel: response.parcelLockerDeliveries.map(mapToListItem),
-          courier: response.courierDeliveries.map(mapToListItem),
-          pickup: response.pickupPointDeliveries.map(mapToListItem)
-        })
-      });
-  }
+  offerId = signal<Guid | undefined>(undefined);
 
   form: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
@@ -78,49 +30,52 @@ export class SaleEdit {
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
+  override ngOnInit(): void {
+    super.ngOnInit();
 
-  ngOnInit(): void {
-    this.categoriesOptions$ = this.categoryApiService.getSelectList();
-    this.conditionOptions$ = this.conditionApiService.getSelectList();
-
-    this.addressApiService.getHomeAddress().subscribe(address => {
-      this.homeAddress.set(address);
-    });
-  }
-
-  loadSale(id: Guid) {
+    const id = this.route.snapshot.paramMap.get('id');
     if (!id) return;
 
-    this.saleOfferService.getById(id).subscribe({
-      next: (sale) => {
-        this.form.patchValue({
-          name: sale.name,
-          selectedCategoryId: sale.categoryId,
-          selectedConditionId: sale.conditionId,
-          description: sale.description,
-          pricePerItem: sale.pricePerItem.amount,
-          quantityAvailable: sale.quantityAvailable,
-        });
+    this.offerId.set(Guid.parse(id));
+    this.facade.loadOffer(this.type, Guid.parse(id));
 
-        const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
-        otherDeliveries.clear();
-        sale.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
-
-        this.images.set([
-          ...sale.images.map(img => ({
-            id: img.id,
-            alt: img.altText,
-            preview: img.imagePath,
-            isNew: false,
-            isDeleted: false
-          }))
-        ]);
-      },
-      error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
+    effect(() => {
+      const offer = this.facade.currentOffer();
+      if (!offer || offer.type !== 'sale') return;
+      this.patchForm(offer.data);
     })
   }
 
-  private buildFormData(): FormData {
+  patchForm(offer: UserSaleOfferResponse) {
+    this.form.patchValue({
+      name: offer.name,
+      selectedCategoryId: offer.categoryId,
+      selectedConditionId: offer.conditionId,
+      description: offer.description,
+      pricePerItem: offer.pricePerItem.amount,
+      quantityAvailable: offer.quantityAvailable,
+    });
+
+    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
+    otherDeliveries.clear();
+    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
+
+    this.images.set([
+      ...offer.images.map(img => ({
+        id: img.id,
+        alt: img.altText,
+        preview: img.imagePath,
+        isNew: false,
+        isDeleted: false
+      }))
+    ]);
+  }
+
+  protected override getOfferId(): Guid | undefined {
+    return this.offerId() ? this.offerId() : undefined;
+  }
+
+  override buildFormData(): FormData {
     const form = this.form.value;
     const fd = new FormData();
 
@@ -149,85 +104,13 @@ export class SaleEdit {
     return fd;
   }
 
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    };
-
-    if (this.images().length === 0) {
-      this.toastService.error("Add at least one image");
-      return;
-    }
-
-
-
-    if (!this.homeAddress()) {
-      this.toastService.success("To add offer you need to add address !");
-      return;
-    }
-
-    const payload = this.buildFormData();
-
-    this.saleOfferService.put(this.offerId()!, payload).subscribe({
-      next: () => {
-        this.toastService.success("Successfully edited offer!");
-      },
-      error: (err: ProblemDetails) => {
-        this.toastService.error(err?.detail ?? "Failed to edit offer, try again later");
-      }
-    });
-  }
-
-  onDeliveryToggle(id: Guid, checked: boolean): void {
-    const array = this.form.get('otherDeliveriesIds') as FormArray
-    if (checked) array.push(new FormControl(id));
-    else {
-      const index = array.controls.findIndex(c => c.value === id);
-      if (index !== -1) array.removeAt(index);
-    }
-    array.updateValueAndValidity();
-  }
-
-  getErrorMessage(path: string) {
-    return getErrorMessage(this.form, path);
-  }
 
   getImagePath(path: string | undefined) {
     if (!path) return '';
-    return this.imageBaseUrl + path;
+    return environment.staticImagesBaseUrl + path;
   }
 
-  onImagesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files) return;
-
-    const files = Array.from(input.files);
-
-    for (const file of files) {
-      if (this.images.length >= 10) break;
-      if (!file.type.startsWith('image/')) continue;
-      if (file.size > 5 * 1024 * 1024) continue;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.images.update(imgs => [
-          ...imgs,
-          {
-            file,
-            preview: reader.result as string,
-            alt: '',
-            isNew: true
-          }
-        ]);
-      };
-      reader.readAsDataURL(file);
-    }
-    input.value = '';
-  }
-
-
-  removeImage(index: number): void {
+  override removeImage(index: number): void {
     this.images.update(imgs => {
       const img = imgs[index];
       if (img.isNew) {
@@ -235,15 +118,6 @@ export class SaleEdit {
       } else {
         img.isDeleted = true;
       }
-      return [...imgs];
-    });
-  }
-
-  revertDelete(index: number): void {
-    this.images.update(imgs => {
-      const img = imgs[index];
-      if (img.isDeleted)
-        img.isDeleted = false;
       return [...imgs];
     });
   }

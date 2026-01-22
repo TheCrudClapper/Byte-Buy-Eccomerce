@@ -4,6 +4,7 @@ import { ImageItem } from '../../../models/image-item';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export type OfferMode = 'add' | 'edit';
 export type OfferType = 'sale' | 'rent';
@@ -19,6 +20,8 @@ export type OfferType = 'sale' | 'rent';
 })
 export abstract class BaseOfferForm implements OnInit {
   protected readonly facade = inject(OffersFacade);
+  protected readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   abstract readonly type: OfferType;
   abstract readonly mode: OfferMode;
@@ -94,6 +97,16 @@ export abstract class BaseOfferForm implements OnInit {
 
   removeImage(index: number): void {
     this.images.update(imgs => imgs.filter((_, i) => i !== index));
+  }
+
+  //for edit and already existing images only
+  revertDelete(index: number): void {
+    this.images.update(imgs => {
+      const img = imgs[index];
+      if (img.isDeleted)
+        img.isDeleted = false;
+      return [...imgs];
+    });
   }
 
   getErrorMessage(path: string) {
