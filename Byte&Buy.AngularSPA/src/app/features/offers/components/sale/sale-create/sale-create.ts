@@ -86,12 +86,12 @@ export class SaleCreate implements OnInit {
     fd.append('QuantityAvailable', String(form.quantityAvailable));
     fd.append('PricePerItem', String(form.pricePerItem));
 
-    this.images().forEach((img, index) => {
-      fd.append(`Images[${index}].Image`, img.file);
-      if (img.alt) {
-        fd.append(`Images[${index}].AltText`, img.alt);
-      }
-    });
+    // this.images().forEach((img, index) => {
+    //   fd.append(`Images[${index}].Image`, img.file);
+    //   if (img.alt) {
+    //     fd.append(`Images[${index}].AltText`, img.alt);
+    //   }
+    // });
 
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));

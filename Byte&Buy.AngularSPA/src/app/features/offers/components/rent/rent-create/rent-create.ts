@@ -89,7 +89,7 @@ export class RentCreate implements OnInit {
     fd.append('MaxRentalDays', String(form.maxRentalDays));
 
     this.images().forEach((img, index) => {
-      fd.append(`Images[${index}].Image`, img.file);
+      fd.append(`Images[${index}].Image`, img?.file ?? '');
       if(img.alt){
         fd.append(`Images[${index}].AltText`, img.alt);
       }

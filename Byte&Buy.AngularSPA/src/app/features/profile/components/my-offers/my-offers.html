@@ -11,16 +11,11 @@
         </div>
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
-                @if(item.type === 'sale'){
-                <a class="offer-title" [routerLink]="[`/offers/sale/details/${item.id}`]">
+                <a class="offer-title"  [routerLink]="item.type === 'rent' 
+                        ? ['/offers', 'rent', 'details', item.id]
+                        : ['/offers', 'sale', 'details', item.id]">
                     {{ item.title }}
                 </a>
-                }
-                @else{
-                <a class="offer-title" [routerLink]="`/offers/rent/details/${item.id}`">
-                    {{ item.title }}
-                </a>
-                }
             </div>
             <div>
                 <span>
@@ -68,8 +63,10 @@
                     }
                 </span>
                 <span class="">
-                    <button class="me-2 icon-btn">
-                        <i class="fa-solid fa-pen-to-square action-icon"></i>
+                    <button class="me-2 icon-btn" [routerLink]="item.type === 'rent' 
+                        ? ['/offers', 'rent', 'edit', item.id]
+                        : ['/offers', 'sale', 'edit', item.id]">
+                        <i class=" fa-solid fa-pen-to-square action-icon"></i>
                     </button>
                     <button class="icon-btn" (click)="remove(item)">
                         <i class="fa-regular fa-trash-can"></i>

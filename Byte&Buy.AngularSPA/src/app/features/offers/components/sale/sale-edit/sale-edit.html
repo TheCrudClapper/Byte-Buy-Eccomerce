@@ -1,49 +1,84 @@
-<div class="container-fluid">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="container">
-        <div class="page-wrapper pt-5 mb-5">
+        <div class="page-wrapper mt-5 mb-5">
             <div class="row">
                 <div class="col-12">
-                    <p class="page-title">Edit offer for sale</p>
+                    <p class="page-title">Edit sale offer</p>
                 </div>
             </div>
-
             <!-- Images -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-11">
                         <p class="content-section-title">Images*</p>
-                        <p class="content-section-description">Add images of maximum 5MB each in jpg, jpeg or png formats</p>
+                        <p class="content-section-description">Add images of maximum 5MB each in jpg, jpeg or png
+                            formats.</p>
                     </div>
+
+                    <!-- Image Input-->
                     <div class="col-1 text-end">
-                        <input type="file" id="file-input"/>
-                        <label for="file-input" class="file-button" multiple>
-                                <i class="fa-solid fa-plus"></i>
+                        <input type="file" id="file-input" hidden accept="image/png, image/jpeg"
+                            (change)="onImagesSelected($event)" multiple />
+                        <label for="file-input" class="file-button" [class.disabled]="images().length >= 10">
+                            <i class="fa-solid fa-plus"></i>
                         </label>
                     </div>
                 </div>
-                <div class="inner-container">
-                    <div class="row">
-                        <div class="col-12">
-                            <i class="fa-regular fa-images fa-3x align-middle"></i> 
-                            <p class="d-inline align-middle">Add up to 10 images per offer</p>
+
+                <!-- Container for displaying imges -->
+                <div class="inner-container horizontal-scroll">
+                    <div class="images-row">
+                        @if(images().length === 0){
+                        <div class="d-flex justify-content-center align-items-center w-100 h-100 text-center">
+                            <i class="fa-regular fa-images fa-3x mb-2"></i>
+                            <p class="mb-0">Add up to 10 images per offer.</p>
                         </div>
+                        } @else{
+                        @for (item of images(); track $index)
+                        {
+                        <div class="image-card">
+                            <div class="position-relative">
+                                <img [src]="item.isNew ? item.preview : getImagePath(item.preview)" [alt]="item.alt"
+                                    [class.image-deleted]="item.isDeleted" class="img-fluid rounded me-5"
+                                    style="height: 130px; width: 100%; object-fit: cover;" />
+                                @if(!item.isDeleted){
+                                <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
+                                    (click)="removeImage($index)">
+                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
+                                </button>
+                                }
+                                @else{
+                                <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
+                                    (click)="revertDelete($index)">
+                                    <i class="fa-solid fa-trash-arrow-up" style="color: #ffffff;"></i>
+                                </button>
+                                }
+                                <input type="text" maxlength="50" [class.input-disabled]="item.isDeleted!" [disabled]="item.isDeleted!"
+                                    class="form-control mt-2" placeholder="Alt text (optional)" [(ngModel)]="item.alt"
+                                    [ngModelOptions]="{ standalone: true }" />
+                            </div>
+                        </div>
+                        }
+                        }
                     </div>
                 </div>
+
             </div>
-            
+
             <!-- Title -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
-                        <p class="content-section-title">Title*</p>
-                        <p class="content-section-description">Describe exacly what you want to sell, include brand,
-                            model
-                            etc.</p>
+                        <p class="content-section-title">Title</p>
+                        <p class="content-section-description">Describe exacly what you want to sale.</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6">
-                        <input type="text" class="form-control" id="inputEmail">
+                    <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        <input type="text" class="form-control" id="inputEmail" formControlName="name">
+                        @if (getErrorMessage("name")) {
+                        <span class="validation-error">{{ getErrorMessage("name") }}</span>
+                        }
                     </div>
                 </div>
             </div>
@@ -58,20 +93,31 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
-                        <select class="form-select">
-                            <option selected disabled>Select Category</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" formControlName="selectedCategoryId">
+                            <option [ngValue]="null" disabled selected>Select Category</option>
+                            @for (item of categoriesOptions$ | async; track item.id) {
+                            <option [ngValue]="item.id">
+                                {{ item.title }}
+                            </option>
+                            }
                         </select>
+                        @if (getErrorMessage("selectedCategoryId")) {
+                        <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
+                        }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
-                        <select class="form-select">
-                            <option selected disabled>Select Condition</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" formControlName="selectedConditionId">
+                            <option [ngValue]="null" disabled>Select Condition</option>
+                            @for (item of conditionOptions$ | async; track item.id)
+                            {
+                            <option [ngValue]="item.id">
+                                {{ item.title }}
+                            </option>
+                            }
                         </select>
+                        @if (getErrorMessage("selectedConditionId")) {
+                        <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
+                        }
                     </div>
                 </div>
             </div>
@@ -80,7 +126,7 @@
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
-                        <p class="content-section-title">Price and Quantity*</p>
+                        <p class="content-section-title">Price Per Item and Quantity*</p>
                         <p class="content-section-description">Enter desired price per item and amount for sale</p>
                     </div>
                 </div>
@@ -88,15 +134,21 @@
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
                             <span class="input-group-text">PLN</span>
-                            <input type="number" class="form-control">
+                            <input type="number" class="form-control" formControlName="pricePerItem">
                             <span class="input-group-text">.00</span>
                         </div>
+                        @if (getErrorMessage("pricePerItem")) {
+                        <span class="validation-error">{{ getErrorMessage("pricePerItem") }}</span>
+                        }
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
-                            <input type="number" class="form-control">
+                            <input type="number" class="form-control" formControlName="quantityAvailable">
                             <span class="input-group-text">PCS</span>
                         </div>
+                        @if (getErrorMessage("quantityAvailable")) {
+                        <span class="validation-error">{{ getErrorMessage("quantityAvailable") }}</span>
+                        }
                     </div>
                 </div>
             </div>
@@ -112,17 +164,22 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <textarea class="form-control" rows="8"></textarea>
+                        <textarea class="form-control" rows="8" formControlName="description"></textarea>
+                        @if (getErrorMessage("description")) {
+                        <span class="validation-error">{{ getErrorMessage("description") }}</span>
+                        }
                     </div>
                 </div>
             </div>
 
+            @if(homeAddress(); as homeAddress){
             <!-- Location -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
                         <p class="content-section-title">Location*</p>
-                        <p class="content-section-description">Location is determined on default address, others will see it</p>
+                        <p class="content-section-description">Location is determined on default address, others will
+                            see it</p>
                     </div>
                 </div>
 
@@ -130,19 +187,26 @@
                     <div class="col-12 col-md-6">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
-                            <p class="d-inline align-middle">Siedlce 26, 33-322 Korzenna</p>
+                            @if(homeAddress){
+                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
+                                homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
+                            } @else{
+                            <p class="d-inline align-middle">Home address is required to be set, befora publishing.</p>
+                            }
                         </div>
                         <div class="row">
-                            <div class="col-12 pt-2">
+                            <div class="col-12 pt-2 fs-14-px">
                                 <a class="link">Change Address</a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
+            }
 
             <!-- Deliveries-->
+            @if(deliveries(); as deliveries){
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
@@ -150,21 +214,69 @@
                         <p class="content-section-description">Select avaliable deliveries</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
 
+                <div class="row">
+                    <div class="col-12 fs-14-px">
+                        @if(deliveries.parcel.length > 0){
+                        <p class="content-section-title">Parcel Lockers</p>
+                        @for (item of deliveries.parcel; track $index)
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12 fs-14-px">
+                        @if(deliveries.courier.length > 0){
+                        <p class="content-section-title mt-3">Courier</p>
+                        @for (item of deliveries.courier; track $index)
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
+                                    (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                    class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12 fs-14-px">
+                        @if(deliveries.pickup.length > 0){
+                        <p class="content-section-title mt-3">Pickup Point</p>
+                        @for (item of deliveries.pickup; track $index)
+                        {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <input type="checkbox" [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
+                                    (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                    class="form-check-input checkbox me-2" />
+                                <span>{{ item.name }}</span>
+                            </div>
+                            <span>{{ item.amount }} {{ item.currency }}</span>
+                        </div>
+                        }
+                        }
                     </div>
                 </div>
             </div>
+            }
 
-             <!-- Publish -->
+            <!-- Publish -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12 text-end">
-                        <button class="btn">Publish</button>
+                        <button class="btn" type="submit" [disabled]="form.invalid">Publish</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>

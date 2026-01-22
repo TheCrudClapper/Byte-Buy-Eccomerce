@@ -197,7 +197,7 @@
                             }
                         </div>
                         <div class="row">
-                            <div class="col-12 pt-2">
+                            <div class="col-12 pt-2 fs-14-px">
                                 <a class="link">Change Address</a>
                             </div>
                         </div>
@@ -218,7 +218,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 fs-14-px">
                         @if(deliveries.parcel.length > 0){
                         <p class="content-section-title">Parcel Lockers</p>
                         @for (item of deliveries.parcel; track $index)
@@ -233,7 +233,7 @@
                         }
                         }
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 fs-14-px">
                         @if(deliveries.courier.length > 0){
                         <p class="content-section-title mt-3">Courier</p>
                         @for (item of deliveries.courier; track $index)
@@ -251,7 +251,7 @@
                         }
                         }
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 fs-14-px">
                         @if(deliveries.pickup.length > 0){
                         <p class="content-section-title mt-3">Pickup Point</p>
                         @for (item of deliveries.pickup; track $index)

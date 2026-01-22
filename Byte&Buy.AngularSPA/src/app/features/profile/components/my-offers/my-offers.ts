@@ -62,4 +62,6 @@ export class MyOffers implements OnInit {
       error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to delete offer")
     });
   }
+
+  
 }

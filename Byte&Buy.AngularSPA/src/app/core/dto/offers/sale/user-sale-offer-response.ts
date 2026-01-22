@@ -9,8 +9,7 @@ export interface UserSaleOfferResponse {
     name: string;
     description: string;
     quantityAvailable: number;
-    pricePerDay: MoneyDto;
-    maxRentalDays: number;
+    pricePerItem: MoneyDto;
     images: ImageResponse[];
     parcelLockerDeliveries: Guid[] | null;
     otherDeliveriesIds: Guid[];

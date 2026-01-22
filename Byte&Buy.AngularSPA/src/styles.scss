@@ -52,7 +52,7 @@
   font-size: 14px;
 }
 
-.fs-12-px{
+.fs-12-px {
   font-size: 12px;
 }
 
@@ -85,8 +85,15 @@
   --error: #EF4444;
 }
 
+html,
 body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
   background-color: var(--background);
+  font-family: 'open-sans-medium'
 }
 
 //Buttons
@@ -257,17 +264,36 @@ span {
   color: var(--text-primary) !important;
 }
 
-html,
-body {
-  height: 100%;
+
+.toast-top-right {
+  margin-top: 65px;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+.icon-btn {
+  background: none;
+  border: 2px solid var(--hover-accent);
+  transition: 0.3s ease;
+  border-radius: 7px;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
-.toast-top-right{
-  margin-top: 65px;
+
+.icon-btn i {
+  font-size: 16px;
+  color: var(--text-primary);
+  transition: 0.3s ease;
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--hover-accent)
 }
 
 //Toastr Styles
@@ -280,7 +306,7 @@ body {
 
 .toast-title {
   font-family: 'raleway-bold' !important;
-  font-size: 16px !important; 
+  font-size: 16px !important;
   font-weight: 600 !important;
   color: var(--text-primary) !important;
 }
@@ -293,10 +319,9 @@ body {
     left: 20px !important;
     width: calc(100% - 40px) !important;
   }
-  
+
   .ngx-toastr {
     width: 100% !important;
     max-width: none !important;
   }
 }
-
