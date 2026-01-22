@@ -150,16 +150,18 @@ export class SaleEdit {
   }
 
   onSubmit(): void {
-    if (this.images().length === 0) {
-      this.toastService.error("Add at least one image");
-      return;
-    }
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     };
 
+    if (this.images().length === 0) {
+      this.toastService.error("Add at least one image");
+      return;
+    }
+
+
+    
     if (!this.homeAddress()) {
       this.toastService.success("To add offer you need to add address !");
       return;
@@ -172,9 +174,9 @@ export class SaleEdit {
         this.toastService.success("Successfully edited offer!");
       },
       error: (err: ProblemDetails) => {
-        this.toastService.success(err?.detail ?? "Failed to edit offer, try again later");
+        this.toastService.error(err?.detail ?? "Failed to edit offer, try again later");
       }
-    })
+    });
   }
 
   onDeliveryToggle(id: Guid, checked: boolean): void {

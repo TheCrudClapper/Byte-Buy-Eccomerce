@@ -7,37 +7,38 @@ import { SaleCartOfferAddRequest } from '../../dto/cart/cart-item/sale-cart-offe
 import { SaleCartOfferUpdateRequest } from '../../dto/cart/cart-item/sale-cart-offer-update-request';
 import { RentCartOfferAddRequest } from '../../dto/cart/cart-item/rent-cart-offer-add-request';
 import { RentCartOfferUpdateRequest } from '../../dto/cart/cart-item/rent-cart-offer-update-request';
-import { CartSummary } from '../../../features/cart/models/cart-summary';
 import { CartSummaryResponse } from '../../dto/cart/cart-summary-response';
+import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../constants/api-constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartApiService {
   private readonly httpClient = inject(HttpClient);
-  private readonly resourceUri = "http://localhost:5099/api/carts";
+  private readonly baseUrl = environment.apiBaseUrl;
 
   getCart(): Observable<CartResponse>{
-    return this.httpClient.get<CartResponse>(`${this.resourceUri}`);
+    return this.httpClient.get<CartResponse>(`${this.baseUrl}${API_ENDPOINTS.carts.base}`);
   }
 
   deleteCartOffer(cartOfferId: Guid): Observable<CartSummaryResponse>{
-    return this.httpClient.delete<CartSummaryResponse>(`${this.resourceUri}/${cartOfferId}`);
+    return this.httpClient.delete<CartSummaryResponse>(`${this.baseUrl}${API_ENDPOINTS.carts.base}/${cartOfferId}`);
   }
   
   postSaleCartOffer(request: SaleCartOfferAddRequest){
-    return this.httpClient.post(`${this.resourceUri}/sale-offer`, request);
+    return this.httpClient.post(`${this.baseUrl}${API_ENDPOINTS.carts.saleOffer}`, request);
   }
 
   putSaleCartOffer(cartOfferId: Guid, request: SaleCartOfferUpdateRequest): Observable<CartSummaryResponse>{
-    return this.httpClient.put<CartSummaryResponse>(`${this.resourceUri}/sale-offer/${cartOfferId}`, request);
+    return this.httpClient.put<CartSummaryResponse>(`${this.baseUrl}${API_ENDPOINTS.carts.saleOffer}/${cartOfferId}`, request);
   }
 
   postRentCartOffer(request: RentCartOfferAddRequest){
-    return this.httpClient.post(`${this.resourceUri}/rent-offer`, request);
+    return this.httpClient.post(`${this.baseUrl}${API_ENDPOINTS.carts.rentOffer}`, request);
   }
 
   putRentCartOffer(cartOfferId: Guid, request: RentCartOfferUpdateRequest): Observable<CartSummaryResponse>{
-    return this.httpClient.put<CartSummaryResponse>(`${this.resourceUri}/rent-offer/${cartOfferId}`, request);
+    return this.httpClient.put<CartSummaryResponse>(`${this.baseUrl}${API_ENDPOINTS.carts.rentOffer}/${cartOfferId}`, request);
   }
 }

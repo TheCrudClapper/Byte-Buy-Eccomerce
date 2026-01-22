@@ -4,13 +4,14 @@ import { LoginRequest } from '../../dto/auth/login-request';
 import { RegisterRequest } from '../../dto/auth/register-request';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../constants/api-constants';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-  private readonly resourceUri = "http://localhost:5099/api/auth";
   private readonly loggedIn = signal<boolean>(false);
 
   constructor(private httpClient: HttpClient){
@@ -19,7 +20,7 @@ export class AuthService {
 
   login(request: LoginRequest): Observable<TokenResponse> {
    return this.httpClient
-      .post<TokenResponse>(`${this.resourceUri}/login`, request)
+      .post<TokenResponse>(`${environment.apiBaseUrl}${API_ENDPOINTS.auth.login}`, request)
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
@@ -29,7 +30,7 @@ export class AuthService {
   }
 
   register(request: RegisterRequest): Observable<void> {
-    return this.httpClient.post<void>(`${this.resourceUri}/register`, request);
+    return this.httpClient.post<void>(`${environment.apiBaseUrl}${API_ENDPOINTS.auth.register}`, request);
   }
 
   logout(): void{
