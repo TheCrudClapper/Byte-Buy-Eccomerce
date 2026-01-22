@@ -1,21 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
-import { CategoryApiService } from '../../../../../core/clients/category/category-api-service';
-import { ConditionApiService } from '../../../../../core/clients/condition/condition-api-service';
-import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
-import { AddressApiService } from '../../../../../core/clients/address/address-api-service';
-import { RentOfferApiSerivce } from '../../../../../core/clients/offers/rent/rent-offer-api-serivce';
-import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
-import { SelectListItem } from '../../../../../shared/models/select-list-item';
-import { Observable } from 'rxjs';
-import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
-import { HomeAddressDto } from '../../../../../core/dto/home-address/home-address-dto';
-import { ImageItem } from '../../../models/image-item';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
-import { mapToListItem } from '../../../../../shared/mappers/offer-mappers';
-import { ProblemDetails } from '../../../../../core/dto/problem-details';
-import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { CommonModule } from '@angular/common';
+import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
+import { UserRentOfferResponse } from '../../../../../core/dto/offers/rent/user-rent-offer-response';
 
 @Component({
   selector: 'app-rent-edit',
@@ -24,26 +12,13 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./rent-edit.scss',
     '../../../shared/styles/offers-shared-styles.scss'],
 })
-export class RentEdit {
-  private readonly categoryApiService = inject(CategoryApiService);
-  private readonly conditionApiService = inject(ConditionApiService);
-  private readonly deliveryApiService = inject(DeliveryApiService);
-  private readonly addressApiService = inject(AddressApiService);
-  private readonly rentOfferApiService = inject(RentOfferApiSerivce);
-  private readonly toastService = inject(ToastService);
+export class RentEdit extends BaseOfferForm implements OnInit {
+  override type: OfferType = 'rent';
+  override mode: OfferMode = 'edit';
 
-  categoriesOptions$!: Observable<SelectListItem[]>;
-  conditionOptions$!: Observable<SelectListItem[]>;
-  deliveries = signal<{ parcel: DeliveryListItem[], courier: DeliveryListItem[], pickup: DeliveryListItem[] }>({
-    parcel: [],
-    courier: [],
-    pickup: []
-  });
+  offerId = signal<Guid | undefined>(undefined);
 
-  homeAddress = signal<HomeAddressDto | null>(null);
-  images = signal<ImageItem[]>([]);
-
-  rentForm: FormGroup = new FormGroup({
+  form: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
     selectedCategoryId: new FormControl<string | null>(null, [Validators.required]),
     selectedConditionId: new FormControl<string | null>(null, [Validators.required]),
@@ -55,27 +30,58 @@ export class RentEdit {
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
-
-  ngOnInit(): void {
-    this.categoriesOptions$ = this.categoryApiService.getSelectList();
-    this.conditionOptions$ = this.conditionApiService.getSelectList();
-
-    this.addressApiService.getHomeAddress().subscribe(address => {
-      this.homeAddress.set(address);
-    });
-
-    this.deliveryApiService.getAvaliableDeliveries()
-      .subscribe(response => {
-        this.deliveries.set({
-          parcel: response.parcelLockerDeliveries.map(mapToListItem),
-          courier: response.courierDeliveries.map(mapToListItem),
-          pickup: response.pickupPointDeliveries.map(mapToListItem)
-        })
-      });
+  protected override getOfferId(): Guid | undefined {
+    return this.offerId() ? this.offerId() : undefined;
   }
 
-  private buildFormData(): FormData {
-    const form = this.rentForm.value;
+  constructor() {
+    super();
+
+    effect(() => {
+      const offer = this.facade.currentOffer();
+      if (!offer || offer.type !== 'rent') return;
+
+      this.patchForm(offer.data);
+    });
+  }
+  override ngOnInit(): void {
+    super.ngOnInit();
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) return;
+
+    this.offerId.set(Guid.parse(id));
+    this.facade.loadOffer(this.type, Guid.parse(id));
+  }
+
+  patchForm(offer: UserRentOfferResponse) {
+    this.form.patchValue({
+      name: offer.name,
+      selectedCategoryId: offer.categoryId,
+      selectedConditionId: offer.conditionId,
+      description: offer.description,
+      pricePerItem: offer.pricePerDay.amount,
+      maxRentalDays: offer.maxRentalDays,
+      quantityAvailable: offer.quantityAvailable,
+    });
+
+    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
+    otherDeliveries.clear();
+    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
+
+    this.images.set([
+      ...offer.images.map(img => ({
+        id: img.id,
+        alt: img.altText,
+        preview: img.imagePath,
+        isNew: false,
+        isDeleted: false
+      }))
+    ]);
+  }
+
+  buildFormData(): FormData {
+    const form = this.form.value;
     const fd = new FormData();
 
     fd.append('CategoryId', form.selectedCategoryId!);
@@ -86,12 +92,16 @@ export class RentEdit {
     fd.append('PricePerDay', String(form.pricePerDay));
     fd.append('MaxRentalDays', String(form.maxRentalDays));
 
-    // this.images().forEach((img, index) => {
-    //   fd.append(`Images[${index}].Image`, img.file);
-    //   if (img.alt) {
-    //     fd.append(`Images[${index}].AltText`, img.alt);
-    //   }
-    // });
+    this.images().filter(i => i.isNew).forEach((img, index) => {
+      fd.append(`NewImages[${index}].Image`, img.file!);
+      fd.append(`NewImages[${index}].AltText`, img.alt ?? '');
+    });
+
+    this.images().filter(i => !i.isNew).forEach((img, index) => {
+      fd.append(`ExistingImages[${index}].Id`, String(img.id!));
+      fd.append(`ExistingImages[${index}].AltText`, img.alt ?? '');
+      fd.append(`ExistingImages[${index}].IsDeleted`, String(img.isDeleted ?? false));
+    });
 
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
@@ -100,82 +110,15 @@ export class RentEdit {
     return fd;
   }
 
-  onSubmit(): void {
-    if (this.images().length === 0) {
-      this.toastService.error("Add at least one image");
-      return;
-    }
-
-    if (this.rentForm.invalid) {
-      this.rentForm.markAllAsTouched();
-      return;
-    };
-
-    if (!this.homeAddress()) {
-      this.toastService.success("To add offer you need to add address !");
-      return;
-    }
-
-    const payload = this.buildFormData();
-
-    this.rentOfferApiService.post(payload).subscribe({
-      next: () => {
-        this.toastService.success("Successfully published offer!");
-      },
-      error: (err: ProblemDetails) => {
-        this.toastService.success(err?.detail ?? "Failed to publish offer, try again later");
+  override removeImage(index: number): void {
+    this.images.update(imgs => {
+      const img = imgs[index];
+      if (img.isNew) {
+        imgs.splice(index, 1);
+      } else {
+        img.isDeleted = true;
       }
-    })
-  }
-
-  onDeliveryToggle(id: Guid, checked: boolean): void {
-    const array = this.rentForm.get('otherDeliveriesIds') as FormArray
-
-    if (checked)
-      array.push(new FormControl(id));
-    else {
-      const index = array.controls.findIndex(c => c.value === id);
-      if (index !== -1) {
-        array.removeAt(index);
-      }
-    }
-
-    array.markAsTouched();
-    array.updateValueAndValidity();
-  }
-
-  getErrorMessage(path: string) {
-    return getErrorMessage(this.rentForm, path);
-  }
-
-  onImagesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files) return;
-
-    const files = Array.from(input.files);
-
-    for (const file of files) {
-      if (this.images.length >= 10) break;
-      if (!file.type.startsWith('image/')) continue;
-      if (file.size > 5 * 1024 * 1024) continue;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.images.update(imgs => [
-          ...imgs,
-          {
-            file,
-            preview: reader.result as string,
-            alt: ''
-          }
-        ]);
-      };
-      reader.readAsDataURL(file);
-    }
-    input.value = '';
-  }
-
-  removeImage(index: number): void {
-    this.images.update(imgs => imgs.filter((_, i) => i !== index));
+      return [...imgs];
+    });
   }
 }

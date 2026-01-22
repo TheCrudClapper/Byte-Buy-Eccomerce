@@ -5,6 +5,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../../../environments/environment';
 
 export type OfferMode = 'add' | 'edit';
 export type OfferType = 'sale' | 'rent';
@@ -107,6 +108,11 @@ export abstract class BaseOfferForm implements OnInit {
         img.isDeleted = false;
       return [...imgs];
     });
+  }
+
+  getImagePath(path: string | undefined) {
+    if (!path) return '';
+    return environment.staticImagesBaseUrl + '/' + path;
   }
 
   getErrorMessage(path: string) {

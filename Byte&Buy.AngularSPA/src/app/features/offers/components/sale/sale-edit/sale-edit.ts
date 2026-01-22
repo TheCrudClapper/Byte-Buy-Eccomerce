@@ -4,7 +4,6 @@ import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { Guid } from 'guid-typescript';
 import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
 import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-sale-offer-response';
-import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-sale-edit',
@@ -30,6 +29,17 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
+  constructor() {
+    super();
+
+    effect(() => {
+      const offer = this.facade.currentOffer();
+      if (!offer || offer.type !== 'sale') return;
+
+      this.patchForm(offer.data);
+    });
+  }
+
   override ngOnInit(): void {
     super.ngOnInit();
 
@@ -38,12 +48,6 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
 
     this.offerId.set(Guid.parse(id));
     this.facade.loadOffer(this.type, Guid.parse(id));
-
-    effect(() => {
-      const offer = this.facade.currentOffer();
-      if (!offer || offer.type !== 'sale') return;
-      this.patchForm(offer.data);
-    })
   }
 
   patchForm(offer: UserSaleOfferResponse) {
@@ -102,12 +106,6 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     });
 
     return fd;
-  }
-
-
-  getImagePath(path: string | undefined) {
-    if (!path) return '';
-    return environment.staticImagesBaseUrl + path;
   }
 
   override removeImage(index: number): void {
