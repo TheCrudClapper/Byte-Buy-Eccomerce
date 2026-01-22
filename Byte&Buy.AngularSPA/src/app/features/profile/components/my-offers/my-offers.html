@@ -1,6 +1,8 @@
 <div class="content-section ">
-    <span class="page-title">My Offers (12)</span>
+    <span class="page-title">My Offers ({{ userOffers().length}})</span>
 </div>
+@if(userOffers(); as offers){
+@for (item of offers; track $index) {
 <div class="content-section mb-2">
     <div class="row">
         <div class="col-2 d-flex align-items-center justify-content-center">
@@ -9,17 +11,16 @@
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
                 <a class="offer-title">
-                    Ryzen 7
+                    {{ item.title }}
                 </a>
             </div>
             <div>
-
                 <span>
                     <span class="d-block">
                         <span class="fw-bold me-1 fs-14-px">Created:</span>
-                        <span class="me-3 fs-14-px">2 Sept 2026</span>
+                        <span class="me-3 fs-14-px">{{ item.dateCreated | date }}</span>
                         <span class="fw-bold me-1 fs-14-px">Last Edited:</span>
-                        <span class="fs-14-px">2 Sept 2026</span>
+                        <span class="fs-14-px">{{ item.dateEdited ?? 'No recent updates'}}</span>
                     </span>
                     <span class="fs-14-px open-sans-medium">
                         12 PLN / day
@@ -32,18 +33,27 @@
             <div class="d-flex justify-content-between align-items-end">
                 <span class="badge">
                     <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
+                    @if(item.type === 'rent'){
                     Rent Offer
+                    }
+                    @if(item.type === 'sale'){
+                    Sale Offer
+                    }
                 </span>
                 <span class="">
                     <button class="me-2 icon-btn">
                         <i class="fa-solid fa-pen-to-square action-icon"></i>
                     </button>
-                    <button class="icon-btn">
+                    <button class="icon-btn" (click)="remove(item.id)">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
-
                 </span>
             </div>
         </div>
     </div>
 </div>
+}
+}
+@else{
+No offers defined yet .
+}

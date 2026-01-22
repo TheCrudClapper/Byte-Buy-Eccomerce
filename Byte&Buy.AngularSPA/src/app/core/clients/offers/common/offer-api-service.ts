@@ -8,18 +8,18 @@ import { CompanySeller } from '../../../../features/offers/models/company-seller
 import { PrivateSeller } from '../../../../features/offers/models/private-seller';
 import { SaleOfferDetails } from '../../../../features/offers/models/sale-offer-details';
 import { SaleOfferDetailsResponse } from '../../../dto/offers/sale/sale-offer-details-response';
-import { OfferBrowserItemResponse } from '../../../dto/offers/common/offer-browser-item-response';
 import { OfferUnion } from '../../../dto/offers/common/offer-browser-union';
+import { UserPanelOfferUnion } from '../../../dto/offers/common/user-panel-union';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OfferApiService {
   private readonly httpClient = inject(HttpClient);
-  private readonly resourceUri = "http://localhost:5099/api/offers";
+  private readonly resourceUri = "http://localhost:5099/api";
 
   getRentOfferDetails(id: Guid): Observable<RentOfferDetails> {
-    return this.httpClient.get<RentOfferDetailsResponse>(`${this.resourceUri}/rent/details/${id}`)
+    return this.httpClient.get<RentOfferDetailsResponse>(`${this.resourceUri}/offers/rent/details/${id}`)
       .pipe(
         map(dto => ({
           id: dto.id,
@@ -41,7 +41,7 @@ export class OfferApiService {
   }
 
   getSaleOfferDetils(id: Guid): Observable<SaleOfferDetails> {
-    return this.httpClient.get<SaleOfferDetailsResponse>(`${this.resourceUri}/sale/details/${id}`)
+    return this.httpClient.get<SaleOfferDetailsResponse>(`${this.resourceUri}/offers/sale/details/${id}`)
       .pipe(
         map(dto => ({
           id: dto.id,
@@ -62,8 +62,12 @@ export class OfferApiService {
   }
 
   browseOffers(): Observable<OfferUnion[]>{
-    return this.httpClient.get<OfferUnion[]>(`${this.resourceUri}`); 
+    return this.httpClient.get<OfferUnion[]>(`${this.resourceUri}/offers`); 
   }
 
+  getUserOffers(): Observable<UserPanelOfferUnion[]>{
+    return this.httpClient.get<UserPanelOfferUnion[]>(`${this.resourceUri}/me/offers`);
+  }
+    
 }
 

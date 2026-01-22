@@ -31,12 +31,4 @@ export class OfferBrowser implements OnInit {
       }
     })
   }
-
-  // isSale(offer: OfferUnion): offer is SaleBrowserItemResponse {
-  //   return offer.type === 'sale';
-  // }
-
-  // isRent(offer: OfferUnion): offer is RentBrowserItemResponse {
-  //   return offer.type === 'rent';
-  // }
 }
