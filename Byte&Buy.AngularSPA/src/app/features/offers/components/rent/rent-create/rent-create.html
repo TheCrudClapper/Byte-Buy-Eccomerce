@@ -40,11 +40,11 @@
                             <div class="position-relative">
                                 <img [src]="item.preview" class="img-fluid rounded me-5"
                                     style="height: 130px; width: 100%; object-fit: cover;" />
-                                <button type="button" class="btn position-absolute top-0 end-0 m-1"
+                                 <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
                                     (click)="removeImage($index)">
                                     <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
                                 </button>
-
+                                 
                                 <input type="text" maxlength="50" class="form-control mt-2"
                                     placeholder="Alt text (optional)" [(ngModel)]="item.alt"
                                     [ngModelOptions]="{ standalone: true }" />

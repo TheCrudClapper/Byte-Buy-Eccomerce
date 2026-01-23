@@ -86,6 +86,7 @@ export abstract class BaseOfferForm implements OnInit {
           ...imgs,
           {
             file,
+            isNew: true,
             preview: reader.result as string,
             alt: ''
           }
@@ -112,10 +113,11 @@ export abstract class BaseOfferForm implements OnInit {
 
   getImagePath(path: string | undefined) {
     if (!path) return '';
-    return environment.staticImagesBaseUrl + '/' + path;
+    return environment.staticImagesBaseUrl + path;
   }
 
   getErrorMessage(path: string) {
     return getErrorMessage(this.form, path);
   }
+
 }

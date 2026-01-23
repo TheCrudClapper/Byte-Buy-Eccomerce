@@ -12,6 +12,7 @@ import { UserRentOfferResponse } from '../../../../../core/dto/offers/rent/user-
   styleUrls: ['./rent-edit.scss',
     '../../../shared/styles/offers-shared-styles.scss'],
 })
+
 export class RentEdit extends BaseOfferForm implements OnInit {
   override type: OfferType = 'rent';
   override mode: OfferMode = 'edit';
