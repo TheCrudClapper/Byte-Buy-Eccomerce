@@ -11,38 +11,41 @@ import { ShippingAddressUpdateRequest } from '../../dto/shipping-address/shippin
 import { ShippingAddressAddRequest } from '../../dto/shipping-address/shipping-address-add-request';
 import { CreatedResponse } from '../../dto/common/created-response';
 import { environment } from '../../../../environments/environment';
+import { API_ENDPOINTS } from '../../constants/api-constants';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class AddressApiService {
-    private readonly resourceUri = "http://localhost:5099/api/me";
-    private readonly httpClient: HttpClient = inject(HttpClient); 
-    
-    getHomeAddress(): Observable<HomeAddressDto>{
-      return this.httpClient.get<HomeAddressDto>(`${this.resourceUri}/home-address`);
-    }
+  private readonly httpClient: HttpClient = inject(HttpClient);
+  private readonly baseUrl = environment.apiBaseUrl;
 
-    putHomeAddress(request: HomeAddressDto): Observable<UpdatedResponse>{
-      return this.httpClient.put<UpdatedResponse>(`${this.resourceUri}/home-address`, request);
-    }
+  getHomeAddress(): Observable<HomeAddressDto> {
+    return this.httpClient.get<HomeAddressDto>(`${this.baseUrl}${API_ENDPOINTS.addresses.homeAddress}`);
+  }
 
-    getShippingAddressesList(): Observable<ShippingAddressListItem[]>{
-      return this.httpClient.get<ShippingAddressListResponse[]>(`${this.resourceUri}/shipping-addresses/list`);
-    }
-    
-    getShippingAddress(id: Guid): Observable<ShippingAddressResponse>{
-      return this.httpClient.get<ShippingAddressResponse>(`${this.resourceUri}/shipping-addresses/${id}`);
-    }
+  putHomeAddress(request: HomeAddressDto): Observable<UpdatedResponse> {
+    return this.httpClient.put<UpdatedResponse>(`${this.baseUrl}${API_ENDPOINTS.addresses.homeAddress}`, request);
+  }
 
-    putShippingAddress(id: Guid, request: ShippingAddressUpdateRequest): Observable<UpdatedResponse>{
-      return this.httpClient.put<UpdatedResponse>(`${this.resourceUri}/shipping-addresses/${id}`, request);
-    }
+  getShippingAddressesList(): Observable<ShippingAddressListItem[]> {
+    return this.httpClient.get<ShippingAddressListResponse[]>(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressesList}`);
+  }
 
-    postShippingAddress(request: ShippingAddressAddRequest): Observable<CreatedResponse>{
-      return this.httpClient.post<CreatedResponse>(`${this.resourceUri}/shipping-addresses`, request);
-    }
+  getShippingAddress(id: Guid): Observable<ShippingAddressResponse> {
+    return this.httpClient.get<ShippingAddressResponse>(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressById}/${id}`);
+  }
 
-    deleteShippingAddress(id: Guid): Observable<Object>{
-      return this.httpClient.delete(`${this.resourceUri}/shipping-addresses/${id}`);
-    }
+  putShippingAddress(id: Guid, request: ShippingAddressUpdateRequest): Observable<UpdatedResponse> {
+    return this.httpClient.put<UpdatedResponse>(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressById}/${id}`, request);
+  }
+
+  postShippingAddress(request: ShippingAddressAddRequest): Observable<CreatedResponse> {
+    return this.httpClient.post<CreatedResponse>(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressAdd}`, request);
+  }
+
+  deleteShippingAddress(id: Guid): Observable<Object> {
+    return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressDelete}/${id}`);
+  }
 }

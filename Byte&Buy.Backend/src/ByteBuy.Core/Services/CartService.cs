@@ -113,7 +113,7 @@ public class CartService : ICartService
             cartSummaryResult.Value);
     }
 
-    public async Task<Result<CartSummaryResponse>> CalculateCartSummary(Cart cart)
+    private async Task<Result<CartSummaryResponse>> CalculateCartSummary(Cart cart)
     {
         var itemsQuantity = 0;
         foreach (var item in cart.CartOffers)

@@ -4,7 +4,6 @@ import { CategoryApiService } from '../../../core/clients/category/category-api-
 import { DeliveryApiService } from '../../../core/clients/delivery/delivery-api-service';
 import { AddressApiService } from '../../../core/clients/address/address-api-service';
 import { SaleOfferApiService } from '../../../core/clients/offers/sale/sale-offer-api-service';
-import { RentOfferApiSerivce } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { ToastService } from '../../../shared/services/snackbar/toast-service';
 import { HomeAddressDto } from '../../../core/dto/home-address/home-address-dto';
 import { mapToListItem } from '../../../shared/mappers/offer-mappers';
@@ -16,6 +15,7 @@ import { ProblemDetails } from '../../../core/dto/problem-details';
 import { Observable, of } from 'rxjs';
 import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-offer-response';
 import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
+import { RentOfferApiService } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
 
 export type EditOffer =
   | { type: 'sale'; data: UserSaleOfferResponse }
@@ -30,7 +30,7 @@ export class OffersFacade {
   private readonly deliveryApi = inject(DeliveryApiService);
   private readonly addressApi = inject(AddressApiService);
   private readonly saleApi = inject(SaleOfferApiService);
-  private readonly rentApi = inject(RentOfferApiSerivce);
+  private readonly rentApi = inject(RentOfferApiService);
   public readonly toast = inject(ToastService);
 
   readonly currentOffer = signal<EditOffer | null>(null);

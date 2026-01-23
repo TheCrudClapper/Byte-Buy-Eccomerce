@@ -8,6 +8,7 @@ import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { FormBuilder } from '@angular/forms';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-base-offer-detail',
@@ -24,7 +25,7 @@ export abstract class BaseOfferDetail {
   protected readonly cartService = inject(CartApiService);
   protected readonly toastService = inject(ToastService);
   protected readonly deliveryService = inject(DeliveryApiService);
-  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   protected readonly router = inject(Router);
   
   protected loading = signal<boolean>(false);

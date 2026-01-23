@@ -7,16 +7,18 @@ import { DeliveryResponse } from '../../dto/delivery/delivery-response';
 import { DeliveryListItem } from '../../../shared/models/delivery-list-items';
 import { DeliveryOptionsResponse } from '../../dto/delivery/delivery-options-response';
 import { Guid } from 'guid-typescript';
+import { API_ENDPOINTS } from '../../constants/api-constants';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeliveryApiService {
-  private readonly resourceUri = "http://localhost:5099/api/deliveries";
   private readonly httpClient = inject(HttpClient);
+  private readonly baseUrl = environment.apiBaseUrl;
 
   getSelectList(): Observable<SelectListItem[]> {
-    return this.httpClient.get<SelectListItemResponse[]>(`${this.resourceUri}/options`).pipe(
+    return this.httpClient.get<SelectListItemResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.options}`).pipe(
       map(response => response.map(item => ({
         id: item.id,
         title: item.title
@@ -25,7 +27,7 @@ export class DeliveryApiService {
   }
 
   getDeliveriesList(): Observable<DeliveryListItem[]> {
-    return this.httpClient.get<DeliveryResponse[]>(`${this.resourceUri}/list`).pipe(
+    return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.list}`).pipe(
       map((response: DeliveryResponse[]) =>
         response.map((item: DeliveryResponse): DeliveryListItem => ({
           id: item.id,
@@ -39,7 +41,7 @@ export class DeliveryApiService {
   }
 
   getDeliveriesListPerOffer(id: Guid): Observable<DeliveryListItem[]> {
-    return this.httpClient.get<DeliveryResponse[]>(`${this.resourceUri}/offer/${id}`).pipe(
+    return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.offer}/${id}`).pipe(
       map((response: DeliveryResponse[]) =>
         response.map((item: DeliveryResponse): DeliveryListItem => ({
           id: item.id,
@@ -52,9 +54,7 @@ export class DeliveryApiService {
     );
   }
 
-
   getAvaliableDeliveries(): Observable<DeliveryOptionsResponse> {
-    return this.httpClient.get<DeliveryOptionsResponse>(`${this.resourceUri}/available`);
+    return this.httpClient.get<DeliveryOptionsResponse>(`${this.baseUrl}${API_ENDPOINTS.deliveries.available}`);
   }
-
 }

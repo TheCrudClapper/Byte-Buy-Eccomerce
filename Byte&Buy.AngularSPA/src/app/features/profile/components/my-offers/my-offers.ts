@@ -5,9 +5,10 @@ import { ToastService } from '../../../../shared/services/snackbar/toast-service
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
-import { RentOfferApiSerivce } from '../../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { SaleOfferApiService } from '../../../../core/clients/offers/sale/sale-offer-api-service';
 import { RouterLink } from '@angular/router';
+import { RentOfferApiService } from '../../../../core/clients/offers/rent/rent-offer-api-serivce';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-my-offers',
@@ -17,10 +18,10 @@ import { RouterLink } from '@angular/router';
 })
 export class MyOffers implements OnInit {
   private readonly offerApiService = inject(OfferApiService);
-  private readonly rentOfferApiService = inject(RentOfferApiSerivce);
+  private readonly rentOfferApiService = inject(RentOfferApiService);
   private readonly saleOfferApiService = inject(SaleOfferApiService);
   private readonly toastService = inject(ToastService);
-  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
 
 
   userOffers = signal<UserPanelOfferUnion[]>([]);

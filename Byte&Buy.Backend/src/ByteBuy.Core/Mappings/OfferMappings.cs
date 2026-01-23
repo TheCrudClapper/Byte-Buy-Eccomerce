@@ -11,6 +11,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class OfferMappings
 {
+    //DEPRECATED
     //public static OfferBrowserItemResponse ToResponse(this Offer offer)
     //{
     //    return offer switch
@@ -45,6 +46,7 @@ public static class OfferMappings
     //        _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
     //    };
     //}
+
     public static Expression<Func<Offer, UserPanelOfferQuery>> UserOfferPanelQueryProjection =>
         o => new UserPanelOfferQuery
         {
@@ -90,7 +92,6 @@ public static class OfferMappings
             },
             OfferType.Rent => new UserRentPanelResponse
             {
-
                 Id = dto.Id,
                 DateCreated = dto.DateCreated,
                 DateEdited = dto.DateEdited,
