@@ -12,6 +12,7 @@ public static class RentOfferSpecifications
         public RentOfferToRentOfferListResponseSpec()
         {
             Query.AsNoTracking()
+                 .Where(ro => ro.Item.IsCompanyItem)
                  .Select(RentOfferMappings.RentOfferListProjection);
         }
     }

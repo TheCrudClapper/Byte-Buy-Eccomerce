@@ -48,6 +48,7 @@ export abstract class BaseOfferDetail {
       this.loadOffer(id);
       this.loadDeliveries(id);
     });
+    console.log(this.imageBaseUrl);
   }
 
   abstract addToCart(): void;

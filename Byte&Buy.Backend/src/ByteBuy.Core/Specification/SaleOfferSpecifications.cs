@@ -12,6 +12,7 @@ public static class SaleOfferSpecifications
         public SaleOfferToSaleOfferListResponseSpec()
         {
             Query.AsNoTracking()
+                 .Where(ro => ro.Item.IsCompanyItem)
                  .Select(SaleOfferMappings.SaleOfferListProjection);
         }
     }
