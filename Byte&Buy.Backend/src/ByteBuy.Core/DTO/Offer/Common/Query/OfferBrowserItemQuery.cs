@@ -2,7 +2,7 @@
 using ByteBuy.Core.DTO.Money;
 using ByteBuy.Core.DTO.Offer.Enum;
 
-namespace ByteBuy.Core.DTO.Offer.Common;
+namespace ByteBuy.Core.DTO.Offer.Common.Query;
 
 //Query object that is used for fetching all types of offers in one go.
 public record OfferBrowserItemQuery

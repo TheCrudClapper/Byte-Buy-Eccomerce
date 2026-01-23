@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Offer.Common;
+using ByteBuy.Core.DTO.Offer.Common.Query;
 using ByteBuy.Core.DTO.Offer.Enum;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
@@ -44,34 +45,62 @@ public static class OfferMappings
     //        _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
     //    };
     //}
-
-    public static UserPanelOfferResponse ToUserOfferPanelResponse(this Offer offer)
-    {
-        return offer switch
+    public static Expression<Func<Offer, UserPanelOfferQuery>> UserOfferPanelQueryProjection =>
+        o => new UserPanelOfferQuery
         {
-            SaleOffer saleOffer => new UserSalePanelResponse
+            DateCreated = o.DateCreated,
+            Id = o.Id,
+            DateEdited = o.DateEdited,
+            QuantityAvaliable = o.QuantityAvailable,
+            Title = o.Item.Name,
+
+            Image = o.Item.Images
+                .AsQueryable()
+                .Select(ImageMappings.ImageResponseProjection)
+                .FirstOrDefault()!,
+
+            MaxRentalDays = o is RentOffer
+                ? ((RentOffer)o).MaxRentalDays : null,
+
+            PricePerDay = o is RentOffer
+                ? ((RentOffer)o).PricePerDay.ToMoneyDto() : null,
+
+            PricePerItem = o is SaleOffer
+                ? ((SaleOffer)o).PricePerItem.ToMoneyDto()
+                : null,
+
+            Type = o is SaleOffer
+                ? OfferType.Sale
+                : OfferType.Rent
+        };
+
+    public static UserPanelOfferResponse ToUserOfferPanelResponse(this UserPanelOfferQuery dto)
+    {
+        return dto.Type switch
+        {
+            OfferType.Sale => new UserSalePanelResponse
             {
-                Id = saleOffer.Id,
-                DateCreated = saleOffer.DateCreated,
-                DateEdited = saleOffer.DateEdited,
-                Image = saleOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
-                Title = saleOffer.Item.Name,
-                QuantityAvaliable = saleOffer.QuantityAvailable,
-                PricePerItem = saleOffer.PricePerItem.ToMoneyDto()
+                Id = dto.Id,
+                DateCreated = dto.DateCreated,
+                DateEdited = dto.DateEdited,
+                Image = dto.Image,
+                Title = dto.Title,
+                QuantityAvaliable = dto.QuantityAvaliable,
+                PricePerItem = dto.PricePerItem!
             },
-            RentOffer rentOffer => new UserRentPanelResponse
+            OfferType.Rent => new UserRentPanelResponse
             {
 
-                Id = rentOffer.Id,
-                DateCreated = rentOffer.DateCreated,
-                DateEdited = rentOffer.DateEdited,
-                Image = rentOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
-                Title = rentOffer.Item.Name,
-                QuantityAvaliable = rentOffer.QuantityAvailable,
-                PricePerDay = rentOffer.PricePerDay.ToMoneyDto(),
-                MaxRentalDays = rentOffer.MaxRentalDays,
+                Id = dto.Id,
+                DateCreated = dto.DateCreated,
+                DateEdited = dto.DateEdited,
+                Image = dto.Image,
+                Title = dto.Title,
+                QuantityAvaliable = dto.QuantityAvaliable,
+                PricePerDay = dto.PricePerDay!,
+                MaxRentalDays = dto.MaxRentalDays!.Value,
             },
-            _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
+            _ => throw new UnreachableException()
         };
     }
 
