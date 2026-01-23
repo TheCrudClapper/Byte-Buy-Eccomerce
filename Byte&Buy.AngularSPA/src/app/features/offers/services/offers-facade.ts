@@ -16,6 +16,7 @@ import { Observable, of } from 'rxjs';
 import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-offer-response';
 import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
 import { RentOfferApiService } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
+import { validate } from '@angular/forms/signals';
 
 export type EditOffer =
   | { type: 'sale'; data: UserSaleOfferResponse }
@@ -63,26 +64,26 @@ export class OffersFacade {
   }
 
   loadOffer(type: OfferType, id: Guid): void {
-    if(type === 'sale'){
+    if (type === 'sale') {
       this.saleApi.getById(id).subscribe({
-        next: offer => this.currentOffer.set({ type: 'sale', data: offer}),
+        next: offer => this.currentOffer.set({ type: 'sale', data: offer }),
         error: (err: ProblemDetails) => this.toast.error(err.detail ?? "Failed to load sale offer")
       });
     }
-    else{
+    else {
       this.rentApi.getById(id).subscribe({
-        next: offer => this.currentOffer.set({ type:'rent', data: offer}),
+        next: offer => this.currentOffer.set({ type: 'rent', data: offer }),
         error: (err: ProblemDetails) => this.toast.error(err.detail ?? "Failed to load rent offer")
       });
-    }    
+    }
   }
 
   submit(type: OfferType, mode: OfferMode,
     payload: FormData, images: ImageItem[],
     offerId?: Guid) {
 
-    if (images.length === 0) {
-      this.toast.error("Add at least one image");
+    if (!this.validateImages(mode, images)) {
+      this.toast.error("Add at least one image !");
       return;
     }
 
@@ -117,4 +118,22 @@ export class OffersFacade {
         this.toast.error(err?.detail ?? 'Operation failed')
     });
   }
+
+  validateImages(mode: OfferMode, images: ImageItem[]): boolean {
+    if (mode === 'add') {
+      return images.some(image => image.isNew);
+    }
+    else {
+      const length = images.length;
+      const deletedCount = images.filter(i => i.isDeleted).length;
+      const newCount = images.filter(i => i.isNew).length;
+      //check wheter at least image is not deleted
+      if (length - deletedCount + newCount <= 0) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
+
+

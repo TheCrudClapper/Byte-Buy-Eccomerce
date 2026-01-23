@@ -40,7 +40,7 @@ export abstract class BaseOfferForm implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
+    
     const payload = this.buildFormData();
     this.facade.submit(
       this.type,
