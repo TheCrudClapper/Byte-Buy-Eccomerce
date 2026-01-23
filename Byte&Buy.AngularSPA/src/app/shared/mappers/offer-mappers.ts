@@ -1,7 +1,7 @@
 import { DeliveryOptionResponse } from "../../core/dto/delivery/delivery-option-response";
-import { DeliveryListItem } from "../models/delivery-list-items";
+import { DeliveryOption } from "../models/delivery-options";
 
-export function mapToListItem(item: DeliveryOptionResponse): DeliveryListItem{
+export function mapToDeliveryOption(item: DeliveryOptionResponse): DeliveryOption{
     return{
         id: item.id,
         amount: item.amount,

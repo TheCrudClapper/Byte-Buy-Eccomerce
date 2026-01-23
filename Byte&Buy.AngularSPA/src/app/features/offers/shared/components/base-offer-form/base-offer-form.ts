@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { OffersFacade } from '../../../services/offers-facade';
 import { ImageItem } from '../../../models/image-item';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -6,7 +6,7 @@ import { Guid } from 'guid-typescript';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../../../environments/environment';
-
+import { toObservable } from '@angular/core/rxjs-interop';
 export type OfferMode = 'add' | 'edit';
 export type OfferType = 'sale' | 'rent';
 
@@ -30,6 +30,8 @@ export abstract class BaseOfferForm implements OnInit {
   images = signal<ImageItem[]>([]);
 
   protected abstract buildFormData(): FormData;
+  protected abstract initParcelControls(): void;
+  protected abstract getSelectedParcelLockers(): Guid[];
 
   ngOnInit(): void {
     this.facade.init();
@@ -40,7 +42,7 @@ export abstract class BaseOfferForm implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    
+
     const payload = this.buildFormData();
     this.facade.submit(
       this.type,

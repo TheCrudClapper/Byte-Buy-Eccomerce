@@ -13,6 +13,7 @@ export function toCartModel(response: CartResponse): Cart {
                 return {
                     id: item.id,
                     image: item.image,
+                    offerId: item.offerId,
                     title: item.title,
                     quantity: item.quantity,
                     subtotal: item.subtotal,
@@ -24,6 +25,7 @@ export function toCartModel(response: CartResponse): Cart {
                 return {
                     id: item.id,
                     image: item.image,
+                    offerId: item.offerId,
                     title: item.title,
                     quantity: item.quantity,
                     subtotal: item.subtotal,

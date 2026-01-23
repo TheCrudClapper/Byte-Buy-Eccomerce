@@ -10,11 +10,16 @@ import { DecimalPipe } from '@angular/common';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 import { RentCartOfferUpdateRequest } from '../../../../../core/dto/cart/cart-item/rent-cart-offer-update-request';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-rent-cart-offer',
-  imports: [DecimalPipe, ReactiveFormsModule],
+  imports: [DecimalPipe, ReactiveFormsModule, RouterLink],
   templateUrl: './rent-cart-offer.html',
-  styleUrl: './rent-cart-offer.scss',
+  standalone: true,
+  styleUrls: ['./rent-cart-offer.scss',
+    '../../../shared/styles/card-shared-styles.scss'
+  ]
 })
 export class RentCartOffer implements OnInit {
   @Input() rentCartOffer!: RentCartOfferModel;

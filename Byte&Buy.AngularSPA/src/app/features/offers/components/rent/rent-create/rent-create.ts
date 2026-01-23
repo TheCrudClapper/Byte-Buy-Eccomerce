@@ -14,9 +14,10 @@ import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/
     '../../../shared/styles/offers-shared-styles.scss']
 })
 export class RentCreate extends BaseOfferForm {
+
   override type: OfferType = 'rent';
   override mode: OfferMode = 'add';
-  
+
   form = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(75), Validators.minLength(16)]),
     selectedCategoryId: new FormControl<string | null>(null, [Validators.required]),
@@ -25,10 +26,28 @@ export class RentCreate extends BaseOfferForm {
     quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
-    parcelLockerDeliveries: new FormArray<FormControl<Guid | null>>([]),
+    parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
+  protected override initParcelControls(): void {
+    const parcelGroup = this.form.get('parcelLockerDeliveries') as FormGroup;
+
+    this.facade.deliveries().parcel.forEach(group => {
+      if (!parcelGroup.contains(group.carrier)) {
+        parcelGroup.addControl(
+          group.carrier,
+          new FormControl<Guid | null>(null)
+        );
+      }
+    })
+  }
+
+  protected override getSelectedParcelLockers(): Guid[] {
+    const values = this.form.value.parcelLockerDeliveries ?? {};
+    return Object.values(values)
+      .filter((v): v is Guid => !!v);
+  }
 
   override buildFormData(): FormData {
     const form = this.form.value;
@@ -51,6 +70,8 @@ export class RentCreate extends BaseOfferForm {
       fd.append(`OtherDeliveriesIds[${i}]`, String(id))
     );
 
+    const parcelIds = this.getSelectedParcelLockers();
+    parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
     return fd;
   }
 }

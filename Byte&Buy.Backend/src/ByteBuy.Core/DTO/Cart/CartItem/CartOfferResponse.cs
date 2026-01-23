@@ -10,6 +10,7 @@ namespace ByteBuy.Core.DTO.Cart.CartItem;
 public abstract record CartOfferResponse
 {
     public Guid Id { get; init; }
+    public Guid OfferId { get; init; }
     public ImageResponse Image { get; init; } = null!;
     public string Title { get; init; } = null!;
     public int Quantity { get; init; }

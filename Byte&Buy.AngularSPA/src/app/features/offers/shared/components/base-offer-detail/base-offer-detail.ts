@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OfferApiService } from '../../../../../core/clients/offers/common/offer-api-service';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 import { DeliveryApiService } from '../../../../../core/clients/delivery/delivery-api-service';
-import { DeliveryListItem } from '../../../../../shared/models/delivery-list-items';
+import { DeliveryOption } from '../../../../../shared/models/delivery-options';
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
@@ -29,7 +29,7 @@ export abstract class BaseOfferDetail {
   protected readonly router = inject(Router);
   
   protected loading = signal<boolean>(false);
-  protected deliveries = signal<DeliveryListItem[]>([]);
+  protected deliveries = signal<DeliveryOption[]>([]);
   protected offerId = signal<Guid | null>(null);
 
   constructor(protected builder: FormBuilder) {

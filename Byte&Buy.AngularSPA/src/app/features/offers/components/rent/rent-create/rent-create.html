@@ -40,11 +40,11 @@
                             <div class="position-relative">
                                 <img [src]="item.preview" class="img-fluid rounded me-5"
                                     style="height: 130px; width: 100%; object-fit: cover;" />
-                                 <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
+                                <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
                                     (click)="removeImage($index)">
                                     <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
                                 </button>
-                                 
+
                                 <input type="text" maxlength="50" class="form-control mt-2"
                                     placeholder="Alt text (optional)" [(ngModel)]="item.alt"
                                     [ngModelOptions]="{ standalone: true }" />
@@ -220,16 +220,23 @@
                 <div class="row">
                     <div class="col-12 fs-14-px">
                         @if(deliveries.parcel.length > 0){
-                        <p class="content-section-title">Parcel Lockers</p>
+                        <p class="content-section-title mb-1">Parcel Lockers</p>
                         @for (item of deliveries.parcel; track $index)
                         {
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <input type="checkbox" class="form-check-input checkbox me-2" />
-                                <span>{{ item.name }}</span>
-                            </div>
-                            <span>{{ item.amount }} {{ item.currency }}</span>
-                        </div>
+                        <span class="mt-3">{{item.carrier}}</span>
+                        @for(option of item.options; track option.id){
+                        <span class="d-flex justify-content-between align-items-center mt-2">
+                            <span>
+                                <input 
+                                    type="radio"
+                                    [value]="option.id"
+                                    [name]="item.carrier"
+                                    class="form-check-input checkbox me-2" />
+                                <span>{{ option.name }}</span>
+                            </span>
+                            <span>{{ option.amount }} {{ option.currency }}</span>
+                        </span>
+                        }
                         }
                         }
                     </div>
@@ -240,10 +247,9 @@
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox"
-                                       [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
-                                       (change)="onDeliveryToggle(item.id, $event.target.checked)"
-                                       class="form-check-input checkbox me-2" />
+                                <input type="checkbox" [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
+                                    (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                    class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
                             <span>{{ item.amount }} {{ item.currency }}</span>

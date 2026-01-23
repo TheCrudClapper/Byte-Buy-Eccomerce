@@ -15,6 +15,7 @@ public static class CartMappings
                 Image = saleOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
                 Title = saleOffer.Item.Name,
                 Quantity = saleCartOffer.Quantity,
+                OfferId = saleCartOffer.OfferId,
                 PricePerItem = saleOffer.PricePerItem.ToMoneyDto(),
                 Subtotal = (saleOffer.PricePerItem * saleCartOffer.Quantity).ToMoneyDto()
             },
@@ -24,6 +25,7 @@ public static class CartMappings
                 Image = rentOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
                 Title = rentOffer.Item.Name,
                 Quantity = rentCartOffer.Quantity,
+                OfferId = rentCartOffer.OfferId,
                 PricePerDay = rentOffer.PricePerDay.ToMoneyDto(),
                 RentalDays = rentCartOffer.RentalDays,
                 Subtotal = (rentOffer.PricePerDay * rentCartOffer.Quantity * rentCartOffer.RentalDays).ToMoneyDto()

@@ -9,7 +9,7 @@
             <div class="col-9  d-flex flex-column justify-content-between">
                 <div class="row">
                     <div class="col-9">
-                        <span class="offer-title">{{ rentCartOffer.title }}</span>
+                        <a [routerLink]="['/offers', 'rent', 'details', rentCartOffer.offerId]" class="offer-title">{{ rentCartOffer.title }}</a>
                         <br>
                         <span class="price fw">Price / day:
                             <span>
@@ -28,9 +28,9 @@
                     </div>
                 </div>
                 <div class="row">
-                     <div class="col-5">
-                        <div class="quantity-wrapper"> 
-                             <span class="input-labels">Quantity</span>
+                    <div class="col-5">
+                        <div class="quantity-wrapper">
+                            <span class="input-labels">Quantity</span>
                             <button class="qty-btn" (click)="decrement()">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
@@ -53,7 +53,10 @@
                         </div>
                     </div>
                     <div class="col-2 justify-content-end d-flex align-items-center">
-                        <i class="fa-regular fa-trash-can delete-icon" (click)="tryRemove(rentCartOffer.id)"></i>
+                        <button type="button" class="icon-btn"
+                            (click)="tryRemove(rentCartOffer.id)">
+                            <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
+                        </button>
                     </div>
 
                 </div>

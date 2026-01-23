@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { SelectListItem } from '../../../shared/models/select-list-item';
 import { SelectListItemResponse } from '../../dto/common/select-list-item-response';
 import { DeliveryResponse } from '../../dto/delivery/delivery-response';
-import { DeliveryListItem } from '../../../shared/models/delivery-list-items';
+import { DeliveryOption } from '../../../shared/models/delivery-options';
 import { DeliveryOptionsResponse } from '../../dto/delivery/delivery-options-response';
 import { Guid } from 'guid-typescript';
 import { API_ENDPOINTS } from '../../constants/api-constants';
@@ -26,10 +26,10 @@ export class DeliveryApiService {
     );
   }
 
-  getDeliveriesList(): Observable<DeliveryListItem[]> {
+  getDeliveriesList(): Observable<DeliveryOption[]> {
     return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.list}`).pipe(
       map((response: DeliveryResponse[]) =>
-        response.map((item: DeliveryResponse): DeliveryListItem => ({
+        response.map((item: DeliveryResponse): DeliveryOption => ({
           id: item.id,
           name: item.name,
           currency: item.currency,
@@ -40,10 +40,10 @@ export class DeliveryApiService {
     );
   }
 
-  getDeliveriesListPerOffer(id: Guid): Observable<DeliveryListItem[]> {
+  getDeliveriesListPerOffer(id: Guid): Observable<DeliveryOption[]> {
     return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.offer}/${id}`).pipe(
       map((response: DeliveryResponse[]) =>
-        response.map((item: DeliveryResponse): DeliveryListItem => ({
+        response.map((item: DeliveryResponse): DeliveryOption => ({
           id: item.id,
           name: item.name,
           currency: item.currency,

@@ -4,6 +4,7 @@ import { ImageResponse } from "../../../../core/dto/image/image-response";
 
 export interface CartOfferBase {
     id: Guid;
+    offerId: Guid;
     image: ImageResponse;
     title: string;
     quantity: number;

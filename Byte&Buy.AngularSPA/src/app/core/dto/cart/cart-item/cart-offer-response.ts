@@ -4,6 +4,7 @@ import { MoneyDto } from "../../common/money-dto";
 
 export interface CartOfferResponse{
     id: Guid;
+    offerId: Guid;
     image: ImageResponse;
     title: string;
     quantity: number;

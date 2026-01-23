@@ -10,12 +10,16 @@ import { SaleCartOfferUpdateRequest } from '../../../../../core/dto/cart/cart-it
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartSummary } from '../../../models/cart-summary';
 import { Guid } from 'guid-typescript';
+import { RouterLink } from '@angular/router';
+import { environment } from '../../../../../../environments/environment';
 
 @Component({
   selector: 'app-sale-cart-offer',
-  imports: [DecimalPipe, ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [DecimalPipe, ɵInternalFormsSharedModule, ReactiveFormsModule, RouterLink],
   templateUrl: './sale-cart-offer.html',
-  styleUrl: './sale-cart-offer.scss',
+  styleUrls: ['./sale-cart-offer.scss',
+    '../../../shared/styles/card-shared-styles.scss'
+  ],
   standalone: true,
 })
 export class SaleCartOffer implements OnInit {
@@ -25,7 +29,7 @@ export class SaleCartOffer implements OnInit {
 
   private readonly cartApiService = inject(CartApiService);
   private readonly toastService = inject(ToastService);
-  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
 
   cartForm!: FormGroup;
 

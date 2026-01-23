@@ -9,7 +9,7 @@
             <div class="col-9  d-flex flex-column justify-content-between">
                 <div class="row">
                     <div class="col-9">
-                        <span class="offer-title">{{ saleCartOffer.title }}</span>
+                        <a [routerLink]="['/offers', 'sale', 'details', saleCartOffer.offerId]" class="offer-title">{{ saleCartOffer.title }}</a>
                         <br>
                         <span class="price fw">Price / unit:
                             <span>
@@ -29,8 +29,8 @@
                 </div>
                 <div class="row">
                     <div class="col-10">
-                        <div class="quantity-wrapper"> 
-                             <span class="input-labels">Quantity</span>
+                        <div class="quantity-wrapper">
+                            <span class="input-labels">Quantity</span>
                             <button class="qty-btn" (click)="decrement()">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
@@ -41,7 +41,10 @@
                         </div>
                     </div>
                     <div class="col-2 justify-content-end d-flex align-items-center">
-                        <i class="fa-regular fa-trash-can delete-icon" (click)="tryRemove(saleCartOffer.id)"></i>
+                        <button type="button" class="icon-btn"
+                            (click)="tryRemove(saleCartOffer.id)">
+                            <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
+                        </button>
                     </div>
 
                 </div>

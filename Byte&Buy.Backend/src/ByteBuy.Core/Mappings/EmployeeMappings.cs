@@ -42,7 +42,7 @@ public static class EmployeeMappings
                 e.HomeAddress.City,
                 e.HomeAddress.Country,
                 e.HomeAddress.FlatNumber),
-            e.PhoneNumber,
+            e.PhoneNumber!,
             e.UserPermissions
                 .Where(up => up.IsGranted)
                 .Select(up => up.PermissionId)
@@ -62,7 +62,7 @@ public static class EmployeeMappings
            e.FirstName,
            e.LastName,
            e.Email!,
-           e.PhoneNumber,
+           e.PhoneNumber!,
            new HomeAddressDto(
                 e.HomeAddress!.Street,
                 e.HomeAddress.HouseNumber,

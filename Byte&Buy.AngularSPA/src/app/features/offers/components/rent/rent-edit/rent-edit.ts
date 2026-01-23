@@ -14,6 +14,12 @@ import { UserRentOfferResponse } from '../../../../../core/dto/offers/rent/user-
 })
 
 export class RentEdit extends BaseOfferForm implements OnInit {
+  protected override initParcelControls(): void {
+    throw new Error('Method not implemented.');
+  }
+  protected override getSelectedParcelLockers(): Guid[] {
+    throw new Error('Method not implemented.');
+  }
   override type: OfferType = 'rent';
   override mode: OfferMode = 'edit';
 

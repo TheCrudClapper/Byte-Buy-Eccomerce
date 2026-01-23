@@ -6,8 +6,8 @@ import { AddressApiService } from '../../../core/clients/address/address-api-ser
 import { SaleOfferApiService } from '../../../core/clients/offers/sale/sale-offer-api-service';
 import { ToastService } from '../../../shared/services/snackbar/toast-service';
 import { HomeAddressDto } from '../../../core/dto/home-address/home-address-dto';
-import { mapToListItem } from '../../../shared/mappers/offer-mappers';
-import { DeliveryListItem } from '../../../shared/models/delivery-list-items';
+import { mapToDeliveryOption } from '../../../shared/mappers/offer-mappers';
+import { DeliveryOption } from '../../../shared/models/delivery-options';
 import { OfferMode, OfferType } from '../shared/components/base-offer-form/base-offer-form';
 import { ImageItem } from '../models/image-item';
 import { Guid } from 'guid-typescript';
@@ -17,6 +17,8 @@ import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-o
 import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
 import { RentOfferApiService } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { validate } from '@angular/forms/signals';
+import { DeliveryGroup } from '../../../shared/models/delivery-group';
+import { groupByCarrier } from '../mappers/offer-mapper';
 
 export type EditOffer =
   | { type: 'sale'; data: UserSaleOfferResponse }
@@ -40,9 +42,9 @@ export class OffersFacade {
   readonly conditions$ = this.conditionApi.getSelectList();
 
   deliveries = signal<{
-    parcel: DeliveryListItem[],
-    courier: DeliveryListItem[],
-    pickup: DeliveryListItem[]
+    parcel: DeliveryGroup[],
+    courier: DeliveryOption[],
+    pickup: DeliveryOption[]
   }>({
     parcel: [],
     courier: [],
@@ -57,9 +59,11 @@ export class OffersFacade {
 
     this.deliveryApi.getAvaliableDeliveries()
       .subscribe(r => this.deliveries.set({
-        parcel: r.parcelLockerDeliveries.map(mapToListItem),
-        courier: r.courierDeliveries.map(mapToListItem),
-        pickup: r.pickupPointDeliveries.map(mapToListItem),
+        parcel: groupByCarrier(
+          r.parcelLockerDeliveries.map(mapToDeliveryOption)
+        ),
+        courier: r.courierDeliveries.map(mapToDeliveryOption),
+        pickup: r.pickupPointDeliveries.map(mapToDeliveryOption),
       }));
   }
 
@@ -105,8 +109,7 @@ export class OffersFacade {
           ? this.saleApi.post(payload)
           : this.saleApi.put(offerId!, payload);
     }
-
-
+    
     request$.subscribe({
       next: () =>
         this.toast.success(

@@ -13,6 +13,12 @@ import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-
     '../../../shared/styles/offers-shared-styles.scss']
 })
 export class SaleEdit extends BaseOfferForm implements OnInit {
+  protected override initParcelControls(): void {
+    throw new Error('Method not implemented.');
+  }
+  protected override getSelectedParcelLockers(): Guid[] {
+    throw new Error('Method not implemented.');
+  }
   override type: OfferType = 'sale';
   override mode: OfferMode = 'edit'
 
