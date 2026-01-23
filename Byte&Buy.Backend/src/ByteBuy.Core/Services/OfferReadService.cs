@@ -29,7 +29,7 @@ public class OfferReadService : IOfferReadService
     {
         var spec = new OfferBrowserSpec();
         var offers = await _offerRepository.GetListBySpecAsync(spec, ct);
-        return offers.Select(o => o.ToResponse())
+        return offers.Select(o => o.ToBrowserItemResponse())
             .ToList();
     }
 

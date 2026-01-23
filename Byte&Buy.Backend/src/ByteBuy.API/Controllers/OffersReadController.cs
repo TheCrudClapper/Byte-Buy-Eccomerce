@@ -28,7 +28,7 @@ public class OffersReadController : BaseApiController
         => HandleResult(await _offerReadService.GetSaleOfferDetails(id, ct));
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<OfferBrowserItemResponse>>> GetOffers(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<OfferBrowserItemResponse>>> GetBrowserOffers(CancellationToken ct)
         => HandleResult(await _offerReadService.BrowseAsync(ct));
 
 }

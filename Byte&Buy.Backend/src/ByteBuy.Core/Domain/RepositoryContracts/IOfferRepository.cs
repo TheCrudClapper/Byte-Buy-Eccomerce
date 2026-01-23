@@ -6,5 +6,4 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IOfferRepository : IRepositoryBase<Offer>
 {
-    Task<IReadOnlyCollection<OfferBrowserItemResponse>> Browse();
 }

@@ -64,7 +64,7 @@ public static class SaleOfferMappings
             so.Item.Category.Name,
             so.Item.Description,
             so.Item.Name,
-             so.CreatedBy is Employee
+            so.CreatedBy is Employee
                 ? new CompanySellerResponse(
                     ((Employee)so.CreatedBy).Company.CompanyName,
                     ((Employee)so.CreatedBy).Company.Email,
