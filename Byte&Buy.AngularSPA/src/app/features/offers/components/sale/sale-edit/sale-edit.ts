@@ -13,12 +13,7 @@ import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-
     '../../../shared/styles/offers-shared-styles.scss']
 })
 export class SaleEdit extends BaseOfferForm implements OnInit {
-  protected override initParcelControls(): void {
-    throw new Error('Method not implemented.');
-  }
-  protected override getSelectedParcelLockers(): Guid[] {
-    throw new Error('Method not implemented.');
-  }
+
   override type: OfferType = 'sale';
   override mode: OfferMode = 'edit'
 
@@ -31,7 +26,7 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     pricePerItem: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
-    parcelLockerDeliveries: new FormArray<FormControl<Guid | null>>([]),
+    parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
@@ -110,6 +105,10 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
+
+    const parcelIds = this.getSelectedParcelLockers();
+    parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
+    return fd;
 
     return fd;
   }

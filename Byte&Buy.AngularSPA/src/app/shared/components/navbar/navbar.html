@@ -4,7 +4,7 @@
     <!--Brand Logo-->
     <a class="navbar-brand" href="#">Byte&Buy</a>
 
-      
+
     <!--Toggler-->
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="cart" >
+          <a class="nav-link" routerLink="cart">
             <i class="fa-solid fa-cart-shopping fa-lg"></i>
             <span class="d-inline d-lg-none">
               Cart
@@ -62,74 +62,72 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user fa-lg"></i>
-            <span>
-              Account
-            </span>
+            Account
           </a>
           <ul class="dropdown-menu">
             @if(!auth.isLoggedIn()){
-              <li>
-                <a routerLink="login" class="dropdown-item">
-                  <i class="fa-solid fa-id-card-clip"></i>
-                  Login
-                </a>
-              </li>
-              
-              <li>
-                <a routerLink="register" class="dropdown-item">
-                  <i class="fa-solid fa-id-card-clip"></i>
-                  Register
-                </a>
-              </li>
+            <li>
+              <a routerLink="login" class="dropdown-item">
+                <i class="fa-solid fa-id-card-clip"></i>
+                Login
+              </a>
+            </li>
+
+            <li>
+              <a routerLink="register" class="dropdown-item">
+                <i class="fa-solid fa-id-card-clip"></i>
+                Register
+              </a>
+            </li>
             }
             @if(auth.isLoggedIn()){
-              <li>
-                <a routerLink="profile" class="dropdown-item">
-                  <i class="fa-solid fa-id-card-clip"></i>
-                  Profile
-                </a>
-              </li>
+            <li>
+              <a routerLink="profile" class="dropdown-item">
+                <i class="fa-solid fa-id-card-clip"></i>
+                Profile
+              </a>
+            </li>
 
-              <li>
-                <a routerLink="offers/sale/create" class="dropdown-item">
-                  <i class="fa-solid fa-money-bill-wave"></i>
-                  Sell
-                </a>
-              </li>
+            <li>
+              <a routerLink="offers/sale/create" class="dropdown-item">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Sell
+              </a>
+            </li>
 
-              <li>
-                <a routerLink="offers/rent/create" class="dropdown-item">
-                  <i class="fa-solid fa-hand-holding-heart"></i>
-                  Rent
-                </a>
-              </li>
+            <li>
+              <a routerLink="offers/rent/create" class="dropdown-item">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+                Rent
+              </a>
+            </li>
 
-              <li>
-                <a href="#" class="dropdown-item">
-                  <i class="fa-solid fa-repeat"></i>
-                  Your Rentals
-                </a>
-              </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-repeat"></i>
+                Your Rentals
+              </a>
+            </li>
 
-              <li>
-                <a href="#" class="dropdown-item">
-                  <i class="fa-solid fa-truck-fast"></i>
-                  Orders
-                </a>
-              </li>
+            <li>
+              <a href="#" class="dropdown-item">
+                <i class="fa-solid fa-truck-fast"></i>
+                Orders
+              </a>
+            </li>
             }
             @if(auth.isLoggedIn()){
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li>
-                <a (click)="onLogout()" class="dropdown-item">
-                  <i class="fa-solid fa-right-from-bracket"></i>
-                  Logout
-                </a>
-              </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a (click)="onLogout()" class="dropdown-item">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+              </a>
+            </li>
             }
-            
+
           </ul>
         </li>
       </ul>

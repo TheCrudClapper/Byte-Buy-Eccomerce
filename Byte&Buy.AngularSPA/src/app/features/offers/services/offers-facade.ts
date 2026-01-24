@@ -12,11 +12,10 @@ import { OfferMode, OfferType } from '../shared/components/base-offer-form/base-
 import { ImageItem } from '../models/image-item';
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../core/dto/problem-details';
-import { Observable, of } from 'rxjs';
+import { Observable} from 'rxjs';
 import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-offer-response';
 import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
 import { RentOfferApiService } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
-import { validate } from '@angular/forms/signals';
 import { DeliveryGroup } from '../../../shared/models/delivery-group';
 import { groupByCarrier } from '../mappers/offer-mapper';
 

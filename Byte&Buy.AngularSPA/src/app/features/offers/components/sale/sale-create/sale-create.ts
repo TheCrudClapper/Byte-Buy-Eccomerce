@@ -14,14 +14,6 @@ import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/
 })
 export class SaleCreate extends BaseOfferForm {
 
-  protected override initParcelControls(): void {
-    throw new Error('Method not implemented.');
-  }
-  
-  protected override getSelectedParcelLockers(): Guid[] {
-    throw new Error('Method not implemented.');
-  }
-
   override type: OfferType = 'sale';
   override mode: OfferMode = 'add';
 
@@ -32,7 +24,7 @@ export class SaleCreate extends BaseOfferForm {
     pricePerItem: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
-    parcelLockerDeliveries: new FormArray<FormControl<Guid | null>>([]),
+    parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
@@ -50,13 +42,14 @@ export class SaleCreate extends BaseOfferForm {
 
     this.images().forEach((img, i) => {
       fd.append(`Images[${i}].Image`, img.file!);
-      if (img.alt) fd.append(`Images[${i}].AltText`, img.alt);
+      fd.append(`Images[${i}].AltText`, img.alt ?? '');
     });
 
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
 
+    console.log(fd);
     return fd;
   }
 }

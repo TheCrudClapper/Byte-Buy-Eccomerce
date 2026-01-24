@@ -6,7 +6,8 @@ import { Guid } from 'guid-typescript';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../../../environments/environment';
-import { toObservable } from '@angular/core/rxjs-interop';
+
+
 export type OfferMode = 'add' | 'edit';
 export type OfferType = 'sale' | 'rent';
 
@@ -30,14 +31,13 @@ export abstract class BaseOfferForm implements OnInit {
   images = signal<ImageItem[]>([]);
 
   protected abstract buildFormData(): FormData;
-  protected abstract initParcelControls(): void;
-  protected abstract getSelectedParcelLockers(): Guid[];
 
   private readonly parcelEffect = effect(() => {
     const parcels = this.facade.deliveries().parcel;
-    if(parcels.length === 0) return;
+    if (parcels.length === 0) return;
 
     this.initParcelControls();
+    this.restoreSelectedParcelLockers();
   });
 
   ngOnInit(): void {
@@ -65,8 +65,51 @@ export abstract class BaseOfferForm implements OnInit {
     return undefined;
   }
 
-  protected restoreSelectedParcelLockers(): void{
+  //initializes parcel lockers radio buttons
+  protected initParcelControls(): void {
+    const parcelGroup = this.form.get('parcelLockerDeliveries') as FormGroup;
 
+    if (parcelGroup === null)
+      throw Error("Form needs to have parcelLockerDeliveries field");
+
+    this.facade.deliveries().parcel.forEach(group => {
+      if (!parcelGroup.contains(group.carrier)) {
+        parcelGroup.addControl(
+          group.carrier,
+          new FormControl<Guid | null>(null)
+        );
+      }
+    })
+  }
+
+  //extracts parcel lockers from form
+  protected getSelectedParcelLockers(): Guid[] {
+    const values = this.form.value.parcelLockerDeliveries ?? [];
+    return Object.values(values)
+      .filter((v): v is Guid => !!v);
+  }
+
+  protected restoreSelectedParcelLockers(): void {
+    if (this.mode !== 'edit')
+      return;
+
+    const offer = this.facade.currentOffer();
+    if (!offer) return;
+
+    const selectedIds = offer.data.parcelLockerDeliveries;
+
+    const parcelGroup = this.form.get('parcelLockerDeliveries') as FormGroup;
+    const parcelGroups = this.facade.deliveries().parcel;
+
+    for (const group of parcelGroups) {
+      const match = group.options.find(o =>
+        selectedIds?.includes(o.id)
+      );
+
+      if (match) {
+        parcelGroup.get(group.carrier)?.setValue(match.id);
+      }
+    }
   }
 
   onDeliveryToggle(id: Guid, checked: boolean): void {

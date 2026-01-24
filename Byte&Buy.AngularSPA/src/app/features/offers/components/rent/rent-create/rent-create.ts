@@ -30,25 +30,6 @@ export class RentCreate extends BaseOfferForm {
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
-  protected override initParcelControls(): void {
-    const parcelGroup = this.form.get('parcelLockerDeliveries') as FormGroup;
-
-    this.facade.deliveries().parcel.forEach(group => {
-      if (!parcelGroup.contains(group.carrier)) {
-        parcelGroup.addControl(
-          group.carrier,
-          new FormControl<Guid | null>(null)
-        );
-      }
-    })
-  }
-
-  protected override getSelectedParcelLockers(): Guid[] {
-    const values = this.form.value.parcelLockerDeliveries ?? {};
-    return Object.values(values)
-      .filter((v): v is Guid => !!v);
-  }
-
   override buildFormData(): FormData {
     const form = this.form.value;
     const fd = new FormData();
@@ -63,7 +44,7 @@ export class RentCreate extends BaseOfferForm {
 
     this.images().forEach((img, i) => {
       fd.append(`Images[${i}].Image`, img.file!);
-      if (img.alt) fd.append(`Images[${i}].AltText`, img.alt);
+      fd.append(`Images[${i}].AltText`, img.alt ?? '');
     });
 
     form.otherDeliveriesIds?.forEach((id, i) =>

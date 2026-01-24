@@ -14,12 +14,7 @@ import { UserRentOfferResponse } from '../../../../../core/dto/offers/rent/user-
 })
 
 export class RentEdit extends BaseOfferForm implements OnInit {
-  protected override initParcelControls(): void {
-    throw new Error('Method not implemented.');
-  }
-  protected override getSelectedParcelLockers(): Guid[] {
-    throw new Error('Method not implemented.');
-  }
+  
   override type: OfferType = 'rent';
   override mode: OfferMode = 'edit';
 
@@ -33,7 +28,7 @@ export class RentEdit extends BaseOfferForm implements OnInit {
     quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
-    parcelLockerDeliveries: new FormArray<FormControl<Guid | null>>([]),
+    parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
   });
 
@@ -113,6 +108,10 @@ export class RentEdit extends BaseOfferForm implements OnInit {
     form.otherDeliveriesIds.forEach((id: Guid, index: number) => {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
+
+    const parcelIds = this.getSelectedParcelLockers();
+    parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
+    return fd;
 
     return fd;
   }
