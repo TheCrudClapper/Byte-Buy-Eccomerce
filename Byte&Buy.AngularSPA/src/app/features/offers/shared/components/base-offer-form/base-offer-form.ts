@@ -33,6 +33,13 @@ export abstract class BaseOfferForm implements OnInit {
   protected abstract initParcelControls(): void;
   protected abstract getSelectedParcelLockers(): Guid[];
 
+  private readonly parcelEffect = effect(() => {
+    const parcels = this.facade.deliveries().parcel;
+    if(parcels.length === 0) return;
+
+    this.initParcelControls();
+  });
+
   ngOnInit(): void {
     this.facade.init();
   }
@@ -56,6 +63,10 @@ export abstract class BaseOfferForm implements OnInit {
   //needs to be overriden by edit components
   protected getOfferId(): Guid | undefined {
     return undefined;
+  }
+
+  protected restoreSelectedParcelLockers(): void{
+
   }
 
   onDeliveryToggle(id: Guid, checked: boolean): void {

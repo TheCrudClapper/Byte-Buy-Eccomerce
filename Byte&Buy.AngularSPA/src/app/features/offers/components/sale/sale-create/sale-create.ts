@@ -13,12 +13,15 @@ import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/
     '../../../shared/styles/offers-shared-styles.scss']
 })
 export class SaleCreate extends BaseOfferForm {
+
   protected override initParcelControls(): void {
     throw new Error('Method not implemented.');
   }
+  
   protected override getSelectedParcelLockers(): Guid[] {
     throw new Error('Method not implemented.');
   }
+
   override type: OfferType = 'sale';
   override mode: OfferMode = 'add';
 

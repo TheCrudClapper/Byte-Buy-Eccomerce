@@ -18,6 +18,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { CartPage } from './features/cart/components/cart-page/cart-page/cart-page';
 import { NotFound } from './shared/components/not-found/not-found/not-found';
 import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-guard';
+import { CheckoutPage } from './features/orders/checkout/checkout-page/checkout-page';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -43,7 +44,8 @@ export const routes: Routes = [
                     { path: 'addresses', component: Addresses},
                     { path: 'my-offers', component: MyOffers}
                 ]
-            }
+            },
+            { path: 'checkout', component: CheckoutPage}
         ]
     },
     { path: 'forbidden', component: Fobidden },

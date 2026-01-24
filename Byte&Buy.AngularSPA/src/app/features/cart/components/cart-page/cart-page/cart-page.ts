@@ -8,11 +8,11 @@ import { SaleCartOffer } from '../../sale-cart-offer/sale-cart-offer/sale-cart-o
 import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-offer';
 import { CartSummary } from '../../../models/cart-summary';
 import { Guid } from 'guid-typescript';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [DecimalPipe, SaleCartOffer, RentCartOffer],
+  imports: [DecimalPipe, SaleCartOffer, RentCartOffer, RouterLink],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.scss',
   standalone: true,

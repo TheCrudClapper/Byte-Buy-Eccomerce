@@ -208,9 +208,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12 fs-14-px">
-                        @if(deliveries.parcel.length > 0){
-                        <p class="content-section-title">Parcel Lockers</p>
+                    <div class="col-12 fs-14-px" formGroupName="parcelLockerDeliveries">
+                        @if(deliveries.parcel && deliveries.parcel.length > 0){
+                        <p class="content-section-title mb-1">Parcel Lockers</p>
                         @for (item of deliveries.parcel; track $index)
                         {
                         <span class="mt-3">{{item.carrier}}</span>
@@ -219,6 +219,7 @@
                             <span>
                                 <input 
                                     type="radio"
+                                    [formControlName]="item.carrier"
                                     [value]="option.id"
                                     [name]="item.carrier"
                                     class="form-check-input checkbox me-2" />
