@@ -174,8 +174,6 @@
                 </div>
             </div>
 
-            @if(facade.homeAddress(); as homeAddress){
-            <!-- Location -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
@@ -189,7 +187,7 @@
                     <div class="col-12 col-md-6">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
-                            @if(homeAddress){
+                            @if(facade.homeAddress(); as homeAddress){
                             <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
                                 homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
@@ -205,7 +203,6 @@
                     </div>
                 </div>
             </div>
-            }
 
             <!-- Deliveries-->
             @if(facade.deliveries(); as deliveries){
