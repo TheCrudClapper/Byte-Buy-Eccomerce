@@ -13,6 +13,7 @@ public sealed class PortalUser : ApplicationUser
     //EF Navigation Properties ONLY
     public Cart Cart { get; private set; } = null!;
     public ICollection<Order> Orders { get; private set; } = [];
+    public ICollection<Rental> Rentals { get; private set; } = [];
 
     private PortalUser(string firstName, string lastName, string email, string? phoneNumber)
         : base(firstName, lastName, email, phoneNumber) { }

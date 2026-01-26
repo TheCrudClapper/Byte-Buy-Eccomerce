@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Helpers;
@@ -51,12 +52,15 @@ public class SaleOfferService : ISaleOfferService
         if (companyAddress is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
 
+        var seller = Seller.CreateCompanySeller(userId);
+
         var saleOfferResult = SaleOffer.Create(
             request.ItemId,
             userId,
             request.QuantityAvailable,
             request.PricePerItem,
             companyAddress,
+            seller,
             validatedDeliveries.Value.Select(d => d.Id));
 
         if (saleOfferResult.IsFailure)

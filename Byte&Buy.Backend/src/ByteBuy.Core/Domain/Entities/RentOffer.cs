@@ -15,7 +15,8 @@ public class RentOffer : Offer
         int quantityAvailable,
         Money pricePerDay,
         int maxRentalDays,
-        AddressValueObject offerAddress) : base(itemId, createdByUserId, quantityAvailable, offerAddress)
+        AddressValueObject offerAddress,
+        Seller seller) : base(itemId, createdByUserId, quantityAvailable, offerAddress, seller)
     {
         PricePerDay = pricePerDay;
         MaxRentalDays = maxRentalDays;
@@ -39,6 +40,7 @@ public class RentOffer : Offer
         decimal pricePerDay,
         int maxRentalDays,
         AddressValueObject offerAddress,
+        Seller seller,
         IEnumerable<Guid> deliveriesIds)
     {
         var validationResult = Validate(quantityAvailable, maxRentalDays);
@@ -51,7 +53,7 @@ public class RentOffer : Offer
 
         var money = moneyResult.Value;
 
-        var rentOffer = new RentOffer(itemId, createdByUserId, quantityAvailable, money, maxRentalDays, offerAddress);
+        var rentOffer = new RentOffer(itemId, createdByUserId, quantityAvailable, money, maxRentalDays, offerAddress, seller);
         rentOffer.AssignDeliveriesToOffer(deliveriesIds);
 
         return rentOffer;

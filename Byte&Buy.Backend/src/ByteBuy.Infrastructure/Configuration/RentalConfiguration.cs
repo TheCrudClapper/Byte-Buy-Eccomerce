@@ -6,12 +6,28 @@ public class RentalConfiguration : IEntityTypeConfiguration<Rental>
 {
     public void Configure(EntityTypeBuilder<Rental> builder)
     {
-        builder.HasKey(r => r.Id);
+        builder.HasOne(p => p.Borrower)
+            .WithMany(pu => pu.Rentals)
+            .HasForeignKey(p => p.BorrowerId)
+            .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(r => r.RentOrderItem)
-               .WithOne(roi => roi.Rental)
-               .HasForeignKey<Rental>(r => r.RentOrderItemId)
-               .OnDelete(DeleteBehavior.NoAction);
+        builder.OwnsOne(o => o.Lender, sa =>
+        {
+            sa.Property(prop => prop.Type)
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .IsRequired();
+
+            sa.Property(prop => prop.Id)
+                .IsRequired();
+        });
+
+
+        builder.OwnsOne(r => r.PricePerDay, m =>
+        {
+            m.Property(prop => prop.Currency).HasMaxLength(3).IsRequired();
+            m.Property(prop => prop.Amount).HasPrecision(18,3).IsRequired();
+        });
 
         builder.HasQueryFilter(item => item.IsActive);
     }

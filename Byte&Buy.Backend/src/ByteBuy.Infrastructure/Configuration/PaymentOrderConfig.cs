@@ -8,9 +8,9 @@ public class PaymentOrderConfig : IEntityTypeConfiguration<PaymentOrder>
 {
     public void Configure(EntityTypeBuilder<PaymentOrder> builder)
     {
-        builder.HasOne(po => po.Order)
+        builder.HasOne(po => po.OrderGroup)
             .WithMany(o => o.PaymentOrders)
-            .HasForeignKey(po => po.OrderId)
+            .HasForeignKey(po => po.OrderGroupId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(po => po.Payment)

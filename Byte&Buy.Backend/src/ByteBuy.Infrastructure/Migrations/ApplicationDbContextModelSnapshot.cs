@@ -622,6 +622,154 @@ namespace ByteBuy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("BuyerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateDelivered")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateEdited")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DeliveryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("OrderGroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("DeliveryId")
+                        .IsUnique();
+
+                    b.HasIndex("OrderGroupId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderDelivery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BuyerFullName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CarrierCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Channel")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("City")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateDeleted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateEdited")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeliveryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("FlatNumber")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("HouseNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ParcelLockerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PickupCity")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PickupLocalNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("PickupPointId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PickupPointName")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PickupStreet")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PostalCity")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Street")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Channel");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("OrderDeliveries");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BuyerId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -634,25 +782,19 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("BuyerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("OrderGroups", (string)null);
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderLine", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -670,24 +812,30 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OfferId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("OrderLineType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfferId");
-
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderLines");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator<string>("OrderLineType").HasValue("OrderLine");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Payment", b =>
@@ -696,13 +844,6 @@ namespace ByteBuy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<long>("AmountMinor")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -712,23 +853,25 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<DateTime?>("DateEdited")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("ExternalTransactionId")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StripeCheckoutSessionId")
+                    b.Property<string>("Method")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
-                    b.Property<string>("StripePaymentIntentId")
+                    b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
@@ -737,9 +880,6 @@ namespace ByteBuy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<long>("AmountMinor")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -752,7 +892,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid>("OrderGroupId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("PaymentId")
@@ -760,11 +900,11 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderGroupId");
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("PaymentOrder");
+                    b.ToTable("PaymentOrders");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Permission", b =>
@@ -803,6 +943,9 @@ namespace ByteBuy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("BorrowerId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -815,10 +958,13 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("RentOrderItemId")
+                    b.Property<Guid>("RentOrderLineId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("RentalEndDate")
+                    b.Property<int>("RentalDays")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("RentalEndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("RentalStartDate")
@@ -827,10 +973,12 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("RentOrderItemId")
-                        .IsUnique();
+                    b.HasIndex("BorrowerId");
 
                     b.ToTable("Rental");
                 });
@@ -1118,24 +1266,21 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.ToTable("SaleOffers", (string)null);
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderLine", b =>
                 {
-                    b.HasBaseType("ByteBuy.Core.Domain.Entities.OrderItem");
+                    b.HasBaseType("ByteBuy.Core.Domain.Entities.OrderLine");
 
-                    b.Property<DateTime>("RentalEndDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("RentalDays")
+                        .HasColumnType("integer");
 
-                    b.Property<DateTime>("RentalStartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.ToTable("RentOrderItems", (string)null);
+                    b.HasDiscriminator().HasValue("RentOrderLine");
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.SaleOrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.SaleOrderLine", b =>
                 {
-                    b.HasBaseType("ByteBuy.Core.Domain.Entities.OrderItem");
+                    b.HasBaseType("ByteBuy.Core.Domain.Entities.OrderLine");
 
-                    b.ToTable("SaleOrderItems", (string)null);
+                    b.HasDiscriminator().HasValue("SaleOrderLine");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
@@ -1425,7 +1570,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "OwnerAddressSnapshot", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "OfferAddressSnapshot", b1 =>
                         {
                             b1.Property<Guid>("OfferId")
                                 .HasColumnType("uuid");
@@ -1472,11 +1617,37 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("OfferId");
                         });
 
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Seller", "Seller", b1 =>
+                        {
+                            b1.Property<Guid>("OfferId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid")
+                                .HasColumnName("Seller_Id");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)")
+                                .HasColumnName("Seller_Type");
+
+                            b1.HasKey("OfferId");
+
+                            b1.ToTable("Offers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OfferId");
+                        });
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Item");
 
-                    b.Navigation("OwnerAddressSnapshot");
+                    b.Navigation("OfferAddressSnapshot");
+
+                    b.Navigation("Seller")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OfferDelivery", b =>
@@ -1500,50 +1671,37 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "User")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "Buyer")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("BuyerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "ShippingAddress", b1 =>
+                    b.HasOne("ByteBuy.Core.Domain.Entities.OrderDelivery", "Delivery")
+                        .WithOne()
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.Order", "DeliveryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ByteBuy.Core.Domain.Entities.OrderGroup", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("OrderGroupId");
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "DeliveryPrice", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)")
+                                .HasColumnName("DeliveryPrice_Amount");
 
-                            b1.Property<string>("Country")
+                            b1.Property<string>("Currency")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
-
-                            b1.Property<string>("FlatNumber")
-                                .HasMaxLength(10)
-                                .HasColumnType("character varying(10)");
-
-                            b1.Property<string>("HouseNumber")
-                                .IsRequired()
-                                .HasMaxLength(10)
-                                .HasColumnType("character varying(10)");
-
-                            b1.Property<string>("PostalCity")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
-
-                            b1.Property<string>("PostalCode")
-                                .IsRequired()
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("character varying(50)");
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("DeliveryPrice_Currency");
 
                             b1.HasKey("OrderId");
 
@@ -1553,9 +1711,186 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "TotalAmount", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "LinesTotal", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)")
+                                .HasColumnName("LinesTotal_Amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("LinesTotal_Currency");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Seller", "Seller", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "Total", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)")
+                                .HasColumnName("Total_Amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("Total_Currency");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.SellerSnapshot", "SellerSnapshot", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("DisplayName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<Guid>("SellerId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("TIN")
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+
+                            b1.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "Address", b2 =>
+                                {
+                                    b2.Property<Guid>("SellerSnapshotOrderId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<string>("City")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)");
+
+                                    b2.Property<string>("Country")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)");
+
+                                    b2.Property<string>("FlatNumber")
+                                        .HasMaxLength(10)
+                                        .HasColumnType("character varying(10)");
+
+                                    b2.Property<string>("HouseNumber")
+                                        .IsRequired()
+                                        .HasMaxLength(10)
+                                        .HasColumnType("character varying(10)");
+
+                                    b2.Property<string>("PostalCity")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)");
+
+                                    b2.Property<string>("PostalCode")
+                                        .IsRequired()
+                                        .HasMaxLength(20)
+                                        .HasColumnType("character varying(20)");
+
+                                    b2.Property<string>("Street")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)");
+
+                                    b2.HasKey("SellerSnapshotOrderId");
+
+                                    b2.ToTable("Orders");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("SellerSnapshotOrderId");
+                                });
+
+                            b1.Navigation("Address")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("Delivery");
+
+                    b.Navigation("DeliveryPrice")
+                        .IsRequired();
+
+                    b.Navigation("LinesTotal")
+                        .IsRequired();
+
+                    b.Navigation("Seller")
+                        .IsRequired();
+
+                    b.Navigation("SellerSnapshot")
+                        .IsRequired();
+
+                    b.Navigation("Total")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderDelivery", b =>
+                {
+                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", "Order")
+                        .WithOne()
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.OrderDelivery", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("OrderDeliveryId")
                                 .HasColumnType("uuid");
 
                             b1.Property<decimal>("Amount")
@@ -1567,101 +1902,124 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasMaxLength(3)
                                 .HasColumnType("character varying(3)");
 
-                            b1.HasKey("OrderId");
+                            b1.HasKey("OrderDeliveryId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("OrderDeliveries");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderId");
+                                .HasForeignKey("OrderDeliveryId");
                         });
 
-                    b.Navigation("ShippingAddress")
-                        .IsRequired();
+                    b.Navigation("Order");
 
-                    b.Navigation("TotalAmount")
+                    b.Navigation("Price")
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderGroup", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.Offer", "Offer")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "TotalPrice", b1 =>
                         {
-                            b1.Property<Guid>("OrderItemId")
+                            b1.Property<Guid>("OrderGroupId")
                                 .HasColumnType("uuid");
 
                             b1.Property<decimal>("Amount")
                                 .HasPrecision(18, 3)
-                                .HasColumnType("numeric(18,3)")
-                                .HasColumnName("OrderItem_TotalPrice");
+                                .HasColumnType("numeric(18,3)");
 
                             b1.Property<string>("Currency")
                                 .IsRequired()
                                 .HasMaxLength(3)
-                                .HasColumnType("character varying(3)")
-                                .HasColumnName("OrderItem_TotalPriceCurrency");
+                                .HasColumnType("character varying(3)");
 
-                            b1.HasKey("OrderItemId");
+                            b1.HasKey("OrderGroupId");
 
-                            b1.ToTable("OrderItems");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
-                        });
-
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "UnitPrice", b1 =>
-                        {
-                            b1.Property<Guid>("OrderItemId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<decimal>("Amount")
-                                .HasPrecision(18, 3)
-                                .HasColumnType("numeric(18,3)")
-                                .HasColumnName("OrderItem_UnitPrice");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasMaxLength(3)
-                                .HasColumnType("character varying(3)")
-                                .HasColumnName("OrderItem_UnitPriceCurrency");
-
-                            b1.HasKey("OrderItemId");
-
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderGroups");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
+                                .HasForeignKey("OrderGroupId");
                         });
 
-                    b.Navigation("Offer");
-
-                    b.Navigation("Order");
+                    b.Navigation("Buyer");
 
                     b.Navigation("TotalPrice")
                         .IsRequired();
+                });
 
-                    b.Navigation("UnitPrice")
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderLine", b =>
+                {
+                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", "Order")
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.ImageThumbnail", "Thumbnail", b1 =>
+                        {
+                            b1.Property<Guid>("OrderLineId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AltText")
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.Property<string>("ImagePath")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("OrderLineId");
+
+                            b1.ToTable("OrderLines");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderLineId");
+                        });
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Thumbnail")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Payment", b =>
+                {
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "Amount", b1 =>
+                        {
+                            b1.Property<Guid>("PaymentId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+
+                            b1.HasKey("PaymentId");
+
+                            b1.ToTable("Payments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PaymentId");
+                        });
+
+                    b.Navigation("Amount")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", "Order")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.OrderGroup", "OrderGroup")
                         .WithMany("PaymentOrders")
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("OrderGroupId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1671,20 +2029,69 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("OrderGroup");
 
                     b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Rental", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.RentOrderItem", "RentOrderItem")
-                        .WithOne("Rental")
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.Rental", "RentOrderItemId")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.PortalUser", "Borrower")
+                        .WithMany("Rentals")
+                        .HasForeignKey("BorrowerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("RentOrderItem");
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Seller", "Lender", b1 =>
+                        {
+                            b1.Property<Guid>("RentalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Type")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.HasKey("RentalId");
+
+                            b1.ToTable("Rental");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RentalId");
+                        });
+
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "PricePerDay", b1 =>
+                        {
+                            b1.Property<Guid>("RentalId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+
+                            b1.HasKey("RentalId");
+
+                            b1.ToTable("Rental");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RentalId");
+                        });
+
+                    b.Navigation("Borrower");
+
+                    b.Navigation("Lender")
+                        .IsRequired();
+
+                    b.Navigation("PricePerDay")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RolePermission", b =>
@@ -1877,21 +2284,59 @@ namespace ByteBuy.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderLine", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.OrderItem", null)
-                        .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.RentOrderItem", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "PricePerDay", b1 =>
+                        {
+                            b1.Property<Guid>("RentOrderLineId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+
+                            b1.HasKey("RentOrderLineId");
+
+                            b1.ToTable("OrderLines");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RentOrderLineId");
+                        });
+
+                    b.Navigation("PricePerDay")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.SaleOrderItem", b =>
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.SaleOrderLine", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.OrderItem", null)
-                        .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.SaleOrderItem", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "PricePerItem", b1 =>
+                        {
+                            b1.Property<Guid>("SaleOrderLineId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)");
+
+                            b1.HasKey("SaleOrderLineId");
+
+                            b1.ToTable("OrderLines");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SaleOrderLineId");
+                        });
+
+                    b.Navigation("PricePerItem")
                         .IsRequired();
                 });
 
@@ -1958,13 +2403,16 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Navigation("CartOffers");
 
                     b.Navigation("OfferDeliveries");
-
-                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("OrderItems");
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderGroup", b =>
+                {
+                    b.Navigation("Orders");
 
                     b.Navigation("PaymentOrders");
                 });
@@ -1988,13 +2436,9 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Navigation("Orders");
 
-                    b.Navigation("ShippingAddresses");
-                });
+                    b.Navigation("Rentals");
 
-            modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RentOrderItem", b =>
-                {
-                    b.Navigation("Rental")
-                        .IsRequired();
+                    b.Navigation("ShippingAddresses");
                 });
 #pragma warning restore 612, 618
         }

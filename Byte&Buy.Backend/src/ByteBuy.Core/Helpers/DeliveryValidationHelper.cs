@@ -50,7 +50,7 @@ public static class DeliveryValidationHelper
                 .Where(d => parcelLockersIds.Contains(d.Id))
                 .ToList();
 
-            if (parcelDeliveries.Any(d => d.Channel != DeliveryChannelEnum.ParcelLocker))
+            if (parcelDeliveries.Any(d => d.Channel != DeliveryChannel.ParcelLocker))
                 return Result.Failure<IReadOnlyCollection<Delivery>>(OfferErrors.InvalidParcelLockerChannel);
 
             //only one parcel locker can be selected per carrier

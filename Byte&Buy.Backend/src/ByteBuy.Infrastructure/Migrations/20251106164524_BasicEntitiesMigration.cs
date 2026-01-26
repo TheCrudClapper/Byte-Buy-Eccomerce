@@ -461,7 +461,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_CartOffers_OfferId",
                 table: "CartOffers",
-                column: "OfferId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserId",
@@ -497,7 +497,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OfferDelivery_OfferId",
                 table: "OfferDelivery",
-                column: "OfferId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_ItemId",
@@ -507,7 +507,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OfferId",
                 table: "OrderItems",
-                column: "OfferId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",

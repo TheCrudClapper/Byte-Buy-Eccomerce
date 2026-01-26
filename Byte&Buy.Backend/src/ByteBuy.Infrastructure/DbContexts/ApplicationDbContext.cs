@@ -30,17 +30,18 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<Country> Countries { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<OrderLine> OrderLines { get; set; }
     public DbSet<Delivery> Deliveries { get; set; }
     public DbSet<OfferDelivery> OfferDeliveries { get; set; }
+    public DbSet<OrderDelivery> OrderDeliveries { get; set; }
     public DbSet<RentCartOffer> RentCartOffers { get; set; }
-    public DbSet<RentOrderItem> RentOrderItems { get; set; }
     public DbSet<SaleCartOffer> SaleCartOffers { get; set; }
-    public DbSet<SaleOrderItem> SaleOrderItems { get; set; }
     public DbSet<Company> Company { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<PortalUser> PortalUsers { get; set; }
     public DbSet<DeliveryCarrier> DeliveryCarriers { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<PaymentOrder> PaymentOrders { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
@@ -63,14 +64,15 @@ public class ApplicationDbContext : IdentityDbContext<
         builder.Entity<SaleCartOffer>().ToTable("SaleCartOffers");
         builder.Entity<RentCartOffer>().ToTable("RentCartOffers");
 
-        builder.Entity<OrderItem>().ToTable("OrderItems");
-        builder.Entity<SaleOrderItem>().ToTable("SaleOrderItems");
-        builder.Entity<RentOrderItem>().ToTable("RentOrderItems");
-
         //TPH Mapping
         builder.Entity<ApplicationUser>()
            .HasDiscriminator<string>("UserType")
            .HasValue<PortalUser>("PortalUser")
            .HasValue<Employee>("Employee");
+
+        builder.Entity<OrderLine>()
+            .HasDiscriminator<string>("OrderLineType")
+            .HasValue<RentOrderLine>("RentOrderLine")
+            .HasValue<SaleOrderLine>("SaleOrderLine");
     }
 }

@@ -24,10 +24,10 @@ public static class OfferMappings
     //            PricePerItem = saleOffer.PricePerItem.ToMoneyDto(),
     //            Category = saleOffer.Item.Category.Name,
     //            Condition = saleOffer.Item.Condition.Name,
-    //            City = offer.OwnerAddressSnapshot.City,
+    //            City = offer.OfferAddressSnapshot.City,
     //            IsCompanyOffer = saleOffer.Item.IsCompanyItem,
-    //            PostalCity = offer.OwnerAddressSnapshot.PostalCity,
-    //            PostalCode = offer.OwnerAddressSnapshot.PostalCode
+    //            PostalCity = offer.OfferAddressSnapshot.PostalCity,
+    //            PostalCode = offer.OfferAddressSnapshot.PostalCode
     //        },
     //        RentOffer rentOffer => new RentBrowserItemResponse
     //        {
@@ -38,10 +38,10 @@ public static class OfferMappings
     //            Category = rentOffer.Item.Category.Name,
     //            Condition = rentOffer.Item.Condition.Name,
     //            MaxRentalDays = rentOffer.MaxRentalDays,
-    //            City = offer.OwnerAddressSnapshot.City,
+    //            City = offer.OfferAddressSnapshot.City,
     //            IsCompanyOffer = rentOffer.Item.IsCompanyItem,
-    //            PostalCity = offer.OwnerAddressSnapshot.PostalCity,
-    //            PostalCode = offer.OwnerAddressSnapshot.PostalCode
+    //            PostalCity = offer.OfferAddressSnapshot.PostalCity,
+    //            PostalCode = offer.OfferAddressSnapshot.PostalCode
     //        },
     //        _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
     //    };
@@ -110,7 +110,7 @@ public static class OfferMappings
         {
             Condition = o.Item.Condition.Name,
             Category = o.Item.Category.Name,
-            City = o.OwnerAddressSnapshot.City,
+            City = o.OfferAddressSnapshot.City,
             Id = o.Id,
             Image = o.Item.Images
                 .AsQueryable()
@@ -118,8 +118,8 @@ public static class OfferMappings
                 .FirstOrDefault()!,
 
             IsCompanyOffer = o.Item.IsCompanyItem,
-            PostalCity = o.OwnerAddressSnapshot.PostalCity,
-            PostalCode = o.OwnerAddressSnapshot.PostalCode,
+            PostalCity = o.OfferAddressSnapshot.PostalCity,
+            PostalCode = o.OfferAddressSnapshot.PostalCode,
             Title = o.Item.Name,
 
             PricePerItem = o is SaleOffer

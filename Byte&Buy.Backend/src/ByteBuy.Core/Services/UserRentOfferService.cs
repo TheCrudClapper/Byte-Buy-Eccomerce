@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
@@ -68,6 +69,8 @@ public class UserRentOfferService : IUserRentOfferService
         var deliveryIds = _itemHelperService
             .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
+        var seller = Seller.CreatePrivateSeller(userId);
+
         var rentOfferResult = RentOffer.Create(
             item.Id,
             userId,
@@ -75,6 +78,7 @@ public class UserRentOfferService : IUserRentOfferService
             request.PricePerDay,
             request.MaxRentalDays,
             homeAddress,
+            seller,
             deliveryIds);
 
         if (rentOfferResult.IsFailure)

@@ -22,7 +22,7 @@ public class Image : AuditableEntity, ISoftDeletable
     }
 
     private Image() { }
-    private Image(string imagePath, string altText)
+    private Image(string imagePath, string? altText)
     {
         ImagePath = imagePath;
         AltText = altText;
@@ -30,7 +30,7 @@ public class Image : AuditableEntity, ISoftDeletable
         DateCreated = DateTime.UtcNow;
     }
 
-    public Result ChangeImageAltText(string altText)
+    public Result ChangeImageAltText(string? altText)
     {
         var validationResult = Validate(altText);
         if (validationResult.IsFailure)
@@ -40,7 +40,7 @@ public class Image : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    private static Result Validate(string altText)
+    private static Result Validate(string? altText)
     {
         if (!string.IsNullOrEmpty(altText))
         {
@@ -51,7 +51,7 @@ public class Image : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    internal static Result<Image> Create(string imagePath, string altText)
+    internal static Result<Image> Create(string imagePath, string? altText)
     {
         var validationResult = Validate(altText);
         if (validationResult.IsFailure)

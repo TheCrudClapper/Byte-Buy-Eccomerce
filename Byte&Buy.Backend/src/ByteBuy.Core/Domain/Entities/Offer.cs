@@ -7,28 +7,29 @@ namespace ByteBuy.Core.Domain.Entities;
 public abstract class Offer : AuditableEntity, ISoftDeletable
 {
     public Guid ItemId { get; set; }
-    public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
 
-    public AddressValueObject OwnerAddressSnapshot = null!;
+    public AddressValueObject OfferAddressSnapshot = null!;
     public int QuantityAvailable { get; set; }
     public Guid CreatedByUserId { get; set; }
+    public Seller Seller { get; set; } = null!;
     public ApplicationUser CreatedBy { get; set; } = null!;
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
     //EF Navigation Properties ONLY
     public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
-    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
     public Item Item { get; set; } = null!;
 
     protected Offer() { }
 
-    protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable, AddressValueObject offerAddress)
+    protected Offer(Guid itemId, Guid createdByUserId, int quantityAvailable, AddressValueObject offerAddress, Seller seller)
     {
         ItemId = itemId;
         CreatedByUserId = createdByUserId;
         QuantityAvailable = quantityAvailable;
-        OwnerAddressSnapshot = offerAddress;
+        OfferAddressSnapshot = offerAddress;
+        Seller = seller;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
     }

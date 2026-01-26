@@ -13,7 +13,7 @@ public class OfferConfig : IEntityTypeConfiguration<Offer>
             .HasForeignKey(o => o.CreatedByUserId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.OwnsOne(e => e.OwnerAddressSnapshot, a =>
+        builder.OwnsOne(e => e.OfferAddressSnapshot, a =>
         {
             a.Property(p => p.City).HasMaxLength(50);
             a.Property(p => p.Street).HasMaxLength(50);
@@ -22,6 +22,19 @@ public class OfferConfig : IEntityTypeConfiguration<Offer>
             a.Property(p => p.HouseNumber).HasMaxLength(10);
             a.Property(p => p.Country).HasMaxLength(50);
             a.Property(p => p.FlatNumber).HasMaxLength(10);
+        });
+
+        builder.OwnsOne(o => o.Seller, s =>
+        {
+            s.Property(x => x.Id)
+                .HasColumnName("Seller_Id")
+                .IsRequired();
+
+            s.Property(x => x.Type)
+                .HasColumnName("Seller_Type")
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .IsRequired();
         });
 
         builder.HasQueryFilter(item => item.IsActive);

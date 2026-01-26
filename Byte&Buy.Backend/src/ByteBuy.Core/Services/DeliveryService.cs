@@ -40,7 +40,7 @@ public class DeliveryService : IDeliveryService
             request.Description,
             request.Price,
             size,
-            (DeliveryChannelEnum)request.ChannelId,
+            (DeliveryChannel)request.ChannelId,
             request.CarrierId
         );
 
@@ -74,7 +74,7 @@ public class DeliveryService : IDeliveryService
             request.Description,
             request.Price,
             size,
-            (DeliveryChannelEnum)request.ChannelId,
+            (DeliveryChannel)request.ChannelId,
             request.CarrierId
         );
 
@@ -123,10 +123,10 @@ public class DeliveryService : IDeliveryService
     }
 
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()
-        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<DeliveryChannelEnum>());
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<DeliveryChannel>());
 
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes()
-        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSizeEnum>());
+        => Result.Success(EnumToSelectListMapper.EnumToSelectLists<ParcelSize>());
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct)
     {
@@ -135,19 +135,19 @@ public class DeliveryService : IDeliveryService
 
         var response = new DeliveryOptionsResponse
         {
-            ParcelLockerDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.ParcelLocker),
-            CourierDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.Courier),
-            PickupPointDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannelEnum.PickupPoint)
+            ParcelLockerDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannel.ParcelLocker),
+            CourierDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannel.Courier),
+            PickupPointDeliveries = DeliveryMappings.MapDeliveries(deliveries, DeliveryChannel.PickupPoint)
         };
 
         return response;
     }
 
     //Helpers
-    private static ParcelSizeEnum? GetEnumOrNull(int? id)
+    private static ParcelSize? GetEnumOrNull(int? id)
     {
         return id.HasValue
-            ? (ParcelSizeEnum)id.Value
+            ? (ParcelSize)id.Value
             : null;
     }
 

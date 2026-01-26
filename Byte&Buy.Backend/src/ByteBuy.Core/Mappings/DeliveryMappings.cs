@@ -22,7 +22,7 @@ public static class DeliveryMappings
 
     public static List<DeliveryOptionResponse> MapDeliveries(
     IEnumerable<DeliveryOptionResponse> deliveries,
-    DeliveryChannelEnum channel)
+    DeliveryChannel channel)
     {
         return deliveries
             .Where(d => d.DeliveryChannel == channel.ToString())

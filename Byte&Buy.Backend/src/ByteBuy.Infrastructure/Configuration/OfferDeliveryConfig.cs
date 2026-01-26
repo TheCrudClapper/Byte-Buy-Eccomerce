@@ -18,6 +18,6 @@ public class OfferDeliveryConfig : IEntityTypeConfiguration<OfferDelivery>
             .HasForeignKey(od => od.DeliveryId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasQueryFilter(item => item.IsActive);
+        builder.HasQueryFilter(od => od.IsActive);
     }
 }

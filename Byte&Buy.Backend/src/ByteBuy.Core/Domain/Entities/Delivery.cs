@@ -12,8 +12,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
     public Money Price { get; private set; } = null!;
     public Guid DeliveryCarrierId { get; private set; }
     public DeliveryCarrier DeliveryCarrier { get; set; } = null!;
-    public ParcelSizeEnum? ParcelSize { get; private set; }
-    public DeliveryChannelEnum Channel { get; private set; }
+    public ParcelSize? ParcelSize { get; private set; }
+    public DeliveryChannel Channel { get; private set; }
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
@@ -23,8 +23,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
     private Delivery(string name,
         string? description,
         Money money,
-        ParcelSizeEnum? size,
-        DeliveryChannelEnum channel,
+        ParcelSize? size,
+        DeliveryChannel channel,
         Guid deliveryCarrierId)
     {
         Name = name;
@@ -49,13 +49,13 @@ public class Delivery : AuditableEntity, ISoftDeletable
     public static Result Validate(
         string name,
         string? description,
-        ParcelSizeEnum? size,
-        DeliveryChannelEnum channel)
+        ParcelSize? size,
+        DeliveryChannel channel)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 50)
             return Result.Failure(DeliveryErrors.NameInvalid);
 
-        if (channel is not DeliveryChannelEnum.ParcelLocker && size is not null)
+        if (channel is not DeliveryChannel.ParcelLocker && size is not null)
             return Result.Failure(DeliveryErrors.ParcelSizeInvalid);
 
         if (description is not null)
@@ -74,8 +74,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
         string name,
         string? description,
         decimal price,
-        ParcelSizeEnum? size,
-        DeliveryChannelEnum channel,
+        ParcelSize? size,
+        DeliveryChannel channel,
         Guid deliveryCarrierId)
     {
         var validationResult = Validate(name, description, size, channel);
@@ -92,8 +92,8 @@ public class Delivery : AuditableEntity, ISoftDeletable
     public Result Update(string name,
         string? description,
         decimal price,
-        ParcelSizeEnum? size,
-        DeliveryChannelEnum channel,
+        ParcelSize? size,
+        DeliveryChannel channel,
         Guid deliveryCarrierId)
     {
         var validationResult = Validate(name, description, size, channel);

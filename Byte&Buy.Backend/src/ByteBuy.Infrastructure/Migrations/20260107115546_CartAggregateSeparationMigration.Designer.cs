@@ -228,7 +228,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OfferId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
@@ -238,7 +238,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("OfferId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("CartOffers", (string)null);
 
@@ -608,14 +608,14 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OfferId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DeliveryId");
 
-                    b.HasIndex("OfferId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OfferDeliveries");
                 });
@@ -674,7 +674,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("OfferId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("OrderId")
@@ -685,7 +685,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfferId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("OrderId");
 
@@ -1286,7 +1286,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasOne("ByteBuy.Core.Domain.Entities.Offer", "Offer")
                         .WithMany("CartOffers")
-                        .HasForeignKey("OfferId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1427,9 +1427,9 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "OwnerAddressSnapshot", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "OfferAddressSnapshot", b1 =>
                         {
-                            b1.Property<Guid>("OfferId")
+                            b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("City")
@@ -1466,19 +1466,19 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasMaxLength(50)
                                 .HasColumnType("character varying(50)");
 
-                            b1.HasKey("OfferId");
+                            b1.HasKey("OrderId");
 
                             b1.ToTable("Offers");
 
                             b1.WithOwner()
-                                .HasForeignKey("OfferId");
+                                .HasForeignKey("OrderId");
                         });
 
                     b.Navigation("CreatedBy");
 
                     b.Navigation("Item");
 
-                    b.Navigation("OwnerAddressSnapshot");
+                    b.Navigation("OfferAddressSnapshot");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OfferDelivery", b =>
@@ -1491,7 +1491,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasOne("ByteBuy.Core.Domain.Entities.Offer", "Offer")
                         .WithMany("OfferDeliveries")
-                        .HasForeignKey("OfferId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1590,7 +1590,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.Offer", "Offer")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OfferId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -1602,7 +1602,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "TotalPrice", b1 =>
                         {
-                            b1.Property<Guid>("OrderItemId")
+                            b1.Property<Guid>("RentOrderLineId")
                                 .HasColumnType("uuid");
 
                             b1.Property<decimal>("Amount")
@@ -1616,17 +1616,17 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasColumnType("character varying(3)")
                                 .HasColumnName("OrderItem_TotalPriceCurrency");
 
-                            b1.HasKey("OrderItemId");
+                            b1.HasKey("RentOrderLineId");
 
                             b1.ToTable("OrderItems");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
+                                .HasForeignKey("RentOrderLineId");
                         });
 
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "UnitPrice", b1 =>
                         {
-                            b1.Property<Guid>("OrderItemId")
+                            b1.Property<Guid>("RentOrderLineId")
                                 .HasColumnType("uuid");
 
                             b1.Property<decimal>("Amount")
@@ -1640,12 +1640,12 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasColumnType("character varying(3)")
                                 .HasColumnName("OrderItem_UnitPriceCurrency");
 
-                            b1.HasKey("OrderItemId");
+                            b1.HasKey("RentOrderLineId");
 
                             b1.ToTable("OrderItems");
 
                             b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
+                                .HasForeignKey("RentOrderLineId");
                         });
 
                     b.Navigation("Offer");

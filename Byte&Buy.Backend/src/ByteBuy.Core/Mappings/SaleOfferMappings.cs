@@ -25,11 +25,11 @@ public static class SaleOfferMappings
             so.QuantityAvailable,
             so.PricePerItem.Amount,
             so.OfferDeliveries
-                .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel == DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList(),
             so.OfferDeliveries
-                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel != DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList());
 
@@ -47,11 +47,11 @@ public static class SaleOfferMappings
                 .Select(ImageMappings.ImageResponseProjection)
                 .ToList(),
             so.OfferDeliveries
-                .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel == DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList(),
             so.OfferDeliveries
-                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel != DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList());
 

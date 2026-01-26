@@ -30,11 +30,11 @@ public static class RentOfferMappings
            ro.PricePerDay.Amount,
            ro.MaxRentalDays,
            ro.OfferDeliveries
-               .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+               .Where(d => d.Delivery.Channel == DeliveryChannel.ParcelLocker)
                .Select(d => d.DeliveryId)
                .ToList(),
            ro.OfferDeliveries
-               .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+               .Where(d => d.Delivery.Channel != DeliveryChannel.ParcelLocker)
                .Select(d => d.DeliveryId)
                .ToList());
 
@@ -53,11 +53,11 @@ public static class RentOfferMappings
                 .Select(ImageMappings.ImageResponseProjection)
                 .ToList(),
              ro.OfferDeliveries
-                .Where(d => d.Delivery.Channel == DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel == DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList(),
             ro.OfferDeliveries
-                .Where(d => d.Delivery.Channel != DeliveryChannelEnum.ParcelLocker)
+                .Where(d => d.Delivery.Channel != DeliveryChannel.ParcelLocker)
                 .Select(d => d.DeliveryId)
                 .ToList());
 

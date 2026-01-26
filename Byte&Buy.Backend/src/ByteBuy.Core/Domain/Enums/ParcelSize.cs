@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Enums;
 
-public enum ParcelSizeEnum
+public enum ParcelSize
 {
     [Description("Small")]
     Small = 0,

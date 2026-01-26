@@ -7,7 +7,7 @@ namespace ByteBuy.Core.Domain.Entities;
 
 /// <summary>
 /// Represents unique information about the ByteBuy company.
-/// This entity cannot be deleted and only one instance exists in the system.
+/// This aggregate cannot be deleted and only one instance exists in the system.
 /// </summary>
 public class Company : AuditableEntity
 {

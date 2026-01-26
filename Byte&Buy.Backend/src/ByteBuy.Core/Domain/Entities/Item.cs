@@ -213,7 +213,7 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public Result ChangeImageAltText(Guid imageId, string altText)
+    public Result ChangeImageAltText(Guid imageId, string? altText)
     {
         var image = Images.FirstOrDefault(i => i.Id == imageId);
         if (image is null)
@@ -253,7 +253,7 @@ public class Item : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
-    public Result AddImage(string imagePath, string altText)
+    public Result AddImage(string imagePath, string? altText)
     {
         var imageResult = Image.Create(imagePath, altText);
         if (imageResult.IsFailure)

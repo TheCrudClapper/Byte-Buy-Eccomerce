@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Enums;
 
-public enum DeliveryChannelEnum
+public enum DeliveryChannel
 {
     [Description("Courier")]
     Courier = 0,

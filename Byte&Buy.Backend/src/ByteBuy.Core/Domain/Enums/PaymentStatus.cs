@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Domain.Enums;
 
-public enum PaymentStatusEnum
+public enum PaymentStatus
 {
     [Description("Created")]
     Created = 0,

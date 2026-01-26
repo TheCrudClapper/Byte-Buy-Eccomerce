@@ -99,7 +99,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Offers_OfferId",
                 table: "OfferDeliveries",
-                column: "OfferId",
+                column: "OrderId",
                 principalTable: "Offers",
                 principalColumn: "Id");
         }
@@ -196,7 +196,7 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDelivery_Offers_OfferId",
                 table: "OfferDelivery",
-                column: "OfferId",
+                column: "OrderId",
                 principalTable: "Offers",
                 principalColumn: "Id");
         }

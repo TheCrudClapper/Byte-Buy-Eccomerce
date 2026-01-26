@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Mappings;
@@ -67,12 +68,15 @@ public class UserSaleOfferService : IUserSaleOfferService
         var deliveryIds = _itemHelperService
             .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
+        var seller = Seller.CreatePrivateSeller(userId);
+
         var saleOfferResult = SaleOffer.Create(
                 item.Id,
                 userId,
                 request.QuantityAvailable,
                 request.PricePerItem,
                 homeAddress,
+                seller,
                 deliveryIds);
 
         if (saleOfferResult.IsFailure)

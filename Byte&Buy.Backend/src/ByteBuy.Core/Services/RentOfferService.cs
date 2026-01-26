@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Offer.RentOffer;
 using ByteBuy.Core.DTO.Shared;
 using ByteBuy.Core.Helpers;
@@ -48,6 +49,8 @@ public class RentOfferService : IRentOfferService
         if (companyAddress is null)
             return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
 
+        var seller = Seller.CreateCompanySeller(userId);
+
         var rentOfferResult = RentOffer.Create(
             request.ItemId,
             userId,
@@ -55,6 +58,7 @@ public class RentOfferService : IRentOfferService
             request.PricePerDay,
             request.MaxRentalDays,
             companyAddress,
+            seller,
             validatedDeliveries.Value.Select(i => i.Id));
 
         if (rentOfferResult.IsFailure)
