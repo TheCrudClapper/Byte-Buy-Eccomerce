@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.DTO.Abstractions;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Internal.Image;
+using ByteBuy.Core.DTO.Public.Abstractions;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

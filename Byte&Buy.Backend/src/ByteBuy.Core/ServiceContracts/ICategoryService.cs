@@ -1,7 +1,6 @@
-﻿using ByteBuy.Core.DTO.Category;
+﻿using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
-using ByteBuy.Services.DTO.Category;
 
 namespace ByteBuy.Core.ServiceContracts;
 

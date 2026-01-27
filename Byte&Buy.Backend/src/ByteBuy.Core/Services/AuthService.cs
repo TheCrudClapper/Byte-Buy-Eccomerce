@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Auth;
+using ByteBuy.Core.DTO.Public.Auth;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;

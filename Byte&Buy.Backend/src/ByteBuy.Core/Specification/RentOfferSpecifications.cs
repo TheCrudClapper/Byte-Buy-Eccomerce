@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;

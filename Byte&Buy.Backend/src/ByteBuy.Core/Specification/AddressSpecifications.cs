@@ -1,8 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 

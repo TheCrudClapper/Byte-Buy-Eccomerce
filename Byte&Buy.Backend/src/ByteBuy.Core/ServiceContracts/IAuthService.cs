@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.Auth;
+﻿using ByteBuy.Core.DTO.Public.Auth;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

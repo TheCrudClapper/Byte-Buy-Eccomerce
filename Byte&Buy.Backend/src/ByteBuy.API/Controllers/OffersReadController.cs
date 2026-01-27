@@ -1,7 +1,7 @@
 ﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Offer.Common;
-using ByteBuy.Core.DTO.Offer.RentOffer;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Public.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

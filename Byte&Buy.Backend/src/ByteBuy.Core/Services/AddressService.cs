@@ -1,9 +1,8 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.AddressValueObj;
-using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Address;
+using ByteBuy.Core.DTO.Public.AddressValueObj;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;

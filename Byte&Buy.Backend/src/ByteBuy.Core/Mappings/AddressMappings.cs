@@ -1,8 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.AddressValueObj;
-using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Core.DTO.Public.Address;
+using ByteBuy.Core.DTO.Public.AddressValueObj;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

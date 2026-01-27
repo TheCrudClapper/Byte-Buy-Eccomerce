@@ -1,17 +1,18 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Internal.Company;
+using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 
 public static class CompanyInfoSpecifications
 {
-    public sealed class CompanyInfoToAddressValueObject : Specification<Company, AddressValueObject>
+    public sealed class CompanyInfoToAddressWithIdSpec : Specification<Company, CompanyAddressWithId>
     {
-        public CompanyInfoToAddressValueObject()
+        public CompanyInfoToAddressWithIdSpec()
         {
             Query.AsNoTracking()
-                .Select(ci => ci.CompanyAddress);
+                .Select(CompanyInfoMappings.CompanyAddressWithItProjection);
         }
     }
 }

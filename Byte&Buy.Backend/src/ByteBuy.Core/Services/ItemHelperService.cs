@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;

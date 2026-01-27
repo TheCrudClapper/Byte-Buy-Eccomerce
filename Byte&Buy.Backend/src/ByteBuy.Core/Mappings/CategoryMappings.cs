@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Category;
-using ByteBuy.Core.DTO.Shared;
-using ByteBuy.Services.DTO.Category;
+using ByteBuy.Core.DTO.Public.Category;
+using ByteBuy.Core.DTO.Public.Shared;
 
 namespace ByteBuy.Core.Mappings;
 

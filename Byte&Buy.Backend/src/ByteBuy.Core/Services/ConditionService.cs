@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Condition;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Condition;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;

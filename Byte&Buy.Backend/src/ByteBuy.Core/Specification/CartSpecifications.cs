@@ -1,5 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.Internal.Cart;
+using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 
@@ -28,8 +30,8 @@ public static class CartSpecifications
             }
             else
             {
-               Query.Where(c => c.UserId == userId)
-                    .Include(c => c.CartOffers);
+                Query.Where(c => c.UserId == userId)
+                     .Include(c => c.CartOffers);
             }
         }
     }
@@ -44,6 +46,19 @@ public static class CartSpecifications
                 .ThenInclude(c => c.Offer)
                     .ThenInclude(o => o.Item)
                         .ThenInclude(i => i.Images);
+        }
+    }
+
+
+    // read-only
+    public sealed class FlatCartOffersSpec : Specification<CartOffer, FlatCartOffersQuery>
+    {
+        public FlatCartOffersSpec(Guid userId)
+        {
+            Query
+                .AsNoTracking()
+                .Where(co => co.Cart.UserId == userId)
+                .Select(CartMappings.FlatCartOffersProjection);
         }
     }
 }

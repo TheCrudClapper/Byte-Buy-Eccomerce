@@ -1,6 +1,6 @@
 ﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Offer.RentOffer;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +21,7 @@ public class UserRentOffersController : BaseApiController
         => HandleResult(await _rentOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm]UserRentOfferUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] UserRentOfferUpdateRequest request)
        => HandleResult(await _rentOfferService.UpdateAsync(CurrentUserId, id, request));
 
     [HttpGet("{id:guid}")]

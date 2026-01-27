@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.Country;
+﻿using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

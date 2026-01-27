@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.ApplicationUser;
+using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.Extensions;
-using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
@@ -32,5 +31,5 @@ public class ApplicationUserService : IApplicationUserService
         return Result.Success();
     }
 
-  
+
 }

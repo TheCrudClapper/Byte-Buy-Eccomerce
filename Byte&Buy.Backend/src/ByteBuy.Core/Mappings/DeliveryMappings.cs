@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Delivery;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Delivery;
+using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

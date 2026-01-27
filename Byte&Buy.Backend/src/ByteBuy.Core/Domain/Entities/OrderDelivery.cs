@@ -34,10 +34,9 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     // Locker
     public string? ParcelLockerId { get; private set; }
 
-    public bool IsActive { get; set;  }
+    public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
     //Navigatio Ef
     public Order Order { get; set; } = null!;
 }
- 

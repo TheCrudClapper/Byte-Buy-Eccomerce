@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.Role;
+﻿using ByteBuy.Core.DTO.Public.Role;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

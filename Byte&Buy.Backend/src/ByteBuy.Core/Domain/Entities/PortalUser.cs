@@ -183,7 +183,7 @@ public sealed class PortalUser : ApplicationUser
         {
             address.MarkAsDefault();
         }
-        else if(isDefault)
+        else if (isDefault)
         {
             currentDefault.UnmarkAsDefault();
             address.MarkAsDefault();

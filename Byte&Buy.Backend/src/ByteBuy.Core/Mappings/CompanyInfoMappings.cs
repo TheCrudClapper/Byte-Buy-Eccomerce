@@ -1,7 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.AddressValueObj;
-using ByteBuy.Core.DTO.CompanyInfo;
-
+using ByteBuy.Core.DTO.Internal.Company;
+using ByteBuy.Core.DTO.Public.AddressValueObj;
+using ByteBuy.Core.DTO.Public.CompanyInfo;
+using System.Linq.Expressions;
 namespace ByteBuy.Core.Mappings;
 
 public static class CompanyInfoMappings
@@ -26,5 +27,10 @@ public static class CompanyInfoMappings
             );
 
     }
+
+    public static Expression<Func<Company, CompanyAddressWithId>> CompanyAddressWithItProjection
+        => c => new CompanyAddressWithId(
+            c.Id,
+            c.CompanyAddress);
 
 }

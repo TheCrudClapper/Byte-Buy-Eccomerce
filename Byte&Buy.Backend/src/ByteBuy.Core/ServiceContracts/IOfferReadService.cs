@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.DTO.Offer.Common;
-using ByteBuy.Core.DTO.Offer.RentOffer;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+﻿using ByteBuy.Core.DTO.Public.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

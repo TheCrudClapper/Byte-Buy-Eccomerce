@@ -26,7 +26,7 @@ public class RentalConfiguration : IEntityTypeConfiguration<Rental>
         builder.OwnsOne(r => r.PricePerDay, m =>
         {
             m.Property(prop => prop.Currency).HasMaxLength(3).IsRequired();
-            m.Property(prop => prop.Amount).HasPrecision(18,3).IsRequired();
+            m.Property(prop => prop.Amount).HasPrecision(18, 3).IsRequired();
         });
 
         builder.HasQueryFilter(item => item.IsActive);

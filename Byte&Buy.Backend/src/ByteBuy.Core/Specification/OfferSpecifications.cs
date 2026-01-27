@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Offer.Common.Query;
+using ByteBuy.Core.DTO.Internal.Offer;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
@@ -23,7 +23,7 @@ public static class OfferSpecifications
             Query.AsNoTracking()
                 .Where(o => o.CreatedByUserId == userId)
                 .Select(OfferMappings.UserOfferPanelQueryProjection);
-                
+
         }
     }
 }

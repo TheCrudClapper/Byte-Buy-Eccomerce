@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Delivery;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Delivery;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
@@ -14,7 +14,7 @@ public static class DeliverySpecifications
         {
             if (offerId.HasValue)
                 Query.Where(d => d.OfferDeliveries.Any(od => od.OfferId == offerId && od.IsActive));
-            
+
             Query.AsNoTracking()
                 .Select(DeliveryMappings.DeliveryListResponseProjection);
         }

@@ -39,7 +39,7 @@ public class OrderDeliveryConfig : IEntityTypeConfiguration<OrderDelivery>
                  .IsRequired();
         });
 
-       
+
         builder.Property(od => od.City)
             .HasMaxLength(50);
 

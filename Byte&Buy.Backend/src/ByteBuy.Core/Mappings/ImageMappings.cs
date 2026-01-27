@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Internal.Image;
+using ByteBuy.Core.DTO.Public.Image;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
@@ -19,10 +20,18 @@ public static class ImageMappings
            i.AltText
            );
 
+    public static Expression<Func<Image, ImageThumbnail>> ImageThumbnailProjection =>
+        i => new ImageThumbnail
+        {
+            ImagePath = i.ImagePath,
+            AltText = i.AltText
+        };
+
     public static ExistingImageUpdate ToExistingImageUpdate(this ExistingImageUpdateRequest dto)
     {
         return new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
     }
+
 
     public static ImageDraft ToImageDraft(this SavedImage image)
     {

@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.Condition;
+﻿using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

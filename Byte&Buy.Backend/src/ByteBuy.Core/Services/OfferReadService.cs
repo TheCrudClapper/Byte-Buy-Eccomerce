@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Offer.Common;
-using ByteBuy.Core.DTO.Offer.RentOffer;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Public.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;

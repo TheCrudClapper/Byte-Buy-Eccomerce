@@ -5,6 +5,9 @@
 /// </summary>
 public static class CompanyInfoErrors
 {
+    public static readonly Error NotFound = new(
+        ErrorType.NotFound, "Company.NotFound", "Company is not found, you can't add offer");
+
     public static readonly Error DuplicateCompanyInfo = new(
         ErrorType.Conflict, "CompanyInfo", "Company information is already defined, update it");
 

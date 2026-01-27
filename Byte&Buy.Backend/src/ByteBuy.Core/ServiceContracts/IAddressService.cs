@@ -1,7 +1,6 @@
-﻿using ByteBuy.Core.DTO.Address;
-using ByteBuy.Core.DTO.AddressValueObj;
-using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Core.DTO.Shared;
+﻿using ByteBuy.Core.DTO.Public.Address;
+using ByteBuy.Core.DTO.Public.AddressValueObj;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

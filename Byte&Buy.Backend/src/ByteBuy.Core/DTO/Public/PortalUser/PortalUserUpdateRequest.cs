@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.PortalUser;
+
+public record PortalUserUpdateRequest(
+    [Required] Guid RoleId,
+    [Required, MaxLength(50)] string FirstName,
+    [Required, MaxLength(50)] string LastName,
+    [Required, EmailAddress] string Email,
+    string? Password,
+    [MaxLength(15)] string? PhoneNumber,
+    IEnumerable<Guid>? GrantedPermissionIds,
+    IEnumerable<Guid>? RevokedPermissionIds);

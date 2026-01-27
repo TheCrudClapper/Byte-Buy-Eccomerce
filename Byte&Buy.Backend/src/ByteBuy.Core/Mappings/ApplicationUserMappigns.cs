@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.ApplicationUser;
+using ByteBuy.Core.DTO.Public.ApplicationUser;
 
 namespace ByteBuy.Core.Mappings;
 

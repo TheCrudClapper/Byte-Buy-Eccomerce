@@ -1,8 +1,8 @@
 ﻿
 using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.ApplicationUser;
-using ByteBuy.Core.DTO.PortalUser;
+using ByteBuy.Core.DTO.Public.ApplicationUser;
+using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;

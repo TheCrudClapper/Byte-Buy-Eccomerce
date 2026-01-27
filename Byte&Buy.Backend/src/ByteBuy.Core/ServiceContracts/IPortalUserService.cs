@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.DTO.ApplicationUser;
-using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Core.DTO.Shared;
+﻿using ByteBuy.Core.DTO.Public.ApplicationUser;
+using ByteBuy.Core.DTO.Public.PortalUser;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Offer.Common;
-using ByteBuy.Core.DTO.Offer.Common.Query;
-using ByteBuy.Core.DTO.Offer.Enum;
-using ByteBuy.Core.DTO.Offer.RentOffer;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Internal.Offer;
+using ByteBuy.Core.DTO.Public.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.Enum;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using System.Diagnostics;
 using System.Linq.Expressions;
 

@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Money;
-using ByteBuy.Core.DTO.Offer.Common;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Public.Money;
+using ByteBuy.Core.DTO.Public.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -47,19 +47,19 @@ public class SaleOfferService : ISaleOfferService
         if (stockUpdateResult.IsFailure)
             return Result.Failure<CreatedResponse>(stockUpdateResult.Error);
 
-        var spec = new CompanyInfoToAddressValueObject();
-        var companyAddress = await _companyInfoRepository.GetBySpecAsync(spec);
-        if (companyAddress is null)
-            return Result.Failure<CreatedResponse>(ItemErrors.NotFound);
+        var spec = new CompanyInfoToAddressWithIdSpec();
+        var companyData = await _companyInfoRepository.GetBySpecAsync(spec);
+        if (companyData is null)
+            return Result.Failure<CreatedResponse>(CompanyInfoErrors.NotFound);
 
-        var seller = Seller.CreateCompanySeller(userId);
+        var seller = Seller.CreateCompanySeller(companyData.Id);
 
         var saleOfferResult = SaleOffer.Create(
             request.ItemId,
             userId,
             request.QuantityAvailable,
             request.PricePerItem,
-            companyAddress,
+            companyData.CompanyAddress,
             seller,
             validatedDeliveries.Value.Select(d => d.Id));
 

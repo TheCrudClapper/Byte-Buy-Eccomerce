@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Image;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;

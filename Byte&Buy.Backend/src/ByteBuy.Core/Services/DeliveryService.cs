@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Delivery;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Delivery;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;

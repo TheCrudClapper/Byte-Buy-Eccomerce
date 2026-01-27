@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.DTO.DeliveryCarrier;
+﻿using ByteBuy.Core.DTO.Public.DeliveryCarrier;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 

@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.ValueObjects;
-using ByteBuy.Core.DTO.Money;
+using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.Mappings;
 

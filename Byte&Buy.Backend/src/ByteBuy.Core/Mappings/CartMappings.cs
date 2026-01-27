@@ -1,5 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Cart.CartItem;
+using ByteBuy.Core.DTO.Internal.Cart;
+using ByteBuy.Core.DTO.Public.Cart.CartOffer;
+using ByteBuy.Core.DTO.Public.Cart.Enum;
+using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -33,4 +36,36 @@ public static class CartMappings
             _ => throw new ArgumentOutOfRangeException(nameof(cartOffer), $"Unsupported cart offer type or offer is null: {cartOffer.GetType().Name}"),
         };
     }
+
+    public static Expression<Func<CartOffer, FlatCartOffersQuery>> FlatCartOffersProjection
+        => co => new FlatCartOffersQuery
+        {
+            OfferId = co.OfferId,
+            Quantity = co.Quantity,
+
+            PricePerItem = co.Offer is SaleOffer
+                ? ((SaleOffer)co.Offer).PricePerItem.ToMoneyDto()
+                : null,
+
+            PricePerDay = co.Offer is RentOffer
+                ? ((RentOffer)co.Offer).PricePerDay.ToMoneyDto()
+                : null,
+
+            RentalDays = co is RentCartOffer
+                ? ((RentCartOffer)co).RentalDays
+                : null,
+
+            SellerId = co.Offer.Seller.Id,
+            SellerType = co.Offer.Seller.Type,
+            Thumbnail = co.Offer.Item.Images
+                .AsQueryable()
+                .Select(ImageMappings.ImageThumbnailProjection)
+                .FirstOrDefault()!,
+
+            Title = co.Offer.Item.Name,
+
+            Type = co is RentCartOffer 
+                ? CartOfferType.Rent 
+                : CartOfferType.Sale
+        };
 }

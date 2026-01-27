@@ -1,5 +1,5 @@
 ﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Offer.Common;
+using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +7,7 @@ namespace ByteBuy.API.Controllers;
 
 [Route("api/me/offers")]
 [ApiController]
-public class UserOffersReadController :  BaseApiController
+public class UserOffersReadController : BaseApiController
 {
     private readonly IOfferReadService _offerReadService;
     public UserOffersReadController(IOfferReadService offerReadService)

@@ -1,9 +1,8 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Category;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Category;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
-using ByteBuy.Services.DTO.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;

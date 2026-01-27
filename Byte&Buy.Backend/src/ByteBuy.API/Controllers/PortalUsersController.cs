@@ -1,11 +1,10 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.ApplicationUser;
-using ByteBuy.Core.DTO.PortalUser;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.ApplicationUser;
+using ByteBuy.Core.DTO.Public.PortalUser;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Contracts;
 
 namespace ByteBuy.API.Controllers;
 

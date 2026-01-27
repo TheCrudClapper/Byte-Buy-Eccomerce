@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Role;
-using ByteBuy.Core.DTO.Shared;
+using ByteBuy.Core.DTO.Public.Role;
+using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

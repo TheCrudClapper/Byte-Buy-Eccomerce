@@ -11,7 +11,7 @@ public class Rental : AuditableEntity, ISoftDeletable
     public Seller Lender { get; set; } = null!;
     public RentalStatus Status { get; set; }
     public Money PricePerDay { get; private set; } = null!;
-    public int RentalDays { get; private set;  }
+    public int RentalDays { get; private set; }
     public DateTime RentalStartDate { get; set; }
     public DateTime? RentalEndDate { get; set; }
     public DateTime? ReturnedDate { get; set; }

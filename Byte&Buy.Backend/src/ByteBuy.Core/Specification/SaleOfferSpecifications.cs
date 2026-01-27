@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Offer.SaleOffer;
+using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
@@ -62,7 +62,7 @@ public static class SaleOfferSpecifications
         }
     }
 
-    public sealed class SaleOfferDetailsResponseSpec : Specification<SaleOffer, SaleOfferDetailsResponse> 
+    public sealed class SaleOfferDetailsResponseSpec : Specification<SaleOffer, SaleOfferDetailsResponse>
     {
         public SaleOfferDetailsResponseSpec(Guid id)
         {
