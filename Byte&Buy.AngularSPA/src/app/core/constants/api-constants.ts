@@ -19,7 +19,8 @@ export const API_ENDPOINTS = {
         shippingAddressesList: '/me/shipping-addresses/list',
         shippingAddressById: '/me/shipping-addresses',
         shippingAddressAdd: '/me/shipping-addresses',
-        shippingAddressDelete: '/me/shipping-addresses'
+        shippingAddressDelete: '/me/shipping-addresses',
+        shippingAddressCheckout: '/me/shipping-addresses/checkout'
     },
 
     categories: {

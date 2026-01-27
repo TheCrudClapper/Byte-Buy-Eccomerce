@@ -64,4 +64,17 @@ public static class AddressMappings
             a.City,
             a.IsDefault
             );
+
+    public static Expression<Func<ShippingAddress, ShippingAddressCheckout>> ShippingAddressCheckoutProjection
+        => a => new ShippingAddressCheckout(
+            a.Id,
+            a.Label,
+            a.Street,
+            a.PostalCity,
+            a.PostalCode,
+            a.City,
+            a.HouseNumber,
+            a.FlatNumber,
+            a.IsDefault
+            );
 }

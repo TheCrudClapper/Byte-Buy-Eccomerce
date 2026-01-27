@@ -181,4 +181,14 @@ public class AddressService : IAddressService
         await _portalUserRepository.CommitAsync();
         return Result.Success();
     }
+
+    public async Task<Result<ShippingAddressCheckout>> GetCheckoutAddress(Guid? addressId, Guid userId, CancellationToken ct = default)
+    {
+        var spec = new UserShippingAddressCheckout(userId, addressId);
+        var address = await _addressReadRepository.GetBySpecAsync(spec, ct);
+
+        return address is null
+            ? Result.Failure<ShippingAddressCheckout>(AddressErrors.NoDefaultAddress)
+            : address;
+    }
 }

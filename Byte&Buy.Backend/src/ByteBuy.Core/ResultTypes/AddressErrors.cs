@@ -2,6 +2,9 @@
 
 public static class AddressErrors
 {
+    public static readonly Error NoDefaultAddress = new(
+        ErrorType.NotFound, "ShippingAddres.Default", "No default address found for this user, please add one address");
+
     public static readonly Error StreetInvalid = Error.Validation(
       "Address.Street",
       "Street is required and must be at most 50 characters.");

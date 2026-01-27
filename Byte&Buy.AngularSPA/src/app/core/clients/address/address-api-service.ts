@@ -12,6 +12,7 @@ import { ShippingAddressAddRequest } from '../../dto/shipping-address/shipping-a
 import { CreatedResponse } from '../../dto/common/created-response';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../constants/api-constants';
+import { ShippingAddressCheckout } from '../../dto/shipping-address/shipping-address-checkout';
 
 @Injectable({
   providedIn: 'root',
@@ -48,4 +49,9 @@ export class AddressApiService {
   deleteShippingAddress(id: Guid): Observable<Object> {
     return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressDelete}/${id}`);
   }
+
+  getShippingAddressCheckout(id?: Guid) : Observable<ShippingAddressCheckout>{
+      return this.httpClient.get<ShippingAddressCheckout>(`${this.baseUrl}${API_ENDPOINTS.addresses.shippingAddressCheckout}/${id ?? ''}`);
+  }
+  
 }

@@ -50,4 +50,7 @@ public class AddressesController : BaseApiController
     public async Task<ActionResult> DeleteUserShippingAddress(Guid addressId)
         => HandleResult(await _addressService.DeleteUserShippingAddressAsync(addressId, CurrentUserId));
 
+    [HttpGet("shipping-addresses/checkout/{addressId?}")]
+    public async Task<ActionResult<ShippingAddressCheckout>> GetCheckoutAddress(CancellationToken ct, Guid? addressId = null)
+        => HandleResult(await _addressService.GetCheckoutAddress(addressId, CurrentUserId, ct));
 }

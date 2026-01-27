@@ -74,5 +74,17 @@ public static class AddressSpecifications
         }
     }
 
+    public sealed class UserShippingAddressCheckout : Specification<ShippingAddress, ShippingAddressCheckout>
+    {
+        public UserShippingAddressCheckout(Guid userId, Guid? addressId = null)
+        {
+            if (addressId.HasValue)
+                Query.Where(a => a.Id == addressId);
+            else
+                Query.Where(a => a.IsDefault);
 
+            Query.Where(a => a.UserId == userId)
+                .Select(AddressMappings.ShippingAddressCheckoutProjection);
+        }
+    }
 }
