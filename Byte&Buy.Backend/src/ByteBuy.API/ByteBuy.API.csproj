@@ -15,18 +15,22 @@
     <Compile Remove="wwwroot\NewFolder2\**" />
     <Compile Remove="wwwroot\NewFolder3\**" />
     <Compile Remove="wwwroot\NewFolder4\**" />
+    <Compile Remove="wwwroot\NewFolder\**" />
     <Content Remove="wwwroot\Images\Employees\**" />
     <Content Remove="wwwroot\NewFolder2\**" />
     <Content Remove="wwwroot\NewFolder3\**" />
     <Content Remove="wwwroot\NewFolder4\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\Images\Employees\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder2\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder3\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder4\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
     <None Remove="wwwroot\Images\Employees\**" />
     <None Remove="wwwroot\NewFolder2\**" />
     <None Remove="wwwroot\NewFolder3\**" />
     <None Remove="wwwroot\NewFolder4\**" />
+    <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,7 +52,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\Items\" />
-    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>

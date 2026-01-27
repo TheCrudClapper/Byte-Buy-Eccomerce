@@ -5,16 +5,18 @@ import { AddressApiService } from '../../../../core/clients/address/address-api-
 import { ShippingAddressCheckout } from '../../../../core/dto/shipping-address/shipping-address-checkout';
 import { CheckoutResponse } from '../../../../core/dto/checkout/checkout-response';
 import { CheckoutApiService } from '../../../../core/clients/checkout/checkout-api-service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-checkout-page',
-  imports: [],
+  imports: [ DecimalPipe ],
   templateUrl: './checkout-page.html',
   styleUrl: './checkout-page.scss',
 })
 export class CheckoutPage implements OnInit{
   private readonly addressApiService = inject(AddressApiService);
   private readonly checkoutApiService = inject(CheckoutApiService);
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
 
   protected shippingAddress = signal<ShippingAddressCheckout | null>(null);
   protected checkout = signal<CheckoutResponse | null>(null);

@@ -37,7 +37,8 @@
                         </div>
                         }
                         @else{
-                        <span class="fs-14-px validation-error">No default shipping address defined, add one to proceed.</span>
+                        <span class="fs-14-px validation-error">No default shipping address defined, add one to
+                            proceed.</span>
                         }
                     </div>
                 </div>
@@ -83,162 +84,72 @@
             </div>
 
             <!-- Packages -->
+            @for (sellerGroup of checkout.sellersGroups; track $index)
+            {
             <div class="content-section">
                 <p class="my-0 content-section-title">
-                    <i class="fa-solid fa-box-open" style="color: #ffffff;"></i> Package 1 of 2
+                    <i class="fa-solid fa-box-open" style="color: #ffffff;"></i> Package {{ $index + 1}} of {{
+                    checkout.sellersGroups.length }}
                 </p>
                 <hr>
                 <div class="col-12 d-flex justify-content-between mb-3">
-                    <span class="fs-14-px">4 items from
-                        <span class="open-sans-bold"> Wojciech (wojciechmucha12@gmail.com)</span>
+                    <span class="fs-14-px">{{sellerGroup.checkoutItems.length}} items from
+                        <span class="open-sans-bold"> {{ sellerGroup.sellerDisplayName }}
+                            ({{sellerGroup.sellerEmail}})</span>
                     </span>
                     <span class="fs-14-px open-sans-bold">
-                        46,00 PLN
+                        {{ sellerGroup.itemsWorth.amount | number:'1.2-2' }} {{ sellerGroup.itemsWorth.currency }}
                     </span>
                 </div>
                 <div class="col-12">
+
+                    @for (item of sellerGroup.checkoutItems; track $index)
+                    {
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row g-3 align-items-center">
                                 <div class="col-auto">
-                                    <img src="test.jpg" class="img-fluid rounded"
-                                        style="width: 80px; height: 80px; object-fit: cover;" alt="Product image">
+                                    <img [src]="imageBaseUrl + item.thumbnail.imagePath" [alt]="item.thumbnail.altText"
+                                        class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
                                 </div>
-
                                 <div class="col">
                                     <div class="row">
                                         <div class="col">
                                             <h6 class="mb-1 fw-bold fs-14-px">
-                                                Test just to see whether this shit works
+                                                {{ item.itemName}}
                                             </h6>
                                         </div>
                                     </div>
-
                                     <div class="row align-items-center">
+                                        @if(item.type === 'sale'){
                                         <div class="col  fs-14-px">
-                                            2 × 23,00 PLN
+                                            {{ item.quantity}} × {{item.pricePerItem.amount | number:'1.2-2' }}
+                                            {{item.pricePerItem.currency }}
                                         </div>
+                                        }
+                                        @else{
+                                        <div class="col  fs-14-px">
+                                            {{ item.quantity}} × {{item.rentalDays}} days x {{item.pricePerDay.amount |
+                                            number:'1.2-2' }} {{item.pricePerDay.currency }}
+                                        </div>
+                                        }
+
                                         <div class="col-auto fs-14-px">
-                                            46,00 PLN
+                                            {{ item.subtotal.amount | number:'1.2-2' }} {{ item.subtotal.currency }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <img src="test2.jpg" class="img-fluid rounded"
-                                        style="width: 80px; height: 80px; object-fit: cover;" alt="Product image">
-                                </div>
-
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h6 class="mb-1 fw-bold fs-14-px">
-                                                Test just to see whether this shit works
-                                            </h6>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-center">
-                                        <div class="col  fs-14-px">
-                                            2 × 23,00 PLN
-                                        </div>
-                                        <div class="col-auto fs-14-px">
-                                            46,00 PLN
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
                 <hr>
                 <div class="col-12">
                     <p class="content-section-title">Delivery</p>
                 </div>
             </div>
-            <div class="content-section">
-                <p class="my-0 content-section-title">
-                    <i class="fa-solid fa-box-open" style="color: #ffffff;"></i> Package 2 of 2
-                </p>
-                <hr>
-                <div class="col-12 d-flex justify-content-between mb-3">
-                    <span class="fs-14-px">4 items from
-                        <span class="open-sans-bold"> Wojciech (wojciechmucha12@gmail.com)</span>
-                    </span>
-                    <span class="fs-14-px open-sans-bold">
-                        46,00 PLN
-                    </span>
-                </div>
-                <div class="col-12">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <img src="test3.jpg" class="img-fluid rounded"
-                                        style="width: 80px; height: 80px; object-fit: cover;" alt="Product image">
-                                </div>
-
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h6 class="mb-1 fw-bold fs-14-px">
-                                                Test just to see whether this shit works
-                                            </h6>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-center">
-                                        <div class="col  fs-14-px">
-                                            2 × 23,00 PLN
-                                        </div>
-                                        <div class="col-auto fs-14-px">
-                                            46,00 PLN
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <img src="test2.jpg" class="img-fluid rounded"
-                                        style="width: 80px; height: 80px; object-fit: cover;" alt="Product image">
-                                </div>
-
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h6 class="mb-1 fw-bold fs-14-px">
-                                                Test just to see whether this shit works
-                                            </h6>
-                                        </div>
-                                    </div>
-
-                                    <div class="row align-items-center">
-                                        <div class="col  fs-14-px">
-                                            2 × 23,00 PLN
-                                        </div>
-                                        <div class="col-auto fs-14-px">
-                                            46,00 PLN
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            }
         </div>
 
 
@@ -251,26 +162,26 @@
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Items Cost</span>
                     <span class="summary-value">
-                        NaN
+                        {{ checkout.itemsCost.amount | number:'1.2-2'}} {{ checkout.itemsCost.currency }}
                     </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Shipping</span>
                     <span class="summary-value">
-                        NaN
+                        0 PLN
                     </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Tax</span>
                     <span class="summary-value">
-                        <!-- {{ checkout.ta }} {{ checkout()?.tax?.currency}} -->
+                        {{ checkout.tax.amount | number:'1.2-2'}} {{ checkout.tax.currency }}
                     </span>
                 </div>
                 <hr>
                 <div class="mb-3 d-flex justify-content-between ">
                     <p class="content-section-title fw-bold">Total Cost</p>
                     <p class="total-cost" style="font-size: 16px;">
-                        NaN
+                        {{ checkout.totalCost.amount | number:'1.2-2'}} {{ checkout.totalCost.currency }}
                     </p>
                 </div>
                 <button class="btn w-100 mb-2">Pay Now</button>
