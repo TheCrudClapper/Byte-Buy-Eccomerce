@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Money;
+﻿using ByteBuy.Core.DTO.Public.Delivery;
+using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Public.Checkout;
 
@@ -7,4 +8,5 @@ public record SellerGroup(
     string SellerDisplayName,
     string SellerEmail,
     MoneyDto ItemsWorth,
-    IReadOnlyCollection<CheckoutItem> CheckoutItems);
+    IReadOnlyCollection<CheckoutItem> CheckoutItems,
+    IReadOnlyCollection<DeliveryOptionResponse> AvaliableDeliveries);

@@ -37,4 +37,14 @@ public static class DeliverySpecifications
                 .Select(DeliveryMappings.DeliveryOptionResponseProjection);
         }
     }
+
+    public class DeliveryOptionByIdsSpec : Specification<Delivery, DeliveryOptionResponse>
+    {
+        public DeliveryOptionByIdsSpec(IEnumerable<Guid> deliveryIds)
+        {
+            Query.AsNoTracking()
+                .Where(d => deliveryIds.Contains(d.Id))
+                .Select(DeliveryMappings.DeliveryOptionResponseProjection);
+        }
+    }
 }

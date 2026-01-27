@@ -1,13 +1,14 @@
 ﻿using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Internal.Cart;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Checkout;
-using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
+using static ByteBuy.Core.Specification.DeliverySpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -17,13 +18,16 @@ public class CheckoutService : ICheckoutService
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly ICartRepository _cartRepository;
     private readonly ICompanyRepository _companyRepository;
+    private readonly IDeliveryRepository _deliveryRepository;
     public CheckoutService(IPortalUserRepository portalUserRepository,
         ICartRepository cartRepository,
-        ICompanyRepository companyRepository)
+        ICompanyRepository companyRepository,
+        IDeliveryRepository deliveryRepository)
     {
         _portalUserRepository = portalUserRepository;
         _cartRepository = cartRepository;
         _companyRepository = companyRepository;
+        _deliveryRepository = deliveryRepository;
     }
 
     public async Task<Result<CheckoutResponse>> GetCheckout(Guid userId, CancellationToken ct)
@@ -65,12 +69,34 @@ public class CheckoutService : ICheckoutService
         if (companyData is not null)
             sellerLookup[companyData.SellerId] = (companyData.SellerDisplayName, companyData.SellerEmail);
 
+        // Group deliveries into dictionary [key: sellerid, value [..deliveryids..]
+        var sellerDeliveryIds = cartOffers
+            .GroupBy(co => co.SellerId)
+            .ToDictionary(
+                g => g.Key,
+                g => ResolveCommonDeliveries(g)
+            );
+
+        // Select only distincs values from deliveries
+        var allDeliveries = sellerDeliveryIds
+            .SelectMany(x => x.Value)
+            .Distinct()
+            .ToList();
+
+        var deliverySpec = new DeliveryOptionByIdsSpec(allDeliveries);
+        var deliveryOptions = await _deliveryRepository.GetListBySpecAsync(deliverySpec, ct);
+
+        var deliveryLookup = deliveryOptions.ToDictionary(d => d.Id);
+
         var sellerGroups = cartOffers
             .GroupBy(co => co.SellerId)
             .Select(g =>
             {
                 if (!sellerLookup.TryGetValue(g.Key, out var seller))
                     throw new InvalidOperationException($"Seller of ID: {g.Key} not found in lookup");
+
+                var deliveryOptions = sellerDeliveryIds[g.Key]
+                .Select(id => deliveryLookup[id]).ToList();
 
                 var items = g
                     .Select(ci => ci.MapToCheckoutItem())
@@ -81,7 +107,8 @@ public class CheckoutService : ICheckoutService
                     SellerDisplayName: seller.SellerDisplayName,
                     SellerEmail: seller.SellerEmail,
                     ItemsWorth: MoneyHelper.Sum(items.Select(i => i.Subtotal)),
-                    CheckoutItems: items);
+                    CheckoutItems: items,
+                    deliveryOptions);
 
             }).ToList();
 
@@ -100,5 +127,31 @@ public class CheckoutService : ICheckoutService
         return dto;
     }
 
+
+    public static IReadOnlyCollection<Guid> ResolveCommonDeliveries(IEnumerable<FlatCartOffersQuery> sellerOffers)
+    {
+        var offers = sellerOffers.ToList();
+
+        if(offers.Count == 0)
+            return [];
+
+        var common = offers
+            .First()
+            .AvaliableDeliveriesIds
+            .ToHashSet();
+
+        // skip first because common is our first record
+        foreach(var offer in offers.Skip(1))
+        {
+            // left in common just those ids that are also in offer.avaliabledelieriesids
+            common.IntersectWith(offer.AvaliableDeliveriesIds);
+
+            if (common.Count == 0)
+                break;
+        }
+
+        return common.ToList();
+
+    }
 }
 
