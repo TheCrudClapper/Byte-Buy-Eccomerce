@@ -1,7 +1,9 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
 using ByteBuy.Core.Mappings;
+using System.Collections;
 
 namespace ByteBuy.Core.Specification;
 
@@ -14,5 +16,14 @@ public static class CompanyInfoSpecifications
             Query.AsNoTracking()
                 .Select(CompanyInfoMappings.CompanyAddressWithItProjection);
         }
+    }
+    public sealed class CompanyInfoToSellerCheckoutResponseSpec : Specification<Company, SellerCheckoutResponse>
+    {
+        public CompanyInfoToSellerCheckoutResponseSpec()
+        {
+            Query.AsNoTracking()
+                .Select(CompanyInfoMappings.SellerCheckoutProjection);
+        }
+
     }
 }

@@ -12,13 +12,14 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public int QuantityAvailable { get; set; }
     public Guid CreatedByUserId { get; set; }
     public Seller Seller { get; set; } = null!;
-    public ApplicationUser CreatedBy { get; set; } = null!;
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
+
 
     //EF Navigation Properties ONLY
     public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
     public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
+    public ApplicationUser CreatedBy { get; set; } = null!;
     public Item Item { get; set; } = null!;
 
     protected Offer() { }

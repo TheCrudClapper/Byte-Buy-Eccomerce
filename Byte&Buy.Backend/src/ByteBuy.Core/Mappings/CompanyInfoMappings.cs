@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.CompanyInfo;
@@ -32,5 +33,11 @@ public static class CompanyInfoMappings
         => c => new CompanyAddressWithId(
             c.Id,
             c.CompanyAddress);
+
+    public static Expression<Func<Company, SellerCheckoutResponse>> SellerCheckoutProjection
+        => c => new SellerCheckoutResponse(
+            c.Id,
+            c.CompanyName,
+            c.Email);
 
 }

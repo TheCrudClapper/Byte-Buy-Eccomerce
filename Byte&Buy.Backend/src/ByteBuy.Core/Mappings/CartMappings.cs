@@ -66,6 +66,10 @@ public static class CartMappings
 
             Type = co is RentCartOffer 
                 ? CartOfferType.Rent 
-                : CartOfferType.Sale
+                : CartOfferType.Sale,
+
+            AvaliableDeliveriesIds = co.Offer.OfferDeliveries
+                .Select(d => d.DeliveryId)
+                .ToList()
         };
 }

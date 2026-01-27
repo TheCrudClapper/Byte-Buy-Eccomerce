@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Cart.Enum;
 using ByteBuy.Core.DTO.Public.Money;
-using ByteBuy.Core.DTO.Public.Offer.Enum;
 namespace ByteBuy.Core.DTO.Internal.Cart;
 
 public record FlatCartOffersQuery
@@ -17,4 +16,5 @@ public record FlatCartOffersQuery
     public MoneyDto? PricePerItem { get; init; }
     public CartOfferType Type { get; init; }
     public SellerType SellerType { get; init; }
+    public IReadOnlyCollection<Guid> AvaliableDeliveriesIds { get; init; } = [];
 }

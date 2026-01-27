@@ -1,5 +1,5 @@
+@if(checkout(); as checkout){
 <div class="container">
-
     <div class="row my-5">
         <!-- List of cart items -->
         <div class="col-12 col-lg-8">
@@ -12,12 +12,14 @@
                         @if(shippingAddress(); as address){
                         <div class="row d-flex justify-content-between">
                             <div class="col-6 col-md-5 col-lg-4">
-                                <span class="fs-14-px open-sans-bold">Dominik Ciureja +48 724075416</span>
+                                <span class="fs-14-px open-sans-bold">{{ checkout.buyerFirstName}} {{
+                                    checkout.buyerLastName }} {{ checkout.buyerPhone }}
+                                </span>
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <h5 class="card-title fs-14-px open-sans-bold">
                                             @if(address.isDefault){
-                                                <i class="fa-solid fa-circle" style="color: #8b5cf6;"></i>
+                                            <i class="fa-solid fa-circle" style="color: #8b5cf6;"></i>
                                             }
                                             {{ address.label }}
                                         </h5>
@@ -35,8 +37,7 @@
                         </div>
                         }
                         @else{
-                        <span class="fs-14-px validation-error">No default shipping address defined, add one to
-                            proceed.</span>
+                        <span class="fs-14-px validation-error">No default shipping address defined, add one to proceed.</span>
                         }
                     </div>
                 </div>
@@ -262,7 +263,7 @@
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Tax</span>
                     <span class="summary-value">
-                        NaN
+                        <!-- {{ checkout.ta }} {{ checkout()?.tax?.currency}} -->
                     </span>
                 </div>
                 <hr>
@@ -285,3 +286,4 @@
 
 
 </div>
+}

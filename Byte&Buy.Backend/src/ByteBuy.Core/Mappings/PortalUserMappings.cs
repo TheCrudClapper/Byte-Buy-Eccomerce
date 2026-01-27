@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
@@ -51,4 +52,10 @@ public static class PortalUserMappings
             p.LastName,
             p.Email!,
             p.PhoneNumber);
+
+    public static Expression<Func<PortalUser, SellerCheckoutResponse>> SellerPortalResponseProjection
+        => p => new SellerCheckoutResponse(
+            p.Id,
+            p.FirstName + p.LastName,
+            p.Email!);
 }

@@ -9,4 +9,5 @@ public class MoneyDto
         Currency = currency;
         Amount = decimal.Round(amount, 2, MidpointRounding.AwayFromZero);
     }
+
 };

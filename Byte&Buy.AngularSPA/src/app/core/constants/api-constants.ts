@@ -62,5 +62,9 @@ export const API_ENDPOINTS = {
 
     portalUsers: {
         me: '/portalusers/me'
+    },
+
+    checkout: {
+        base: '/checkout'   
     }
 }

@@ -50,15 +50,4 @@ public static class CartSpecifications
     }
 
 
-    // read-only
-    public sealed class FlatCartOffersSpec : Specification<CartOffer, FlatCartOffersQuery>
-    {
-        public FlatCartOffersSpec(Guid userId)
-        {
-            Query
-                .AsNoTracking()
-                .Where(co => co.Cart.UserId == userId)
-                .Select(CartMappings.FlatCartOffersProjection);
-        }
-    }
 }

@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
-using ByteBuy.Core.DTO.Public.Checkout;
-
+using ByteBuy.Core.DTO.Internal.Cart;
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface ICartRepository : IRepositoryBase<Cart>
 {
+    Task<IReadOnlyCollection<FlatCartOffersQuery>> GetCartOffersForCheckout(Guid userId, CancellationToken ct = default);
 }
