@@ -11,4 +11,5 @@ public interface ICartService
     Task<Result<CartSummaryResponse>> UpdateRentCartOffer(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request);
     Task<Result<CartSummaryResponse>> UpdateSaleCartOffer(Guid userId, Guid cartItemId, SaleCartOfferUpdateRequest request);
     Task<Result<CartSummaryResponse>> DeleteCartOffer(Guid userId, Guid cartItemId);
+    Task<Result> ClearCart(Guid userId);
 }

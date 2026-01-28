@@ -75,6 +75,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (totalsResult.IsFailure)
             return totalsResult;
 
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 
@@ -113,6 +114,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (totalsResult.IsFailure)
             return totalsResult;
 
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 
@@ -164,6 +166,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (totalsResult.IsFailure)
             return totalsResult;
 
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 
@@ -208,6 +211,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (totalsResult.IsFailure)
             return totalsResult;
 
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 
@@ -218,6 +222,7 @@ public class Cart : AuditableEntity, ISoftDeletable
 
         TotalCartValue = Money.Zero;
         TotalItemsValue = Money.Zero;
+        DateEdited = DateTime.UtcNow;
     }
 
     public Result RemoveCartItem(Guid cartItemId)
@@ -232,6 +237,7 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (totalsResult.IsFailure)
             return totalsResult;
 
+        DateEdited = DateTime.UtcNow;
         return Result.Success();
     }
 

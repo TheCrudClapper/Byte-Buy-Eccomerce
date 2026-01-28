@@ -38,4 +38,8 @@ public class CartsController : BaseApiController
     [HttpGet]
     public async Task<ActionResult<CartResponse>> GetCart(CancellationToken ct = default)
         => HandleResult(await _cartService.GetCart(CurrentUserId, ct));
+
+    [HttpDelete("clear")]
+    public async Task<ActionResult> ClearCart()
+        => HandleResult(await _cartService.ClearCart(CurrentUserId));
 }

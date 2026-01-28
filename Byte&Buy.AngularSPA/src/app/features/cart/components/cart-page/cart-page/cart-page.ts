@@ -9,6 +9,8 @@ import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-o
 import { CartSummary } from '../../../models/cart-summary';
 import { Guid } from 'guid-typescript';
 import { Router, RouterLink } from '@angular/router';
+import { Toast } from 'ngx-toastr';
+import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 
 @Component({
   selector: 'app-cart-page',
@@ -20,7 +22,7 @@ import { Router, RouterLink } from '@angular/router';
 
 export class CartPage implements OnInit {
   private readonly cartApiService = inject(CartApiService);
-
+  private readonly toastService = inject(ToastService);
   cartModel = signal<Cart | null>(null);
 
   ngOnInit(): void {
@@ -34,6 +36,17 @@ export class CartPage implements OnInit {
         console.log(data);
       },
       error: (err: ProblemDetails) => console.log(err.detail)
+    });
+  }
+
+  clearCart() {
+    this.cartApiService.clearCart().subscribe({
+      next: () => {
+        this.cartModel.set(null);
+      },
+      error: (err: ProblemDetails) => {
+        this.toastService.error(err?.detail ?? "Failed to clear cart.")
+      }
     });
   }
 

@@ -41,4 +41,8 @@ export class CartApiService {
   putRentCartOffer(cartOfferId: Guid, request: RentCartOfferUpdateRequest): Observable<CartSummaryResponse>{
     return this.httpClient.put<CartSummaryResponse>(`${this.baseUrl}${API_ENDPOINTS.carts.rentOffer}/${cartOfferId}`, request);
   }
+
+  clearCart(){
+    return this.httpClient.delete(`${this.baseUrl}${API_ENDPOINTS.carts.clear}`);
+  }
 }

@@ -190,4 +190,20 @@ public class CartService : ICartService
 
         return cartSummaryResult.Value;
     }
+
+    public async Task<Result> ClearCart(Guid userId)
+    {
+        var spec = new CartAggregateByUserIdSpec(userId);
+        var cart = await _cartRepository.GetBySpecAsync(spec);
+
+        if(cart is null)
+            return Result.Failure(CartErrors.NotFound);
+
+        cart.ClearCart();
+
+        await _cartRepository.UpdateAsync(cart);
+        await _cartRepository.CommitAsync();
+
+        return Result.Success();
+    }
 }

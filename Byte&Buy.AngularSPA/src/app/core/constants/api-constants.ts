@@ -9,7 +9,8 @@ export const API_ENDPOINTS = {
     carts: {
         base: '/carts',
         saleOffer: '/carts/sale-offer',
-        rentOffer: '/carts/rent-offer'
+        rentOffer: '/carts/rent-offer',
+        clear: '/carts/clear'
     },
 
     //Addresses
