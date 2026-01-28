@@ -27,7 +27,7 @@ public static class ImageErrors
 
     public static readonly Error AltTextInvalid = Error.Validation(
        "Image.AltText",
-       "Alternative text is required and must be at most 50 characters.");
+       "Alternative text must be at most 50 characters.");
 
     public static readonly Error ImagePathInvalid = Error.Validation(
        "Image.Path",
