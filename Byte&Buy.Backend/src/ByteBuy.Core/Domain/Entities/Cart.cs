@@ -211,6 +211,15 @@ public class Cart : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
+    public void ClearCart()
+    {
+        foreach(var cartOffer in CartOffers)
+            cartOffer.Deactivate();
+
+        TotalCartValue = Money.Zero;
+        TotalItemsValue = Money.Zero;
+    }
+
     public Result RemoveCartItem(Guid cartItemId)
     {
         var cartItem = CartOffers.FirstOrDefault(item => item.Id == cartItemId);
