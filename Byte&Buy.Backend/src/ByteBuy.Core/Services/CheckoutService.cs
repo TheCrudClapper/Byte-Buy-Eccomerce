@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.Cart;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Checkout;
+using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -98,6 +99,8 @@ public class CheckoutService : ICheckoutService
                 var deliveryOptions = sellerDeliveryIds[g.Key]
                 .Select(id => deliveryLookup[id]).ToList();
 
+                var groupedDeliveries = MapDeliveries(deliveryOptions);
+
                 var items = g
                     .Select(ci => ci.MapToCheckoutItem())
                     .ToList();
@@ -108,7 +111,7 @@ public class CheckoutService : ICheckoutService
                     SellerEmail: seller.SellerEmail,
                     ItemsWorth: MoneyHelper.Sum(items.Select(i => i.Subtotal)),
                     CheckoutItems: items,
-                    deliveryOptions);
+                    groupedDeliveries);
 
             }).ToList();
 
@@ -152,6 +155,38 @@ public class CheckoutService : ICheckoutService
 
         return common.ToList();
 
+    }
+
+    public static DeliveryOptionsResponse MapDeliveries(IEnumerable<DeliveryOptionResponse> avaliableDeliveries)
+    {
+        var deliveries = avaliableDeliveries.ToList();
+
+        if (deliveries.Count == 0)
+            return new DeliveryOptionsResponse
+            {
+                PickupPointDeliveries = [],
+                CourierDeliveries = [],
+                ParcelLockerDeliveries = []
+            };
+
+        var parcel = deliveries
+            .Where(d => d.DeliveryChannel == DeliveryChannel.ParcelLocker.ToString())
+            .ToList();
+
+        var pickup = deliveries
+            .Where(d => d.DeliveryChannel == DeliveryChannel.PickupPoint.ToString())
+            .ToList();
+
+        var courier = deliveries
+           .Where(d => d.DeliveryChannel == DeliveryChannel.Courier.ToString())
+           .ToList();
+
+        return new DeliveryOptionsResponse
+        {
+            CourierDeliveries = courier,
+            ParcelLockerDeliveries = parcel,
+            PickupPointDeliveries = pickup
+        };
     }
 }
 

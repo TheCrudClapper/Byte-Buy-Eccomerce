@@ -9,4 +9,4 @@ public record SellerGroup(
     string SellerEmail,
     MoneyDto ItemsWorth,
     IReadOnlyCollection<CheckoutItem> CheckoutItems,
-    IReadOnlyCollection<DeliveryOptionResponse> AvaliableDeliveries);
+    DeliveryOptionsResponse DeliveryOptions);

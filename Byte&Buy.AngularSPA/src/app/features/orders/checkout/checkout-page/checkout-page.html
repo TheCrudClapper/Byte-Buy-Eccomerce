@@ -146,7 +146,158 @@
                 </div>
                 <hr>
                 <div class="col-12">
-                    <p class="content-section-title">Delivery</p>
+
+                    @if (selectedDelivery()[sellerGroup.sellerId.toString()]; as selected) {
+
+                    @switch (selected.deliveryChannel)
+                    {
+                    @case ('ParcelLocker')
+                    {
+                    <p class="content-section-title mb-1">Delivery Details</p>
+                    <p class="content-section-description mb-3 open-sans-medium">
+                        Additional delivery details are required for the selected delivery method.
+                    </p>
+                    <div class="mb-4">
+                        <div class="row g-3 align-items-end">
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Carrier
+                                </label>
+                                <input type="text" class="form-control" [value]="selected.carrier" disabled>
+                            </div>
+
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Delivery Channel
+                                </label>
+                                <input type="text" class="form-control" [value]="selected.deliveryChannel" disabled>
+                            </div>
+
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Parcel Locker ID
+                                </label>
+                                <input type="text" class="form-control"
+                                    (input)="setParcelLocker(sellerGroup.sellerId.toString(), $any($event.target).value)"
+                                    placeholder="e.g. WAW123" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    }
+
+                    @case ('PickupPoint')
+                    {
+                    <p class="content-section-title mb-1">Delivery Details</p>
+                    <p class="content-section-description mb-3 open-sans-medium">
+                        Additional delivery details are required for the selected delivery method.
+                    </p>
+                    <div class="mb-4">
+                        <div class="row g-3 align-items-end">
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Carrier
+                                </label>
+                                <input type="text" class="form-control" [value]="selected.carrier" disabled>
+                            </div>
+
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Delivery Channel
+                                </label>
+                                <input type="text" class="form-control" [value]="selected.deliveryChannel" disabled>
+                            </div>
+
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Pickup Point Name
+                                </label>
+                                <input type="text" class="form-control" [value]="selected.name" placeholder="Żabka"
+                                    disabled>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Pickup Point Id
+                                </label>
+                                <input type="text" class="form-control" placeholder="e.g. POP-MSD4" autocomplete="off">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Street
+                                </label>
+                                <input type="text" class="form-control" placeholder="e.g. Poniatowskiego"
+                                    autocomplete="off">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    City
+                                </label>
+                                <input type="text" class="form-control" placeholder="e.g. Warszawa" autocomplete="off">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label fs-14-px open-sans-bold">
+                                    Local Number
+                                </label>
+                                <input type="text" class="form-control" placeholder="e.g. 56 / 2" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    }
+                    }
+
+                    @if(sellerGroup.deliveryOptions.parcelLockerDeliveries.length > 0){
+                    <p class="content-section-title">Parcel Lockers</p>
+                    @for (parcel of sellerGroup.deliveryOptions.parcelLockerDeliveries; track $index)
+                    {
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <input type="radio" (change)="selectDelivery(sellerGroup.sellerId.toString(), parcel)"
+                                class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId">
+                            <span class="fs-14-px">{{ parcel.name }}</span>
+                        </span>
+                        <span class="fs-14-px">{{ parcel.amount | number:'1.2-2' }} {{ parcel.currency }}</span>
+                    </div>
+                    }
+                    }
+                    @if(sellerGroup.deliveryOptions.courierDeliveries.length > 0){
+                    <p class="content-section-title">Courier</p>
+                    @for (courier of sellerGroup.deliveryOptions.courierDeliveries; track $index)
+                    {
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <input type="radio" (change)="selectDelivery(sellerGroup.sellerId.toString(), courier)"
+                                class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId">
+                            <span class="fs-14-px">{{ courier.name }}</span>
+                        </span>
+                        <span class="fs-14-px">{{ courier.amount | number:'1.2-2'}} {{ courier.currency }}</span>
+                    </div>
+                    }
+                    }
+                    @if(sellerGroup.deliveryOptions.pickupPointDeliveries.length > 0){
+                    <p class="content-section-title mt-2">Pickup Point</p>
+                    @for (pickup of sellerGroup.deliveryOptions.pickupPointDeliveries; track $index)
+                    {
+                    <div class="d-flex justify-content-between">
+                        <span>
+                            <input type="radio" (change)="selectDelivery(sellerGroup.sellerId.toString(), pickup)"
+                                class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId">
+                            <span class="fs-14-px">{{ pickup.name }}</span>
+                        </span>
+                        <span class="fs-14-px">{{ pickup.amount | number:'1.2-2'}} {{ pickup.currency }}</span>
+                    </div>
+                    }
+                    }
                 </div>
             </div>
             }
@@ -168,7 +319,9 @@
                 <div class="mb-2 d-flex justify-content-between">
                     <span class="summary-item">Shipping</span>
                     <span class="summary-value">
-                        0 PLN
+                        @if(deliveryCost(); as delivery){
+                        {{ delivery.amount }} {{ delivery.currency}}
+                        }
                     </span>
                 </div>
                 <div class="mb-2 d-flex justify-content-between">
@@ -181,10 +334,12 @@
                 <div class="mb-3 d-flex justify-content-between ">
                     <p class="content-section-title fw-bold">Total Cost</p>
                     <p class="total-cost" style="font-size: 16px;">
-                        {{ checkout.totalCost.amount | number:'1.2-2'}} {{ checkout.totalCost.currency }}
+                        @if(finalTotalCost(); as totalCost){
+                          {{ totalCost.amount }} {{ totalCost.currency }}
+                        }
                     </p>
                 </div>
-                <button class="btn w-100 mb-2">Pay Now</button>
+                <button class="btn w-100 mb-2" [disabled]="!canPay()">Pay Now</button>
                 <p class="pay-description">
                     By clicking this button, you confirm your purchase. Your card will be charged for the purchase
                     amount. Your bank may ask you for additional verification.
