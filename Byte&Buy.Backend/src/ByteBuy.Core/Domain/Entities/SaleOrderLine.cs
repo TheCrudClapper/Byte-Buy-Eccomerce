@@ -7,7 +7,7 @@ namespace ByteBuy.Core.Domain.Entities;
 public class SaleOrderLine : OrderLine
 {
     public Money PricePerItem { get; private set; } = null!;
-
+    public override Money TotalPrice => PricePerItem * Quantity;
     private SaleOrderLine() { }
 
     private SaleOrderLine(

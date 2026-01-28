@@ -8,6 +8,8 @@ public class RentOrderLine : OrderLine
     public Money PricePerDay { get; private set; } = null!;
     public int RentalDays { get; private set; }
 
+    public override Money TotalPrice => PricePerDay * RentalDays * Quantity;
+
     private RentOrderLine() { }
 
     private RentOrderLine(
