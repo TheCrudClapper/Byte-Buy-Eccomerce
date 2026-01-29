@@ -67,5 +67,9 @@ export const API_ENDPOINTS = {
 
     checkout: {
         base: '/checkout'   
+    },
+
+    orders: {
+        post: '/orders'
     }
 }

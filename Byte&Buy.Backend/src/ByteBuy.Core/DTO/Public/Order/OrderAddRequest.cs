@@ -1,6 +1,7 @@
-﻿namespace ByteBuy.Core.DTO.Public.Order;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.Order;
 
 public record OrderAddRequest(
-    Guid PaymentMethodId,
-    IEnumerable<SellerDeliveryRequest> SelectedDeliveries);
-
+    [Required] Guid PaymentMethodId,
+    [Required] IEnumerable<SellerDeliveryRequest> SelectedDeliveries);

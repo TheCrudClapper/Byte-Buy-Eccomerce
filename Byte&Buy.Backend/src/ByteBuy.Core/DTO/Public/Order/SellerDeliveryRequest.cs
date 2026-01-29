@@ -1,9 +1,11 @@
-﻿namespace ByteBuy.Core.DTO.Public.Order;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.Order;
 
 // Dto that encapsulates delivery data per order from one seller.
 public record SellerDeliveryRequest(
-    Guid SellerId,
-    Guid DeliveryId,
+    [Required] Guid SellerId,
+    [Required] Guid DeliveryId,
 
     // Only for courier
     Guid? ShippingAddressId,
