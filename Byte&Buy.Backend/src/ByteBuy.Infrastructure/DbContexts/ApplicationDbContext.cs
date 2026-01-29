@@ -1,7 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 namespace ByteBuy.Infrastructure.DbContexts;
 
 public class ApplicationDbContext : IdentityDbContext<
@@ -74,5 +76,10 @@ public class ApplicationDbContext : IdentityDbContext<
             .HasDiscriminator<string>("OrderLineType")
             .HasValue<RentOrderLine>("RentOrderLine")
             .HasValue<SaleOrderLine>("SaleOrderLine");
+
+        builder.Entity<PaymentDetails>()
+            .HasDiscriminator<PaymentMethod>(p => p.Method)
+            .HasValue<CardPaymentDetails>(PaymentMethod.Card)
+            .HasValue<BlikPaymentDetails>(PaymentMethod.Blik);
     }
 }

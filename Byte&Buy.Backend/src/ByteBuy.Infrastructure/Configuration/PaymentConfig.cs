@@ -19,6 +19,11 @@ public class PaymentConfig : IEntityTypeConfiguration<Payment>
             .HasMaxLength(20)
             .IsRequired();
 
+        builder.HasOne(p => p.PaymentDetails)
+            .WithOne(pd => pd.Payment)
+            .HasForeignKey<PaymentDetails>(pd => pd.PaymentId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.OwnsOne(p => p.Amount, m =>
         {
             m.Property(prop => prop.Amount).HasPrecision(18, 3).IsRequired();

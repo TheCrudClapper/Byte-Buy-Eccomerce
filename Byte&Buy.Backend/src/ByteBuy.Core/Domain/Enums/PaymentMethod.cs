@@ -9,7 +9,4 @@ public enum PaymentMethod
 
     [Description("Card")]
     Card,
-
-    [Description("Google Pay")]
-    GooglePay,
 }
