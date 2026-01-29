@@ -50,34 +50,22 @@
                             Payment Methods
                         </p>
                         <div class="row mt-3">
+                            @if(checkout.avaliablePaymentMethods){
+                            @for (method of checkout.avaliablePaymentMethods; track method.id)
+                            {
                             <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" style="width: 56px;">
-                                    <i class="fa-brands fa-cc-visa fa-2x"></i>
+                                <div class="card p-2 text-center payment-card" [class.card-selected]="selectedPaymentMethod() === method.id" style="width: 56px;" (click)="selectPaymentMethod(method.id)">
+                                    @if(method.title === 'Blik'){
+                                    <img height="31"
+                                        src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">
+                                    }
+                                    @if(method.title === "Card"){
+                                    <i class="fa-regular fa-credit-card fa-2x" style="color: #ffffff;"></i>
+                                    }
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" style="width: 56px;">
-                                    <i class="fa-brands fa-cc-mastercard fa-2x"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" style="width: 56px;">
-                                    <i class="fa-brands fa-cc-paypal fa-2x"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" style="width: 56px;">
-                                    <i class="fa-brands fa-apple-pay fa-2x"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" style="width: 56px;">
-                                    <i class="fa-brands fa-google-pay fa-2x"></i>
-                                </div>
-                            </div>
+                            }
+                            }
                         </div>
                     </div>
                 </div>
@@ -323,7 +311,7 @@
                     <span class="summary-item">Shipping</span>
                     <span class="summary-value">
                         @if(deliveryCost(); as delivery){
-                            {{ delivery.amount | number:'1.2-2'}} {{ delivery.currency}}
+                        {{ delivery.amount | number:'1.2-2'}} {{ delivery.currency}}
                         }
                     </span>
                 </div>
@@ -338,7 +326,7 @@
                     <p class="content-section-title fw-bold">Total Cost</p>
                     <p class="total-cost" style="font-size: 16px;">
                         @if(finalTotalCost(); as totalCost){
-                          {{ totalCost.amount | number:'1.2-2'}} {{ totalCost.currency }}
+                        {{ totalCost.amount | number:'1.2-2'}} {{ totalCost.currency }}
                         }
                     </p>
                 </div>

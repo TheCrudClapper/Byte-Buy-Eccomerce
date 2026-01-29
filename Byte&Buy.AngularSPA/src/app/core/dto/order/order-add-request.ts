@@ -2,6 +2,6 @@ import { Guid } from "guid-typescript";
 import { SellerDeliveryRequest } from "./seller-delivery-request";
 
 export interface OrderAddRequest{
-    paymentMethodId: string,
+    paymentMethodId: number,
     selectedDeliveries: SellerDeliveryRequest[];
 }

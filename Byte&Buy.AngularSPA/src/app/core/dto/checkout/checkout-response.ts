@@ -1,4 +1,6 @@
+import { SelectListItem } from "../../../shared/models/select-list-item";
 import { MoneyDto } from "../common/money-dto";
+import { SelectListItemResponseInt } from "../common/select-list-item-response-int";
 import { SellerGroup } from "./seller-group";
 
 export interface CheckoutResponse {
@@ -6,6 +8,7 @@ export interface CheckoutResponse {
   buyerLastName: string;
   buyerPhone: string;
   sellersGroups: SellerGroup[];
+  avaliablePaymentMethods: SelectListItemResponseInt[];
   itemsCost: MoneyDto;
   tax: MoneyDto;
   totalCost: MoneyDto;

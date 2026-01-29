@@ -33,23 +33,14 @@ hr {
     cursor: pointer;
 }
 
-.card {
+.card{
     background-color: var(--card-background);
     color: var(--text-primary);
     border-color: var(--primary-accent);
 }
 
-.card-link {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text-primary);
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.card-link:hover {
-    color: var(--primary-accent);
+.card-selected{
+    background-color: var(--primary-accent);
 }
 
 .link {
@@ -67,4 +58,5 @@ hr {
 .payment-card:hover{
     transition: 0.3s ease-out;
     background-color: var(--primary-accent);
+    cursor: pointer;
 }

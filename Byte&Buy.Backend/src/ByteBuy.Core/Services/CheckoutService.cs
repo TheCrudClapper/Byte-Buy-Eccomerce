@@ -123,6 +123,7 @@ public class CheckoutService : ICheckoutService
             userData.LastName,
             userData.PhoneNumber!,
             sellerGroups,
+            EnumToSelectListMapper.EnumToSelectLists<PaymentMethod>(),
             itemsCost,
             tax,
             itemsCost);

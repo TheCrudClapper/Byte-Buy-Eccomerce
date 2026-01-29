@@ -27,6 +27,7 @@ export class CheckoutPage implements OnInit {
   protected shippingAddress = signal<ShippingAddressCheckout | null>(null);
   protected checkout = signal<CheckoutResponse | null>(null);
   protected totalCost = signal<MoneyDto | null>(null);
+  protected selectedPaymentMethod = signal<number>(0);
 
   // Holds selected deliveries key -> seller id, value -> type representing given delivery
   deliveryBySeller = signal<Record<string, SellerDeliveryState | null>>({});
@@ -92,6 +93,7 @@ export class CheckoutPage implements OnInit {
     );
     this.checkoutApiService.getCheckout().subscribe(data => {
       this.checkout.set(data);
+      console.log(data);
       this.totalCost.set(data.totalCost);
     });
   }
@@ -136,6 +138,10 @@ export class CheckoutPage implements OnInit {
     }
   }
 
+  selectPaymentMethod(id: number){
+    this.selectedPaymentMethod.set(id);
+  }
+
   setParcelLocker(sellerId: string, lockerId: string) {
     this.deliveryBySeller.update(s => {
       const current = s[sellerId];
@@ -174,10 +180,10 @@ export class CheckoutPage implements OnInit {
   }
 
   submit() {
-    const sellerPaload = buildSellerDeliveriesPayload(this.deliveryBySeller());
+    const sellerPayload = buildSellerDeliveriesPayload(this.deliveryBySeller());
     const finalPayload: OrderAddRequest = {
-      paymentMethodId: "9191B0F6-F84D-4D83-BF4D-4A9CBA98F05F",
-      selectedDeliveries: sellerPaload
+      paymentMethodId: this.selectedPaymentMethod(),
+      selectedDeliveries: sellerPayload
     };
 
     this.orderApiService.postOrder(finalPayload).subscribe(data => {
