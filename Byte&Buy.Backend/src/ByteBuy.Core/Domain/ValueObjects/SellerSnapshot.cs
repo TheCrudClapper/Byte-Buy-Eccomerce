@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Enums;
-
 namespace ByteBuy.Core.Domain.ValueObjects;
 
 public class SellerSnapshot
@@ -12,4 +11,18 @@ public class SellerSnapshot
 
     private SellerSnapshot() { }
 
+    private SellerSnapshot(SellerType type, Guid sellerId, string displayName, string? tIN, AddressValueObject address)
+    {
+        Type = type;
+        SellerId = sellerId;
+        DisplayName = displayName;
+        TIN = tIN;
+        Address = address;
+    }
+
+    public static SellerSnapshot CreateCompanySnapshot(Guid sellerId, string displayName, string? tIN, AddressValueObject address)
+        => new(SellerType.Company, sellerId, displayName, tIN, address);
+
+    public static SellerSnapshot CreatePrivateSellerSnapshot(Guid sellerId, string displayName, string? tIN, AddressValueObject address)
+        => new(SellerType.Company, sellerId, displayName, tIN, address);
 }

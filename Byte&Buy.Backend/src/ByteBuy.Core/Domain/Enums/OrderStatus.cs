@@ -4,8 +4,8 @@ namespace ByteBuy.Core.Domain.Enums;
 
 public enum OrderStatus
 {
-    [Description("Created")]
-    Created = 0,
+    [Description("Awaiting Payment")]
+    AwaitingPayment = 0,
 
     [Description("In Preparation")]
     InPreparation = 1,

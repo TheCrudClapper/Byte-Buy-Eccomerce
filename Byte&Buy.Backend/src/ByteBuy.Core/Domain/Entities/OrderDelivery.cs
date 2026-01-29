@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -39,4 +40,147 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
 
     //Navigatio Ef
     public Order Order { get; set; } = null!;
+
+    private OrderDelivery() { }
+
+    private OrderDelivery (string deliveryName, string carrierCode, DeliveryChannel channel, Money price)
+    { 
+        DeliveryName = deliveryName;
+        CarrierCode = carrierCode;
+        Channel = channel;
+        Price = price;
+    }
+
+    private static Result<OrderDelivery> CreateInternal(
+        string deliveryName,
+        string carrierCode,
+        DeliveryChannel channel,
+        decimal priceAmount,
+        string priceCurrency)
+    {
+        var moneyResult = Money.Create(priceAmount, priceCurrency);
+        if (moneyResult.IsFailure)
+            return Result.Failure<OrderDelivery>(moneyResult.Error);
+
+        if (string.IsNullOrWhiteSpace(carrierCode) || carrierCode.Length > 3)
+            return Result.Failure<OrderDelivery>(OrderDeliveryErrors.InvalidCarrierCode);
+
+        return new OrderDelivery(deliveryName, carrierCode, channel, moneyResult.Value);
+    }
+
+    public static Result<OrderDelivery> CreatePickupPointDelivery(
+    string deliveryName,
+    string carrierCode,
+    decimal priceAmount,
+    string priceCurrency,
+    string pickupPointId,
+    string pickupPointName,
+    string pickupStreet,
+    string pickupCity,
+    string? pickupLocalNumber)
+    {
+        var deliveryResult = CreateInternal(
+            deliveryName,
+            carrierCode,
+            DeliveryChannel.PickupPoint,
+            priceAmount,
+            priceCurrency);
+
+        if (deliveryResult.IsFailure)
+            return deliveryResult;
+
+        if (string.IsNullOrWhiteSpace(pickupPointId) ||
+            string.IsNullOrWhiteSpace(pickupPointName) ||
+            string.IsNullOrWhiteSpace(pickupStreet) ||
+            string.IsNullOrWhiteSpace(pickupCity))
+        {
+            return Result.Failure<OrderDelivery>(
+                OrderDeliveryErrors.InvalidPickupPointData);
+        }
+
+        var delivery = deliveryResult.Value;
+
+        delivery.PickupPointId = pickupPointId;
+        delivery.PickupPointName = pickupPointName;
+        delivery.PickupStreet = pickupStreet;
+        delivery.PickupCity = pickupCity;
+        delivery.PickupLocalNumber = pickupLocalNumber;
+
+        return delivery;
+    }
+
+    public static Result<OrderDelivery> CreateParcelLockerDelivery(
+    string deliveryName,
+    string carrierCode,
+    decimal priceAmount,
+    string priceCurrency,
+    string parcelLockerId)
+    {
+        var deliveryResult = CreateInternal(
+            deliveryName,
+            carrierCode,
+            DeliveryChannel.ParcelLocker,
+            priceAmount,
+            priceCurrency);
+
+        if (deliveryResult.IsFailure)
+            return deliveryResult;
+
+        if (string.IsNullOrWhiteSpace(parcelLockerId))
+            return Result.Failure<OrderDelivery>(OrderDeliveryErrors.InvalidParcelLocker);
+
+        var delivery = deliveryResult.Value;
+        delivery.ParcelLockerId = parcelLockerId;
+
+        return delivery;
+    }
+
+    public static Result<OrderDelivery> CreateCourierDelivery(
+    string deliveryName,
+    string carrierCode,
+    decimal priceAmount,
+    string priceCurrency,
+    string buyerFullName,
+    string street,
+    string houseNumber,
+    string? flatNumber,
+    string city,
+    string postalCity,
+    string postalCode,
+    string phone)
+    {
+        var deliveryResult = CreateInternal(
+            deliveryName,
+            carrierCode,
+            DeliveryChannel.Courier,
+            priceAmount,
+            priceCurrency);
+
+        if (deliveryResult.IsFailure)
+            return deliveryResult;
+
+        if (string.IsNullOrWhiteSpace(buyerFullName) ||
+            string.IsNullOrWhiteSpace(street) ||
+            string.IsNullOrWhiteSpace(houseNumber) ||
+            string.IsNullOrWhiteSpace(city) ||
+            string.IsNullOrWhiteSpace(postalCode) ||
+            string.IsNullOrWhiteSpace(phone))
+        {
+            return Result.Failure<OrderDelivery>(
+                OrderDeliveryErrors.InvalidCourierAddress);
+        }
+
+        var delivery = deliveryResult.Value;
+
+        delivery.BuyerFullName = buyerFullName;
+        delivery.Street = street;
+        delivery.HouseNumber = houseNumber;
+        delivery.FlatNumber = flatNumber;
+        delivery.City = city;
+        delivery.PostalCity = postalCity;
+        delivery.PostalCode = postalCode;
+        delivery.Phone = phone;
+
+        return delivery;
+    }
 }

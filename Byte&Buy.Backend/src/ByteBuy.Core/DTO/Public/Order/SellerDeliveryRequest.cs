@@ -14,5 +14,4 @@ public record SellerDeliveryRequest(
     ParcelLockerDeliveryRequest? ParcelLockerData,
 
     // Only for pickup points
-    PickupPointDeliveryRequest? PickupPointData
-    );
+    PickupPointDeliveryRequest? PickupPointData);

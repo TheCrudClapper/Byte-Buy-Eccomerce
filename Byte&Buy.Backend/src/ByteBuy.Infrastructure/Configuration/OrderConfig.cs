@@ -31,17 +31,6 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
            .HasForeignKey<Order>(o => o.DeliveryId)
            .OnDelete(DeleteBehavior.Cascade);
 
-        // Owned type for Seller Value Object
-        builder.OwnsOne(o => o.Seller, sa =>
-        {
-            sa.Property(prop => prop.Type)
-                .HasConversion<string>()
-                .HasMaxLength(20)
-                .IsRequired();
-
-            sa.Property(prop => prop.Id)
-                .IsRequired();
-        });
 
         // Owned type for Seller Snapshot Value Object
         builder.OwnsOne(o => o.SellerSnapshot, ss =>
