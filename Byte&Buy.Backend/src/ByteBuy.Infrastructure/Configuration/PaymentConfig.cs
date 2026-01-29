@@ -10,9 +10,9 @@ public class PaymentConfig : IEntityTypeConfiguration<Payment>
     {
 
         builder.Property(p => p.Status)
-            .HasConversion<string>()
-            .HasMaxLength(20)
-            .IsRequired();
+           .HasConversion<string>()
+           .HasMaxLength(20)
+           .IsRequired();
 
         builder.Property(p => p.Method)
             .HasConversion<string>()

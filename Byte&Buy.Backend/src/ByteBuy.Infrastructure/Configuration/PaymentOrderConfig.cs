@@ -8,10 +8,11 @@ public class PaymentOrderConfig : IEntityTypeConfiguration<PaymentOrder>
 {
     public void Configure(EntityTypeBuilder<PaymentOrder> builder)
     {
-        builder.HasOne(po => po.OrderGroup)
-            .WithMany(o => o.PaymentOrders)
-            .HasForeignKey(po => po.OrderGroupId)
-            .OnDelete(DeleteBehavior.NoAction);
+        builder.OwnsOne(po => po.Amount, po =>
+        {
+            po.Property(prop => prop.Currency).HasMaxLength(3);
+            po.Property(prop => prop.Amount).HasPrecision(18, 3);
+        });
 
         builder.HasOne(po => po.Payment)
             .WithMany(o => o.PaymentOrders)

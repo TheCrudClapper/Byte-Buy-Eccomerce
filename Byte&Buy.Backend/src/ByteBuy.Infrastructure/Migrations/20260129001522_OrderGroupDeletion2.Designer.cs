@@ -3,6 +3,7 @@ using System;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ByteBuy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260129001522_OrderGroupDeletion2")]
+    partial class OrderGroupDeletion2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -643,6 +646,9 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -654,6 +660,8 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.HasIndex("DeliveryId")
                         .IsUnique();
+
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("Orders");
                 });
@@ -861,9 +869,6 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.HasIndex("PaymentId");
 
@@ -1646,6 +1651,10 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ByteBuy.Core.Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId");
+
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "DeliveryPrice", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
@@ -1829,6 +1838,8 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Navigation("LinesTotal")
                         .IsRequired();
 
+                    b.Navigation("Payment");
+
                     b.Navigation("Seller")
                         .IsRequired();
 
@@ -1940,12 +1951,6 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", null)
-                        .WithOne("Payment")
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.PaymentOrder", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ByteBuy.Core.Domain.Entities.Payment", "Payment")
                         .WithMany("PaymentOrders")
                         .HasForeignKey("PaymentId")
@@ -2354,8 +2359,6 @@ namespace ByteBuy.Infrastructure.Migrations
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
                 {
                     b.Navigation("Lines");
-
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Payment", b =>

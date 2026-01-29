@@ -10,9 +10,7 @@ public class Payment : AuditableEntity, ISoftDeletable
     public PaymentStatus Status { get; set; }
     public Money Amount { get; set; } = null!;
     public string? ExternalTransactionId { get; set; }
+    public ICollection<PaymentOrder> PaymentOrders { get; set; } = [];
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
-
-    //Navigation Ef
-    public ICollection<PaymentOrder> PaymentOrders { get; set; } = new List<PaymentOrder>();
 }
