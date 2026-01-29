@@ -1,4 +1,7 @@
-﻿namespace ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.ResultTypes;
+
+namespace ByteBuy.Core.Domain.Entities;
 
 public sealed class CardPaymentDetails : PaymentDetails
 {
@@ -6,4 +9,22 @@ public sealed class CardPaymentDetails : PaymentDetails
     public string CardHolderName { get; set; } = null!;
 
     private CardPaymentDetails() { }
+
+    private CardPaymentDetails(PaymentMethod method, string maskedCardNumber, string cardHolderName)
+    {
+        Method = method;
+        MaskedCardNumber = maskedCardNumber;
+        CardHolderName = cardHolderName;
+    }
+
+    public static Result<CardPaymentDetails> Create(PaymentMethod method, string cardNumber, string cardHolderName)
+    {
+        if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length < 13 || cardNumber.Length > 19)
+            return Result.Failure<CardPaymentDetails>(PaymentDetailsErrors.InvalidCardNumber);
+
+        if (string.IsNullOrWhiteSpace(cardHolderName))
+            return Result.Failure<CardPaymentDetails>(PaymentDetailsErrors.InvalidCartHolder);
+
+        return new CardPaymentDetails(method, cardNumber, cardHolderName);
+    }
 }

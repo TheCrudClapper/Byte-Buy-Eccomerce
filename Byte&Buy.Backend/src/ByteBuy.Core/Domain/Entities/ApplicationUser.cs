@@ -52,7 +52,7 @@ public abstract class ApplicationUser : IdentityUser<Guid>, ISoftDeletable, IEnt
             return Result.Failure(CommonUserErrors.EmailInvalid);
         if (phoneNumber is not null)
         {
-            if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15)
+            if (string.IsNullOrWhiteSpace(phoneNumber) || phoneNumber.Length > 15 || phoneNumber.Length < 9)
             {
                 return Result.Failure(CommonUserErrors.PhoneNumberInvalid);
             }
