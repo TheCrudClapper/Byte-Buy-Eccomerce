@@ -1,42 +1,68 @@
-@if(paymentModel(); as model){
-    <div class="container h-100 d-flex justify-content-center align-items-center">
-        <div class="col-md-9 col-lg-7 col-xl-6 col-xxl-5  content-section">
-            <form>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="payment-title">Payment with </span>
-                    @if(model.method === 0){
-                        <img height="31" src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">
-                    }
-                    @if(model.method === 1){
-                        <i class="fa-regular fa-credit-card fa-2x" style="color: #ffffff;"></i>
-                    }
-                </div>
+@if (paymentModel(); as model) {
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="payment-title">Total Charge</span>
-                    <span class="payment-title">18000.00 PLN</span>
+<div class="container h-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-9 col-lg-7 col-xl-6 col-xxl-5 content-section">
+        <form [formGroup]="form">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="payment-title">Payment with</span>
+
+                @if (model.method === PaymentMethod.Blik) {
+                <img height="31" src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg">
+                }
+
+                @if (model.method === PaymentMethod.Card) {
+                <i class="fa-regular fa-credit-card fa-2x"></i>
+                }
+            </div>
+
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="payment-title">Total Charge</span>
+                <span class="payment-title">
+                    {{ model.paymentTotal.amount | number:'1.2-2' }} {{ model.paymentTotal.currency }}
+                </span>
+            </div>
+
+            <hr>
+
+          
+            @if (model.method === PaymentMethod.Card) {
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label class="form-label">Card Number</label>
+                    <input type="number" class="form-control">
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-12 mb-3">
-                        <label for="card-number" class="form-label">Card Number</label>
-                        <input type="number" class="form-control open-sans-bold" id="card-number">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label for="expiration" class="form-label">Expiration Date</label>
-                        <input type="text" placeholder="MM / YY" class="form-control open-sans-bold" id="expiration">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label for="cvc" class="form-label">CVV / CVC</label>
-                        <input type="text" placeholder="***" class="form-control open-sans-bold" id="cvc">
-                    </div>
-                    <div class="mb-3">
-                        <label for="cardHolder" class="form-label">Card Holder</label>
-                        <input type="text" class="form-control open-sans-bold" id="cardHolder">
-                    </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">Expiration</label>
+                    <input type="text" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Pay</button>
-            </form>
-        </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label">CVC</label>
+                    <input type="text" class="form-control">
+                </div>
+                 <div class="col-12 mb-3">
+                    <label class="form-label">Card Holder</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            }
+
+      
+            @if (model.method === PaymentMethod.Blik) {
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control">
+                </div>
+                <div class="col-12 mb-3">
+                    <label class="form-label">BLIK Code</label>
+                    <input type="text" maxlength="6" class="form-control">
+                </div>
+            </div>
+            }
+
+            <button class="btn btn-primary w-100">Pay</button>
+        </form>
     </div>
+</div>
 }
