@@ -26,12 +26,6 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             .HasForeignKey(ol => ol.OrderId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(o => o.Delivery)
-           .WithOne()
-           .HasForeignKey<Order>(o => o.DeliveryId)
-           .OnDelete(DeleteBehavior.Cascade);
-
-
         // Owned type for Seller Snapshot Value Object
         builder.OwnsOne(o => o.SellerSnapshot, ss =>
         {
@@ -75,18 +69,6 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
                 .IsRequired();
         });
 
-        builder.OwnsOne(o => o.DeliveryPrice, dp =>
-        {
-            dp.Property(p => p.Amount)
-                .HasColumnName("DeliveryPrice_Amount")
-                .HasPrecision(18, 3)
-                .IsRequired();
-
-            dp.Property(p => p.Currency)
-                .HasColumnName("DeliveryPrice_Currency")
-                .HasMaxLength(3)
-                .IsRequired();
-        });
 
         builder.OwnsOne(o => o.Total, t =>
         {

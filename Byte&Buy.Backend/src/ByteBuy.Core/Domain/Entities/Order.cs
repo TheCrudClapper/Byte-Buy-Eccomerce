@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
+using Microsoft.AspNetCore.Http;
 
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -9,11 +10,10 @@ namespace ByteBuy.Core.Domain.Entities;
 public class Order : AuditableEntity, ISoftDeletable
 {
     public Guid BuyerId { get; private set; }
-    public Guid DeliveryId { get; private set; }
     public OrderStatus Status { get; private set; }
+    public OrderDelivery Delivery { get; set; } = null!;
     public ICollection<OrderLine> Lines { get; private set; } = [];
     public Money LinesTotal { get; private set; } = null!;
-    public Money DeliveryPrice { get; private set; } = null!;
     public Money Total { get; private set; } = null!;
     public SellerSnapshot SellerSnapshot { get; private set; } = null!;
     public DateTime? DateDelivered { get; private set; }
@@ -22,17 +22,15 @@ public class Order : AuditableEntity, ISoftDeletable
 
     //Navigation EF
     public PortalUser Buyer { get; set; } = null!;
-    public OrderDelivery Delivery { get; set; } = null!;
     public PaymentOrder? Payment { get; set; }
     private Order() { }
     
-    private Order(Guid buyerId, Guid deliveryId, SellerSnapshot snapshot, Money deliveryPrice, IEnumerable<OrderLine> lines)
+    private Order(Guid buyerId, OrderDelivery delivery, SellerSnapshot snapshot, IEnumerable<OrderLine> lines)
     {
         Id = Guid.NewGuid();
         BuyerId = buyerId;
-        DeliveryId = deliveryId;
+        Delivery = delivery;
         Status = OrderStatus.AwaitingPayment;
-        DeliveryPrice = deliveryPrice;
         SellerSnapshot = snapshot;
         DateCreated = DateTime.UtcNow;
         IsActive = true;
@@ -45,17 +43,11 @@ public class Order : AuditableEntity, ISoftDeletable
 
     public static Result<Order> CreateNewOrder(
         Guid buyerId,
-        Guid deliveryId,
-        IEnumerable<OrderLine> lines,
-        decimal deliveryPriceAmount,
-        string deliveryPriceCurrency,
-        SellerSnapshot sellerSnapshot)
+        OrderDelivery delivery,
+        SellerSnapshot sellerSnapshot,
+        IEnumerable<OrderLine> lines)
     {
-        var deliveryResult = Money.Create(deliveryPriceAmount, deliveryPriceCurrency);
-        if (deliveryResult.IsFailure)
-            return Result.Failure<Order>(deliveryResult.Error);
-
-        return new Order(buyerId, deliveryId, sellerSnapshot, deliveryResult.Value, lines);
+        return new Order(buyerId, delivery, sellerSnapshot, lines);
     }
 
 
@@ -65,6 +57,11 @@ public class Order : AuditableEntity, ISoftDeletable
             .Select(line => line.TotalPrice)
             .Aggregate(Money.Zero, (sum, lineTotal) => sum + lineTotal);
 
-        Total = LinesTotal + DeliveryPrice;
+        Total = LinesTotal + Delivery.Price;
+    }
+
+    public void PayForOrder()
+    {
+        Status = OrderStatus.InPreparation;
     }
 }

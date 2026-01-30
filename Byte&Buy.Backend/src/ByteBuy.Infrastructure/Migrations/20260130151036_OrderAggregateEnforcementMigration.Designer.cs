@@ -3,6 +3,7 @@ using System;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ByteBuy.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260130151036_OrderAggregateEnforcementMigration")]
+    partial class OrderAggregateEnforcementMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1684,6 +1687,30 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "DeliveryPrice", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 3)
+                                .HasColumnType("numeric(18,3)")
+                                .HasColumnName("DeliveryPrice_Amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("DeliveryPrice_Currency");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.Money", "LinesTotal", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
@@ -1814,6 +1841,9 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Navigation("Buyer");
 
+                    b.Navigation("DeliveryPrice")
+                        .IsRequired();
+
                     b.Navigation("LinesTotal")
                         .IsRequired();
 
@@ -1936,7 +1966,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
                 {
-                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", "Order")
+                    b.HasOne("ByteBuy.Core.Domain.Entities.Order", null)
                         .WithOne("Payment")
                         .HasForeignKey("ByteBuy.Core.Domain.Entities.PaymentOrder", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1972,8 +2002,6 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Navigation("Amount")
                         .IsRequired();
-
-                    b.Navigation("Order");
 
                     b.Navigation("Payment");
                 });

@@ -5,6 +5,6 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IOrderRepository : IRepositoryBase<Order>
 {
-
+   Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId);
 }
 

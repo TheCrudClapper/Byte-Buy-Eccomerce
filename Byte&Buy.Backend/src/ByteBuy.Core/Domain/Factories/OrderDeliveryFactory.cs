@@ -11,6 +11,7 @@ namespace ByteBuy.Core.Domain.Factories;
 public static class OrderDeliveryFactory
 {
     public static Result<OrderDelivery> CreateOrderDelivery(
+        Guid orderId,
         SellerDeliveryRequest request,
         DeliveryOrderQuery delivery,
         UserShippingAddressQuery? shippingAddress = null)
@@ -21,6 +22,7 @@ public static class OrderDeliveryFactory
                 shippingAddress is null
                 ? Result.Failure<OrderDelivery>(OrderDeliveryErrors.InvalidShippingAddress)
                 : OrderDelivery.CreateCourierDelivery(
+                    orderId,
                     delivery.Name,
                     delivery.CarrierCode,
                     delivery.priceAmount,
@@ -34,6 +36,7 @@ public static class OrderDeliveryFactory
 
            DeliveryChannel.ParcelLocker =>
                 OrderDelivery.CreateParcelLockerDelivery(
+                    orderId,
                     delivery.Name,
                     delivery.CarrierCode,
                     delivery.priceAmount,
@@ -42,6 +45,7 @@ public static class OrderDeliveryFactory
 
             DeliveryChannel.PickupPoint =>
                OrderDelivery.CreatePickupPointDelivery(
+                   orderId,
                    delivery.Name,
                    delivery.CarrierCode,
                    delivery.priceAmount,

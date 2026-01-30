@@ -23,7 +23,6 @@ export type OfferType = 'sale' | 'rent';
 export abstract class BaseOfferForm implements OnInit {
   protected readonly facade = inject(OffersFacade);
   protected readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
 
   abstract readonly type: OfferType;
   abstract readonly mode: OfferMode;

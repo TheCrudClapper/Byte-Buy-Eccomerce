@@ -71,5 +71,11 @@ export const API_ENDPOINTS = {
 
     orders: {
         post: '/orders'
+    },
+
+    payments:{
+        get: '/payments',
+        blik: '/payments/blik',
+        card: '/payments/card',
     }
 }

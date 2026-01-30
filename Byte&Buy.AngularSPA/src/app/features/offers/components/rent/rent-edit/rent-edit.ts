@@ -46,6 +46,7 @@ export class RentEdit extends BaseOfferForm implements OnInit {
       this.patchForm(offer.data);
     });
   }
+  
   override ngOnInit(): void {
     super.ngOnInit();
 

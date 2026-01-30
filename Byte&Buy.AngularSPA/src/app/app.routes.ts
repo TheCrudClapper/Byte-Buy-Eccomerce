@@ -19,6 +19,7 @@ import { CartPage } from './features/cart/components/cart-page/cart-page/cart-pa
 import { NotFound } from './shared/components/not-found/not-found/not-found';
 import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-guard';
 import { CheckoutPage } from './features/orders/checkout/checkout-page/checkout-page';
+import { PaymentGateway } from './features/payment-gateway/components/payment-gateway/payment-gateway';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -45,7 +46,8 @@ export const routes: Routes = [
                     { path: 'my-offers', component: MyOffers}
                 ]
             },
-            { path: 'checkout', component: CheckoutPage}
+            { path: 'checkout', component: CheckoutPage},
+            { path: 'payment/:id', component: PaymentGateway}
         ]
     },
     { path: 'forbidden', component: Fobidden },

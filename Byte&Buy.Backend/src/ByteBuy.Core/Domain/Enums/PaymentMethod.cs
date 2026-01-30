@@ -5,8 +5,8 @@ namespace ByteBuy.Core.Domain.Enums;
 public enum PaymentMethod
 {
     [Description("Blik")]
-    Blik,
+    Blik = 0,
 
     [Description("Card")]
-    Card,
+    Card = 1,
 }

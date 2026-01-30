@@ -1,7 +1,10 @@
 ﻿namespace ByteBuy.Core.ResultTypes;
 
-public static class PaymentDetailsErrors
+public static class PaymentErrors
 {
+    public static readonly Error NotFound = new(
+        ErrorType.NotFound, "Payment.NotFound", "Payment of given id is not found");
+
     public static readonly Error InvalidPhoneNumber = Error.Validation
         ("PaymentDetails.PhoneNumber", "Given phone number is too short or in invalid format.");
 

@@ -17,7 +17,7 @@ public class OrdersController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreatedResponse>> PostOrder(OrderAddRequest request)
+    public async Task<ActionResult<OrderCreatedReponse>> PostOrder(OrderAddRequest request)
         => HandleResult(await _orderService.AddAsync(CurrentUserId, request));
 
     [HttpPut]

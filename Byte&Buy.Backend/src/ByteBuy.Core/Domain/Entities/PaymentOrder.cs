@@ -6,12 +6,15 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class PaymentOrder : AuditableEntity, ISoftDeletable
 {
-    public Guid PaymentId { get; set; }
-    public Guid OrderId { get; set; }
-    public Money Amount { get; set; } = null!;
-    public Payment Payment { get; set; } = null!;
-    public bool IsActive { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public Guid PaymentId { get; private set; }
+    public Guid OrderId { get; private set; }
+    public Money Amount { get; private set; } = null!; 
+    public bool IsActive { get; private set; }
+    public DateTime? DateDeleted { get; private set; }
+
+    //EF navigation
+    public Payment Payment { get; private set; } = null!;
+    public Order Order { get; private set; } = null!;
 
     private PaymentOrder() { }
 
@@ -24,13 +27,7 @@ public class PaymentOrder : AuditableEntity, ISoftDeletable
         DateCreated = DateTime.UtcNow;
     }
 
-    public static Result<PaymentOrder> Create(Guid paymentId, Guid orderId, decimal amountAmount, string amountCurrency)
-    {
-        var moneyResult = Money.Create(amountAmount, amountCurrency);
-        if (moneyResult.IsFailure)
-            return Result.Failure<PaymentOrder>(moneyResult.Error);
-
-        return new PaymentOrder(paymentId, orderId, moneyResult.Value);
-    }
-
+    public static PaymentOrder Create(Guid paymentId, Guid orderId, Money amount)
+        => new PaymentOrder(paymentId, orderId, amount);
+   
 }

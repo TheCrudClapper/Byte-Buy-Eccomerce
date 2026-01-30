@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.DomainServices;
 using ByteBuy.Core.Domain.DomainServicesContracts;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +38,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRentOfferService, UserRentOfferService>();
         services.AddScoped<ICheckoutService, CheckoutService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IPaymentService, PaymentService>();
 
         //AddUserShippingAddressAsync Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();

@@ -11,6 +11,10 @@ import { SellerDeliveryState } from '../../models/seller-delivery-state';
 import { OrderAddRequest } from '../../../../core/dto/order/order-add-request';
 import { OrderApiService } from '../../../../core/clients/orders/order-api-service';
 import { buildSellerDeliveriesPayload } from '../../mappers/order-mappers';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
+import { ToastService } from '../../../../shared/services/snackbar/toast-service';
+import { Router } from '@angular/router';
+import { OrderCreatedResponse } from '../../../../core/dto/order/order-created-response';
 
 @Component({
   selector: 'app-checkout-page',
@@ -23,6 +27,8 @@ export class CheckoutPage implements OnInit {
   private readonly checkoutApiService = inject(CheckoutApiService);
   private readonly orderApiService = inject(OrderApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
+  protected readonly router = inject(Router);
+  private readonly toastService = inject(ToastService);
 
   protected shippingAddress = signal<ShippingAddressCheckout | null>(null);
   protected checkout = signal<CheckoutResponse | null>(null);
@@ -186,8 +192,11 @@ export class CheckoutPage implements OnInit {
       selectedDeliveries: sellerPayload
     };
 
-    this.orderApiService.postOrder(finalPayload).subscribe(data => {
-      console.log("Data" + data);
+    this.orderApiService.postOrder(finalPayload).subscribe({
+      next: (data: OrderCreatedResponse) => {
+          this.router.navigate(['/payment', data.paymentId]);
+        },
+      error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to created order") 
     })
   }
 }

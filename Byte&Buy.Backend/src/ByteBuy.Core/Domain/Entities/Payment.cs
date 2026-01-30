@@ -18,19 +18,32 @@ public class Payment : AuditableEntity, ISoftDeletable
 
     private Payment() { }
 
-    private Payment(PaymentMethod method, PaymentStatus status, IEnumerable<PaymentOrder> paymentOrders)
+    private Payment(PaymentMethod method, PaymentStatus status)
     {
+        Id = Guid.NewGuid();
         Method = method;
         Status = status;
-        
-        foreach (PaymentOrder po in paymentOrders)
-            PaymentOrders.Add(po);
-
-        CalculateAmount();
+        IsActive = true;
+        DateCreated = DateTime.UtcNow;
     }
 
-    public static Result<Payment> CreateNewPayment(PaymentMethod method, IEnumerable<PaymentOrder> paymentOrders)
-        => new Payment(method, PaymentStatus.Created, paymentOrders);
+    public static Result<Payment> CreateNewPayment(PaymentMethod method,
+        IEnumerable<(Guid orderId, Money amount)> orders)
+    {
+        var payment = new Payment(method, PaymentStatus.Created);
+
+        foreach (var (orderId, amount) in orders)
+        {
+            var moneyResult = Money.Create(amount.Amount, amount.Currency);
+            if (moneyResult.IsFailure)
+                return Result.Failure<Payment>(moneyResult.Error);
+
+            payment.PaymentOrders.Add(PaymentOrder.Create(payment.Id, orderId, moneyResult.Value));
+        }
+
+        payment.CalculateAmount();
+        return payment;
+    }
 
     private void CalculateAmount()
     {

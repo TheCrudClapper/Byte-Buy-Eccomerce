@@ -17,7 +17,7 @@ public sealed class BlikPaymentDetails : PaymentDetails
     public static Result<BlikPaymentDetails> Create(PaymentMethod method, string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber) ||  phoneNumber.Length < 9 || phoneNumber.Length > 15 )
-            return Result.Failure<BlikPaymentDetails>(PaymentDetailsErrors.InvalidPhoneNumber);
+            return Result.Failure<BlikPaymentDetails>(PaymentErrors.InvalidPhoneNumber);
 
         return new BlikPaymentDetails(method, phoneNumber);
     }

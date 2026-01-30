@@ -6,9 +6,7 @@ using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Cart;
 using ByteBuy.Core.DTO.Internal.Seller;
-using ByteBuy.Core.DTO.Public.Checkout;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
@@ -26,13 +24,15 @@ public class OrderService : IOrderService
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly ICompanyRepository _companyRepository;
+    private readonly IPaymentRepository _paymentRepository;
 
     public OrderService(ICartRepository cartRepository,
         IOrderRepository orderRepository,
         IDeliveryRepository deliveryRepository,
         IPortalUserRepository portalUserRepository,
         ICompanyRepository companyRepository,
-        IAddressReadRepository addressReadRepository)
+        IAddressReadRepository addressReadRepository,
+        IPaymentRepository paymentRepository)
     {
         _cartRepository = cartRepository;
         _orderRepository = orderRepository;
@@ -40,13 +40,14 @@ public class OrderService : IOrderService
         _portalUserRepository = portalUserRepository;
         _companyRepository = companyRepository;
         _addressReadRepository = addressReadRepository;
+        _paymentRepository = paymentRepository;
     }
 
-    public async Task<Result<CreatedResponse>> AddAsync(Guid userId, OrderAddRequest request)
+    public async Task<Result<OrderCreatedReponse>> AddAsync(Guid userId, OrderAddRequest request)
     {
         var cartOffers = await _cartRepository.GetCartOffersForCheckout(userId);
         if (cartOffers.Count == 0)
-            return Result.Failure<CreatedResponse>(OrderErrors.NoCartOffersFound);
+            return Result.Failure<OrderCreatedReponse>(OrderErrors.NoCartOffersFound);
 
         var paymentMethod = (PaymentMethod)request.PaymentMethodId;
 
@@ -69,7 +70,7 @@ public class OrderService : IOrderService
             companySnapshot = await _companyRepository.GetBySpecAsync(companySpec);
 
             if (companySnapshot is null)
-                return Result.Failure<CreatedResponse>(CompanyInfoErrors.NotFound);
+                return Result.Failure<OrderCreatedReponse>(CompanyInfoErrors.NotFound);
         }
 
         var privateSellerSpec = new PrivateSellerSnapshotSpec(sellerIds
@@ -100,7 +101,7 @@ public class OrderService : IOrderService
             shippingAddress = await _addressReadRepository.GetBySpecAsync(addressSpec);
 
             if (shippingAddress is null)
-                return Result.Failure<CreatedResponse>(OrderDeliveryErrors.InvalidShippingAddress);
+                return Result.Failure<OrderCreatedReponse>(OrderDeliveryErrors.InvalidShippingAddress);
         }
 
         // sellers
@@ -114,13 +115,13 @@ public class OrderService : IOrderService
                 .FirstOrDefault(d => d.SellerId == sellerId);
 
             if (deliveryRequest is null)
-                return Result.Failure<CreatedResponse>(OrderErrors.MisingDeliveryPerSeller);
+                return Result.Failure<OrderCreatedReponse>(OrderErrors.MisingDeliveryPerSeller);
 
             if (!deliveryLookup.TryGetValue(deliveryRequest.DeliveryId, out var deliveryDto))
-                return Result.Failure<CreatedResponse>(OrderErrors.InvalidDelivery);
+                return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidDelivery);
 
             if (!sellerLookup.TryGetValue(sellerId, out var sellerDto))
-                return Result.Failure<CreatedResponse>(OrderErrors.InvalidSeller);
+                return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidSeller);
 
             var orderId = Guid.NewGuid();
 
@@ -130,7 +131,7 @@ public class OrderService : IOrderService
             {
                 var lineResult = OrderLineFactory.FromCartOffer(orderId, cartOffer);
                 if (lineResult.IsFailure)
-                    return Result.Failure<CreatedResponse>(lineResult.Error);
+                    return Result.Failure<OrderCreatedReponse>(lineResult.Error);
 
                 lines.Add(lineResult.Value);
             }
@@ -140,28 +141,36 @@ public class OrderService : IOrderService
 
             // orders delivery
             var deliveryResult = OrderDeliveryFactory.CreateOrderDelivery(
+                orderId,
                 deliveryRequest,
                 deliveryDto,
                 deliveryDto.channel == DeliveryChannel.Courier ? shippingAddress : null);
 
             if (deliveryResult.IsFailure)
-                return Result.Failure<CreatedResponse>(deliveryResult.Error);
+                return Result.Failure<OrderCreatedReponse>(deliveryResult.Error);
 
             var orderResult = Order.CreateNewOrder(
                 userId,
-                deliveryResult.Value.Id,
-                lines,
-                deliveryDto.priceAmount,
-                deliveryDto.priceCurrency,
-                sellerSnapshot);
+                deliveryResult.Value,
+                sellerSnapshot,
+                lines);
 
             orders.Add(orderResult.Value);
+
+            await _orderRepository.AddAsync(orderResult.Value);
         }
 
+        var orderAmounts = orders.Select(o => (o.Id, o.Total));
 
-        throw new NotImplementedException();
+        var paymentResult = Payment.CreateNewPayment(paymentMethod, orderAmounts);
+        if (paymentResult.IsFailure)
+            return Result.Failure<OrderCreatedReponse>(paymentResult.Error);
+
+        await _paymentRepository.AddAsync(paymentResult.Value);
+        await _orderRepository.CommitAsync();
+        return new OrderCreatedReponse(paymentResult.Value.Id, paymentResult.Value.Method);
     }
-
+    
     public Task<Result> ReturnOrder(Guid userId, Guid orderId)
     {
         throw new NotImplementedException();

@@ -23,9 +23,9 @@ public class OrderDeliveryConfig : IEntityTypeConfiguration<OrderDelivery>
             .IsRequired();
 
         builder.HasOne(od => od.Order)
-               .WithOne()
-               .HasForeignKey<OrderDelivery>(od => od.OrderId)
-               .OnDelete(DeleteBehavior.Cascade);
+           .WithOne(o => o.Delivery)
+           .HasForeignKey<OrderDelivery>(od => od.OrderId)
+           .OnDelete(DeleteBehavior.Cascade);
 
         // Owner type price
         builder.OwnsOne(od => od.Price, price =>

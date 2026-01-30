@@ -36,14 +36,15 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     public bool IsActive { get; set; }
     public DateTime? DateDeleted { get; set; }
 
-    //Navigatio Ef
+    //Navigation Ef
     public Order Order { get; set; } = null!;
 
     private OrderDelivery() { }
 
-    private OrderDelivery(string deliveryName, string carrierCode, DeliveryChannel channel, Money price)
+    private OrderDelivery(Guid orderId, string deliveryName, string carrierCode, DeliveryChannel channel, Money price)
     {
         Id = Guid.NewGuid();
+        OrderId = orderId;
         DeliveryName = deliveryName;
         CarrierCode = carrierCode;
         Channel = channel;
@@ -53,6 +54,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     }
 
     private static Result<OrderDelivery> CreateInternal(
+        Guid orderId,
         string deliveryName,
         string carrierCode,
         DeliveryChannel channel,
@@ -66,10 +68,11 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
         if (string.IsNullOrWhiteSpace(carrierCode) || carrierCode.Length > 20)
             return Result.Failure<OrderDelivery>(OrderDeliveryErrors.InvalidCarrierCode);
 
-        return new OrderDelivery(deliveryName, carrierCode, channel, moneyResult.Value);
+        return new OrderDelivery(orderId, deliveryName, carrierCode, channel, moneyResult.Value);
     }
 
     public static Result<OrderDelivery> CreatePickupPointDelivery(
+    Guid orderId,
     string deliveryName,
     string carrierCode,
     decimal priceAmount,
@@ -81,6 +84,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     string? pickupLocalNumber)
     {
         var deliveryResult = CreateInternal(
+            orderId,
             deliveryName,
             carrierCode,
             DeliveryChannel.PickupPoint,
@@ -112,6 +116,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     }
 
     public static Result<OrderDelivery> CreateParcelLockerDelivery(
+    Guid orderId,
     string deliveryName,
     string carrierCode,
     decimal priceAmount,
@@ -119,6 +124,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     string parcelLockerId)
     {
         var deliveryResult = CreateInternal(
+            orderId,
             deliveryName,
             carrierCode,
             DeliveryChannel.ParcelLocker,
@@ -138,6 +144,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     }
 
     public static Result<OrderDelivery> CreateCourierDelivery(
+    Guid orderId,
     string deliveryName,
     string carrierCode,
     decimal priceAmount,
@@ -150,6 +157,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     string postalCode)
     {
         var deliveryResult = CreateInternal(
+            orderId,
             deliveryName,
             carrierCode,
             DeliveryChannel.Courier,

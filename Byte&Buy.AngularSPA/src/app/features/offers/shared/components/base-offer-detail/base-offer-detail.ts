@@ -18,7 +18,6 @@ import { environment } from '../../../../../../environments/environment';
 })
 
 //Base abstract class for sale and rent offer details encapsulating common logic
-
 export abstract class BaseOfferDetail {
   protected readonly route = inject(ActivatedRoute);
   protected readonly offerService = inject(OfferApiService);
@@ -48,7 +47,6 @@ export abstract class BaseOfferDetail {
       this.loadOffer(id);
       this.loadDeliveries(id);
     });
-    console.log(this.imageBaseUrl);
   }
 
   abstract addToCart(): void;
