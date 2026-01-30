@@ -2,6 +2,7 @@
 using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Internal.Checkout;
+using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Mappings;
@@ -89,8 +90,20 @@ public static class PortalUserSpecifications
         public PortalUserToSellerCheckoutSpec(IEnumerable<Guid> sellerIds)
         {
             Query
-                .Where(item => sellerIds.Contains(item.Id))
+                .Where(p => sellerIds.Contains(p.Id))
                 .Select(PortalUserMappings.SellerPortalResponseProjection);
+        }
+    }
+
+    public sealed class PrivateSellerSnapshotSpec : Specification<PortalUser, SellerSnapshotDto>
+    {
+        public PrivateSellerSnapshotSpec(IEnumerable<Guid> sellersIds)
+        {
+            Query
+                .AsNoTracking()
+                .Where(p => sellersIds.Contains(p.Id))
+                .Select(PortalUserMappings.SellerSnapshotDtoProjection);
+                
         }
     }
 }

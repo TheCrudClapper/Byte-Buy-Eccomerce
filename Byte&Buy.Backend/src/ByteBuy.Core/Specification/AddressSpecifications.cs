@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
@@ -84,6 +85,16 @@ public static class AddressSpecifications
 
             Query.Where(a => a.UserId == userId)
                 .Select(AddressMappings.ShippingAddressCheckoutProjection);
+        }
+    }
+
+    public sealed class UserShippingAddressQuerySpec : Specification<ShippingAddress, UserShippingAddressQuery>
+    {
+        public UserShippingAddressQuerySpec(Guid userId, Guid addressId)
+        {
+            Query.AsNoTracking()
+                .Where(a => a.Id == addressId && a.UserId == userId)
+                .Select(AddressMappings.UserShippingAddressQueryProjection);
         }
     }
 }

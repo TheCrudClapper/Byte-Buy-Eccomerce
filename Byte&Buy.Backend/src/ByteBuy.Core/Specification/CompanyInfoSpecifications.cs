@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
+using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.Mappings;
 using System.Collections;
 
@@ -24,6 +25,14 @@ public static class CompanyInfoSpecifications
             Query.AsNoTracking()
                 .Select(CompanyInfoMappings.SellerCheckoutProjection);
         }
+    }
 
+    public sealed class CompanySellerSnapshotSpec : Specification<Company, SellerSnapshotDto>
+    {
+        public CompanySellerSnapshotSpec()
+        {
+            Query.AsNoTracking()
+                .Select(CompanyInfoMappings.SellerSnapshotDtoProjection);
+        }
     }
 }

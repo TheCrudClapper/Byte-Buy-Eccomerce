@@ -16,18 +16,16 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     public Money Price { get; private set; } = null!;
 
     // Courier 
-    public string? BuyerFullName { get; private set; }
     public string? Street { get; private set; }
     public string? HouseNumber { get; private set; }
     public string? FlatNumber { get; private set; }
     public string? City { get; private set; }
     public string? PostalCity { get; private set; }
     public string? PostalCode { get; private set; }
-    public string? Phone { get; private set; }
 
     // Pickup
-    public string? PickupPointId { get; private set; }
     public string? PickupPointName { get; private set; }
+    public string? PickupPointId { get; private set; }
     public string? PickupStreet { get; private set; }
     public string? PickupCity { get; private set; }
     public string? PickupLocalNumber { get; private set; }
@@ -43,12 +41,15 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
 
     private OrderDelivery() { }
 
-    private OrderDelivery (string deliveryName, string carrierCode, DeliveryChannel channel, Money price)
-    { 
+    private OrderDelivery(string deliveryName, string carrierCode, DeliveryChannel channel, Money price)
+    {
+        Id = Guid.NewGuid();
         DeliveryName = deliveryName;
         CarrierCode = carrierCode;
         Channel = channel;
         Price = price;
+        IsActive = true;
+        DateCreated = DateTime.UtcNow;
     }
 
     private static Result<OrderDelivery> CreateInternal(
@@ -62,7 +63,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
         if (moneyResult.IsFailure)
             return Result.Failure<OrderDelivery>(moneyResult.Error);
 
-        if (string.IsNullOrWhiteSpace(carrierCode) || carrierCode.Length > 3)
+        if (string.IsNullOrWhiteSpace(carrierCode) || carrierCode.Length > 20)
             return Result.Failure<OrderDelivery>(OrderDeliveryErrors.InvalidCarrierCode);
 
         return new OrderDelivery(deliveryName, carrierCode, channel, moneyResult.Value);
@@ -73,8 +74,8 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     string carrierCode,
     decimal priceAmount,
     string priceCurrency,
-    string pickupPointId,
     string pickupPointName,
+    string pickupPointId,
     string pickupStreet,
     string pickupCity,
     string? pickupLocalNumber)
@@ -90,6 +91,7 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
             return deliveryResult;
 
         if (string.IsNullOrWhiteSpace(pickupPointId) ||
+            string.IsNullOrWhiteSpace(pickupLocalNumber) ||
             string.IsNullOrWhiteSpace(pickupPointName) ||
             string.IsNullOrWhiteSpace(pickupStreet) ||
             string.IsNullOrWhiteSpace(pickupCity))
@@ -140,14 +142,12 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
     string carrierCode,
     decimal priceAmount,
     string priceCurrency,
-    string buyerFullName,
     string street,
     string houseNumber,
     string? flatNumber,
     string city,
     string postalCity,
-    string postalCode,
-    string phone)
+    string postalCode)
     {
         var deliveryResult = CreateInternal(
             deliveryName,
@@ -159,12 +159,10 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
         if (deliveryResult.IsFailure)
             return deliveryResult;
 
-        if (string.IsNullOrWhiteSpace(buyerFullName) ||
-            string.IsNullOrWhiteSpace(street) ||
+        if (string.IsNullOrWhiteSpace(street) ||
             string.IsNullOrWhiteSpace(houseNumber) ||
             string.IsNullOrWhiteSpace(city) ||
-            string.IsNullOrWhiteSpace(postalCode) ||
-            string.IsNullOrWhiteSpace(phone))
+            string.IsNullOrWhiteSpace(postalCode))
         {
             return Result.Failure<OrderDelivery>(
                 OrderDeliveryErrors.InvalidCourierAddress);
@@ -172,14 +170,12 @@ public class OrderDelivery : AuditableEntity, ISoftDeletable
 
         var delivery = deliveryResult.Value;
 
-        delivery.BuyerFullName = buyerFullName;
         delivery.Street = street;
         delivery.HouseNumber = houseNumber;
         delivery.FlatNumber = flatNumber;
         delivery.City = city;
         delivery.PostalCity = postalCity;
         delivery.PostalCode = postalCode;
-        delivery.Phone = phone;
 
         return delivery;
     }

@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
+using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.CompanyInfo;
 using System.Linq.Expressions;
@@ -40,4 +42,11 @@ public static class CompanyInfoMappings
             c.CompanyName,
             c.Email);
 
+    public static Expression<Func<Company, SellerSnapshotDto>> SellerSnapshotDtoProjection
+        => c => new SellerSnapshotDto(
+            c.Id,
+            SellerType.Company,
+            c.CompanyName,
+            c.TIN,
+            c.CompanyAddress);
 }

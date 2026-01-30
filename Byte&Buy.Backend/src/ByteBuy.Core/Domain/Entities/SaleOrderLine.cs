@@ -25,7 +25,7 @@ public class SaleOrderLine : OrderLine
         string imagePath,
         string? altText,
         int quantity,
-        int amount,
+        decimal amount,
         string currency)
     {
         if (quantity <= 0)

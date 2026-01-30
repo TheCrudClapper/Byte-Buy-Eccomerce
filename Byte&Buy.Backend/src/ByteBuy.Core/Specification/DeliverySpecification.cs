@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -45,6 +46,16 @@ public static class DeliverySpecifications
             Query.AsNoTracking()
                 .Where(d => deliveryIds.Contains(d.Id))
                 .Select(DeliveryMappings.DeliveryOptionResponseProjection);
+        }
+    }
+
+    public class DeliveryOrderQuerySpec : Specification<Delivery, DeliveryOrderQuery>
+    {
+        public DeliveryOrderQuerySpec(IEnumerable<Guid> deliveryIds)
+        {
+            Query.AsNoTracking()
+                 .Where(d => deliveryIds.Contains(d.Id))
+                 .Select(DeliveryMappings.DeliveryOrderQueryProjection);
         }
     }
 }

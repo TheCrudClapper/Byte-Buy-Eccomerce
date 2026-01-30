@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
@@ -51,4 +52,12 @@ public static class DeliveryMappings
             d.Price.Amount,
             d.Price.Currency);
 
+    public static Expression<Func<Delivery, DeliveryOrderQuery>> DeliveryOrderQueryProjection
+        => d => new DeliveryOrderQuery(
+            d.Id,
+            d.Name,
+            d.DeliveryCarrier.Code,
+            d.Channel,
+            d.Price.Amount,
+            d.Price.Currency);
 }

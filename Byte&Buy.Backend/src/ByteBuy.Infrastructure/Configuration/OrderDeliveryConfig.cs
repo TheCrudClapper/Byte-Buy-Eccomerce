@@ -58,9 +58,6 @@ public class OrderDeliveryConfig : IEntityTypeConfiguration<OrderDelivery>
         builder.Property(od => od.FlatNumber)
             .HasMaxLength(10);
 
-        builder.Property(od => od.BuyerFullName);
-        builder.Property(od => od.Phone);
-
         builder.Property(od => od.PickupPointId);
 
         builder.Property(od => od.PickupPointName)

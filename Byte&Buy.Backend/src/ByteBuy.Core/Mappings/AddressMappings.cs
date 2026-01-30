@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using System.Linq.Expressions;
@@ -76,4 +77,14 @@ public static class AddressMappings
             a.FlatNumber,
             a.IsDefault
             );
+
+    public static Expression<Func<ShippingAddress, UserShippingAddressQuery>> UserShippingAddressQueryProjection
+        => a => new UserShippingAddressQuery(
+            a.Id,
+            a.Street,
+            a.City,
+            a.PostalCity,
+            a.PostalCode,
+            a.HouseNumber,
+            a.FlatNumber);
 }

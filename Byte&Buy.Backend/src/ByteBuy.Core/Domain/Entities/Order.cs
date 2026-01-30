@@ -28,6 +28,7 @@ public class Order : AuditableEntity, ISoftDeletable
     
     private Order(Guid buyerId, Guid deliveryId, SellerSnapshot snapshot, Money deliveryPrice, IEnumerable<OrderLine> lines)
     {
+        Id = Guid.NewGuid();
         BuyerId = buyerId;
         DeliveryId = deliveryId;
         Status = OrderStatus.AwaitingPayment;
@@ -46,8 +47,8 @@ public class Order : AuditableEntity, ISoftDeletable
         Guid buyerId,
         Guid deliveryId,
         IEnumerable<OrderLine> lines,
-        string deliveryPriceCurrency,
         decimal deliveryPriceAmount,
+        string deliveryPriceCurrency,
         SellerSnapshot sellerSnapshot)
     {
         var deliveryResult = Money.Create(deliveryPriceAmount, deliveryPriceCurrency);

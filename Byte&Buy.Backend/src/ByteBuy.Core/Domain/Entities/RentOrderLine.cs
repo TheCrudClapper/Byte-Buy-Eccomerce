@@ -29,7 +29,7 @@ public class RentOrderLine : OrderLine
         string imagePath,
         string? altText,
         int quantity,
-        int amount,
+        decimal amount,
         string currency,
         int rentalDays)
     {

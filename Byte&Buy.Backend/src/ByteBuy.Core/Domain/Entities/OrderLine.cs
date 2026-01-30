@@ -20,6 +20,7 @@ public abstract class OrderLine : AuditableEntity, ISoftDeletable
 
     protected OrderLine(Guid orderId, string itemName, ImageThumbnail thumbnail, int quantity)
     {
+        Id = Guid.NewGuid();
         OrderId = orderId;
         ItemName = itemName;
         Thumbnail = thumbnail;

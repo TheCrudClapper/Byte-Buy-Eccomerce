@@ -24,5 +24,5 @@ public class SellerSnapshot
         => new(SellerType.Company, sellerId, displayName, tIN, address);
 
     public static SellerSnapshot CreatePrivateSellerSnapshot(Guid sellerId, string displayName, string? tIN, AddressValueObject address)
-        => new(SellerType.Company, sellerId, displayName, tIN, address);
+        => new(SellerType.PrivatePerson, sellerId, displayName, tIN, address);
 }

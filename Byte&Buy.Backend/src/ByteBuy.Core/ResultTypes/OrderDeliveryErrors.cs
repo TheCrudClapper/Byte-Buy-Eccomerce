@@ -13,4 +13,7 @@ public static class OrderDeliveryErrors
 
     public static readonly Error InvalidCourierAddress = Error.Validation(
        "OrderDelivery.PickupPoint", "Invalid Courier address used in one of deliveries");
+
+    public static readonly Error InvalidShippingAddress = Error.Validation(
+        "OrderDelivery.ShippingAddress", "Shippinh address provided is not valid");
 }
