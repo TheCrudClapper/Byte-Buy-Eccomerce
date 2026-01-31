@@ -62,6 +62,7 @@ public class Order : AuditableEntity, ISoftDeletable
 
     public void PayForOrder()
     {
-        Status = OrderStatus.InPreparation;
+        Status = OrderStatus.Paid;
     }
+
 }

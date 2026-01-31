@@ -24,6 +24,7 @@ public class BaseApiController : ControllerBase
     public ActionResult HandleResult<T>(Result<T> result)
     {
         var statusCode = MapToStatusCode(result.Error);
+
         return result.IsFailure
             ? Problem(
                 statusCode: (int)statusCode,

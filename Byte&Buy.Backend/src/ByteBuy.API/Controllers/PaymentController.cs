@@ -15,15 +15,15 @@ public class PaymentController : BaseApiController
         _paymentService = paymentService;
     }
 
-    [HttpGet("{paymentId}")]
+    [HttpGet("{paymentId:guid}")]
     public async Task<ActionResult<PaymentResponse>> GetPayment(Guid paymentId)
         => HandleResult(await _paymentService.GetPayment(paymentId));
 
-    [HttpPut("{paymentId}/blik")]
+    [HttpPut("{paymentId:guid}/blik")]
     public async Task<ActionResult> PayUsingBlik(Guid paymentId, BlikPaymentRequest request)
-        => HandleResult(await _paymentService.PayViaBlik(paymentId, request));
+        => HandleResult(await _paymentService.PayViaBlik(CurrentUserId, paymentId, request));
 
-    [HttpPut("{paymentId}/card")]
+    [HttpPut("{paymentId:guid}/card")]
     public async Task<ActionResult> PayUsingCard(Guid paymentId, CardPaymentRequest request)
-        => HandleResult(await _paymentService.PayViaCard(paymentId, request));
+        => HandleResult(await _paymentService.PayViaCard(CurrentUserId, paymentId, request));
 }

@@ -1,5 +1,7 @@
-﻿namespace ByteBuy.Core.DTO.Public.Payment;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.Payment;
 
 public record CardPaymentRequest(
-    string CardHolderName,
-    string CardNumber);
+    [Required] string CardHolderName,
+    [Required, MinLength(16), MaxLength(19)] string CardNumber);

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PaymentApiService } from '../../../../core/clients/payment/payment-api-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { PaymentModel } from '../../models/payment-model';
 import { mapToPaymentModel } from '../../mappers/payment-mapper';
@@ -12,6 +12,7 @@ import { BlikPaymentRequest } from '../../../../core/dto/payment/blik-payment-re
 import { CardPaymentRequest } from '../../../../core/dto/payment/card-payment-request';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
+import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 
 @Component({
   selector: 'app-payment-gateway',
@@ -24,6 +25,7 @@ export class PaymentGateway implements OnInit {
   private readonly paymentApiService = inject(PaymentApiService);
   protected readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
 
   private readonly paymentId = signal<Guid | undefined>(undefined);
@@ -88,7 +90,6 @@ export class PaymentGateway implements OnInit {
     if (method === PaymentMethod.Blik) {
       this.form.controls.phone.setValidators([
         Validators.required,
-        Validators.email,
       ]);
       this.form.controls.blikCode.setValidators([
         Validators.required,
@@ -96,6 +97,10 @@ export class PaymentGateway implements OnInit {
       ]);
     }
     this.form.updateValueAndValidity();
+  }
+
+  getErrorMessage(path: string) {
+    return getErrorMessage(this.form, path);
   }
 
   submit() {
@@ -115,9 +120,11 @@ export class PaymentGateway implements OnInit {
         cardHolderName: this.form.value.cardHolder!,
         cardNumber: this.form.value.cardNumber!
       }
+
       this.paymentApiService.payWithCard(id, payload).subscribe({
         next: () => {
-          this.toastService.success("Successfully paid for order with Card")
+          this.toastService.success("Successfully paid for order with Card");
+          this.router.navigate(['/profile', 'my-orders']);
         },
         error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to pay using card")
       });
@@ -127,11 +134,13 @@ export class PaymentGateway implements OnInit {
       const payload: BlikPaymentRequest = {
         phoneNumber: this.form.value.phone!
       }
+
       this.paymentApiService.payWithBlik(id, payload).subscribe({
         next: () => {
           this.toastService.success("Successfully paid for order with Blik !")
+          this.router.navigate(['/profile', 'my-orders']);
         },
-        error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to pay using card")
+        error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to pay using blik")
       });
     }
   }

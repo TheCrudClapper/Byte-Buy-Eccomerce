@@ -7,8 +7,8 @@ public enum OrderStatus
     [Description("Awaiting Payment")]
     AwaitingPayment = 0,
 
-    [Description("In Preparation")]
-    InPreparation = 1,
+    [Description("Paid")]
+    Paid = 1,
 
     [Description("Shipped")]
     Shipped = 2,

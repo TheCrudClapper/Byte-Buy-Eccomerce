@@ -1,4 +1,6 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Payment;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -27,13 +29,57 @@ public class PaymentService : IPaymentService
             : dto;
     }
 
-    public Task<Result> PayViaBlik(Guid paymentId, BlikPaymentRequest request)
+    public async Task<Result> PayViaBlik(Guid userId, Guid paymentId, BlikPaymentRequest request)
     {
-        throw new NotImplementedException();
+        var payment = await _paymentRepository.GetPaymentByUserId(userId, paymentId);
+        if (payment is null)
+            return Result.Failure(PaymentErrors.NotFound);
+
+        if (payment.Method != PaymentMethod.Blik)
+            return Result.Failure(PaymentErrors.PaymentMethodsNotMatch);
+
+        var blikResult = BlikPaymentDetails.Create(payment.Id, payment.Method, request.PhoneNumber);
+        if(blikResult.IsFailure)
+            return Result.Failure<Result>(PaymentErrors.NotFound);
+
+        var paymentResult = payment.FinalizePayment(blikResult.Value);
+        if (paymentResult.IsFailure)
+            return Result.Failure(paymentResult.Error);
+
+        var orders = await _orderRepository.GetOrdersByPaymentId(userId, paymentId);
+
+        foreach(var order in orders)
+            order.PayForOrder();
+
+        await _paymentRepository.UpdateAsync(payment);
+        await _paymentRepository.CommitAsync();
+        return Result.Success();
     }
 
-    public Task<Result> PayViaCard(Guid paymentId, CardPaymentRequest request)
+    public async Task<Result> PayViaCard(Guid userId, Guid paymentId, CardPaymentRequest request)
     {
-        throw new NotImplementedException();
+        var payment = await _paymentRepository.GetByIdAsync(paymentId);
+        if (payment is null)
+            return Result.Failure<Result>(PaymentErrors.NotFound);
+
+        if (payment.Method != PaymentMethod.Card)
+            return Result.Failure(PaymentErrors.PaymentMethodsNotMatch);
+
+        var cardResult = CardPaymentDetails.Create(PaymentMethod.Card, request.CardNumber, request.CardHolderName);
+        if (cardResult.IsFailure)
+            return Result.Failure<Result>(PaymentErrors.NotFound);
+
+        var paymentResult = payment.FinalizePayment(cardResult.Value);
+        if (paymentResult.IsFailure)
+            return Result.Failure(paymentResult.Error);
+
+        var orders = await _orderRepository.GetOrdersByPaymentId(userId, paymentId);
+
+        foreach (var order in orders)
+            order.PayForOrder();
+
+        await _paymentRepository.UpdateAsync(payment);
+        await _paymentRepository.CommitAsync();
+        return Result.Success();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.Public.Payment;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.Payment;
 
 public record BlikPaymentRequest(
-    string PhoneNumber);
+    [Required, MaxLength(15)] string PhoneNumber);

@@ -51,4 +51,15 @@ public class Payment : AuditableEntity, ISoftDeletable
             .Select(po => po.Amount)
             .Aggregate(Money.Zero, (sum, orderAmount) => sum + orderAmount);
     }
+
+    public Result FinalizePayment(PaymentDetails details)
+    {
+        if (Status == PaymentStatus.Completed)
+            return Result.Failure(PaymentErrors.AlreadyPaid);
+        
+            Status = PaymentStatus.Completed;
+            PaymentDetails = details;
+
+        return Result.Success();
+    }
 }

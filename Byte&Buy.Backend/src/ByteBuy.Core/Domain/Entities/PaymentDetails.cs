@@ -10,8 +10,9 @@ public abstract class PaymentDetails : AuditableEntity
     public PaymentMethod Method { get; set; }
     protected PaymentDetails(){}
 
-    protected PaymentDetails(PaymentMethod method)
+    protected PaymentDetails(PaymentMethod method, Guid paymentId)
     {
         Method = method;
+        PaymentId = paymentId;  
     }
 }

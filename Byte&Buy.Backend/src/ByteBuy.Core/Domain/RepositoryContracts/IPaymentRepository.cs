@@ -5,5 +5,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IPaymentRepository : IRepositoryBase<Payment>
 {
-
+    Task<Payment?> GetPaymentByUserId(Guid userId, Guid paymentId, CancellationToken ct = default);
 }

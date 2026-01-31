@@ -20,6 +20,7 @@ import { NotFound } from './shared/components/not-found/not-found/not-found';
 import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-guard';
 import { CheckoutPage } from './features/orders/checkout/checkout-page/checkout-page';
 import { PaymentGateway } from './features/payment-gateway/components/payment-gateway/payment-gateway';
+import { MyOrders } from './features/profile/components/my-orders/my-orders/my-orders';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -43,11 +44,12 @@ export const routes: Routes = [
                     { path: '', redirectTo: 'personal-info', pathMatch: 'full' },
                     { path: 'personal-info', component: PersonalInfo },
                     { path: 'addresses', component: Addresses},
-                    { path: 'my-offers', component: MyOffers}
+                    { path: 'my-offers', component: MyOffers},
+                    { path: 'my-orders', component: MyOrders}
                 ]
             },
             { path: 'checkout', component: CheckoutPage},
-            { path: 'payment/:id', component: PaymentGateway}
+            { path: 'payment/:id', component: PaymentGateway},
         ]
     },
     { path: 'forbidden', component: Fobidden },

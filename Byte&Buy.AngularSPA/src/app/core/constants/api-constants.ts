@@ -75,7 +75,7 @@ export const API_ENDPOINTS = {
 
     payments:{
         get: '/payments',
-        blik: '/payments/blik',
-        card: '/payments/card',
+        blik: '/blik',
+        card: '/card',
     }
 }

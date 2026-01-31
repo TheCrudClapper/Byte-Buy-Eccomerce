@@ -19,7 +19,7 @@ public sealed class CardPaymentDetails : PaymentDetails
 
     public static Result<CardPaymentDetails> Create(PaymentMethod method, string cardNumber, string cardHolderName)
     {
-        if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length < 13 || cardNumber.Length > 19)
+        if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length < 16 || cardNumber.Length > 19)
             return Result.Failure<CardPaymentDetails>(PaymentErrors.InvalidCardNumber);
 
         if (string.IsNullOrWhiteSpace(cardHolderName))

@@ -31,11 +31,6 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
         return Task.CompletedTask;
     }
 
-    public Task AddRange(IEnumerable<T> entities)
-    {
-        throw new NotImplementedException();
-    }
-
     public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
         => await _context.Set<T>().FirstOrDefaultAsync(item => item.Id == id, ct);
 

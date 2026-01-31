@@ -19,16 +19,22 @@
                         Personal Information
                     </div>
                 </a>
+                <a class="action-link" [routerLink]="['/profile/addresses']" routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }">
+                    <div class="px-3 py-3 action-tile">
+                        Addresses
+                    </div>
+                </a>
                 <a class="action-link" [routerLink]="['/profile/my-offers']" routerLinkActive="active-link"
                     [routerLinkActiveOptions]="{ exact: true }">
                     <div class="px-3 py-3 action-tile">
                         My Offers
                     </div>
                 </a>
-                <a class="action-link" [routerLink]="['/profile/addresses']" routerLinkActive="active-link"
+                <a class="action-link" [routerLink]="['/profile/my-orders']" routerLinkActive="active-link"
                     [routerLinkActiveOptions]="{ exact: true }">
                     <div class="px-3 py-3 action-tile">
-                        Addresses
+                        My Orders
                     </div>
                 </a>
                 <a class="action-link">

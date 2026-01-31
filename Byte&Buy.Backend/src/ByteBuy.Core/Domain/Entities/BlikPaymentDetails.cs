@@ -9,17 +9,17 @@ public sealed class BlikPaymentDetails : PaymentDetails
 
     private BlikPaymentDetails() { }
 
-    private BlikPaymentDetails(PaymentMethod method, string phoneNumber) : base(method)
+    private BlikPaymentDetails(Guid paymentId, PaymentMethod method, string phoneNumber) : base(method, paymentId)
     {
         PhoneNumber = phoneNumber;
     }
 
-    public static Result<BlikPaymentDetails> Create(PaymentMethod method, string phoneNumber)
+    public static Result<BlikPaymentDetails> Create(Guid paymentId, PaymentMethod method, string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber) ||  phoneNumber.Length < 9 || phoneNumber.Length > 15 )
             return Result.Failure<BlikPaymentDetails>(PaymentErrors.InvalidPhoneNumber);
 
-        return new BlikPaymentDetails(method, phoneNumber);
+        return new BlikPaymentDetails(paymentId, method, phoneNumber);
     }
 
 }
