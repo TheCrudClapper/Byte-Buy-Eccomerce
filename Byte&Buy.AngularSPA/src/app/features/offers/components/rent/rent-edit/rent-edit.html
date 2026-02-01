@@ -28,7 +28,7 @@
                 <!-- Container for displaying imges -->
                 <div class="inner-container horizontal-scroll">
                     <div class="images-row">
-                         @if(images().length === 0){
+                        @if(images().length === 0){
                         <div class="d-flex justify-content-center align-items-center w-100 h-100 text-center">
                             <i class="fa-regular fa-images fa-3x mb-2"></i>
                             <p class="mb-0">Add up to 10 images per offer.</p>
@@ -66,30 +66,48 @@
 
             </div>
 
-            <!-- Title -->
+            <!-- Title and Additional Rental days-->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
-                        <p class="content-section-title">Title and max rental days*</p>
-                        <p class="content-section-description">Describe exacly what you want to rent, provide max
-                            allowed rental period (days).</p>
+                        <p class="content-section-title">Title and additional rental days*</p>
+                        <p class="content-section-description">Describe exacly what you want to rent, optionally provide
+                            additional
+                            rent days to already defined ones.</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row align-items-end">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <input type="text" class="form-control" id="inputEmail" formControlName="name">
-                        @if (getErrorMessage("name")) {
-                        <span class="validation-error">{{ getErrorMessage("name") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("name")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("name") }}
+                            </span>
+                            }
+                        </div>
+
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        @if (facade.currentOffer(); as offer) {
+                        @if (offer.type === 'rent') {
+                        <span class="fs-12-px">
+                            Current max rental days: {{ offer.data.maxRentalDays }}
+                        </span>
+                        }
+                        }
                         <div class="input-group">
-                            <input type="number" formControlName="maxRentalDays" class="form-control">
+                            <span class="input-group-text">+</span>
+                            <input type="number" formControlName="additionalRentalDays" class="form-control">
                             <span class="input-group-text">DAYS</span>
                         </div>
-                        @if (getErrorMessage("maxRentalDays")) {
-                        <span class="validation-error">{{ getErrorMessage("maxRentalDays") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("additionalRentalDays")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("additionalRentalDays") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +117,7 @@
                 <div class="row">
                     <div class="col-11">
                         <p class="content-section-title">Condition and Category*</p>
-                        <p class="content-section-description">Choose category and condition of your item</p>
+                        <p class="content-section-description">Choose category and condition of your item.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -112,9 +130,13 @@
                             </option>
                             }
                         </select>
-                        @if (getErrorMessage("selectedCategoryId")) {
-                        <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("selectedCategoryId")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("selectedCategoryId") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedConditionId">
@@ -126,40 +148,61 @@
                             </option>
                             }
                         </select>
-                        @if (getErrorMessage("selectedConditionId")) {
-                        <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("selectedConditionId")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("selectedConditionId") }}
+                            </span>
+                            }
+                        </div>
+
                     </div>
                 </div>
             </div>
 
-            <!-- Price and Currency -->
+            <!-- Price and Quantiy -->
             <div class="content-section">
                 <div class="row">
                     <div class="col-12">
-                        <p class="content-section-title">Price Per Day and Quantity*</p>
-                        <p class="content-section-description">Enter desired price per item and amount for sale</p>
+                        <p class="content-section-title">Price per day and additional quantity*</p>
+                        <p class="content-section-description">Enter desired price per item and amount for sale.</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row align-items-end">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
                             <span class="input-group-text">PLN</span>
                             <input type="number" class="form-control" formControlName="pricePerDay">
                             <span class="input-group-text">.00</span>
                         </div>
-                        @if (getErrorMessage("pricePerDay")) {
-                        <span class="validation-error">{{ getErrorMessage("pricePerDay") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("pricePerDay")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("pricePerDay") }}
+                            </span>
+                            }
+                        </div>
+
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
+                        @if (facade.currentOffer(); as offer)
+                        {
+                        <span class="fs-12-px">
+                            Current avaliable quantity: {{ offer.data.quantityAvailable }}
+                        </span>
+                        }
                         <div class="input-group">
-                            <input type="number" class="form-control" formControlName="quantityAvailable">
+                            <span class="input-group-text">+</span>
+                            <input type="number" class="form-control" formControlName="additionalQuantity">
                             <span class="input-group-text">PCS</span>
                         </div>
-                        @if (getErrorMessage("quantityAvailable")) {
-                        <span class="validation-error">{{ getErrorMessage("quantityAvailable") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("additionalQuantity")){
+                            <span class="validation-error">
+                                {{ getErrorMessage("additionalQuantity") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,25 +213,29 @@
                     <div class="col-12">
                         <p class="content-section-title">Description*</p>
                         <p class="content-section-description">Provide detailed information about the item and avoid
-                            questions from buyers</p>
+                            questions from buyers.</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <textarea class="form-control fs-14-px" rows="8" formControlName="description"></textarea>
-                        @if (getErrorMessage("description")) {
-                        <span class="validation-error">{{ getErrorMessage("description") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("description")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("description") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
 
-           <div class="content-section">
+            <div class="content-section">
                 <div class="row">
                     <div class="col-12">
                         <p class="content-section-title">Location*</p>
                         <p class="content-section-description">Location is determined on default address, others will
-                            see it</p>
+                            see it.</p>
                     </div>
                 </div>
 
@@ -200,7 +247,7 @@
                             <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
                                 homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
-                            <p class="d-inline align-middle">Home address is required to be set, befora publishing.</p>
+                            <p class="d-inline align-middle">Home address is required to be set, before publishing.</p>
                             }
                         </div>
                         <div class="row">
@@ -233,12 +280,8 @@
                         @for(option of item.options; track option.id){
                         <span class="d-flex justify-content-between align-items-center mt-2">
                             <span>
-                                <input 
-                                    type="radio"
-                                    [formControlName]="item.carrier"
-                                    [value]="option.id"
-                                    [name]="item.carrier"
-                                    class="form-check-input checkbox me-2" />
+                                <input type="radio" [formControlName]="item.carrier" [value]="option.id"
+                                    [name]="item.carrier" class="form-check-input checkbox me-2" />
                                 <span>{{ option.name }}</span>
                             </span>
                             <span>{{ option.amount }} {{ option.currency }}</span>
@@ -254,10 +297,9 @@
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox"
-                                       [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
-                                       (change)="onDeliveryToggle(item.id, $event.target.checked)"
-                                       class="form-check-input checkbox me-2" />
+                                <input type="checkbox" [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
+                                    (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                    class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
                             <span>{{ item.amount }} {{ item.currency }}</span>

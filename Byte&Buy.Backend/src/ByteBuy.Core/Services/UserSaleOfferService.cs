@@ -165,7 +165,7 @@ public class UserSaleOfferService : IUserSaleOfferService
             .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
         var offerUpdateResult = saleOffer.Update(
-            request.QuantityAvailable,
+            request.AdditionalQuantity,
             request.PricePerItem,
             deliveryIds);
 

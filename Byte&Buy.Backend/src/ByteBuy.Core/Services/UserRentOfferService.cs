@@ -167,9 +167,10 @@ public class UserRentOfferService : IUserRentOfferService
             .MergeDeliveryIds(request.OtherDeliveriesIds, request.ParcelLockerDeliveries);
 
         var offerUpdateResult = rentOffer.Update(
-            request.QuantityAvailable,
+            request.AdditionalQuantity,
             request.PricePerDay,
             rentOffer.MaxRentalDays,
+            request.AdditionalRentalDays,
             deliveryIds);
 
         if (offerUpdateResult.IsFailure)

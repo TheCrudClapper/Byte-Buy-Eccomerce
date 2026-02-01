@@ -115,11 +115,11 @@ public class RentOfferService : IRentOfferService
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
     {
         var spec = new RentOfferAggregateSpec(id);
-        var offer = await _rentOfferRepository.GetBySpecAsync(spec);
-        if (offer is null)
+        var rentOffer = await _rentOfferRepository.GetBySpecAsync(spec);
+        if (rentOffer is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        var item = await _itemRepository.GetByIdAsync(offer.ItemId);
+        var item = await _itemRepository.GetByIdAsync(rentOffer.ItemId);
         if (item is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
@@ -131,7 +131,7 @@ public class RentOfferService : IRentOfferService
         if (validatedDeliveries.IsFailure)
             return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
-        var quantityDiff = request.QuantityAvailable - offer.QuantityAvailable;
+        var quantityDiff = request.AdditionalQuantity - rentOffer.QuantityAvailable;
         if (quantityDiff != 0)
         {
             Result stockUpdateResult;
@@ -144,19 +144,20 @@ public class RentOfferService : IRentOfferService
                 return Result.Failure<UpdatedResponse>(stockUpdateResult.Error);
         }
 
-        var updateResult = offer.Update(
-            request.QuantityAvailable,
+        var updateResult = rentOffer.Update(
+            request.AdditionalQuantity,
             request.PricePerDay,
-            request.MaxRentalDays,
+            rentOffer.MaxRentalDays,
+            request.AdditionalRentalDays,
             validatedDeliveries.Value.Select(d => d.Id));
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _rentOfferRepository.UpdateAsync(offer);
+        await _rentOfferRepository.UpdateAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
         await _rentOfferRepository.CommitAsync();
 
-        return offer.ToUpdatedResponse();
+        return rentOffer.ToUpdatedResponse();
     }
 }

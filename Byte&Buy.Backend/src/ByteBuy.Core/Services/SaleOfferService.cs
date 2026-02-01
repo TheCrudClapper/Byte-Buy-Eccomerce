@@ -133,7 +133,7 @@ public class SaleOfferService : ISaleOfferService
         if (validatedDeliveries.IsFailure)
             return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
-        var quantityDiff = request.QuantityAvailable - saleOffer.QuantityAvailable;
+        var quantityDiff = request.AdditionalQuantity - saleOffer.QuantityAvailable;
         if (quantityDiff != 0)
         {
             Result stockUpdateResult;
@@ -147,7 +147,7 @@ public class SaleOfferService : ISaleOfferService
         }
 
         var updateResult = saleOffer.Update(
-            request.QuantityAvailable,
+            request.AdditionalQuantity,
             request.PricePerItem,
             validatedDeliveries.Value.Select(d => d.Id));
 

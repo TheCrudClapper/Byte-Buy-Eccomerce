@@ -10,9 +10,5 @@ public partial class EmployeePageView : UserControl
         InitializeComponent();
     }
 
-    public EmployeePageView(EmployeePageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
+   
 }

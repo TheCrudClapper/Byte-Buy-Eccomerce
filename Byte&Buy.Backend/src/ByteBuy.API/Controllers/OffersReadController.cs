@@ -30,5 +30,4 @@ public class OffersReadController : BaseApiController
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<OfferBrowserItemResponse>>> GetBrowserOffers(CancellationToken ct)
         => HandleResult(await _offerReadService.BrowseAsync(ct));
-
 }

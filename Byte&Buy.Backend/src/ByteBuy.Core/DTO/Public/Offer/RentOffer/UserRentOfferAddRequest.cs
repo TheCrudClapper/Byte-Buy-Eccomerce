@@ -8,9 +8,9 @@ public record UserRentOfferAddRequest(
    [Required] Guid ConditionId,
    [Required, MaxLength(75)] string Name,
    [Required, MaxLength(2000)] string Description,
-   [Required] int QuantityAvailable,
-   [Required] decimal PricePerDay,
-   [Required] int MaxRentalDays,
+   [Required, Range(1, int.MaxValue)] int QuantityAvailable,
+   [Required, Range(1, double.MaxValue)] decimal PricePerDay,
+   [Required, Range(1, 360)] int MaxRentalDays,
    [Required] IEnumerable<ImageAddRequest> Images,
    [Required] IEnumerable<Guid> OtherDeliveriesIds,
    IEnumerable<Guid>? ParcelLockerDeliveries);

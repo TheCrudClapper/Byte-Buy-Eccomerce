@@ -24,7 +24,7 @@ export class RentCreate extends BaseOfferForm {
     selectedConditionId: new FormControl<string | null>(null, [Validators.required]),
     pricePerDay: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-    maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1), Validators.max(360)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
     parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),

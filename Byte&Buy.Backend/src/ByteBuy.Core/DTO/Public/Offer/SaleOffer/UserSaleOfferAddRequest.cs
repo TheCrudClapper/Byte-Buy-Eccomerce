@@ -8,8 +8,8 @@ public record UserSaleOfferAddRequest(
     [Required] Guid ConditionId,
     [Required, MaxLength(75)] string Name,
     [Required, MaxLength(2000)] string Description,
-    [Required] int QuantityAvailable,
-    [Required] decimal PricePerItem,
+    [Required, Range(1, int.MaxValue)] int QuantityAvailable,
+    [Required, Range(1, double.MaxValue)] decimal PricePerItem,
     [Required] IEnumerable<ImageAddRequest> Images,
     IEnumerable<Guid>? ParcelLockerDeliveries,
     [Required] IEnumerable<Guid> OtherDeliveriesIds);

@@ -25,8 +25,8 @@ export class RentEdit extends BaseOfferForm implements OnInit {
     selectedCategoryId: new FormControl<string | null>(null, [Validators.required]),
     selectedConditionId: new FormControl<string | null>(null, [Validators.required]),
     pricePerDay: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-    quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-    maxRentalDays: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    additionalQuantity: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
+    additionalRentalDays: new FormControl<number>(0, [Validators.required, Validators.min(0), Validators.max(359)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
     parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
@@ -63,9 +63,7 @@ export class RentEdit extends BaseOfferForm implements OnInit {
       selectedCategoryId: offer.categoryId,
       selectedConditionId: offer.conditionId,
       description: offer.description,
-      pricePerItem: offer.pricePerDay.amount,
-      maxRentalDays: offer.maxRentalDays,
-      quantityAvailable: offer.quantityAvailable,
+      pricePerItem: offer.pricePerDay.amount
     });
 
     const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
@@ -91,9 +89,9 @@ export class RentEdit extends BaseOfferForm implements OnInit {
     fd.append('ConditionId', form.selectedConditionId!);
     fd.append('Name', form.name);
     fd.append('Description', form.description);
-    fd.append('QuantityAvailable', String(form.quantityAvailable));
+    fd.append('AdditionalQuantity', String(form.additionalQuantity));
     fd.append('PricePerDay', String(form.pricePerDay));
-    fd.append('MaxRentalDays', String(form.maxRentalDays));
+    fd.append('AdditionalRentalDays', String(form.additionalRentalDays));
 
     this.images().filter(i => i.isNew).forEach((img, index) => {
       fd.append(`NewImages[${index}].Image`, img.file!);

@@ -15,6 +15,15 @@ public static class OfferErrors
         ErrorType.Validation, "Offer.MultipleParcelLockersPerCarrier",
         "You can only have one parcel locker selected per carrier.");
 
+    public static readonly Error InvalidAdditionalQuantity = new(
+       ErrorType.Validation, "Offer.AdditionalQuantity", "Additional rental days can either be 0 or positive");
+
+    public static readonly Error InvalidAdditionalRentalDays = Error.Validation(
+        "RentOffer.AdditionalRentalDays", "Additional rental days must be either 0 or positive");
+
+    public static readonly Error InvalidRentalDaysSum = Error.Validation(
+        "RentOffer.AdditionalRentalDays", "Current max rentals days and additional sum must be lower than 360.");
+
     public static readonly Error InvalidParcelLockerChannel = new(
         ErrorType.Validation, "Offer.InvalidParcelLockerChannel",
         "One or more selected parcel locker deliveries have invalid channel type.");
@@ -27,5 +36,5 @@ public static class OfferErrors
         "Offer.Item", "Item is not found");
 
     public static readonly Error MaxRentalDaysInvalid = Error.Validation(
-        "RentOffer.MaxRentalDays", "Max rental days must be higher than 0.");
+        "RentOffer.MaxRentalDays", "Max rental days must be at least one and 360 at max");
 }

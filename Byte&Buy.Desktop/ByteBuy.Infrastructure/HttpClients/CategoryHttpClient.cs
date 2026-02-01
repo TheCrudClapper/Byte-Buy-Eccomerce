@@ -28,6 +28,4 @@ public class CategoryHttpClient(HttpClient httpClient)
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
-
-
 }

@@ -167,7 +167,9 @@ input:checked {
   color: var(--error);
   font-weight: 450;
 }
-
+.error-placeholder{
+  height: 14px;
+}
 p {
   font-family: 'raleway-bold';
 }
@@ -243,7 +245,6 @@ textarea:focus {
   text-align: center;
   border: 1px solid var(--primary-accent);
   border-radius: 5px;
-
 }
 
 .page-title {

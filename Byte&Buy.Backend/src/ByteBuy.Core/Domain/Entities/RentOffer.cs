@@ -22,13 +22,13 @@ public class RentOffer : Offer
         MaxRentalDays = maxRentalDays;
     }
 
-    public static Result Validate(int quantityAvailable, int maxRentalDays)
+    public static Result ValidateCreate(int quantityAvailable, int maxRentalDays)
     {
-        var basicValidation = ValidateBasicInfo(quantityAvailable);
+        var basicValidation = ValidateBasicCreateData(quantityAvailable);
         if (basicValidation.IsFailure)
             return Result.Failure(basicValidation.Error);
 
-        if (maxRentalDays < 1)
+        if (maxRentalDays < 1 || maxRentalDays > 360)
             return Result.Failure(OfferErrors.MaxRentalDaysInvalid);
 
         return Result.Success();
@@ -43,7 +43,7 @@ public class RentOffer : Offer
         Seller seller,
         IEnumerable<Guid> deliveriesIds)
     {
-        var validationResult = Validate(quantityAvailable, maxRentalDays);
+        var validationResult = ValidateCreate(quantityAvailable, maxRentalDays);
         if (validationResult.IsFailure)
             return Result.Failure<RentOffer>(validationResult.Error);
 
@@ -60,14 +60,20 @@ public class RentOffer : Offer
     }
 
     public Result Update(
-        int quantityAvailable,
+        int additionalQuantity,
         decimal pricePerDay,
-        int maxRentalDays,
+        int currentMaxRentalDays,
+        int additionalRentalDays,
         IEnumerable<Guid> deliveriesIds)
     {
-        var validationResult = Validate(quantityAvailable, maxRentalDays);
-        if (validationResult.IsFailure)
-            return Result.Failure(validationResult.Error);
+        if (additionalQuantity < 0)
+            return Result.Failure(OfferErrors.InvalidAdditionalQuantity);
+
+        if(additionalRentalDays < 0)
+            return Result.Failure(OfferErrors.InvalidAdditionalRentalDays);
+
+        if (additionalRentalDays + currentMaxRentalDays > 360)
+            return Result.Failure(OfferErrors.InvalidRentalDaysSum);
 
         var moneyResult = Money.Create(pricePerDay);
         if (moneyResult.IsFailure)
@@ -76,8 +82,8 @@ public class RentOffer : Offer
         var money = moneyResult.Value;
 
         PricePerDay = money;
-        MaxRentalDays = maxRentalDays;
-        QuantityAvailable = quantityAvailable;
+        MaxRentalDays += additionalRentalDays;
+        QuantityAvailable += additionalQuantity;
         DateEdited = DateTime.UtcNow;
 
         var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);

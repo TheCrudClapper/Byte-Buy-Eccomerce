@@ -13,7 +13,6 @@ import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-
     '../../../shared/styles/offers-shared-styles.scss']
 })
 export class SaleEdit extends BaseOfferForm implements OnInit {
-
   override type: OfferType = 'sale';
   override mode: OfferMode = 'edit'
 
@@ -24,7 +23,7 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     selectedCategoryId: new FormControl<string | null>(null, [Validators.required]),
     selectedConditionId: new FormControl<string | null>(null, [Validators.required]),
     pricePerItem: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
-    quantityAvailable: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    additionalQuantity: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
     description: new FormControl<string>("", [Validators.maxLength(2000), Validators.required]),
     parcelLockerDeliveries: new FormGroup({}),
     otherDeliveriesIds: new FormArray<FormControl<Guid>>([], [Validators.required, Validators.minLength(1)]),
@@ -58,7 +57,6 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
       selectedConditionId: offer.conditionId,
       description: offer.description,
       pricePerItem: offer.pricePerItem.amount,
-      quantityAvailable: offer.quantityAvailable,
     });
 
     const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
@@ -88,7 +86,7 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
     fd.append('ConditionId', form.selectedConditionId!);
     fd.append('Name', form.name);
     fd.append('Description', form.description);
-    fd.append('QuantityAvailable', String(form.quantityAvailable));
+    fd.append('AdditionalQuantity', String(form.additionalQuantity));
     fd.append('PricePerItem', String(form.pricePerItem));
 
     this.images().filter(i => i.isNew).forEach((img, index) => {

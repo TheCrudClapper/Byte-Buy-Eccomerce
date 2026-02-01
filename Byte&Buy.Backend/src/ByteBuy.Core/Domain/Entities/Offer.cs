@@ -43,7 +43,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
             od.Deactivate();
     }
 
-    public static Result ValidateBasicInfo(int quantityAvailable)
+    public static Result ValidateBasicCreateData(int quantityAvailable)
     {
         if (quantityAvailable < 1)
             return Result.Failure(OfferErrors.QuantityAvaliableInvalid);

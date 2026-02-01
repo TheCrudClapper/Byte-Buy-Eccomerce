@@ -40,7 +40,7 @@
                             <div class="position-relative">
                                 <img [src]="item.preview" class="img-fluid rounded me-5"
                                     style="height: 130px; width: 100%; object-fit: cover;" />
-                                 <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
+                                <button type="button" class="icon-btn position-absolute top-0 end-0 m-1"
                                     (click)="removeImage($index)">
                                     <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
                                 </button>
@@ -68,9 +68,13 @@
                 <div class="row">
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <input type="text" class="form-control" id="inputEmail" formControlName="name">
-                        @if (getErrorMessage("name")) {
-                        <span class="validation-error">{{ getErrorMessage("name") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("name")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("name") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -80,7 +84,7 @@
                 <div class="row">
                     <div class="col-11">
                         <p class="content-section-title">Condition and Category*</p>
-                        <p class="content-section-description">Choose category and condition of your item</p>
+                        <p class="content-section-description">Choose category and condition of your item.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -93,9 +97,13 @@
                             </option>
                             }
                         </select>
-                        @if (getErrorMessage("selectedCategoryId")) {
-                        <span class="validation-error">{{ getErrorMessage("selectedCategoryId") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("selectedCategoryId")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("selectedCategoryId") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <select class="form-select" formControlName="selectedConditionId">
@@ -107,9 +115,13 @@
                             </option>
                             }
                         </select>
-                        @if (getErrorMessage("selectedConditionId")) {
-                        <span class="validation-error">{{ getErrorMessage("selectedConditionId") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("selectedConditionId")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("selectedConditionId") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,7 +131,7 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="content-section-title">Price Per Item and Quantity*</p>
-                        <p class="content-section-description">Enter desired price per item and amount for sale</p>
+                        <p class="content-section-description">Enter desired price per item and amount for sale.</p>
                     </div>
                 </div>
                 <div class="row">
@@ -129,18 +141,26 @@
                             <input type="number" class="form-control" formControlName="pricePerItem">
                             <span class="input-group-text">.00</span>
                         </div>
-                        @if (getErrorMessage("pricePerItem")) {
-                        <span class="validation-error">{{ getErrorMessage("pricePerItem") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("pricePerItem")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("pricePerItem") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                     <div class="col-12 col-md-6 mb-3 mb-md-0">
                         <div class="input-group">
                             <input type="number" class="form-control" formControlName="quantityAvailable">
                             <span class="input-group-text">PCS</span>
                         </div>
-                        @if (getErrorMessage("quantityAvailable")) {
-                        <span class="validation-error">{{ getErrorMessage("quantityAvailable") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("quantityAvailable")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("quantityAvailable") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,15 +171,19 @@
                     <div class="col-12">
                         <p class="content-section-title">Description*</p>
                         <p class="content-section-description">Provide detailed information about the item and avoid
-                            questions from buyers</p>
+                            questions from buyers.</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <textarea class="form-control fs-14-px" rows="8" formControlName="description"></textarea>
-                        @if (getErrorMessage("description")) {
-                        <span class="validation-error">{{ getErrorMessage("description") }}</span>
-                        }
+                        <div class="error-placeholder">
+                            @if (getErrorMessage("description")) {
+                            <span class="validation-error">
+                                {{ getErrorMessage("description") }}
+                            </span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,7 +195,7 @@
                     <div class="col-12">
                         <p class="content-section-title">Location*</p>
                         <p class="content-section-description">Location is determined on default address, others will
-                            see it</p>
+                            see it.</p>
                     </div>
                 </div>
 
@@ -195,7 +219,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <!-- Deliveries-->
             @if(facade.deliveries(); as deliveries){
@@ -217,12 +241,8 @@
                         @for(option of item.options; track option.id){
                         <span class="d-flex justify-content-between align-items-center mt-2">
                             <span>
-                                <input 
-                                    type="radio"
-                                    [formControlName]="item.carrier"
-                                    [value]="option.id"
-                                    [name]="item.carrier"
-                                    class="form-check-input checkbox me-2" />
+                                <input type="radio" [formControlName]="item.carrier" [value]="option.id"
+                                    [name]="item.carrier" class="form-check-input checkbox me-2" />
                                 <span>{{ option.name }}</span>
                             </span>
                             <span>{{ option.amount }} {{ option.currency }}</span>

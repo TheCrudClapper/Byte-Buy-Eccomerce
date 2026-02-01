@@ -26,7 +26,7 @@ public class SaleOffer : Offer
      Seller seller,
      IEnumerable<Guid> deliveriesIds)
     {
-        var validationResult = ValidateBasicInfo(quantityAvailable);
+        var validationResult = ValidateBasicCreateData(quantityAvailable);
         if (validationResult.IsFailure)
             return Result.Failure<SaleOffer>(validationResult.Error);
 
@@ -43,13 +43,12 @@ public class SaleOffer : Offer
     }
 
     public Result Update(
-       int quantityAvailable,
+       int additionalQuantity,
        decimal pricePerItem,
        IEnumerable<Guid> deliveriesIds)
     {
-        var validationResult = ValidateBasicInfo(quantityAvailable);
-        if (validationResult.IsFailure)
-            return Result.Failure(validationResult.Error);
+        if (additionalQuantity < 0)
+            return Result.Failure(OfferErrors.InvalidAdditionalQuantity);
 
         var moneyResult = Money.Create(pricePerItem);
         if (moneyResult.IsFailure)
@@ -58,7 +57,7 @@ public class SaleOffer : Offer
         var money = moneyResult.Value;
 
         PricePerItem = money;
-        QuantityAvailable = quantityAvailable;
+        QuantityAvailable += additionalQuantity;
         DateEdited = DateTime.UtcNow;
 
         var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);
