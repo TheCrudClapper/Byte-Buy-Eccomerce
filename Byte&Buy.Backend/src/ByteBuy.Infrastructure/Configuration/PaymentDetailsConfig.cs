@@ -1,6 +1,4 @@
-﻿
-using ByteBuy.Core.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using ByteBuy.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

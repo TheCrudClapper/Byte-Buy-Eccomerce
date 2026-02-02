@@ -10,6 +10,7 @@ using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
+using static ByteBuy.Core.Specification.CartSpecifications;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
 using static ByteBuy.Core.Specification.DeliverySpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
@@ -166,11 +167,33 @@ public class OrderService : IOrderService
         if (paymentResult.IsFailure)
             return Result.Failure<OrderCreatedReponse>(paymentResult.Error);
 
+        var cartResult = await ClearUserCart(userId);
+        if (cartResult.IsFailure)
+            return Result.Failure<OrderCreatedReponse>(cartResult.Error);
+
         await _paymentRepository.AddAsync(paymentResult.Value);
         await _orderRepository.CommitAsync();
+
         return new OrderCreatedReponse(paymentResult.Value.Id, paymentResult.Value.Method);
     }
     
+    public async Task<Result> ClearUserCart(Guid userId)
+    {
+        var cartSpec = new CartAggregateByUserIdSpec(userId);
+        var cart = await _cartRepository.GetBySpecAsync(cartSpec);
+        if (cart is null)
+            return Result.Failure(CartErrors.NotFound);
+
+        cart.ClearCart();
+
+        return Result.Success();
+    }
+
+    public async Task SubstractOrDisableOffers()
+    {
+
+    }
+
     public Task<Result> ReturnOrder(Guid userId, Guid orderId)
     {
         throw new NotImplementedException();
