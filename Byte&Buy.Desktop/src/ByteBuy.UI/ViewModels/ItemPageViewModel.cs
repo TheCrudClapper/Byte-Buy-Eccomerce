@@ -1,6 +1,7 @@
 ﻿using Avalonia.Media.Imaging;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
@@ -21,11 +22,13 @@ public partial class ItemPageViewModel : ViewModelSingle
 {
     #region MVVM Fields
     [ObservableProperty]
-    [Required, MaxLength(75)]
+    [Required]
+    [MaxLength(75, ErrorMessage = "Name must have at most 75 characters")]
+    [MinLength(16, ErrorMessage = "Name must have at least 16 characters")]
     private string _name = string.Empty;
 
     [ObservableProperty]
-    [Range(1, double.MaxValue)]
+    [StockQuantityValidation]
     private int _stockQuantity;
 
     [ObservableProperty]
@@ -55,6 +58,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     public bool ImageContainerVisible => !Images.Any(i => !i.IsDeleted);
 
     #endregion
+
     private readonly IItemService _itemService;
     private readonly IConditionService _conditionService;
     private readonly ICategoryService _categoryService;

@@ -36,11 +36,15 @@
 							Grid.Row="1">
 
 					<!-- Offer type -->
-					<CheckBox HorizontalAlignment="Right"
-							  IsVisible="{Binding !IsEditMode}"
-							  Foreground="{DynamicResource TextPrimaryBrush}"
-							  Command="{Binding ChangeOfferTypeCommand}"
-							  Content="Sale Offer" />
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsVisible="{Binding !IsEditMode}">
+						<TextBlock Classes="textBoxLabel"
+								   Text="Sale Offer"
+								   VerticalAlignment="Center"
+								   Margin="0,0,5,0"/>
+						<CheckBox  HorizontalAlignment="Right"
+								   Command="{Binding ChangeOfferTypeCommand}" />
+					</StackPanel>
+
 
 					<!-- Selected item -->
 					<TextBlock Text="Selected Stock Item"
@@ -53,38 +57,87 @@
 							 TextWrapping="Wrap" />
 
 					<!-- Units -->
-					<TextBlock Text="Units"
-							   Classes="textBoxLabel" />
-					<NumericUpDown Value="{Binding QuantityAvaliable}"
-								   Watermark="Enter avaliable quantity for rental"
-								   FormatString="0"
-								   Minimum="1" />
+					<StackPanel IsVisible="{Binding !IsEditMode}" Spacing="10">
+						<TextBlock Text="Quantity"
+								   Classes="textBoxLabel" />
+						<NumericUpDown Value="{Binding Quantity}"
+									   Watermark="Enter avaliable quantity for rental"
+									   FormatString="0"
+									   Minimum="1" />
+					</StackPanel>
+
+
+					<Grid ColumnDefinitions="31*, 2*, 69*" IsVisible="{Binding IsEditMode}">
+						<StackPanel Grid.Column="0" Spacing="10">
+							<TextBlock Text="Current quantity"
+									   Classes="textBoxLabel"
+									   HorizontalAlignment="Stretch" />
+							<TextBox IsEnabled="False"
+									 Text="{Binding CurrentAvaliableQuantity}"
+									 TextWrapping="Wrap" />
+						</StackPanel>
+						<StackPanel Grid.Column="2" Spacing="10">
+							<TextBlock Text="Additional quantity"
+									   Classes="textBoxLabel"
+									   HorizontalAlignment="Stretch" />
+							<NumericUpDown Value="{Binding Quantity}"
+										   Watermark="Enter additional quantity"
+										   FormatString="0"
+										   Minimum="0" />
+						</StackPanel>
+					</Grid>
+
 
 					<!-- Rent Offer Fields -->
-					<StackPanel Spacing="10"
-								IsVisible="{Binding !IsSaleOffer}">
-						<TextBlock Text="Rental Price per Day"
+					<StackPanel Spacing="10" IsVisible="{Binding !IsSaleOffer}">
+						<TextBlock Text="Rental price per day"
 								   Classes="textBoxLabel" />
 						<NumericUpDown Value="{Binding PricePerDay}"
-									   FormatString="0.000"
+									   FormatString="0.00"
 									   Minimum="1"
 									   Watermark="Enter price per one day of rental period" />
 
-						<TextBlock Text="Max Rental Days"
-								   Classes="textBoxLabel" />
-						<NumericUpDown Value="{Binding MaxRentalDays}"
-									   FormatString="0"
-									   Watermark="Enter maximum days of rental period"
-									   Minimum="1" />
+						<StackPanel IsVisible="{Binding !IsEditMode}" Spacing="10">
+							<TextBlock Text="Max Rental Days"
+									   Classes="textBoxLabel" />
+							<NumericUpDown Value="{Binding RentalDays}"
+										   FormatString="0"
+										   Watermark="Enter desired maximum days of rental period (360 max)"
+										   Minimum="1" />
+
+						</StackPanel>
+
+						<Grid ColumnDefinitions="31*, 2*, 69*" IsVisible="{Binding IsEditMode}">
+							<StackPanel Grid.Column="0" Spacing="10">
+								<TextBlock Text="Current days"
+										   Classes="textBoxLabel"
+										   HorizontalAlignment="Stretch" />
+								<TextBox IsEnabled="False"
+										 Text="{Binding MaxRentalDays}"
+										 TextWrapping="Wrap" />
+							</StackPanel>
+
+							<StackPanel Grid.Column="2" Spacing="10">
+								<TextBlock Text="Additional rental days"
+										   Classes="textBoxLabel"
+										   HorizontalAlignment="Stretch" />
+								<NumericUpDown Value="{Binding RentalDays}"
+											   Watermark="Enter additional quantity"
+											   FormatString="0"
+											   Minimum="0" />
+							</StackPanel>
+						</Grid>
+
+
 					</StackPanel>
 
 					<!-- Sale Offer Fields -->
 					<StackPanel Spacing="10"
 								IsVisible="{Binding IsSaleOffer}">
-						<TextBlock Text="Unit Price"
+						<TextBlock Text="Unit price"
 								   Classes="textBoxLabel" />
 						<NumericUpDown Value="{Binding PricePerItem}"
-									   FormatString="0.000"
+									   FormatString="0.00"
 									   Minimum="1"
 									   Watermark="Enter price per one item" />
 					</StackPanel>
@@ -105,8 +158,8 @@
 												<DataTemplate x:CompileBindings="false">
 													<Grid ColumnDefinitions="auto,*,auto">
 														<StackPanel Orientation="Horizontal">
-															<RadioButton IsThreeState="True" 
-															GroupName="{Binding Carrier}"
+															<RadioButton IsThreeState="True"
+																		 GroupName="{Binding Carrier}"
 																		 IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 															<TextBlock Text="{Binding Name}"
 																	   VerticalAlignment="Center" />

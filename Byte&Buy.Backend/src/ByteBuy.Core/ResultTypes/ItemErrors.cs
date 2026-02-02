@@ -6,10 +6,14 @@
 public static class ItemErrors
 {
     public static readonly Error NotFound = new(
-        ErrorType.NotFound, "Item.NotFound", "Item is not found");
+        ErrorType.NotFound,
+        "Item.NotFound",
+        "Item is not found");
 
     public static readonly Error HasActiveOffers = new(
-        ErrorType.Conflict, "Item.HasActiveOffers", "This Item is used, cannot be deleted");
+        ErrorType.Conflict,
+        "Item.HasActiveOffers",
+        "This Item is used, cannot be deleted");
 
     public static readonly Error NameInvalid = Error.Validation(
         "Item.Name",
@@ -22,6 +26,10 @@ public static class ItemErrors
     public static readonly Error StockQuantityInvalid = Error.Validation(
         "Item.StockQuantity",
         "Quantity must be at least 1.");
+
+    public static readonly Error StockUpdateQuantityInvalid = Error.Validation(
+        "Item.StockQuantity",
+        "Quantity must be 0 or positive");
 
     public static readonly Error ImageNotFound = Error.Validation(
         "Item.Image",
@@ -36,5 +44,6 @@ public static class ItemErrors
         "At least one image is required for item !");
 
     public static readonly Error StockNotSupported = Error.Validation(
-        "Item.StockQuantity", "You are not a company, thus stock mainpulation is not supported");
+        "Item.StockQuantity",
+        "You are not a company, thus stock mainpulation is not supported");
 }

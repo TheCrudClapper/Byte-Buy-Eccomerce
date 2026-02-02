@@ -16,7 +16,7 @@ public static class OfferMappings
     {
         return new SaleOfferAddRequest(
             vm.SelectedItem?.Id ?? Guid.Empty,
-            vm.QuantityAvaliable,
+            vm.Quantity,
             vm.PricePerItem,
             MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
@@ -25,7 +25,7 @@ public static class OfferMappings
     public static SaleOfferUpdateRequest MapToSaleUpdateRequest(this OfferDialogViewModel vm)
     {
         return new SaleOfferUpdateRequest(
-            vm.QuantityAvaliable,
+            vm.Quantity,
             vm.PricePerItem,
             MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
@@ -35,9 +35,9 @@ public static class OfferMappings
     {
         return new RentOfferAddRequest(
             vm.SelectedItem?.Id ?? Guid.Empty,
-            vm.QuantityAvaliable,
+            vm.Quantity,
             vm.PricePerDay,
-            vm.MaxRentalDays,
+            vm.RentalDays,
             MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
@@ -45,9 +45,9 @@ public static class OfferMappings
     public static RentOfferUpdateRequest MapToRentUpdateRequest(this OfferDialogViewModel vm)
     {
         return new RentOfferUpdateRequest(
-            vm.QuantityAvaliable,
+            vm.Quantity,
             vm.PricePerDay,
-            vm.MaxRentalDays,
+            vm.RentalDays,
             MapParcelLockers(vm.ParcelLockerGroups),
             MapOtherDeliveries(vm));
     }
@@ -93,6 +93,13 @@ public static class OfferMappings
         };
     }
 
+    /// <summary>
+    /// Takes server response and maps given other and parcel locker ids to 
+    /// selected state in view.
+    /// </summary>
+    /// <param name="vm"></param>
+    /// <param name="otherDeliveriesIds"></param>
+    /// <param name="parcelLockerIds"></param>
     private static void MapCommonDeliveries(this OfferDialogViewModel vm,
     IReadOnlyCollection<Guid> otherDeliveriesIds,
     IReadOnlyCollection<Guid>? parcelLockerIds)
@@ -123,7 +130,7 @@ public static class OfferMappings
     {
         MapCommonDeliveries(vm, response.OtherDeliveriesIds, response.ParcelLockerDeliveries);
         vm.MaxRentalDays = response.MaxRentalDays;
-        vm.QuantityAvaliable = response.QuantityAvailable;
+        vm.CurrentAvaliableQuantity = response.QuantityAvailable;
         vm.PricePerDay = response.PricePerDay;
     }
 
@@ -131,6 +138,6 @@ public static class OfferMappings
     {
         MapCommonDeliveries(vm, response.OtherDeliveriesIds, response.ParcelLockerDeliveries);
         vm.PricePerItem = response.PricePerItem;
-        vm.QuantityAvaliable = response.QuantityAvailable;
+        vm.CurrentAvaliableQuantity = response.QuantityAvailable;
     }
 }

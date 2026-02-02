@@ -55,14 +55,6 @@ public class Item : AuditableEntity, ISoftDeletable
         DeactivateAllImages();
     }
 
-    private static Result ValidateCompanyItem(string name, string description, int stockQuantity)
-    {
-        if (stockQuantity < 1)
-            return Result.Failure(ItemErrors.StockQuantityInvalid);
-
-        return ValidateCommon(name, description);
-    }
-
     private static Result ValidateCommon(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 75)
@@ -87,7 +79,10 @@ public class Item : AuditableEntity, ISoftDeletable
     //Static factory method that creates item in company context
     public static Result<Item> CreateCompanyItem(string name, string description, Guid categoryId, Guid conditionId, int stockQuantity, IEnumerable<ImageDraft> images)
     {
-        var validationResult = ValidateCompanyItem(name, description, stockQuantity);
+        if (stockQuantity < 1)
+            return Result.Failure<Item>(ItemErrors.StockQuantityInvalid);
+
+        var validationResult = ValidateCommon(name, description);
         if (validationResult.IsFailure)
             return Result.Failure<Item>(validationResult.Error);
 
@@ -148,7 +143,10 @@ public class Item : AuditableEntity, ISoftDeletable
         IEnumerable<ImageDraft>? newImages,
         IEnumerable<ExistingImageUpdate> existingImages)
     {
-        var validationResult = ValidateCompanyItem(name, description, stockQuantity);
+        if (stockQuantity < 0)
+            return Result.Failure(ItemErrors.StockUpdateQuantityInvalid);
+
+        var validationResult = ValidateCommon(name, description);
         if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 

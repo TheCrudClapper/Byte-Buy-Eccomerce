@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
@@ -21,19 +22,29 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private bool _isSaleOffer;
 
     [ObservableProperty]
+    [Required]
     private decimal _pricePerDay;
 
     [ObservableProperty]
-    private int _maxRentalDays;
+    private int? _maxRentalDays;
 
     [ObservableProperty]
+    private int? _currentAvaliableQuantity;
+
+    [ObservableProperty]
+    [Required]
+    private int _rentalDays;
+
+    [ObservableProperty]
+    [Required, Range(0, double.MaxValue)]
     private decimal _pricePerItem;
 
     [ObservableProperty]
     private ItemListItem? _selectedItem;
 
     [ObservableProperty]
-    private int _quantityAvaliable;
+    [Required, Range(0, int.MaxValue)]
+    private int _quantity;
 
     [ObservableProperty]
     private ObservableCollection<ParcelLockerCarrierGroup> _parcelLockerGroups = [];
@@ -103,6 +114,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     protected override async Task<bool> AddItem()
     {
         bool isValid = Validate();
+        ValidateAllProperties();
         if (!isValid) return false;
         if (IsSaleOffer)
         {

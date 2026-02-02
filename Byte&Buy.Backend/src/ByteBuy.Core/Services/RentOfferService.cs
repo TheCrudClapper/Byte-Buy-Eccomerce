@@ -131,17 +131,12 @@ public class RentOfferService : IRentOfferService
         if (validatedDeliveries.IsFailure)
             return Result.Failure<UpdatedResponse>(validatedDeliveries.Error);
 
-        var quantityDiff = request.AdditionalQuantity - rentOffer.QuantityAvailable;
-        if (quantityDiff != 0)
+        if (request.AdditionalQuantity > 0)
         {
-            Result stockUpdateResult;
-            if (quantityDiff > 0)
-                stockUpdateResult = item.SubstractStock(quantityDiff);
+            if (item.StockQuantity < request.AdditionalQuantity)
+                return Result.Failure<UpdatedResponse>(ItemErrors.StockNotEnough);
             else
-                stockUpdateResult = item.AddStock(-quantityDiff);
-
-            if (stockUpdateResult.IsFailure)
-                return Result.Failure<UpdatedResponse>(stockUpdateResult.Error);
+                item.SubstractStock(request.AdditionalQuantity);
         }
 
         var updateResult = rentOffer.Update(
