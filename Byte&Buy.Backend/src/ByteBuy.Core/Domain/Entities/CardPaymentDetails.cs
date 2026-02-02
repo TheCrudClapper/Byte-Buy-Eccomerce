@@ -10,14 +10,13 @@ public sealed class CardPaymentDetails : PaymentDetails
 
     private CardPaymentDetails() { }
 
-    private CardPaymentDetails(PaymentMethod method, string maskedCardNumber, string cardHolderName)
+    private CardPaymentDetails(Guid paymentId, PaymentMethod method, string maskedCardNumber, string cardHolderName) : base(method, paymentId)
     {
-        Method = method;
         MaskedCardNumber = maskedCardNumber;
         CardHolderName = cardHolderName;
     }
 
-    public static Result<CardPaymentDetails> Create(PaymentMethod method, string cardNumber, string cardHolderName)
+    public static Result<CardPaymentDetails> Create(Guid paymentId, PaymentMethod method, string cardNumber, string cardHolderName)
     {
         if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length < 16 || cardNumber.Length > 19)
             return Result.Failure<CardPaymentDetails>(PaymentErrors.InvalidCardNumber);
@@ -25,6 +24,6 @@ public sealed class CardPaymentDetails : PaymentDetails
         if (string.IsNullOrWhiteSpace(cardHolderName))
             return Result.Failure<CardPaymentDetails>(PaymentErrors.InvalidCartHolder);
 
-        return new CardPaymentDetails(method, cardNumber, cardHolderName);
+        return new CardPaymentDetails(paymentId, method, cardNumber, cardHolderName);
     }
 }

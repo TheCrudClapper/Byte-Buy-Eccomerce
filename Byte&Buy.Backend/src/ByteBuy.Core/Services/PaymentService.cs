@@ -38,7 +38,11 @@ public class PaymentService : IPaymentService
         if (payment.Method != PaymentMethod.Blik)
             return Result.Failure(PaymentErrors.PaymentMethodsNotMatch);
 
-        var blikResult = BlikPaymentDetails.Create(payment.Id, payment.Method, request.PhoneNumber);
+        var blikResult = BlikPaymentDetails.Create(
+            payment.Id,
+            payment.Method,
+            request.PhoneNumber);
+
         if(blikResult.IsFailure)
             return Result.Failure<Result>(PaymentErrors.NotFound);
 
@@ -65,7 +69,12 @@ public class PaymentService : IPaymentService
         if (payment.Method != PaymentMethod.Card)
             return Result.Failure(PaymentErrors.PaymentMethodsNotMatch);
 
-        var cardResult = CardPaymentDetails.Create(PaymentMethod.Card, request.CardNumber, request.CardHolderName);
+        var cardResult = CardPaymentDetails.Create(
+            payment.Id,
+            payment.Method,
+            request.CardNumber,
+            request.CardHolderName);
+
         if (cardResult.IsFailure)
             return Result.Failure<Result>(PaymentErrors.NotFound);
 

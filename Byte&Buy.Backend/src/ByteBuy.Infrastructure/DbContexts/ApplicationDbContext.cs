@@ -78,7 +78,7 @@ public class ApplicationDbContext : IdentityDbContext<
             .HasValue<SaleOrderLine>("SaleOrderLine");
 
         builder.Entity<PaymentDetails>()
-            .HasDiscriminator<PaymentMethod>(p => p.Method)
+            .HasDiscriminator(p => p.Method)
             .HasValue<CardPaymentDetails>(PaymentMethod.Card)
             .HasValue<BlikPaymentDetails>(PaymentMethod.Blik);
     }
