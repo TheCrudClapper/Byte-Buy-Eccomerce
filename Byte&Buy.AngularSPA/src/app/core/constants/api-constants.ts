@@ -70,7 +70,9 @@ export const API_ENDPOINTS = {
     },
 
     orders: {
+        base: '/orders',
         post: '/orders'
+
     },
 
     payments:{

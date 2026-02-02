@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.DTO.Internal.Cart;
+using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.DTO.Public.Cart.CartOffer;
-using ByteBuy.Core.DTO.Public.Cart.Enum;
 using ByteBuy.Core.DTO.Public.Checkout;
 using ByteBuy.Core.DTO.Public.Money;
 

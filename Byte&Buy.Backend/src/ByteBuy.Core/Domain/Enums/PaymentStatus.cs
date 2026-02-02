@@ -12,5 +12,4 @@ public enum PaymentStatus
 
     [Description("Failed")]
     Failed = 3,
-
 }

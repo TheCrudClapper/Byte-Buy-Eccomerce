@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Public.Cart.Enum;
+using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;
 namespace ByteBuy.Core.DTO.Internal.Cart;

@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Internal.Cart;
-using ByteBuy.Core.DTO.Public.Cart.Enum;
+using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;
 

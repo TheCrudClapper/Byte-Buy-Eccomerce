@@ -31,9 +31,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-auto fs-14-px text-end align-items-center d-flex">
-                                <a class="link">Change Address</a>
-                            </div>
                         </div>
                         }
                         @else{
@@ -54,7 +51,9 @@
                             @for (method of checkout.avaliablePaymentMethods; track method.id)
                             {
                             <div class="col-auto">
-                                <div class="card p-2 text-center payment-card" [class.card-selected]="selectedPaymentMethod() === method.id" style="width: 56px;" (click)="selectPaymentMethod(method.id)">
+                                <div class="card p-2 text-center payment-card"
+                                    [class.card-selected]="selectedPaymentMethod() === method.id" style="width: 56px;"
+                                    (click)="selectPaymentMethod(method.id)">
                                     @if(method.title === 'Blik'){
                                     <img height="31"
                                         src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">

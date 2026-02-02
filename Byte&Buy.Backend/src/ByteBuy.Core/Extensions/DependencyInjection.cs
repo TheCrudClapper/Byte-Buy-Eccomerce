@@ -39,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<ICheckoutService, CheckoutService>();
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IOrderReadService, OrderReadService>();
 
         //AddUserShippingAddressAsync Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();

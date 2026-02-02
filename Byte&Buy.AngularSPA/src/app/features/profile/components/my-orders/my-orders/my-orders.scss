@@ -1,0 +1,27 @@
+hr {
+    border-radius: 10px;
+    color: var(--primary-accent);
+}
+
+.total-cost {
+    font-size: 16px;
+    font-family: 'open-sans-bold';
+}
+
+.card{
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--primary-accent);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: 'open-sans-bold';
+    transition: 0.3s ease;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: var(--primary-accent);
+}
