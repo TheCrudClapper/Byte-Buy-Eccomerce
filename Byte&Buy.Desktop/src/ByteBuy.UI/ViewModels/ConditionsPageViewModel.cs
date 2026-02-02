@@ -19,9 +19,7 @@ public class ConditionsPageViewModel(
     IConditionService conditionService)
     : ViewModelMany<ConditionListItem, IConditionService>(alert, navigation, dialogNavigation, conditionService)
 {
-    private bool _isLoaded;
-
-    protected override async Task Edit(ConditionListItem item)
+    protected override async Task EditAsync(ConditionListItem item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Condition, async vm =>
@@ -33,12 +31,12 @@ public class ConditionsPageViewModel(
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
 
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -52,7 +50,7 @@ public class ConditionsPageViewModel(
         Items = new ObservableCollection<ConditionListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Condition);
@@ -61,16 +59,8 @@ public class ConditionsPageViewModel(
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully added new item!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
-    }
 }

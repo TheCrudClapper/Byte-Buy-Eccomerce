@@ -28,22 +28,21 @@ public partial class AdministrationPageViewModel : PageViewModel
     }
 
     public AdministrationPageViewModel(AlertViewModel alert,
-        DeliveriesPageViewModel deliveries,
-        CountriesPageViewModel countries,
-        ConditionsPageViewModel conditions,
-        CategoriesPageViewModel categories,
+        DeliveriesPageViewModel deliveriesViewModel,
+        CountriesPageViewModel countriesViewModel,
+        ConditionsPageViewModel conditionsViewModel,
+        CategoriesPageViewModel categoriesViewModel,
         ItemsPageViewModel itemsPageViewModel,
         RentOffersViewModel rentOffersViewModel,
         SaleOffersViewModel saleOffersViewModel,
-        DeliveryCarriersViewModel carrierViewModel) : base(alert)
+        DeliveryCarriersViewModel carriersViewModel) : base(alert)
     {
-        DeliveriesPageViewModel = deliveries;
-        CountriesPageViewModel = countries;
-        ConditionsPageViewModel = conditions;
-        CategoriesPageViewModel = categories;
-        DeliveryCarriersPageViewModel = carrierViewModel;
-        SelectedTab = DeliveriesPageViewModel;
-        _ = DeliveriesPageViewModel.EnsureLoadedAsync();
+        DeliveriesPageViewModel = deliveriesViewModel;
+        CountriesPageViewModel = countriesViewModel;
+        ConditionsPageViewModel = conditionsViewModel;
+        CategoriesPageViewModel = categoriesViewModel;
+        DeliveryCarriersPageViewModel = carriersViewModel;
+        SelectedTab = deliveriesViewModel;
         ItemsPageViewModel = itemsPageViewModel;
         RentOffersViewModel = rentOffersViewModel;
         SaleOffersViewModel = saleOffersViewModel;
@@ -57,28 +56,28 @@ public partial class AdministrationPageViewModel : PageViewModel
         switch (tab)
         {
             case DeliveriesPageViewModel deliveries:
-                await deliveries.EnsureLoadedAsync();
+                await deliveries.LoadDataAsync();
                 break;
             case CountriesPageViewModel countries:
-                await countries.EnsureLoadedAsync();
+                await countries.LoadDataAsync();
                 break;
             case CategoriesPageViewModel categories:
-                await categories.EnsureLoadedAsync();
+                await categories.LoadDataAsync();
                 break;
             case ConditionsPageViewModel conditions:
-                await conditions.EnsureLoadedAsync();
+                await conditions.LoadDataAsync();
                 break;
             case ItemsPageViewModel items:
-                await items.EnsureLoadedAsync();
+                await items.LoadDataAsync();
                 break;
             case RentOffersViewModel rentOffers:
-                await rentOffers.EnsureLoadedAsync();
+                await rentOffers.LoadDataAsync();
                 break;
             case SaleOffersViewModel saleOffers:
-                await saleOffers.EnsureLoadedAsync();
+                await saleOffers.LoadDataAsync();
                 break;
             case DeliveryCarriersViewModel deliveryCarriers:
-                await deliveryCarriers.EnsureLoadedAsync();
+                await deliveryCarriers.LoadDataAsync();
                 break;
         }
     }

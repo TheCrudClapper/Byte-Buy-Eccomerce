@@ -48,7 +48,6 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Role => x.GetRequiredService<RolePageViewModel>(),
                 ApplicationPageNames.Roles => x.GetRequiredService<RolesPageViewModel>(),
                 ApplicationPageNames.Profile => x.GetRequiredService<ProfilePageViewModel>(),
-                ApplicationPageNames.Settings => x.GetRequiredService<SettingsPageViewModel>(),
                 ApplicationPageNames.CompanyInfo => x.GetRequiredService<CompanyInfoPageViewModel>(),
                 ApplicationPageNames.PortalUsers => x.GetRequiredService<PortalUsersPageViewModel>(),
                 ApplicationPageNames.PortalUser => x.GetRequiredService<PortalUserPageViewModel>(),

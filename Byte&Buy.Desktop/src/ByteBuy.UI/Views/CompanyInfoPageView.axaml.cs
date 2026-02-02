@@ -8,9 +8,4 @@ public partial class CompanyInfoPageView : UserControl
     {
         InitializeComponent();
     }
-    public CompanyInfoPageView(CompanyInfoPageView vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

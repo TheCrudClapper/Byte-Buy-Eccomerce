@@ -18,8 +18,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
     ICountryService countryService)
     : ViewModelMany<CountryListItem, ICountryService>(alert, navigation, dialogNavigation, countryService)
 {
-    private bool _isLoaded;
-    protected override async Task Edit(CountryListItem item)
+    protected override async Task EditAsync(CountryListItem item)
     {
         var result = await DialogNavigation
           .OpenDialogAsync(ApplicationDialogNames.Country, async vm =>
@@ -31,11 +30,11 @@ public class CountriesPageViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetAll();
         var (ok, value) = HandleResult(result);
@@ -48,7 +47,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<CountryListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Country);
@@ -56,16 +55,7 @@ public class CountriesPageViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
-    }
-
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
     }
 }

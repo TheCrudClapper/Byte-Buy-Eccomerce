@@ -15,15 +15,13 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
 {
-    private bool _isLoaded;
-
     public ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
         IDialogService dialogNavigation,
         IItemService service) : base(alert, navigation, dialogNavigation, service)
     {
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
         {
@@ -32,7 +30,7 @@ public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemServi
         });
     }
 
-    protected override async Task Edit(ItemListItem item)
+    protected override async Task EditAsync(ItemListItem item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
         {
@@ -54,11 +52,11 @@ public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemServi
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated published offer!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -70,14 +68,5 @@ public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemServi
             .ToList();
 
         Items = new ObservableCollection<ItemListItem>(list);
-    }
-
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
     }
 }

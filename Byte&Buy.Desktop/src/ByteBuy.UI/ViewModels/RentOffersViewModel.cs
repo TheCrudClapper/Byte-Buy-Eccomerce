@@ -19,13 +19,7 @@ public class RentOffersViewModel(
     IRentOfferService service)
     : ViewModelMany<RentOfferListItem, IRentOfferService>(alert, navigation, dialogNavigation, service)
 {
-    private bool _isLoaded;
-    protected override Task Add()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override async Task Edit(RentOfferListItem item)
+    protected override async Task EditAsync(RentOfferListItem item)
     {
         var result = await DialogNavigation
           .OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
@@ -37,11 +31,11 @@ public class RentOffersViewModel(
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated offer!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -54,12 +48,10 @@ public class RentOffersViewModel(
 
         Items = new ObservableCollection<RentOfferListItem>(list);
     }
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
 
-        await LoadData();
-        _isLoaded = true;
+    //Not used
+    protected override Task AddAsync()
+    {
+        throw new System.NotImplementedException();
     }
 }

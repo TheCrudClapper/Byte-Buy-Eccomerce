@@ -8,10 +8,4 @@ public partial class DeliveriesPageView : UserControl
     {
         InitializeComponent();
     }
-
-    //public DeliveriesPageView(DeliveriesPageViewModel vm)
-    //{
-    //    InitializeComponent();
-    //    DataContext = vm;
-    //}
 }

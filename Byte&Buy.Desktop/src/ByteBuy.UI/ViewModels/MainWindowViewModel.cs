@@ -40,14 +40,14 @@ public partial class MainWindowViewModel : WindowViewModel
     private async Task GoToPortalUsers() => await _navigation.NavigateToAsync(ApplicationPageNames.PortalUsers, async vm =>
     {
         if (vm is PortalUsersPageViewModel empVm)
-            await empVm.LoadData();
+            await empVm.LoadDataAsync();
     });
 
     [RelayCommand]
     private async Task GoToEmployees() => await _navigation.NavigateToAsync(ApplicationPageNames.Employees, async vm =>
     {
         if (vm is EmployeesPageViewModel empVm)
-            await empVm.LoadData();
+            await empVm.LoadDataAsync();
     });
 
     [RelayCommand]
@@ -64,7 +64,7 @@ public partial class MainWindowViewModel : WindowViewModel
     private async Task GoToRoles() => await _navigation.NavigateToAsync(ApplicationPageNames.Roles, async vm =>
     {
         if (vm is RolesPageViewModel rolesVm)
-            await rolesVm.LoadData();
+            await rolesVm.LoadDataAsync();
     });
 
     [RelayCommand]

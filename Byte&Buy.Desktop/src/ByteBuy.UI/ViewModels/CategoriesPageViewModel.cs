@@ -18,9 +18,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
     ICategoryService categoryService)
     : ViewModelMany<CategoryListItem, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
 {
-    private bool _isLoaded;
-
-    protected override async Task Edit(CategoryListItem item)
+    protected override async Task EditAsync(CategoryListItem item)
     {
         var result = await DialogNavigation
              .OpenDialogAsync(ApplicationDialogNames.Category, async vm =>
@@ -32,11 +30,11 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -49,7 +47,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<CategoryListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Category);
@@ -57,17 +55,8 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully added new item!");
-            await LoadData();
+            await LoadDataAsync();
         }
 
-    }
-
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
     }
 }

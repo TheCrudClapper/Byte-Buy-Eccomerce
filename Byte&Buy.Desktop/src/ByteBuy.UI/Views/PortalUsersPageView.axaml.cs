@@ -9,9 +9,4 @@ public partial class PortalUsersPageView : UserControl
     {
         InitializeComponent();
     }
-    public PortalUsersPageView(PortalUsersPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

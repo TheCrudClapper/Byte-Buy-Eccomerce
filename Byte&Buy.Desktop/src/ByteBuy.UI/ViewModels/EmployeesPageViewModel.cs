@@ -20,10 +20,10 @@ public partial class EmployeesPageViewModel
         IDialogService dialogNavigation,
         IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
     {
-        _ = LoadData();
+        _ = LoadDataAsync();
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -37,7 +37,7 @@ public partial class EmployeesPageViewModel
         Items = new ObservableCollection<EmployeeListItem>(list);
     }
 
-    protected override async Task Edit(EmployeeListItem employee)
+    protected override async Task EditAsync(EmployeeListItem employee)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {
@@ -46,7 +46,7 @@ public partial class EmployeesPageViewModel
         });
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {

@@ -9,10 +9,4 @@ public partial class ConditionsPageView : UserControl
     {
         InitializeComponent();
     }
-
-    public ConditionsPageView(ConditionsPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

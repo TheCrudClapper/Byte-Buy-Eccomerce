@@ -18,8 +18,7 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
     IDeliveryService deliveryService)
     : ViewModelMany<DeliveryListItem, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
 {
-    private bool _isLoaded;
-    protected override async Task Edit(DeliveryListItem item)
+    protected override async Task EditAsync(DeliveryListItem item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
@@ -30,12 +29,12 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            await LoadData();
+            await LoadDataAsync();
             Alert.ShowSuccessAlert("Successfully updated item!");
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -49,7 +48,7 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
         Items = new ObservableCollection<DeliveryListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
@@ -60,17 +59,8 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            await LoadData();
+            await LoadDataAsync();
             Alert.ShowSuccessAlert("Successfully added new item!");
         }
-    }
-
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
     }
 }

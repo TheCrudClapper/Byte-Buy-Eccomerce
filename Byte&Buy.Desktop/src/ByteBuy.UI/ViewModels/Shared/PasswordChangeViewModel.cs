@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.Views.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class PasswordChangeViewModel(IEmployeeService employeeService, AlertViewModel alert)
+public partial class PasswordChangeViewModel(IEmployeeService employeeService)
     : ObservableValidator
 {
     [ObservableProperty]

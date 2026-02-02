@@ -18,9 +18,7 @@ public class DeliveryCarriersViewModel(AlertViewModel alert,
     IDeliveryCarrierService service)
     : ViewModelMany<DeliveryCarrierListItem, IDeliveryCarrierService>(alert, navigation, dialogNavigation, service)
 {
-    private bool _isLoaded;
-
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetAll();
         var (ok, value) = HandleResult(result);
@@ -33,7 +31,7 @@ public class DeliveryCarriersViewModel(AlertViewModel alert,
         Items = new ObservableCollection<DeliveryCarrierListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.DeliveryCarrier);
@@ -41,20 +39,10 @@ public class DeliveryCarriersViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
-
-    public async Task EnsureLoadedAsync()
-    {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
-    }
-
-    protected override async Task Edit(DeliveryCarrierListItem item)
+    protected override async Task EditAsync(DeliveryCarrierListItem item)
     {
         var result = await DialogNavigation
          .OpenDialogAsync(ApplicationDialogNames.DeliveryCarrier, async vm =>
@@ -66,7 +54,7 @@ public class DeliveryCarriersViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated item!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 }

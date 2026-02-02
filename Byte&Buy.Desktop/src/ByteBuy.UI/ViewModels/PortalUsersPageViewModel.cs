@@ -19,10 +19,10 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
         IDialogService dialogNavigation,
         IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
     {
-        _ = LoadData();
+        _ = LoadDataAsync();
     }
 
-    protected override async Task Edit(PortalUserListItem item)
+    protected override async Task EditAsync(PortalUserListItem item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
         {
@@ -31,7 +31,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
         });
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -44,7 +44,7 @@ public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPorta
         Items = new ObservableCollection<PortalUserListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
         {

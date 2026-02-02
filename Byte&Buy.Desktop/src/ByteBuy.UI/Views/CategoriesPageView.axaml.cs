@@ -9,9 +9,4 @@ public partial class CategoriesPageView : UserControl
     {
         InitializeComponent();
     }
-    public CategoriesPageView(CategoriesPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

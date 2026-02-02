@@ -9,9 +9,4 @@ public partial class RolesPageView : UserControl
     {
         InitializeComponent();
     }
-    public RolesPageView(RolesPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

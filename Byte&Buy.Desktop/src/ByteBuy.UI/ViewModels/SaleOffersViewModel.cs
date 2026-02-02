@@ -18,13 +18,7 @@ public class SaleOffersViewModel(AlertViewModel alert,
     ISaleOfferService service)
     : ViewModelMany<SaleOfferListItem, ISaleOfferService>(alert, navigation, dialogNavigation, service)
 {
-    private bool _isLoaded;
-    protected override Task Add()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override async Task Edit(SaleOfferListItem item)
+    protected override async Task EditAsync(SaleOfferListItem item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
@@ -36,11 +30,11 @@ public class SaleOffersViewModel(AlertViewModel alert,
         if (result is bool ok && ok)
         {
             Alert.ShowSuccessAlert("Successfully updated offer!");
-            await LoadData();
+            await LoadDataAsync();
         }
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();
         var (ok, value) = HandleResult(result);
@@ -54,12 +48,9 @@ public class SaleOffersViewModel(AlertViewModel alert,
         Items = new ObservableCollection<SaleOfferListItem>(list);
     }
 
-    public async Task EnsureLoadedAsync()
+    //Not used
+    protected override Task AddAsync()
     {
-        if (_isLoaded)
-            return;
-
-        await LoadData();
-        _isLoaded = true;
+        throw new System.NotImplementedException();
     }
 }

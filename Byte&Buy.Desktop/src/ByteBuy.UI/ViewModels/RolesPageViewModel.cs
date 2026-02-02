@@ -19,10 +19,10 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         IDialogService dialogNavigation,
         IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
     {
-        _ = LoadData();
+        _ = LoadDataAsync();
     }
 
-    protected override async Task Edit(RoleListItem item)
+    protected override async Task EditAsync(RoleListItem item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
         {
@@ -31,7 +31,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         });
     }
 
-    public override async Task LoadData()
+    public override async Task LoadDataAsync()
     {
         var result = await Service.GetAll();
         var (ok, value) = HandleResult(result);
@@ -45,7 +45,7 @@ public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
         Items = new ObservableCollection<RoleListItem>(list);
     }
 
-    protected override async Task Add()
+    protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
         {

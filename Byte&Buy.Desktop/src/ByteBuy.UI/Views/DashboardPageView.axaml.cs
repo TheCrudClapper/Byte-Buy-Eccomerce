@@ -9,9 +9,4 @@ public partial class DashboardPageView : UserControl
     {
         InitializeComponent();
     }
-    public DashboardPageView(DashboardPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

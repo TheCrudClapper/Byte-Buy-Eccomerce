@@ -9,9 +9,4 @@ public partial class CountriesPageView : UserControl
     {
         InitializeComponent();
     }
-    public CountriesPageView(CountriesPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

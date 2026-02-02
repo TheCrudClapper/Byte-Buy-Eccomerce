@@ -6,8 +6,8 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class AuthService
-    (IAuthHttpClient authHttpClient, ITokenStore tokenStore) : IAuthService
+public class AuthService(IAuthHttpClient authHttpClient, ITokenStore tokenStore)
+    : IAuthService
 {
     public async Task<Result> Login(LoginRequest request)
     {

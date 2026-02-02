@@ -9,9 +9,4 @@ public partial class AdministrationPageView : UserControl
     {
         InitializeComponent();
     }
-    public AdministrationPageView(AdministrationPageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

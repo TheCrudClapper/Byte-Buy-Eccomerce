@@ -9,10 +9,4 @@ public partial class ProfilePageView : UserControl
     {
         InitializeComponent();
     }
-
-    public ProfilePageView(ProfilePageViewModel vm)
-    {
-        InitializeComponent();
-        DataContext = vm;
-    }
 }

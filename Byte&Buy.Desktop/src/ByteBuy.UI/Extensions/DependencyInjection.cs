@@ -44,7 +44,6 @@ public static class DependencyInjection
         services.AddTransient<LoginWindowViewModel>();
         services.AddTransient<DashboardPageViewModel>();
         services.AddTransient<EmployeesPageViewModel>();
-        services.AddTransient<SettingsPageViewModel>();
         services.AddTransient<EmployeePageViewModel>();
         services.AddTransient<ProfilePageViewModel>();
         services.AddTransient<RolesPageViewModel>();

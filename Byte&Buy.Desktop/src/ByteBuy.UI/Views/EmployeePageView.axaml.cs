@@ -9,6 +9,4 @@ public partial class EmployeePageView : UserControl
     {
         InitializeComponent();
     }
-
-   
 }
