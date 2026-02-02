@@ -50,6 +50,7 @@ public partial class LoginWindowViewModel : WindowViewModel
             Error = result.Error!.Description;
             return;
         }
+
         LoginSuccess?.Invoke();
     }
 }
