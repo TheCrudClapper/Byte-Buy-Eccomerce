@@ -1,7 +1,6 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.Common;
-using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +10,9 @@ namespace ByteBuy.API.Controllers;
 [ApiController]
 public class OrdersController : BaseApiController
 {
-    private readonly IOrderService _orderService;
-    private readonly IOrderReadService _orderReadService;
-    public OrdersController(IOrderService orderService, IOrderReadService orderReadService)
+    private readonly IOrderCreateService _orderService;
+    private readonly IOrderService _orderReadService;
+    public OrdersController(IOrderCreateService orderService, IOrderService orderReadService)
     {
         _orderService = orderService;
         _orderReadService = orderReadService;
@@ -23,11 +22,8 @@ public class OrdersController : BaseApiController
     public async Task<ActionResult<OrderCreatedReponse>> PostOrder(OrderAddRequest request)
         => HandleResult(await _orderService.AddAsync(CurrentUserId, request));
 
-    [HttpPut]
-    public async Task<ActionResult<UpdatedResponse>> ReturnOrder(Guid orderId)
-        => HandleResult(await _orderService.ReturnOrder(CurrentUserId, orderId));
-
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrders(CancellationToken ct)
         => HandleResult(await _orderReadService.GetAllUserOrders(CurrentUserId, ct));
+
 }

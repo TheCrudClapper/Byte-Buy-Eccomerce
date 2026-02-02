@@ -43,17 +43,12 @@ public class PaymentService : IPaymentService
             payment.Method,
             request.PhoneNumber);
 
-        if(blikResult.IsFailure)
+        if (blikResult.IsFailure)
             return Result.Failure<Result>(PaymentErrors.NotFound);
 
-        var paymentResult = payment.FinalizePayment(blikResult.Value);
-        if (paymentResult.IsFailure)
-            return Result.Failure(paymentResult.Error);
-
-        var orders = await _orderRepository.GetOrdersByPaymentId(userId, paymentId);
-
-        foreach(var order in orders)
-            order.PayForOrder();
+        var finalizeResult = await FinalizeAndPay(userId, payment, blikResult.Value);
+        if (finalizeResult.IsFailure)
+            return finalizeResult;
 
         await _paymentRepository.UpdateAsync(payment);
         await _paymentRepository.CommitAsync();
@@ -78,17 +73,31 @@ public class PaymentService : IPaymentService
         if (cardResult.IsFailure)
             return Result.Failure<Result>(PaymentErrors.NotFound);
 
-        var paymentResult = payment.FinalizePayment(cardResult.Value);
-        if (paymentResult.IsFailure)
-            return Result.Failure(paymentResult.Error);
-
-        var orders = await _orderRepository.GetOrdersByPaymentId(userId, paymentId);
-
-        foreach (var order in orders)
-            order.PayForOrder();
+        var finalizeResult = await FinalizeAndPay(userId, payment, cardResult.Value);
+        if (finalizeResult.IsFailure)
+            return finalizeResult;
 
         await _paymentRepository.UpdateAsync(payment);
         await _paymentRepository.CommitAsync();
         return Result.Success();
     }
+
+    private async Task<Result> FinalizeAndPay(Guid userId, Payment payment, PaymentDetails details)
+    {
+        var paymentResult = payment.FinalizePayment(details);
+        if (paymentResult.IsFailure)
+            return Result.Failure(paymentResult.Error);
+
+        var orders = await _orderRepository.GetOrdersByPaymentId(userId, payment.Id);
+
+        foreach (var order in orders)
+        {
+            var statusResult = order.MarkAsPaid();
+            if (statusResult.IsFailure)
+                return statusResult;
+        }
+
+        return Result.Success();
+    }
+
 }

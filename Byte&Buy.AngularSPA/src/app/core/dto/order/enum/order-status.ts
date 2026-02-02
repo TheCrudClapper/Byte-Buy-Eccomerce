@@ -3,7 +3,6 @@ export enum OrderStatus {
     Paid = 1,
     Shipped = 2,
     Delivered = 3,
-    Completed = 4,
-    Canceled = 5,
-    Returned = 6
+    Canceled = 4,
+    Returned = 5
 }

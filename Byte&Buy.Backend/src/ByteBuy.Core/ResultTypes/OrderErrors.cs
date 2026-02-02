@@ -6,7 +6,7 @@ public static class OrderErrors
         ErrorType.Validation, "Order.Delivery", "Some deliveries sent by user are not valid");
 
     public static readonly Error QuantityInvalid = Error.Validation(
-        "OrderLine.Quantity","Quantity must be greater than 0.");
+        "OrderLine.Quantity", "Quantity must be greater than 0.");
 
     public static readonly Error RentalDaysInvalid = Error.Validation(
         "OrderLine.RentalDays", "Rental days msut be greater than 0, at least 1");
@@ -28,4 +28,7 @@ public static class OrderErrors
 
     public static readonly Error EmptySellerDetails = Error.Validation(
       "Order.Seller", "Order cannot be created without seller information");
+
+    public static readonly Error ShippedStatusViolation = Error.Validation(
+     "Order.Status", "Order cannot be shipped because it has not been paid for.");
 }

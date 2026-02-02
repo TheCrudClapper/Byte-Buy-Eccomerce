@@ -16,12 +16,9 @@ public enum OrderStatus
     [Description("Delivered")]
     Delivered = 3,
 
-    [Description("Completed")]
-    Completed = 4,
-
     [Description("Canceled")]
-    Canceled = 5,
+    Canceled = 4,
 
     [Description("Returned")]
-    Returned = 6
+    Returned = 5
 }

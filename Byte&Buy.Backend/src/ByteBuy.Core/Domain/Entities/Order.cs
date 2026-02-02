@@ -2,9 +2,21 @@
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
-using Microsoft.AspNetCore.Http;
-
 namespace ByteBuy.Core.Domain.Entities;
+
+//Class that holds allowed transitions between order states
+public static class OrderStatusTransitions
+{
+    public static readonly Dictionary<OrderStatus, OrderStatus[]> AllowedTransitions = new()
+    {
+        { OrderStatus.AwaitingPayment, [ OrderStatus.Paid, OrderStatus.Canceled ] },
+        { OrderStatus.Paid, [ OrderStatus.Shipped, OrderStatus.Canceled ] },
+        { OrderStatus.Shipped, [ OrderStatus.Delivered, OrderStatus.Returned ] },
+        { OrderStatus.Delivered, [ OrderStatus.Returned ] },
+        { OrderStatus.Canceled, Array.Empty<OrderStatus>() },
+        { OrderStatus.Returned, Array.Empty<OrderStatus>() }
+    };
+}
 
 //Represents one order from one seller with sellers offers
 public class Order : AuditableEntity, ISoftDeletable
@@ -24,7 +36,7 @@ public class Order : AuditableEntity, ISoftDeletable
     public PortalUser Buyer { get; set; } = null!;
     public PaymentOrder? Payment { get; set; }
     private Order() { }
-    
+
     private Order(Guid buyerId, OrderDelivery delivery, SellerSnapshot snapshot, IEnumerable<OrderLine> lines)
     {
         Id = Guid.NewGuid();
@@ -60,9 +72,38 @@ public class Order : AuditableEntity, ISoftDeletable
         Total = LinesTotal + Delivery.Price;
     }
 
-    public void PayForOrder()
+    public Result MarkAsPaid()
+      => ChangeStatus(OrderStatus.Paid);
+
+    public Result MarkAsShipped()
+        => ChangeStatus(OrderStatus.Shipped);
+
+    public Result MarkAsDelivered()
+        => ChangeStatus(OrderStatus.Delivered);
+
+    public Result MarkAsReturned()
+        => ChangeStatus(OrderStatus.Returned);
+
+    public Result Cancel()
+        => ChangeStatus(OrderStatus.Canceled);
+
+    private bool CanChangeStatus(OrderStatus newStatus)
     {
-        Status = OrderStatus.Paid;
+        return OrderStatusTransitions.AllowedTransitions.TryGetValue(Status, out var allowedStatus)
+               && allowedStatus.Contains(newStatus);
     }
 
+    public Result ChangeStatus(OrderStatus newStatus)
+    {
+        if (!CanChangeStatus(newStatus))
+        {
+            return Result.Failure(Error.Validation("Order.Status", $"Cannot change status from {Status} to {newStatus}"));
+        }
+
+        Status = newStatus;
+        DateEdited = DateTime.UtcNow;
+
+        return Result.Success();
+    }
 }
+
