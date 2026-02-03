@@ -10,11 +10,18 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 {
     public OrderRepository(ApplicationDbContext context) : base(context){ }
 
-    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId)
+    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId, CancellationToken ct = default)
     {
         return await _context.PaymentOrders
             .Where(po => po.PaymentId == paymentId && po.Order.BuyerId == userId)
             .Select(o => o.Order)
-            .ToListAsync();
+            .ToListAsync(ct);
+    }
+
+    public async Task<Order?> GetUserOrder(Guid userId, Guid orderId, CancellationToken ct = default)
+    {
+        return await _context.Orders
+            .Where(o => o.BuyerId == userId && o.Id == orderId)
+            .FirstOrDefaultAsync(ct);
     }
 }

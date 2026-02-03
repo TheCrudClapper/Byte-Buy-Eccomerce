@@ -29,4 +29,7 @@ export class OrderApiService {
     return this.httpClient.get<OrderDetailsResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.details}${id}`)
   }
   
+  cancelOrder(id: Guid){
+    return this.httpClient.put(`${this.baseApiUrl + API_ENDPOINTS.orders.base}/${id}/cancel`, null);
+  }
 }

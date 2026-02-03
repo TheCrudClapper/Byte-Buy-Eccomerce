@@ -72,7 +72,7 @@ export const API_ENDPOINTS = {
     orders: {
         base: '/orders',
         post: '/orders',
-        details: '/orders/details/'
+        details: '/orders/details/',
     },
 
     payments:{

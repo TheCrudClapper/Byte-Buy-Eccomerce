@@ -30,4 +30,7 @@ public class OrdersController : BaseApiController
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
         => HandleResult(await _orderService.GetOrderDetails(orderId, ct));
 
+    [HttpPut("{orderId:guid}/cancel")]
+    public async Task<ActionResult> CancelOrder(Guid orderId)
+        => HandleResult(await _orderService.CancelOrder(CurrentUserId, orderId));
 }

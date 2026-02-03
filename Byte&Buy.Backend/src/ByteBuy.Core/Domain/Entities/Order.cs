@@ -10,8 +10,8 @@ public static class OrderStatusTransitions
     public static readonly Dictionary<OrderStatus, OrderStatus[]> AllowedTransitions = new()
     {
         { OrderStatus.AwaitingPayment, [ OrderStatus.Paid, OrderStatus.Canceled ] },
-        { OrderStatus.Paid, [ OrderStatus.Shipped, OrderStatus.Canceled ] },
-        { OrderStatus.Shipped, [ OrderStatus.Delivered, OrderStatus.Returned ] },
+        { OrderStatus.Paid, [ OrderStatus.Shipped ] },
+        { OrderStatus.Shipped, [ OrderStatus.Delivered ] },
         { OrderStatus.Delivered, [ OrderStatus.Returned ] },
         { OrderStatus.Canceled, Array.Empty<OrderStatus>() },
         { OrderStatus.Returned, Array.Empty<OrderStatus>() }

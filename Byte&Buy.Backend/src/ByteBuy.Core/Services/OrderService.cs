@@ -16,6 +16,22 @@ public class OrderService : IOrderService
         _orderRepository = orderRepository;
     }
 
+    public async Task<Result> CancelOrder(Guid userId, Guid orderId)
+    {
+        var order = await _orderRepository.GetUserOrder(userId, orderId);
+        if (order is null)
+            return Result.Failure(OrderErrors.NotFound);
+
+        var cancelationResult =  order.Cancel();
+        if(cancelationResult.IsFailure)
+            return Result.Failure(cancelationResult.Error);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+        return Result.Success(order);
+    }
+
+
     public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrders(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserOrderListQuerySpec(userId);
@@ -34,5 +50,10 @@ public class OrderService : IOrderService
         return queryResult is null
             ? Result.Failure<OrderDetailsResponse>(OrderErrors.NotFound)
             : queryResult.ToOrderDetailResponse();
+    }
+
+    public Task<Result> ReturnOrder(Guid userId, Guid orderId)
+    {
+        throw new NotImplementedException();
     }
 }

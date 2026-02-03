@@ -216,87 +216,53 @@
             </div>
         </div>
 
+        @if(actionButtonsVisible()){
         <div class="content-section">
             <div class="row my-0">
                 @switch (order.status)
                 {
                 @case(OrderStatus.AwaitingPayment){
-                    <div class="col-12">
-                        <hr class="action-spacer">
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                <div class="col-12 action-row">
+                    <div class="action-container">
+                        <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
+                        <a class="link" [routerLink]="['/payment', `${order.paymentId}`]">FINALIZE PAYMENT</a>
                     </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                            <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
-                            <a class="link" [routerLink]="['/payment', `${order.paymentId}`]">FINALIZE PAYMENT</a>
-                        </div>
+                </div>
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                <div class="col-12 action-row">
+                    <div class="action-container">
+                        <i class="fa-solid fa-ban fa-2x"></i>
+                        <a class="link" (click)="cancelOrder()">CANCEL ORDER</a>
                     </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                            <i class="fa-solid fa-ban fa-2x"></i>
-                            <a class="link">CANCEL ORDER</a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                }
-                @case(OrderStatus.Paid){
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                            <i class="fa-solid fa-ban fa-2x"></i>
-                            <a class="link">CANCEL ORDER</a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                }
-                @case(OrderStatus.Shipped){
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                            <i class="fa-solid fa-ban fa-2x"></i>
-                            <a class="link">CANCEL ORDER</a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                             <i class="fa-solid fa-arrow-rotate-left fa-2x" style="color: #ffffff;"></i>
-                            <a class="link">RETURN ORDER</a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
                 }
                 @case(OrderStatus.Delivered){
-                    <div class="col-12">
-                        <hr class="action-spacer">
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                <div class="col-12 action-row">
+                    <div class="action-container">
+                        <i class="fa-solid fa-arrow-rotate-left fa-2x" style="color: #ffffff;"></i>
+                        <a class="link">RETURN ORDER</a>
                     </div>
-                    <div class="col-12 action-row">
-                        <div class="action-container">
-                             <i class="fa-solid fa-arrow-rotate-left fa-2x" style="color: #ffffff;"></i>
-                            <a class="link">RETURN ORDER</a>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <hr class="action-spacer">
-                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
                 }
                 }
             </div>
         </div>
+        }
+
         }
     </div>
 </div>

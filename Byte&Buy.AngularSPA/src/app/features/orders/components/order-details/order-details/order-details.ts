@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 
 export class OrderDetails implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
+  private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly imageBaseUrl = environment.staticImagesBaseUrl;
@@ -38,12 +39,41 @@ export class OrderDetails implements OnInit {
   loadOrderDetails(id: Guid) {
     this.orderApiService.getOrderDetails(id).subscribe({
       next: (data: OrderDetailsResponse) => {
-        this.orderDetails.set(data),
-        console.log(data);
+        this.orderDetails.set(data);
       },
       error: (err: ProblemDetails) => {
-        this.router.navigate(['/not-found'])
+        this.router.navigate(['/not-found']);
       }
     })
   }
+
+  cancelOrder(){
+    if(!this.orderDetails() || !this.orderDetails()?.id)
+      return;
+
+    const orderId = this.orderDetails()!.id;
+    this.orderApiService.cancelOrder(orderId).subscribe({
+      next: () => {
+        this.toastService.success("Successfully canceled order.");
+        this.orderDetails.update(o => {
+          if(!o) return;
+          return { ...o, status: OrderStatus.Canceled}
+        })
+      },
+      error: (err: ProblemDetails) => {
+        this.toastService.error(err.detail ?? "Failed to cancel your order");
+      }
+    })
+  }
+
+  returnOrder(){
+
+  }
+
+  actionButtonsVisible(): boolean{
+    const status = this.orderDetails()?.status;
+    return status === OrderStatus.AwaitingPayment 
+      || status === OrderStatus.Delivered;
+  }
+
 }
