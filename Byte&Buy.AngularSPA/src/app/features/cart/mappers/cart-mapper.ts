@@ -1,7 +1,7 @@
 import { CartResponse } from "../../../core/dto/cart/cart-response";
 import { CartSummaryResponse } from "../../../core/dto/cart/cart-summary-response";
 import { Cart } from "../models/cart";
-import { CartOffer } from "../models/cart-offers/cart-offer-alias";
+import { CartOffer } from "../models/cart-offers/cart-offer-union";
 import { RentCartOfferModel } from "../models/cart-offers/rent-cart-offer-model";
 import { SaleCartOfferModel } from "../models/cart-offers/sale-cart-offer-model";
 import { CartSummary } from "../models/cart-summary";

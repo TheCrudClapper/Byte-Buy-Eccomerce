@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -23,5 +24,15 @@ public class OrderService : IOrderService
         return queryResult
             .Select(o => o.ToUserOrderListResponse())
             .ToList();
+    }
+
+    public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct = default)
+    {
+        var spec = new OrderDetailsResponseSpec(orderId);
+        var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
+
+        return queryResult is null
+            ? Result.Failure<OrderDetailsResponse>(OrderErrors.NotFound)
+            : queryResult.ToOrderDetailResponse();
     }
 }

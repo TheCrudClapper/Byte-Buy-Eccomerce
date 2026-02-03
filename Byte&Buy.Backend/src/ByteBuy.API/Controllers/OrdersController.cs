@@ -10,20 +10,25 @@ namespace ByteBuy.API.Controllers;
 [ApiController]
 public class OrdersController : BaseApiController
 {
-    private readonly IOrderCreateService _orderService;
-    private readonly IOrderService _orderReadService;
+    private readonly IOrderCreateService _orderCreationService;
+    private readonly IOrderService _orderService;
     public OrdersController(IOrderCreateService orderService, IOrderService orderReadService)
     {
-        _orderService = orderService;
-        _orderReadService = orderReadService;
+        _orderCreationService = orderService;
+        _orderService = orderReadService;
     }
 
     [HttpPost]
     public async Task<ActionResult<OrderCreatedReponse>> PostOrder(OrderAddRequest request)
-        => HandleResult(await _orderService.AddAsync(CurrentUserId, request));
+        => HandleResult(await _orderCreationService.AddAsync(CurrentUserId, request));
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrders(CancellationToken ct)
-        => HandleResult(await _orderReadService.GetAllUserOrders(CurrentUserId, ct));
+        => HandleResult(await _orderService.GetAllUserOrders(CurrentUserId, ct));
+
+    [HttpGet("details/{orderId:guid}")]
+    public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
+        => HandleResult(await _orderService.GetOrderDetails(orderId, ct));
+
 
 }

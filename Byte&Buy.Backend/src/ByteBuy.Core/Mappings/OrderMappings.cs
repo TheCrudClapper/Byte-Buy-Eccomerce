@@ -1,11 +1,17 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Internal.Order.Enum;
+using ByteBuy.Core.DTO.Internal.OrderDelivery;
+using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;
+using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.DTO.Public.Order.Rent;
 using ByteBuy.Core.DTO.Public.Order.Sale;
+using ByteBuy.Core.DTO.Public.OrderDelivery;
+using ByteBuy.Core.DTO.Public.PortalUser;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
@@ -59,7 +65,7 @@ public static class OrderMappings
             query.TotalLinesCost,
             query.DeliveryCost,
             query.TotalCost,
-            query.Lines.Select(line => line.Type switch 
+            query.Lines.Select(line => line.Type switch
             {
                 OrderLineType.Sale => (UserOrderLineResponse)new UserSaleOrderLineResponse()
                 {
@@ -82,4 +88,172 @@ public static class OrderMappings
             })
             .ToList());
     }
+
+    public static Expression<Func<Order, OrderDetailsQuery>> OrderDetailsQueryProjection
+      => o => new OrderDetailsQuery(
+          o.Id,
+          o.Status,
+          o.DateCreated,
+          o.DateDelivered,
+          o.SellerSnapshot.DisplayName,
+          o.Lines.Count,
+          new MoneyDto(o.LinesTotal.Amount, o.LinesTotal.Currency),
+          new MoneyDto(o.Total.Amount, o.Total.Currency),
+
+          new OrderDeliveryQuery(
+              o.Delivery.CarrierCode,
+              o.Delivery.DeliveryName,
+              o.Delivery.Channel,
+              new MoneyDto(o.Delivery.Price.Amount, o.Delivery.Price.Currency),
+
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.Street : null,
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.HouseNumber : null,
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.FlatNumber : null,
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.City : null,
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.PostalCity : null,
+              o.Delivery.Channel == DeliveryChannel.Courier ? o.Delivery.PostalCode : null,
+
+
+              o.Delivery.Channel == DeliveryChannel.PickupPoint ? o.Delivery.PickupPointName : null,
+              o.Delivery.Channel == DeliveryChannel.PickupPoint ? o.Delivery.PickupPointId : null,
+              o.Delivery.Channel == DeliveryChannel.PickupPoint ? o.Delivery.PickupStreet : null,
+              o.Delivery.Channel == DeliveryChannel.PickupPoint ? o.Delivery.PickupCity : null,
+              o.Delivery.Channel == DeliveryChannel.PickupPoint ? o.Delivery.PickupLocalNumber : null,
+
+              o.Delivery.Channel == DeliveryChannel.ParcelLocker ? o.Delivery.ParcelLockerId : null
+          ),
+          new BuyerSnapshotQuery(
+              o.BuyerSnapshot.FullName,
+              o.BuyerSnapshot.Email,
+              o.BuyerSnapshot.PhoneNumber!,
+              new HomeAddressDto(
+                  o.BuyerSnapshot.Address.Street,
+                  o.BuyerSnapshot.Address.HouseNumber,
+                  o.BuyerSnapshot.Address.PostalCity,
+                  o.BuyerSnapshot.Address.PostalCode,
+                  o.BuyerSnapshot.Address.City,
+                  o.BuyerSnapshot.Address.Country,
+                  o.BuyerSnapshot.Address.FlatNumber
+              )
+          ),
+          o.Lines.Select(line => new UserOrderLineQuery(
+              line.ItemName,
+              line is RentOrderLine
+                ? OrderLineType.Rent
+                : OrderLineType.Sale,
+
+              line.Quantity,
+
+              new MoneyDto(line.TotalPrice.Amount, line.TotalPrice.Currency),
+              new ImageThumbnailDto(line.Thumbnail.ImagePath, line.Thumbnail.AltText),
+
+              line is RentOrderLine
+                ? null
+                : ((SaleOrderLine)line).PricePerItem.ToMoneyDto(),
+
+              line is RentOrderLine
+                ? ((RentOrderLine)line).PricePerDay.ToMoneyDto()
+                : null,
+
+              line is RentOrderLine
+                ? ((RentOrderLine)line).RentalDays
+                : null
+          ))
+          .ToList()
+      );
+
+    public static OrderDetailsResponse ToOrderDetailResponse(this OrderDetailsQuery query)
+    {
+        OrderDeliveryDetails deliveryDto;
+
+        if (query.DeliveryQuery.Channel == DeliveryChannel.Courier)
+        {
+            deliveryDto = new CourierDeliveryDetails(
+                query.DeliveryQuery.Street!,
+                query.DeliveryQuery.HouseNumber!,
+                query.DeliveryQuery.FlatNumber!,
+                query.DeliveryQuery.City!,
+                query.DeliveryQuery.PostalCity!,
+                query.DeliveryQuery.PostalCode!
+            )
+            {
+                CarrierCode = query.DeliveryQuery.CarrierCode,
+                DeliveryName = query.DeliveryQuery.DeliveryName,
+                Channel = query.DeliveryQuery.Channel,
+                Price = query.DeliveryQuery.Price
+            };
+        }
+        else if (query.DeliveryQuery.Channel == DeliveryChannel.PickupPoint)
+        {
+            deliveryDto = new PickupPointDeliveryDetails(
+                query.DeliveryQuery.PickupPointName!,
+                query.DeliveryQuery.PickupPointId!,
+                query.DeliveryQuery.PickupStreet!,
+                query.DeliveryQuery.PickupCity!,
+                query.DeliveryQuery.PickupLocalNumber!
+            )
+            {
+                CarrierCode = query.DeliveryQuery.CarrierCode,
+                DeliveryName = query.DeliveryQuery.DeliveryName,
+                Channel = query.DeliveryQuery.Channel,
+                Price = query.DeliveryQuery.Price
+            };
+
+        }
+        else
+        {
+            deliveryDto = new ParcelLockerDeliveryDetails(
+                query.DeliveryQuery.ParcelLockerId!
+            )
+            {
+                CarrierCode = query.DeliveryQuery.CarrierCode,
+                DeliveryName = query.DeliveryQuery.DeliveryName,
+                Channel = query.DeliveryQuery.Channel,
+                Price = query.DeliveryQuery.Price
+            };
+
+        }
+
+        var linesDto = query.Lines.Select(line => line.Type switch
+        {
+            OrderLineType.Sale => (UserOrderLineResponse)new UserSaleOrderLineResponse
+            {
+                ItemTitle = line.ItemTitle,
+                Quantity = line.Quantity,
+                Thumbnail = line.Thumbnail,
+                Total = line.Total,
+                PricePerItem = line.PricePerItem!
+            },
+            OrderLineType.Rent => (UserOrderLineResponse)new UserRentOrderLineResponse
+            {
+                ItemTitle = line.ItemTitle,
+                Quantity = line.Quantity,
+                Thumbnail = line.Thumbnail,
+                Total = line.Total,
+                PricePerDay = line.PricePerDay!,
+                RentalDays = line.RentalDays!.Value
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(line.Type), "Unsupported line type")
+        })
+        .ToList();
+
+        return new OrderDetailsResponse(
+            query.OrderId,
+            query.Status,
+            query.PurchasedDate,
+            query.DateDelivered,
+            query.SellerDisplayName,
+            query.LinesCount,
+            query.TotalLinesCost,
+            query.TotalCost,
+            deliveryDto,
+            new BuyerSnapshotResponse(
+                query.BuyerDetailsQuery.FullName,
+                query.BuyerDetailsQuery.Email,
+                query.BuyerDetailsQuery.PhoneNumber,
+                query.BuyerDetailsQuery.Address
+            ),
+            linesDto);
+    }
+
 }

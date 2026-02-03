@@ -4,7 +4,7 @@ import { OrderStatus } from "../enum/order-status";
 import { UserSaleOrderLineResponse } from "../sale/user-sale-order-line-response";
 import { UserRentOrderLineResponse } from "../rent/user-rent-order-line-response";
 
-export type UserOrderLineResponse =
+export type UserOrderLineResponseUnion =
     | UserSaleOrderLineResponse
     | UserRentOrderLineResponse;
 
@@ -17,5 +17,5 @@ export interface UserOrderListResponse {
     totalItemsCost: MoneyDto;
     deliveryCost: MoneyDto;
     totalCost: MoneyDto;
-    lines: UserOrderLineResponse[];
+    lines: UserOrderLineResponseUnion[];
 }

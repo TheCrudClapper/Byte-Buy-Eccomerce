@@ -107,7 +107,7 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class BuyserSnapshotQuerySpec : Specification<PortalUser, BuyerSnapshotQuery>
+    public sealed class BuyserSnapshotQuerySpec : Specification<PortalUser, PortalUserBuyerQuery>
     {
         public BuyserSnapshotQuerySpec(Guid userId)
         {

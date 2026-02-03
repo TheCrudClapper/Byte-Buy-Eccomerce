@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Internal.PortalUser;
 
-public record BuyerSnapshotQuery(
+public record PortalUserBuyerQuery(
     string FirstName,
     string LastName,
     string Email,

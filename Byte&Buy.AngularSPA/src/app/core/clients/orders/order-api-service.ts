@@ -6,6 +6,8 @@ import { API_ENDPOINTS } from '../../constants/api-constants';
 import { OrderAddRequest } from '../../dto/order/order-add-request';
 import { OrderCreatedResponse } from '../../dto/order/order-created-response';
 import { UserOrderListResponse } from '../../dto/order/common/user-order-list-response';
+import { OrderDetailsResponse } from '../../dto/order/order-details-response';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root',
@@ -22,4 +24,9 @@ export class OrderApiService {
   getUserOrders(): Observable<UserOrderListResponse[]> {
     return this.httpClient.get<UserOrderListResponse[]>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`)
   }
+
+  getOrderDetails(id: Guid): Observable<OrderDetailsResponse>{
+    return this.httpClient.get<OrderDetailsResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.details}${id}`)
+  }
+  
 }
