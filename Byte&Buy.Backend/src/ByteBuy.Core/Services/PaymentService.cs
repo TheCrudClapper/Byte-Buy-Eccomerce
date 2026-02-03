@@ -4,7 +4,6 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Payment;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
-using static ByteBuy.Core.Specification.PaymentSpecification;
 
 namespace ByteBuy.Core.Services;
 
@@ -19,11 +18,9 @@ public class PaymentService : IPaymentService
         _orderRepository = orderRepository;
     }
 
-    public async Task<Result<PaymentResponse>> GetPayment(Guid paymentId)
+    public async Task<Result<PaymentResponse>> GetUnpaidPayment(Guid userId, Guid paymentId, CancellationToken ct)
     {
-        var spec = new PaymentResponseSpec(paymentId);
-        var dto = await _paymentRepository.GetBySpecAsync(spec);
-
+        var dto = await _paymentRepository.GetUnpaidUserPayment(userId, paymentId, ct);
         return dto is null
             ? Result.Failure<PaymentResponse>(PaymentErrors.NotFound)
             : dto;

@@ -16,8 +16,8 @@ public class PaymentController : BaseApiController
     }
 
     [HttpGet("{paymentId:guid}")]
-    public async Task<ActionResult<PaymentResponse>> GetPayment(Guid paymentId)
-        => HandleResult(await _paymentService.GetPayment(paymentId));
+    public async Task<ActionResult<PaymentResponse>> GetPayment(Guid paymentId, CancellationToken ct)
+        => HandleResult(await _paymentService.GetUnpaidPayment(CurrentUserId, paymentId, ct));
 
     [HttpPut("{paymentId:guid}/blik")]
     public async Task<ActionResult> PayUsingBlik(Guid paymentId, BlikPaymentRequest request)

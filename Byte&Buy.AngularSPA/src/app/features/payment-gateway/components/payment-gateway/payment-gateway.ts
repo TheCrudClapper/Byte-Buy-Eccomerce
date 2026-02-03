@@ -61,10 +61,15 @@ export class PaymentGateway implements OnInit {
       .pipe(
         map(mapToPaymentModel)
       )
-      .subscribe(payment => {
-        this.paymentModel.set(payment);
-        this.buildForm(payment.method)
-      });
+      .subscribe({
+        next: (payment) => {
+          this.paymentModel.set(payment)
+          this.buildForm(payment.method)
+        },
+        error: () => {
+          this.router.navigate(['/not-found']);
+        }
+      })
   }
   private buildForm(method: PaymentMethod) {
     this.form.reset();
