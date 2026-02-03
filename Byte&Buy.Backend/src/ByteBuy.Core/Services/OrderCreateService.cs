@@ -2,7 +2,9 @@
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.Factories;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
+using ByteBuy.Core.DTO.Internal.PortalUser;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.ResultTypes;
@@ -44,6 +46,10 @@ public class OrderCreateService : IOrderCreateService
 
     public async Task<Result<OrderCreatedReponse>> AddAsync(Guid userId, OrderAddRequest request)
     {
+        var buyerSnapshotResult = await CreateUserSnapshot(userId);
+        if (buyerSnapshotResult.IsFailure)
+            return Result.Failure<OrderCreatedReponse>(buyerSnapshotResult.Error);
+
         var cartOffers = await _cartRepository.GetCartOffersForCheckout(userId);
         if (cartOffers.Count == 0)
             return Result.Failure<OrderCreatedReponse>(OrderErrors.NoCartOffersFound);
@@ -88,7 +94,7 @@ public class OrderCreateService : IOrderCreateService
         if (companySnapshot is not null)
             sellerLookup[companySnapshot.SellerId] = companySnapshot;
 
-        // if in request any courier is selected donwload user's address
+        // if in request any courier is selected donwload queryResult's address
         UserShippingAddressQuery? shippingAddress = null;
         var courierDeliveryRequest = request.SelectedDeliveries
             .FirstOrDefault(d => d.ShippingAddressId is not null
@@ -152,6 +158,7 @@ public class OrderCreateService : IOrderCreateService
                 userId,
                 deliveryResult.Value,
                 sellerSnapshot,
+                buyerSnapshotResult.Value,
                 lines);
 
             orders.Add(orderResult.Value);
@@ -174,7 +181,7 @@ public class OrderCreateService : IOrderCreateService
 
         return new OrderCreatedReponse(paymentResult.Value.Id, paymentResult.Value.Method);
     }
-    
+
     private async Task<Result> ClearUserCart(Guid userId)
     {
         var cartSpec = new CartAggregateByUserIdSpec(userId);
@@ -185,6 +192,23 @@ public class OrderCreateService : IOrderCreateService
         cart.ClearCart();
 
         return Result.Success();
+    }
+
+    private async Task<Result<BuyerSnapshot>> CreateUserSnapshot(Guid userId)
+    {
+        var userSpec = new BuyserSnapshotQuerySpec(userId);
+        var queryResult = await _portalUserRepository.GetBySpecAsync(userSpec);
+        if (queryResult is null)
+            return Result.Failure<BuyerSnapshot>(CommonUserErrors.NotFound);
+
+        var snapshot = BuyerSnapshot.Create(
+            queryResult.FirstName,
+            queryResult.LastName,
+            queryResult.Phone,
+            queryResult.Email,
+            queryResult.Address);
+
+        return snapshot;
     }
 
     //Logic for handlign 

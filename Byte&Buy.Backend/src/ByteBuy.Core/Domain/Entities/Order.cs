@@ -38,13 +38,18 @@ public class Order : AuditableEntity, ISoftDeletable
     public PaymentOrder? Payment { get; set; }
     private Order() { }
 
-    private Order(Guid buyerId, OrderDelivery delivery, SellerSnapshot snapshot, IEnumerable<OrderLine> lines)
+    private Order(Guid buyerId,
+        OrderDelivery delivery,
+        SellerSnapshot snapshot,
+        BuyerSnapshot buyerSnapshot,
+        IEnumerable<OrderLine> lines)
     {
         Id = Guid.NewGuid();
         BuyerId = buyerId;
         Delivery = delivery;
         Status = OrderStatus.AwaitingPayment;
         SellerSnapshot = snapshot;
+        BuyerSnapshot = buyerSnapshot;
         DateCreated = DateTime.UtcNow;
         IsActive = true;
 
@@ -58,9 +63,10 @@ public class Order : AuditableEntity, ISoftDeletable
         Guid buyerId,
         OrderDelivery delivery,
         SellerSnapshot sellerSnapshot,
+        BuyerSnapshot buyerSnapshot,
         IEnumerable<OrderLine> lines)
     {
-        return new Order(buyerId, delivery, sellerSnapshot, lines);
+        return new Order(buyerId, delivery, sellerSnapshot, buyerSnapshot, lines);
     }
 
 

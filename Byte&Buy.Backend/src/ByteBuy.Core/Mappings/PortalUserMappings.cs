@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Internal.Checkout;
+using ByteBuy.Core.DTO.Internal.PortalUser;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
@@ -67,5 +68,13 @@ public static class PortalUserMappings
             SellerType.PrivatePerson,
             p.FirstName + p.LastName,
             null,
+            p.HomeAddress!);
+
+    public static Expression<Func<PortalUser, BuyerSnapshotQuery>> BuyerSnapshotQueryProjection
+        => p => new BuyerSnapshotQuery(
+            p.FirstName,
+            p.LastName,
+            p.Email!,
+            p.PhoneNumber!,
             p.HomeAddress!);
 }
