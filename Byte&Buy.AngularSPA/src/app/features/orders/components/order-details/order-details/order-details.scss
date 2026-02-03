@@ -1,0 +1,85 @@
+.page-wrapper {
+    width: 75%;
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    .page-wrapper {
+        width: 100%;
+    }
+}
+
+hr {
+    border-radius: 10px;
+    color: var(--primary-accent);
+}
+
+.total-cost {
+    font-size: 16px;
+    font-family: 'open-sans-bold';
+}
+
+.card {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--primary-accent);
+}
+
+.link {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: 'open-sans-bold';
+    transition: 0.3s ease;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: var(--primary-accent);
+}
+
+.action-row {
+    padding: 12px 2px;
+}
+
+.action-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px;
+}
+
+.action-spacer {
+    margin: 0px;
+}
+
+.delivery-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.delivery-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.delivery-text span {
+    line-height: 1.2;
+}
+
+.subtext{
+    font-size: 13px;
+    line-height: 1;
+    font-family: 'open-sans-medium';
+    margin-bottom: 4px;
+}
+
+
+.delivery-data {
+    display: flex;
+    flex-direction: column;
+    gap: 0,1px;
+}
+.delivery-data .title {
+    margin-bottom: 6px; 
+}

@@ -18,9 +18,10 @@ import { authGuard } from './core/guards/auth-guard';
 import { CartPage } from './features/cart/components/cart-page/cart-page/cart-page';
 import { NotFound } from './shared/components/not-found/not-found/not-found';
 import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-guard';
-import { CheckoutPage } from './features/orders/checkout/checkout-page/checkout-page';
+import { CheckoutPage } from './features/orders/components/checkout-page/checkout-page';
 import { PaymentGateway } from './features/payment-gateway/components/payment-gateway/payment-gateway';
 import { MyOrders } from './features/profile/components/my-orders/my-orders/my-orders';
+import { OrderDetails } from './features/orders/components/order-details/order-details/order-details';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -36,6 +37,7 @@ export const routes: Routes = [
             { path: 'offers/sale/create', component: SaleCreate}, 
             { path: 'offers/sale/edit/:id', component: SaleEdit, canMatch: [guidParameterGuard]}, 
             { path: 'offers/sale/details/:id', component: SaleDetails, canMatch: [guidParameterGuard]},
+            { path: 'order/details/:id', component: OrderDetails, canMatch: [guidParameterGuard]},
             { path: 'cart', component: CartPage},
             {
                 path: 'profile',
@@ -49,7 +51,7 @@ export const routes: Routes = [
                 ]
             },
             { path: 'checkout', component: CheckoutPage},
-            { path: 'payment/:id', component: PaymentGateway},
+            { path: 'payment/:id', component: PaymentGateway, canMatch: [guidParameterGuard]},
         ]
     },
     { path: 'forbidden', component: Fobidden },

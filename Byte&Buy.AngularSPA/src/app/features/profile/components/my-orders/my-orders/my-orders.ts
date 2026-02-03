@@ -6,10 +6,11 @@ import { ToastService } from '../../../../../shared/services/snackbar/toast-serv
 import { environment } from '../../../../../../environments/environment';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { OrderStatus } from '../../../../../core/dto/order/enum/order-status';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-orders',
-  imports: [DecimalPipe, DatePipe],
+  imports: [DecimalPipe, DatePipe, RouterLink],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.scss',
 })
