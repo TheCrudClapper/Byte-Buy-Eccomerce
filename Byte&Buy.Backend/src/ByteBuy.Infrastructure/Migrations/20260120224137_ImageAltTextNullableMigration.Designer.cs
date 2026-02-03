@@ -1144,7 +1144,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "HomeAddress", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "Address", b1 =>
                         {
                             b1.Property<Guid>("ApplicationUserId")
                                 .HasColumnType("uuid");
@@ -1191,7 +1191,7 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("ApplicationUserId");
                         });
 
-                    b.Navigation("HomeAddress");
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUserRole", b =>

@@ -1669,7 +1669,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Employee", b =>
                 {
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "HomeAddress", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "Address", b1 =>
                         {
                             b1.Property<Guid>("EmployeeId")
                                 .HasColumnType("uuid");
@@ -1711,7 +1711,7 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("EmployeeId");
                         });
 
-                    b.Navigation("HomeAddress")
+                    b.Navigation("Address")
                         .IsRequired();
                 });
 

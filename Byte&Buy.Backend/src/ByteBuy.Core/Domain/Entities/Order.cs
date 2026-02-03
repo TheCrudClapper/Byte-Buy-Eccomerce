@@ -28,6 +28,7 @@ public class Order : AuditableEntity, ISoftDeletable
     public Money LinesTotal { get; private set; } = null!;
     public Money Total { get; private set; } = null!;
     public SellerSnapshot SellerSnapshot { get; private set; } = null!;
+    public BuyerSnapshot BuyerSnapshot { get; private set; } = null!;
     public DateTime? DateDelivered { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }

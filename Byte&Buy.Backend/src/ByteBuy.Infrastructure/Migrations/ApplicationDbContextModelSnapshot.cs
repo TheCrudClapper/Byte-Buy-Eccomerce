@@ -1738,6 +1738,92 @@ namespace ByteBuy.Infrastructure.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.BuyerSnapshot", "BuyerSnapshot", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Email")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)")
+                                .HasColumnName("BuyerSnapshot_Email");
+
+                            b1.Property<string>("FullName")
+                                .IsRequired()
+                                .HasMaxLength(150)
+                                .HasColumnType("character varying(150)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)")
+                                .HasColumnName("BuyerSnapshot_PhoneNumber");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+
+                            b1.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "Address", b2 =>
+                                {
+                                    b2.Property<Guid>("BuyerSnapshotOrderId")
+                                        .HasColumnType("uuid");
+
+                                    b2.Property<string>("City")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)")
+                                        .HasColumnName("BuyerSnapshot_Address_City");
+
+                                    b2.Property<string>("Country")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)")
+                                        .HasColumnName("BuyerSnapshot_Address_Country");
+
+                                    b2.Property<string>("FlatNumber")
+                                        .HasMaxLength(10)
+                                        .HasColumnType("character varying(10)")
+                                        .HasColumnName("BuyerSnapshot_Address_FlatNumber");
+
+                                    b2.Property<string>("HouseNumber")
+                                        .IsRequired()
+                                        .HasMaxLength(10)
+                                        .HasColumnType("character varying(10)")
+                                        .HasColumnName("BuyerSnapshot_Address_HouseNumber");
+
+                                    b2.Property<string>("PostalCity")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)")
+                                        .HasColumnName("BuyerSnapshot_Address_PostalCity");
+
+                                    b2.Property<string>("PostalCode")
+                                        .IsRequired()
+                                        .HasMaxLength(20)
+                                        .HasColumnType("character varying(20)")
+                                        .HasColumnName("BuyerSnapshot_Address_PostalCode");
+
+                                    b2.Property<string>("Street")
+                                        .IsRequired()
+                                        .HasMaxLength(50)
+                                        .HasColumnType("character varying(50)")
+                                        .HasColumnName("BuyerSnapshot_Address_Street");
+
+                                    b2.HasKey("BuyerSnapshotOrderId");
+
+                                    b2.ToTable("Orders");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("BuyerSnapshotOrderId");
+                                });
+
+                            b1.Navigation("Address")
+                                .IsRequired();
+                        });
+
                     b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.SellerSnapshot", "SellerSnapshot", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
@@ -1819,6 +1905,9 @@ namespace ByteBuy.Infrastructure.Migrations
                         });
 
                     b.Navigation("Buyer");
+
+                    b.Navigation("BuyerSnapshot")
+                        .IsRequired();
 
                     b.Navigation("LinesTotal")
                         .IsRequired();

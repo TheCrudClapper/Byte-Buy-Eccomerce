@@ -21,7 +21,7 @@ public static class PortalUserErrors
         Error.Validation("PortalUser.ShippingAddress", "Label is required and must be at most 50 characters.");
 
     public static readonly Error HomeAddressNotSet =
-        Error.Validation("PortalUser.HomeAddress", "You need to set home address in order to publish offers.");
+        Error.Validation("PortalUser.Address", "You need to set home address in order to publish offers.");
 
     public static readonly Error ShippingAddressNotFound =
         Error.Validation("PortalUser.ShippingAddress", "Given shipping address is not found");

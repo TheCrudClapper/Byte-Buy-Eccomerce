@@ -56,6 +56,55 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             });
         });
 
+        // Owned type for Buyer Snapshot Value Object
+        builder.OwnsOne(o => o.BuyerSnapshot, bs =>
+        {
+            bs.Property(p => p.FullName)
+                .HasMaxLength(150)
+                .IsRequired();
+
+            bs.Property(p => p.Email)
+                .HasColumnName("BuyerSnapshot_Email")
+                .HasMaxLength(150)
+                .IsRequired();
+
+            bs.Property(p => p.PhoneNumber)
+                .HasColumnName("BuyerSnapshot_PhoneNumber")
+                .HasMaxLength(20);
+
+            bs.OwnsOne(p => p.Address, a =>
+            {
+                a.Property(p => p.City)
+                    .HasColumnName("BuyerSnapshot_Address_City")
+                    .HasMaxLength(50);
+
+                a.Property(p => p.Street)
+                    .HasColumnName("BuyerSnapshot_Address_Street")
+                    .HasMaxLength(50);
+
+                a.Property(p => p.PostalCode)
+                    .HasColumnName("BuyerSnapshot_Address_PostalCode")
+                    .HasMaxLength(20);
+
+                a.Property(p => p.PostalCity)
+                    .HasColumnName("BuyerSnapshot_Address_PostalCity")
+                    .HasMaxLength(50);
+
+                a.Property(p => p.HouseNumber)
+                    .HasColumnName("BuyerSnapshot_Address_HouseNumber")
+                    .HasMaxLength(10);
+
+                a.Property(p => p.Country)
+                    .HasColumnName("BuyerSnapshot_Address_Country")
+                    .HasMaxLength(50);
+
+                a.Property(p => p.FlatNumber)
+                    .HasColumnName("BuyerSnapshot_Address_FlatNumber")
+                    .HasMaxLength(10);
+            });
+        });
+
+
         builder.OwnsOne(o => o.LinesTotal, lt =>
         {
             lt.Property(p => p.Amount)

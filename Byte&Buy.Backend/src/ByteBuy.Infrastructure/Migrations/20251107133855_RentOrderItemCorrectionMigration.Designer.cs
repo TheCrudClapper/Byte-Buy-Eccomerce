@@ -1467,7 +1467,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "HomeAddress", b1 =>
+                    b.OwnsOne("ByteBuy.Core.Domain.ValueObjects.AddressValueObject", "Address", b1 =>
                         {
                             b1.Property<Guid>("EmployeeId")
                                 .HasColumnType("uuid");
@@ -1511,7 +1511,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
                     b.Navigation("CompanyInfo");
 
-                    b.Navigation("HomeAddress")
+                    b.Navigation("Address")
                         .IsRequired();
                 });
 
