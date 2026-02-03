@@ -1,3 +1,5 @@
+import { Guid } from "guid-typescript";
+
 export const API_ENDPOINTS = {
     //Auth
     auth: {
@@ -71,8 +73,9 @@ export const API_ENDPOINTS = {
 
     orders: {
         base: '/orders',
-        post: '/orders',
-        details: '/orders/details/',
+        cancel: (id: string | Guid) => `/orders/${id}/cancel`,
+        details: (id: string | Guid) => `/orders/details/${id}`,
+        return: (id: string | Guid) => `/order/${id}/return`
     },
 
     payments:{

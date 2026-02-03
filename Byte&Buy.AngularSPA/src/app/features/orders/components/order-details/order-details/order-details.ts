@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLinkActive, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { OrderApiService } from '../../../../../core/clients/orders/order-api-service';
 import { OrderDetailsResponse } from '../../../../../core/dto/order/order-details-response';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
@@ -67,7 +67,22 @@ export class OrderDetails implements OnInit {
   }
 
   returnOrder(){
+    if(!this.orderDetails() || !this.orderDetails()?.id)
+      return;
 
+    const orderId = this.orderDetails()!.id;
+    this.orderApiService.returnOrder(orderId).subscribe({
+      next: () => {
+        this.toastService.success("Successfully returned order.");
+        this.orderDetails.update(o => {
+          if(!o) return;
+          return { ...o, status: OrderStatus.Returned}
+        })
+      },
+      error: (err: ProblemDetails) => {
+        this.toastService.error(err.detail ?? "Failed to return your order");
+      }
+    })
   }
 
   actionButtonsVisible(): boolean{
@@ -75,5 +90,4 @@ export class OrderDetails implements OnInit {
     return status === OrderStatus.AwaitingPayment 
       || status === OrderStatus.Delivered;
   }
-
 }

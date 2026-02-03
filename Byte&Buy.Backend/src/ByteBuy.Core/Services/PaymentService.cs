@@ -41,7 +41,7 @@ public class PaymentService : IPaymentService
             request.PhoneNumber);
 
         if (blikResult.IsFailure)
-            return Result.Failure<Result>(PaymentErrors.NotFound);
+            return Result.Failure<Result>(blikResult.Error);
 
         var finalizeResult = await FinalizeAndPay(userId, payment, blikResult.Value);
         if (finalizeResult.IsFailure)
@@ -68,7 +68,7 @@ public class PaymentService : IPaymentService
             request.CardHolderName);
 
         if (cardResult.IsFailure)
-            return Result.Failure<Result>(PaymentErrors.NotFound);
+            return Result.Failure<Result>(cardResult.Error);
 
         var finalizeResult = await FinalizeAndPay(userId, payment, cardResult.Value);
         if (finalizeResult.IsFailure)

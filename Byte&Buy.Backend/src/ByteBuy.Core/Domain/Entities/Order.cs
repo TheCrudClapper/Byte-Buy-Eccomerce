@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
 using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.Exceptions;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 namespace ByteBuy.Core.Domain.Entities;
@@ -87,11 +88,30 @@ public class Order : AuditableEntity, ISoftDeletable
 
     public Result MarkAsDelivered()
         => ChangeStatus(OrderStatus.Delivered);
+       
 
-    public Result MarkAsReturned()
-        => ChangeStatus(OrderStatus.Returned);
+    public Result ReturnOrder()
+    {
+        if (Status != OrderStatus.Delivered)
+            return Result.Failure(Error.Validation("Order.Status", "Only delivered orders can be returned"));
 
-    public Result Cancel()
+        if (!DateDelivered.HasValue)
+            throw new DomainInvariantException($"{nameof(DateDelivered)} " +
+                $"cannot be null when order is delivered");
+
+        var startingDate = DateDelivered.Value.Date;
+        var lastReturnDay = startingDate.AddDays(14);
+        if (DateTime.UtcNow.Date > lastReturnDay)
+            return Result.Failure(OrderErrors.CannotReturnOrder);
+
+
+        Status = OrderStatus.Returned;
+        DateEdited = DateTime.UtcNow;
+
+        return Result.Success();
+    }
+
+    public Result CancelOrder()
         => ChangeStatus(OrderStatus.Canceled);
 
     private bool CanChangeStatus(OrderStatus newStatus)

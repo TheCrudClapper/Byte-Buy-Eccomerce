@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.Common;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -16,19 +17,20 @@ public class OrderService : IOrderService
         _orderRepository = orderRepository;
     }
 
-    public async Task<Result> CancelOrder(Guid userId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
     {
         var order = await _orderRepository.GetUserOrder(userId, orderId);
         if (order is null)
-            return Result.Failure(OrderErrors.NotFound);
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
 
-        var cancelationResult =  order.Cancel();
+        var cancelationResult =  order.CancelOrder();
         if(cancelationResult.IsFailure)
-            return Result.Failure(cancelationResult.Error);
+            return Result.Failure<UpdatedResponse>(cancelationResult.Error);
 
         await _orderRepository.UpdateAsync(order);
         await _orderRepository.CommitAsync();
-        return Result.Success(order);
+
+        return order.ToUpdatedResponse();
     }
 
 
@@ -52,8 +54,19 @@ public class OrderService : IOrderService
             : queryResult.ToOrderDetailResponse();
     }
 
-    public Task<Result> ReturnOrder(Guid userId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId)
     {
-        throw new NotImplementedException();
+        var order = await _orderRepository.GetUserOrder(userId, orderId);
+        if (order is null)
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
+
+        var returnResult = order.ReturnOrder();
+        if (returnResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(returnResult.Error);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+
+        return order.ToUpdatedResponse();
     }
 }

@@ -8,6 +8,7 @@ import { OrderCreatedResponse } from '../../dto/order/order-created-response';
 import { UserOrderListResponse } from '../../dto/order/common/user-order-list-response';
 import { OrderDetailsResponse } from '../../dto/order/order-details-response';
 import { Guid } from 'guid-typescript';
+import { UpdatedResponse } from '../../dto/common/updated-response';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class OrderApiService {
   private readonly baseApiUrl = environment.apiBaseUrl;
 
   postOrder(request: OrderAddRequest): Observable<OrderCreatedResponse> {
-    return this.httpClient.post<OrderCreatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.post}`, request);
+    return this.httpClient.post<OrderCreatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`, request);
   }
 
   getUserOrders(): Observable<UserOrderListResponse[]> {
@@ -26,10 +27,14 @@ export class OrderApiService {
   }
 
   getOrderDetails(id: Guid): Observable<OrderDetailsResponse>{
-    return this.httpClient.get<OrderDetailsResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.details}${id}`)
+    return this.httpClient.get<OrderDetailsResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.details(id)}`)
   }
   
-  cancelOrder(id: Guid){
-    return this.httpClient.put(`${this.baseApiUrl + API_ENDPOINTS.orders.base}/${id}/cancel`, null);
+  cancelOrder(id: Guid): Observable<UpdatedResponse>{
+    return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.cancel(id)}`, null);
+  }
+
+  returnOrder(id: Guid): Observable<UpdatedResponse>{
+    return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.return(id)}`, null);
   }
 }

@@ -8,6 +8,9 @@ public static class OrderErrors
     public static readonly Error InvalidDelivery = new(
         ErrorType.Validation, "Order.Delivery", "Some deliveries sent by user are not valid");
 
+    public static readonly Error CannotReturnOrder = new(
+        ErrorType.Validation, "Order.Status", "Order cannot be returned after 14 days counting from delivery.");
+
     public static readonly Error QuantityInvalid = Error.Validation(
         "OrderLine.Quantity", "Quantity must be greater than 0.");
 
