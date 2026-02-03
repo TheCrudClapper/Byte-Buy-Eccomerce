@@ -12,6 +12,7 @@ export type OrderDetailsUnion =
 
 export interface OrderDetailsResponse {
   id: Guid; 
+  paymentId? :Guid;
   status: OrderStatus;
   purchasedDate: Date; 
   dateDelivered?: string | null;

@@ -92,6 +92,7 @@ public static class OrderMappings
     public static Expression<Func<Order, OrderDetailsQuery>> OrderDetailsQueryProjection
       => o => new OrderDetailsQuery(
           o.Id,
+          o.Status == OrderStatus.AwaitingPayment ? o.Payment.PaymentId : null,
           o.Status,
           o.DateCreated,
           o.DateDelivered,
@@ -239,6 +240,7 @@ public static class OrderMappings
 
         return new OrderDetailsResponse(
             query.OrderId,
+            query.PaymentId,
             query.Status,
             query.PurchasedDate,
             query.DateDelivered,

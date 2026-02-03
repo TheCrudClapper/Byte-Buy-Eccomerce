@@ -6,6 +6,8 @@ namespace ByteBuy.Core.DTO.Internal.Order;
 
 public sealed record OrderDetailsQuery(
         Guid OrderId,
+        //only when status == awaiting payment
+        Guid? PaymentId,
         OrderStatus Status,
         DateTime PurchasedDate,
         DateTime? DateDelivered,

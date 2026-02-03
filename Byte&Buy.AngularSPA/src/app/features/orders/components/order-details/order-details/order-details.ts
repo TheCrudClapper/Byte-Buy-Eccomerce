@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLinkActive } from "@angular/router";
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink } from "@angular/router";
 import { OrderApiService } from '../../../../../core/clients/orders/order-api-service';
 import { OrderDetailsResponse } from '../../../../../core/dto/order/order-details-response';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-details',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './order-details.html',
   styleUrl: './order-details.scss',
 })

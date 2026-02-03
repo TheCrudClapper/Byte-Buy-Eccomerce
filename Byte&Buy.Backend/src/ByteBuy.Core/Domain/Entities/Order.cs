@@ -35,7 +35,7 @@ public class Order : AuditableEntity, ISoftDeletable
 
     //Navigation EF
     public PortalUser Buyer { get; set; } = null!;
-    public PaymentOrder? Payment { get; set; }
+    public PaymentOrder Payment { get; set; } = null!;
     private Order() { }
 
     private Order(Guid buyerId,

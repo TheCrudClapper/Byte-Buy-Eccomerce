@@ -8,6 +8,7 @@ namespace ByteBuy.Core.DTO.Public.Order;
 
 public sealed record OrderDetailsResponse(
     Guid Id,
+    Guid? PaymentId,
     OrderStatus Status,
     DateTime PurchasedDate,
     DateTime? DateDelivered,

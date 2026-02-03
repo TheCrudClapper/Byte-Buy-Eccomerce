@@ -227,7 +227,7 @@
                     <div class="col-12 action-row">
                         <div class="action-container">
                             <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
-                            <a class="link">FINALIZE PAYMENT</a>
+                            <a class="link" [routerLink]="['/payment', `${order.paymentId}`]">FINALIZE PAYMENT</a>
                         </div>
                     </div>
                     <div class="col-12">
