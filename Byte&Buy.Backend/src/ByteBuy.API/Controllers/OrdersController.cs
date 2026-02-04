@@ -29,7 +29,7 @@ public class OrdersController : BaseApiController
 
     [HttpGet("details/{orderId:guid}")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
-        => HandleResult(await _orderService.GetOrderDetails(orderId, ct));
+        => HandleResult(await _orderService.GetOrderDetails(CurrentUserId, orderId, ct));
 
     [HttpPut("{orderId:guid}/cancel")]
     public async Task<ActionResult<UpdatedResponse>> CancelOrder(Guid orderId)
@@ -38,4 +38,6 @@ public class OrdersController : BaseApiController
     [HttpPut("{orderId:guid}/return")]
     public async Task<ActionResult<UpdatedResponse>> ReturnOrder(Guid orderId)
         => HandleResult(await _orderService.ReturnOrder(CurrentUserId, orderId));
+
+
 }

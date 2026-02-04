@@ -8,7 +8,7 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IOrderService
 {
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrders(Guid userId, CancellationToken ct = default);
-    Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct = default);
+    Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid userId, Guid orderId, CancellationToken ct = default);
 
     /// <summary>
     /// Method that cancels user's order, can only be invoked by owner of offer.

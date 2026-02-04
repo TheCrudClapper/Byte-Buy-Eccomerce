@@ -44,9 +44,9 @@ public class OrderService : IOrderService
             .ToList();
     }
 
-    public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct = default)
+    public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid userId, Guid orderId, CancellationToken ct = default)
     {
-        var spec = new OrderDetailsResponseSpec(orderId);
+        var spec = new OrderDetailsResponseSpec(userId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
 
         return queryResult is null
