@@ -41,7 +41,7 @@ export class OrderDetails implements OnInit {
       next: (data: OrderDetailsResponse) => {
         this.orderDetails.set(data);
       },
-      error: (err: ProblemDetails) => {
+      error: (err) => {
         this.router.navigate(['/not-found']);
       }
     })

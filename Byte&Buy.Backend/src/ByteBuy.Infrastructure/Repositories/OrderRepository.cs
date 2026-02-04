@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Formats.Asn1;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
@@ -22,6 +23,13 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
     {
         return await _context.Orders
             .Where(o => o.BuyerId == userId && o.Id == orderId)
+            .FirstOrDefaultAsync(ct);
+    }
+
+    public async Task<Order?> GetSellerOrder(Guid sellerId, Guid orderId, CancellationToken ct = default)
+    {
+        return await _context.Orders
+            .Where(o => o.Id == orderId && o.SellerSnapshot.SellerId == sellerId)
             .FirstOrDefaultAsync(ct);
     }
 }

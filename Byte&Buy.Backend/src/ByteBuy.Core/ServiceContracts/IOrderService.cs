@@ -25,4 +25,20 @@ public interface IOrderService
     /// <param name="orderId"></param>
     /// <returns></returns>
     Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId);
+
+    /// <summary>
+    /// Method that is designated only for seller, allows sending offer to clients
+    /// </summary>
+    /// <param name="sellerId"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    Task<Result<UpdatedResponse>> ShipOrder(Guid sellerId, Guid orderId);
+
+    /// <summary>
+    /// Method that is designated only for seller, allows delivering orders
+    /// </summary>
+    /// <param name="sellerId"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    Task<Result<UpdatedResponse>> DeliverOrder(Guid sellerId, Guid orderId);
 }

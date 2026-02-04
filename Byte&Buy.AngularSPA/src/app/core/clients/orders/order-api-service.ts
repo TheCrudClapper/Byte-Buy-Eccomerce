@@ -26,15 +26,24 @@ export class OrderApiService {
     return this.httpClient.get<UserOrderListResponse[]>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`)
   }
 
-  getOrderDetails(id: Guid): Observable<OrderDetailsResponse>{
+  getOrderDetails(id: Guid): Observable<OrderDetailsResponse> {
     return this.httpClient.get<OrderDetailsResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.details(id)}`)
   }
-  
-  cancelOrder(id: Guid): Observable<UpdatedResponse>{
+
+  cancelOrder(id: Guid): Observable<UpdatedResponse> {
     return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.cancel(id)}`, null);
   }
 
-  returnOrder(id: Guid): Observable<UpdatedResponse>{
+  returnOrder(id: Guid): Observable<UpdatedResponse> {
     return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.return(id)}`, null);
   }
+
+  shipOrder(id: Guid): Observable<UpdatedResponse> {
+    return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.ship(id)}`, null);
+  }
+
+  deliverOrder(id: Guid): Observable<UpdatedResponse> {
+    return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.deliver(id)}`, null);
+  }
+
 }

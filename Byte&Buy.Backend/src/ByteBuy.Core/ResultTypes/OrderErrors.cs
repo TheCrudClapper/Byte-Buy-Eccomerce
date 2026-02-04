@@ -5,6 +5,12 @@ public static class OrderErrors
     public static readonly Error NotFound = new(
         ErrorType.NotFound, "Order", "Order is not found");
 
+    public static readonly Error InvalidReturnState = Error.Validation(
+        "Order.Status", "Only delivered orders can be returned");
+
+    public static readonly Error InvalidDeliveredState = Error.Validation(
+      "Order.Status", "Only delivered orders can be returned");
+
     public static readonly Error InvalidDelivery = new(
         ErrorType.Validation, "Order.Delivery", "Some deliveries sent by user are not valid");
 

@@ -39,5 +39,12 @@ public class OrdersController : BaseApiController
     public async Task<ActionResult<UpdatedResponse>> ReturnOrder(Guid orderId)
         => HandleResult(await _orderService.ReturnOrder(CurrentUserId, orderId));
 
+    [HttpPut("{orderId:guid}/ship")]
+    public async Task<ActionResult<UpdatedResponse>> ShipOrder(Guid orderId)
+        => HandleResult(await _orderService.ShipOrder(CurrentUserId, orderId));
+
+    [HttpPut("{orderId:guid}/deliver")]
+    public async Task<ActionResult<UpdatedResponse>> DeliverOrder(Guid orderId)
+       => HandleResult(await _orderService.DeliverOrder(CurrentUserId, orderId));
 
 }

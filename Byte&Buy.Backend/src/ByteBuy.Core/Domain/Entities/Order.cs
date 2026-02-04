@@ -80,20 +80,25 @@ public class Order : AuditableEntity, ISoftDeletable
         Total = LinesTotal + Delivery.Price;
     }
 
-    public Result MarkAsPaid()
+    public Result PayForOrder()
       => ChangeStatus(OrderStatus.Paid);
 
-    public Result MarkAsShipped()
+    public Result ShipOrder()
         => ChangeStatus(OrderStatus.Shipped);
 
-    public Result MarkAsDelivered()
-        => ChangeStatus(OrderStatus.Delivered);
-       
+    public Result DeliverOrder()
+    {
+        if (Status != OrderStatus.Shipped)
+            return Result.Failure(OrderErrors.InvalidDeliveredState);
 
+        DateDelivered = DateTime.UtcNow;
+        return ChangeStatus(OrderStatus.Delivered);
+    }
+       
     public Result ReturnOrder()
     {
         if (Status != OrderStatus.Delivered)
-            return Result.Failure(Error.Validation("Order.Status", "Only delivered orders can be returned"));
+            return Result.Failure(OrderErrors.InvalidReturnState);
 
         if (!DateDelivered.HasValue)
             throw new DomainInvariantException($"{nameof(DateDelivered)} " +
@@ -104,11 +109,7 @@ public class Order : AuditableEntity, ISoftDeletable
         if (DateTime.UtcNow.Date > lastReturnDay)
             return Result.Failure(OrderErrors.CannotReturnOrder);
 
-
-        Status = OrderStatus.Returned;
-        DateEdited = DateTime.UtcNow;
-
-        return Result.Success();
+        return ChangeStatus(OrderStatus.Returned);
     }
 
     public Result CancelOrder()

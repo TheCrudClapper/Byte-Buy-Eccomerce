@@ -89,7 +89,7 @@ public class PaymentService : IPaymentService
 
         foreach (var order in orders)
         {
-            var statusResult = order.MarkAsPaid();
+            var statusResult = order.PayForOrder();
             if (statusResult.IsFailure)
                 return statusResult;
         }

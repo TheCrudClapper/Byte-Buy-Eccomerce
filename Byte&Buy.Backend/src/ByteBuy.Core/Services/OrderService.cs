@@ -23,8 +23,8 @@ public class OrderService : IOrderService
         if (order is null)
             return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
 
-        var cancelationResult =  order.CancelOrder();
-        if(cancelationResult.IsFailure)
+        var cancelationResult = order.CancelOrder();
+        if (cancelationResult.IsFailure)
             return Result.Failure<UpdatedResponse>(cancelationResult.Error);
 
         await _orderRepository.UpdateAsync(order);
@@ -33,6 +33,39 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
+    public async Task<Result<UpdatedResponse>> DeliverOrder(Guid sellerId, Guid orderId)
+    {
+        var order = await _orderRepository.GetSellerOrder(sellerId, orderId);
+        if (order is null)
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
+
+        var deliveryResult = order.DeliverOrder();
+
+        if (deliveryResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(deliveryResult.Error);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+
+        return order.ToUpdatedResponse();
+    }
+
+    public async Task<Result<UpdatedResponse>> ShipOrder(Guid sellerId, Guid orderId)
+    {
+        var order = await _orderRepository.GetSellerOrder(sellerId, orderId);
+        if (order is null)
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
+
+        var shippedResult = order.ShipOrder();
+
+        if (shippedResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(shippedResult.Error);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+
+        return order.ToUpdatedResponse();
+    }
 
     public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrders(Guid userId, CancellationToken ct = default)
     {
