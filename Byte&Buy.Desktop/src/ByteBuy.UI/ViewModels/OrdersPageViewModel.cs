@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Order;
 using ByteBuy.UI.ModelsUI.RentOffer;
@@ -36,7 +37,10 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItem, IOrderSe
     [RelayCommand]
     public async Task OpenDetailsPage()
     {
-        throw new System.NotImplementedException();
+        await Navigation.NavigateToAsync(ApplicationPageNames.OrderDetails, async vm =>
+        {
+
+        });
     }
 
     protected override Task AddAsync(){ throw new System.NotImplementedException();}
