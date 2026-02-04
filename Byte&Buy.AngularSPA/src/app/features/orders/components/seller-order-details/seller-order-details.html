@@ -1,0 +1,259 @@
+<div class="container">
+    <div class="page-wrapper mt-5 mb-5">
+        <div class="row">
+            <div class="col-12">
+                <p class="page-title">Order Details</p>
+            </div>
+        </div>
+        @if(orderDetails(); as order){
+        <div class="content-section">
+            <div class="delivery-row">
+                @if(order.status === OrderStatus.AwaitingPayment){
+                <i class="fa-solid fa-hourglass-end" style="color: #ffffff;"></i>
+                <span class="content-title open-sans-bold">
+                    Awaiting Payment
+                </span>
+                }
+                @if(order.status === OrderStatus.Paid){
+                <i class="fa-solid fa-coins" style="color: #ffffff;"></i>
+                <span class="content-title open-sans-bold">
+                    Order Paid
+                </span>
+                }
+                @if(order.status === OrderStatus.Canceled){
+                <i class="fa-solid fa-ban" style="color: #ffffff;"></i>
+                <span class="content-title open-sans-bold">
+                    Order Canceled by user
+                </span>
+                }
+                @if(order.status === OrderStatus.Shipped){
+                <i class="fa-solid fa-truck" style="color: #ffffff;"></i>
+                <span class="content-title open-sans-bold">
+                    Order in shipment
+                </span>
+                }
+                @if(order.status === OrderStatus.Returned){
+                <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
+                <span class="content-title open-sans-bold">
+                    Order returned
+                </span>
+                }
+                @if(order.status === OrderStatus.Delivered){
+                <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
+                <div class="delivery-text">
+                    <span class="content-title open-sans-bold">
+                        Package delivered
+                    </span>
+                    <span class="fs-12-px">
+                        @if(order.dateDelivered){
+                        {{ order.dateDelivered | date:'dd MMM yyyy, HH:mm' }}
+                        }
+                    </span>
+                </div>
+                }
+
+            </div>
+            <hr>
+
+            <div class="d-flex justify-content-between">
+
+                <div class="delivery-data">
+                    <p class="fs-14-px title">Delivery Method</p>
+                    @if(order.deliveryDetails; as delivery){
+                    @switch (delivery.type)
+                    {
+                    @case ('courier'){
+                    <span class="subtext">Courier Delivery</span>
+                    }
+                    @case ('parcelLocker'){
+                    <span class="subtext">Parcel Locker Delivery</span>
+                    }
+                    @case ('pickupPoint'){
+                    <span class="subtext">Pickup Point Delivery</span>
+                    }
+                    }
+                    <span class="subtext">Carrier Code: {{ delivery.carrierCode }}</span>
+                    }
+                </div>
+
+                <div class="delivery-data">
+                    <p class="fs-14-px title">Recipient Data</p>
+                    @if(order.buyerSnapshot; as buyer){
+                    <span class="subtext">{{ buyer.fullName}}</span>
+                    <span class="subtext">{{ buyer.phoneNumber ? `+48 ${buyer.phoneNumber }` : ''}}</span>
+                    <span class="subtext">{{ buyer.email }}</span>
+                    <span class="subtext">
+                        {{ buyer.address.city }} {{ buyer.address.street }}
+                        {{ buyer.address.houseNumber }} {{ buyer.address.flatNumber ? `/ ${buyer.address.flatNumber}` :
+                        '' }}
+                    </span>
+                    <span class="subtext">
+                        {{ buyer.address.postalCity }} {{ buyer.address.postalCode}} {{ buyer.address.country }}
+                    </span>
+                    }
+                </div>
+
+                <div class="delivery-data">
+                    <p class="fs-14-px title">Package Destination</p>
+                    @if(order.deliveryDetails; as delivery){
+                    @switch (delivery.type){
+                    @case ('courier')
+                    {
+                    <span class="subtext">
+                        {{ delivery.city }} {{ delivery.street }}
+                        {{ delivery.houseNumber }} {{ delivery.flatNumber ? `/ ${delivery.flatNumber}` : ''}}
+                    </span>
+                    <span class="subtext">
+                        {{ delivery.postalCity }}, {{ delivery.postalCode }}
+                    </span>
+                    }
+                    @case ('pickupPoint')
+                    {
+                    <span class="subtext">
+                        {{ delivery.pickupCity }} {{ delivery.pickupStreet}} {{ delivery.pickupLocalNumber}}
+                    </span>
+                    <span class="subtext">
+                        {{ delivery.pickupPointName }}
+                    </span>
+                    <span class="subtext">
+                        {{ delivery.pickupPointId}}
+                    </span>
+                    }
+                    @case ('parcelLocker')
+                    {
+                    <span class="subtext">
+                        {{ delivery.parcelLockerId }}
+                    </span>
+                    }
+                    }
+                    }
+                </div>
+
+            </div>
+
+        </div>
+        <div class="content-section">
+            <div class="col-12 d-flex justify-content-between mb-3 align-items-end">
+                <div class="delivery-text">
+                    <span class="fs-12-px">{{ order.purchasedDate | date:'dd MMM yyyy, HH:mm'}}</span>
+                    <span class="fs-14-px">{{ order.linesCount }} item/s from
+                        <span class="open-sans-bold">{{ order.sellerDisplayName }}</span>
+                    </span>
+                </div>
+                <span class="fs-14-px open-sans-bold">
+                    {{ order.totalItemsCost.amount| number:'1.2-2'}} {{ order.totalItemsCost.currency}}
+                </span>
+            </div>
+            <div class="col-12">
+                @for (line of order.lines; track $index) {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-auto">
+                                <img [src]="`${imageBaseUrl}${line.thumbnail.imagePath}`" class="img-fluid rounded"
+                                    [alt]="`${line.thumbnail.altText}`"
+                                    style="width: 80px; height: 80px; object-fit: cover;">
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="mb-1 fw-bold fs-14-px">
+                                            {{ line.itemTitle }}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    @if(line.type === 'sale'){
+                                    <div class="col  fs-14-px">
+                                        {{ line.quantity }} x {{ line.pricePerItem.amount | number:'1.2-2'}} {{
+                                        line.pricePerItem.currency }}
+                                    </div>
+                                    }
+                                    @else{
+                                    <div class="col  fs-14-px">
+                                        {{ line.quantity }} x {{ line.rentalDays }} days x {{ line.pricePerDay.amount |
+                                        number:'1.2-2'}} {{
+                                        line.pricePerDay.currency }}
+                                    </div>
+                                    }
+
+                                    <div class="col-auto fs-14-px">
+                                        {{ line.total.amount | number:'1.2-2' }} {{ line.total.currency }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+                <hr>
+                <div class="col-12 d-flex justify-content-between">
+                    <span class="fs-14-px open-sans-bold">
+                        Shipment
+                        <br>
+                        <span class="fs-12-px">{{ order.deliveryDetails.deliveryName }}</span>
+                    </span>
+                    <span class="fs-14-px open-sans-bold">
+                        {{ order.deliveryDetails.price.amount | number:'1.2-2'}}
+                        {{ order.deliveryDetails.price.currency }}
+                    </span>
+                </div>
+                <hr>
+                <div class="col-12 d-flex justify-content-between">
+                    <span class="fs-14-px open-sans-bold">Total</span>
+                    <span class="fs-14-px open-sans-bold">
+                        {{ order.totalCost.amount | number:'1.2-2' }}
+                        {{ order.totalCost.currency }}
+                    </span>
+                </div>
+                <hr>
+                <div class="col-12">
+                    <span class="fs-14-px open-sans-bold">
+                        <i class="fa-solid fa-file-invoice fa-xl me-1"></i>
+                    </span>
+                    <a class="link fs-14-px">Export to PDF</a>
+                </div>
+            </div>
+        </div>
+
+        @if(actionButtonsVisible()){
+        <div class="content-section">
+            <div class="row my-0">
+                @switch (order.status)
+                {
+                @case(OrderStatus.Paid){
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                <div class="col-12 action-row">
+                    <div class="action-container">
+                        <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
+                        <a class="link" (click)="shipOrder()" >SHIP ORDER</a>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                }
+                @case(OrderStatus.Shipped){
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                <div class="col-12 action-row">
+                    <div class="action-container">
+                        <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
+                        <a class="link" (click)="deliverOrder()">DELIVER ORDER</a>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr class="action-spacer">
+                </div>
+                }
+                }
+            </div>
+        </div>
+        }
+
+        }
+    </div>
+</div>

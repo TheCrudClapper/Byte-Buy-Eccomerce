@@ -73,9 +73,10 @@ export const API_ENDPOINTS = {
 
     orders: {
         base: '/orders',
+        sellerOrders: '/orders/seller',
         cancel: (id: string | Guid) => `/orders/${id}/cancel`,
         details: (id: string | Guid) => `/orders/details/${id}`,
-        return: (id: string | Guid) => `/order/${id}/return`,
+        return: (id: string | Guid) => `/orders/${id}/return`,
         ship: (id: string | Guid) => `/orders/${id}/ship`,
         deliver: (id: string | Guid) => `/orders/${id}/deliver`,
     },

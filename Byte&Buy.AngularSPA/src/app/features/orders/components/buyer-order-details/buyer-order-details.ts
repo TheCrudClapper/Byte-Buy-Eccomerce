@@ -1,24 +1,24 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { OrderApiService } from '../../../../../core/clients/orders/order-api-service';
-import { OrderDetailsResponse } from '../../../../../core/dto/order/order-details-response';
-import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
-import { ProblemDetails } from '../../../../../core/dto/problem-details';
+import { OrderApiService } from '../../../../core/clients/orders/order-api-service';
+import { ToastService } from '../../../../shared/services/snackbar/toast-service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { environment } from '../../../../../environments/environment';
+import { OrderStatus } from '../../../../core/dto/order/enum/order-status';
+import { DeliveryChannel } from '../../../../core/dto/delivery/enum/delivery-channel';
 import { Guid } from 'guid-typescript';
-import { environment } from '../../../../../../environments/environment';
-import { OrderStatus } from '../../../../../core/dto/order/enum/order-status';
-import { DeliveryChannel } from '../../../../../core/dto/delivery/enum/delivery-channel';
+import { OrderDetailsResponse } from '../../../../core/dto/order/order-details-response';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-order-details',
+  selector: 'app-buyer-order-details',
   imports: [CommonModule, RouterLink],
-  templateUrl: './order-details.html',
-  styleUrl: './order-details.scss',
+  standalone: true,
+  templateUrl: './buyer-order-details.html',
+  styleUrl: './buyer-order-details.scss',
 })
-
-export class OrderDetails implements OnInit {
-  private readonly orderApiService = inject(OrderApiService);
+export class BuyerOrderDetails implements OnInit{
+ private readonly orderApiService = inject(OrderApiService);
   private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -84,6 +84,7 @@ export class OrderDetails implements OnInit {
       }
     })
   }
+
 
   actionButtonsVisible(): boolean{
     const status = this.orderDetails()?.status;

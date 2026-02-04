@@ -46,4 +46,7 @@ export class OrderApiService {
     return this.httpClient.put<UpdatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.deliver(id)}`, null);
   }
 
+  getSellerOrders(): Observable<UserOrderListResponse[]> {
+    return this.httpClient.get<UserOrderListResponse[]>(`${this.baseApiUrl + API_ENDPOINTS.orders.sellerOrders}`)
+  }
 }

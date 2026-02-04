@@ -67,7 +67,7 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrders(Guid userId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrdersAsync(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserOrderListQuerySpec(userId);
         var queryResult = await _orderRepository.GetListBySpecAsync(spec, ct);
@@ -77,7 +77,7 @@ public class OrderService : IOrderService
             .ToList();
     }
 
-    public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid userId, Guid orderId, CancellationToken ct = default)
+    public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default)
     {
         var spec = new OrderDetailsResponseSpec(userId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
@@ -101,5 +101,15 @@ public class OrderService : IOrderService
         await _orderRepository.CommitAsync();
 
         return order.ToUpdatedResponse();
+    }
+
+    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default)
+    {
+        var spec = new SellerOrdersListQuerySpec(sellerId);
+        var queryResult = await _orderRepository.GetListBySpecAsync(spec, ct);
+
+        return queryResult
+            .Select(o => o.ToUserOrderListResponse())
+            .ToList();
     }
 }

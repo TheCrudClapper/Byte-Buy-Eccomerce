@@ -9,15 +9,27 @@ namespace ByteBuy.Core.Specification;
 public static class OrderSpecifications
 {
     /// <summary>
-    /// Specification that gets orders for two ends: user and private seller
+    /// Specification that gets orders for specific user
     /// </summary>
     public sealed class UserOrderListQuerySpec : Specification<Order, UserOrderListQuery>
     {
         public UserOrderListQuerySpec(Guid userId)
         {
             Query.AsNoTracking()
-                 .Where(o => o.BuyerId == userId 
-                    || (o.SellerSnapshot.SellerId == userId && o.SellerSnapshot.Type == SellerType.PrivatePerson))
+                 .Where(o => o.BuyerId == userId)
+                 .Select(OrderMappings.UserOrderListQueryProjection);
+        }
+    }
+
+    /// <summary>
+    /// Specification that gets orders for specific seller
+    /// </summary>
+    public sealed class SellerOrdersListQuerySpec : Specification<Order, UserOrderListQuery>
+    {
+        public SellerOrdersListQuerySpec(Guid sellerId)
+        {
+            Query.AsNoTracking()
+                 .Where(o => o.SellerSnapshot.SellerId == sellerId)
                  .Select(OrderMappings.UserOrderListQueryProjection);
         }
     }
@@ -31,8 +43,8 @@ public static class OrderSpecifications
         {
             Query
                 .AsNoTracking()
-                .Where(o => o.Id == orderId 
-                    && (o.BuyerId == userId 
+                .Where(o => o.Id == orderId
+                    && (o.BuyerId == userId
                     || (o.SellerSnapshot.SellerId == userId && o.SellerSnapshot.Type == SellerType.PrivatePerson)))
                 .Select(OrderMappings.OrderDetailsQueryProjection);
         }

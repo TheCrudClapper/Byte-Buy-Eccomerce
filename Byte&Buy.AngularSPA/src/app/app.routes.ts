@@ -21,7 +21,10 @@ import { guidParameterGuard } from './core/guards/guid-parameter/guid-parameter-
 import { CheckoutPage } from './features/orders/components/checkout-page/checkout-page';
 import { PaymentGateway } from './features/payment-gateway/components/payment-gateway/payment-gateway';
 import { MyOrders } from './features/profile/components/my-orders/my-orders/my-orders';
-import { OrderDetails } from './features/orders/components/order-details/order-details/order-details';
+import { BuyerOrderDetails } from './features/orders/components/buyer-order-details/buyer-order-details';
+import { SellerOrderDetails } from './features/orders/components/seller-order-details/seller-order-details';
+import { ClientOrders } from './features/orders/components/client-orders/client-orders';
+import { MyRentals } from './features/rentals/components/my-rentals/my-rentals';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -37,7 +40,9 @@ export const routes: Routes = [
             { path: 'offers/sale/create', component: SaleCreate}, 
             { path: 'offers/sale/edit/:id', component: SaleEdit, canMatch: [guidParameterGuard]}, 
             { path: 'offers/sale/details/:id', component: SaleDetails, canMatch: [guidParameterGuard]},
-            { path: 'order/details/:id', component: OrderDetails, canMatch: [guidParameterGuard]},
+            { path: 'order/details/:id', component: BuyerOrderDetails, canMatch: [guidParameterGuard]},
+            { path: 'order/seller-details/:id', component: SellerOrderDetails, canMatch: [guidParameterGuard]},
+            { path: 'client-orders', component: ClientOrders},
             { path: 'cart', component: CartPage},
             {
                 path: 'profile',
@@ -47,7 +52,8 @@ export const routes: Routes = [
                     { path: 'personal-info', component: PersonalInfo },
                     { path: 'addresses', component: Addresses},
                     { path: 'my-offers', component: MyOffers},
-                    { path: 'my-orders', component: MyOrders}
+                    { path: 'my-orders', component: MyOrders},
+                    { path: 'my-rentals', component: MyRentals}
                 ]
             },
             { path: 'checkout', component: CheckoutPage},
