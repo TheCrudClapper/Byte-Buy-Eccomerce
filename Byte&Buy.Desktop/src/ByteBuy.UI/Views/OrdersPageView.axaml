@@ -1,0 +1,118 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="using:ByteBuy.UI.Views.Shared"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="ByteBuy.UI.Views.OrdersPageView"
+			 x:DataType="vm:OrdersPageViewModel">
+
+	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Grid>
+
+		<Grid x:Name="Root" RowDefinitions="50,50,*,50">
+			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+
+				<!--Page Title-->
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"  Text="Orders"/>
+
+			</Grid>
+
+			<!-- Filters -->
+			<Grid Grid.Row="1">
+				<Label Content="Filters" />
+			</Grid>
+
+			<!-- Fetched items count -->
+			<StackPanel Grid.Row="2">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<Label Content="Records fetched:"
+						   FontFamily="{DynamicResource RalewayMedium}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
+						   HorizontalAlignment="Right" />
+					<Label Content="{Binding ItemsCount}"
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
+						   HorizontalAlignment="Right" />
+				</StackPanel>
+
+				<!-- Data Grid Containing All Items -->
+				<DataGrid
+				x:Name="ItemsGrid"
+				ItemsSource="{Binding Items}"
+				AutoGenerateColumns="False"
+				SelectedItem="{Binding SelectedItem}"
+				GridLinesVisibility="All"
+				IsReadOnly="True"
+				HeadersVisibility="All"
+				CanUserSortColumns="True"
+				CanUserResizeColumns="True"
+				RowHeight="36">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+						<DataGridTextColumn Header="FullName" Binding="{Binding BuyerFullName}" Width="*" />
+						<DataGridTextColumn Header="Buyer Email" Binding="{Binding BuyerEmail}" Width="*" />
+						<DataGridTextColumn Header="Order Status" Binding="{Binding Status}" Width="*" />
+						<DataGridTextColumn Header="Lines" Binding="{Binding LinesCount}" Width="*" />
+						<DataGridTextColumn Header="Purchased" Binding="{Binding PurchaseDate}" Width="*" />
+						<DataGridTextColumn Header="Total" Binding="{Binding TotalCost}" Width="*" />
+						<DataGridTemplateColumn Header="Actions">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
+										<Button
+										Command="{Binding DataContext.OpenDetailsPageCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/magnifying-glass-solid-full.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+
+				</DataGrid>
+
+			</StackPanel>
+
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+				<TextBlock
+				Margin="5,0,5,0"
+				Text="1 of 32"
+				FontSize="15"
+				FontWeight="600"
+				FontFamily="{DynamicResource RalewayMedium}"
+				VerticalAlignment="Center"
+				Foreground="{DynamicResource TextPrimaryBrush}"/>
+				<Button>
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+			</StackPanel>
+
+		</Grid>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+	</Grid>
+</UserControl>

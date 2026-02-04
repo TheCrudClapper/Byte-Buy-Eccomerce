@@ -9,7 +9,6 @@ public interface IOrderService
 {
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrdersAsync(Guid userId, CancellationToken ct = default);
 
-
     Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default);
 
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default);
@@ -45,4 +44,6 @@ public interface IOrderService
     /// <param name="orderId"></param>
     /// <returns></returns>
     Task<Result<UpdatedResponse>> DeliverOrder(Guid sellerId, Guid orderId);
+
+    Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersList(CancellationToken ct = default);
 }

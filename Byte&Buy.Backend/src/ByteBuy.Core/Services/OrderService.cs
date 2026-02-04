@@ -12,9 +12,11 @@ namespace ByteBuy.Core.Services;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
-    public OrderService(IOrderRepository orderRepository)
+    private readonly ICompanyRepository _companyRepository;
+    public OrderService(IOrderRepository orderRepository, ICompanyRepository companyRepository)
     {
         _orderRepository = orderRepository;
+        _companyRepository = companyRepository;
     }
 
     public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
@@ -111,5 +113,13 @@ public class OrderService : IOrderService
         return queryResult
             .Select(o => o.ToUserOrderListResponse())
             .ToList();
+    }
+
+    public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersList(CancellationToken ct = default)
+    {
+        var companyId = await _companyRepository.GetCompanyId(ct);
+
+        var spec = new CompanyOrderListResponseSpec(companyId);
+        return await _orderRepository.GetListBySpecAsync(spec, ct);
     }
 }

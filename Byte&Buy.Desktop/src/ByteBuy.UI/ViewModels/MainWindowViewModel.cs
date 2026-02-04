@@ -68,6 +68,13 @@ public partial class MainWindowViewModel : WindowViewModel
     });
 
     [RelayCommand]
+    private async Task GoToOrders() => await _navigation.NavigateToAsync(ApplicationPageNames.Orders, async vm =>
+    {
+        if(vm is OrdersPageViewModel ordersVm)
+            await ordersVm.LoadDataAsync();
+    });
+
+    [RelayCommand]
     private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.Administration);
 
     [RelayCommand]

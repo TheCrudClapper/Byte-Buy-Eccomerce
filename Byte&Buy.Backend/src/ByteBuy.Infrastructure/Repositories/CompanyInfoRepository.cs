@@ -12,12 +12,21 @@ public class CompanyInfoRepository : EfBaseRepository<Company>, ICompanyReposito
 
     public async Task<bool> ExistAsync(CancellationToken ct = default)
     {
-        return await _context.Company.AnyAsync(ct);
+        return await _context.Company
+            .AnyAsync(ct);
     }
 
     public async Task<Company?> GetAsync(CancellationToken ct)
     {
         //There is only one record of company details in whole db
-        return await _context.Company.FirstOrDefaultAsync(ct);
+        return await _context.Company
+            .SingleOrDefaultAsync(ct);
+    }
+
+    public async Task<Guid> GetCompanyId(CancellationToken ct = default)
+    {
+        return await _context.Company
+            .Select(c => c.Id)
+            .SingleOrDefaultAsync(ct);
     }
 }

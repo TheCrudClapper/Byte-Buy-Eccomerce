@@ -12,6 +12,7 @@ using ByteBuy.Core.DTO.Public.Order.Rent;
 using ByteBuy.Core.DTO.Public.Order.Sale;
 using ByteBuy.Core.DTO.Public.OrderDelivery;
 using ByteBuy.Core.DTO.Public.PortalUser;
+using ByteBuy.Core.Extensions;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
@@ -257,5 +258,15 @@ public static class OrderMappings
             ),
             linesDto);
     }
+
+    public static Expression<Func<Order, CompanyOrderListResponse>> CompanyOrderListProjection
+        => o => new CompanyOrderListResponse(
+            o.Id,
+            o.Status.ToString(),
+            o.DateCreated,
+            o.Lines.Count,
+            o.BuyerSnapshot.Email,
+            o.BuyerSnapshot.FullName,
+            o.Total.ToMoneyDto());
 
 }

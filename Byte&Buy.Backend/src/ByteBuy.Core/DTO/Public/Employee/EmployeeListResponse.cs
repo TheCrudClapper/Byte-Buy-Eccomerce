@@ -5,5 +5,4 @@ public record EmployeeListResponse(
     string FirstName,
     string LastName,
     string Email,
-    string Role
-    );
+    string Role);

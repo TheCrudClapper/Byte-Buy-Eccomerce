@@ -50,4 +50,9 @@ public class OrdersController : BaseApiController
     [HttpGet("seller")]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrders(CancellationToken ct)
        => HandleResult(await _orderService.GetSellerOrdersAsync(CurrentUserId, ct));
+
+    [HttpGet("company")]
+    public async Task<ActionResult<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrders(CancellationToken ct)
+       => HandleResult(await _orderService.GetCompanyOrdersList(ct));
+
 }

@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
+using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
@@ -47,6 +48,19 @@ public static class OrderSpecifications
                     && (o.BuyerId == userId
                     || (o.SellerSnapshot.SellerId == userId && o.SellerSnapshot.Type == SellerType.PrivatePerson)))
                 .Select(OrderMappings.OrderDetailsQueryProjection);
+        }
+    }
+
+    /// <summary>
+    /// Specification that gets a list of orders for company
+    /// </summary>
+    public sealed class CompanyOrderListResponseSpec : Specification<Order, CompanyOrderListResponse>
+    {
+        public CompanyOrderListResponseSpec(Guid companyId)
+        {
+            Query.AsNoTracking()
+                .Where(o => o.SellerSnapshot.Type == SellerType.Company && o.SellerSnapshot.SellerId == companyId)
+                .Select(OrderMappings.CompanyOrderListProjection);
         }
     }
 

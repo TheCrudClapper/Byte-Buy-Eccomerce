@@ -62,5 +62,6 @@
 
   <ItemGroup>
     <Folder Include="ModelsUI\Image\" />
+    <Folder Include="ModelsUI\Rental\" />
   </ItemGroup>
 </Project>

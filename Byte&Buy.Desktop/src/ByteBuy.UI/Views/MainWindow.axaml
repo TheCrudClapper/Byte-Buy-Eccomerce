@@ -97,11 +97,21 @@
 						</Button>
 
 						<Button
+						Command="{Binding GoToOrdersCommand}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
 									   Margin="0,0,5,0" />
 								<Label Content="Orders" />
+							</StackPanel>
+						</Button>
+
+						<Button
+						Classes="sidebarMenuButton">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="{SvgImage /Assets/Images/regular/calendar-days-regular-full.svg}"
+									   Margin="0,0,5,0" />
+								<Label Content="Rentals" />
 							</StackPanel>
 						</Button>
 

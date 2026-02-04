@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.DTO.Public.Money;
+﻿namespace ByteBuy.Services.DTO.Money;
 
 public sealed record MoneyDto
 {
