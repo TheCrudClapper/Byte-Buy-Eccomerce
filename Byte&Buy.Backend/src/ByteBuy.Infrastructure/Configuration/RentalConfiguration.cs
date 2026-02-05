@@ -11,17 +11,34 @@ public class RentalConfiguration : IEntityTypeConfiguration<Rental>
             .HasForeignKey(p => p.BorrowerId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        builder.OwnsOne(o => o.Lender, sa =>
+        builder.OwnsOne(o => o.Lender, ss =>
         {
-            sa.Property(prop => prop.Type)
+            ss.Property(prop => prop.Type)
                 .HasConversion<string>()
                 .HasMaxLength(20)
                 .IsRequired();
 
-            sa.Property(prop => prop.Id)
+            ss.Property(prop => prop.SellerId)
                 .IsRequired();
-        });
 
+            ss.Property(prop => prop.TIN)
+                .HasMaxLength(20);
+
+            ss.Property(prop => prop.DisplayName)
+              .HasMaxLength(100)
+              .IsRequired();
+
+            ss.OwnsOne(prop => prop.Address, a =>
+            {
+                a.Property(p => p.City).HasMaxLength(50);
+                a.Property(p => p.Street).HasMaxLength(50);
+                a.Property(p => p.PostalCode).HasMaxLength(20);
+                a.Property(p => p.PostalCity).HasMaxLength(50);
+                a.Property(p => p.HouseNumber).HasMaxLength(10);
+                a.Property(p => p.Country).HasMaxLength(50);
+                a.Property(p => p.FlatNumber).HasMaxLength(10);
+            });
+        });
 
         builder.OwnsOne(r => r.PricePerDay, m =>
         {

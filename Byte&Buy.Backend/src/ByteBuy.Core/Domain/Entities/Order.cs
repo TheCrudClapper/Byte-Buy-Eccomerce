@@ -14,8 +14,8 @@ public static class OrderStatusTransitions
         { OrderStatus.Paid, [ OrderStatus.Shipped ] },
         { OrderStatus.Shipped, [ OrderStatus.Delivered ] },
         { OrderStatus.Delivered, [ OrderStatus.Returned ] },
-        { OrderStatus.Canceled, Array.Empty<OrderStatus>() },
-        { OrderStatus.Returned, Array.Empty<OrderStatus>() }
+        { OrderStatus.Canceled, [] },
+        { OrderStatus.Returned, [] }
     };
 }
 

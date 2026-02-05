@@ -19,8 +19,4 @@ public enum RentalStatus
     // Rental was completed on given terms
     [Description("Completed")]
     Completed = 3,
-
-    // User canceled rental
-    [Description("Cancelled")]
-    Cancelled = 4,
 }

@@ -1,8 +1,111 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ByteBuy.UI.Views.OrderDetailsPageView">
-  WELCOME TO DETAILS PAGE
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+			 x:Class="ByteBuy.UI.Views.OrderDetailsPageView">
+
+	<UserControl.Styles>
+		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../Styles/OrderDetailsStyles.axaml" />
+	</UserControl.Styles>
+
+
+	<ScrollViewer>
+		<Grid RowDefinitions="50,*,5,*">
+			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Order Details"/>
+			<!-- First Container -->
+			<Border Grid.Row="1" Classes="sectionBorder" Padding="20" MaxHeight="250">
+				<Grid RowDefinitions="50,1,20,*"  ColumnDefinitions="*,*,*" >
+					<StackPanel>
+						<TextBlock Text="Order Paid" Classes="status" />
+					</StackPanel>
+					<Border Grid.Row="1"
+							Opacity="0.2"
+							Grid.ColumnSpan="3"
+							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+					<!--Delivery Method-->
+					<StackPanel Grid.Row="3" Grid.Column="0" >
+						<TextBlock Text="Delivery Method" Classes="headerText" Margin="0,0,0,5"/>
+						<TextBlock Text="Parcel Locker Delivery" Classes="standardText" />
+						<TextBlock Text="Carrier Code: Inpost" Classes="standardText"/>
+					</StackPanel>
+					<StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+						<TextBlock Text="Recipient Data" Classes="headerText" Margin="0,0,0,5"/>
+						<TextBlock Text="Wojciech Mucha" Classes="standardText"/>
+						<TextBlock Text="wojciechmucha12@gmail.com" Classes="standardText"/>
+					</StackPanel>
+					<StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right">
+						<TextBlock Text="Package Destination" Classes="headerText" Margin="0,0,0,5"/>
+						<TextBlock Text="WAW123" Classes="standardText"/>
+					</StackPanel>
+				</Grid>
+			</Border>
+
+			<!-- Second Container -->
+			<Border Grid.Row="3" Classes="sectionBorder" Padding="20">
+				<Grid RowDefinitions="*,*,1,*,*,*,*,*" ColumnDefinitions="*,*">
+
+					<!--First Row and Items Price-->
+					<StackPanel>
+						<TextBlock Text="04 Feb 2026, 18:18" Classes="smallText"/>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="2 item/s from " Classes="standardText"/>
+							<TextBlock Text="ByteBuy" Classes="standardText, bold"/>
+						</StackPanel>
+					</StackPanel>
+					<TextBlock Grid.Column="2" Text="999.00 PLN" HorizontalAlignment="Right" Classes="headerText, bold"/>
+
+					<!--Second Row and Line Items List-->
+					<Grid Grid.Row="1" Grid.ColumnSpan="2">
+						<TextBlock Text="Reserved for items"/>
+					</Grid>
+
+					<!--Spacer-->
+					<Border Grid.Row="2"
+							Opacity="0.2"
+							Margin="0,0,0,10"
+							Grid.ColumnSpan="3"
+							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+					<StackPanel Grid.Row="3" MaxHeight="40">
+						<TextBlock Text="Shipment" Classes="headerText, bold"/>
+						<TextBlock Text="Inpost Parcel Locker" Classes="standardText"/>
+					</StackPanel>
+					<TextBlock Grid.Row="3"
+							   MaxHeight="40"
+							   Grid.Column="2"
+							   Text="25.00 PLN"
+							   HorizontalAlignment="Right"
+							   Classes="headerText, bold"/>
+
+					<!--Spacer-->
+					<Border Grid.Row="4"
+							Opacity="0.2"
+							Margin="0,0,0,10"
+							Grid.ColumnSpan="3"
+							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+					<TextBlock Grid.Row="5" Text="Total" Classes="standardText, bold"/>
+					<TextBlock
+						Grid.Row="5"
+						Grid.Column="2"
+						HorizontalAlignment="Right"
+						Text="1240,00 PLN"
+						Classes="standardText, bold"/>
+
+					
+					<!--Spacer-->
+					<Border Grid.Row="6"
+							Opacity="0.2"
+							Margin="0,0,0,10"
+							Grid.ColumnSpan="3"
+							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+					<TextBlock Grid.Row="7" Text="Export to PDF" Classes="standardText, bold"/>
+				</Grid>
+			</Border>
+		</Grid>
+	</ScrollViewer>
 </UserControl>

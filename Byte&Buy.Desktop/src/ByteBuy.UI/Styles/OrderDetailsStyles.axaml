@@ -1,0 +1,37 @@
+<Styles xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<!-- Add Controls for Previewer Here -->
+		</Border>
+	</Design.PreviewWith>
+
+	<!-- Add Styles Here -->
+	<Style Selector="TextBlock.status">
+		<Setter Property="FontSize" Value="18"/>
+		<Setter Property="FontWeight" Value="600"/>
+		<Setter Property="FontFamily" Value="Open Sans Bold"/>
+	</Style>
+
+	<Style Selector="TextBlock.headerText">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontFamily" Value="OpenSansMedium"/>
+		<Setter Property="FontWeight" Value="600"/>
+	</Style>
+
+	<Style Selector="TextBlock.standardText">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontFamily" Value="OpenSansMedium"/>
+		<Setter Property="FontWeight" Value="500"/>
+	</Style>
+
+	<Style Selector="TextBlock.bold">
+		<Setter Property="FontWeight" Value="600"/>
+	</Style>
+
+	<Style Selector="TextBlock.smallText">
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontFamily" Value="OpenSansMedium"/>
+		<Setter Property="FontWeight" Value="500"/>
+	</Style>
+</Styles>

@@ -6,7 +6,6 @@ import { OrderApiService } from '../../../../core/clients/orders/order-api-servi
 import { DeliveryChannel } from '../../../../core/dto/delivery/enum/delivery-channel';
 import { OrderStatus } from '../../../../core/dto/order/enum/order-status';
 import { OrderDetailsResponse } from '../../../../core/dto/order/order-details-response';
-import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { CommonModule } from '@angular/common';
 
