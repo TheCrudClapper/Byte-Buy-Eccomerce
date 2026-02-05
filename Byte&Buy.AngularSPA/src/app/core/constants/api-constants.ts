@@ -85,5 +85,11 @@ export const API_ENDPOINTS = {
         get: '/payments',
         blik: '/blik',
         card: '/card',
+    },
+
+    rentals: {
+        borrowerList: '/rentals/borrower',
+        lenderList: '/rentals/lender',
+        return: (id: string | Guid) => `/rentals/${id}/return`,  
     }
 }

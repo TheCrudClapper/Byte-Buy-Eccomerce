@@ -24,7 +24,7 @@ import { MyOrders } from './features/profile/components/my-orders/my-orders/my-o
 import { BuyerOrderDetails } from './features/orders/components/buyer-order-details/buyer-order-details';
 import { SellerOrderDetails } from './features/orders/components/seller-order-details/seller-order-details';
 import { ClientOrders } from './features/orders/components/client-orders/client-orders';
-import { MyRentals } from './features/rentals/components/my-rentals/my-rentals';
+import { MyRentals } from './features/profile/components/my-rentals/my-rentals';
 import { ClientRentals } from './features/rentals/components/client-rentals/client-rentals';
 
 export const routes: Routes = [

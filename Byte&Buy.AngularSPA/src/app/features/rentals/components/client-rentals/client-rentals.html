@@ -11,13 +11,30 @@
             </div>
             <a class="link">FILTERS</a>
         </div>
+        @if(rentalsList(); as rentals){
+        @for (rental of rentals; track $index)
+        {
         <div class="content-section">
             <div class="d-flex d-align-items-center justify-content-between">
                 <p class="my-0 content-section-title">
+                    @if(rental.status === RentalStatus.Created){
                     <i class="fa-solid fa-square-plus" style="color: #ffffff;"></i>
                     Rental Created
+                    }
+                    @if(rental.status === RentalStatus.Active){
+                    <i class="fa-regular fa-calendar-days" style="color: #ffffff;"></i>
+                    Rental Active
+                    }
+                    @if(rental.status === RentalStatus.Overdue){
+                    <i class="fa-solid fa-calendar-xmark" style="color: #ffffff;"></i>
+                    <span class="overdue">Rental Overdue</span>
+                    }
+                    @if(rental.status === RentalStatus.Completed){
+                    <i class="fa-solid fa-calendar-check" style="color: #ffffff;"></i>
+                    Rental Completed
+                    }
                 <p class="my-0 content-section-title">
-                    Created (04 Feb 2026, 15:53)
+                    Created ( {{ rental.dateCreated | date:'dd MMM yyyy, HH:mm' }} )
                 </p>
             </div>
             <hr>
@@ -25,18 +42,19 @@
                 <div class="d-flex flex-column">
                     <span>
                         <span class="fs-14-px">Lended for </span>
-                        <span class="open-sans-bold fs-14-px">Joanna Jarzmik (joannajarzmik@gmail.com)</span>
+                        <span class="open-sans-bold fs-14-px">{{ rental.borrowerName }} ({{ rental.borrowerEmail
+                            }})</span>
                     </span>
                     <span>
                     </span>
                     <div class="d-flex justify-content-between">
                         <span class="fs-14-px">
                             Lended from
-                            <span class="open-sans-bold">05 Feb 2026</span>
+                            <span class="open-sans-bold">{{ rental.startingRentalDate | date:'dd MMM yyyy'}}</span>
                             to
-                            <span class="open-sans-bold">10 Feb 2026</span>
+                            <span class="open-sans-bold">{{ rental.endingRentalDate | date:'dd MMM yyyy' }}</span>
                         </span>
-                        <span class="fs-14-px open-sans-bold">(5 day/s period)</span>
+                        <span class="fs-14-px open-sans-bold">({{rental.rentalDays}} day/s period)</span>
                     </div>
                 </div>
             </div>
@@ -44,20 +62,21 @@
                 <div class="card-body">
                     <div class="row g-3 align-items-center">
                         <div class="col-auto">
-                            <img src="fallback.png" class="img-fluid rounded" [alt]="``"
+                            <img [src]="`${imageBaseUrl}${rental.thumbnail.imagePath}`" class="img-fluid rounded"
+                                [alt]="`${rental.thumbnail.altText}`"
                                 style="width: 80px; height: 80px; object-fit: cover;">
                         </div>
                         <div class="col">
                             <div class="row">
                                 <div class="col">
                                     <h6 class="mb-1 fw-bold fs-14-px">
-                                        Komputer Pc
+                                        {{ rental.itemName }}
                                     </h6>
                                 </div>
                             </div>
                             <div class="row align-items-center">
                                 <div class="col-auto fs-14-px">
-                                    <span>Lended <span class="open-sans-bold">15 </span>units</span>
+                                    <span>Lended <span class="open-sans-bold">{{ rental.quantity }} </span>units</span>
                                 </div>
                             </div>
 
@@ -69,7 +88,7 @@
             <div class="col-12 d-flex justify-content-between">
                 <span class="fs-14-px open-sans-bold">Paid</span>
                 <span class="fs-14-px open-sans-bold">
-                    150 PLN
+                    {{ rental.totalPricePaid.amount | number:'1.2-2'}} {{ rental.totalPricePaid.currency }}
                 </span>
             </div>
             <hr>
@@ -77,5 +96,17 @@
                 <span class="link"></span>
             </div>
         </div>
+        }
+        @if(rentals.length === 0){
+        <div class="content-section flex-column  d-flex justify-content-center align-items-center">
+            <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
+            <p class="mt-2 mb-0">No one rented any of your items yet.</p>
+            <span class="fs-14-px">
+                We hope that it will change soon
+                <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
+            </span>
+        </div>
+        }
+        }
     </div>
 </div>

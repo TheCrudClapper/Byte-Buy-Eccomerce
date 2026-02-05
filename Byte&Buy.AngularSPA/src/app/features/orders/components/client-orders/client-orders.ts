@@ -15,8 +15,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './client-orders.html',
   styleUrl: './client-orders.scss',
 })
-export class ClientOrders implements OnInit{
- private readonly orderApiService = inject(OrderApiService);
+export class ClientOrders implements OnInit {
+  private readonly orderApiService = inject(OrderApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
 

@@ -43,7 +43,9 @@ public class RentalService : IRentalService
         if (rental is null)
             return Result.Failure<UpdatedResponse>(RentalErrors.NotFound);
 
-        rental.ReturnRental();
+        var returnResult =  rental.ReturnRental();
+        if (returnResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(returnResult.Error);
 
         await _rentalRepository.UpdateAsync(rental);
         await _rentalRepository.CommitAsync();

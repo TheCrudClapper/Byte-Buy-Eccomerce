@@ -1,0 +1,98 @@
+<div class="content-section">
+    <span class="page-title">My Rentals ({{ rentalsList()?.length }})</span>
+</div>
+@if(rentalsList(); as rentals){
+@for (rental of rentals; track rental.id)
+{
+<div class="content-section">
+    <div class="d-flex d-align-items-center justify-content-between">
+        <p class="my-0 content-section-title">
+            @if(rental.status === RentalStatus.Created){
+            <i class="fa-solid fa-square-plus" style="color: #ffffff;"></i>
+            Rental Created
+            }
+            @if(rental.status === RentalStatus.Active){
+            <i class="fa-regular fa-calendar-days" style="color: #ffffff;"></i>
+            Rental Active
+            }
+            @if(rental.status === RentalStatus.Overdue){
+            <i class="fa-solid fa-calendar-xmark" style="color: #ffffff;"></i>
+            <span class="overdue">Rental Overdue</span>
+            }
+            @if(rental.status === RentalStatus.Completed){
+            <i class="fa-solid fa-calendar-check" style="color: #ffffff;"></i>
+            Rental Completed
+            }
+        <p class="my-0 content-section-title">
+            Created ( {{ rental.dateCreated | date:'dd MMM yyyy, HH:mm' }} )
+        </p>
+    </div>
+    <hr>
+    <div class="col-12 mb-3">
+        <div class="d-flex flex-column">
+            <span>
+                <span class="fs-14-px">Lended for </span>
+                <span class="open-sans-bold fs-14-px">{{ rental.lenderName }}</span>
+            </span>
+            <span>
+            </span>
+            <div class="d-flex justify-content-between">
+                <span class="fs-14-px">
+                    Lended from
+                    <span class="open-sans-bold">{{ rental.startingRentalDate | date:'dd MMM yyyy'}}</span>
+                    to
+                    <span class="open-sans-bold">{{ rental.endingRentalDate | date:'dd MMM yyyy' }}</span>
+                </span>
+                <span class="fs-14-px open-sans-bold">({{rental.rentalDays}} day/s period)</span>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row g-3 align-items-center">
+                <div class="col-auto">
+                    <img [src]="`${imageBaseUrl}${rental.thumbnail.imagePath}`" class="img-fluid rounded"
+                        [alt]="`${rental.thumbnail.altText}`" style="width: 80px; height: 80px; object-fit: cover;">
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h6 class="mb-1 fw-bold fs-14-px">
+                                {{ rental.itemName }}
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-auto fs-14-px">
+                            <span>Lended <span class="open-sans-bold">{{ rental.quantity }} </span>units</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="col-12 d-flex justify-content-between">
+        <span class="fs-14-px open-sans-bold">Paid</span>
+        <span class="fs-14-px open-sans-bold">
+            {{ rental.totalPricePaid.amount | number:'1.2-2'}} {{ rental.totalPricePaid.currency }}
+        </span>
+    </div>
+    <hr>
+    <div class="col-12 text-center">
+        <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
+    </div>
+</div>
+}
+@if(rentals.length === 0){
+<div class="content-section flex-column  d-flex justify-content-center align-items-center">
+    <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
+    <p class="mt-2 mb-0">You haven't rented anything yet.</p>
+    <span class="fs-14-px">
+        We hope that it will change soon
+        <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
+    </span>
+</div>
+}
+}
