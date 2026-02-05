@@ -1,4 +1,8 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.Exceptions;
+using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -13,10 +17,14 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICompanyRepository _companyRepository;
-    public OrderService(IOrderRepository orderRepository, ICompanyRepository companyRepository)
+    private readonly IRentalRepository _rentalRepository;
+    public OrderService(IOrderRepository orderRepository,
+        ICompanyRepository companyRepository,
+        IRentalRepository rentalRepository)
     {
         _orderRepository = orderRepository;
         _companyRepository = companyRepository;
+        _rentalRepository = rentalRepository;
     }
 
     public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
@@ -46,9 +54,15 @@ public class OrderService : IOrderService
         if (deliveryResult.IsFailure)
             return Result.Failure<UpdatedResponse>(deliveryResult.Error);
 
+        var rentOrderLines = order.Lines
+            .OfType<RentOrderLine>()
+            .ToList();
+
+        if (rentOrderLines.Count > 0)
+            await CreateRentals(order, rentOrderLines);
+
         await _orderRepository.UpdateAsync(order);
         await _orderRepository.CommitAsync();
-
         return order.ToUpdatedResponse();
     }
 
@@ -121,5 +135,41 @@ public class OrderService : IOrderService
 
         var spec = new CompanyOrderListResponseSpec(companyId);
         return await _orderRepository.GetListBySpecAsync(spec, ct);
+    }
+
+    /// <summary>
+    /// Method that creates rentals per each rent order line found in given order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <param name="rentLines"></param>
+    /// <returns></returns>
+    /// <exception cref="DomainInvariantException"></exception>
+    private async Task CreateRentals(Order order, List<RentOrderLine> rentLines)
+    {
+        if (order.DateDelivered == null)
+            throw new DomainInvariantException($"{order.Id} is marked as delivered but delivery date is null");
+
+        var deliveryDate = order.DateDelivered.Value;
+
+        foreach (var line in rentLines)
+        {
+            var creationResult = Rental.CreateRental(
+                line.Id,
+                order.BuyerId,
+                line.Thumbnail.ImagePath,
+                line.Thumbnail.AltText,
+                line.PricePerDay.Amount,
+                line.PricePerDay.Currency,
+                line.ItemName,
+                line.Quantity,
+                order.SellerSnapshot,
+                line.RentalDays,
+                deliveryDate);
+
+            if (creationResult.IsFailure)
+                throw new DomainInvariantException($"Failed to create rental for order line {line.Id}: {creationResult.Error.Description}");
+
+            await _rentalRepository.AddAsync(creationResult.Value);
+        }
     }
 }

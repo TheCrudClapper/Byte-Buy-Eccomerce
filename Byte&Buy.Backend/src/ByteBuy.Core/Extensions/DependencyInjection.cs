@@ -40,6 +40,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderCreateService, OrderCreateService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IRentalService, RentalService>();
 
         //AddUserShippingAddressAsync Domain Services
         services.AddScoped<IAddressValidationService, AddressValidationService>();

@@ -25,4 +25,9 @@ public class SellerSnapshot
 
     public static SellerSnapshot CreatePrivateSellerSnapshot(Guid sellerId, string displayName, string? tIN, AddressValueObject address)
         => new(SellerType.PrivatePerson, sellerId, displayName, tIN, address);
+
+    public SellerSnapshot Copy()
+    {
+        return new SellerSnapshot(Type, SellerId, DisplayName, TIN, Address);
+    }
 }

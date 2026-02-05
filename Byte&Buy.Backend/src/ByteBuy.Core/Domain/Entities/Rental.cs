@@ -13,7 +13,6 @@ public static class RentalStatusTransitions
         { RentalStatus.Active, [ RentalStatus.Overdue, RentalStatus.Completed ] },
         { RentalStatus.Overdue, [ RentalStatus.Completed] },
         { RentalStatus.Completed, [] },
-
     };
 }
 
@@ -52,6 +51,7 @@ public sealed class Rental : AuditableEntity, ISoftDeletable
     {
         Status = RentalStatus.Created;
         Lender = lender;
+        RentOrderLineId = rentOrderLineId;
         Thumbnail = thumbnail;
         ItemName = itemName;
         BorrowerId = borrowerId;
@@ -73,7 +73,6 @@ public sealed class Rental : AuditableEntity, ISoftDeletable
         string itemName,
         int quantity,
         SellerSnapshot lender,
-        Money pricePerDay,
         int rentalDays,
         DateTime deliveryDate)
     {
@@ -94,20 +93,61 @@ public sealed class Rental : AuditableEntity, ISoftDeletable
         var rentalStartDate = deliveryDate.Date.AddDays(1);
         var rentalEndDate = rentalStartDate.AddDays(rentalDays);
 
+        var lenderSnapshotCopy = lender.Copy();
+       
         var rental = new Rental(
             rentOrderLineId,
             borrowerId,
             thumbnailResult.Value,
             itemName,
             quantity,
-            lender,
+            lenderSnapshotCopy,
             moneyResult.Value,
             rentalDays,
-            deliveryDate);
-
-        rental.RentalStartDate = rentalStartDate;
-        rental.RentalEndDate = rentalEndDate;
+            deliveryDate)
+        {
+            RentalStartDate = rentalStartDate,
+            RentalEndDate = rentalEndDate
+        };
 
         return rental;
+    }
+
+    //this is intended to be used only by background job
+    public Result ActivateRental()
+       => ChangeStatus(RentalStatus.Active);
+
+    // this is intended to be used only by background job
+    public Result MarkAsOverdue()
+        => ChangeStatus(RentalStatus.Overdue);
+
+    public Result ReturnRental()
+    {
+        var statusResult = ChangeStatus(RentalStatus.Completed);
+        if (statusResult.IsFailure)
+            return statusResult;
+
+        ReturnedDate = DateTime.UtcNow;
+
+        return Result.Success();
+    }
+
+    private bool CanChangeStatus(RentalStatus newStatus)
+    {
+        return RentalStatusTransitions.AllowedTransitions.TryGetValue(Status, out var allowedStatus)
+               && allowedStatus.Contains(newStatus);
+    }
+
+    public Result ChangeStatus(RentalStatus newStatus)
+    {
+        if (!CanChangeStatus(newStatus))
+        {
+            return Result.Failure(Error.Validation("Rental.Status", $"Cannot change status from {Status} to {newStatus}"));
+        }
+
+        Status = newStatus;
+        DateEdited = DateTime.UtcNow;
+
+        return Result.Success();
     }
 }

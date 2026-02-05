@@ -29,6 +29,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
     public async Task<Order?> GetSellerOrder(Guid sellerId, Guid orderId, CancellationToken ct = default)
     {
         return await _context.Orders
+            .Include(o => o.Lines)
             .Where(o => o.Id == orderId && o.SellerSnapshot.SellerId == sellerId)
             .FirstOrDefaultAsync(ct);
     }

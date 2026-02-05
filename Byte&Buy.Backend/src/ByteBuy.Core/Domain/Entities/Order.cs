@@ -88,11 +88,12 @@ public class Order : AuditableEntity, ISoftDeletable
 
     public Result DeliverOrder()
     {
-        if (Status != OrderStatus.Shipped)
+        var statusResult = ChangeStatus(OrderStatus.Delivered);
+        if (statusResult.IsFailure)
             return Result.Failure(OrderErrors.InvalidDeliveredState);
 
         DateDelivered = DateTime.UtcNow;
-        return ChangeStatus(OrderStatus.Delivered);
+        return Result.Success();
     }
        
     public Result ReturnOrder()

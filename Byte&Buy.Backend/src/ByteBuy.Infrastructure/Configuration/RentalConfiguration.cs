@@ -11,6 +11,12 @@ public class RentalConfiguration : IEntityTypeConfiguration<Rental>
             .HasForeignKey(p => p.BorrowerId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.OwnsOne(p => p.Thumbnail, i =>
+        {
+            i.Property(img => img.AltText).HasMaxLength(50);
+            i.Property(img => img.ImagePath);
+        });
+
         builder.OwnsOne(o => o.Lender, ss =>
         {
             ss.Property(prop => prop.Type)
