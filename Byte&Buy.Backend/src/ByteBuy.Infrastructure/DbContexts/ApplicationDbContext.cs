@@ -44,6 +44,7 @@ public class ApplicationDbContext : IdentityDbContext<
     public DbSet<DeliveryCarrier> DeliveryCarriers { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<PaymentOrder> PaymentOrders { get; set; }
+    public DbSet<Rental> Rentals { get; set; }
 
 
     public ApplicationDbContext(DbContextOptions options) : base(options) { }

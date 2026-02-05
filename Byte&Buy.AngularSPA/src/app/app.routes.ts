@@ -25,6 +25,7 @@ import { BuyerOrderDetails } from './features/orders/components/buyer-order-deta
 import { SellerOrderDetails } from './features/orders/components/seller-order-details/seller-order-details';
 import { ClientOrders } from './features/orders/components/client-orders/client-orders';
 import { MyRentals } from './features/rentals/components/my-rentals/my-rentals';
+import { ClientRentals } from './features/rentals/components/client-rentals/client-rentals';
 
 export const routes: Routes = [
     { path: '', component: HomePage},
@@ -43,6 +44,7 @@ export const routes: Routes = [
             { path: 'order/details/:id', component: BuyerOrderDetails, canMatch: [guidParameterGuard]},
             { path: 'order/seller-details/:id', component: SellerOrderDetails, canMatch: [guidParameterGuard]},
             { path: 'client-orders', component: ClientOrders},
+            { path: 'client-rentals', component: ClientRentals, canMatch: [guidParameterGuard]},
             { path: 'cart', component: CartPage},
             {
                 path: 'profile',

@@ -25,7 +25,7 @@ public class OrdersController : BaseApiController
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrders(CancellationToken ct)
-        => HandleResult(await _orderService.GetAllUserOrdersAsync(CurrentUserId, ct));
+        => HandleResult(await _orderService.GetUserOrdersAsync(CurrentUserId, ct));
 
     [HttpGet("details/{orderId:guid}")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
@@ -53,6 +53,6 @@ public class OrdersController : BaseApiController
 
     [HttpGet("company")]
     public async Task<ActionResult<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrders(CancellationToken ct)
-       => HandleResult(await _orderService.GetCompanyOrdersList(ct));
+       => HandleResult(await _orderService.GetCompanyOrdersListAsync(ct));
 
 }

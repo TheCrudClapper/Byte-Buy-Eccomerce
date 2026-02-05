@@ -83,7 +83,7 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetAllUserOrdersAsync(Guid userId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserOrderListQuerySpec(userId);
         var queryResult = await _orderRepository.GetListBySpecAsync(spec, ct);
@@ -129,7 +129,7 @@ public class OrderService : IOrderService
             .ToList();
     }
 
-    public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersList(CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
 
@@ -143,7 +143,7 @@ public class OrderService : IOrderService
     /// <param name="order"></param>
     /// <param name="rentLines"></param>
     /// <returns></returns>
-    /// <exception cref="DomainInvariantException"></exception>
+    /// <exception cref="DomainInvariantException">Is thrown when there is domain invariant inconsistence within processed objects</exception>
     private async Task CreateRentals(Order order, List<RentOrderLine> rentLines)
     {
         if (order.DateDelivered == null)
