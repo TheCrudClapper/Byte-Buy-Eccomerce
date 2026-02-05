@@ -107,6 +107,7 @@
 						</Button>
 
 						<Button
+						Command="{Binding GoToRentalsCommand}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/calendar-days-regular-full.svg}"

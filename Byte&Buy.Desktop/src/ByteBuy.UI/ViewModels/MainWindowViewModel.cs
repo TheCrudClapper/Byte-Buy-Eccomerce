@@ -75,6 +75,14 @@ public partial class MainWindowViewModel : WindowViewModel
     });
 
     [RelayCommand]
+    private async Task GoToRentals() => await _navigation.NavigateToAsync(ApplicationPageNames.Rentals, async vm =>
+    {
+        if (vm is RentalsPageViewModel rentalsVm)
+            await rentalsVm.LoadDataAsync();
+    });
+
+
+    [RelayCommand]
     private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.Administration);
 
     [RelayCommand]
