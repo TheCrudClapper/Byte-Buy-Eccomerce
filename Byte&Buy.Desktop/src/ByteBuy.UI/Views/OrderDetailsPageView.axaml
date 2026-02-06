@@ -2,8 +2,13 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:ordeline="clr-namespace:ByteBuy.UI.ViewModels.Order.OrderLine"
+			 xmlns:delivery="clr-namespace:ByteBuy.UI.ViewModels.Order.OrderDelivery"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+			 x:DataType="vm:OrderDetailsPageViewModel"
 			 x:Class="ByteBuy.UI.Views.OrderDetailsPageView">
+
 
 	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
@@ -12,100 +17,293 @@
 
 
 	<ScrollViewer>
-		<Grid RowDefinitions="50,*,5,*">
+		<Grid RowDefinitions="70,*" Margin="0,0,20,0">
 			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Order Details"/>
+
+
 			<!-- First Container -->
-			<Border Grid.Row="1" Classes="sectionBorder" Padding="20" MaxHeight="250">
-				<Grid RowDefinitions="50,1,20,*"  ColumnDefinitions="*,*,*" >
-					<StackPanel>
-						<TextBlock Text="Order Paid" Classes="status" />
-					</StackPanel>
-					<Border Grid.Row="1"
-							Opacity="0.2"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+			<StackPanel Grid.Row="1">
+				<Border Grid.Row="1" Classes="sectionBorder" Padding="20" MaxHeight="250" Margin="0,0,0,10">
+					<Grid RowDefinitions="30,1,*"  ColumnDefinitions="33*, 33*, 33*" >
 
-					<!--Delivery Method-->
-					<StackPanel Grid.Row="3" Grid.Column="0" >
-						<TextBlock Text="Delivery Method" Classes="headerText" Margin="0,0,0,5"/>
-						<TextBlock Text="Parcel Locker Delivery" Classes="standardText" />
-						<TextBlock Text="Carrier Code: Inpost" Classes="standardText"/>
-					</StackPanel>
-					<StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
-						<TextBlock Text="Recipient Data" Classes="headerText" Margin="0,0,0,5"/>
-						<TextBlock Text="Wojciech Mucha" Classes="standardText"/>
-						<TextBlock Text="wojciechmucha12@gmail.com" Classes="standardText"/>
-					</StackPanel>
-					<StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right">
-						<TextBlock Text="Package Destination" Classes="headerText" Margin="0,0,0,5"/>
-						<TextBlock Text="WAW123" Classes="standardText"/>
-					</StackPanel>
-				</Grid>
-			</Border>
-
-			<!-- Second Container -->
-			<Border Grid.Row="3" Classes="sectionBorder" Padding="20">
-				<Grid RowDefinitions="*,*,1,*,*,*,*,*" ColumnDefinitions="*,*">
-
-					<!--First Row and Items Price-->
-					<StackPanel>
-						<TextBlock Text="04 Feb 2026, 18:18" Classes="smallText"/>
+						<!--Order Status-->
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="2 item/s from " Classes="standardText"/>
-							<TextBlock Text="ByteBuy" Classes="standardText, bold"/>
+							<Image Margin="0,0,5,0"
+								   Height="25"
+								   Width="25">
+								<Image.Source>
+									<SvgImage Source="{Binding StatusIcon}" />
+								</Image.Source>
+							</Image>
+							<TextBlock Text="{Binding StatusText}" Classes="status" />
 						</StackPanel>
-					</StackPanel>
-					<TextBlock Grid.Column="2" Text="999.00 PLN" HorizontalAlignment="Right" Classes="headerText, bold"/>
 
-					<!--Second Row and Line Items List-->
-					<Grid Grid.Row="1" Grid.ColumnSpan="2">
-						<TextBlock Text="Reserved for items"/>
+						<!--spacer-->
+						<Border Grid.Row="1"
+								Margin="0,10,0,10"
+								Opacity="0.2"
+								Grid.ColumnSpan="3"
+								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+						<!--Delivery Method-->
+						<StackPanel Grid.Row="3" Grid.Column="0">
+							<TextBlock Text="Delivery Method" Classes="headerText" Margin="0,0,0,5"/>
+							<TextBlock Text="{Binding OrderDelivery.DeliveryName}" Classes="standardText" />
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="Carrier Code: " Classes="standardText"/>
+								<TextBlock Text="{Binding OrderDelivery.CarrierCode}" Classes="standardText"/>
+							</StackPanel>
+						</StackPanel>
+
+						<!--Recipient Data-->
+						<StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+							<TextBlock Text="Recipient Data" Classes="headerText" Margin="0,0,0,5"/>
+							<TextBlock Text="{Binding Buyer.FullName}" Classes="standardText"/>
+							<TextBlock Text="{Binding Buyer.PhoneNumber}" Classes="standardText"/>
+							<TextBlock Text="{Binding Buyer.Email}" Classes="standardText"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Buyer.HomeAddress.City}" Classes="standardText"/>
+								<TextBlock Text=", "/>
+								<TextBlock Text="{Binding Buyer.HomeAddress.Street}" Classes="standardText"/>
+								<TextBlock Text=" "/>
+								<TextBlock Text="{Binding Buyer.HomeAddress.HouseNumber}" Classes="standardText"/>
+								<TextBlock Text=" "/>
+								<TextBlock Text="{Binding Buyer.HomeAddress.FlatNumber}" Classes="standardText"/>
+							</StackPanel>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Buyer.HomeAddress.PostalCity}" Classes="standardText"/>
+								<TextBlock Text=" "/>
+								<TextBlock Text="{Binding Buyer.HomeAddress.PostalCode}" Classes="standardText"/>
+								<TextBlock Text=" "/>
+								<TextBlock Text="{Binding Buyer.HomeAddress.Country}" Classes="standardText"/>
+							</StackPanel>
+						</StackPanel>
+
+						<!--Package Destination-->
+						<StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right">
+							<TextBlock Text="Package Destination" Classes="headerText" Margin="0,0,0,5"/>
+							<ContentControl Content="{Binding OrderDelivery}">
+								<ContentControl.DataTemplates>
+
+									<!--Courier Template-->
+									<DataTemplate DataType="{x:Type delivery:CourierDeliveryViewModel}">
+										<Grid Grid.RowDefinitions="*,*">
+											<StackPanel Orientation="Horizontal" Grid.Row="0">
+												<TextBlock Classes="standardText" Text="{Binding City}" />
+												<TextBlock Text=", "/>
+												<TextBlock Classes="standardText" Text="{Binding Street}"/>
+												<TextBlock Text=" "/>
+												<TextBlock Classes="standardText" Text="{Binding HouseNumber}"/>
+												<TextBlock Text=" "/>
+												<TextBlock Classes="standardText" Text="{Binding FlatNumber}" />
+											</StackPanel>
+											<StackPanel Orientation="Horizontal" Grid.Row="1">
+												<TextBlock Classes="standardText" Text="{Binding PostalCity}" />
+												<TextBlock Text=", "/>
+												<TextBlock Classes="standardText" Text="{Binding PostalCode}"/>
+											</StackPanel>
+										</Grid>
+									</DataTemplate>
+
+
+									<!--Parcel Locker Template-->
+									<DataTemplate DataType="{x:Type delivery:ParcelLockerDeliveryViewModel}">
+										<TextBlock Classes="standardText" Text="{Binding ParcelLockerId}" />
+									</DataTemplate>
+
+									<!--Pickup Point Tempalte-->
+									<DataTemplate DataType="{x:Type delivery:PickupPointDeliveryViewModel}">
+										<Grid Grid.RowDefinitions="*, *">
+											<StackPanel Orientation="Horizontal" Grid.Row="0">
+												<TextBlock Classes="standardText" Text="{Binding PickupPointName}" />
+												<TextBlock Text=", "/>
+												<TextBlock Classes="standardText" Text="{Binding PickupPointId}" />
+											</StackPanel>
+											<StackPanel Orientation="Horizontal" Grid.Row="1">
+												<TextBlock Classes="standardText" Text="{Binding PickupCity}" />
+												<TextBlock Text=", "/>
+												<TextBlock Classes="standardText" Text="{Binding PickupStreet}" />
+												<TextBlock Text=" "/>
+												<TextBlock Classes="standardText" Text="{Binding PickupLocalNumber}"/>
+											</StackPanel>
+										</Grid>
+
+									</DataTemplate>
+								</ContentControl.DataTemplates>
+							</ContentControl>
+							<!--<TextBlock Text="WAW123" Classes="standardText"/>-->
+						</StackPanel>
 					</Grid>
+				</Border>
 
-					<!--Spacer-->
-					<Border Grid.Row="2"
-							Opacity="0.2"
-							Margin="0,0,0,10"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+				<!-- Second Container -->
+				<Border Grid.Row="3" Classes="sectionBorder" Padding="20">
+					<Grid RowDefinitions="40,*,1,70,1,60,1,40"  ColumnDefinitions="*,*">
 
-					<StackPanel Grid.Row="3" MaxHeight="40">
-						<TextBlock Text="Shipment" Classes="headerText, bold"/>
-						<TextBlock Text="Inpost Parcel Locker" Classes="standardText"/>
-					</StackPanel>
-					<TextBlock Grid.Row="3"
-							   MaxHeight="40"
-							   Grid.Column="2"
-							   Text="25.00 PLN"
-							   HorizontalAlignment="Right"
-							   Classes="headerText, bold"/>
+						<!--First Row and Items Price-->
+						<StackPanel>
+							<TextBlock Text="{Binding PurchasedDate}" Classes="smallText"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding LinesCount}" Classes="standardText"/>
+								<TextBlock Text=" item/s from " Classes="standardText"/>
+								<TextBlock Text="{Binding SellerDisplayName}" Classes="standardText, bold"/>
+							</StackPanel>
+						</StackPanel>
+						<TextBlock Grid.Column="2"
+								   Text="{Binding TotalItemsCost.Display}"
+								   HorizontalAlignment="Right"
+								   Classes="headerText, bold"/>
 
-					<!--Spacer-->
-					<Border Grid.Row="4"
-							Opacity="0.2"
-							Margin="0,0,0,10"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+						<!--Second Row and Line Items List-->
 
-					<TextBlock Grid.Row="5" Text="Total" Classes="standardText, bold"/>
-					<TextBlock
+						<ItemsControl ItemsSource="{Binding Lines}" Grid.Row="1" Grid.ColumnSpan="2">
+							<ItemsControl.DataTemplates>
+								<!--Sale ORder Line-->
+								<DataTemplate DataType="{x:Type ordeline:SaleOrderLineViewModel}">
+									<Border Height="140" Classes="lineBorder" Grid.ColumnSpan="2"  Padding="15" Margin="0,10">
+										<Grid RowDefinitions="*,*" ColumnDefinitions="120,*,Auto">
+
+											<!-- Thumbnail -->
+											<Image
+											Grid.RowSpan="2"
+											Width="100"
+											Height="100"
+											Stretch="UniformToFill"
+											Source="{Binding Thumbnail.Preview}" />
+
+											<!-- Title -->
+											<TextBlock
+											Grid.Column="1"
+											Grid.Row="0"
+											Classes="standardText bold"
+											VerticalAlignment="Bottom"
+											Text="Test" />
+
+											<!-- Quantity and Price -->
+											<StackPanel
+											Grid.Column="1"
+											Grid.Row="1"
+											Orientation="Horizontal">
+
+												<TextBlock Classes="standardText" Text="{Binding Quantity}" />
+												<TextBlock Classes="standardText" Text=" x " />
+												<TextBlock Classes="standardText" Text="{Binding PricePerItem.Display}" />
+											</StackPanel>
+
+											<!-- Total -->
+											<TextBlock
+											Grid.Column="2"
+											Grid.Row="1"
+											HorizontalAlignment="Right"
+											Classes="standardText"
+											Text="{Binding Total.Display}" />
+										</Grid>
+									</Border>
+								</DataTemplate>
+
+								<!--Rent Order Line-->
+								<DataTemplate DataType="{x:Type ordeline:RentOrderLineViewModel}">
+									<Border Height="140" Classes="lineBorder" Grid.ColumnSpan="2"  Padding="15" Margin="0,10">
+										<Grid RowDefinitions="*,*" ColumnDefinitions="120,*,Auto">
+
+											<Image
+											Grid.RowSpan="2"
+											Width="100"
+											Height="100"
+											Stretch="UniformToFill"
+											Source="{Binding Thumbnail.Preview}" />
+
+											<TextBlock
+											Grid.Column="1"
+											Grid.Row="0"
+											Classes="standardText bold"
+											VerticalAlignment="Bottom"
+											Text="{Binding ItemTitle}" />
+
+											<StackPanel
+											Grid.Column="1"
+											Grid.Row="1"
+											Orientation="Horizontal">
+
+												<TextBlock Classes="standardText" Text="{Binding Quantity}" />
+												<TextBlock Classes="standardText" Text=" x " />
+												<TextBlock Classes="standardText" Text="{Binding RentalDays}" />
+												<TextBlock Classes="standardText" Text=" days x " />
+												<TextBlock Classes="standardText" Text="{Binding PricePerDay.Display}" />
+											</StackPanel>
+
+											<TextBlock
+											Grid.Column="2"
+											Grid.Row="1"
+											HorizontalAlignment="Right"
+											Classes="standardText"
+											Text="{Binding Total.Display}" />
+										</Grid>
+									</Border>
+								</DataTemplate>
+							</ItemsControl.DataTemplates>
+
+						</ItemsControl>
+
+
+
+						<!--Spacer-->
+						<Border Grid.Row="2"
+								Opacity="0.2"
+								Margin="0,0,0,1"
+								Grid.ColumnSpan="3"
+								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+						<!--Shipment-->
+						<StackPanel Grid.Row="3" VerticalAlignment="Center">
+							<TextBlock Text="Shipment" Classes="headerText, bold"/>
+							<TextBlock Text="{Binding OrderDelivery.DeliveryName}" Classes="standardText"/>
+						</StackPanel>
+						<TextBlock Grid.Row="3"
+								   VerticalAlignment="Center"
+								   Grid.Column="2"
+								   Text="{Binding OrderDelivery.Price.Display}"
+								   HorizontalAlignment="Right"
+								   Classes="headerText, bold"/>
+
+						<!--Spacer-->
+						<Border Grid.Row="4"
+								Opacity="0.2"
+								Grid.ColumnSpan="3"
+								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+
+						<!--Total-->
+						<TextBlock
+						VerticalAlignment="Center"
 						Grid.Row="5"
-						Grid.Column="2"
-						HorizontalAlignment="Right"
-						Text="1240,00 PLN"
+						Text="Total"
 						Classes="standardText, bold"/>
 
-					
-					<!--Spacer-->
-					<Border Grid.Row="6"
-							Opacity="0.2"
-							Margin="0,0,0,10"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+						<TextBlock
+						Grid.Row="5"
+						Grid.Column="2"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Right"
+						Text="{Binding TotalCost.Display}"
+						Classes="standardText, bold"/>
 
-					<TextBlock Grid.Row="7" Text="Export to PDF" Classes="standardText, bold"/>
-				</Grid>
-			</Border>
+						<!--Spacer-->
+						<Border Grid.Row="6"
+								Opacity="0.2"
+								Grid.ColumnSpan="3"
+								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+
+						<!--Export to pdf-->
+						<StackPanel Grid.Row="7" Orientation="Horizontal" VerticalAlignment="Bottom">
+							<Image
+							Source="{SvgImage /Assets/Images/regular/file-pdf-regular-full.svg}"
+							Width="30" Height="30" />
+							<TextBlock Margin="5,0" Text="Export to PDF" VerticalAlignment="Center" Classes="standardText, bold"/>
+						</StackPanel>
+					</Grid>
+				</Border>
+			</StackPanel>
 		</Grid>
 	</ScrollViewer>
 </UserControl>

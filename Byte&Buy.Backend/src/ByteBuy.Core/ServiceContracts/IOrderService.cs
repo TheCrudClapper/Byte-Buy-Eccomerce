@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ResultTypes;
 
@@ -9,6 +8,7 @@ public interface IOrderService
 {
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default);
 
+    Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId, CancellationToken ct = default);
     Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default);
 
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default);

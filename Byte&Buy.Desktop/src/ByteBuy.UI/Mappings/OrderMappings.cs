@@ -1,5 +1,6 @@
-﻿using ByteBuy.UI.ModelsUI.Money;
+﻿using ByteBuy.Services.DTO.Order.Enums;
 using ByteBuy.UI.ModelsUI.Order;
+using System;
 
 namespace ByteBuy.UI.Mappings;
 
@@ -17,6 +18,20 @@ public static class OrderMappings
             LinesCount = dto.LinesCount,
             PurchaseDate = dto.PurchasedDate,
             TotalCost = $"{dto.TotalCost.Amount} {dto.TotalCost.Currency}"
+        };
+    }
+
+    public static string MapOrderStatusIcon(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.AwaitingPayment => "avares://ByteBuy.UI/Assets/Images/regular/hourglass-end-solid-full.svg",
+            OrderStatus.Paid => "avares://ByteBuy.UI/Assets/Images/regular/coins-solid-full.svg",
+            OrderStatus.Canceled => "avares://ByteBuy.UI/Assets/Images/regular/ban-solid-full.svg",
+            OrderStatus.Delivered => "avares://ByteBuy.UI/Assets/Images/regular/truck-ramp-box-solid-full.svg",
+            OrderStatus.Returned => "avares://ByteBuy.UI/Assets/Images/regular/arrow-rotate-left-solid-full.svg",
+            OrderStatus.Shipped => "avares://ByteBuy.UI/Assets/Images/regular/truck-solid-full.svg",
+            _ => throw new NotSupportedException()
         };
     }
 }

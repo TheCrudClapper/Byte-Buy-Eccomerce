@@ -17,7 +17,7 @@
 			  ColumnDefinitions="35*, 5*, 60*">
 
 			<!--Page Title-->
-			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Employee"/>
+			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Employee"/>
 
 			<!-- Profile Picture Section -->
 			<Border Grid.Row="1"

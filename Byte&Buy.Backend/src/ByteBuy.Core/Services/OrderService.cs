@@ -4,7 +4,6 @@ using ByteBuy.Core.Domain.Exceptions;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
@@ -96,6 +95,18 @@ public class OrderService : IOrderService
     public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default)
     {
         var spec = new OrderDetailsResponseSpec(userId, orderId);
+        var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
+
+        return queryResult is null
+            ? Result.Failure<OrderDetailsResponse>(OrderErrors.NotFound)
+            : queryResult.ToOrderDetailResponse();
+    }
+
+    public async Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId, CancellationToken ct = default)
+    {
+        var companyId = await _companyRepository.GetCompanyId(ct);
+
+        var spec = new CompanyOrderDetalsResponseSpec(companyId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
 
         return queryResult is null

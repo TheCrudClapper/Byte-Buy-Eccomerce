@@ -1,7 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Public.Money;
+using ByteBuy.Core.DTO.Public.Order.OrderLine;
 
-namespace ByteBuy.Core.DTO.Public.Order.Common;
+namespace ByteBuy.Core.DTO.Public.Order;
 
 public record UserOrderListResponse(
     Guid OrderId,

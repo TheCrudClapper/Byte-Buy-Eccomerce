@@ -10,7 +10,7 @@
 	<Style Selector="TextBlock.status">
 		<Setter Property="FontSize" Value="18"/>
 		<Setter Property="FontWeight" Value="600"/>
-		<Setter Property="FontFamily" Value="Open Sans Bold"/>
+		<Setter Property="FontFamily" Value="OpenSansBold"/>
 	</Style>
 
 	<Style Selector="TextBlock.headerText">
@@ -34,4 +34,13 @@
 		<Setter Property="FontFamily" Value="OpenSansMedium"/>
 		<Setter Property="FontWeight" Value="500"/>
 	</Style>
+
+	<Style Selector="Border.lineBorder">
+		<Setter Property="Padding" Value="10"/>
+		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+		<Setter Property="CornerRadius" Value="4"/>
+	</Style>
 </Styles>
+

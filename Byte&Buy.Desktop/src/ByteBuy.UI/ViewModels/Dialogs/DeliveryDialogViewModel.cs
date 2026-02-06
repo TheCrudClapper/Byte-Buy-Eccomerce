@@ -16,7 +16,7 @@ namespace ByteBuy.UI.ViewModels.Dialogs;
 public partial class DeliveryDialogViewModel(
     IDeliveryService deliveryService,
     IDeliveryCarrierService carrierService)
-    : DialogSingleViewModel("Delivery")
+    : DialogSingleViewModel("OrderDelivery")
 {
     #region MVVM Properties
     [ObservableProperty]

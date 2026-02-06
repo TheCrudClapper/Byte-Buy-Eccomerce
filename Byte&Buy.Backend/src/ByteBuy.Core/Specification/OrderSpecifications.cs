@@ -51,6 +51,17 @@ public static class OrderSpecifications
         }
     }
 
+    public sealed class CompanyOrderDetalsResponseSpec : Specification<Order, OrderDetailsQuery>
+    {
+        public CompanyOrderDetalsResponseSpec(Guid companyId, Guid orderId)
+        {
+            Query.AsNoTracking()
+                .Where(o => o.Id == orderId 
+                    && ( o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company ))
+                .Select(OrderMappings.OrderDetailsQueryProjection);
+        }
+    }
+
     /// <summary>
     /// Specification that gets a list of orders for company
     /// </summary>

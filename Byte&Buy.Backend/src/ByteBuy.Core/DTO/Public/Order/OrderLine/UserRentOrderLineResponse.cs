@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.DTO.Public.Money;
-using ByteBuy.Core.DTO.Public.Order.Common;
 
-namespace ByteBuy.Core.DTO.Public.Order.Rent;
+namespace ByteBuy.Core.DTO.Public.Order.OrderLine;
 
 public record UserRentOrderLineResponse : UserOrderLineResponse
 {

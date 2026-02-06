@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.InfraContracts.HttpClients;
+﻿using ByteBuy.Services.DTO.Order;
+using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -13,4 +14,7 @@ public class OrderService(IOrderHttpClient httpClient) : IOrderService
 
     public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrderList(CancellationToken ct = default)
         => await httpClient.GetCompanyOrdersListAsync();
+
+    public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId)
+        => await httpClient.GetCompanyOrderDetailsAsync(orderId);
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
 public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deliveryCarrierService)
-    : DialogSingleViewModel("Delivery Carrier")
+    : DialogSingleViewModel("OrderDelivery Carrier")
 {
     #region MVVM Properties
     [ObservableProperty]

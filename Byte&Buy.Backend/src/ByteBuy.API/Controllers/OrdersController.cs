@@ -1,6 +1,5 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.DTO.Public.Order.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +29,10 @@ public class OrdersController : BaseApiController
     [HttpGet("details/{orderId:guid}")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
         => HandleResult(await _orderService.GetOrderDetailsAsync(CurrentUserId, orderId, ct));
+
+    [HttpGet("details/{orderId:guid}/company")]
+    public async Task<ActionResult<OrderDetailsResponse>> GetCompanyOrderDetails(Guid orderId, CancellationToken ct)
+        => HandleResult(await _orderService.GetCompanyOrderDetailsAsync(orderId, ct));
 
     [HttpPut("{orderId:guid}/cancel")]
     public async Task<ActionResult<UpdatedResponse>> CancelOrder(Guid orderId)

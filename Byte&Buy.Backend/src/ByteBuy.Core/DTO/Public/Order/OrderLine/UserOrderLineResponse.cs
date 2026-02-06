@@ -1,10 +1,8 @@
 ﻿using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;
-using ByteBuy.Core.DTO.Public.Order.Rent;
-using ByteBuy.Core.DTO.Public.Order.Sale;
 using System.Text.Json.Serialization;
 
-namespace ByteBuy.Core.DTO.Public.Order.Common;
+namespace ByteBuy.Core.DTO.Public.Order.OrderLine;
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 [JsonDerivedType(typeof(UserSaleOrderLineResponse), "sale")]
