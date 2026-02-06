@@ -3,10 +3,11 @@ import { Guid } from 'guid-typescript';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-sale-create',
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './sale-create.html',
   styleUrls: [
     './sale-create.scss',

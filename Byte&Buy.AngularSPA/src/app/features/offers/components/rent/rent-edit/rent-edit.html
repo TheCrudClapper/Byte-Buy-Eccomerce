@@ -234,15 +234,15 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="content-section-title">Location*</p>
-                        <p class="content-section-description">Location is determined on default address, others will
+                        <p class="content-section-description">Location is determined on your home address, others will
                             see it.</p>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12">
                         <div class="inner-container text-center">
-                            <i class="fa-solid fa-signs-post fa-3x align-middle" style="color: #ffffff;"></i>
+                            <i class="fa-solid fa-map-location-dot fa-2x align-middle me-2"></i>
                             @if(facade.homeAddress(); as homeAddress){
                             <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
                                 homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
@@ -250,12 +250,6 @@
                             <p class="d-inline align-middle">Home address is required to be set, before publishing.</p>
                             }
                         </div>
-                        <div class="row">
-                            <div class="col-12 pt-2 fs-14-px">
-                                <a class="link">Change Address</a>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>

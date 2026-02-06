@@ -85,16 +85,13 @@
                 </div>
             </div>
             <hr>
-            <div class="col-12 d-flex justify-content-between">
+            <div class="col-12">
                 <span class="fs-14-px open-sans-bold">Paid</span>
                 <span class="fs-14-px open-sans-bold">
                     {{ rental.totalPricePaid.amount | number:'1.2-2'}} {{ rental.totalPricePaid.currency }}
                 </span>
             </div>
             <hr>
-            <div class="col-12 text-center">
-                <span class="link"></span>
-            </div>
         </div>
         }
         @if(rentals.length === 0){

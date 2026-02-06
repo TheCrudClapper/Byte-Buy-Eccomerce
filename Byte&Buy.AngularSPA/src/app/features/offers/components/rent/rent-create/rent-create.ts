@@ -3,10 +3,11 @@ import { Guid } from 'guid-typescript';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-rent-create',
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './rent-create.html',
   standalone: true,
   styleUrls: [

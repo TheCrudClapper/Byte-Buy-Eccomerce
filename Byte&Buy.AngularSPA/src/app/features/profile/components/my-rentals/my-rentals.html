@@ -80,9 +80,11 @@
         </span>
     </div>
     <hr>
-    <div class="col-12 text-center">
-        <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
-    </div>
+    @if(rental.status === RentalStatus.Active || rental.status === RentalStatus.Overdue){
+        <div class="col-12 text-center">
+            <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
+        </div>
+    }
 </div>
 }
 @if(rentals.length === 0){

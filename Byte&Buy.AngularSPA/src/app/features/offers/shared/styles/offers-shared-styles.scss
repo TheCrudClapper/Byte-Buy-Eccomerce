@@ -78,18 +78,6 @@ td{
   font-family: 'open-sans-medium';
 }
 
-a{
-  font-family: 'open-sans-medium';
-  text-decoration: none;
-  transition: color 0.3s;
-  color: var(--text-primary);
-}
-
-a:hover{
-  cursor: pointer;
-  color: var(--primary-accent);  
-}
-
 .sticky-top{
   z-index: 1 !important;
 }
