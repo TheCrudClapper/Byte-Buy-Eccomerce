@@ -29,5 +29,6 @@ public enum ApplicationPageNames
     DeliveryCarriers,
     Orders,
     OrderDetails,
-    Rentals
+    Rentals,
+    RentalDetails
 }

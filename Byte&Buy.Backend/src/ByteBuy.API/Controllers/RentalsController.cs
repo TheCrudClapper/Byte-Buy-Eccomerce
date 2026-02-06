@@ -21,7 +21,7 @@ public class RentalsController : BaseApiController
         => HandleResult(await _rentalService.GetUserRentalsAsync(CurrentUserId, ct));
 
     [HttpGet("lender")]
-    public async Task<ActionResult<IReadOnlyCollection<UserRentalLenderResponse>>> GetLenderRentals(CancellationToken ct = default)
+    public async Task<ActionResult<IReadOnlyCollection<RentalLenderResponse>>> GetLenderRentals(CancellationToken ct = default)
         => HandleResult(await _rentalService.GetSellerRentalsAsync(CurrentUserId, ct));
 
     [HttpPut("{rentalId:guid}/return")]
@@ -31,4 +31,8 @@ public class RentalsController : BaseApiController
     [HttpGet("company")]
     public async Task<ActionResult<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentals(CancellationToken ct = default)
        => HandleResult(await _rentalService.GetCompanyRentalsListAsync(CurrentUserId, ct));
+
+    [HttpGet("{rentalId:guid}/company")]
+    public async Task<ActionResult<RentalLenderResponse>> GetCompanyRental(Guid rentalId, CancellationToken ct = default)
+        => HandleResult(await _rentalService.GetCompanyRentalAsync(rentalId, ct));
 }

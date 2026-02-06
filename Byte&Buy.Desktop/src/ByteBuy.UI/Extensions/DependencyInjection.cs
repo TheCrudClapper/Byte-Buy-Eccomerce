@@ -67,6 +67,7 @@ public static class DependencyInjection
         services.AddTransient<OrdersPageViewModel>();
         services.AddTransient<OrderDetailsPageViewModel>();
         services.AddTransient<RentalsPageViewModel>();
+        services.AddTransient<RentalDetailsPageViewModel>();
 
 
         //Dialgos View Models

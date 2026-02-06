@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RentalApiService } from '../../../../core/clients/rental/rental-api-service';
-import { UserRentalLenderResponse } from '../../../../core/dto/rental/user-rental-lender-response';
+import { RentalLenderResponse } from '../../../../core/dto/rental/rental-lender-response';
 import { environment } from '../../../../../environments/environment';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { DatePipe, DecimalPipe } from '@angular/common';
@@ -19,7 +19,7 @@ export class ClientRentals implements OnInit {
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
 
-  rentalsList = signal<UserRentalLenderResponse[] | undefined>(undefined);
+  rentalsList = signal<RentalLenderResponse[] | undefined>(undefined);
   readonly RentalStatus = RentalStatus;
   
   ngOnInit(): void {

@@ -2,7 +2,7 @@ import { MoneyDto } from "../common/money-dto";
 import { ImageThumbnailDto } from "../image/image-thumbnail";
 import { RentalStatus } from "./enum/rental-status";
 
-export interface UserRentalLenderResponse {
+export interface RentalLenderResponse {
   id: string;
   status: RentalStatus;
   itemName: string;

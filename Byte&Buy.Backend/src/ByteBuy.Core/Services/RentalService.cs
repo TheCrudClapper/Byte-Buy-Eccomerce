@@ -17,15 +17,27 @@ public class RentalService : IRentalService
         _companyRepository = companyRepository;
     }
 
+    public async Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId, CancellationToken ct = default)
+    {
+        var companyId = await _companyRepository.GetCompanyId(ct);
+
+        var spec = new CompanyRentalLenderSpec(companyId, rentalId);
+        var dto = await _rentalRepository.GetBySpecAsync(spec, ct);
+
+        return dto is null
+            ? Result.Failure<RentalLenderResponse>(RentalErrors.NotFound)
+            : dto;
+    }
+
     public async Task<Result<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentalsListAsync(Guid sellerId, CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
 
-        var spec = new CompanyRentalLenderSpec(companyId);
+        var spec = new CompanyRentalListLenderSpec(companyId);
         return await _rentalRepository.GetListBySpecAsync(spec, ct);
     }
 
-    public async Task<Result<IReadOnlyCollection<UserRentalLenderResponse>>> GetSellerRentalsAsync(Guid sellerId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<RentalLenderResponse>>> GetSellerRentalsAsync(Guid sellerId, CancellationToken ct = default)
     {
         var spec = new UserRentalLenderSpec(sellerId);
         return await _rentalRepository.GetListBySpecAsync(spec, ct);

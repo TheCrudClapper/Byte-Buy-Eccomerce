@@ -8,8 +8,8 @@ namespace ByteBuy.Core.Mappings;
 
 public static class RentalMappings
 {
-    public static Expression<Func<Rental, UserRentalLenderResponse>> UserRentalLenderResponseProjection
-        => r => new UserRentalLenderResponse(
+    public static Expression<Func<Rental, RentalLenderResponse>> RentalLenderResponseProjection
+        => r => new RentalLenderResponse(
             r.Id,
             r.Status,
             r.ItemName,

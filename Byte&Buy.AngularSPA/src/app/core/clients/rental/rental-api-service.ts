@@ -5,7 +5,7 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { UserRentalBorrowerResponse } from '../../dto/rental/user-rental-borrower-response';
 import { API_ENDPOINTS } from '../../constants/api-constants';
-import { UserRentalLenderResponse } from '../../dto/rental/user-rental-lender-response';
+import { RentalLenderResponse } from '../../dto/rental/rental-lender-response';
 import { UpdatedResponse } from '../../dto/common/updated-response';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class RentalApiService {
     return this.httpClient.get<UserRentalBorrowerResponse[]>(`${this.baseUrl}${API_ENDPOINTS.rentals.borrowerList}`);
   }
 
-  getLenderRentals(): Observable<UserRentalLenderResponse[]> {
-    return this.httpClient.get<UserRentalLenderResponse[]>(`${this.baseUrl}${API_ENDPOINTS.rentals.lenderList}`);
+  getLenderRentals(): Observable<RentalLenderResponse[]> {
+    return this.httpClient.get<RentalLenderResponse[]>(`${this.baseUrl}${API_ENDPOINTS.rentals.lenderList}`);
   }
 
   returnRental(id: Guid): Observable<UpdatedResponse> {

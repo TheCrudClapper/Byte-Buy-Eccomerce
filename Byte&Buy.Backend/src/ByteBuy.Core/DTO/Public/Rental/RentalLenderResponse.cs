@@ -7,7 +7,7 @@ namespace ByteBuy.Core.DTO.Public.Rental;
 /// <summary>
 /// Dto used in displaying a list of rentals from perspective of seller/lender
 /// </summary>
-public sealed record UserRentalLenderResponse(
+public sealed record RentalLenderResponse(
     Guid Id,
     RentalStatus Status,
     string ItemName,
