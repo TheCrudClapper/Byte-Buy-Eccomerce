@@ -12,7 +12,7 @@
 
 	<UserControl.Styles>
 		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
-		<StyleInclude Source="../Styles/OrderDetailsStyles.axaml" />
+		<StyleInclude Source="../Styles/OrderRentalStyles.axaml" />
 	</UserControl.Styles>
 
 
@@ -131,7 +131,6 @@
 									</DataTemplate>
 								</ContentControl.DataTemplates>
 							</ContentControl>
-							<!--<TextBlock Text="WAW123" Classes="standardText"/>-->
 						</StackPanel>
 					</Grid>
 				</Border>

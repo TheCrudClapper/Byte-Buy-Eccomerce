@@ -1,17 +1,19 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Order;
 using ByteBuy.UI.ModelsUI.Rental;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class RentalsPageViewModel : ViewModelMany<RentalListItem, IRentalService>
+public partial class RentalsPageViewModel : ViewModelMany<RentalListItem, IRentalService>
 {
     public RentalsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IRentalService service)
         : base(alert, navigation, dialogNavigation, service)
@@ -31,6 +33,18 @@ public class RentalsPageViewModel : ViewModelMany<RentalListItem, IRentalService
             .ToList();
 
         Items = new ObservableCollection<RentalListItem>(list);
+    }
+
+
+
+    [RelayCommand]
+    public async Task OpenDetailsPage(RentalListItem listItem)
+    {
+        await Navigation.NavigateToAsync(ApplicationPageNames.RentalDetails, async vm =>
+        {
+            if (vm is RentalDetailsPageViewModel rentalVm)
+                await rentalVm.InitializeAsync(listItem.Id);
+        });
     }
 
     protected override Task AddAsync()

@@ -16,7 +16,7 @@
 		<dialogHostAvalonia:DialogHostStyles />
 		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
 		<StyleInclude Source="Styles/DialogHostStyleOverride.axaml"/>
-		<StyleInclude Source="Styles/OrderDetailsStyles.axaml"/>
+		<StyleInclude Source="Styles/OrderRentalStyles.axaml"/>
 	</Application.Styles>
 
 	<Application.Resources>
