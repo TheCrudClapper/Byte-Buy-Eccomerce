@@ -33,7 +33,6 @@ export class CartPage implements OnInit {
     this.cartApiService.getCart().subscribe({
       next: (data) => {
         this.cartModel.set(toCartModel(data))
-        console.log(data);
       },
       error: (err: ProblemDetails) => console.log(err.detail)
     });

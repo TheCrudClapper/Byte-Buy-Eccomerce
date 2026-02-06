@@ -9,7 +9,7 @@
 
             <p class="d-block">
                 <i class="fa-regular fa-user" style="color: #ffffff;"></i>
-                <span class="ms-2 fw-bold">Sells: </span>
+                <span class="ms-2">Sells: </span>
                 <span>
                     {{ seller.type === 'company' ? seller.companyName : seller.firstName }}
                 </span>
@@ -17,9 +17,9 @@
 
             <p class="d-block">
                 <i class="fa-regular fa-envelope" style="color: #ffffff;"></i>
-                <span class="ms-2 fw-bold">Email: </span>
+                <span class="ms-2">Email: </span>
                 <span>
-                    <a [href]="`mailto:${seller.type == 'company' ? seller.companyEmail :  seller.email}`">
+                    <a class="link" [href]="`mailto:${seller.type == 'company' ? seller.companyEmail :  seller.email}`">
                         {{ seller.type === 'company' ? seller.companyEmail : seller.email }}
                     </a>
 
@@ -28,17 +28,16 @@
 
             <p class="d-block" *ngIf="seller && 'accountCreatedDate' in seller">
                 <i class="fa-solid fa-hourglass" style="color: #ffffff;"></i>
-                <span class="ms-2 fw-bold">Account created: </span>
-                <span>{{ seller.accountCreatedDate | date}}</span>
+                <span class="ms-2">Account created: </span>
+                <span class="">{{ seller.accountCreatedDate | date}}</span>
             </p>
 
         </div>
         <div class="col-6">
-
             <p class="d-block">
                 <i class="fa-solid fa-map-location-dot" style="color: #ffffff;"></i>
                 <span class="ms-2">
-                    <a [href]="googleMapsLink()" target="_blank">
+                    <a class="link" [href]="googleMapsLink()" target="_blank">
                         {{ seller.city + ', ' + seller.postalCity + ' ' + seller.postalCode }}
                     </a>
                 </span>
@@ -46,9 +45,9 @@
 
             <p class="d-block">
                 <i class="fa-solid fa-phone" style="color: #ffffff;"></i>
-                <span class="ms-2 fw-bold">Phone: </span>
+                <span class="ms-2">Phone: </span>
                 <span>
-                    <a [href]="`tel:${seller.phone}`">
+                    <a class="link" [href]="`tel:${seller.phone}`">
                         {{ seller.phone}}
                     </a>
                 </span>

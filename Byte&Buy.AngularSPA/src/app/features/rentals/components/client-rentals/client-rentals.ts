@@ -26,7 +26,6 @@ export class ClientRentals implements OnInit {
     this.rentalApiSerivce.getLenderRentals().subscribe({
       next: data => {
         this.rentalsList.set(data) 
-        console.log(data);
       },
       error: (err) => this.toastService.error(err?.detail ?? "Failed to fetch your rented offers")
     });

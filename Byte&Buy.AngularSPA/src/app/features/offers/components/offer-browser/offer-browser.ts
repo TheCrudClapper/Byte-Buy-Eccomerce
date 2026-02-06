@@ -28,7 +28,6 @@ export class OfferBrowser implements OnInit {
     this.offerApiService.browseOffers().subscribe({
       next: (data) => {
         this.offers.set(data);
-        console.log(data);
       }
     })
   }
