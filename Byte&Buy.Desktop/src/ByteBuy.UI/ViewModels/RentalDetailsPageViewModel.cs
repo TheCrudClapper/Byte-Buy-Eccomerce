@@ -59,6 +59,7 @@ public partial class RentalDetailsPageViewModel : PageViewModel
         IImageService imageService) : base(alert)
     {
         _rentalService = rentalService;
+        _imageService = imageService;
     }
 
     public async Task InitializeAsync(Guid rentalId)
@@ -98,6 +99,6 @@ public partial class RentalDetailsPageViewModel : PageViewModel
         using var ms = new MemoryStream(bytes);
         var bitmap = new Bitmap(ms);
 
-        ImageThumbnail.Preview = bitmap; ;
+        ImageThumbnail.Preview = bitmap;
     }
 }

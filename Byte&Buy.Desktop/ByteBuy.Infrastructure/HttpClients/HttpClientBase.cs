@@ -89,7 +89,7 @@ public abstract class HttpClientBase
             return Result<T>.Fail(ApiErrors.RequestFailed);
         }
     }
-    protected async Task<Result<T>> PutAsync<T>(string resource, HttpContent content)
+    protected async Task<Result<T>> PutAsync<T>(string resource, HttpContent? content)
     {
         try
         {

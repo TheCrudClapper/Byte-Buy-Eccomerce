@@ -1,5 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using ByteBuy.Services.DTO.Order;
+using ByteBuy.Services.DTO.Order.Enums;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
@@ -7,6 +8,8 @@ using ByteBuy.UI.ViewModels.Order.Buyer;
 using ByteBuy.UI.ViewModels.Order.OrderDelivery;
 using ByteBuy.UI.ViewModels.Order.OrderLine;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,19 +20,52 @@ namespace ByteBuy.UI.ViewModels;
 public partial class OrderDetailsPageViewModel : PageViewModel
 {
     #region MVVM Fields
-    public string StatusText { get; set; } = null!;
-    public string StatusIcon { get; set; } = null!;
 
-    public string PurchasedDate { get; set; } = null!;
-    public string SellerDisplayName { get; set; }  = null!;
-    public int LinesCount { get; set; }
+    [ObservableProperty]
+    public Guid _orderId;
 
-    public MoneyViewModel TotalItemsCost { get; set; } = null!;
-    public MoneyViewModel TotalCost { get; set; } = null!;
+    [ObservableProperty]
+    public string _purchasedDate = null!;
 
-    public OrderDeliveryDetailsViewModel OrderDelivery { get; set; } = null!;
-    public BuyerViewModel Buyer { get; set; } = null!;
-    public IReadOnlyCollection<OrderLineViewModel> Lines { get; set; } = [];
+    [ObservableProperty]
+    public string _sellerDisplayName = null!;
+
+    [ObservableProperty]
+    public int _linesCount;
+
+    [ObservableProperty]
+    OrderStatus _status;
+
+    [ObservableProperty]
+    public MoneyViewModel _totalItemsCost = null!;
+
+    [ObservableProperty]
+    public MoneyViewModel _totalCost = null!;
+
+    [ObservableProperty]
+    public OrderDeliveryDetailsViewModel _orderDelivery =  null!;
+
+    [ObservableProperty]
+    public BuyerViewModel _buyer = null!;
+
+    [ObservableProperty]
+    public IReadOnlyCollection<OrderLineViewModel> _lines  = [];
+
+    public bool CanShip => Status == OrderStatus.Paid;
+    public bool CanDeliver => Status == OrderStatus.Shipped;
+
+    public string StatusText => Status switch
+    {
+        OrderStatus.AwaitingPayment => "Awaiting Payment",
+        OrderStatus.Paid => "Paid",
+        OrderStatus.Shipped => "Shipped",
+        OrderStatus.Delivered => "Delivered",
+        OrderStatus.Canceled => "Cancelled",
+        OrderStatus.Returned => "Returned",
+        _ => "Unknown"
+    };
+    public string StatusIcon
+    => OrderMappings.MapOrderStatusIcon(Status);
 
     #endregion
 
@@ -54,10 +90,9 @@ public partial class OrderDetailsPageViewModel : PageViewModel
         await FetchImagePreviewAsync();
     }
 
-    public async void BuildViewModel(OrderDetailsResponse dto)
+    public void BuildViewModel(OrderDetailsResponse dto)
     {
-        StatusText = dto.Status.ToString();
-        StatusIcon = OrderMappings.MapOrderStatusIcon(dto.Status);
+        OrderId = dto.Id;
         SellerDisplayName = dto.SellerDisplayName;
         LinesCount = dto.LinesCount;
         TotalItemsCost = new MoneyViewModel(dto.TotalItemsCost);
@@ -65,16 +100,43 @@ public partial class OrderDetailsPageViewModel : PageViewModel
         OrderDelivery = OrderDeliveryDetailsViewModel.From(dto.DeliveryDetails);
         Buyer = new BuyerViewModel(dto.BuyerSnapshot);
         PurchasedDate = dto.PurchasedDate.ToString("dd/MM/yyyy, HH:mm");
-
+        Status = dto.Status;
         Lines = dto.Lines
             .Select(OrderLineViewModel.From)
             .ToList();
     }
 
+    [RelayCommand]
+    public async Task ShipOrder()
+    {
+        if (!CanShip)
+            return;
+
+        var result = await _orderService.ShipOrder(OrderId);
+        var (ok, value) = HandleResult(result, "Successfully shipped order.");
+        if (!ok || value is null)
+            return;
+
+        Status = OrderStatus.Shipped;
+    }
+
+    [RelayCommand]
+    public async Task DeliverOrder()
+    {
+        if (!CanDeliver)
+            return;
+
+        var result = await _orderService.DeliverOrder(OrderId);
+        var (ok, value) = HandleResult(result, "Successfully shipped order.");
+        if (!ok || value is null) return;
+
+        Status = OrderStatus.Delivered;
+    }
+
     // Fetching images from static resource -> saving to mem -> bitmap -> assign to line
     public async Task FetchImagePreviewAsync()
     {
-        if (Lines is null || !Lines.Any())
+        if (Lines is null || Lines.Count < 1)
             return;
 
         var tasks = Lines
@@ -92,5 +154,13 @@ public partial class OrderDetailsPageViewModel : PageViewModel
             });
 
         await Task.WhenAll(tasks);
+    }
+
+    partial void OnStatusChanged(OrderStatus value)
+    {
+        OnPropertyChanged(nameof(StatusText));
+        OnPropertyChanged(nameof(StatusIcon));
+        OnPropertyChanged(nameof(CanShip));
+        OnPropertyChanged(nameof(CanDeliver));
     }
 }
