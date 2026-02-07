@@ -127,10 +127,17 @@
 					<Grid RowDefinitions="auto, auto"
 						  ColumnDefinitions="*,*">
 						<StackPanel Grid.Row="0" Margin="0,0,0,10">
+
 							<TextBlock Classes="sectionText"
 									   Text="Name and Stock Quantity"/>
+
 							<TextBlock Classes="sectionHelperText"
-									   Text="Choose category and condition of your item"/>
+									   IsVisible="{Binding !IsEditMode}"
+									   Text="Provide name and stock quantity of item."/>
+
+							<TextBlock IsVisible="{Binding IsEditMode}"
+									   Classes="sectionHelperText"
+									   Text="Provide name and additional stock quantity of item."/>
 						</StackPanel>
 
 						<TextBox Grid.Row="1"
@@ -139,11 +146,30 @@
 								 Text="{Binding Name}"
 								 HorizontalAlignment="Stretch"/>
 
-						<TextBox Grid.Row="1"
-								 Grid.Column="1"
-								 Text="{Binding StockQuantity}"
-								 Margin="10,0,0,0"
-								 HorizontalAlignment="Stretch"/>
+						<TextBox
+							Grid.Column="1"
+							Grid.Row="1"
+							IsVisible="{Binding !IsEditMode}"
+							Text="{Binding StockQuantity}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Stretch"/>
+
+						<!--Visible only in edit mode-->
+						<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="30*, 70*" IsEnabled="{Binding IsEditMode}">
+							<TextBox
+							Grid.Column="0"
+							IsEnabled="false"
+							Text="{Binding CurrentStockQuantity}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Stretch"/>
+
+							<TextBox
+							Grid.Column="1"
+							Grid.Row="1"
+							Text="{Binding StockQuantity}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Stretch"/>
+						</Grid>
 					</Grid>
 				</Border>
 
@@ -158,7 +184,7 @@
 							<TextBlock Classes="sectionText"
 									   Text="Category and Condition"/>
 							<TextBlock Classes="sectionHelperText"
-									   Text="Choose category and condition of your item"/>
+									   Text="Choose category and condition of your item."/>
 						</StackPanel>
 
 						<ComboBox Grid.Row="1"
@@ -199,7 +225,7 @@
 							<TextBlock Classes="sectionText"
 									   Text="Description"/>
 							<TextBlock Classes="sectionHelperText" HorizontalAlignment="Left"
-									   Text="Give detailed info about item, to avoid customer questions"/>
+									   Text="Describe what you want to add, its pros and cons to avoid customer questions."/>
 						</StackPanel>
 						<StackPanel Grid.Row="1">
 							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

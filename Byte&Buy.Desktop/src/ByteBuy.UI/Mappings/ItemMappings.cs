@@ -36,7 +36,7 @@ public static class ItemMappings
     public static void MapFromResponse(this ItemPageViewModel vm, ItemResponse response)
     {
         vm.Description = response.Description;
-        vm.StockQuantity = response.StockQuantity;
+        vm.CurrentStockQuantity = response.StockQuantity;
         vm.Name = response.Name;
         vm.SelectedCategory = vm.Categories
             .FirstOrDefault(c => c.Id == response.CategoryId);

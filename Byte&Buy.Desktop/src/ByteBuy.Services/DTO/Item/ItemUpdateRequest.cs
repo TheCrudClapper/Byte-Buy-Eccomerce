@@ -7,8 +7,6 @@ public sealed record ItemUpdateRequest(
       Guid ConditionId,
       string Name,
       string Description,
-      int StockQuantity,
-
+      int AdditionalStockQuantity,
       IList<ImageAddRequest> NewImages,
-      IList<ExistingImageUpdateRequest> ExistingImages
-    );
+      IList<ExistingImageUpdateRequest> ExistingImages);

@@ -27,9 +27,9 @@ public static class ItemErrors
         "Item.StockQuantity",
         "Quantity must be at least 1.");
 
-    public static readonly Error StockUpdateQuantityInvalid = Error.Validation(
+    public static readonly Error AdditionalStockUpdateQuantityInvalid = Error.Validation(
         "Item.StockQuantity",
-        "Quantity must be 0 or positive");
+        "Additional Quantity must be 0 or positive");
 
     public static readonly Error ImageNotFound = Error.Validation(
         "Item.Image",

@@ -77,11 +77,10 @@ public class ItemsService : IItemsService
             request.Description,
             request.CategoryId,
             request.ConditionId,
-            request.StockQuantity,
+            request.AdditionalStockQuantity,
             draftsResult.Value,
             request.ExistingImages
                 .Select(i => i.ToExistingImageUpdate()));
-
 
         if (updateResult.IsFailure)
         {

@@ -139,18 +139,18 @@ public class Item : AuditableEntity, ISoftDeletable
         string description,
         Guid categoryId,
         Guid conditionId,
-        int stockQuantity,
+        int additionalStockQuantity,
         IEnumerable<ImageDraft>? newImages,
         IEnumerable<ExistingImageUpdate> existingImages)
     {
-        if (stockQuantity < 0)
-            return Result.Failure(ItemErrors.StockUpdateQuantityInvalid);
+        if (additionalStockQuantity < 0)
+            return Result.Failure(ItemErrors.AdditionalStockUpdateQuantityInvalid);
 
         var validationResult = ValidateCommon(name, description);
         if (validationResult.IsFailure)
             return Result.Failure(validationResult.Error);
 
-        return UpdateInternal(name, description, categoryId, conditionId, stockQuantity, newImages, existingImages);
+        return UpdateInternal(name, description, categoryId, conditionId, additionalStockQuantity, newImages, existingImages);
     }
 
 
@@ -159,7 +159,7 @@ public class Item : AuditableEntity, ISoftDeletable
         string description,
         Guid categoryId,
         Guid conditionId,
-        int stockQuantity,
+        int additionalStockQuantity,
         IEnumerable<ImageDraft>? newImages,
         IEnumerable<ExistingImageUpdate> existingImages)
     {
@@ -167,7 +167,7 @@ public class Item : AuditableEntity, ISoftDeletable
         Description = description;
         CategoryId = categoryId;
         ConditionId = conditionId;
-        StockQuantity = stockQuantity;
+        StockQuantity += additionalStockQuantity;
 
         if (newImages is not null && newImages.Any())
         {

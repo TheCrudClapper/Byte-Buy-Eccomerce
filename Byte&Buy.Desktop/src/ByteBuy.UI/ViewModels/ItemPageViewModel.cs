@@ -32,6 +32,9 @@ public partial class ItemPageViewModel : ViewModelSingle
     private int _stockQuantity;
 
     [ObservableProperty]
+    private int _currentStockQuantity;
+
+    [ObservableProperty]
     [Required(ErrorMessage = "You need to select category")]
     private SelectListItemResponse<Guid>? _selectedCategory;
 
