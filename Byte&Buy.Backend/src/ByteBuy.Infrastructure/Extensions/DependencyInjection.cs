@@ -45,7 +45,6 @@ public static class DependencyInjection
         services.AddScoped<IRentalRepository, RentalRepository>();
 
 
-
         //Hangfire Services
         services.AddScoped<IRentalStatusService, RentalStatusService>();
 
