@@ -16,7 +16,7 @@ public static class OrderMappings
             BuyerEmail = dto.BuyerEmail,
             BuyerFullName = dto.BuyerFullName,
             LinesCount = dto.LinesCount,
-            PurchaseDate = dto.PurchasedDate,
+            PurchaseDate = dto.PurchasedDate.ToLocalTime().ToString("dd/MM/yyyy"),
             TotalCost = $"{dto.TotalCost.Amount} {dto.TotalCost.Currency}"
         };
     }
@@ -32,6 +32,20 @@ public static class OrderMappings
             OrderStatus.Returned => "avares://ByteBuy.UI/Assets/Images/regular/arrow-rotate-left-solid-full.svg",
             OrderStatus.Shipped => "avares://ByteBuy.UI/Assets/Images/regular/truck-solid-full.svg",
             _ => throw new NotSupportedException()
+        };
+    }
+
+    public static string MapOrderStatusText(OrderStatus status)
+    {
+        return status switch
+        {
+            OrderStatus.AwaitingPayment => "Awaiting Payment",
+            OrderStatus.Paid => "Paid",
+            OrderStatus.Shipped => "Shipped",
+            OrderStatus.Delivered => "Delivered",
+            OrderStatus.Canceled => "Cancelled",
+            OrderStatus.Returned => "Returned",
+            _ => "Unknown"
         };
     }
 }

@@ -85,9 +85,9 @@ public partial class RentalDetailsPageViewModel : PageViewModel
         RentalDays = dto.RentalDays;
         BorrowerEmail = dto.BorrowerEmail;
         BorrowerName = dto.BorrowerName;
-        StartingRentalDate = dto.StartingRentalDate.ToUniversalTime().ToString("dd/MM/yyyy");
-        DateCreated = dto.DateCreated.ToUniversalTime().ToString("dd/MM/yyyy, HH:mm");
-        EndingRentalDate = dto.EndingRentalDate.ToUniversalTime().ToString("dd/MM/yyyy");
+        StartingRentalDate = dto.StartingRentalDate.ToLocalTime().ToString("dd/MM/yyyy");
+        DateCreated = dto.DateCreated.ToLocalTime().ToString("dd/MM/yyyy, HH:mm");
+        EndingRentalDate = dto.EndingRentalDate.ToLocalTime().ToString("dd/MM/yyyy");
     }
 
     public async Task FetchImagePreviewAsync()

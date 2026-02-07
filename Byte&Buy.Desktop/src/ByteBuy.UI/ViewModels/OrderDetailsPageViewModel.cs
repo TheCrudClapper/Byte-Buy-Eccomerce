@@ -1,4 +1,7 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Avalonia.Controls;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
+using Avalonia.Svg.Skia;
 using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Order.Enums;
 using ByteBuy.Services.ServiceContracts;
@@ -10,6 +13,7 @@ using ByteBuy.UI.ViewModels.Order.OrderLine;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ExCSS;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -43,29 +47,22 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     public MoneyViewModel _totalCost = null!;
 
     [ObservableProperty]
-    public OrderDeliveryDetailsViewModel _orderDelivery =  null!;
+    public OrderDeliveryDetailsViewModel _orderDelivery = null!;
 
     [ObservableProperty]
     public BuyerViewModel _buyer = null!;
 
     [ObservableProperty]
-    public IReadOnlyCollection<OrderLineViewModel> _lines  = [];
+    public IReadOnlyCollection<OrderLineViewModel> _lines = [];
 
     public bool CanShip => Status == OrderStatus.Paid;
     public bool CanDeliver => Status == OrderStatus.Shipped;
 
-    public string StatusText => Status switch
-    {
-        OrderStatus.AwaitingPayment => "Awaiting Payment",
-        OrderStatus.Paid => "Paid",
-        OrderStatus.Shipped => "Shipped",
-        OrderStatus.Delivered => "Delivered",
-        OrderStatus.Canceled => "Cancelled",
-        OrderStatus.Returned => "Returned",
-        _ => "Unknown"
-    };
+    public string StatusText
+        => OrderMappings.MapOrderStatusText(Status);
+
     public string StatusIcon
-    => OrderMappings.MapOrderStatusIcon(Status);
+        => OrderMappings.MapOrderStatusIcon(Status);
 
     #endregion
 
@@ -99,7 +96,7 @@ public partial class OrderDetailsPageViewModel : PageViewModel
         TotalCost = new MoneyViewModel(dto.TotalCost);
         OrderDelivery = OrderDeliveryDetailsViewModel.From(dto.DeliveryDetails);
         Buyer = new BuyerViewModel(dto.BuyerSnapshot);
-        PurchasedDate = dto.PurchasedDate.ToString("dd/MM/yyyy, HH:mm");
+        PurchasedDate = dto.PurchasedDate.ToLocalTime().ToString("dd/MM/yyyy, HH:mm");
         Status = dto.Status;
         Lines = dto.Lines
             .Select(OrderLineViewModel.From)
