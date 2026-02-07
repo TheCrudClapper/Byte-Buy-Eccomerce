@@ -1,7 +1,9 @@
 ﻿using ByteBuy.Core.Contracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.HangfireJobs;
 using ByteBuy.Infrastructure.Repositories;
+using ByteBuy.Infrastructure.ServiceContracts;
 using ByteBuy.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("Default"),
                 x => x.MigrationsAssembly("ByteBuy.Infrastructure"));
         });
+
 
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<ICompanyRepository, CompanyInfoRepository>();
@@ -41,6 +44,13 @@ public static class DependencyInjection
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IRentalRepository, RentalRepository>();
 
+
+
+        //Hangfire Services
+        services.AddScoped<IRentalStatusService, RentalStatusService>();
+
+        //Hangfire Jobs
+        services.AddScoped<RentalStatusJob>();
         return services;
     }
 }

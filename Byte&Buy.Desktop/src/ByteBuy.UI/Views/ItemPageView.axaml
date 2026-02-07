@@ -236,6 +236,7 @@
 								<TextBlock Classes="sectionHelperText" Text="{Binding DescriptionCharCount}"/>
 								<TextBlock Classes="sectionHelperText" Text="/2000"/>
 							</StackPanel>
+
 							<TextBox
 							Text="{Binding Description}"
 							TextWrapping="Wrap"

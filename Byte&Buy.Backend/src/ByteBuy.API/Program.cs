@@ -3,7 +3,10 @@ using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure.Extensions;
+using ByteBuy.Infrastructure.HangfireJobs;
 using EquipmentService.API.Extensions;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +26,15 @@ builder.Services
 
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
+
+
+// -----------------------------
+// Adding Hangfire
+// -----------------------------
+builder.Services.AddHangfire(config =>
+    config.UsePostgreSqlStorage(
+        builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddHangfireServer();
 
 // -----------------------------
 // Add Identity
@@ -63,6 +75,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// -----------------------------
+// Hangfire
+// -----------------------------
+app.UseHangfireDashboard("/hangfire");
+
+
+RecurringJob.AddOrUpdate<RentalStatusJob>(
+    "update-rental-statuses",
+    job => job.Execute(),
+    Cron.Daily(0,0)
+);
 
 // -----------------------------
 // Https
