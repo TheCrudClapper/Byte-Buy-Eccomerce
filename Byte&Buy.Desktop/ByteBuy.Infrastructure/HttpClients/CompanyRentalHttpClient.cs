@@ -5,10 +5,10 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients
 {
-    internal class RentalHttpClient : HttpClientBase, IRentalHttpClient
+    internal class CompanyRentalHttpClient : HttpClientBase, IRentalHttpClient
     {
         private const string resource = "rentals";
-        public RentalHttpClient(HttpClient httpClient) : base(httpClient) { }
+        public CompanyRentalHttpClient(HttpClient httpClient) : base(httpClient) { }
 
         public Task<Result<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentalsList()
           => GetAsync<IReadOnlyCollection<CompanyRentalLenderResponse>>($"{resource}/company");

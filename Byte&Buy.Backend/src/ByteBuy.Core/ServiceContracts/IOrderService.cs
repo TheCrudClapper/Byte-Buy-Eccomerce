@@ -30,12 +30,19 @@ public interface IOrderService
     Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId);
 
     /// <summary>
-    /// Method that is designated only for seller, allows sending offer to clients
+    /// Method that is designated only for private sellers, allows sending offer to clients
     /// </summary>
     /// <param name="sellerId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> ShipOrder(Guid sellerId, Guid orderId);
+    Task<Result<UpdatedResponse>> ShipOrderAsPrivateSeller(Guid sellerId, Guid orderId);
+
+    /// <summary>
+    /// Method designated only for company, allows sending offers to clients
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    Task<Result<UpdatedResponse>> ShipOrderAsCompany(Guid orderId);
 
     /// <summary>
     /// Method that is designated only for seller, allows delivering orders
@@ -43,7 +50,14 @@ public interface IOrderService
     /// <param name="sellerId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> DeliverOrder(Guid sellerId, Guid orderId);
+    Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSeller(Guid sellerId, Guid orderId);
+
+    /// <summary>
+    /// Method that is designated only for company, allows delivering orders.
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    Task<Result<UpdatedResponse>> DeliverOrderAsCompany(Guid orderId);
 
     /// <summary>
     /// Method that is designated only for company context

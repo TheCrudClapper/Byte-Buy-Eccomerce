@@ -30,10 +30,6 @@ public class OrdersController : BaseApiController
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
         => HandleResult(await _orderService.GetOrderDetailsAsync(CurrentUserId, orderId, ct));
 
-    [HttpGet("details/{orderId:guid}/company")]
-    public async Task<ActionResult<OrderDetailsResponse>> GetCompanyOrderDetails(Guid orderId, CancellationToken ct)
-        => HandleResult(await _orderService.GetCompanyOrderDetailsAsync(orderId, ct));
-
     [HttpPut("{orderId:guid}/cancel")]
     public async Task<ActionResult<UpdatedResponse>> CancelOrder(Guid orderId)
         => HandleResult(await _orderService.CancelOrder(CurrentUserId, orderId));
@@ -44,18 +40,13 @@ public class OrdersController : BaseApiController
 
     [HttpPut("{orderId:guid}/ship")]
     public async Task<ActionResult<UpdatedResponse>> ShipOrder(Guid orderId)
-        => HandleResult(await _orderService.ShipOrder(CurrentUserId, orderId));
+        => HandleResult(await _orderService.ShipOrderAsPrivateSeller(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrder(Guid orderId)
-       => HandleResult(await _orderService.DeliverOrder(CurrentUserId, orderId));
+       => HandleResult(await _orderService.DeliverOrderAsPrivateSeller(CurrentUserId, orderId));
 
     [HttpGet("seller")]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrders(CancellationToken ct)
        => HandleResult(await _orderService.GetSellerOrdersAsync(CurrentUserId, ct));
-
-    [HttpGet("company")]
-    public async Task<ActionResult<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrders(CancellationToken ct)
-       => HandleResult(await _orderService.GetCompanyOrdersListAsync(ct));
-
 }

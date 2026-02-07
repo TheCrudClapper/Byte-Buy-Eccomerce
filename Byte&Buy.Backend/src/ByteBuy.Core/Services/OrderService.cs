@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.Exceptions;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -42,45 +40,24 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> DeliverOrder(Guid sellerId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> ShipOrderAsCompany(Guid orderId)
     {
-        var order = await _orderRepository.GetSellerOrder(sellerId, orderId);
-        if (order is null)
-            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
-
-        var deliveryResult = order.DeliverOrder();
-
-        if (deliveryResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(deliveryResult.Error);
-
-        var rentOrderLines = order.Lines
-            .OfType<RentOrderLine>()
-            .ToList();
-
-        if (rentOrderLines.Count > 0)
-            await CreateRentals(order, rentOrderLines);
-
-        await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
-        return order.ToUpdatedResponse();
+        var companyId = await _companyRepository.GetCompanyId();
+        return await ShipInternal(() => _orderRepository.GetSellerOrder(companyId, orderId));
     }
 
-    public async Task<Result<UpdatedResponse>> ShipOrder(Guid sellerId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> DeliverOrderAsCompany(Guid orderId)
     {
-        var order = await _orderRepository.GetSellerOrder(sellerId, orderId);
-        if (order is null)
-            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
-
-        var shippedResult = order.ShipOrder();
-
-        if (shippedResult.IsFailure)
-            return Result.Failure<UpdatedResponse>(shippedResult.Error);
-
-        await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
-
-        return order.ToUpdatedResponse();
+        var companyId = await _companyRepository.GetCompanyId();
+        return await DeliverOrderInternal(() => _orderRepository.GetSellerOrder(companyId, orderId));
     }
+
+    public async Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSeller(Guid sellerId, Guid orderId)
+        => await DeliverOrderInternal(() => _orderRepository.GetSellerOrder(sellerId, orderId));
+
+    public async Task<Result<UpdatedResponse>> ShipOrderAsPrivateSeller(Guid sellerId, Guid orderId)
+        => await ShipInternal(() => _orderRepository.GetSellerOrder(sellerId, orderId));
+
 
     public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default)
     {
@@ -183,4 +160,57 @@ public class OrderService : IOrderService
             await _rentalRepository.AddAsync(creationResult.Value);
         }
     }
+
+    /// <summary>
+    /// Method encapsulates common logic for shipping order (either from company or private 
+    /// seller perspective)
+    /// </summary>
+    /// <param name="getOrder"></param>
+    /// <returns></returns>
+    private async Task<Result<UpdatedResponse>> ShipInternal(Func<Task<Order?>> getOrder)
+    {
+        var order = await getOrder();
+        if (order is null)
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
+
+        var shippedResult = order.ShipOrder();
+
+        if (shippedResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(shippedResult.Error);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+
+        return order.ToUpdatedResponse();
+    }
+
+
+    /// <summary>
+    /// Method encapsulates commong logic from private seller and company realted use cases.
+    /// </summary>
+    /// <param name="getOrder"></param>
+    /// <returns></returns>
+    private async Task<Result<UpdatedResponse>> DeliverOrderInternal(Func<Task<Order?>> getOrder)
+    {
+        var order = await getOrder();
+        if (order is null)
+            return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
+
+        var deliveryResult = order.DeliverOrder();
+
+        if (deliveryResult.IsFailure)
+            return Result.Failure<UpdatedResponse>(deliveryResult.Error);
+
+        var rentOrderLines = order.Lines
+            .OfType<RentOrderLine>()
+            .ToList();
+
+        if (rentOrderLines.Count > 0)
+            await CreateRentals(order, rentOrderLines);
+
+        await _orderRepository.UpdateAsync(order);
+        await _orderRepository.CommitAsync();
+        return order.ToUpdatedResponse();
+    }
+
 }

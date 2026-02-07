@@ -28,11 +28,4 @@ public class RentalsController : BaseApiController
     public async Task<ActionResult<UpdatedResponse>> ReturnRentedItem(Guid rentalId)
         => HandleResult(await _rentalService.ReturnItemToLenderAsync(CurrentUserId, rentalId));
 
-    [HttpGet("company")]
-    public async Task<ActionResult<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentals(CancellationToken ct = default)
-       => HandleResult(await _rentalService.GetCompanyRentalsListAsync(CurrentUserId, ct));
-
-    [HttpGet("{rentalId:guid}/company")]
-    public async Task<ActionResult<RentalLenderResponse>> GetCompanyRental(Guid rentalId, CancellationToken ct = default)
-        => HandleResult(await _rentalService.GetCompanyRentalAsync(rentalId, ct));
 }

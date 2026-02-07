@@ -17,8 +17,8 @@ public class OrderHttpClient(HttpClient httpClient)
         => await GetAsync<OrderDetailsResponse>($"{resource}/details/{orderId}/company");
 
     public async Task<Result<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
-        => await PutAsync<UpdatedResponse>($"{resource}/{orderId}/deliver", null);
+        => await PutAsync<UpdatedResponse>($"{resource}/{orderId}/deliver/company", null);
 
     public async Task<Result<UpdatedResponse>> ShipOrderAsync(Guid orderId)
-        => await PutAsync<UpdatedResponse>($"{resource}/{orderId}/ship", null);
+        => await PutAsync<UpdatedResponse>($"{resource}/{orderId}/ship/company", null);
 }

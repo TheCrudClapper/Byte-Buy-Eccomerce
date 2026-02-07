@@ -55,7 +55,7 @@ public partial class RentalDetailsPageViewModel : PageViewModel
 
     private readonly IRentalService _rentalService;
     private readonly IImageService _imageService;
-    protected RentalDetailsPageViewModel(AlertViewModel alert, IRentalService rentalService,
+    public RentalDetailsPageViewModel(AlertViewModel alert, IRentalService rentalService,
         IImageService imageService) : base(alert)
     {
         _rentalService = rentalService;
@@ -85,9 +85,9 @@ public partial class RentalDetailsPageViewModel : PageViewModel
         RentalDays = dto.RentalDays;
         BorrowerEmail = dto.BorrowerEmail;
         BorrowerName = dto.BorrowerName;
-        StartingRentalDate = dto.StartingRentalDate.ToString("dd/MM/yyyy");
-        DateCreated = dto.DateCreated.ToString("dd/MM/yyyy, HH:mm");
-        EndingRentalDate = dto.EndingRentalDate.ToString("dd/MM/yyyy");
+        StartingRentalDate = dto.StartingRentalDate.ToUniversalTime().ToString("dd/MM/yyyy");
+        DateCreated = dto.DateCreated.ToUniversalTime().ToString("dd/MM/yyyy, HH:mm");
+        EndingRentalDate = dto.EndingRentalDate.ToUniversalTime().ToString("dd/MM/yyyy");
     }
 
     public async Task FetchImagePreviewAsync()
