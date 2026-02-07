@@ -42,8 +42,7 @@ export class SaleDetails extends BaseOfferDetail {
   }
 
   override get description(): string | undefined {
-    const desc = this.saleOfferDetails()?.description;
-    return desc ? desc.trim().replace(/\n/g, '<br>') : undefined;
+    return this.saleOfferDetails()?.description?.trim();
   }
 
   override addToCart(): void {
@@ -51,7 +50,7 @@ export class SaleDetails extends BaseOfferDetail {
       this.cartForm.markAsTouched();
       return;
     }
-    
+
     const data = this.cartForm.get('quantity')!.value;
     const payload: SaleCartOfferAddRequest = {
       quantity: data!,

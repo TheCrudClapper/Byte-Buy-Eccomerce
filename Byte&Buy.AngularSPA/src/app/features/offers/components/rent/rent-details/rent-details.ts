@@ -42,8 +42,7 @@ export class RentDetails extends BaseOfferDetail {
   };
 
   override get description(): string | undefined {
-    const desc = this.rentOfferDetails()?.description;
-    return desc ? desc.trim().replace(/\n/g, '<br>') : undefined;
+    return this.rentOfferDetails()?.description?.trim();
   }
 
   override addToCart(): void {

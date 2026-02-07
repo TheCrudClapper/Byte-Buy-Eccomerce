@@ -31,7 +31,7 @@
 							Grid.Column="2">
 								<StackPanel Orientation="Horizontal">
 									<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-										   Width="10" Height="10" />
+										   Width="15" Height="15" />
 								</StackPanel>
 							</Button>
 						</StackPanel>
@@ -40,30 +40,34 @@
 								Height="250"
 								Margin="0,10,0,0"
 								Classes="highlightable"
-								Background="LightGray"
+								Background="{DynamicResource GrayAccentBrush}"
 								DragDrop.AllowDrop="True"
+								BorderBrush="{DynamicResource PrimaryAccentBrush}"
+								BorderThickness="1"
 								CornerRadius="10"
 								HorizontalAlignment="Stretch"
 								VerticalAlignment="Stretch">
 							<Grid>
 								<StackPanel VerticalAlignment="Center" IsVisible="{Binding ImageContainerVisible}">
-									<StackPanel Orientation="Horizontal"
+									<StackPanel Orientation="Horizontal" Margin="0,5"
 												HorizontalAlignment="Center">
 										<Image Height="50"
+											   Margin="0,0,5,0"
 											   Width="50"
-											   Source="{SvgImage /Assets/Images/regular/file-image-regular-full.svg}"/>
+											   Source="{SvgImage /Assets/Images/regular/images-regular-full.svg}"/>
 										<TextBlock Text="No images"
 												   FontSize="20"
 												   FontFamily="{DynamicResource OpenSansBold}"
-												   Foreground="{DynamicResource TextLightBrush}"
+												    Foreground="{DynamicResource TextPrimaryBrush}"
 												   VerticalAlignment="Center"/>
 									</StackPanel>
+
 									<TextBlock FontWeight="DemiBold"
 											   HorizontalAlignment="Center"
 											   FontFamily="{DynamicResource OpenSansMedium}"
-											   Foreground="{DynamicResource TextLightBrush}"
+											   Foreground="{DynamicResource TextPrimaryBrush}"
 											   FontSize="14"
-											   Text="To add new images click + icon above or drag and drop files to gray container"/>
+											   Text="To add new images click + icon above."/>
 								</StackPanel>
 
 								<ScrollViewer HorizontalScrollBarVisibility="Auto"
@@ -99,7 +103,7 @@
 														Command="{Binding DataContext.DeleteImageCommand,
 														RelativeSource={RelativeSource AncestorType=UserControl}}"
 														CommandParameter="{Binding}">
-															<Image Source="{SvgImage /Assets/Images/regular/trash-can-regular-full.svg}"
+															<Image Source="{SvgImage /Assets/Images/regular/trash-can-solid-full.svg}"
 																   Height="17"
 																   Width="17" />
 														</Button>
@@ -155,7 +159,7 @@
 							HorizontalAlignment="Stretch"/>
 
 						<!--Visible only in edit mode-->
-						<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="30*, 70*" IsEnabled="{Binding IsEditMode}">
+						<Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="30*, 70*" IsVisible="{Binding IsEditMode}">
 							<TextBox
 							Grid.Column="0"
 							IsEnabled="false"
