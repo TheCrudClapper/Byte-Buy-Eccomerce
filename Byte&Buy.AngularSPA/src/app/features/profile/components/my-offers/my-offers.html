@@ -62,10 +62,18 @@
                         Sale Offer
                         }
                     </span>
-                    @if(item.status === OfferStatus.SoldOut){
-                        <span class="badge text-bg-dark fs-12-px me-2">Sold out !</span>
+                    @if(item.status === OfferStatus.Avaliable){
+                    <span class="badge fs-12-px">
+                        <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
+                        Avaliable
+                    </span>
                     }
-
+                    @else{
+                    <span class="badge text-bg-dark fs-12-px me-2">
+                        Sold out
+                        <i class="fa-solid fa-exclamation" style="color: #ffffff;"></i>
+                    </span>
+                    }
                 </span>
 
 

@@ -2,6 +2,8 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RentBrowserItemResponse } from '../../../../../../core/dto/offers/rent/rent-browser-item-response';
+import { OfferStatus } from '../../../../../../core/dto/offers/enum/offer-status';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-rent-browser-item',
@@ -14,5 +16,6 @@ import { RentBrowserItemResponse } from '../../../../../../core/dto/offers/rent/
 })
 export class RentBrowserItem {
    @Input({ required: true }) offer!: RentBrowserItemResponse;
-   protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;;
+   readonly OfferStatus = OfferStatus;
 }

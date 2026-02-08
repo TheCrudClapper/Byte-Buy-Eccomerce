@@ -35,6 +35,18 @@
                         <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
                         Sale Offer
                     </span>
+                     @if(offer.status === OfferStatus.Avaliable){
+                    <span class="badge fs-12-px">
+                        <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
+                        Avaliable
+                    </span>
+                    }
+                    @else{
+                    <span class="badge text-bg-dark fs-12-px me-2">
+                        Sold out
+                        <i class="fa-solid fa-exclamation" style="color: #ffffff;"></i>
+                    </span>
+                    }
                 </span>
                 <span class="location">
                     <i class="fa-solid fa-location-dot  me-1" style="color: #ffffff;"></i>

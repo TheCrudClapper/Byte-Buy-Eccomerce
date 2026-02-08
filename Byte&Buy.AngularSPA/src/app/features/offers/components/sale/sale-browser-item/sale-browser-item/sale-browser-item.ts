@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { SaleBrowserItemResponse } from '../../../../../../core/dto/offers/sale/sale-browser-item-response';
 import { RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
+import { OfferStatus } from '../../../../../../core/dto/offers/enum/offer-status';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-sale-browser-item',
@@ -15,5 +17,6 @@ import { DecimalPipe } from '@angular/common';
 })
 export class SaleBrowserItem {
   @Input({ required: true }) offer!: SaleBrowserItemResponse;
-  protected readonly imageBaseUrl = "http://localhost:5099/Images/";
+  protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
+  readonly OfferStatus = OfferStatus;
 }

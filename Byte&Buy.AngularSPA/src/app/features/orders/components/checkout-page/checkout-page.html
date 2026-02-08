@@ -109,19 +109,19 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col d-flex justify-content-between align-items-center">
-                                            <h6 class="mb-1 fw-bold fs-14-px">
+                                            <span class="mb-1 fw-bold fs-14-px">
                                                 <a class="link"
                                                     [routerLink]="['/offers', `${item.type == 'sale' ? 'sale' : 'rent'}`, 'details', `${item.offerId}`]">
                                                     {{ item.itemName}} </a>
-                                            </h6>
-                                            <div>
+                                            </span>
+                                            <div class="text-end">
                                                 @if(item.status == OfferStatus.Avaliable){
-                                                <span class="badge fs-12-px me-2">Avaliable</span>
+                                                <span class="badge fs-12-px">Avaliable</span>
                                                 }
                                                 @if(item.status == OfferStatus.SoldOut){
-                                                <span class="badge text-bg-dark fs-12-px me-2">Sold out !</span>
+                                                <span class="badge text-bg-dark fs-12-px">Sold out !</span>
                                                 }
-                                                <span class="badge fs-12-px">In stock: {{ item.avaliableQuantity
+                                                <span class="badge fs-12-px ms-2">In stock: {{ item.avaliableQuantity
                                                     }}</span>
                                             </div>
 
