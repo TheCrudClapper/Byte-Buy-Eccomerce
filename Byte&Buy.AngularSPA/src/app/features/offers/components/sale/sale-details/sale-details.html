@@ -88,10 +88,18 @@
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{ offer.seller.type === 'company' ? "Company" : "Private Person"}}
                             </span>
+                            @if(offer.status === OfferStatus.Avaliable){
                             <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
                                 Avaliable: {{ offer.quantityAvaliable }}
                             </span>
+                            }
+                            @else {
+                            <span class="badge seller-badge me-2 mb-2">
+                                Sold out 
+                                <i class="fa-solid fa-exclamation" style="color: #ffffff;"></i>
+                            </span>
+                            }
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
                                 Sale Offer
@@ -123,13 +131,13 @@
                         </div>
                     </div>
                     @if(deliveries(); as deliveries){
-                        @for (item of deliveries; track $index)
-                        {
-                        <div class="mb-1 d-flex justify-content-between">
-                            <span>{{item.name}}</span>
-                            <span>{{item.amount}} {{item.currency}}</span>
-                        </div>
-                        }
+                    @for (item of deliveries; track $index)
+                    {
+                    <div class="mb-1 d-flex justify-content-between">
+                        <span>{{item.name}}</span>
+                        <span>{{item.amount}} {{item.currency}}</span>
+                    </div>
+                    }
                     }
                 </div>
             </div>

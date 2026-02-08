@@ -12,21 +12,22 @@
                                 @for (item of offer.images; track $index)
                                 {
                                 <div class="carousel-item" [class.active]="$index === 0">
-                                    <img [src]="imageBaseUrl + item.imagePath" class="d-block w-100" [alt]="item.altText">
+                                    <img [src]="imageBaseUrl + item.imagePath" class="d-block w-100"
+                                        [alt]="item.altText">
                                 </div>
                                 }
                             </div>
                             @if(offer.images.length > 1){
-                                <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
-                                    data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
-                                    data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                             }
                         </div>
                     </div>
@@ -86,10 +87,18 @@
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{offer.seller.type == 'company' ? "Company" : "Private"}}
                             </span>
-                            <span class="badge seller-badge mb-2 me-2">
+                            @if(offer.status === OfferStatus.Avaliable){
+                            <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
-                                Avaliable: {{offer.quantityAvaliable}}
+                                Avaliable: {{ offer.quantityAvaliable }}
                             </span>
+                            }
+                            @else {
+                            <span class="badge seller-badge me-2 mb-2">
+                                Sold out
+                                <i class="fa-solid fa-exclamation" style="color: #ffffff;"></i>
+                            </span>
+                            }
                             <span class="badge seller-badge mb-2 me-2">
                                 <i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i>
                                 Max days per rental: {{ offer.maxRentalDays }}

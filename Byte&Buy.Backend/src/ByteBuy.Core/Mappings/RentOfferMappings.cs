@@ -63,8 +63,9 @@ public static class RentOfferMappings
         => ro => new RentOfferDetailsResponse(
             ro.Id,
             ro.MaxRentalDays,
+            ro.Status,
             ro.QuantityAvailable,
-            ro.PricePerDay.ToMoneyDto(),
+            new MoneyDto(ro.PricePerDay.Amount, ro.PricePerDay.Currency),
             ro.Item.Condition.Name,
             ro.Item.Category.Name,
             ro.Item.Description,

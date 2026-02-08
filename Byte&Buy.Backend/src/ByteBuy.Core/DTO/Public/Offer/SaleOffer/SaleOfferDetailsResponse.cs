@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Public.Offer.SaleOffer;
@@ -7,6 +8,7 @@ public record SaleOfferDetailsResponse(
     Guid Id,
     int QuantityAvaliable,
     MoneyDto PricePerItem,
+    OfferStatus Status,
     string Condition,
     string Category,
     string Description,

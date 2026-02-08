@@ -59,7 +59,8 @@ public static class SaleOfferMappings
         => so => new SaleOfferDetailsResponse(
             so.Id,
             so.QuantityAvailable,
-            so.PricePerItem.ToMoneyDto(),
+            new MoneyDto(so.PricePerItem.Amount, so.PricePerItem.Currency),
+            so.Status,
             so.Item.Condition.Name,
             so.Item.Category.Name,
             so.Item.Description,
@@ -81,8 +82,7 @@ public static class SaleOfferMappings
                     so.CreatedBy.HomeAddress.PostalCity,
                     so.CreatedBy.HomeAddress.PostalCode,
                     so.CreatedBy.PhoneNumber,
-                    so.CreatedBy.DateCreated
-                    ),
+                    so.CreatedBy.DateCreated),
             so.Item.Images
                 .AsQueryable()
                 .Select(ImageMappings.ImageResponseProjection)

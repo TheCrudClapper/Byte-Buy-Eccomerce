@@ -23,6 +23,7 @@ export class OfferApiService {
       .pipe(
         map(dto => ({
           id: dto.id,
+          status: dto.status,
           maxRentalDays: dto.maxRentalDays,
           quantityAvaliable: dto.quantityAvaliable,
           pricePerDayAmount: dto.pricePerDay.amount,
@@ -45,6 +46,7 @@ export class OfferApiService {
       .pipe(
         map(dto => ({
           id: dto.id,
+          status: dto.status,
           quantityAvaliable: dto.quantityAvaliable,
           pricePerItemAmount: dto.pricePerItem.amount,
           pricePerItemCurrency: dto.pricePerItem.currency,

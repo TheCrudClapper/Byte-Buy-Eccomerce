@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Public.Offer.RentOffer;
@@ -6,6 +7,7 @@ namespace ByteBuy.Core.DTO.Public.Offer.RentOffer;
 public record RentOfferDetailsResponse(
     Guid Id,
     int MaxRentalDays,
+    OfferStatus Status,
     int QuantityAvaliable,
     MoneyDto PricePerDay,
     string Condition,

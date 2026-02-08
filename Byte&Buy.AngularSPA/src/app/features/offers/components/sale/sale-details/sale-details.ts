@@ -8,6 +8,7 @@ import { Guid } from 'guid-typescript';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { SellerInfo } from '../../../shared/seller-info/seller-info';
 import { SaleCartOfferAddRequest } from '../../../../../core/dto/cart/cart-item/sale-cart-offer-add-request';
+import { OfferStatus } from '../../../../../core/dto/offers/enum/offer-status';
 
 @Component({
   selector: 'app-sale-details',
@@ -18,6 +19,7 @@ import { SaleCartOfferAddRequest } from '../../../../../core/dto/cart/cart-item/
     '../../../shared/styles/offers-shared-styles.scss'],
   standalone: true
 })
+
 export class SaleDetails extends BaseOfferDetail {
   cartForm!: FormGroup;
 
@@ -30,6 +32,7 @@ export class SaleDetails extends BaseOfferDetail {
 
   saleOfferDetails = signal<SaleOfferDetails | null>(null);
   seller = computed(() => this.saleOfferDetails()?.seller);
+  readonly OfferStatus = OfferStatus;
 
   loadOffer(id: Guid) {
     this.offerService.getSaleOfferDetils(id)

@@ -9,6 +9,7 @@ import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { BaseOfferDetail } from '../../../shared/components/base-offer-detail/base-offer-detail';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { RentCartOfferAddRequest } from '../../../../../core/dto/cart/cart-item/rent-cart-offer-add-request';
+import { OfferStatus } from '../../../../../core/dto/offers/enum/offer-status';
 
 @Component({
   selector: 'app-rent-details',
@@ -25,7 +26,8 @@ export class RentDetails extends BaseOfferDetail {
 
   rentOfferDetails = signal<RentOfferDetails | null>(null);
   seller = computed(() => this.rentOfferDetails()?.seller);
-
+  readonly OfferStatus = OfferStatus;
+  
   cartForm = new FormGroup({
     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
     rentalDays: new FormControl(1, [Validators.required, Validators.min(1)]),
