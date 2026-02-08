@@ -8,6 +8,11 @@ public class OfferConfig : IEntityTypeConfiguration<Offer>
 {
     public void Configure(EntityTypeBuilder<Offer> builder)
     {
+        builder.Property(prop => prop.Status)
+            .HasConversion<string>()
+            .HasMaxLength(20)
+            .IsRequired();
+
         builder.HasOne(o => o.CreatedBy)
             .WithMany(u => u.Offers)
             .HasForeignKey(o => o.CreatedByUserId)

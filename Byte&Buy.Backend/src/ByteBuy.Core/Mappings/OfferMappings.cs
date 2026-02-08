@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.DTO.Internal.Offer;
 using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
@@ -11,42 +12,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class OfferMappings
 {
-    //DEPRECATED
-    //public static OfferBrowserItemResponse ToResponse(this Offer offer)
-    //{
-    //    return offer switch
-    //    {
-    //        SaleOffer saleOffer => new SaleBrowserItemResponse
-    //        {
-    //            Id = saleOffer.Id,
-    //            Image = saleOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
-    //            Title = saleOffer.Item.Name,
-    //            PricePerItem = saleOffer.PricePerItem.ToMoneyDto(),
-    //            Category = saleOffer.Item.Category.Name,
-    //            Condition = saleOffer.Item.Condition.Name,
-    //            City = offer.OfferAddressSnapshot.City,
-    //            IsCompanyOffer = saleOffer.Item.IsCompanyItem,
-    //            PostalCity = offer.OfferAddressSnapshot.PostalCity,
-    //            PostalCode = offer.OfferAddressSnapshot.PostalCode
-    //        },
-    //        RentOffer rentOffer => new RentBrowserItemResponse
-    //        {
-    //            Id = rentOffer.Id,
-    //            Image = rentOffer.Item.Images.FirstOrDefault()!.ToImageResponse(),
-    //            Title = rentOffer.Item.Name,
-    //            PricePerDay = rentOffer.PricePerDay.ToMoneyDto(),
-    //            Category = rentOffer.Item.Category.Name,
-    //            Condition = rentOffer.Item.Condition.Name,
-    //            MaxRentalDays = rentOffer.MaxRentalDays,
-    //            City = offer.OfferAddressSnapshot.City,
-    //            IsCompanyOffer = rentOffer.Item.IsCompanyItem,
-    //            PostalCity = offer.OfferAddressSnapshot.PostalCity,
-    //            PostalCode = offer.OfferAddressSnapshot.PostalCode
-    //        },
-    //        _ => throw new ArgumentOutOfRangeException(nameof(offer), $"Unsupported offer type or offer is null: {offer.GetType().Name}"),
-    //    };
-    //}
-
+    
     public static Expression<Func<Offer, UserPanelOfferQuery>> UserOfferPanelQueryProjection =>
         o => new UserPanelOfferQuery
         {
@@ -117,7 +83,7 @@ public static class OfferMappings
                 .Select(ImageMappings.ImageResponseProjection)
                 .FirstOrDefault()!,
 
-            IsCompanyOffer = o.Item.IsCompanyItem,
+            IsCompanyOffer = o.Seller.Type == SellerType.Company,  
             PostalCity = o.OfferAddressSnapshot.PostalCity,
             PostalCode = o.OfferAddressSnapshot.PostalCode,
             Title = o.Item.Name,

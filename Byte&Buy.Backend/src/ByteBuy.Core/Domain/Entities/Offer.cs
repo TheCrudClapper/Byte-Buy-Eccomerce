@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
@@ -6,21 +7,21 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public abstract class Offer : AuditableEntity, ISoftDeletable
 {
-    public Guid ItemId { get; set; }
-
-    public AddressValueObject OfferAddressSnapshot = null!;
-    public int QuantityAvailable { get; set; }
-    public Guid CreatedByUserId { get; set; }
-    public Seller Seller { get; set; } = null!;
-    public bool IsActive { get; set; }
-    public DateTime? DateDeleted { get; set; }
+    public Guid ItemId { get; protected set; }
+    public OfferStatus Status { get; private set; }
+    public AddressValueObject OfferAddressSnapshot { get; protected set; } = null!;
+    public int QuantityAvailable { get; protected set; }
+    public Guid CreatedByUserId { get; protected set; }
+    public Seller Seller { get; protected set; } = null!;
+    public bool IsActive { get; protected set; }
+    public DateTime? DateDeleted { get; protected set; }
 
 
     //EF Navigation Properties ONLY
-    public ICollection<CartOffer> CartOffers { get; set; } = new List<CartOffer>();
-    public ICollection<OfferDelivery> OfferDeliveries { get; set; } = new List<OfferDelivery>();
-    public ApplicationUser CreatedBy { get; set; } = null!;
-    public Item Item { get; set; } = null!;
+    public ICollection<CartOffer> CartOffers { get; protected set; } = new List<CartOffer>();
+    public ICollection<OfferDelivery> OfferDeliveries { get; protected set; } = new List<OfferDelivery>();
+    public ApplicationUser CreatedBy { get; protected set; } = null!;
+    public Item Item { get; protected set; } = null!;
 
     protected Offer() { }
 
@@ -33,6 +34,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
         Seller = seller;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
+        Status = OfferStatus.Avaliable;
     }
 
     public void Deactivate()
@@ -41,6 +43,20 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
         DateDeleted = DateTime.UtcNow;
         foreach (var od in OfferDeliveries)
             od.Deactivate();
+    }
+
+    public Result DecreaseQuantity(int requestedQuantity)
+    {
+        if (requestedQuantity > QuantityAvailable)
+            return Result.Failure(OfferErrors.QuantityDecreseInvalid);
+
+        if(requestedQuantity <= QuantityAvailable)
+            QuantityAvailable -= requestedQuantity;
+
+        if (QuantityAvailable == 0)
+            Status = OfferStatus.SouldOut;
+
+        return Result.Success();
     }
 
     public static Result ValidateBasicCreateData(int quantityAvailable)
