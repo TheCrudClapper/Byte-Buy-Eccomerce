@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using System.Text.Json.Serialization;
@@ -17,6 +18,7 @@ public abstract record OfferBrowserItemResponse
     public string Category { get; init; } = null!;
     public string City { get; init; } = null!;
     public string PostalCity { get; init; } = null!;
+    public OfferStatus Status { get; init; }
     public string PostalCode { get; init; } = null!;
     public bool IsCompanyOffer { get; init; }
 }

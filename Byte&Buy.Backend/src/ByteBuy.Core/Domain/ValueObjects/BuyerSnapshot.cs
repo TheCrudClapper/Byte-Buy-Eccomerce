@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
@@ -23,16 +24,19 @@ public class BuyerSnapshot
         Address = address;
     }
 
-    public static BuyerSnapshot Create(string firstName,
+    public static Result<BuyerSnapshot> Create(string firstName,
         string lastName,
-        string phoneNumber,
+        string? phoneNumber,
         string email,
-        AddressValueObject address)
-        => new(
-            $"{firstName} {lastName}",
-            email!,
-            phoneNumber,
-            address);
+        AddressValueObject? address)
+    {
 
+        if (address is null)
+            return Result.Failure<BuyerSnapshot>(BuyerSnapshotErrors.HomeAddressNotSet);
 
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            return Result.Failure<BuyerSnapshot>(BuyerSnapshotErrors.PhoneNumberNotSet);
+
+        return new BuyerSnapshot(firstName, lastName, phoneNumber, address);
+    }
 }

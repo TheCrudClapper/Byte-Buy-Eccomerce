@@ -21,7 +21,7 @@ public static class OfferMappings
             DateEdited = o.DateEdited,
             QuantityAvaliable = o.QuantityAvailable,
             Title = o.Item.Name,
-
+            Status = o.Status,
             Image = o.Item.Images
                 .AsQueryable()
                 .Select(ImageMappings.ImageResponseProjection)
@@ -49,6 +49,7 @@ public static class OfferMappings
             OfferType.Sale => new UserSalePanelResponse
             {
                 Id = dto.Id,
+                Status = dto.Status,
                 DateCreated = dto.DateCreated,
                 DateEdited = dto.DateEdited,
                 Image = dto.Image,
@@ -61,13 +62,14 @@ public static class OfferMappings
                 Id = dto.Id,
                 DateCreated = dto.DateCreated,
                 DateEdited = dto.DateEdited,
+                Status = dto.Status,
                 Image = dto.Image,
                 Title = dto.Title,
                 QuantityAvaliable = dto.QuantityAvaliable,
                 PricePerDay = dto.PricePerDay!,
                 MaxRentalDays = dto.MaxRentalDays!.Value,
             },
-            _ => throw new UnreachableException()
+            _ => throw new NotSupportedException($"Status {dto.Status} is not a valid offer status")
         };
     }
 
@@ -83,6 +85,7 @@ public static class OfferMappings
                 .Select(ImageMappings.ImageResponseProjection)
                 .FirstOrDefault()!,
 
+            Status = o.Status,
             IsCompanyOffer = o.Seller.Type == SellerType.Company,  
             PostalCity = o.OfferAddressSnapshot.PostalCity,
             PostalCode = o.OfferAddressSnapshot.PostalCode,
@@ -116,6 +119,7 @@ public static class OfferMappings
                 Title = dto.Title,
                 Condition = dto.Condition,
                 Category = dto.Category,
+                Status = dto.Status,
                 City = dto.City,
                 PostalCity = dto.PostalCity,
                 PostalCode = dto.PostalCode,
@@ -128,6 +132,7 @@ public static class OfferMappings
                 Id = dto.Id,
                 Image = dto.Image,
                 Title = dto.Title,
+                Status = dto.Status,
                 Condition = dto.Condition,
                 Category = dto.Category,
                 City = dto.City,
@@ -138,7 +143,7 @@ public static class OfferMappings
                 PricePerDay = dto.PricePerDay!
             },
 
-            _ => throw new UnreachableException()
+            _ => throw new NotSupportedException($"Status {dto.Status} is not a valid offer status")
         };
     }
 }

@@ -17,7 +17,7 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
         content.Add(new StringContent(request.ConditionId.ToString()), "ConditionId");
         content.Add(new StringContent(request.Name), "Name");
         content.Add(new StringContent(request.Description), "Description");
-        content.Add(new StringContent(request.StockQuantity.ToString()), "AdditionalStockQuantity");
+        content.Add(new StringContent(request.StockQuantity.ToString()), "StockQuantity");
 
         for (int i = 0; i < request.Images.Count; i++)
         {

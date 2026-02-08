@@ -8,5 +8,5 @@ public record ItemAddRequest(
         [Required] Guid ConditionId,
         [Required, MaxLength(75)] string Name,
         [Required, MaxLength(2000)] string Description,
-        [Required] int StockQuantity,
+        [Required, Range(1, int.MaxValue)] int StockQuantity,
         [Required] IEnumerable<ImageAddRequest> Images);

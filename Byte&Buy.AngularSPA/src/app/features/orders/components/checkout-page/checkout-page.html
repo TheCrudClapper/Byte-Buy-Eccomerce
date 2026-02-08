@@ -9,12 +9,15 @@
                         <p class="my-0 content-section-title mb-2">
                             Shipping Address
                         </p>
-                        @if(shippingAddress(); as address){
-                        <div class="row d-flex justify-content-between">
-                            <div class="col-6 col-md-5 col-lg-4">
+
+                        <div class="row">
+                            <div class="col-12">
                                 <span class="fs-14-px open-sans-bold">{{ checkout.buyerFirstName}} {{
-                                    checkout.buyerLastName }} {{ checkout.buyerPhone }}
+                                    checkout.buyerLastName }} {{ checkout.buyerPhone ? `+48 ${checkout.buyerPhone}` : ``}}
                                 </span>
+                            </div>
+                            @if(shippingAddress(); as address){
+                            <div class="col-6 col-md-5 col-lg-4">
                                 <div class="card mt-2">
                                     <div class="card-body">
                                         <h5 class="card-title fs-14-px open-sans-bold">
@@ -31,12 +34,14 @@
                                     </div>
                                 </div>
                             </div>
+                            }
+                            @else{
+                            <div class="col-12">
+                                <span class="fs-14-px validation-error">No default shipping address is defined, courier
+                                    deliveries are not avaliable.</span>
+                            </div>
+                            }
                         </div>
-                        }
-                        @else{
-                        <span class="fs-14-px validation-error">No default shipping address defined, add one to
-                            proceed.</span>
-                        }
                     </div>
                 </div>
             </div>
@@ -54,11 +59,11 @@
                                 <div class="card p-2 text-center payment-card"
                                     [class.card-selected]="selectedPaymentMethod() === method.id" style="width: 56px;"
                                     (click)="selectPaymentMethod(method.id)">
-                                    @if(method.title === 'Blik'){
+                                    @if(method.id === PaymentMethod.Blik ){
                                     <img height="31"
                                         src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">
                                     }
-                                    @if(method.title === "Card"){
+                                    @if(method.id === PaymentMethod.Card ){
                                     <i class="fa-regular fa-credit-card fa-2x" style="color: #ffffff;"></i>
                                     }
                                 </div>
@@ -103,30 +108,58 @@
                                 </div>
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col d-flex justify-content-between align-items-center">
                                             <h6 class="mb-1 fw-bold fs-14-px">
-                                                {{ item.itemName}}
+                                                <a class="link"
+                                                    [routerLink]="['/offers', `${item.type == 'sale' ? 'sale' : 'rent'}`, 'details', `${item.offerId}`]">
+                                                    {{ item.itemName}} </a>
                                             </h6>
+                                            <div>
+                                                @if(item.status == OfferStatus.Avaliable){
+                                                <span class="badge fs-12-px me-2">Avaliable</span>
+                                                }
+                                                @if(item.status == OfferStatus.SoldOut){
+                                                <span class="badge text-bg-dark fs-12-px me-2">Sold out !</span>
+                                                }
+                                                <span class="badge fs-12-px">In stock: {{ item.avaliableQuantity
+                                                    }}</span>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="row align-items-center">
                                         @if(item.type === 'sale'){
-                                        <div class="col  fs-14-px">
-                                            {{ item.quantity}} × {{item.pricePerItem.amount | number:'1.2-2' }}
+                                        <div class="col fs-14-px">
+                                            {{ item.quantity}} pc /s × {{item.pricePerItem.amount | number:'1.2-2' }}
                                             {{item.pricePerItem.currency }}
                                         </div>
                                         }
                                         @else{
-                                        <div class="col  fs-14-px">
-                                            {{ item.quantity}} × {{item.rentalDays}} days x {{item.pricePerDay.amount |
+                                        <div class="col fs-14-px">
+                                            {{ item.quantity}} pc /s × {{item.rentalDays}} days x
+                                            {{item.pricePerDay.amount |
                                             number:'1.2-2' }} {{item.pricePerDay.currency }}
                                         </div>
                                         }
-
                                         <div class="col-auto fs-14-px">
                                             {{ item.subtotal.amount | number:'1.2-2' }} {{ item.subtotal.currency }}
                                         </div>
                                     </div>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 fs-14-px">
+                                    @if(item.status == OfferStatus.SoldOut){
+                                    <span class="validation-error">
+                                        This offer is sold out and cannot be purchased.
+                                    </span>
+                                    }
+                                    @else if(!item.canFinalize){
+                                    <span class="validation-error">
+                                        Requested quantity exceeds current availability. Please update your cart.
+                                    </span>
+                                    }
                                 </div>
                             </div>
                         </div>

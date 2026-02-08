@@ -9,6 +9,7 @@ import { SaleOfferApiService } from '../../../../core/clients/offers/sale/sale-o
 import { RouterLink } from '@angular/router';
 import { RentOfferApiService } from '../../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { environment } from '../../../../../environments/environment';
+import { OfferStatus } from '../../../../core/dto/offers/enum/offer-status';
 
 @Component({
   selector: 'app-my-offers',
@@ -25,7 +26,8 @@ export class MyOffers implements OnInit {
 
 
   userOffers = signal<UserPanelOfferUnion[]>([]);
-
+  readonly OfferStatus = OfferStatus;
+  
   ngOnInit(): void {
     this.offerApiService.getUserOffers().subscribe({
       next: data => this.userOffers.set(data),

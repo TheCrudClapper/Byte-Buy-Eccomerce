@@ -13,13 +13,16 @@ import { OrderApiService } from '../../../../core/clients/orders/order-api-servi
 import { buildSellerDeliveriesPayload } from '../../mappers/order-mappers';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { OrderCreatedResponse } from '../../../../core/dto/order/order-created-response';
+import { OfferStatus } from '../../../../core/dto/offers/enum/offer-status';
+import { PaymentMethod } from '../../../payment-gateway/models/payment-method';
 
 @Component({
   selector: 'app-checkout-page',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './checkout-page.html',
+  standalone: true,
   styleUrl: './checkout-page.scss',
 })
 export class CheckoutPage implements OnInit {
@@ -38,6 +41,11 @@ export class CheckoutPage implements OnInit {
   // Holds selected deliveries key -> seller id, value -> type representing given delivery
   deliveryBySeller = signal<Record<string, SellerDeliveryState | null>>({});
 
+
+  // Declaring enums to be visible in template
+  readonly OfferStatus = OfferStatus;
+  readonly PaymentMethod = PaymentMethod;
+  
   // singal calculating deliveries cost
   deliveryCost = computed(() => {
     let deliveryTotal = 0;
@@ -70,7 +78,10 @@ export class CheckoutPage implements OnInit {
 
   canPay = computed(() => {
     const deliveries = Object.values(this.deliveryBySeller());
-    if (deliveries.length === 0) return false;
+    if (deliveries.length === 0) return false;    
+
+    if(!this.checkout() || !this.checkout()?.canPlaceOrder)
+      return false;
 
     return deliveries.every(d => {
       if (!d) return false;
@@ -84,7 +95,7 @@ export class CheckoutPage implements OnInit {
 
         case 'PickupPoint':
           const p = d.pickupPoint;
-          return !!(p.street && p.city && p.localNumber);
+          return !!(p.street && p.city && p.localNumber && p.pickupPointId);
 
         default:
           return false;
@@ -99,6 +110,7 @@ export class CheckoutPage implements OnInit {
     );
     this.checkoutApiService.getCheckout().subscribe(data => {
       this.checkout.set(data);
+      console.log(data);
       this.totalCost.set(data.totalCost);
     });
   }

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 
@@ -9,6 +10,7 @@ public record UserPanelOfferQuery
 {
     public Guid Id { get; init; }
     public OfferType Type { get; init; }
+    public OfferStatus Status { get; init; }
     public string Title { get; init; } = null!;
     public ImageResponse Image { get; init; } = null!;
     public DateTime DateCreated { get; init; }

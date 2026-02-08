@@ -3,7 +3,9 @@
 public static class AddressErrors
 {
     public static readonly Error NoDefaultAddress = new(
-        ErrorType.NotFound, "ShippingAddres.Default", "No default address found for this user, please add one address");
+        ErrorType.NotFound,
+        "ShippingAddres.Default",
+        "No default address found for this user, courier deliveries are not avaliable.");
 
     public static readonly Error StreetInvalid = Error.Validation(
       "Address.Street",
@@ -32,6 +34,4 @@ public static class AddressErrors
     public static readonly Error FlatNumberInvalid = Error.Validation(
         "Address.FlatNumber",
         "Flat number must be at most 10 characters.");
-
-
 }

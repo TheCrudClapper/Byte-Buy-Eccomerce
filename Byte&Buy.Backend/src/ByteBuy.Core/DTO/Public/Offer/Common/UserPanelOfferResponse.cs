@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Money;
 using System.Text.Json.Serialization;
 
@@ -11,6 +12,7 @@ public record UserPanelOfferResponse
 {
     public Guid Id { get; init; }
     public string Title { get; init; } = null!;
+    public OfferStatus Status { get; init; }
     public ImageResponse Image { get; init; } = null!;
     public DateTime DateCreated { get; init; }
     public DateTime? DateEdited { get; init; }

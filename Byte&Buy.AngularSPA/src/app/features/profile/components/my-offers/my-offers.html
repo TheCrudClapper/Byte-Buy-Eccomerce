@@ -11,9 +11,8 @@
         </div>
         <div class="col-10 d-flex flex-column justify-content-between">
             <div>
-                <a class="offer-title" [routerLink]="item.type === 'rent' 
-                        ? ['/offers', 'rent', 'details', item.id]
-                        : ['/offers', 'sale', 'details', item.id]">
+                <a class="offer-title"
+                    [routerLink]="['/offers', `${item.type === 'rent' ? 'rent' : 'sale'}`, 'details', item.id]">
                     {{ item.title }}
                 </a>
             </div>
@@ -22,8 +21,8 @@
                     <span class="d-block">
                         <span class="fw-bold me-1 fs-14-px">Created:</span>
                         <span class="me-3 fs-14-px">{{ item.dateCreated | date }}</span>
-                        <span class="fw-bold me-1 fs-14-px">Last Edited:</span>
-                        <span class="fs-14-px">{{ item.dateEdited | date }}</span>
+                        <span class="fw-bold me-1 fs-14-px">{{ item.dateEdited ? 'Last Edited:' : ''}}</span>
+                        <span class="fs-14-px">{{ item.dateEdited ? `${item.dateEdited | date}` : ``}}</span>
                     </span>
                     <span class="d-block">
                         <span class="fw-bold me-1 fs-14-px">Quantity:</span>
@@ -53,16 +52,24 @@
             <div class="col-12">
             </div>
             <div class="d-flex justify-content-between align-items-end">
-                <span class="badge">
-                    <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
-                    @if(item.type === 'rent'){
-                    Rent Offer
+                <span>
+                    <span class="badge me-1">
+                        <i class="fa-solid fa-circle-check" style="color: #ffffff;"></i>
+                        @if(item.type === 'rent'){
+                        Rent Offer
+                        }
+                        @if(item.type === 'sale'){
+                        Sale Offer
+                        }
+                    </span>
+                    @if(item.status === OfferStatus.SoldOut){
+                        <span class="badge text-bg-dark fs-12-px me-2">Sold out !</span>
                     }
-                    @if(item.type === 'sale'){
-                    Sale Offer
-                    }
+
                 </span>
-                <span class="">
+
+
+                <div>
                     <button class="me-2 icon-btn" [routerLink]="item.type === 'rent' 
                         ? ['/offers', 'rent', 'edit', item.id]
                         : ['/offers', 'sale', 'edit', item.id]">
@@ -71,7 +78,7 @@
                     <button class="icon-btn" (click)="remove(item)">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
-                </span>
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +92,7 @@
         We hope that it will change soon
         <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
     </span>
-   
+
 </div>
 }
 }

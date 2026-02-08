@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Image;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 
@@ -14,6 +15,7 @@ public record OfferBrowserItemQuery
     public string Condition { get; init; } = null!;
     public string Category { get; init; } = null!;
     public string City { get; init; } = null!;
+    public OfferStatus Status { get; init; }
     public string PostalCity { get; init; } = null!;
     public string PostalCode { get; init; } = null!;
     public bool IsCompanyOffer { get; init; }

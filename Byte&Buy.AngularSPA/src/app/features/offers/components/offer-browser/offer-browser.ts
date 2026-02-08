@@ -19,7 +19,6 @@ export class OfferBrowser implements OnInit {
   private readonly offerApiService = inject(OfferApiService);
 
   offers = signal<OfferUnion[]>([]);
-
   ngOnInit(): void {
     this.loadOffers();
   }

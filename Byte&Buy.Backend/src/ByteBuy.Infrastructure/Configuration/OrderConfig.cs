@@ -70,7 +70,7 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
 
             bs.Property(p => p.PhoneNumber)
                 .HasColumnName("BuyerSnapshot_PhoneNumber")
-                .HasMaxLength(20);
+                .HasMaxLength(15);
 
             bs.OwnsOne(p => p.Address, a =>
             {

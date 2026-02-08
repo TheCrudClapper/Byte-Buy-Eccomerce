@@ -15,4 +15,4 @@ public record PortalUserBuyerQuery(
     string LastName,
     string Email,
     string Phone,
-    AddressValueObject Address);
+    AddressValueObject? Address);

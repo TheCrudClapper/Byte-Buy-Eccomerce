@@ -4,7 +4,6 @@ using ByteBuy.Core.Domain.Factories;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
-using ByteBuy.Core.DTO.Internal.PortalUser;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.ResultTypes;
@@ -141,7 +140,7 @@ public class OrderCreateService : IOrderCreateService
                 lines.Add(lineResult.Value);
             }
 
-            // seller snapshot
+            // seller snapshotResult
             var sellerSnapshot = SellerSnapshotFactory.CreateSnapshot(sellerDto);
 
             // orders delivery
@@ -201,14 +200,14 @@ public class OrderCreateService : IOrderCreateService
         if (queryResult is null)
             return Result.Failure<BuyerSnapshot>(CommonUserErrors.NotFound);
 
-        var snapshot = BuyerSnapshot.Create(
+        var snapshotResult = BuyerSnapshot.Create(
             queryResult.FirstName,
             queryResult.LastName,
             queryResult.Phone,
             queryResult.Email,
             queryResult.Address);
 
-        return snapshot;
+        return snapshotResult;
     }
 
     //Logic for handlign 

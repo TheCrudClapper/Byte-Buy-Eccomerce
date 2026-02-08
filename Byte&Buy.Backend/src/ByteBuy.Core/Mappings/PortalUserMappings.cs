@@ -76,5 +76,5 @@ public static class PortalUserMappings
             p.LastName,
             p.Email!,
             p.PhoneNumber!,
-            p.HomeAddress!);
+            p.HomeAddress);
 }

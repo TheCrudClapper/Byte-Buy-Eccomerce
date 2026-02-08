@@ -38,11 +38,11 @@ public class CheckoutService : ICheckoutService
         var userData = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         if (userData is null)
-            return Result.Failure<CheckoutResponse>(CommonUserErrors.NotFound);
+            return Result.Failure<CheckoutResponse>(CheckoutErrors.UserDataNotFound);
 
-        var cartOffers = await _cartRepository.GetCartOffersForCheckout(userId, ct);
+        var checkoutItemsQuery = await _cartRepository.GetCartOffersAsCheckoutItemQuery(userId, ct);
 
-        var sellerIds = cartOffers
+        var sellerIds = checkoutItemsQuery
             .Select(co => (co.SellerId, co.SellerType))
             .Distinct()
             .ToList();
@@ -71,7 +71,7 @@ public class CheckoutService : ICheckoutService
             sellerLookup[companyData.SellerId] = (companyData.SellerDisplayName, companyData.SellerEmail);
 
         // Group deliveries into dictionary [key: sellerid, value [..deliveryids..]
-        var sellerDeliveryIds = cartOffers
+        var sellerDeliveryIds = checkoutItemsQuery
             .GroupBy(co => co.SellerId)
             .ToDictionary(
                 g => g.Key,
@@ -89,7 +89,7 @@ public class CheckoutService : ICheckoutService
 
         var deliveryLookup = deliveryOptions.ToDictionary(d => d.Id);
 
-        var sellerGroups = cartOffers
+        var sellerGroups = checkoutItemsQuery
             .GroupBy(co => co.SellerId)
             .Select(g =>
             {
@@ -126,13 +126,16 @@ public class CheckoutService : ICheckoutService
             EnumToSelectListMapper.EnumToSelectLists<PaymentMethod>(),
             itemsCost,
             tax,
-            itemsCost);
+            itemsCost,
+            sellerGroups
+                .SelectMany(s => s.CheckoutItems)
+                .All(i => i.CanFinalize));
 
         return dto;
     }
 
 
-    public static IReadOnlyCollection<Guid> ResolveCommonDeliveries(IEnumerable<FlatCartOffersQuery> sellerOffers)
+    public static IReadOnlyCollection<Guid> ResolveCommonDeliveries(IEnumerable<CheckoutItemQuery> sellerOffers)
     {
         var offers = sellerOffers.ToList();
 
