@@ -8,5 +8,5 @@ public enum OfferStatus
     Avaliable = 0,
 
     [Description("Sold Out")]
-    SouldOut = 1
+    SoldOut = 1
 }

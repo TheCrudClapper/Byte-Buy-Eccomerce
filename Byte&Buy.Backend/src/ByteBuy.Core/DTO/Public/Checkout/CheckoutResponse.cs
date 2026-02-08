@@ -11,4 +11,5 @@ public record CheckoutResponse(
     IReadOnlyCollection<SelectListItemResponse<int>> AvaliablePaymentMethods,
     MoneyDto ItemsCost,
     MoneyDto Tax,
-    MoneyDto TotalCost);
+    MoneyDto TotalCost,
+    bool CanPlaceOrder);

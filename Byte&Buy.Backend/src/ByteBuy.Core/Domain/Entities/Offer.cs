@@ -48,13 +48,12 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
     public Result DecreaseQuantity(int requestedQuantity)
     {
         if (requestedQuantity > QuantityAvailable)
-            return Result.Failure(OfferErrors.QuantityDecreseInvalid);
+            return Result.Failure(OfferErrors.QuantityDecreaseInvalid);
 
-        if(requestedQuantity <= QuantityAvailable)
-            QuantityAvailable -= requestedQuantity;
+        QuantityAvailable -= requestedQuantity;
 
         if (QuantityAvailable == 0)
-            Status = OfferStatus.SouldOut;
+            Status = OfferStatus.SoldOut;
 
         return Result.Success();
     }

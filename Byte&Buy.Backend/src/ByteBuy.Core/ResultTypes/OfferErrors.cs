@@ -5,7 +5,7 @@
 /// </summary>
 public static class OfferErrors
 {
-    public static readonly Error QuantityDecreseInvalid = new(
+    public static readonly Error QuantityDecreaseInvalid = new(
         ErrorType.Validation, "Offer.Quantity", "User requested more quantity than is avaliable");
 
     public static readonly Error NotFound = new(

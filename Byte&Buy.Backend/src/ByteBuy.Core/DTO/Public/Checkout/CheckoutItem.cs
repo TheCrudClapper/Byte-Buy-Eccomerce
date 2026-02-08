@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Cart.CartOffer;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.DTO.Public.Cart.CartOffer;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;
 using System.Text.Json.Serialization;
@@ -14,6 +15,9 @@ public abstract record CheckoutItem
     public string ItemName { get; init; } = null!;
     public ImageThumbnailDto Thumbnail { get; init; } = null!;
     public int Quantity { get; init; }
+    public int AvaliableQuantity { get; init; }
+    public OfferStatus Status { get; init; }
+    public bool CanFinalize { get; init; }
     public MoneyDto Subtotal { get; init; } = null!;
 }
 
