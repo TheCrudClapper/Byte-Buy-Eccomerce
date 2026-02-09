@@ -2,6 +2,8 @@
 
 public static class PortalUserErrors
 {
+    public static readonly Error PortalUserDeletionFailed = new(ErrorType.Unexpected,
+        "PortalUser.Delete", "Portal User deletion failed, try again later");
 
     public static readonly Error PortalUserCreationFailed = new(ErrorType.Unexpected,
         "PortalUser.Add", "Portal User creation failed, try again later");

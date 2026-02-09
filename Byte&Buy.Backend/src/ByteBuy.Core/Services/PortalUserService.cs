@@ -24,6 +24,7 @@ public class PortalUserService : IPortalUserService
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IUserRepository _userRepository;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IOfferRepository _offerRepository;
     private readonly IAddressValidationService _addressValidator;
     private readonly RoleManager<ApplicationRole> _roleManager;
     public PortalUserService(
@@ -34,11 +35,13 @@ public class PortalUserService : IPortalUserService
         RoleManager<ApplicationRole> roleManager,
         IAddressValidationService addressValidator,
         IPasswordService passwordService,
+        IOfferRepository offerRepository,
         IUnitOfWork unitOfWork)
     {
         _portalUserRepository = portalUserRepository;
         _userRepository = userRepository;
         _userManager = userManager;
+        _offerRepository = offerRepository;
         _unitOfWork = unitOfWork;
         _roleManager = roleManager;
         _addressValidator = addressValidator;
@@ -93,6 +96,9 @@ public class PortalUserService : IPortalUserService
             var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
             if (!roleResult.Succeeded)
                 return roleResult.ToResult<CreatedResponse>();
+
+            await _cartRepository.AddAsync(cartResult.Value);
+            await _unitOfWork.SaveChangesAsync();
 
             await _unitOfWork.CommitAsync();
             return user.ToCreatedResponse();
@@ -169,22 +175,41 @@ public class PortalUserService : IPortalUserService
         var spec = new PortalUserWithAddressAndPermissionSpec(id);
         var portalUser = await _portalUserRepository.GetBySpecAsync(spec);
         if (portalUser is null)
-            return Result.Failure(Error.NotFound);
+            return Result.Failure(CommonUserErrors.NotFound);
 
         var cartSpec = new CartAggregateByUserIdSpec(portalUser.Id);
         var userCart = await _cartRepository.GetBySpecAsync(cartSpec);
         if (userCart is null)
             return Result.Failure(CartErrors.NotFound);
 
-        portalUser.Deactivate();
-        userCart.Deactivate();
+        await _unitOfWork.BeginTransactionAsync();
 
-        await _portalUserRepository.UpdateAsync(portalUser);
-        await _cartRepository.UpdateAsync(userCart);
+        try
+        {
+            portalUser.Deactivate();
+            userCart.Deactivate();
 
-        await _unitOfWork.SaveChangesAsync();
+            var userOffers = await _offerRepository.GetOffersCreatedByUser(portalUser.Id);
+            foreach(var offer in userOffers)
+            {
+                offer.Deactivate();
+                await _offerRepository.UpdateAsync(offer);
+            }
 
-        return Result.Success();
+            await _portalUserRepository.UpdateAsync(portalUser);
+            await _cartRepository.UpdateAsync(userCart);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.CommitAsync();
+            return Result.Success();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure(PortalUserErrors.PortalUserDeletionFailed);
+        }
+        
     }
 
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)

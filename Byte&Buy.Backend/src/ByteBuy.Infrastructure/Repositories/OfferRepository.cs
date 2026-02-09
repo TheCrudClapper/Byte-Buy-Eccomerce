@@ -17,4 +17,12 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             .Where(o => offerIds.Contains(o.Id))
             .ToListAsync(ct);
     }
+
+    public async Task<IReadOnlyCollection<Offer>> GetOffersCreatedByUser(Guid userId, CancellationToken ct = default)
+    {
+        return await _context.Offers
+            .Include(o => o.OfferDeliveries)
+            .Where(o => o.CreatedByUserId == userId)
+            .ToListAsync(ct);
+    }
 }
