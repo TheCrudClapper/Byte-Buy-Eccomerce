@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.Mappings;
 
@@ -51,7 +50,7 @@ public static class RentalSpecification
     /// <summary>
     /// Specification gets a list of rentals where company is lender
     /// </summary>
-    public sealed class CompanyRentalListLenderSpec : Specification<Rental, CompanyRentalLenderResponse> 
+    public sealed class CompanyRentalListLenderSpec : Specification<Rental, CompanyRentalLenderResponse>
     {
         public CompanyRentalListLenderSpec(Guid companyId)
         {

@@ -1,6 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Internal.Cart;
-using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;
 
@@ -10,31 +8,34 @@ public static class OrderLineFactory
 {
     public static Result<OrderLine> FromCartOffer(
        Guid orderId,
-       FlatCartOffersQuery cartOffer)
+       CartOffer cartOffer)
     {
-        return cartOffer.Type switch
+        var image = cartOffer.Offer.Item.Images.FirstOrDefault() ?? throw new InvalidOperationException(
+                $"Offer {cartOffer.Offer.Id} does not contain any images.");
+
+        return cartOffer switch
         {
-            CartOfferType.Sale =>
+            SaleCartOffer sale =>
                 SaleOrderLine.Create(
                     orderId,
-                    cartOffer.Title,
-                    cartOffer.Thumbnail.ImagePath,
-                    cartOffer.Thumbnail.AltText,
-                    cartOffer.Quantity,
-                    cartOffer.PricePerItem!.Amount,
-                    cartOffer.PricePerItem.Currency
+                    sale.Offer.Item.Name,
+                    image.ImagePath,
+                    image.AltText,
+                    sale.Quantity,
+                    ((SaleOffer)sale.Offer).PricePerItem.Amount,
+                    ((SaleOffer)sale.Offer).PricePerItem.Currency
                 ).Upcast<OrderLine, SaleOrderLine>(),
 
-            CartOfferType.Rent =>
+            RentCartOffer rent =>
                 RentOrderLine.Create(
                     orderId,
-                    cartOffer.Title,
-                    cartOffer.Thumbnail.ImagePath,
-                    cartOffer.Thumbnail.AltText,
+                    rent.Offer.Item.Name,
+                    image.ImagePath,
+                    image.AltText,
                     cartOffer.Quantity,
-                    cartOffer.PricePerDay!.Amount,
-                    cartOffer.PricePerDay.Currency,
-                    cartOffer.RentalDays!.Value
+                    ((RentOffer)rent.Offer).PricePerDay.Amount,
+                    ((RentOffer)rent.Offer).PricePerDay.Currency,
+                    rent.RentalDays
                 ).Upcast<OrderLine, RentOrderLine>(),
 
             _ => throw new ArgumentOutOfRangeException(nameof(cartOffer), $"Unsupported cartOffer type or cartOffer is null"),

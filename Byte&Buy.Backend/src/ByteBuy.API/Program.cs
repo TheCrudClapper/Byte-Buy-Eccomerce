@@ -84,7 +84,7 @@ app.UseHangfireDashboard("/hangfire");
 RecurringJob.AddOrUpdate<RentalStatusJob>(
     "update-rental-statuses",
     job => job.Execute(),
-    Cron.Daily(0,0)
+    Cron.Daily(0, 0)
 );
 
 // -----------------------------

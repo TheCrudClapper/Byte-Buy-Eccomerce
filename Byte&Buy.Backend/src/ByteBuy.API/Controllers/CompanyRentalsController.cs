@@ -12,7 +12,7 @@ public class CompanyRentalsController : BaseApiController
     private readonly IRentalService _rentalService;
     public CompanyRentalsController(IRentalService rentalService)
       => _rentalService = rentalService;
-    
+
 
     [HttpGet("company")]
     public async Task<ActionResult<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentals(CancellationToken ct = default)

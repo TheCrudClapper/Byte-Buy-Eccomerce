@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Internal.Cart;
 using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Cart.CartOffer;
@@ -84,7 +83,7 @@ public static class CheckoutMappings
                 .ToList(),
 
             CanFinalize =
-                co.Offer.Status == OfferStatus.Avaliable 
+                co.Offer.Status == OfferStatus.Available
                 && co.Quantity <= co.Offer.QuantityAvailable
         };
 }

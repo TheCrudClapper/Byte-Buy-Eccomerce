@@ -5,6 +5,10 @@
 /// </summary>
 public static class OfferErrors
 {
+
+    public static readonly Error SoldOut = new(
+        ErrorType.Validation, "Offer.SoldOut", "Offer is sold out and is not available for purchase.");
+
     public static readonly Error QuantityDecreaseInvalid = new(
         ErrorType.Validation, "Offer.Quantity", "User requested more quantity than is avaliable");
 

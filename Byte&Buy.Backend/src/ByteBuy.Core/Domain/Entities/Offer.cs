@@ -34,7 +34,7 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
         Seller = seller;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
-        Status = OfferStatus.Avaliable;
+        Status = OfferStatus.Available;
     }
 
     public void Deactivate()
@@ -47,6 +47,9 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
 
     public Result DecreaseQuantity(int requestedQuantity)
     {
+        if (Status == OfferStatus.SoldOut)
+            return Result.Failure(OfferErrors.SoldOut);
+
         if (requestedQuantity > QuantityAvailable)
             return Result.Failure(OfferErrors.QuantityDecreaseInvalid);
 

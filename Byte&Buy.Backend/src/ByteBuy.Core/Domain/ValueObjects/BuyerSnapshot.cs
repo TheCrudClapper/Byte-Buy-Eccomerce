@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 

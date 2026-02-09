@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Seller;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Factories;
 

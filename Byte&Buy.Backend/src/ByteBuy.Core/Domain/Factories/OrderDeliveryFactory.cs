@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Order;
@@ -16,7 +15,7 @@ public static class OrderDeliveryFactory
         DeliveryOrderQuery delivery,
         UserShippingAddressQuery? shippingAddress = null)
     {
-        return delivery.channel switch
+        return delivery.Channel switch
         {
             DeliveryChannel.Courier =>
                 shippingAddress is null
@@ -25,8 +24,8 @@ public static class OrderDeliveryFactory
                     orderId,
                     delivery.Name,
                     delivery.CarrierCode,
-                    delivery.priceAmount,
-                    delivery.priceCurrency,
+                    delivery.PriceAmount,
+                    delivery.PriceCurrency,
                     shippingAddress.Street,
                     shippingAddress.HouseNumber,
                     shippingAddress.FlatNumber,
@@ -34,22 +33,22 @@ public static class OrderDeliveryFactory
                     shippingAddress.PostalCity,
                     shippingAddress.PostalCode),
 
-           DeliveryChannel.ParcelLocker =>
-                OrderDelivery.CreateParcelLockerDelivery(
-                    orderId,
-                    delivery.Name,
-                    delivery.CarrierCode,
-                    delivery.priceAmount,
-                    delivery.priceCurrency,
-                    request.ParcelLockerData!.LockerId),
+            DeliveryChannel.ParcelLocker =>
+                 OrderDelivery.CreateParcelLockerDelivery(
+                     orderId,
+                     delivery.Name,
+                     delivery.CarrierCode,
+                     delivery.PriceAmount,
+                     delivery.PriceCurrency,
+                     request.ParcelLockerData!.LockerId),
 
             DeliveryChannel.PickupPoint =>
                OrderDelivery.CreatePickupPointDelivery(
                    orderId,
                    delivery.Name,
                    delivery.CarrierCode,
-                   delivery.priceAmount,
-                   delivery.priceCurrency,
+                   delivery.PriceAmount,
+                   delivery.PriceCurrency,
                    delivery.Name,
                    request.PickupPointData!.PickupPointId,
                    request.PickupPointData!.Street,

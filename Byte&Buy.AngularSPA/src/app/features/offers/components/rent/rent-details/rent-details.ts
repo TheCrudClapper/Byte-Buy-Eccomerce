@@ -38,6 +38,12 @@ export class RentDetails extends BaseOfferDetail {
       .subscribe({
         next: (data) => {
           this.rentOfferDetails.set(data);
+
+          if(data.status === OfferStatus.SoldOut){
+            this.cartForm.disable()
+          }else{
+            this.cartForm.enable();
+          }
         },
         error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
       })

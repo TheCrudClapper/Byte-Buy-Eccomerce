@@ -4,9 +4,9 @@ public class DomainInvariantException : Exception
 {
     public DomainInvariantException() { }
 
-    public DomainInvariantException(string message) 
+    public DomainInvariantException(string message)
         : base(message) { }
 
-    public DomainInvariantException(string message, Exception innerException) 
+    public DomainInvariantException(string message, Exception innerException)
         : base(message, innerException) { }
 }

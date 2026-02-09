@@ -56,8 +56,8 @@ public static class OrderSpecifications
         public CompanyOrderDetalsResponseSpec(Guid companyId, Guid orderId)
         {
             Query.AsNoTracking()
-                .Where(o => o.Id == orderId 
-                    && ( o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company ))
+                .Where(o => o.Id == orderId
+                    && (o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company))
                 .Select(OrderMappings.OrderDetailsQueryProjection);
         }
     }

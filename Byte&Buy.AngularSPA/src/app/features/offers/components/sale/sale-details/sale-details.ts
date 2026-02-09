@@ -39,6 +39,12 @@ export class SaleDetails extends BaseOfferDetail {
       .subscribe({
         next: (data) => {
           this.saleOfferDetails.set(data);
+          
+          if(data.status === OfferStatus.SoldOut){
+            this.cartForm.disable()
+          }else{
+            this.cartForm.enable();
+          }
         },
         error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
       });

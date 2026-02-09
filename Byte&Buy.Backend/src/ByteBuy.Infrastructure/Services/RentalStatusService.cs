@@ -9,7 +9,7 @@ public class RentalStatusService : IRentalStatusService
     private readonly IRentalRepository _rentalRepository;
     public RentalStatusService(IRentalRepository rentalRepository)
       => _rentalRepository = rentalRepository;
-    
+
 
     public async Task UpdateRentalStatusesAsync()
     {
@@ -18,12 +18,12 @@ public class RentalStatusService : IRentalStatusService
 
         var now = DateTime.UtcNow;
 
-        foreach(var rental in statuses)
+        foreach (var rental in statuses)
         {
             if (now < rental.RentalStartDate)
                 continue;
 
-            if(now > rental.RentalEndDate)
+            if (now > rental.RentalEndDate)
             {
                 if (rental.Status != RentalStatus.Overdue)
                     rental.MarkAsOverdue();
@@ -36,6 +36,6 @@ public class RentalStatusService : IRentalStatusService
         }
 
         await _rentalRepository.CommitAsync();
-        
+
     }
 }

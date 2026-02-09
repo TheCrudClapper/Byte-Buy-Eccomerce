@@ -9,7 +9,7 @@ public static class ResultExtension
         this Result<TDerived> result)
         where TDerived : TBase
     {
-        if(result.IsFailure)
+        if (result.IsFailure)
             return Result.Failure<TBase>(result.Error);
 
         return Result.Success<TBase>(result.Value);

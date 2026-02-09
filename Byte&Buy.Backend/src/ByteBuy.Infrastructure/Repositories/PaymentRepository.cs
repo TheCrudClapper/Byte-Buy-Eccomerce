@@ -11,7 +11,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class PaymentRepository : EfBaseRepository<Payment>, IPaymentRepository
 {
-    public PaymentRepository(ApplicationDbContext context) : base(context){ }
+    public PaymentRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<Payment?> GetPaymentByUserId(Guid userId, Guid paymentId, CancellationToken ct)
     {
@@ -26,7 +26,7 @@ public class PaymentRepository : EfBaseRepository<Payment>, IPaymentRepository
         return await _context.PaymentOrders
             .AsNoTracking()
             .Where(p => p.PaymentId == paymentId
-                    && p.Order.BuyerId == userId 
+                    && p.Order.BuyerId == userId
                     && p.Payment.Status == PaymentStatus.Created)
             .Select(p => new PaymentResponse(p.Payment.Method, p.Payment.Amount.ToMoneyDto()))
             .FirstOrDefaultAsync(ct);

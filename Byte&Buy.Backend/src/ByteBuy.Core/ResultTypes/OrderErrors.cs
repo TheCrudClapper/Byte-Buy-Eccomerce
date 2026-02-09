@@ -5,6 +5,9 @@ public static class OrderErrors
     public static readonly Error NotFound = new(
         ErrorType.NotFound, "Order", "Order is not found");
 
+    public static readonly Error FailedToCreateOrder = new(
+        ErrorType.Unexpected, "Order", "Failed to create order, try again later");
+
     public static readonly Error InvalidReturnState = Error.Validation(
         "Order.Status", "Only delivered orders can be returned");
 

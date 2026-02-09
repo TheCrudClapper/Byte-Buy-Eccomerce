@@ -87,14 +87,14 @@
                                 <i class="fa-brands fa-ello" style="color: #ffffff;"></i>
                                 Seller: {{offer.seller.type == 'company' ? "Company" : "Private"}}
                             </span>
-                            @if(offer.status === OfferStatus.Avaliable){
+                            @if(offer.status === OfferStatus.Available){
                             <span class="badge seller-badge me-2 mb-2">
                                 <i class="fa-solid fa-box-open" style="color: #ffffff;"></i>
                                 Avaliable: {{ offer.quantityAvaliable }}
                             </span>
                             }
                             @else {
-                            <span class="badge seller-badge me-2 mb-2">
+                            <span class="badge text-bg-dark seller-badge me-2 mb-2">
                                 Sold out
                                 <i class="fa-solid fa-exclamation" style="color: #ffffff;"></i>
                             </span>
@@ -103,27 +103,25 @@
                                 <i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i>
                                 Max days per rental: {{ offer.maxRentalDays }}
                             </span>
-                            <span class="badge seller-badge mb-2 me-2">
-                                <i class="fa-solid  fa-circle-check" style="color: #ffffff;"></i>
-                                Rent Offer
-                            </span>
                         </div>
                     </div>
 
                     <form [formGroup]="cartForm" (ngSubmit)="addToCart()">
                         <div class="row mt-2 align-items-center pt-3">
                             <div class="col-6">
-                                <span>Quantity</span>
+                                <span class="fs-14-px">Quantity</span>
                                 <input type="number" formControlName="quantity" class="form-control">
                                 <span class="validation-error"> {{ getError('quantity') }}</span>
                             </div>
                             <div class="col-6">
-                                <span>Rental Days</span>
+                                <span class="fs-14-px">Rental Days</span>
                                 <input type="number" formControlName="rentalDays" class="form-control">
                                 <span class="validation-error"> {{ getError('rentalDays') }}</span>
                             </div>
                             <div class="col-12 mt-2">
-                                <button class="btn w-100">
+                                <button 
+                                    class="btn w-100" 
+                                    [disabled]="cartForm.disabled || rentOfferDetails()?.status === OfferStatus.SoldOut">
                                     <i class="fa-solid fa-cart-arrow-down me-1" style="color: #ffffff;"></i>
                                     To Cart
                                 </button>

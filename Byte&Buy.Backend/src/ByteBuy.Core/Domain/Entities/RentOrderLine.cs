@@ -21,7 +21,7 @@ public class RentOrderLine : OrderLine
     int rentalDays) : base(orderId, itemName, thumbnail, quantity)
     {
         PricePerDay = pricePerDay;
-        RentalDays  = rentalDays;
+        RentalDays = rentalDays;
     }
 
     public static Result<RentOrderLine> Create(Guid orderId,

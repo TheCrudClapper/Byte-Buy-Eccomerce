@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.DTO.Internal.Cart;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Checkout;
 using ByteBuy.Core.DTO.Public.Delivery;
@@ -139,7 +138,7 @@ public class CheckoutService : ICheckoutService
     {
         var offers = sellerOffers.ToList();
 
-        if(offers.Count == 0)
+        if (offers.Count == 0)
             return [];
 
         var common = offers
@@ -148,7 +147,7 @@ public class CheckoutService : ICheckoutService
             .ToHashSet();
 
         // skip first because common is our first record
-        foreach(var offer in offers.Skip(1))
+        foreach (var offer in offers.Skip(1))
         {
             // left in common just those ids that are also in offer.avaliabledelieriesids
             common.IntersectWith(offer.AvaliableDeliveriesIds);

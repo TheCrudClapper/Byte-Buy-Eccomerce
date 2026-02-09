@@ -10,15 +10,15 @@ public abstract class PaymentDetails : AuditableEntity, ISoftDeletable
 
     //Discriminator
     public PaymentMethod Method { get; set; }
-    public bool IsActive {  get; set; }
-    public DateTime? DateDeleted {  get; set; }
+    public bool IsActive { get; set; }
+    public DateTime? DateDeleted { get; set; }
 
-    protected PaymentDetails(){}
+    protected PaymentDetails() { }
 
     protected PaymentDetails(PaymentMethod method, Guid paymentId)
     {
         Method = method;
-        PaymentId = paymentId;  
+        PaymentId = paymentId;
         IsActive = true;
         DateCreated = DateTime.UtcNow;
     }

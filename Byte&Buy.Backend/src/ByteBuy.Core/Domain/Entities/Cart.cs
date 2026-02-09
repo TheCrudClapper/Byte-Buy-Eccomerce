@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.EntityContracts;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
@@ -40,6 +41,9 @@ public class Cart : AuditableEntity, ISoftDeletable
     {
         if (saleOffer is null)
             return Result.Failure(CartErrors.NullOffer);
+
+        if (saleOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
 
         if (quantity <= 0)
             return Result.Failure(CartErrors.QuantityInvalid);
@@ -92,6 +96,9 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (offer is null || offer is not SaleOffer saleOffer)
             return Result.Failure(CartErrors.NullOffer);
 
+        if (saleOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
+
         //in this case, we delete item from cart
         if (quantity <= 0)
         {
@@ -122,6 +129,9 @@ public class Cart : AuditableEntity, ISoftDeletable
     {
         if (rentOffer is null)
             return Result.Failure(CartErrors.NullOffer);
+
+        if (rentOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
 
         if (quantity <= 0)
             return Result.Failure(CartErrors.QuantityInvalid);
@@ -183,6 +193,9 @@ public class Cart : AuditableEntity, ISoftDeletable
         if (offer is null || offer is not RentOffer rentOffer)
             return Result.Failure(CartErrors.NullOffer);
 
+        if (rentOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
+
         if (quantity <= 0)
         {
             cartOffer.Deactivate();
@@ -217,7 +230,7 @@ public class Cart : AuditableEntity, ISoftDeletable
 
     public void ClearCart()
     {
-        foreach(var cartOffer in CartOffers)
+        foreach (var cartOffer in CartOffers)
             cartOffer.Deactivate();
 
         TotalCartValue = Money.Zero;

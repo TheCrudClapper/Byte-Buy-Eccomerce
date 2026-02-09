@@ -94,7 +94,7 @@ public class CartService : ICartService
 
     public async Task<Result<CartResponse>> GetCart(Guid userId, CancellationToken ct = default)
     {
-        var spec = new CartAggegateWithFullOffer(userId);
+        var spec = new CartAggegateWithOffers(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec, ct);
 
         if (cart is null)
@@ -196,7 +196,7 @@ public class CartService : ICartService
         var spec = new CartAggregateByUserIdSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
 
-        if(cart is null)
+        if (cart is null)
             return Result.Failure(CartErrors.NotFound);
 
         cart.ClearCart();

@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.Factories;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Seller;
@@ -19,6 +20,7 @@ namespace ByteBuy.Core.Services;
 public class OrderCreateService : IOrderCreateService
 {
     private readonly ICartRepository _cartRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IOrderRepository _orderRepository;
     private readonly IAddressReadRepository _addressReadRepository;
     private readonly IDeliveryRepository _deliveryRepository;
@@ -32,7 +34,8 @@ public class OrderCreateService : IOrderCreateService
         IPortalUserRepository portalUserRepository,
         ICompanyRepository companyRepository,
         IAddressReadRepository addressReadRepository,
-        IPaymentRepository paymentRepository)
+        IPaymentRepository paymentRepository,
+        IUnitOfWork unitOfWork)
     {
         _cartRepository = cartRepository;
         _orderRepository = orderRepository;
@@ -41,144 +44,170 @@ public class OrderCreateService : IOrderCreateService
         _companyRepository = companyRepository;
         _addressReadRepository = addressReadRepository;
         _paymentRepository = paymentRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<OrderCreatedReponse>> AddAsync(Guid userId, OrderAddRequest request)
     {
-        var buyerSnapshotResult = await CreateUserSnapshot(userId);
-        if (buyerSnapshotResult.IsFailure)
-            return Result.Failure<OrderCreatedReponse>(buyerSnapshotResult.Error);
+        await _unitOfWork.BeginTransactionAsync();
 
-        var cartOffers = await _cartRepository.GetCartOffersForCheckout(userId);
-        if (cartOffers.Count == 0)
-            return Result.Failure<OrderCreatedReponse>(OrderErrors.NoCartOffersFound);
-
-        var paymentMethod = (PaymentMethod)request.PaymentMethodId;
-
-        var offersBySeller = cartOffers
-            .GroupBy(o => o.SellerId);
-
-        // download all needed deliveries
-        var deliveriesSpec = new DeliveryOrderQuerySpec(request.SelectedDeliveries.Select(d => d.DeliveryId));
-        var deliveries = await _deliveryRepository.GetListBySpecAsync(deliveriesSpec);
-
-        var sellerIds = cartOffers
-          .Select(co => (co.SellerId, co.SellerType))
-          .Distinct()
-          .ToList();
-
-        SellerSnapshotDto? companySnapshot = null;
-        if (sellerIds.Any(type => type.SellerType == SellerType.Company))
+        try
         {
-            var companySpec = new CompanySellerSnapshotSpec();
-            companySnapshot = await _companyRepository.GetBySpecAsync(companySpec);
+            var buyerSnapshotResult = await CreateUserSnapshot(userId);
+            if (buyerSnapshotResult.IsFailure)
+                return Result.Failure<OrderCreatedReponse>(buyerSnapshotResult.Error);
 
-            if (companySnapshot is null)
-                return Result.Failure<OrderCreatedReponse>(CompanyInfoErrors.NotFound);
-        }
+            //Get whole cart aggregate with cart offer + offer for further calc
+            var cartSpec = new CartAggegateWithOffers(userId);
+            var cart = await _cartRepository.GetBySpecAsync(cartSpec);
 
-        var privateSellerSpec = new PrivateSellerSnapshotSpec(sellerIds
-            .Where(i => i.SellerType != SellerType.Company)
-            .Select(i => i.SellerId));
+            //var cart = await _cartRepository.GetCartOffersForCheckout(userId);
+            if (cart is null)
+                return Result.Failure<OrderCreatedReponse>(CartErrors.NotFound);
 
-        var privateSellers = await _portalUserRepository.GetListBySpecAsync(privateSellerSpec);
+            if (cart.CartOffers.Count == 0)
+                return Result.Failure<OrderCreatedReponse>(OrderErrors.NoCartOffersFound);
 
-        // creating lookups for faster and easier acceess
-        var deliveryLookup = deliveries
-            .ToDictionary(d => d.Id);
+            var paymentMethod = (PaymentMethod)request.PaymentMethodId;
 
-        var sellerLookup = privateSellers
-            .ToDictionary(s => s.SellerId, s => s);
+            var offersBySeller = cart.CartOffers
+                .GroupBy(o => o.Offer.Seller.Id);
 
-        if (companySnapshot is not null)
-            sellerLookup[companySnapshot.SellerId] = companySnapshot;
+            // download all needed deliveries
+            var deliveriesSpec = new DeliveryOrderQuerySpec(request.SelectedDeliveries.Select(d => d.DeliveryId));
+            var deliveries = await _deliveryRepository.GetListBySpecAsync(deliveriesSpec);
 
-        // if in request any courier is selected donwload queryResult's address
-        UserShippingAddressQuery? shippingAddress = null;
-        var courierDeliveryRequest = request.SelectedDeliveries
-            .FirstOrDefault(d => d.ShippingAddressId is not null
-                         && deliveryLookup[d.DeliveryId].channel == DeliveryChannel.Courier);
+            var sellerIds = cart.CartOffers
+              .Select(co => (co.Offer.Seller.Id, co.Offer.Seller.Type))
+              .Distinct()
+              .ToList();
 
-        if (courierDeliveryRequest is not null)
-        {
-            var addressSpec = new UserShippingAddressQuerySpec(userId, courierDeliveryRequest.ShippingAddressId!.Value);
-            shippingAddress = await _addressReadRepository.GetBySpecAsync(addressSpec);
-
-            if (shippingAddress is null)
-                return Result.Failure<OrderCreatedReponse>(OrderDeliveryErrors.InvalidShippingAddress);
-        }
-
-        // sellers
-        var orders = new List<Order>();
-
-        foreach (var sellerGroup in offersBySeller)
-        {
-            var sellerId = sellerGroup.Key;
-
-            var deliveryRequest = request.SelectedDeliveries
-                .FirstOrDefault(d => d.SellerId == sellerId);
-
-            if (deliveryRequest is null)
-                return Result.Failure<OrderCreatedReponse>(OrderErrors.MisingDeliveryPerSeller);
-
-            if (!deliveryLookup.TryGetValue(deliveryRequest.DeliveryId, out var deliveryDto))
-                return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidDelivery);
-
-            if (!sellerLookup.TryGetValue(sellerId, out var sellerDto))
-                return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidSeller);
-
-            var orderId = Guid.NewGuid();
-
-            // orders lines
-            var lines = new List<OrderLine>();
-            foreach (var cartOffer in sellerGroup)
+            SellerSnapshotDto? companySnapshot = null;
+            if (sellerIds.Any(type => type.Type == SellerType.Company))
             {
-                var lineResult = OrderLineFactory.FromCartOffer(orderId, cartOffer);
-                if (lineResult.IsFailure)
-                    return Result.Failure<OrderCreatedReponse>(lineResult.Error);
+                var companySpec = new CompanySellerSnapshotSpec();
+                companySnapshot = await _companyRepository.GetBySpecAsync(companySpec);
 
-                lines.Add(lineResult.Value);
+                if (companySnapshot is null)
+                    return Result.Failure<OrderCreatedReponse>(CompanyInfoErrors.NotFound);
             }
 
-            // seller snapshotResult
-            var sellerSnapshot = SellerSnapshotFactory.CreateSnapshot(sellerDto);
+            var privateSellerSpec = new PrivateSellerSnapshotSpec(sellerIds
+                .Where(i => i.Type != SellerType.Company)
+                .Select(i => i.Id));
 
-            // orders delivery
-            var deliveryResult = OrderDeliveryFactory.CreateOrderDelivery(
-                orderId,
-                deliveryRequest,
-                deliveryDto,
-                deliveryDto.channel == DeliveryChannel.Courier ? shippingAddress : null);
+            var privateSellers = await _portalUserRepository.GetListBySpecAsync(privateSellerSpec);
 
-            if (deliveryResult.IsFailure)
-                return Result.Failure<OrderCreatedReponse>(deliveryResult.Error);
+            // creating lookups for faster and easier acceess
+            var deliveryLookup = deliveries
+                .ToDictionary(d => d.Id);
 
-            var orderResult = Order.CreateNewOrder(
-                userId,
-                deliveryResult.Value,
-                sellerSnapshot,
-                buyerSnapshotResult.Value,
-                lines);
+            var sellerLookup = privateSellers
+                .ToDictionary(s => s.SellerId, s => s);
 
-            orders.Add(orderResult.Value);
+            if (companySnapshot is not null)
+                sellerLookup[companySnapshot.SellerId] = companySnapshot;
 
-            await _orderRepository.AddAsync(orderResult.Value);
+            // if in request any courier is selected donwload queryResult's address
+            UserShippingAddressQuery? shippingAddress = null;
+            var courierDeliveryRequest = request.SelectedDeliveries
+                .FirstOrDefault(d => d.ShippingAddressId is not null
+                             && deliveryLookup[d.DeliveryId].Channel == DeliveryChannel.Courier);
+
+            if (courierDeliveryRequest is not null)
+            {
+                var addressSpec = new UserShippingAddressQuerySpec(userId, courierDeliveryRequest.ShippingAddressId!.Value);
+                shippingAddress = await _addressReadRepository.GetBySpecAsync(addressSpec);
+
+                if (shippingAddress is null)
+                    return Result.Failure<OrderCreatedReponse>(OrderDeliveryErrors.InvalidShippingAddress);
+            }
+
+            // sellers
+            var orders = new List<Order>();
+
+
+            foreach (var sellerGroup in offersBySeller)
+            {
+                var sellerId = sellerGroup.Key;
+
+                var deliveryRequest = request.SelectedDeliveries
+                    .FirstOrDefault(d => d.SellerId == sellerId);
+
+                if (deliveryRequest is null)
+                    return Result.Failure<OrderCreatedReponse>(OrderErrors.MisingDeliveryPerSeller);
+
+                if (!deliveryLookup.TryGetValue(deliveryRequest.DeliveryId, out var deliveryDto))
+                    return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidDelivery);
+
+                if (!sellerLookup.TryGetValue(sellerId, out var sellerDto))
+                    return Result.Failure<OrderCreatedReponse>(OrderErrors.InvalidSeller);
+
+                var orderId = Guid.NewGuid();
+
+                // orders lines
+                var lines = new List<OrderLine>();
+                foreach (var cartOffer in sellerGroup)
+                {
+                    var quantityResult = cartOffer.Offer.DecreaseQuantity(cartOffer.Quantity);
+                    if (quantityResult.IsFailure)
+                        return Result.Failure<OrderCreatedReponse>(quantityResult.Error);
+
+                    var lineResult = OrderLineFactory.FromCartOffer(orderId, cartOffer);
+                    if (lineResult.IsFailure)
+                        return Result.Failure<OrderCreatedReponse>(lineResult.Error);
+
+                    lines.Add(lineResult.Value);
+                }
+
+                // seller snapshotResult
+                var sellerSnapshot = SellerSnapshotFactory.CreateSnapshot(sellerDto);
+
+                // orders delivery
+                var deliveryResult = OrderDeliveryFactory.CreateOrderDelivery(
+                    orderId,
+                    deliveryRequest,
+                    deliveryDto,
+                    deliveryDto.Channel == DeliveryChannel.Courier ? shippingAddress : null);
+
+                if (deliveryResult.IsFailure)
+                    return Result.Failure<OrderCreatedReponse>(deliveryResult.Error);
+
+                var orderResult = Order.CreateNewOrder(
+                    userId,
+                    deliveryResult.Value,
+                    sellerSnapshot,
+                    buyerSnapshotResult.Value,
+                    lines);
+
+                orders.Add(orderResult.Value);
+
+                await _orderRepository.AddAsync(orderResult.Value);
+            }
+
+            var orderAmounts = orders.Select(o => (o.Id, o.Total));
+
+            var paymentResult = Payment.CreateNewPayment(paymentMethod, orderAmounts);
+            if (paymentResult.IsFailure)
+                return Result.Failure<OrderCreatedReponse>(paymentResult.Error);
+
+            var cartResult = await ClearUserCart(userId);
+            if (cartResult.IsFailure)
+                return Result.Failure<OrderCreatedReponse>(cartResult.Error);
+
+            await _paymentRepository.AddAsync(paymentResult.Value);
+
+            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
+
+            return new OrderCreatedReponse(paymentResult.Value.Id, paymentResult.Value.Method);
+        }
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure<OrderCreatedReponse>(OrderErrors.FailedToCreateOrder);
         }
 
-        var orderAmounts = orders.Select(o => (o.Id, o.Total));
-
-        var paymentResult = Payment.CreateNewPayment(paymentMethod, orderAmounts);
-        if (paymentResult.IsFailure)
-            return Result.Failure<OrderCreatedReponse>(paymentResult.Error);
-
-        var cartResult = await ClearUserCart(userId);
-        if (cartResult.IsFailure)
-            return Result.Failure<OrderCreatedReponse>(cartResult.Error);
-
-        await _paymentRepository.AddAsync(paymentResult.Value);
-        await _orderRepository.CommitAsync();
-
-        return new OrderCreatedReponse(paymentResult.Value.Id, paymentResult.Value.Method);
     }
 
     private async Task<Result> ClearUserCart(Guid userId)
@@ -208,11 +237,5 @@ public class OrderCreateService : IOrderCreateService
             queryResult.Address);
 
         return snapshotResult;
-    }
-
-    //Logic for handlign 
-    private async Task SubstractOrDisableOffers()
-    {
-
     }
 }

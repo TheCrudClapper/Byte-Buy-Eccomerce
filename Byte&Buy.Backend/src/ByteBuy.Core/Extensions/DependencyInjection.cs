@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.DomainServices;
 using ByteBuy.Core.Domain.DomainServicesContracts;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using Microsoft.Extensions.DependencyInjection;

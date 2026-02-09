@@ -56,9 +56,9 @@ public class Payment : AuditableEntity, ISoftDeletable
     {
         if (Status == PaymentStatus.Completed)
             return Result.Failure(PaymentErrors.AlreadyPaid);
-        
-            Status = PaymentStatus.Completed;
-            PaymentDetails = details;
+
+        Status = PaymentStatus.Completed;
+        PaymentDetails = details;
 
         return Result.Success();
     }

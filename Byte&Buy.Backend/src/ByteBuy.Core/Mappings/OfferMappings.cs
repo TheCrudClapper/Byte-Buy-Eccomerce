@@ -5,14 +5,13 @@ using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
-using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
 public static class OfferMappings
 {
-    
+
     public static Expression<Func<Offer, UserPanelOfferQuery>> UserOfferPanelQueryProjection =>
         o => new UserPanelOfferQuery
         {
@@ -86,7 +85,7 @@ public static class OfferMappings
                 .FirstOrDefault()!,
 
             Status = o.Status,
-            IsCompanyOffer = o.Seller.Type == SellerType.Company,  
+            IsCompanyOffer = o.Seller.Type == SellerType.Company,
             PostalCity = o.OfferAddressSnapshot.PostalCity,
             PostalCode = o.OfferAddressSnapshot.PostalCode,
             Title = o.Item.Name,

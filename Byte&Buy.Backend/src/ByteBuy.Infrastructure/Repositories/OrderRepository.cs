@@ -3,13 +3,12 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using System.Formats.Asn1;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
 public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 {
-    public OrderRepository(ApplicationDbContext context) : base(context){ }
+    public OrderRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId, CancellationToken ct = default)
     {

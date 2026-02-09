@@ -69,7 +69,7 @@ public class RentOffer : Offer
         if (additionalQuantity < 0)
             return Result.Failure(OfferErrors.InvalidAdditionalQuantity);
 
-        if(additionalRentalDays < 0)
+        if (additionalRentalDays < 0)
             return Result.Failure(OfferErrors.InvalidAdditionalRentalDays);
 
         if (additionalRentalDays + currentMaxRentalDays > 360)

@@ -94,7 +94,7 @@ public sealed class Rental : AuditableEntity, ISoftDeletable
         var rentalEndDate = rentalStartDate.AddDays(rentalDays);
 
         var lenderSnapshotCopy = lender.Copy();
-       
+
         var rental = new Rental(
             rentOrderLineId,
             borrowerId,

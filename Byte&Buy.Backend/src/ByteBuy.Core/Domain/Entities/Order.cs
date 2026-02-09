@@ -95,7 +95,7 @@ public class Order : AuditableEntity, ISoftDeletable
         DateDelivered = DateTime.UtcNow;
         return Result.Success();
     }
-       
+
     public Result ReturnOrder()
     {
         if (Status != OrderStatus.Delivered)

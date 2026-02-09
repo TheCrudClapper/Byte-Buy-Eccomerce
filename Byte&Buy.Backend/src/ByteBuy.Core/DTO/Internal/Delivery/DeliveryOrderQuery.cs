@@ -1,12 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.Domain.ValueObjects;
 
 namespace ByteBuy.Core.DTO.Internal.Delivery;
 
-public record DeliveryOrderQuery(
+public sealed record DeliveryOrderQuery(
     Guid Id,
-    string Name, 
+    string Name,
     string CarrierCode,
-    DeliveryChannel channel,
-    decimal priceAmount,
-    string priceCurrency);
+    DeliveryChannel Channel,
+    decimal PriceAmount,
+    string PriceCurrency);

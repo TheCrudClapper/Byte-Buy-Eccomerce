@@ -1,8 +1,10 @@
 ﻿using ByteBuy.Core.Contracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.HangfireJobs;
 using ByteBuy.Infrastructure.Repositories;
+using ByteBuy.Infrastructure.Repositories.UnitOfWork;
 using ByteBuy.Infrastructure.ServiceContracts;
 using ByteBuy.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +46,9 @@ public static class DependencyInjection
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IRentalRepository, RentalRepository>();
 
+
+        //Unit of work
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         //Hangfire Services
         services.AddScoped<IRentalStatusService, RentalStatusService>();

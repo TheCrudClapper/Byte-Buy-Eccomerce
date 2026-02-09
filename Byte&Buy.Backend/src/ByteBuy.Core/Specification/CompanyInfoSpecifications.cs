@@ -4,7 +4,6 @@ using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.Mappings;
-using System.Collections;
 
 namespace ByteBuy.Core.Specification;
 

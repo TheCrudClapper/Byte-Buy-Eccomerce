@@ -1,7 +1,5 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.DTO.Internal.Cart;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 
@@ -36,9 +34,9 @@ public static class CartSpecifications
         }
     }
 
-    public sealed class CartAggegateWithFullOffer : Specification<Cart>
+    public sealed class CartAggegateWithOffers : Specification<Cart>
     {
-        public CartAggegateWithFullOffer(Guid userId)
+        public CartAggegateWithOffers(Guid userId)
         {
             Query.Where(c => c.UserId == userId)
                 .AsSplitQuery()
