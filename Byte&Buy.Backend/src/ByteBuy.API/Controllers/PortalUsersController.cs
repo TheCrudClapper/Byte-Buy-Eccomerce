@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [Resource("portalusers")]
-[Route("api/[controller]")]
+[Route("api/portalusers")]
 [ApiController]
 public class PortalUsersController
     : CrudControllerBase<Guid, PortalUserAddRequest, PortalUserUpdateRequest, PortalUserResponse>

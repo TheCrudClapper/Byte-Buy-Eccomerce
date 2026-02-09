@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers;
 
 [Resource("permissions")]
-[Route("api/[controller]")]
+[Route("api/permissions")]
 [ApiController]
 public class PermissionsController : BaseApiController
 {

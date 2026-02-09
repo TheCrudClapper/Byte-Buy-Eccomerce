@@ -68,7 +68,7 @@ export class OfferApiService {
   }
 
   getUserOffers(): Observable<UserPanelOfferUnion[]>{
-    return this.httpClient.get<UserPanelOfferUnion[]>(`${this.resourceUri}/me/offers`);
+    return this.httpClient.get<UserPanelOfferUnion[]>(`${this.resourceUri}/offers/my`);
   }
     
 }

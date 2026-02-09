@@ -8,22 +8,6 @@ namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications
 {
-    public sealed class CurrentDefaultShippingAddressSpec : Specification<ShippingAddress>
-    {
-        public CurrentDefaultShippingAddressSpec(Guid userId)
-        {
-            Query.Where(a => a.UserId == userId && a.IsDefault);
-        }
-    }
-
-    public sealed class UserShippingAddresSpec : Specification<ShippingAddress>
-    {
-        public UserShippingAddresSpec(Guid userId, Guid addressId)
-        {
-            Query.Where(a => a.Id == addressId && a.UserId == userId);
-        }
-    }
-
     public sealed class UserHomeAddressSpec : Specification<PortalUser, AddressValueObject?>
     {
         public UserHomeAddressSpec(Guid userId)

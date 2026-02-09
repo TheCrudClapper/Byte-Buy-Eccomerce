@@ -1,6 +1,8 @@
-﻿namespace ByteBuy.Core.DTO.Public.DeliveryCarrier;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ByteBuy.Core.DTO.Public.DeliveryCarrier;
 
 public record DeliveryCarrierAddRequest(
-    string Name,
-    string Code
+    [Required] string Name,
+    [Required] string Code
 );
