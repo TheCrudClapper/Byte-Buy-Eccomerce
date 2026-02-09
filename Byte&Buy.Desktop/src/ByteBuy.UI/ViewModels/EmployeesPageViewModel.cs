@@ -11,18 +11,13 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel
-    : ViewModelMany<EmployeeListItem, IEmployeeService>
+public partial class EmployeesPageViewModel(
+    AlertViewModel alert,
+    INavigationService navigation,
+    IDialogService dialogNavigation,
+    IEmployeeService service)
+        : ViewModelMany<EmployeeListItem, IEmployeeService>(alert, navigation, dialogNavigation, service)
 {
-    public EmployeesPageViewModel(
-        AlertViewModel alert,
-        INavigationService navigation,
-        IDialogService dialogNavigation,
-        IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
-    {
-        _ = LoadDataAsync();
-    }
-
     public override async Task LoadDataAsync()
     {
         var result = await Service.GetList();

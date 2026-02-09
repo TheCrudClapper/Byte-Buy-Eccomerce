@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Infrastructure.ServiceContracts;
 
 namespace ByteBuy.Infrastructure.Services;
@@ -7,9 +8,15 @@ namespace ByteBuy.Infrastructure.Services;
 public class RentalStatusService : IRentalStatusService
 {
     private readonly IRentalRepository _rentalRepository;
-    public RentalStatusService(IRentalRepository rentalRepository)
-      => _rentalRepository = rentalRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
+    public RentalStatusService(IRentalRepository rentalRepository,
+        IUnitOfWork unitOfWork)
+    {
+        _rentalRepository = rentalRepository;
+        _unitOfWork = unitOfWork;
+
+    }
 
     public async Task UpdateRentalStatusesAsync()
     {
@@ -35,7 +42,6 @@ public class RentalStatusService : IRentalStatusService
                 rental.ActivateRental();
         }
 
-        await _rentalRepository.CommitAsync();
-
+        await _unitOfWork.SaveChangesAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -18,17 +19,22 @@ public class SaleOfferService : ISaleOfferService
     private readonly ICompanyRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly ISaleOfferRepository _saleOfferRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
     public SaleOfferService(
         IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
         ICompanyRepository companyInfoRepository,
-        IDeliveryRepository deliveryRepository)
+        IDeliveryRepository deliveryRepository,
+        IUnitOfWork unitOfWork)
     {
         _itemRepository = itemRepository;
         _companyInfoRepository = companyInfoRepository;
         _saleOfferRepository = saleOfferRepository;
         _deliveryRepository = deliveryRepository;
+        _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, SaleOfferAddRequest request)
     {
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
@@ -70,7 +76,8 @@ public class SaleOfferService : ISaleOfferService
 
         await _saleOfferRepository.AddAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
 
         return saleOffer.ToCreatedResponse();
     }
@@ -94,7 +101,8 @@ public class SaleOfferService : ISaleOfferService
 
         await _saleOfferRepository.UpdateAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 
@@ -151,7 +159,7 @@ public class SaleOfferService : ISaleOfferService
 
         await _saleOfferRepository.UpdateAsync(saleOffer);
         await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return saleOffer.ToUpdatedResponse();
     }

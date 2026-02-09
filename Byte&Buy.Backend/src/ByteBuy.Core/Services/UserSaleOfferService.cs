@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -17,14 +18,18 @@ public class UserSaleOfferService : IUserSaleOfferService
     private readonly IItemRepository _itemRepository;
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IItemHelperService _itemHelperService;
+    private readonly IUnitOfWork _unitOfWork;
+
     public UserSaleOfferService(IItemRepository itemRepository,
         ISaleOfferRepository saleOfferRepository,
         IItemHelperService itemValidation,
-        IPortalUserRepository portalUserRepository)
+        IPortalUserRepository portalUserRepository,
+        IUnitOfWork unitOfWork)
     {
         _itemRepository = itemRepository;
         _saleOfferRepository = saleOfferRepository;
         _itemHelperService = itemValidation;
+        _unitOfWork = unitOfWork;
         _portalUserRepository = portalUserRepository;
     }
 
@@ -86,8 +91,8 @@ public class UserSaleOfferService : IUserSaleOfferService
 
         await _itemRepository.AddAsync(item);
         await _saleOfferRepository.AddAsync(saleOffer);
-        await _saleOfferRepository.CommitAsync();
 
+        await _unitOfWork.SaveChangesAsync();
         return saleOffer.ToCreatedResponse();
     }
 
@@ -107,7 +112,7 @@ public class UserSaleOfferService : IUserSaleOfferService
 
         await _itemRepository.UpdateAsync(item);
         await _saleOfferRepository.UpdateAsync(offer);
-        await _saleOfferRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }
@@ -174,7 +179,7 @@ public class UserSaleOfferService : IUserSaleOfferService
 
         await _itemRepository.UpdateAsync(item);
         await _saleOfferRepository.UpdateAsync(saleOffer);
-        await _saleOfferRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return saleOffer.ToUpdatedResponse();
     }

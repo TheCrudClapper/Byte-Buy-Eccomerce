@@ -52,9 +52,6 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
     private IQueryable<TResult> ApplySpecification<TResult>(ISpecification<T, TResult> spec)
         => _specEval.GetQuery(_context.Set<T>(), spec);
 
-    public virtual Task<int> CommitAsync(CancellationToken ct = default)
-        => _context.SaveChangesAsync(ct);
-
     public Task<List<T>> GetAllByConditionAsync(Expression<Func<T, bool>> expression, CancellationToken ct = default)
         => _context.Set<T>().Where(expression).ToListAsync(ct);
 

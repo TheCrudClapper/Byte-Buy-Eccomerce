@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.DeliveryCarrier;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -11,11 +12,15 @@ namespace ByteBuy.Core.Services;
 public class DeliveryCarrierService : IDeliveryCarrierService
 {
     private readonly IDeliveryCarrierRepository _deliveryCarrierRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeliveryCarrierService(IDeliveryCarrierRepository deliveryCarrierRepository)
+    public DeliveryCarrierService(IDeliveryCarrierRepository deliveryCarrierRepository,
+        IUnitOfWork unitOfWork)
     {
         _deliveryCarrierRepository = deliveryCarrierRepository;
+        _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<CreatedResponse>> AddAsync(DeliveryCarrierAddRequest request)
     {
         var exists = await _deliveryCarrierRepository
@@ -35,7 +40,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
         var carrier = carrierResult.Value;
 
         await _deliveryCarrierRepository.AddAsync(carrier);
-        await _deliveryCarrierRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return carrier.ToCreatedResponse();
     }
@@ -58,7 +63,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
         );
 
         await _deliveryCarrierRepository.UpdateAsync(carrier);
-        await _deliveryCarrierRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return carrier.ToUpdatedResponse();
     }
@@ -75,7 +80,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
         carrier.Deactivate();
 
         await _deliveryCarrierRepository.UpdateAsync(carrier);
-        await _deliveryCarrierRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

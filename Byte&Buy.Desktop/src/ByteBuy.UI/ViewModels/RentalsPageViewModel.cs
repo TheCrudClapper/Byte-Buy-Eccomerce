@@ -13,14 +13,12 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class RentalsPageViewModel : ViewModelMany<RentalListItem, IRentalService>
+public partial class RentalsPageViewModel(
+    AlertViewModel alert,
+    INavigationService navigation,
+    IDialogService dialogNavigation,
+    IRentalService service) : ViewModelMany<RentalListItem, IRentalService>(alert, navigation, dialogNavigation, service)
 {
-    public RentalsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IRentalService service)
-        : base(alert, navigation, dialogNavigation, service)
-    {
-
-    }
-
     public async override Task LoadDataAsync()
     {
         var result = await Service.GetCompanyRentalsList();

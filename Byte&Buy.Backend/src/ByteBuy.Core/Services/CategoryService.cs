@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -11,9 +12,14 @@ namespace ByteBuy.Core.Services;
 public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CategoryService(ICategoryRepository categoryRepository)
-        => _categoryRepository = categoryRepository;
+    public CategoryService(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+    {
+        _categoryRepository = categoryRepository;
+        _unitOfWork = unitOfWork;
+    }
+       
 
     public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)
     {
@@ -27,7 +33,7 @@ public class CategoryService : ICategoryService
 
         var category = categoryResult.Value;
         await _categoryRepository.AddAsync(category);
-        await _categoryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return category.ToCreatedResponse();
     }
@@ -47,7 +53,7 @@ public class CategoryService : ICategoryService
             return Result.Failure<UpdatedResponse>(result.Error);
 
         await _categoryRepository.UpdateAsync(category);
-        await _categoryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return category.ToUpdatedResponse();
     }
@@ -64,7 +70,7 @@ public class CategoryService : ICategoryService
         category.Deactivate();
 
         await _categoryRepository.UpdateAsync(category);
-        await _categoryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

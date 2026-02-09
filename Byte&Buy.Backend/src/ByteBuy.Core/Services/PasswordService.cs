@@ -23,7 +23,6 @@ public class PasswordService : IPasswordService
         //Change for new one
         var add = await _userManager.AddPasswordAsync(user, newPassword);
         return add;
-
     }
 
     public async Task<IdentityResult> ValidateAsync(ApplicationUser user, string password)

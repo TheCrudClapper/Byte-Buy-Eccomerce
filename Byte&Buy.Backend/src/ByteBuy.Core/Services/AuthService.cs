@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Auth;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;
@@ -10,6 +11,7 @@ namespace ByteBuy.Core.Services;
 
 public class AuthService : IAuthService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
     private readonly ICartRepository _cartRepository;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -18,8 +20,10 @@ public class AuthService : IAuthService
     public AuthService(UserManager<ApplicationUser> userManager,
         ICartRepository cartRepository,
         ITokenService tokenService,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
         _cartRepository = cartRepository;
         _userManager = userManager;
         _tokenService = tokenService;
@@ -68,18 +72,34 @@ public class AuthService : IAuthService
 
         userResult.Value.AttachCart(cartResult.Value.Id);
 
-        var identityResult = await _userManager
+        //begin transaction
+        await _unitOfWork.BeginTransactionAsync();
+
+        try
+        {
+            var identityResult = await _userManager
             .CreateAsync(userResult.Value, request.Password);
 
-        if (!identityResult.Succeeded)
-            return identityResult.ToResult();
+            if (!identityResult.Succeeded)
+                return identityResult.ToResult();
 
-        const string defaultRoleName = "Portal User";
+            const string defaultRoleName = "Portal User";
 
-        await _cartRepository.AddAsync(cartResult.Value);
-        await _cartRepository.CommitAsync();
-        await _userManager.AddToRoleAsync(userResult.Value, defaultRoleName);
+            await _cartRepository.AddAsync(cartResult.Value);
+            await _unitOfWork.SaveChangesAsync();
 
-        return Result.Success();
+            var roleResult = await _userManager.AddToRoleAsync(userResult.Value, defaultRoleName);
+            if(!roleResult.Succeeded)
+                return roleResult.ToResult();
+
+            await _unitOfWork.CommitAsync();
+            return Result.Success();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure(AuthErrors.FailedToRegisterUser);
+        }
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -16,16 +17,21 @@ public class RentOfferService : IRentOfferService
     private readonly IRentOfferRepository _rentOfferRepository;
     private readonly ICompanyRepository _companyInfoRepository;
     private readonly IDeliveryRepository _deliveryRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IItemRepository _itemRepository;
-    public RentOfferService(IRentOfferRepository rentOfferRepo, IItemRepository itemRepo,
+    public RentOfferService(IRentOfferRepository rentOfferRepo,
+        IItemRepository itemRepo,
         IDeliveryRepository deliveryRepository,
-        ICompanyRepository companyInfoRepository)
+        ICompanyRepository companyInfoRepository,
+        IUnitOfWork unitOfWork)
     {
         _companyInfoRepository = companyInfoRepository;
         _rentOfferRepository = rentOfferRepo;
         _itemRepository = itemRepo;
         _deliveryRepository = deliveryRepository;
+        _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, RentOfferAddRequest request)
     {
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
@@ -68,7 +74,8 @@ public class RentOfferService : IRentOfferService
 
         await _rentOfferRepository.AddAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
-        await _rentOfferRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
 
         return rentOffer.ToCreatedResponse();
     }
@@ -92,7 +99,8 @@ public class RentOfferService : IRentOfferService
 
         await _rentOfferRepository.UpdateAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
-        await _rentOfferRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 
@@ -151,7 +159,8 @@ public class RentOfferService : IRentOfferService
 
         await _rentOfferRepository.UpdateAsync(rentOffer);
         await _itemRepository.UpdateAsync(item);
-        await _rentOfferRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
 
         return rentOffer.ToUpdatedResponse();
     }

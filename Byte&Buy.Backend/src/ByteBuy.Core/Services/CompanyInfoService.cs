@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.CompanyInfo;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -13,11 +14,14 @@ public class CompanyInfoService : ICompanyInfoService
 {
     private readonly ICompanyRepository _companyInfoRepository;
     private readonly IAddressValidationService _addressValidator;
+    private readonly IUnitOfWork _unitOfWork;
     public CompanyInfoService(ICompanyRepository companyInfo,
-        IAddressValidationService addressValidator)
+        IAddressValidationService addressValidator,
+        IUnitOfWork unitOfWork)
     {
         _companyInfoRepository = companyInfo;
         _addressValidator = addressValidator;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<CreatedResponse>> AddAsync(CompanyInfoAddRequest request)
     {
@@ -44,7 +48,7 @@ public class CompanyInfoService : ICompanyInfoService
             return Result.Failure<CreatedResponse>(createResult.Error);
 
         await _companyInfoRepository.AddAsync(createResult.Value);
-        await _companyInfoRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return createResult.Value.ToCreatedResponse();
     }
@@ -83,7 +87,7 @@ public class CompanyInfoService : ICompanyInfoService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _companyInfoRepository.UpdateAsync(companyInfo);
-        await _companyInfoRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return companyInfo.ToUpdatedResponse();
     }

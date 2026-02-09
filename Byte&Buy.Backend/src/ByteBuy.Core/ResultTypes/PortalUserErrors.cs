@@ -2,6 +2,13 @@
 
 public static class PortalUserErrors
 {
+
+    public static readonly Error PortalUserCreationFailed = new(ErrorType.Unexpected,
+        "PortalUser.Add", "Portal User creation failed, try again later");
+
+    public static readonly Error PortalUserUpdateFailed = new(ErrorType.Unexpected,
+       "PortalUser.Update", "Portal User creation failed, try again later");
+
     public static readonly Error DuplicateShippingAddressLabel = new(
         ErrorType.Conflict,
         "PortalUser.ShippingAddress.DuplicateShippingAddressLabel",

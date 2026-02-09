@@ -19,4 +19,7 @@ public static class AuthErrors
 
     public static readonly Error PasswordsDontMatch = new(
         ErrorType.Conflict, "Auth.PasswordsDontMatch", "Confirmation and new passwords doesn't match");
+
+    public static readonly Error FailedToRegisterUser = new(
+        ErrorType.Unexpected, "Auth.Register", "Failed to register user, please try again.");
 }

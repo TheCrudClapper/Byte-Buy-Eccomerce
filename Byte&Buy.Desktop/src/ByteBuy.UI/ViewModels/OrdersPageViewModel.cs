@@ -14,14 +14,9 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class OrdersPageViewModel 
-    : ViewModelMany<OrderListItem, IOrderService>
+public partial class OrdersPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IOrderService service)
+        : ViewModelMany<OrderListItem, IOrderService>(alert, navigation, dialogNavigation, service)
 {
-    public OrdersPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IOrderService service) 
-        : base(alert, navigation, dialogNavigation, service)
-    {
-    }
-
     public override async Task LoadDataAsync()
     {
         var result = await Service.GetCompanyOrderList();

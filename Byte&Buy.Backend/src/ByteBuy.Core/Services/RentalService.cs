@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -11,10 +12,15 @@ public class RentalService : IRentalService
 {
     private readonly IRentalRepository _rentalRepository;
     private readonly ICompanyRepository _companyRepository;
-    public RentalService(IRentalRepository rentalRepository, ICompanyRepository companyRepository)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public RentalService(IRentalRepository rentalRepository,
+        ICompanyRepository companyRepository,
+        IUnitOfWork unitOfWork)
     {
         _rentalRepository = rentalRepository;
         _companyRepository = companyRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId, CancellationToken ct = default)
@@ -60,7 +66,7 @@ public class RentalService : IRentalService
             return Result.Failure<UpdatedResponse>(returnResult.Error);
 
         await _rentalRepository.UpdateAsync(rental);
-        await _rentalRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return rental.ToUpdatedResponse();
     }

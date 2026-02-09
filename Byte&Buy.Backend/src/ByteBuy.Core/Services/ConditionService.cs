@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -11,9 +12,13 @@ namespace ByteBuy.Core.Services;
 public class ConditionService : IConditionService
 {
     private readonly IConditionRepository _conditionRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ConditionService(IConditionRepository conditionRepository)
-        => _conditionRepository = conditionRepository;
+    public ConditionService(IConditionRepository conditionRepository, IUnitOfWork unitOfWork)
+    {
+        _conditionRepository = conditionRepository;
+        _unitOfWork = unitOfWork;
+    }
 
     public async Task<Result<CreatedResponse>> AddAsync(ConditionAddRequest request)
     {
@@ -27,7 +32,7 @@ public class ConditionService : IConditionService
 
         var condition = result.Value;
         await _conditionRepository.AddAsync(condition);
-        await _conditionRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return condition.ToCreatedResponse();
     }
@@ -44,7 +49,8 @@ public class ConditionService : IConditionService
 
         condition.Update(request.Name, request.Description);
         await _conditionRepository.UpdateAsync(condition);
-        await _conditionRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return condition.ToUpdatedResponse();
     }
 
@@ -59,7 +65,7 @@ public class ConditionService : IConditionService
 
         condition.Deactivate();
         await _conditionRepository.UpdateAsync(condition);
-        await _conditionRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Item;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -13,12 +14,15 @@ public class ItemsService : IItemsService
 {
     private readonly IItemRepository _itemRepository;
     private readonly IItemHelperService _itemHelperService;
+    private readonly IUnitOfWork _unitOfWork;
 
     public ItemsService(IItemRepository itemRepository,
-        IItemHelperService itemValidationService)
+        IItemHelperService itemValidationService,
+        IUnitOfWork unitOfWork)
     {
         _itemRepository = itemRepository;
         _itemHelperService = itemValidationService;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
@@ -51,7 +55,7 @@ public class ItemsService : IItemsService
         var item = itemCreationResult.Value;
 
         await _itemRepository.AddAsync(item);
-        await _itemRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return item.ToCreatedResponse();
     }
@@ -95,7 +99,7 @@ public class ItemsService : IItemsService
         //    return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
 
         await _itemRepository.UpdateAsync(aggregate);
-        await _itemRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return aggregate.ToUpdatedResponse();
     }
@@ -112,7 +116,7 @@ public class ItemsService : IItemsService
         aggregate.Deactivate();
 
         await _itemRepository.UpdateAsync(aggregate);
-        await _itemRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

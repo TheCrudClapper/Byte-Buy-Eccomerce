@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Payment;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
@@ -11,11 +12,15 @@ public class PaymentService : IPaymentService
 {
     private readonly IPaymentRepository _paymentRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
     public PaymentService(IPaymentRepository paymentRepository,
-        IOrderRepository orderRepository)
+        IOrderRepository orderRepository,
+        IUnitOfWork unitOfWork)
     {
         _paymentRepository = paymentRepository;
         _orderRepository = orderRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<PaymentResponse>> GetUnpaidPayment(Guid userId, Guid paymentId, CancellationToken ct)
@@ -48,7 +53,7 @@ public class PaymentService : IPaymentService
             return finalizeResult;
 
         await _paymentRepository.UpdateAsync(payment);
-        await _paymentRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 
@@ -75,7 +80,8 @@ public class PaymentService : IPaymentService
             return finalizeResult;
 
         await _paymentRepository.UpdateAsync(payment);
-        await _paymentRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return Result.Success();
     }
 

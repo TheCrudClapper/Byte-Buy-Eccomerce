@@ -11,17 +11,12 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem, IPortalUserService>
+public class PortalUsersPageViewModel(
+    AlertViewModel alert,
+    INavigationService navigation,
+    IDialogService dialogNavigation,
+    IPortalUserService userService) : ViewModelMany<PortalUserListItem, IPortalUserService>(alert, navigation, dialogNavigation, userService)
 {
-    public PortalUsersPageViewModel(
-        AlertViewModel alert,
-        INavigationService navigation,
-        IDialogService dialogNavigation,
-        IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
-    {
-        _ = LoadDataAsync();
-    }
-
     protected override async Task EditAsync(PortalUserListItem item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>

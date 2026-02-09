@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Cart;
 using ByteBuy.Core.Mappings;
@@ -13,14 +14,17 @@ public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
     private readonly IOfferRepository _offerRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IDeliveryRepository _deliveryRepository;
     public CartService(ICartRepository cartRepository,
         IOfferRepository offerRepository,
-        IDeliveryRepository deliveryRepository)
+        IDeliveryRepository deliveryRepository,
+        IUnitOfWork unitOfWork)
     {
         _cartRepository = cartRepository;
         _offerRepository = offerRepository;
         _deliveryRepository = deliveryRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request)
@@ -42,7 +46,7 @@ public class CartService : ICartService
             return Result.Failure(result.Error);
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }
@@ -66,7 +70,7 @@ public class CartService : ICartService
             return Result.Failure(result.Error);
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }
@@ -83,7 +87,7 @@ public class CartService : ICartService
             return Result.Failure<CartSummaryResponse>(deleteResult.Error);
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
         if (cartSummaryResult.IsFailure)
@@ -161,7 +165,7 @@ public class CartService : ICartService
             return Result.Failure<CartSummaryResponse>(updateResult.Error);
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
         if (cartSummaryResult.IsFailure)
@@ -182,7 +186,7 @@ public class CartService : ICartService
             return Result.Failure<CartSummaryResponse>(updateResult.Error);
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
         if (cartSummaryResult.IsFailure)
@@ -202,7 +206,7 @@ public class CartService : ICartService
         cart.ClearCart();
 
         await _cartRepository.UpdateAsync(cart);
-        await _cartRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Employee;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Extensions;
@@ -15,6 +16,7 @@ namespace ByteBuy.Core.Services;
 public class EmployeeService : IEmployeeService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IPasswordService _passwordService;
     private readonly ICompanyRepository _companyRepository;
@@ -29,11 +31,13 @@ public class EmployeeService : IEmployeeService
         RoleManager<ApplicationRole> roleManager,
         IPasswordService passwordService,
         ICompanyRepository companyRepository,
+        IUnitOfWork unitOfWork,
         IAddressValidationService addressValidator)
     {
         _userRepository = applicationUserRepository;
         _roleManager = roleManager;
         _userManager = userManager;
+        _unitOfWork = unitOfWork;
         _employeeRepository = employeeRepository;
         _passwordService = passwordService;
         _addressValidator = addressValidator;
@@ -76,16 +80,29 @@ public class EmployeeService : IEmployeeService
 
         var employee = employeeResult.Value;
 
-        var identityResult = await _userManager.CreateAsync(employee, request.Password);
+        await _unitOfWork.BeginTransactionAsync();
 
-        if (!identityResult.Succeeded)
-            return identityResult.ToResult<CreatedResponse>();
+        try
+        {
+            var identityResult = await _userManager.CreateAsync(employee, request.Password);
 
-        var roleResult = await _userManager.AddToRoleAsync(employee, applicationRole.Name!);
-        if (!roleResult.Succeeded)
-            return roleResult.ToResult<CreatedResponse>();
+            if (!identityResult.Succeeded)
+                return identityResult.ToResult<CreatedResponse>();
 
-        return employee.ToCreatedResponse();
+            var roleResult = await _userManager.AddToRoleAsync(employee, applicationRole.Name!);
+            if (!roleResult.Succeeded)
+                return roleResult.ToResult<CreatedResponse>();
+
+            await _unitOfWork.CommitAsync();
+
+            return employee.ToCreatedResponse();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure<CreatedResponse>(EmployeeErrors.EmployeeCreationFailed);
+        }
+       
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, EmployeeUpdateRequest request)
@@ -120,25 +137,38 @@ public class EmployeeService : IEmployeeService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        if (!string.IsNullOrWhiteSpace(request.Password))
+        await _unitOfWork.BeginTransactionAsync();
+
+        try
         {
-            var validation = await _passwordService.ValidateAsync(employee, request.Password);
-            if (!validation.Succeeded)
-                return validation.ToResult<UpdatedResponse>();
+            if (!string.IsNullOrWhiteSpace(request.Password))
+            {
+                var validation = await _passwordService.ValidateAsync(employee, request.Password);
+                if (!validation.Succeeded)
+                    return validation.ToResult<UpdatedResponse>();
 
-            var change = await _passwordService.ChangePasswordAsync(employee, request.Password);
-            if (!validation.Succeeded)
-                return change.ToResult<UpdatedResponse>();
+                var change = await _passwordService.ChangePasswordAsync(employee, request.Password);
+                if (!change.Succeeded)
+                    return change.ToResult<UpdatedResponse>();
+            }
+
+            var roleChange = await UpdateEmployeeRoleAsync(employee, newRole);
+            if (roleChange.IsFailure)
+                return Result.Failure<UpdatedResponse>(roleChange.Error);
+
+            await _employeeRepository.UpdateAsync(employee);
+            await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.CommitAsync();
+
+            return employee.ToUpdatedResponse();
         }
-
-        var roleChange = await UpdateEmployeeRoleAsync(employee, newRole);
-        if (roleChange.IsFailure)
-            return Result.Failure<UpdatedResponse>(roleChange.Error);
-
-        await _employeeRepository.UpdateAsync(employee);
-        await _employeeRepository.CommitAsync();
-
-        return employee.ToUpdatedResponse();
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure<UpdatedResponse>(EmployeeErrors.EmployeeUpdateFailed);
+        }
+        
     }
 
     public async Task<Result> DeleteAsync(Guid id)
@@ -151,7 +181,7 @@ public class EmployeeService : IEmployeeService
         employee.Deactivate();
 
         await _employeeRepository.UpdateAsync(employee);
-        await _employeeRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }
@@ -187,6 +217,7 @@ public class EmployeeService : IEmployeeService
         return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(excludedUserId), ct);
     }
 
+
     public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);
@@ -208,7 +239,8 @@ public class EmployeeService : IEmployeeService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _employeeRepository.UpdateAsync(employee);
-        await _employeeRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return employee.ToUpdatedResponse();
     }
 

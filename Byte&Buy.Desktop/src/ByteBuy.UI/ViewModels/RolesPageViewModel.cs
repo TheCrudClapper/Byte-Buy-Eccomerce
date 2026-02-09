@@ -11,17 +11,12 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class RolesPageViewModel : ViewModelMany<RoleListItem, IRoleService>
+public class RolesPageViewModel(
+    AlertViewModel alert,
+    INavigationService navigationService,
+    IDialogService dialogNavigation,
+    IRoleService roleService) : ViewModelMany<RoleListItem, IRoleService>(alert, navigationService, dialogNavigation, roleService)
 {
-    public RolesPageViewModel(
-        AlertViewModel alert,
-        INavigationService navigationService,
-        IDialogService dialogNavigation,
-        IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
-    {
-        _ = LoadDataAsync();
-    }
-
     protected override async Task EditAsync(RoleListItem item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>

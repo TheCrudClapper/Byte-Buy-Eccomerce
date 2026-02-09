@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -16,14 +17,17 @@ public class AddressService : IAddressService
     private readonly IPortalUserRepository _portalUserRepository;
     private readonly IAddressReadRepository _addressReadRepository;
     private readonly ICountryRepository _countryRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IAddressValidationService _addressValidator;
     public AddressService(IAddressReadRepository addressRepository,
         IAddressValidationService addressValidator,
         ICountryRepository countryRepository,
-        IPortalUserRepository portalUserRepository)
+        IPortalUserRepository portalUserRepository,
+        IUnitOfWork unitOfWork)
     {
         _portalUserRepository = portalUserRepository;
         _addressReadRepository = addressRepository;
+        _unitOfWork = unitOfWork;
         _addressValidator = addressValidator;
         _countryRepository = countryRepository;
     }
@@ -58,7 +62,7 @@ public class AddressService : IAddressService
         var address = addressResult.Value;
 
         await _portalUserRepository.UpdateAsync(user);
-        await _portalUserRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return address.ToCreatedResponse();
     }
@@ -92,7 +96,7 @@ public class AddressService : IAddressService
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
         await _portalUserRepository.UpdateAsync(user);
-        await _portalUserRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         var updated = user.ShippingAddresses.Single(a => a.Id == addressId);
         return updated.ToUpdatedResponse();
@@ -118,7 +122,7 @@ public class AddressService : IAddressService
             return Result.Failure<UpdatedResponse>(homeAddressResult.Error);
 
         await _portalUserRepository.UpdateAsync(user);
-        await _portalUserRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
         return user.ToUpdatedResponse();
     }
 
@@ -177,7 +181,7 @@ public class AddressService : IAddressService
             return result;
 
         await _portalUserRepository.UpdateAsync(user);
-        await _portalUserRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 

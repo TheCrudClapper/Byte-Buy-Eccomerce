@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -17,6 +18,7 @@ namespace ByteBuy.Core.Services;
 public class PortalUserService : IPortalUserService
 
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordService _passwordService;
     private readonly ICartRepository _cartRepository;
     private readonly IPortalUserRepository _portalUserRepository;
@@ -31,11 +33,13 @@ public class PortalUserService : IPortalUserService
         UserManager<ApplicationUser> userManager,
         RoleManager<ApplicationRole> roleManager,
         IAddressValidationService addressValidator,
-        IPasswordService passwordService)
+        IPasswordService passwordService,
+        IUnitOfWork unitOfWork)
     {
         _portalUserRepository = portalUserRepository;
         _userRepository = userRepository;
         _userManager = userManager;
+        _unitOfWork = unitOfWork;
         _roleManager = roleManager;
         _addressValidator = addressValidator;
         _cartRepository = cartRepository;
@@ -48,7 +52,7 @@ public class PortalUserService : IPortalUserService
             return Result.Failure<CreatedResponse>(AuthErrors.EmailAlreadyTaken);
 
         var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
-        if (role is null)
+        if (role is null || role.Name is null)
             return Result.Failure<CreatedResponse>(RoleErrors.NotFound);
 
         var userResult = PortalUser.CreateWithAddress(
@@ -78,15 +82,27 @@ public class PortalUserService : IPortalUserService
 
         user.AttachCart(cartResult.Value.Id);
 
-        var identityResult = await _userManager.CreateAsync(user, request.Password);
-        if (!identityResult.Succeeded)
-            return identityResult.ToResult<CreatedResponse>();
+        await _unitOfWork.BeginTransactionAsync();
 
-        var roleResult = await _userManager.AddToRoleAsync(user, role.Name ?? "");
-        if (!roleResult.Succeeded)
-            return roleResult.ToResult<CreatedResponse>();
+        try
+        {
+            var identityResult = await _userManager.CreateAsync(user, request.Password);
+            if (!identityResult.Succeeded)
+                return identityResult.ToResult<CreatedResponse>();
 
-        return user.ToCreatedResponse();
+            var roleResult = await _userManager.AddToRoleAsync(user, role.Name);
+            if (!roleResult.Succeeded)
+                return roleResult.ToResult<CreatedResponse>();
+
+            await _unitOfWork.CommitAsync();
+            return user.ToCreatedResponse();
+        }
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure<CreatedResponse>(PortalUserErrors.PortalUserCreationFailed);
+        }
+        
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
@@ -115,25 +131,37 @@ public class PortalUserService : IPortalUserService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        if (!string.IsNullOrWhiteSpace(request.Password))
+        await _unitOfWork.BeginTransactionAsync();
+
+        try
         {
-            var validation = await _passwordService.ValidateAsync(user, request.Password);
-            if (!validation.Succeeded)
-                return validation.ToResult<UpdatedResponse>();
+            if (!string.IsNullOrWhiteSpace(request.Password))
+            {
+                var validation = await _passwordService.ValidateAsync(user, request.Password);
+                if (!validation.Succeeded)
+                    return validation.ToResult<UpdatedResponse>();
 
-            var change = await _passwordService.ChangePasswordAsync(user, request.Password);
-            if (!change.Succeeded)
-                return change.ToResult<UpdatedResponse>();
+                var change = await _passwordService.ChangePasswordAsync(user, request.Password);
+                if (!change.Succeeded)
+                    return change.ToResult<UpdatedResponse>();
+            }
+
+            var roleChange = await UpdateUserRoleAsync(user, newRole);
+            if (roleChange.IsFailure)
+                return Result.Failure<UpdatedResponse>(roleChange.Error);
+
+            await _portalUserRepository.UpdateAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.CommitAsync();
+
+            return user.ToUpdatedResponse();
         }
-
-        var roleChange = await UpdateUserRoleAsync(user, newRole);
-        if (roleChange.IsFailure)
-            return Result.Failure<UpdatedResponse>(roleChange.Error);
-
-        await _portalUserRepository.UpdateAsync(user);
-        await _portalUserRepository.CommitAsync();
-
-        return user.ToUpdatedResponse();
+        catch
+        {
+            await _unitOfWork.RollbackAsync();
+            return Result.Failure<UpdatedResponse>(PortalUserErrors.PortalUserUpdateFailed);
+        }
     }
 
     public async Task<Result> DeleteAsync(Guid id)
@@ -153,7 +181,8 @@ public class PortalUserService : IPortalUserService
 
         await _portalUserRepository.UpdateAsync(portalUser);
         await _cartRepository.UpdateAsync(userCart);
-        await _portalUserRepository.CommitAsync();
+
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

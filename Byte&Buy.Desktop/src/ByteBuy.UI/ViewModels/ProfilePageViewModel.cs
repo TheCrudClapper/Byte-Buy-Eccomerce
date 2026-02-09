@@ -74,8 +74,7 @@ public partial class ProfilePageViewModel : PageViewModel
         AlertViewModel alert) : base(alert)
     {
         _employeeService = employeeService;
-        PasswordComponent = passwordComponent; ;
-        _ = LoadData();
+        PasswordComponent = passwordComponent;
     }
 
     [RelayCommand]

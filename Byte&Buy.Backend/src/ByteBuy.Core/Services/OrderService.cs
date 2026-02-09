@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Exceptions;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -15,13 +16,17 @@ public class OrderService : IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly ICompanyRepository _companyRepository;
     private readonly IRentalRepository _rentalRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
     public OrderService(IOrderRepository orderRepository,
         ICompanyRepository companyRepository,
-        IRentalRepository rentalRepository)
+        IRentalRepository rentalRepository,
+        IUnitOfWork unitOfWork)
     {
         _orderRepository = orderRepository;
         _companyRepository = companyRepository;
         _rentalRepository = rentalRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
@@ -35,7 +40,7 @@ public class OrderService : IOrderService
             return Result.Failure<UpdatedResponse>(cancelationResult.Error);
 
         await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return order.ToUpdatedResponse();
     }
@@ -102,7 +107,7 @@ public class OrderService : IOrderService
             return Result.Failure<UpdatedResponse>(returnResult.Error);
 
         await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return order.ToUpdatedResponse();
     }
@@ -179,7 +184,7 @@ public class OrderService : IOrderService
             return Result.Failure<UpdatedResponse>(shippedResult.Error);
 
         await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return order.ToUpdatedResponse();
     }
@@ -209,7 +214,8 @@ public class OrderService : IOrderService
             await CreateRentals(order, rentOrderLines);
 
         await _orderRepository.UpdateAsync(order);
-        await _orderRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return order.ToUpdatedResponse();
     }
 

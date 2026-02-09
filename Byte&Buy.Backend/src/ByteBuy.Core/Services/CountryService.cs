@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
@@ -11,10 +12,12 @@ namespace ByteBuy.Core.Services;
 public class CountryService : ICountryService
 {
     private readonly ICountryRepository _countryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CountryService(ICountryRepository countryRepository)
+    public CountryService(ICountryRepository countryRepository, IUnitOfWork unitOfWork)
     {
         _countryRepository = countryRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<CreatedResponse>> AddAsync(CountryAddRequest request)
@@ -29,7 +32,7 @@ public class CountryService : ICountryService
 
         var country = countryResult.Value;
         await _countryRepository.AddAsync(country);
-        await _countryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return country.ToCreatedResponse();
     }
@@ -49,7 +52,7 @@ public class CountryService : ICountryService
             request.Code);
 
         await _countryRepository.UpdateAsync(country);
-        await _countryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
 
         return country.ToUpdatedResponse();
     }
@@ -66,7 +69,7 @@ public class CountryService : ICountryService
         country.Deactivate();
 
         await _countryRepository.UpdateAsync(country);
-        await _countryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 

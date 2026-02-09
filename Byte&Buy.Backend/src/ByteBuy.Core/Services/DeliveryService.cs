@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Helpers;
@@ -15,14 +16,17 @@ public class DeliveryService : IDeliveryService
 {
     private readonly IDeliveryRepository _deliveryRepository;
     private readonly IDeliveryCarrierRepository _carrierRepository;
-
+    private readonly IUnitOfWork _unitOfWork;
     public DeliveryService(
         IDeliveryRepository deliveryRepository,
-        IDeliveryCarrierRepository carrierRepository)
+        IDeliveryCarrierRepository carrierRepository,
+        IUnitOfWork unitOfWork)
     {
         _deliveryRepository = deliveryRepository;
         _carrierRepository = carrierRepository;
+        _unitOfWork = unitOfWork;
     }
+
     public async Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request)
     {
         var exist = await _deliveryRepository.ExistWithNameAsync(request.Name);
@@ -49,7 +53,8 @@ public class DeliveryService : IDeliveryService
 
         var delivery = deliveryResult.Value;
         await _deliveryRepository.AddAsync(delivery);
-        await _deliveryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return delivery.ToCreatedResponse();
     }
 
@@ -82,7 +87,8 @@ public class DeliveryService : IDeliveryService
             return Result.Failure<UpdatedResponse>(deliveryResult.Error);
 
         await _deliveryRepository.UpdateAsync(delivery);
-        await _deliveryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return delivery.ToUpdatedResponse();
     }
 
@@ -98,7 +104,8 @@ public class DeliveryService : IDeliveryService
         delivery.Deactivate();
 
         await _deliveryRepository.UpdateAsync(delivery);
-        await _deliveryRepository.CommitAsync();
+        await _unitOfWork.SaveChangesAsync();
+
         return Result.Success();
     }
 

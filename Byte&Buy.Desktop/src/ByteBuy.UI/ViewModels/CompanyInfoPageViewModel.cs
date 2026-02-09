@@ -73,7 +73,6 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
         ICompanyInfoService companyInfoService) : base(alert)
     {
         _companyInfoService = companyInfoService;
-        _ = LoadData();
     }
 
     [RelayCommand]

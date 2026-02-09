@@ -13,14 +13,10 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemsPageViewModel : ViewModelMany<ItemListItem, IItemService>
+public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
+    IDialogService dialogNavigation,
+    IItemService service) : ViewModelMany<ItemListItem, IItemService>(alert, navigation, dialogNavigation, service)
 {
-    public ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
-        IDialogService dialogNavigation,
-        IItemService service) : base(alert, navigation, dialogNavigation, service)
-    {
-    }
-
     protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
