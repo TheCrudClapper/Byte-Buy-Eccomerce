@@ -101,6 +101,9 @@ public class Order : AuditableEntity, ISoftDeletable
         if (Status != OrderStatus.Delivered)
             return Result.Failure(OrderErrors.InvalidReturnState);
 
+        if (!Lines.Any(line => line is SaleOrderLine))
+            return Result.Failure(OrderErrors.NotSuitableForReturn);
+
         if (!DateDelivered.HasValue)
             throw new DomainInvariantException($"{nameof(DateDelivered)} " +
                 $"cannot be null when order is delivered");
@@ -108,7 +111,7 @@ public class Order : AuditableEntity, ISoftDeletable
         var startingDate = DateDelivered.Value.Date;
         var lastReturnDay = startingDate.AddDays(14);
         if (DateTime.UtcNow.Date > lastReturnDay)
-            return Result.Failure(OrderErrors.CannotReturnOrder);
+            return Result.Failure(OrderErrors.ReturnPeriodExpired);
 
         return ChangeStatus(OrderStatus.Returned);
     }

@@ -6,6 +6,7 @@ namespace ByteBuy.Core.Domain.Entities;
 public abstract class OrderLine : AuditableEntity, ISoftDeletable
 {
     public Guid OrderId { get; private set; }
+    public Guid OfferId { get; private set; }
     public string ItemName { get; private set; } = null!;
     public ImageThumbnail Thumbnail { get; private set; } = null!;
     public abstract Money TotalPrice { get; }
@@ -18,10 +19,11 @@ public abstract class OrderLine : AuditableEntity, ISoftDeletable
 
     protected OrderLine() { }
 
-    protected OrderLine(Guid orderId, string itemName, ImageThumbnail thumbnail, int quantity)
+    protected OrderLine(Guid orderId, Guid offerId, string itemName, ImageThumbnail thumbnail, int quantity)
     {
         Id = Guid.NewGuid();
         OrderId = orderId;
+        OfferId = offerId;
         ItemName = itemName;
         Thumbnail = thumbnail;
         Quantity = quantity;

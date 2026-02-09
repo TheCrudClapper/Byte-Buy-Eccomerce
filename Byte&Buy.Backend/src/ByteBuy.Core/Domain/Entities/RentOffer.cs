@@ -86,6 +86,7 @@ public class RentOffer : Offer
         QuantityAvailable += additionalQuantity;
         DateEdited = DateTime.UtcNow;
 
+        MarkAsAvailable();
         var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);
         if (deliveryUpdateResult.IsFailure)
             return deliveryUpdateResult;

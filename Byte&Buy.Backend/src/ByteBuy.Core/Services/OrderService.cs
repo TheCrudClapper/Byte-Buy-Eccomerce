@@ -14,6 +14,7 @@ namespace ByteBuy.Core.Services;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly IOfferRepository _offerReposiotry;
     private readonly ICompanyRepository _companyRepository;
     private readonly IRentalRepository _rentalRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -21,11 +22,13 @@ public class OrderService : IOrderService
     public OrderService(IOrderRepository orderRepository,
         ICompanyRepository companyRepository,
         IRentalRepository rentalRepository,
+        IOfferRepository offerReposiotry,
         IUnitOfWork unitOfWork)
     {
         _orderRepository = orderRepository;
         _companyRepository = companyRepository;
         _rentalRepository = rentalRepository;
+        _offerReposiotry = offerReposiotry;
         _unitOfWork = unitOfWork;
     }
 
@@ -39,6 +42,21 @@ public class OrderService : IOrderService
         if (cancelationResult.IsFailure)
             return Result.Failure<UpdatedResponse>(cancelationResult.Error);
 
+        //get offers for quantity correction
+        var offers = await _offerReposiotry
+            .GetOffersByIdsAsync(order.Lines.Select(l => l.OfferId));
+
+        var offerLookup = offers.ToDictionary(o => o.Id);
+
+        foreach(var line in order.Lines)
+        {
+            if(offerLookup.TryGetValue(line.OfferId, out var offer))
+            {
+                offer.RestoreQuantity(line.Quantity);
+            }        
+        }
+
+       
         await _orderRepository.UpdateAsync(order);
         await _unitOfWork.SaveChangesAsync();
 

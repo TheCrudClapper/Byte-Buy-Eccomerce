@@ -8,7 +8,7 @@ namespace ByteBuy.Core.Domain.Entities;
 public abstract class Offer : AuditableEntity, ISoftDeletable
 {
     public Guid ItemId { get; protected set; }
-    public OfferStatus Status { get; private set; }
+    public OfferStatus Status { get; protected set; }
     public AddressValueObject OfferAddressSnapshot { get; protected set; } = null!;
     public int QuantityAvailable { get; protected set; }
     public Guid CreatedByUserId { get; protected set; }
@@ -45,6 +45,12 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
             od.Deactivate();
     }
 
+    public void RestoreQuantity(int quantity)
+    {
+        QuantityAvailable += quantity;
+        MarkAsAvailable();
+    }
+
     public Result DecreaseQuantity(int requestedQuantity)
     {
         if (Status == OfferStatus.SoldOut)
@@ -61,10 +67,16 @@ public abstract class Offer : AuditableEntity, ISoftDeletable
         return Result.Success();
     }
 
+    protected void MarkAsAvailable()
+    {
+        if (QuantityAvailable > 0 && Status == OfferStatus.SoldOut)
+            Status = OfferStatus.Available;
+    }
+
     public static Result ValidateBasicCreateData(int quantityAvailable)
     {
         if (quantityAvailable < 1)
-            return Result.Failure(OfferErrors.QuantityAvaliableInvalid);
+            return Result.Failure(OfferErrors.QuantityInvalid);
         return Result.Success();
     }
 

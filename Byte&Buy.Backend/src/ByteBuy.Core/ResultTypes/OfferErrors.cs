@@ -23,7 +23,7 @@ public static class OfferErrors
         "You can only have one parcel locker selected per carrier.");
 
     public static readonly Error InvalidAdditionalQuantity = new(
-       ErrorType.Validation, "Offer.AdditionalQuantity", "Additional rental days can either be 0 or positive");
+       ErrorType.Validation, "Offer.AdditionalQuantity", "Additional quantity can either be 0 or positive");
 
     public static readonly Error InvalidAdditionalRentalDays = Error.Validation(
         "RentOffer.AdditionalRentalDays", "Additional rental days must be either 0 or positive");
@@ -35,8 +35,8 @@ public static class OfferErrors
         ErrorType.Validation, "Offer.InvalidParcelLockerChannel",
         "One or more selected parcel locker deliveries have invalid channel type.");
 
-    public static readonly Error QuantityAvaliableInvalid = Error.Validation(
-        "Cart.Quantity",
+    public static readonly Error QuantityInvalid = Error.Validation(
+        "Offer.Quantity",
         "Quantity must be greater than 0.");
 
     public static readonly Error ItemNotFound = Error.Validation(

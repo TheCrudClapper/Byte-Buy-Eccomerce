@@ -36,6 +36,8 @@ public class BuyerSnapshot
         if (string.IsNullOrWhiteSpace(phoneNumber))
             return Result.Failure<BuyerSnapshot>(BuyerSnapshotErrors.PhoneNumberNotSet);
 
-        return new BuyerSnapshot(firstName, lastName, phoneNumber, address);
+        var fullName = $"{firstName} {lastName}";
+
+        return new BuyerSnapshot(fullName, email, phoneNumber, address);
     }
 }

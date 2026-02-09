@@ -12,15 +12,17 @@ public class SaleOrderLine : OrderLine
 
     private SaleOrderLine(
         Guid orderId,
+        Guid offerId,
         string itemName,
         ImageThumbnail thumbnail,
         int quantity,
-        Money pricePerItem) : base(orderId, itemName, thumbnail, quantity)
+        Money pricePerItem) : base(orderId, offerId, itemName, thumbnail, quantity)
     {
         PricePerItem = pricePerItem;
     }
 
     public static Result<SaleOrderLine> Create(Guid orderId,
+        Guid offerId,
         string itemName,
         string imagePath,
         string? altText,
@@ -39,6 +41,6 @@ public class SaleOrderLine : OrderLine
         if (thumbnailResult.IsFailure)
             return Result.Failure<SaleOrderLine>(thumbnailResult.Error);
 
-        return new SaleOrderLine(orderId, itemName, thumbnailResult.Value, quantity, moneyResult.Value);
+        return new SaleOrderLine(orderId, offerId, itemName, thumbnailResult.Value, quantity, moneyResult.Value);
     }
 }

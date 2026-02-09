@@ -5,6 +5,9 @@ public static class OrderErrors
     public static readonly Error NotFound = new(
         ErrorType.NotFound, "Order", "Order is not found");
 
+    public static readonly Error NotSuitableForReturn = new(
+        ErrorType.Validation, "Order.Return", "Cannot return order that doesnt contain any offers for sale");
+
     public static readonly Error FailedToCreateOrder = new(
         ErrorType.Unexpected, "Order", "Failed to create order, try again later");
 
@@ -17,7 +20,7 @@ public static class OrderErrors
     public static readonly Error InvalidDelivery = new(
         ErrorType.Validation, "Order.Delivery", "Some deliveries sent by user are not valid");
 
-    public static readonly Error CannotReturnOrder = new(
+    public static readonly Error ReturnPeriodExpired = new(
         ErrorType.Validation, "Order.Status", "Order cannot be returned after 14 days counting from delivery.");
 
     public static readonly Error QuantityInvalid = Error.Validation(

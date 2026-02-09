@@ -14,17 +14,19 @@ public class RentOrderLine : OrderLine
 
     private RentOrderLine(
     Guid orderId,
+    Guid offerId,
     string itemName,
     ImageThumbnail thumbnail,
     int quantity,
     Money pricePerDay,
-    int rentalDays) : base(orderId, itemName, thumbnail, quantity)
+    int rentalDays) : base(orderId, offerId, itemName, thumbnail, quantity)
     {
         PricePerDay = pricePerDay;
         RentalDays = rentalDays;
     }
 
     public static Result<RentOrderLine> Create(Guid orderId,
+        Guid offerId,
         string itemName,
         string imagePath,
         string? altText,
@@ -47,6 +49,6 @@ public class RentOrderLine : OrderLine
         if (thumbnailResult.IsFailure)
             return Result.Failure<RentOrderLine>(thumbnailResult.Error);
 
-        return new RentOrderLine(orderId, itemName, thumbnailResult.Value, quantity, moneyResult.Value, rentalDays);
+        return new RentOrderLine(orderId, offerId, itemName, thumbnailResult.Value, quantity, moneyResult.Value, rentalDays);
     }
 }

@@ -18,6 +18,7 @@ public static class OrderLineFactory
             SaleCartOffer sale =>
                 SaleOrderLine.Create(
                     orderId,
+                    sale.OfferId,
                     sale.Offer.Item.Name,
                     image.ImagePath,
                     image.AltText,
@@ -29,6 +30,7 @@ public static class OrderLineFactory
             RentCartOffer rent =>
                 RentOrderLine.Create(
                     orderId,
+                    rent.OfferId,
                     rent.Offer.Item.Name,
                     image.ImagePath,
                     image.AltText,

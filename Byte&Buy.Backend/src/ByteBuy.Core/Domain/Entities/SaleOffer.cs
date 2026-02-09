@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 namespace ByteBuy.Core.Domain.Entities;
 
@@ -59,6 +60,8 @@ public class SaleOffer : Offer
         PricePerItem = money;
         QuantityAvailable += additionalQuantity;
         DateEdited = DateTime.UtcNow;
+
+        MarkAsAvailable();
 
         var deliveryUpdateResult = UpdateDeliveries(deliveriesIds);
         if (deliveryUpdateResult.IsFailure)
