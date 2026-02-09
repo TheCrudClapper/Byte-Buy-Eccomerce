@@ -16,7 +16,7 @@ public static class OrderMappings
             BuyerEmail = dto.BuyerEmail,
             BuyerFullName = dto.BuyerFullName,
             LinesCount = dto.LinesCount,
-            PurchaseDate = dto.PurchasedDate.ToLocalTime().ToString("dd/MM/yyyy"),
+            PurchaseDate = dto.PurchasedDate.ToLocalTime().ToString(),
             TotalCost = $"{dto.TotalCost.Amount} {dto.TotalCost.Currency}"
         };
     }

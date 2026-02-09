@@ -45,7 +45,7 @@ export class CheckoutPage implements OnInit {
   // Declaring enums to be visible in template
   readonly OfferStatus = OfferStatus;
   readonly PaymentMethod = PaymentMethod;
-  
+
   // singal calculating deliveries cost
   deliveryCost = computed(() => {
     let deliveryTotal = 0;
@@ -78,9 +78,9 @@ export class CheckoutPage implements OnInit {
 
   canPay = computed(() => {
     const deliveries = Object.values(this.deliveryBySeller());
-    if (deliveries.length === 0) return false;    
+    if (deliveries.length === 0) return false;
 
-    if(!this.checkout() || !this.checkout()?.canPlaceOrder)
+    if (!this.checkout() || !this.checkout()?.canPlaceOrder)
       return false;
 
     return deliveries.every(d => {
@@ -155,7 +155,7 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-  selectPaymentMethod(id: number){
+  selectPaymentMethod(id: number) {
     this.selectedPaymentMethod.set(id);
   }
 
@@ -196,6 +196,7 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+  //On failed order creation -> refres checkout
   submit() {
     const sellerPayload = buildSellerDeliveriesPayload(this.deliveryBySeller());
     const finalPayload: OrderAddRequest = {
@@ -205,9 +206,16 @@ export class CheckoutPage implements OnInit {
 
     this.orderApiService.postOrder(finalPayload).subscribe({
       next: (data: OrderCreatedResponse) => {
-          this.router.navigate(['/payment', data.paymentId]);
-        },
-      error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to created order") 
+        this.router.navigate(['/payment', data.paymentId]);
+      },
+      error: (err: ProblemDetails) => {
+        this.toastService.error(err?.detail ?? "Failed to created order");
+
+        this.checkoutApiService.getCheckout().subscribe(data => {
+          this.checkout.set(data);
+          this.totalCost.set(data.totalCost);
+        });
+      }
     })
   }
 }
