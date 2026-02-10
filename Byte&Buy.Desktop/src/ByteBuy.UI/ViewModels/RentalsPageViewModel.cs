@@ -34,7 +34,6 @@ public partial class RentalsPageViewModel(
     }
 
 
-
     [RelayCommand]
     public async Task OpenDetailsPage(RentalListItem listItem)
     {

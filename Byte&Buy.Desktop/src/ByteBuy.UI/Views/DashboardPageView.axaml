@@ -4,6 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:vmp="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:ordervm="clr-namespace:ByteBuy.UI.ViewModels.Dashboard"
 			 xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 			 mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
@@ -156,20 +157,41 @@
 				</Border>
 			</Grid>
 
-
+			<!--Fourth row, orders and chart-->
 			<Grid Grid.Row="6" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
 
-				<Border Grid.Column="0" Classes="card">
-					<StackPanel Grid.Column="0">
-						<TextBlock Classes="cardStat" FontSize="16" Text="Recent orders"/>
-						<Grid RowDefinitions="30,*,*" ColumnDefinitions="*,*,*,*,*" Margin="0,15">
-							<TextBlock Text="Buyer Email" Grid.Column="0" Classes="cardSubText"/>
-							<TextBlock Text="Purchased" Grid.Column="1" Classes="cardSubText"/>
-							<TextBlock Text="Price" Grid.Column="2" Classes="cardSubText"/>
-							<TextBlock Text="Lines Count" Grid.Column="3" Classes="cardSubText"/>
-							<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText"/>
+
+				<Border Grid.Column="0" Classes="card" Padding="10">
+
+					<StackPanel>
+						<TextBlock Classes="cardStat" FontSize="16" Text="Recent Orders"/>
+
+
+						<Grid ColumnDefinitions="30*,25*,25*,20*" ColumnSpacing="10" Margin="0,10">
+							<!-- Header -->
+							<TextBlock Text="Buyer Email" Grid.Column="0" Classes="cardSubText" FontWeight="SemiBold" />
+							<TextBlock Text="Purchased" Grid.Column="1" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+							<TextBlock Text="Price" Grid.Column="2" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+							<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
 						</Grid>
+
+						<ScrollViewer>
+							<!-- Orders Colection -->
+							<ItemsControl ItemsSource="{Binding Orders}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="ordervm:OrderDashboardViewModel">
+										<Grid Margin="0,5" ColumnDefinitions="30*,25*,25*,20*">
+											<TextBlock Text="{Binding BuyerEmail}" Grid.Column="0"/>
+											<TextBlock Text="{Binding PurchaseDate}" Grid.Column="1" HorizontalAlignment="Center"/>
+											<TextBlock Text="{Binding Price.Display}" Grid.Column="2" HorizontalAlignment="Center"/>
+											<TextBlock Text="{Binding Status}" Grid.Column="4" HorizontalAlignment="Center"/>
+										</Grid>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
 					</StackPanel>
+
 				</Border>
 
 				<Border Grid.Column="1" Classes="card">

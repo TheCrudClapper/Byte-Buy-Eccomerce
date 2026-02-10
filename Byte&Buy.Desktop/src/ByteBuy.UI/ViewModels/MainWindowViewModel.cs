@@ -25,9 +25,12 @@ public partial class MainWindowViewModel : WindowViewModel
         };
     }
 
-
     [RelayCommand]
-    private void GoToDashboard() => _navigation.NavigateTo(ApplicationPageNames.Dashboard);
+    private async Task GoToDashboard() => await _navigation.NavigateToAsync(ApplicationPageNames.Dashboard, async vm =>
+    {
+        if (vm is DashboardPageViewModel dashVm)
+            await dashVm.LoadDataAsync();
+    });
 
     [RelayCommand]
     private async Task GoToCompanyDetails() => await _navigation.NavigateToAsync(ApplicationPageNames.CompanyInfo, async vm =>
@@ -50,8 +53,6 @@ public partial class MainWindowViewModel : WindowViewModel
             await empVm.LoadDataAsync();
     });
 
-    [RelayCommand]
-    private void GoToSettings() => _navigation.NavigateTo(ApplicationPageNames.Settings);
 
     [RelayCommand]
     private async Task GoToProfile() => await _navigation.NavigateToAsync(ApplicationPageNames.Profile, async vm =>

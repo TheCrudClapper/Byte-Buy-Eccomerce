@@ -10,4 +10,5 @@ public interface IOrderHttpClient
     Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId);
     Task<Result<UpdatedResponse>> DeliverOrderAsync(Guid orderId);
     Task<Result<UpdatedResponse>> ShipOrderAsync(Guid orderId);
+    Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardListAsync();
 }

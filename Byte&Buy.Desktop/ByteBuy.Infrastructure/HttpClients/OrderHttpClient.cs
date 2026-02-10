@@ -21,4 +21,7 @@ public class OrderHttpClient(HttpClient httpClient)
 
     public async Task<Result<UpdatedResponse>> ShipOrderAsync(Guid orderId)
         => await PutAsync<UpdatedResponse>($"{resource}/{orderId}/ship/company", null);
+
+    public async Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardListAsync()
+        => await GetAsync<IReadOnlyCollection<OrderDashboardListResponse>>($"{resource}/dashboard");
 }

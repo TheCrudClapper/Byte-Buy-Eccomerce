@@ -5,7 +5,7 @@
 		xmlns:viewModels="clr-namespace:ByteBuy.UI.ViewModels"
 		xmlns:views="using:ByteBuy.UI.Views.Shared"
 		mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="800"
-		Height="800" Width="1400"
+		Height="800" Width="1500"
 		x:Class="ByteBuy.UI.Views.MainWindow"
 		x:DataType="viewModels:MainWindowViewModel"
 		FontFamily="{DynamicResource SegoeUiThisBoldReqular}"

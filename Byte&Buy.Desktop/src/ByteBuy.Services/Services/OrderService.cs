@@ -24,4 +24,7 @@ public class OrderService(IOrderHttpClient httpClient) : IOrderService
 
     public async Task<Result<UpdatedResponse>> ShipOrder(Guid orderId)
         => await httpClient.ShipOrderAsync(orderId);
+
+    public async Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrders()
+        => await httpClient.GetDashboardListAsync();
 }

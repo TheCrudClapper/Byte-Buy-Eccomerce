@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Order.Enums;
+﻿using ByteBuy.Services.DTO.Order;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Shared;
 
 namespace ByteBuy.UI.ViewModels.Dashboard;
@@ -11,8 +12,12 @@ public class OrderDashboardViewModel
     public string PurchaseDate { get; set; }
     public string Status { get; set; }
 
-    public OrderDashboardViewModel()
+    public OrderDashboardViewModel(OrderDashboardListResponse dto)
     {
-        
+        BuyerEmail = dto.BuyerEmail;
+        Price = new MoneyViewModel(dto.Price);
+        LinesCount = dto.LinesCount;
+        Status = OrderMappings.MapOrderStatusText(dto.Status);
+        PurchaseDate = dto.PurchaseDate.ToLocalTime().ToString();
     }
 }

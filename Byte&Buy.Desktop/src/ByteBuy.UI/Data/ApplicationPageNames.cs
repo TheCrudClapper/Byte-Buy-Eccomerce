@@ -9,7 +9,6 @@ public enum ApplicationPageNames
     Employees,
     Profile,
     Dashboard,
-    Settings,
     CompanyInfo,
     PortalUsers,
     PortalUser,

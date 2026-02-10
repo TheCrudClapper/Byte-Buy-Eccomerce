@@ -1,14 +1,40 @@
-﻿using ByteBuy.UI.ViewModels.Shared;
+﻿using ByteBuy.Services.DTO.Order;
+using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dashboard;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore.Defaults;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class DashboardPageViewModel : Base.PageViewModel
+public partial class DashboardPageViewModel : PageViewModel
 {
-    public DashboardPageViewModel(AlertViewModel alert) : base(alert)
+    #region MVVM Fields
+    [ObservableProperty]
+    private ObservableCollection<OrderDashboardViewModel> _orders = [];
+    #endregion
+    
+    private readonly IOrderService _orderService;
+
+    public DashboardPageViewModel(AlertViewModel alert, IOrderService orderService) : base(alert)
     {
+        _orderService = orderService;
+    }
+
+    public async Task LoadDataAsync()
+    {
+        var ordersResult = await _orderService.GetDashboardOrders();
+        var (ok, value) = HandleResult(ordersResult);
+        if (!ok || value is null)
+            return;
+
+        Orders = new ObservableCollection<OrderDashboardViewModel>(value.Select(o => new OrderDashboardViewModel(o)));
     }
 
     [ObservableProperty]

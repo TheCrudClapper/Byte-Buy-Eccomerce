@@ -8,6 +8,7 @@ public interface IOrderService : IBaseService
 {
     Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrderList(CancellationToken ct = default);
     Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId);
+    Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrders();
     Task<Result<UpdatedResponse>> DeliverOrder(Guid orderId);
     Task<Result<UpdatedResponse>> ShipOrder(Guid orderId);
 }
