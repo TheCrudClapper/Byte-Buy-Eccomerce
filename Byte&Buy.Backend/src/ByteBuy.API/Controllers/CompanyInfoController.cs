@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Authorize]
 [Resource("companyinfo")]
 [Route("api/[controller]")]
 [ApiController]

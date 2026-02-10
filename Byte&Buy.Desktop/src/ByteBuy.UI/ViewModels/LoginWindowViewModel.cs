@@ -17,7 +17,7 @@ public partial class LoginWindowViewModel : WindowViewModel
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email format")]
-    private string _email = "joanna04@gmail.com";
+    private string _email = "wojciechmucha12@gmail.com";
 
     [ObservableProperty]
     [NotifyDataErrorInfo]

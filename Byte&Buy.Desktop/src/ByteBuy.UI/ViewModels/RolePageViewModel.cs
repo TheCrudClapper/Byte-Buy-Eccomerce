@@ -14,9 +14,13 @@ public partial class RolePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty][Required] private string _roleName = string.Empty;
+    [ObservableProperty]
+    [Required]
+    [NotifyDataErrorInfo]
+    private string _roleName = string.Empty;
 
-    [ObservableProperty] private bool _isTutorialExpanded = false;
+    [ObservableProperty]
+    private bool _isTutorialExpanded = false;
 
     #endregion
 

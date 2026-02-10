@@ -105,7 +105,6 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
         await Task.WhenAll(permissionListBoxTask, roleTask, countriesTask);
 
-        await permissionListBoxTask;
         var roles = roleTask.Result;
         var countries = countriesTask.Result;
 

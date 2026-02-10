@@ -2,10 +2,12 @@
 using ByteBuy.Core.DTO.Public.Cart;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Authorize]
 [Route("api/carts")]
 [ApiController]
 public class CartsController : BaseApiController

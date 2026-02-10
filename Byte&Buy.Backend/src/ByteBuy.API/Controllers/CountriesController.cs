@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+
 [Resource("countries")]
 [Route("api/[controller]")]
 [ApiController]
@@ -17,12 +18,12 @@ public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, C
         => _countryService = countryService;
 
     [HttpGet]
-    //[HasPermission("country:read:many")]
+    //[HasPermission("{resource}:read:many")]
     public async Task<ActionResult<IReadOnlyCollection<CountryResponse>>> GetCountries(CancellationToken ct)
         => HandleResult(await _countryService.GetCountriesAsync(ct));
 
     [HttpGet("options")]
-    //[HasPermission("country:read:options")]
+    //[HasPermission("{resource}:read:options")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectListAsync(ct));
 }

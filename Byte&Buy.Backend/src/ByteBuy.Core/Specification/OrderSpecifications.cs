@@ -82,6 +82,7 @@ public static class OrderSpecifications
         {
             Query.AsNoTracking()
                 .Take(10)
+                .OrderByDescending(o => o.DateCreated)
                 .Select(OrderMappings.OrderDashboardProjection);
         }
     }

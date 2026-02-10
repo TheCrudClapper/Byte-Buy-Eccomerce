@@ -3,11 +3,11 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class ImageService(IImagePreviewHttpClient htppClient) : IImageService
+public class ImageService(IImagePreviewHttpClient httpClient) : IImageService
 {
     public async Task<byte[]?> GetImageBytesAsync(string relativePath, CancellationToken ct = default)
     {
-        var bytes = await htppClient.GetByteArrayAsync(relativePath, ct);
+        var bytes = await httpClient.GetByteArrayAsync(relativePath, ct);
         return bytes is { Length: > 0 } ? bytes : null;
     }
 }

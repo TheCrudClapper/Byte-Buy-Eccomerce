@@ -3,9 +3,12 @@ using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Role;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 namespace ByteBuy.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Resource("roles")]
 [Route("api/[controller]")]
@@ -17,12 +20,12 @@ public class RolesController
         => _roleService = roleService;
 
     [HttpGet("options")]
-    //[HasPermission("role:read:options")]
+    [HasPermission("{resource}:read:options")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectListAsync(ct));
 
     [HttpGet]
-    //[HasPermission("role:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<IReadOnlyCollection<RoleResponse>>> GetRoles(CancellationToken ct)
         => HandleResult(await _roleService.GetAllRolesAsync(ct));
 }

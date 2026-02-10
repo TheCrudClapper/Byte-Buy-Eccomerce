@@ -5,5 +5,5 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 
 public interface IPermissionHttpClient
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
 }

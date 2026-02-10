@@ -59,10 +59,11 @@
 			<!--Third Row, Charts-->
 			<Grid Grid.Row="4" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
 				<Border Grid.Column="0" Classes="card">
+
 					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
 						<lvc:CartesianChart.Title>
 							<lvc:XamlDrawnLabelVisual
-							Text="Gross Market Value"
+							Text="Gross Market Value (last 6 months)"
 							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
 							TextSize="16"/>
 						</lvc:CartesianChart.Title>
@@ -104,36 +105,34 @@
 
 
 				<Border Grid.Column="0" Classes="card" Padding="10">
-
-					<StackPanel>
-						<TextBlock Classes="cardStat" FontSize="16" Text="Recent Orders"/>
-
-
-						<Grid ColumnDefinitions="30*,25*,25*,20*" ColumnSpacing="10" Margin="0,10">
-							<!-- Header -->
-							<TextBlock Text="Buyer Email" Grid.Column="0" Classes="cardSubText" FontWeight="SemiBold" />
-							<TextBlock Text="Purchased" Grid.Column="1" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-							<TextBlock Text="Price" Grid.Column="2" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-							<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-						</Grid>
+					<ScrollViewer>
+						<StackPanel>
+							<TextBlock Classes="cardStat" FontSize="16" Text="Recent Orders"/>
+							<Grid ColumnDefinitions="30*,25*,25*,20*" ColumnSpacing="10" Margin="0,10">
+								<!-- Header -->
+								<TextBlock Text="Buyer Email" Grid.Column="0" Classes="cardSubText" FontWeight="SemiBold" />
+								<TextBlock Text="Purchased" Grid.Column="1" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+								<TextBlock Text="Price" Grid.Column="2" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+								<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+							</Grid>
 
 
-						<!-- Orders Colection -->
-						<ItemsControl ItemsSource="{Binding Orders}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate x:DataType="dashboard:OrderDashboardViewModel">
-									<Grid Margin="0,5" ColumnDefinitions="30*,25*,25*,20*">
-										<TextBlock Text="{Binding BuyerEmail}" Grid.Column="0"/>
-										<TextBlock Text="{Binding PurchaseDate}" Grid.Column="1" HorizontalAlignment="Center"/>
-										<TextBlock Text="{Binding Price.Display}" Grid.Column="2" HorizontalAlignment="Center"/>
-										<TextBlock Text="{Binding Status}" Grid.Column="4" HorizontalAlignment="Center"/>
-									</Grid>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
+							<!-- Orders Colection -->
+							<ItemsControl ItemsSource="{Binding Orders}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:DataType="dashboard:OrderDashboardViewModel">
+										<Grid Margin="0,5" ColumnDefinitions="30*,25*,25*,20*">
+											<TextBlock Text="{Binding BuyerEmail}" Grid.Column="0"/>
+											<TextBlock Text="{Binding PurchaseDate}" Grid.Column="1" HorizontalAlignment="Center"/>
+											<TextBlock Text="{Binding Price.Display}" Grid.Column="2" HorizontalAlignment="Center"/>
+											<TextBlock Text="{Binding Status}" Grid.Column="4" HorizontalAlignment="Center"/>
+										</Grid>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
 
-					</StackPanel>
-
+						</StackPanel>
+					</ScrollViewer>
 				</Border>
 
 				<Border Grid.Column="1" Classes="card">

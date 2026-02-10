@@ -1,10 +1,12 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
+[Authorize]
 [Route("api/rentals")]
 [ApiController]
 public class CompanyRentalsController : BaseApiController

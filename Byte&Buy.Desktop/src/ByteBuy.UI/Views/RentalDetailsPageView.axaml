@@ -28,7 +28,7 @@
 								<SvgImage Source="{Binding RentalIcon}" />
 							</Image.Source>
 						</Image>
-						<TextBlock Text="Rental Active" Classes="status" />
+						<TextBlock Text="{Binding RentalStatusText}" Classes="status" />
 					</StackPanel>
 
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
