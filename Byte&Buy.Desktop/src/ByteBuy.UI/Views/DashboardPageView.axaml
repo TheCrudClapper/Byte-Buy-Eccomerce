@@ -9,7 +9,6 @@
 			 xmlns:charts="clr-namespace:ByteBuy.UI.ViewModels.Charts"
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 			 mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
-
 			 x:DataType="vm:DashboardPageViewModel"
 			 Background="{DynamicResource Background}"
 			 x:Class="ByteBuy.UI.Views.DashboardPageView">
@@ -23,7 +22,7 @@
 					   Height="50"
 					   Width="50" />
 				<StackPanel Grid.Column="1">
-					<TextBlock Classes="pageTitle" Grid.Column="1" Text="Hello Wojciech !"/>
+					<TextBlock Classes="pageTitle" Grid.Column="1" Text="Hello There !"/>
 					<TextBlock Classes="standardText" Grid.Column="1" Grid.Row="1" Text="We got portion of stats just for you."/>
 				</StackPanel>
 			</Grid>
@@ -70,12 +69,7 @@
 
 						<lvc:CartesianChart.Series>
 							<lvc:XamlLineSeries
-							Values="{Binding Values}"
-							Fill="{x:Null}"
-							GeometrySize="20"/>
-							<lvc:XamlLineSeries
-							x:TypeArguments="x:Int32, draw:StarGeometry"
-							Values="{Binding Values2}"
+							Values="{Binding GmvValues}"
 							Fill="{x:Null}"
 							GeometrySize="20"/>
 						</lvc:CartesianChart.Series>
@@ -147,7 +141,7 @@
 					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
 						<lvc:CartesianChart.Title>
 							<lvc:XamlDrawnLabelVisual
-							Text="Orders over time (last 12 months)"
+							Text="Orders over time (last 6 months)"
 							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
 							TextSize="16"/>
 						</lvc:CartesianChart.Title>
@@ -155,6 +149,7 @@
 						<lvc:CartesianChart.Series>
 							<lvc:XamlColumnSeries Values="{Binding ColumnValues}"/>
 						</lvc:CartesianChart.Series>
+
 						<lvc:CartesianChart.XAxes>
 							<lvc:XamlDateTimeAxis
 							Interval="1.00:00:00"

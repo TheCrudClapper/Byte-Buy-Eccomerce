@@ -14,4 +14,7 @@ public class StatisticsHttpClient : HttpClientBase, IStatisticsHttpClient
 
     public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerTypeAsync()
          => await GetAsync<IReadOnlyCollection<GMVBySellerTypeDto>>($"{resource}/gmv-seller-type");
+
+    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonths()
+        => await GetAsync<IReadOnlyList<OrdersAndGmvByMonthDto>>($"{resource}/gmv-months");
 }

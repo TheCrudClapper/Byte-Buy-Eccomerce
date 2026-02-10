@@ -120,9 +120,8 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 
         await Task.WhenAll(listBoxTask, countriesTask, roleTask);
 
-        var countries = await countriesTask;
-        var roles = await roleTask;
-        await listBoxTask;
+        var countries = countriesTask.Result;
+        var roles = roleTask.Result;
 
         Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);
 

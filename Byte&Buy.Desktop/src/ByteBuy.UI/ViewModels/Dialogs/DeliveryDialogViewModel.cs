@@ -61,9 +61,9 @@ public partial class DeliveryDialogViewModel(
 
         await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
 
-        var parcelResult = await parcelLockerSizesTask;
-        var deliveryChannelResult = await deliveryChannelsTask;
-        var deliveryCarriersResult = await deliveryCarriersTask;
+        var parcelResult = parcelLockerSizesTask.Result;
+        var deliveryChannelResult = deliveryChannelsTask.Result;
+        var deliveryCarriersResult = deliveryCarriersTask.Result;
 
         ParcelLockerSize = new ObservableCollection<SelectListItemResponse<int>>(parcelResult.Value ?? []);
         DeliveryChannels = new ObservableCollection<SelectListItemResponse<int>>(deliveryChannelResult.Value ?? []);

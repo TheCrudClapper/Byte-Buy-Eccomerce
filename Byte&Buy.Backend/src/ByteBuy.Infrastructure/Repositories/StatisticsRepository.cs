@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Statistics;
+using ByteBuy.Core.DTO.Public.Statistics;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,6 +67,41 @@ public class StatisticsRepository : IStatisticsRepository
             CompanyGMV = companyGMV == 0 ? Money.Zero : Money.Create(companyGMV).Value,
             PrivateSellerGMV = privateSellerGMV == 0 ? Money.Zero : Money.Create(privateSellerGMV).Value
         };
+
+        return response;
+    }
+
+    public async Task<IReadOnlyList<OrdersAndGmvByMonthDto>> GetOrdersAndGmvByMonthAsync(int months = 6, CancellationToken ct = default)
+    {
+        var startDate = DateTime.UtcNow.AddMonths(-months + 1);
+
+        var orders = await _context.Orders
+           .Where(o => o.Status != OrderStatus.Canceled && o.DateCreated >= startDate)
+           .Select(o => new
+           {
+               o.DateCreated,
+               Amount = o.LinesTotal.Amount
+           })
+           .ToListAsync(ct);
+
+        var grouped = orders
+            .GroupBy(o => new { o.DateCreated.Year, o.DateCreated.Month })
+            .Select(g => new OrdersAndGmvByMonthDto(
+                g.Key.Year,
+                g.Key.Month,
+                g.Count(),
+                g.Sum(x => x.Amount)
+            ))
+            .OrderBy(x => x.Year).ThenBy(x => x.Month)
+            .ToList();
+
+        var response = new List<OrdersAndGmvByMonthDto>();
+        for (int i = 0; i < months; i++)
+        {
+            var dt = startDate.AddMonths(i);
+            var data = grouped.FirstOrDefault(x => x.Year == dt.Year && x.Month == dt.Month);
+            response.Add(data ?? new OrdersAndGmvByMonthDto(dt.Year, dt.Month, 0, 0m));
+        }
 
         return response;
     }

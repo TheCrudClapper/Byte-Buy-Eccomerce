@@ -23,6 +23,7 @@ public partial class MainWindowViewModel : WindowViewModel
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
                 OnPropertyChanged(nameof(CurrentPage));
         };
+        _ = GoToDashboard();
     }
 
     [RelayCommand]

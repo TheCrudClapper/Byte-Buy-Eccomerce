@@ -22,4 +22,8 @@ public class StatisticsController : BaseApiController
     [HttpGet("gmv-seller-type")]
     public async Task<ActionResult<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerType(CancellationToken ct)
         => HandleResult(await _statisticsService.GetGMVBySellerType(ct));
+
+    [HttpGet("gmv-months")]
+    public async Task<ActionResult<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonths(CancellationToken ct)
+        => HandleResult(await _statisticsService.GetOrdersAndGmvByMonthAsync(6, ct));
 }

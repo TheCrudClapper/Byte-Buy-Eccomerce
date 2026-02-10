@@ -106,8 +106,8 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         await Task.WhenAll(permissionListBoxTask, roleTask, countriesTask);
 
         await permissionListBoxTask;
-        var roles = await roleTask;
-        var countries = await countriesTask;
+        var roles = roleTask.Result;
+        var countries = countriesTask.Result;
 
         Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Value ?? []);
         Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);

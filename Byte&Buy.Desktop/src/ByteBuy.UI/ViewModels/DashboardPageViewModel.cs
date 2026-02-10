@@ -22,7 +22,14 @@ public partial class DashboardPageViewModel : PageViewModel
     private ObservableCollection<KpiViewModel> _kpis = [];
 
     [ObservableProperty]
-    private ObservableCollection<PieChartViewModel> gmvBySellerData = [];
+    private ObservableCollection<PieChartViewModel> _gmvBySellerData = [];
+
+    [ObservableProperty]
+    private DateTimePoint[] columnValues = [];
+
+    [ObservableProperty]
+    private double[] _gmvValues = [];
+
     #endregion
 
     private readonly IOrderService _orderService;
@@ -36,9 +43,12 @@ public partial class DashboardPageViewModel : PageViewModel
 
     public async Task LoadDataAsync()
     {
-        await LoadOrdersAsync();
-        await LoadKpisAsync();
-        await LoadGmvBySellerType();
+        var t1 = LoadOrdersAsync();
+        var t2 = LoadKpisAsync();
+        var t3 = LoadGmvBySellerType();
+        var t4 = LoadOrdersAndGmvChartAsync();
+
+        await Task.WhenAll(t1, t2, t3, t4);
     }
 
     private async Task LoadKpisAsync()
@@ -71,19 +81,22 @@ public partial class DashboardPageViewModel : PageViewModel
         Orders = new ObservableCollection<OrderDashboardViewModel>(value.Select(o => new OrderDashboardViewModel(o)));
     }
 
+    private async Task LoadOrdersAndGmvChartAsync()
+    {
+        var result = await _statisticsService.GetOrdersGmvByMonths();
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
+            return;
 
-    public double[] Values { get; set; } = { 12, 14, 16, 17, 1 };
-    public double[] Values2 { get; set; } = { 20, 63, 123, 346, 500 };
+        ColumnValues = value.Select(v => new DateTimePoint
+        {
+            DateTime = new DateTime(v.Year, v.Month, 1),
+            Value = v.OrdersCount
+        }).ToArray();
 
-    public DateTimePoint[] ColumnValues { get; set; } = [
-        new() { DateTime = new(2026, 1, 1), Value = 3 },
-        new() { DateTime = new(2026, 1, 2), Value = 6 },
-        new() { DateTime = new(2026, 1, 3), Value = 5 },
-        new() { DateTime = new(2026, 1, 4), Value = 3 },
-        new() { DateTime = new(2026, 1, 5), Value = 5 },
-        new() { DateTime = new(2026, 1, 6), Value = 8 },
-        new() { DateTime = new(2026, 1, 7), Value = 6 }
-    ];
+        GmvValues = value.Select(v => (double)v.Gmv).ToArray();
+    }
+
 
     public Func<DateTime, string> Formatter { get; set; } =
         date => date.ToString("MMMM dd");

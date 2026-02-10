@@ -12,4 +12,7 @@ public class StatisticsService(IStatisticsHttpClient httpClient) : IStatisticsSe
 
     public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerType()
         => await httpClient.GetGMVBySellerTypeAsync();
+
+    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonths()
+        => await httpClient.GetOrdersAndGmvByMonths();
 }

@@ -7,4 +7,5 @@ public interface IStatisticsService
 {
     Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis();
     Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerType();
+    Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonths();
 }

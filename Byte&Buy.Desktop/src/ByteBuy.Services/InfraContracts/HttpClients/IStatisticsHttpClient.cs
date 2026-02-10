@@ -6,4 +6,5 @@ public interface IStatisticsHttpClient
 {
     Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync();
     Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerTypeAsync();
+    Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonths();
 }

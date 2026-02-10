@@ -77,4 +77,10 @@ public class StatisticsService : IStatisticsService
             },
         };
     }
+
+    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonthAsync(int months = 6, CancellationToken ct = default)
+    {
+        var data = await _statisticsRepo.GetOrdersAndGmvByMonthAsync(months, ct);
+        return Result.Success(data);
+    }
 }
