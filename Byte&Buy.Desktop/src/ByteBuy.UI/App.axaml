@@ -17,6 +17,7 @@
 		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
 		<StyleInclude Source="Styles/DialogHostStyleOverride.axaml"/>
 		<StyleInclude Source="Styles/OrderRentalStyles.axaml"/>
+		<StyleInclude Source="Styles/DashboardStyles.axaml"/>
 	</Application.Styles>
 
 	<Application.Resources>

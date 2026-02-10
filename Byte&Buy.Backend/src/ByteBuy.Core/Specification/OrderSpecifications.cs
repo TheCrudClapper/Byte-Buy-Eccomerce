@@ -75,4 +75,14 @@ public static class OrderSpecifications
         }
     }
 
+
+    public sealed class DashboardOrdersSpec : Specification<Order, OrderDashboardListResponse>
+    {
+        public DashboardOrdersSpec()
+        {
+            Query.AsNoTracking()
+                .Take(10)
+                .Select(OrderMappings.OrderDashboardProjection);
+        }
+    }
 }

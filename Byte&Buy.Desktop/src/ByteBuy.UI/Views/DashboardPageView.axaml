@@ -1,15 +1,201 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:DataType="vm:DashboardPageViewModel"
-             Background="Transparent"
-             x:Class="ByteBuy.UI.Views.DashboardPageView">
-    
-    <StackPanel>
-        <Label Foreground="Black" Content="{Binding Test}"/>
-    </StackPanel>
-  
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:vmp="clr-namespace:ByteBuy.UI.ViewModels"
+			 xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
+			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+			 mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
+
+			 x:DataType="vm:DashboardPageViewModel"
+			 Background="{DynamicResource Background}"
+			 x:Class="ByteBuy.UI.Views.DashboardPageView">
+
+	<ScrollViewer>
+		<Grid RowDefinitions="60,10,100,10,300,10,250" ColumnDefinitions="*,30">
+
+			<!--First Row, User-->
+			<Grid ColumnDefinitions="50,*" VerticalAlignment="Center">
+				<Image Source="{SvgImage /Assets/Images/regular/circle-user-solid-full.svg}"
+					   Height="50"
+					   Width="50" />
+				<StackPanel Grid.Column="1">
+					<TextBlock Classes="pageTitle" Grid.Column="1" Text="Hello Wojciech !"/>
+					<TextBlock Classes="standardText" Grid.Column="1" Grid.Row="1" Text="We got portion of stats just for you."/>
+				</StackPanel>
+			</Grid>
+
+			<!--Second Row, Cards-->
+			<Grid ColumnDefinitions="*,*,*,*,*,*" Grid.Row="2" ColumnSpacing="10">
+				<Border Grid.Column="0" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="250"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Users"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/users-solid-full.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+				<Border Grid.Column="1" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="250"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Employees"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/building-user-solid-full.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+				<Border Grid.Column="2" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="2,50000 $"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="GMV" TextWrapping="Wrap"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/dollar-sign-solid-full.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+				<Border Grid.Column="3" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="45"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Orders Total"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+				<Border Grid.Column="4" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="250"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Active Sellers"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/hand-holding-dollar-solid-full.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+				<Border Grid.Column="5" Classes="card">
+					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
+						<TextBlock Classes="cardStat" Text="250"/>
+						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Cash Flow"/>
+						<Border Grid.RowSpan="2"
+								Grid.Column="1"
+								Classes="cardImageBorder">
+
+							<Image Source="{SvgImage /Assets/Images/regular/coins-solid-full.svg}"
+								   Classes="cardImage"/>
+						</Border>
+					</Grid>
+				</Border>
+			</Grid>
+
+			<!--Third Row, Charts-->
+			<Grid Grid.Row="4" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
+				<Border Grid.Column="0" Classes="card">
+					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
+						<lvc:CartesianChart.Title>
+							<lvc:XamlDrawnLabelVisual
+							Text="Gross Market Value"
+							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
+							TextSize="16"/>
+						</lvc:CartesianChart.Title>
+
+						<lvc:CartesianChart.Series>
+							<lvc:XamlLineSeries
+							Values="{Binding Values}"
+							Fill="{x:Null}"
+							GeometrySize="20"/>
+							<lvc:XamlLineSeries
+							x:TypeArguments="x:Int32, draw:StarGeometry"
+							Values="{Binding Values2}"
+							Fill="{x:Null}"
+							GeometrySize="20"/>
+						</lvc:CartesianChart.Series>
+					</lvc:CartesianChart>
+				</Border>
+
+
+				<Border Grid.Column="1" Classes="card">
+
+					<lvc:PieChart SeriesSource="{Binding Data}" Background="{DynamicResource CardBackground}">
+						<lvc:PieChart.Title>
+							<lvc:XamlDrawnLabelVisual
+							Text="Gross Market Value by Seller Type"
+							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
+							TextSize="16"/>
+						</lvc:PieChart.Title>
+						<lvc:PieChart.SeriesTemplate>
+							<DataTemplate x:DataType="vmp:PieData">
+								<lvc:XamlPieSeries
+								SeriesName="{Binding Name}"
+								Values="{Binding Values}"
+								MaxRadialColumnWidth="60"/>
+							</DataTemplate>
+						</lvc:PieChart.SeriesTemplate>
+					</lvc:PieChart>
+
+				</Border>
+			</Grid>
+
+
+			<Grid Grid.Row="6" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
+
+				<Border Grid.Column="0" Classes="card">
+					<StackPanel Grid.Column="0">
+						<TextBlock Classes="cardStat" FontSize="16" Text="Recent orders"/>
+						<Grid RowDefinitions="30,*,*" ColumnDefinitions="*,*,*,*,*" Margin="0,15">
+							<TextBlock Text="Buyer Email" Grid.Column="0" Classes="cardSubText"/>
+							<TextBlock Text="Purchased" Grid.Column="1" Classes="cardSubText"/>
+							<TextBlock Text="Price" Grid.Column="2" Classes="cardSubText"/>
+							<TextBlock Text="Lines Count" Grid.Column="3" Classes="cardSubText"/>
+							<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText"/>
+						</Grid>
+					</StackPanel>
+				</Border>
+
+				<Border Grid.Column="1" Classes="card">
+
+					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
+						<lvc:CartesianChart.Title>
+							<lvc:XamlDrawnLabelVisual
+							Text="Orders over time (last 12 months)"
+							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
+							TextSize="16"/>
+						</lvc:CartesianChart.Title>
+
+						<lvc:CartesianChart.Series>
+							<lvc:XamlColumnSeries Values="{Binding ColumnValues}"/>
+						</lvc:CartesianChart.Series>
+						<lvc:CartesianChart.XAxes>
+							<lvc:XamlDateTimeAxis
+							Interval="1.00:00:00"
+							DateFormatter="{Binding Formatter}"/>
+						</lvc:CartesianChart.XAxes>
+
+					</lvc:CartesianChart>
+
+				</Border>
+
+			</Grid>
+		</Grid>
+	</ScrollViewer>
 </UserControl>

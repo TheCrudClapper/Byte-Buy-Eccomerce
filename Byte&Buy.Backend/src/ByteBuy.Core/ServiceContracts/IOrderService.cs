@@ -65,4 +65,10 @@ public interface IOrderService
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Method that takes recent orders
+    /// </summary>
+    /// <returns></returns>
+    Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrdersAsync(CancellationToken ct = default);
 }

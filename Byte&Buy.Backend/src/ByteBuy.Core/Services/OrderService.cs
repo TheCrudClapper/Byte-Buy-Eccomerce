@@ -237,4 +237,9 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
+    public async Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrdersAsync(CancellationToken ct)
+    {
+        var spec = new DashboardOrdersSpec();
+        return await _orderRepository.GetListBySpecAsync(spec, ct);
+    }
 }

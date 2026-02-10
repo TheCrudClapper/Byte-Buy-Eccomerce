@@ -266,4 +266,12 @@ public static class OrderMappings
             o.BuyerSnapshot.FullName,
             o.Total.ToMoneyDto());
 
+    public static Expression<Func<Order, OrderDashboardListResponse>> OrderDashboardProjection
+        => o => new OrderDashboardListResponse(
+            o.Id,
+            o.BuyerSnapshot.Email,
+            new MoneyDto(o.Total.Amount, o.Total.Currency),
+            o.Lines.Count,
+            o.DateCreated,
+            o.Status);
 }

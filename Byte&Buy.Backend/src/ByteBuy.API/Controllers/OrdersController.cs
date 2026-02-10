@@ -3,6 +3,7 @@ using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace ByteBuy.API.Controllers;
 
@@ -45,6 +46,10 @@ public class OrdersController : BaseApiController
     [HttpPut("{orderId:guid}/deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrder(Guid orderId)
        => HandleResult(await _orderService.DeliverOrderAsPrivateSeller(CurrentUserId, orderId));
+
+    [HttpGet("dashboard")]
+    public async Task<ActionResult<UpdatedResponse>> GetDashboardOrders(CancellationToken ct)
+        => HandleResult(await _orderService.GetDashboardOrdersAsync(ct));
 
     [HttpGet("seller")]
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrders(CancellationToken ct)
