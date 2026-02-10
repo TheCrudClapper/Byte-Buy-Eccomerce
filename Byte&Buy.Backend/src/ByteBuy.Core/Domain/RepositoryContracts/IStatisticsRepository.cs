@@ -5,4 +5,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 public interface IStatisticsRepository
 {
     Task<KpiSnapshotQuery> GetBasicKpisAsync(CancellationToken ct = default);
+    Task<GMVBySellerTypeQuery> GetGMVBySellerTypeAsync(CancellationToken ct = default);
 }

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Statistics;
+using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
@@ -13,11 +14,11 @@ public class StatisticsService : IStatisticsService
         _statisticsRepo = statisticsRepo;
     }
 
-    public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync()
+    public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync(CancellationToken ct)
     {
-        var kpis = await _statisticsRepo.GetBasicKpisAsync();
+        var kpis = await _statisticsRepo.GetBasicKpisAsync(ct);
 
-        var response = new List<KeyPerformanceIndicatorDto>
+        return new List<KeyPerformanceIndicatorDto>
         {
             new() {
                 Key = KpiKeys.Users,
@@ -39,7 +40,7 @@ public class StatisticsService : IStatisticsService
             },
             new() {
                 Key = KpiKeys.Gmv,
-                Label = "Gross Merchandise Value",
+                Label = "GMV",
                 Value = kpis.Gmv.Amount,
                 DisplayValue = $"{kpis.Gmv.Amount:N2} {kpis.Gmv.Currency}"
             },
@@ -56,7 +57,24 @@ public class StatisticsService : IStatisticsService
                 DisplayValue = kpis.ActiveSellers.ToString()
             }
         };
+    }
 
-        return response;
+    public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerType(CancellationToken ct)
+    {
+        var gmvs = await _statisticsRepo.GetGMVBySellerTypeAsync(ct);
+
+        return new List<GMVBySellerTypeDto>()
+        {
+            new()
+            {
+                Display = "Company",
+                GMVAmount = gmvs.CompanyGMV.ToMoneyDto(),
+            },
+            new()
+            {
+                Display = "Private Sellers",
+                GMVAmount = gmvs.PrivateSellerGMV.ToMoneyDto(),
+            },
+        };
     }
 }

@@ -4,8 +4,9 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:vmp="clr-namespace:ByteBuy.UI.ViewModels"
-			 xmlns:ordervm="clr-namespace:ByteBuy.UI.ViewModels.Dashboard"
+			 xmlns:dashboard="clr-namespace:ByteBuy.UI.ViewModels.Dashboard"
 			 xmlns:draw="using:LiveChartsCore.SkiaSharpView.Drawing.Geometries"
+			 xmlns:charts="clr-namespace:ByteBuy.UI.ViewModels.Charts"
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 			 mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
 
@@ -28,86 +29,33 @@
 			</Grid>
 
 			<!--Second Row, Cards-->
-			<Grid ColumnDefinitions="*,*,*,*,*,*" Grid.Row="2" ColumnSpacing="10">
-				<Border Grid.Column="0" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="250"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Users"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
+			<ItemsControl Grid.Row="2" ItemsSource="{Binding Kpis}">
+				<ItemsControl Grid.Row="2" ItemsSource="{Binding Kpis}">
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<StackPanel Orientation="Horizontal" Spacing="10"/>
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
 
-							<Image Source="{SvgImage /Assets/Images/regular/users-solid-full.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-				<Border Grid.Column="1" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="250"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Employees"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
-
-							<Image Source="{SvgImage /Assets/Images/regular/building-user-solid-full.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-				<Border Grid.Column="2" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="2,50000 $"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="GMV" TextWrapping="Wrap"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
-
-							<Image Source="{SvgImage /Assets/Images/regular/dollar-sign-solid-full.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-				<Border Grid.Column="3" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="45"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Orders Total"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
-
-							<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-				<Border Grid.Column="4" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="250"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Active Sellers"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
-
-							<Image Source="{SvgImage /Assets/Images/regular/hand-holding-dollar-solid-full.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-				<Border Grid.Column="5" Classes="card">
-					<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*, 50*" VerticalAlignment="Center">
-						<TextBlock Classes="cardStat" Text="250"/>
-						<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="Cash Flow"/>
-						<Border Grid.RowSpan="2"
-								Grid.Column="1"
-								Classes="cardImageBorder">
-
-							<Image Source="{SvgImage /Assets/Images/regular/coins-solid-full.svg}"
-								   Classes="cardImage"/>
-						</Border>
-					</Grid>
-				</Border>
-			</Grid>
+					<ItemsControl.ItemTemplate>
+						<DataTemplate x:DataType="dashboard:KpiViewModel">
+							<Border Classes="card" MinWidth="200" Height="100">
+								<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*,50*" VerticalAlignment="Center">
+									<TextBlock Classes="cardStat" Text="{Binding DisplayValue}"/>
+									<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="{Binding Label}" TextWrapping="Wrap"/>
+									<Border Grid.RowSpan="2" Grid.Column="1" Classes="cardImageBorder">
+										<Image Classes="cardImage">
+											<Image.Source>
+												<SvgImage Source="{Binding IconPath}"/>
+											</Image.Source>
+										</Image>
+									</Border>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ItemsControl>
 
 			<!--Third Row, Charts-->
 			<Grid Grid.Row="4" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
@@ -137,15 +85,15 @@
 
 				<Border Grid.Column="1" Classes="card">
 
-					<lvc:PieChart SeriesSource="{Binding Data}" Background="{DynamicResource CardBackground}">
+					<lvc:PieChart SeriesSource="{Binding GmvBySellerData}" Background="{DynamicResource CardBackground}">
 						<lvc:PieChart.Title>
 							<lvc:XamlDrawnLabelVisual
-							Text="Gross Market Value by Seller Type"
+							Text="Gross Market Value by Seller Type (pln)"
 							Paint="{lvc:SolidColorPaint Color='#ffffff'}"
 							TextSize="16"/>
 						</lvc:PieChart.Title>
 						<lvc:PieChart.SeriesTemplate>
-							<DataTemplate x:DataType="vmp:PieData">
+							<DataTemplate x:DataType="charts:PieChartViewModel">
 								<lvc:XamlPieSeries
 								SeriesName="{Binding Name}"
 								Values="{Binding Values}"
@@ -175,21 +123,21 @@
 							<TextBlock Text="Status" Grid.Column="4" Classes="cardSubText" FontWeight="SemiBold" HorizontalAlignment="Center"/>
 						</Grid>
 
-						<ScrollViewer>
-							<!-- Orders Colection -->
-							<ItemsControl ItemsSource="{Binding Orders}">
-								<ItemsControl.ItemTemplate>
-									<DataTemplate x:DataType="ordervm:OrderDashboardViewModel">
-										<Grid Margin="0,5" ColumnDefinitions="30*,25*,25*,20*">
-											<TextBlock Text="{Binding BuyerEmail}" Grid.Column="0"/>
-											<TextBlock Text="{Binding PurchaseDate}" Grid.Column="1" HorizontalAlignment="Center"/>
-											<TextBlock Text="{Binding Price.Display}" Grid.Column="2" HorizontalAlignment="Center"/>
-											<TextBlock Text="{Binding Status}" Grid.Column="4" HorizontalAlignment="Center"/>
-										</Grid>
-									</DataTemplate>
-								</ItemsControl.ItemTemplate>
-							</ItemsControl>
-						</ScrollViewer>
+
+						<!-- Orders Colection -->
+						<ItemsControl ItemsSource="{Binding Orders}">
+							<ItemsControl.ItemTemplate>
+								<DataTemplate x:DataType="dashboard:OrderDashboardViewModel">
+									<Grid Margin="0,5" ColumnDefinitions="30*,25*,25*,20*">
+										<TextBlock Text="{Binding BuyerEmail}" Grid.Column="0"/>
+										<TextBlock Text="{Binding PurchaseDate}" Grid.Column="1" HorizontalAlignment="Center"/>
+										<TextBlock Text="{Binding Price.Display}" Grid.Column="2" HorizontalAlignment="Center"/>
+										<TextBlock Text="{Binding Status}" Grid.Column="4" HorizontalAlignment="Center"/>
+									</Grid>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+
 					</StackPanel>
 
 				</Border>

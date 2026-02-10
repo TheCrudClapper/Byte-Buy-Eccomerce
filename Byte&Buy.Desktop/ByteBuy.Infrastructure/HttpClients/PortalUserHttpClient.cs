@@ -23,6 +23,4 @@ public class PortalUserHttpClient(HttpClient httpClient)
 
     public async Task<Result<IEnumerable<PortalUserListResponse>>> GetListAsync()
         => await GetAsync<IEnumerable<PortalUserListResponse>>($"{resource}/list");
-
-
 }

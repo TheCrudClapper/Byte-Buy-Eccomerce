@@ -16,6 +16,10 @@ public class StatisticsController : BaseApiController
     }
 
     [HttpGet("kpi")]
-    public async Task<ActionResult<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis(CancellationToken ct = default)
-        => HandleResult(await _statisticsService.GetKpisAsync());
+    public async Task<ActionResult<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis(CancellationToken ct)
+        => HandleResult(await _statisticsService.GetKpisAsync(ct));
+
+    [HttpGet("gmv-seller-type")]
+    public async Task<ActionResult<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerType(CancellationToken ct)
+        => HandleResult(await _statisticsService.GetGMVBySellerType(ct));
 }
