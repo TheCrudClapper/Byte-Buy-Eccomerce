@@ -23,5 +23,4 @@ export class ToastService {
       progressAnimation: 'decreasing',
     });
   }
-
 }

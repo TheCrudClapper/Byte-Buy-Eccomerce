@@ -5,40 +5,40 @@
                 <p class="page-title">Order Details</p>
             </div>
         </div>
-        @if(orderDetails(); as order){
+        @if(facade.orderDetails(); as order){
         <div class="content-section">
             <div class="delivery-row">
-                @if(order.status === OrderStatus.AwaitingPayment){
+                @if(order.status === facade.OrderStatus.AwaitingPayment){
                 <i class="fa-solid fa-hourglass-end" style="color: #ffffff;"></i>
                 <span class="content-title open-sans-bold">
                     Awaiting Payment
                 </span>
                 }
-                @if(order.status === OrderStatus.Paid){
+                @if(order.status === facade.OrderStatus.Paid){
                 <i class="fa-solid fa-coins" style="color: #ffffff;"></i>
                 <span class="content-title open-sans-bold">
                     Order Paid
                 </span>
                 }
-                @if(order.status === OrderStatus.Canceled){
+                @if(order.status === facade.OrderStatus.Canceled){
                 <i class="fa-solid fa-ban" style="color: #ffffff;"></i>
                 <span class="content-title open-sans-bold">
                     Order Canceled by user
                 </span>
                 }
-                @if(order.status === OrderStatus.Shipped){
+                @if(order.status ===  facade.OrderStatus.Shipped){
                 <i class="fa-solid fa-truck" style="color: #ffffff;"></i>
                 <span class="content-title open-sans-bold">
                     Order in shipment
                 </span>
                 }
-                @if(order.status === OrderStatus.Returned){
+                @if(order.status ===  facade.OrderStatus.Returned){
                 <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
                 <span class="content-title open-sans-bold">
                     Order returned
                 </span>
                 }
-                @if(order.status === OrderStatus.Delivered){
+                @if(order.status ===  facade.OrderStatus.Delivered){
                 <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
                 <div class="delivery-text">
                     <span class="content-title open-sans-bold">
@@ -207,13 +207,13 @@
                     </span>
                 </div>
                 <hr>
-                @if(canDownloadPdf()){
+                @if( facade.canDownloadPdf()){
                 <div class="col-12">
                     <span class="fs-14-px open-sans-bold">
                         <i class="fa-regular fa-file-pdf me-1  fa-xl" style="color: #ffffff;"></i>
                     </span>
-                    <a class="link fs-14-px" [class.disabled]="!canDownloadPdf()"
-                        (click)="canDownloadPdf() && downloadPdf()">
+                    <a class="link fs-14-px" [class.disabled]="! facade.canDownloadPdf()"
+                        (click)=" facade.canDownloadPdf() &&  facade.downloadPdf()">
                         Export to PDF
                     </a>
                 </div>
@@ -226,28 +226,28 @@
             <div class="row my-0">
                 @switch (order.status)
                 {
-                @case(OrderStatus.Paid){
+                @case( facade.OrderStatus.Paid){
                 <div class="col-12">
                     <hr class="action-spacer">
                 </div>
                 <div class="col-12 action-row">
                     <div class="action-container">
                         <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
-                        <a class="link" (click)="shipOrder()">SHIP ORDER</a>
+                        <a class="link" (click)="facade.shipOrder()">SHIP ORDER</a>
                     </div>
                 </div>
                 <div class="col-12">
                     <hr class="action-spacer">
                 </div>
                 }
-                @case(OrderStatus.Shipped){
+                @case( facade.OrderStatus.Shipped){
                 <div class="col-12">
                     <hr class="action-spacer">
                 </div>
                 <div class="col-12 action-row">
                     <div class="action-container">
                         <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
-                        <a class="link" (click)="deliverOrder()">DELIVER ORDER</a>
+                        <a class="link" (click)=" facade.deliverOrder()">DELIVER ORDER</a>
                     </div>
                 </div>
                 <div class="col-12">

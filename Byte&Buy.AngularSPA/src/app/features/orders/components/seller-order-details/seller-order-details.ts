@@ -10,6 +10,7 @@ import { ToastService } from '../../../../shared/services/snackbar/toast-service
 import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
+import { OrderDetialsFacade } from '../../services/order-details-facade';
 
 @Component({
   selector: 'app-seller-order-details',
@@ -19,106 +20,22 @@ import { ProblemDetails } from '../../../../core/dto/problem-details';
   styleUrl: './seller-order-details.scss',
 })
 export class SellerOrderDetails implements OnInit {
-  private readonly orderApiService = inject(OrderApiService);
-  private readonly documentsApiService = inject(DocumentsApiService);
-  private readonly toastService = inject(ToastService);
+  protected readonly facade = inject(OrderDetialsFacade);
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   readonly imageBaseUrl = environment.staticImagesBaseUrl;
 
-  readonly OrderStatus = OrderStatus;
-  readonly DeliveryChannel = DeliveryChannel;
-  orderDetails = signal<OrderDetailsResponse | undefined>(undefined);
+  actionButtonsVisible(): boolean {
+    const status = this.facade.orderDetails()?.status;
+    return status === OrderStatus.AwaitingPayment
+      || status === OrderStatus.Delivered;
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) return;
 
     const guid = Guid.parse(id);
-    this.loadOrderDetails(guid);
+    this.facade.init(guid)
   }
 
-  canDownloadPdf = computed(() => {
-    const order = this.orderDetails();
-    if (!order) return false;
-
-    return order.status === OrderStatus.Delivered ||
-      order.status === OrderStatus.Returned;
-  });
-
-  downloadPdf() {
-    if (!this.orderDetails() || !this.orderDetails()?.id)
-      return;
-
-    const orderId = this.orderDetails()!.id;
-    this.documentsApiService.downloadOrderDetails(orderId).subscribe(
-      {
-        next: (blob) => {
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `order-details-${orderId}.pdf`;
-          a.click();
-
-          window.URL.revokeObjectURL(url);
-        },
-        error: (err: ProblemDetails) => this.toastService.error(err.detail ?? "Failed to generate pdf")
-      });
-
-  }
-
-  loadOrderDetails(id: Guid) {
-    this.orderApiService.getOrderDetails(id).subscribe({
-      next: (data: OrderDetailsResponse) => {
-        this.orderDetails.set(data);
-      },
-      error: () => {
-        this.router.navigate(['/not-found']);
-      }
-    })
-  }
-
-  shipOrder() {
-    if (!this.orderDetails() || !this.orderDetails()?.id)
-      return;
-
-    const orderId = this.orderDetails()!.id;
-    this.orderApiService.shipOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully shipped order.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Shipped }
-        })
-      },
-      error: (err) => {
-        this.toastService.error(err.detail ?? "Failed to return your order");
-      }
-    })
-  }
-
-  deliverOrder() {
-    if (!this.orderDetails() || !this.orderDetails()?.id)
-      return;
-
-    const orderId = this.orderDetails()!.id;
-    this.orderApiService.deliverOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully delivered order to user.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Delivered }
-        })
-      },
-      error: (err) => {
-        this.toastService.error(err.detail ?? "Failed to deliver your order");
-      }
-    })
-  }
-
-  actionButtonsVisible(): boolean {
-    const status = this.orderDetails()?.status;
-    return status === OrderStatus.Paid
-      || status === OrderStatus.Shipped;
-  }
 }
