@@ -7,7 +7,10 @@ public sealed record OrderLineData
     public OrderLineType Type { get; init; }
     public int Quantity { get; init; }
     public int? RentalDays { get; init; }
-    public string? PricePerDay { get; init; }
-    public string? PricePerItem{ get; init; }
-    public string Total { get; init; } = null!;
+    public decimal? PricePerDay { get; init; }
+    public string? PricePerDayCurrency { get; init; }
+    public decimal? PricePerItem{ get; init; }
+    public string? PricePerItemCurrency{ get; init; }
+    public decimal Total { get; init; }
+    public string TotalCurrency { get; init; } = null!;
 }

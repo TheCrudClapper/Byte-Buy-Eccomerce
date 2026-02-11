@@ -6,7 +6,7 @@ public static class CommonUserErrors
         ErrorType.NotFound, "User.NotFound", "User is not found");
 
     public static readonly Error FirstNameInvalid = Error.Validation(
-        "User.FirstName", "First name is required.");
+        "User.CustomersFullName", "First name is required.");
 
     public static readonly Error LastNameInvalid = Error.Validation(
         "User.LastName", "Last name is required.");

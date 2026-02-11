@@ -2,5 +2,5 @@
 
 public interface IDocumentService
 {
-    Task<byte[]> GenerateOrderDetailsPdf(Guid orderId);
+    Task<byte[]> GenerateOrderDetailsPdf(Guid orderId, CancellationToken ct = default);
 }

@@ -4,5 +4,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface IDocumentRepository
 {
-    Task<OrderDetailsPdfModel> GetOrderDetails(Guid orderId);
+    Task<OrderDetailsPdfModel?> GetOrderDetails(Guid orderId, CancellationToken ct = default);
 }
