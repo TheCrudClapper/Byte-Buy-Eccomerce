@@ -1,6 +1,8 @@
-﻿namespace ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.ResultTypes;
+
+namespace ByteBuy.Core.ServiceContracts;
 
 public interface IDocumentService
 {
-    Task<byte[]> GenerateOrderDetailsPdf(Guid orderId, CancellationToken ct = default);
+    Task<Result<byte[]>> GenerateOrderDetailsPdf(Guid orderId, CancellationToken ct = default);
 }

@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
 using ByteBuy.Core.DTO.Internal.Order.Enum;
@@ -42,7 +43,9 @@ public class DocumentRepository : IDocumentRepository
 
         return await _context.Orders
             .AsNoTracking()
-            .Where(o => o.Id == orderId && o.DateDelivered != null)
+            .Where(o => o.Id == orderId 
+                && o.DateDelivered != null 
+                && (o.Status == OrderStatus.Delivered || o.Status == OrderStatus.Returned))
             .Select(o => new OrderDetailsPdfModel()
             {
                 OrderStatus = o.Status,

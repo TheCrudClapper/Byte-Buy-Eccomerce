@@ -1,5 +1,6 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
+using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,8 +19,13 @@ public class DocumentsController : BaseApiController
     [HttpGet("order-details/{orderId:guid}")]
     public async Task<ActionResult> DownloadOrderDetailsPdf(Guid orderId, CancellationToken ct)
     {
-        var pdfBytes = await _documentService.GenerateOrderDetailsPdf(orderId, ct);
+        var pdfBytesResult = await _documentService.GenerateOrderDetailsPdf(orderId, ct);
 
-        return File(pdfBytes, "application/pdf", $"order-details-{orderId}.pdf");
+        return pdfBytesResult.IsFailure
+            ? Problem(
+                statusCode: 404,
+                title: pdfBytesResult.Error.Code,
+                detail: pdfBytesResult.Error.Description)
+            : File(pdfBytesResult.Value, "application/pdf", $"order-details-{orderId}.pdf");
     }
 }
