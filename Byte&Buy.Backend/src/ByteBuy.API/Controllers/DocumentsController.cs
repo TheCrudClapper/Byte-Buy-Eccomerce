@@ -1,6 +1,4 @@
 ﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Internal.DocumentModels;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 

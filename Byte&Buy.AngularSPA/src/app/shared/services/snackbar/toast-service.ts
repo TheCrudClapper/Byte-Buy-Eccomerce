@@ -15,14 +15,12 @@ export class ToastService {
   error(message: string) {
     this.toastrService.error(message, "Error", {
       progressAnimation: 'decreasing',
-      positionClass: 'toast-top-right',
     });
   }
 
   info(message: string) {
     this.toastrService.info(message, "Info", {
       progressAnimation: 'decreasing',
-      positionClass: 'toast-top-right',
     });
   }
 

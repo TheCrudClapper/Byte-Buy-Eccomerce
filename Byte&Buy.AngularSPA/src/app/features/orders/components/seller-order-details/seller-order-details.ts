@@ -9,6 +9,7 @@ import { OrderDetailsResponse } from '../../../../core/dto/order/order-details-r
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 
 @Component({
   selector: 'app-seller-order-details',
@@ -50,15 +51,20 @@ export class SellerOrderDetails implements OnInit {
       return;
 
     const orderId = this.orderDetails()!.id;
-    this.documentsApiService.downloadOrderDetails(orderId).subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `order-details-${orderId}.pdf`;
-      a.click();
+    this.documentsApiService.downloadOrderDetails(orderId).subscribe(
+      {
+        next: (blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `order-details-${orderId}.pdf`;
+          a.click();
 
-      window.URL.revokeObjectURL(url);
-    });
+          window.URL.revokeObjectURL(url);
+        },
+        error: (err: ProblemDetails) => this.toastService.error(err.detail ?? "Failed to generate pdf")
+      });
+
   }
 
   loadOrderDetails(id: Guid) {
