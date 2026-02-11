@@ -7,6 +7,7 @@ public sealed record UserOrderListQuery(
     OrderStatus Status,
     DateTime PurchasedDate,
     string SellerDisplayName,
+    string BuyerDisplayName,
     int LinesCount,
     MoneyDto TotalLinesCost,
     MoneyDto DeliveryCost,

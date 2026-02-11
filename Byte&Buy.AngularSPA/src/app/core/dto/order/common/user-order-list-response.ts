@@ -12,6 +12,7 @@ export interface UserOrderListResponse {
     orderId: Guid;
     status: OrderStatus;
     sellerDisplayName: string;
+    buyerDisplayName: string;
     purchasedDate: Date;
     linesCount: number;
     totalItemsCost: MoneyDto;

@@ -9,6 +9,7 @@ public record UserOrderListResponse(
     OrderStatus Status,
     DateTime PurchasedDate,
     string SellerDisplayName,
+    string BuyerDisplayName,
     int LinesCount,
     MoneyDto TotalItemsCost,
     MoneyDto DeliveryCost,

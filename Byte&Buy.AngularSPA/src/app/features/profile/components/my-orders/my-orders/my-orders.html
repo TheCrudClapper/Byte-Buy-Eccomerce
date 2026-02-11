@@ -36,6 +36,8 @@
     <div class="col-12 d-flex justify-content-between mb-3">
         <span class="fs-14-px">{{order.linesCount}} item/s from
             <span class="open-sans-bold">{{ order.sellerDisplayName }}</span>
+            to
+            <span class="open-sans-bold">{{ order.buyerDisplayName }}</span>
         </span>
         <span class="fs-14-px open-sans-bold">
             {{ order.totalItemsCost.amount| number:'1.2-2'}} {{ order.totalItemsCost.currency}}
@@ -108,7 +110,7 @@
         We hope that it will change soon
         <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
     </span>
-   
+
 </div>
 }
 }

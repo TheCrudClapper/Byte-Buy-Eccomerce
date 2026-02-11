@@ -26,6 +26,10 @@ public class OrdersController : BaseApiController
     public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrders(CancellationToken ct)
         => HandleResult(await _orderService.GetUserOrdersAsync(CurrentUserId, ct));
 
+    [HttpGet("seller")]
+    public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrders(CancellationToken ct)
+        => HandleResult(await _orderService.GetSellerOrdersAsync(CurrentUserId, ct));
+
     [HttpGet("details/{orderId:guid}")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetails(Guid orderId, CancellationToken ct)
         => HandleResult(await _orderService.GetOrderDetailsAsync(CurrentUserId, orderId, ct));
@@ -49,8 +53,4 @@ public class OrdersController : BaseApiController
     [HttpGet("dashboard")]
     public async Task<ActionResult<UpdatedResponse>> GetDashboardOrders(CancellationToken ct)
         => HandleResult(await _orderService.GetDashboardOrdersAsync(ct));
-
-    [HttpGet("seller")]
-    public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrders(CancellationToken ct)
-       => HandleResult(await _orderService.GetSellerOrdersAsync(CurrentUserId, ct));
 }
