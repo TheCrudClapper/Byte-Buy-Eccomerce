@@ -6,6 +6,5 @@ public sealed record OrderDetailsPdfModel
     public CustomerData CustomerData { get; init; } = null!;
     public PaymentData PaymentData { get; init; } = null!;
     public DeliveryData DeliveryData { get; init; } = null!;
-
     public OrderData OrderData { get; init; } = null!;
 }

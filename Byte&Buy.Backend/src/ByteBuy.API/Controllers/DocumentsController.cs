@@ -16,7 +16,7 @@ public class DocumentsController : BaseApiController
     }
 
     [HttpGet("order-summary")]
-    public async Task<ActionResult<FileContentResult>> DownloadOrderDetailsPdf(Guid orderId, CancellationToken ct)
+    public async Task<ActionResult> DownloadOrderDetailsPdf(Guid orderId, CancellationToken ct)
     {
         var pdfBytes = await _documentService.GenerateOrderDetailsPdf(orderId, ct);
 

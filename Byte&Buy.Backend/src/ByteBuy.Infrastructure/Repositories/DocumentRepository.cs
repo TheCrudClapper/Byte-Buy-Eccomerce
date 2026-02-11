@@ -33,7 +33,7 @@ public class DocumentRepository : IDocumentRepository
                 PostalCity = c.CompanyAddress.PostalCity,
                 Street = c.CompanyAddress.Street
             }
-        }).SingleOrDefaultAsync(ct);
+        }).SingleAsync(ct);
     }
 
     public async Task<OrderDetailsPdfModel?> GetOrderDetails(Guid orderId, CancellationToken ct)
@@ -42,12 +42,18 @@ public class DocumentRepository : IDocumentRepository
 
         return await _context.Orders
             .AsNoTracking()
-            .Where(o => o.Id == orderId)
+            .Where(o => o.Id == orderId && o.DateDelivered != null)
             .Select(o => new OrderDetailsPdfModel()
             {
                 OrderData = new OrderData()
                 {
+                    Total = o.Total.Amount,
+                    Tax = o.Total.Amount * 0.23m,
+                    TaxCurrency = o.Total.Currency,
+                    TotalCurrency = o.Total.Currency,
                     OrderId = o.Id,
+                    LinesTotal = o.LinesTotal.Amount,
+                    LinesTotalCurrency = o.LinesTotal.Currency,
                     DateCreated = o.DateCreated,
                     Lines = o.Lines.Select(l => new OrderLineData()
                     {
@@ -69,13 +75,14 @@ public class DocumentRepository : IDocumentRepository
                 {
                     DateCreated = o.Payment.DateCreated,
                     PaymentId = o.Payment.PaymentId,
+                    Method = o.Payment.Payment.Method.ToString(),
                     Total = o.Payment.Amount.Amount,
                     TotalCurrency = o.Payment.Amount.Currency
                 },
                 DeliveryData = new DeliveryData()
                 {
                     CarrierCode = o.Delivery.CarrierCode,
-                    DeliveredDate = o.DateDelivered!.Value,
+                    DeliveredDate = o.DateDelivered.GetValueOrDefault(),
                     DeliveryName = o.Delivery.DeliveryName,
                     Total = o.Delivery.Price.Amount,
                     TotalCurrency = o.Delivery.Price.Currency

@@ -4,6 +4,11 @@ public sealed record OrderData
 {
     public Guid OrderId { get; init; }
     public DateTime DateCreated { get; init; }
-    public string Total { get; init; } = null!;
+    public decimal Total { get; init; }
+    public decimal Tax { get; init; }
+    public string TaxCurrency { get; init; } = null!;
+    public string TotalCurrency { get; init; } = null!;
+    public decimal LinesTotal { get; init; }
+    public string LinesTotalCurrency { get; init; } = null!;
     public IReadOnlyCollection<OrderLineData> Lines { get; init; } = [];
 }
