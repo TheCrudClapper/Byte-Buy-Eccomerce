@@ -44,7 +44,7 @@ public class QuestOrderDetailsPdfGenerator : IPdfGenerator<OrderDetailsPdfModel>
                             company.Item().Text($"{orderDetails.CompanyData.CompanyAddress.PostalCode} {orderDetails.CompanyData.CompanyAddress.PostalCity}, {orderDetails.CompanyData.CompanyAddress.Country}");
                             company.Item().Text($"TIN: {orderDetails.CompanyData.TIN}");
                             company.Item().Text(orderDetails.CompanyData.Email);
-                            company.Item().Text($"+ 48{orderDetails.CompanyData.Phone}");
+                            company.Item().Text($"+ 48 {orderDetails.CompanyData.Phone}");
                         });
 
                         row.ConstantItem(200).AlignRight().Column(meta =>
@@ -74,8 +74,8 @@ public class QuestOrderDetailsPdfGenerator : IPdfGenerator<OrderDetailsPdfModel>
 
                             rec.Item().Text(orderDetails.CustomerData.CustomersFullName);
                             rec.Item().Text(orderDetails.CustomerData.Email);
-                            rec.Item().Text(orderDetails.CustomerData.Phone);
-                            rec.Item().Text($"{orderDetails.CustomerData.CustomerAddress.Street} {orderDetails.CustomerData.CustomerAddress.HouseNumber}/{orderDetails.CustomerData.CustomerAddress.FlatNumber}");
+                            rec.Item().Text($"+ 48 { orderDetails.CustomerData.Phone}");
+                            rec.Item().Text($"{orderDetails.CustomerData.CustomerAddress.City} {orderDetails.CustomerData.CustomerAddress.Street} {orderDetails.CustomerData.CustomerAddress.HouseNumber}/{orderDetails.CustomerData.CustomerAddress.FlatNumber}");
                             rec.Item().Text($"{orderDetails.CustomerData.CustomerAddress.PostalCode} {orderDetails.CustomerData.CustomerAddress.PostalCity}");
                             rec.Item().Text(orderDetails.CustomerData.CustomerAddress.Country);
                         });

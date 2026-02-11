@@ -45,6 +45,7 @@ public class DocumentRepository : IDocumentRepository
             .Where(o => o.Id == orderId && o.DateDelivered != null)
             .Select(o => new OrderDetailsPdfModel()
             {
+                OrderStatus = o.Status,
                 OrderData = new OrderData()
                 {
                     Total = o.Total.Amount,

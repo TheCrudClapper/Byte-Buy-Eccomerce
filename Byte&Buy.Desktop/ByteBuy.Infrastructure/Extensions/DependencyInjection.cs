@@ -73,6 +73,9 @@ public static class DependencyInjection
         services.AddHttpClient<IStatisticsHttpClient, StatisticsHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
+        services.AddHttpClient<IDocumentsHttpClient, DocumentsHttpClient>()
+           .AddHttpMessageHandler<BearerTokenHandler>();
+
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
         return services;

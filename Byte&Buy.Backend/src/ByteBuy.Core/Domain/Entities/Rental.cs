@@ -142,7 +142,7 @@ public sealed class Rental : AuditableEntity, ISoftDeletable
     {
         if (!CanChangeStatus(newStatus))
         {
-            return Result.Failure(Error.Validation("Rental.Status", $"Cannot change status from {Status} to {newStatus}"));
+            return Result.Failure(Error.Validation("Rental.OrderStatus", $"Cannot change status from {Status} to {newStatus}"));
         }
 
         Status = newStatus;

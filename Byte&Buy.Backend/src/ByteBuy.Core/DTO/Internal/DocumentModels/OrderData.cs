@@ -1,4 +1,6 @@
-﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
+﻿using ByteBuy.Core.Domain.Enums;
+
+namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
 public sealed record OrderData
 {

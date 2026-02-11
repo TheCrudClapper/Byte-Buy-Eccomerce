@@ -30,6 +30,7 @@ public static class DependencyInjection
         services.AddSingleton<IOrderService, OrderService>();
         services.AddSingleton<IRentalService, RentalService>();
         services.AddSingleton<IStatisticsService, StatisticsService>();
+        services.AddSingleton<IDocumentService, DocumentService>();
 
         return services;
     }

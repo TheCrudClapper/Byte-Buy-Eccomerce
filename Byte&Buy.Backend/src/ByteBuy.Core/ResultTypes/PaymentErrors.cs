@@ -6,7 +6,7 @@ public static class PaymentErrors
         ErrorType.NotFound, "Payment.NotFound", "Payment of given id is not found");
 
     public static readonly Error AlreadyPaid = new(
-        ErrorType.Conflict, "Payment.Status", "You can't pay again for already completed payment!");
+        ErrorType.Conflict, "Payment.OrderStatus", "You can't pay again for already completed payment!");
 
     public static readonly Error PaymentMethodsNotMatch = new(
         ErrorType.Validation, "Payment.PaymnetMethod",

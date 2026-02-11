@@ -68,7 +68,7 @@ public static class OfferMappings
                 PricePerDay = dto.PricePerDay!,
                 MaxRentalDays = dto.MaxRentalDays!.Value,
             },
-            _ => throw new NotSupportedException($"Status {dto.Status} is not a valid offer status")
+            _ => throw new NotSupportedException($"OrderStatus {dto.Status} is not a valid offer status")
         };
     }
 
@@ -142,7 +142,7 @@ public static class OfferMappings
                 PricePerDay = dto.PricePerDay!
             },
 
-            _ => throw new NotSupportedException($"Status {dto.Status} is not a valid offer status")
+            _ => throw new NotSupportedException($"OrderStatus {dto.Status} is not a valid offer status")
         };
     }
 }

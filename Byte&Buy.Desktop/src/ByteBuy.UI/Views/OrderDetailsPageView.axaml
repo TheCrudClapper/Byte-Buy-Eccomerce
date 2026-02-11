@@ -158,7 +158,7 @@
 
 				<!-- Second Container -->
 				<Border Grid.Row="3" Classes="sectionBorder" Padding="20">
-					<Grid RowDefinitions="40,*,1,70,1,60,1,40"  ColumnDefinitions="*,*">
+					<Grid RowDefinitions="40,*,1,70,1,60,1,*"  ColumnDefinitions="*,*">
 
 						<!--First Row and Items Price-->
 						<StackPanel>
@@ -315,12 +315,14 @@
 								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
 
 						<!--Export to pdf-->
-						<StackPanel Grid.Row="7" Orientation="Horizontal" VerticalAlignment="Bottom">
-							<Image
-							Source="{SvgImage /Assets/Images/regular/file-pdf-regular-full.svg}"
-							Width="30" Height="30" />
-							<TextBlock Margin="5,0" Text="Export to PDF" VerticalAlignment="Center" Classes="standardText, bold"/>
-						</StackPanel>
+						<Button Command="{Binding DownloadPdfCommand}" Grid.Row="7" Margin="0,10" IsVisible="{Binding CanGeneratePdf}">
+							<StackPanel Orientation="Horizontal">
+								<Image
+								Source="{SvgImage /Assets/Images/regular/file-pdf-regular-full.svg}"
+								Width="16" Height="16" />
+								<TextBlock Margin="5,0"  Text="Export to PDF" Classes="standardText, bold"/>
+							</StackPanel>
+						</Button>
 					</Grid>
 				</Border>
 			</StackPanel>

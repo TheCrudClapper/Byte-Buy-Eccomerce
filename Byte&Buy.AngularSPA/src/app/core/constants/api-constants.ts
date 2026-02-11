@@ -91,5 +91,9 @@ export const API_ENDPOINTS = {
         borrowerList: '/rentals/borrower',
         lenderList: '/rentals/lender',
         return: (id: string | Guid) => `/rentals/${id}/return`,  
-    }
+    },
+
+     documents: {
+        orderDetails: (id: string | Guid) => `/documents/order-details/${id}`
+    },
 }

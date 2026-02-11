@@ -209,7 +209,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Rental",
                 type: "integer",
                 nullable: false,
@@ -329,7 +329,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 defaultValue: "");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Payments",
                 type: "character varying(20)",
                 maxLength: 20,
@@ -654,7 +654,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Rental");
 
             migrationBuilder.DropColumn(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Rental");
 
             migrationBuilder.DropColumn(
@@ -845,7 +845,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AlterColumn<int>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Payment",
                 type: "integer",
                 nullable: false,

@@ -12,16 +12,16 @@ public static class OrderErrors
         ErrorType.Unexpected, "Order", "Failed to create order, try again later");
 
     public static readonly Error InvalidReturnState = Error.Validation(
-        "Order.Status", "Only delivered orders can be returned");
+        "Order.OrderStatus", "Only delivered orders can be returned");
 
     public static readonly Error InvalidDeliveredState = Error.Validation(
-      "Order.Status", "Only delivered orders can be returned");
+      "Order.OrderStatus", "Only delivered orders can be returned");
 
     public static readonly Error InvalidDelivery = new(
         ErrorType.Validation, "Order.Delivery", "Some deliveries sent by user are not valid");
 
     public static readonly Error ReturnPeriodExpired = new(
-        ErrorType.Validation, "Order.Status", "Order cannot be returned after 14 days counting from delivery.");
+        ErrorType.Validation, "Order.OrderStatus", "Order cannot be returned after 14 days counting from delivery.");
 
     public static readonly Error QuantityInvalid = Error.Validation(
         "OrderLine.Quantity", "Quantity must be greater than 0.");
@@ -48,5 +48,5 @@ public static class OrderErrors
       "Order.Seller", "Order cannot be created without seller information");
 
     public static readonly Error ShippedStatusViolation = Error.Validation(
-     "Order.Status", "Order cannot be shipped because it has not been paid for.");
+     "Order.OrderStatus", "Order cannot be shipped because it has not been paid for.");
 }

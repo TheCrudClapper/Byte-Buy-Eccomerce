@@ -207,12 +207,17 @@
                     </span>
                 </div>
                 <hr>
+                @if(canDownloadPdf()){
                 <div class="col-12">
                     <span class="fs-14-px open-sans-bold">
                         <i class="fa-regular fa-file-pdf me-1  fa-xl" style="color: #ffffff;"></i>
                     </span>
-                    <a class="link fs-14-px">Export to PDF</a>
+                    <a class="link fs-14-px" [class.disabled]="!canDownloadPdf()"
+                        (click)="canDownloadPdf() && downloadPdf()">
+                        Export to PDF
+                    </a>
                 </div>
+                }
             </div>
         </div>
 
@@ -228,7 +233,7 @@
                 <div class="col-12 action-row">
                     <div class="action-container">
                         <i class="fa-solid fa-dollar-sign fa-2x" style="color: #ffffff;"></i>
-                        <a class="link" (click)="shipOrder()" >SHIP ORDER</a>
+                        <a class="link" (click)="shipOrder()">SHIP ORDER</a>
                     </div>
                 </div>
                 <div class="col-12">

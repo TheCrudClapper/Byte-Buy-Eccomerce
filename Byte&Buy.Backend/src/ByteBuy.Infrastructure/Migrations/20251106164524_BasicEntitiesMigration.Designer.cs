@@ -565,7 +565,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("OrderStatus")
                         .IsRequired()
                         .HasColumnType("text");
 

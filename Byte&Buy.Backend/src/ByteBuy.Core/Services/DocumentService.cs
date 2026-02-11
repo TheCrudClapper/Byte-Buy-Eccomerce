@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
 using ByteBuy.Core.ServiceContracts;
 
@@ -22,8 +23,14 @@ public class DocumentService : IDocumentService
         if (pdfData is null)
             return [];
 
-        var generated = _pdfGenerator.Generate(pdfData);
+        if(pdfData.OrderStatus == OrderStatus.Returned 
+            || pdfData.OrderStatus ==  OrderStatus.Delivered)
+        {
+            var generated = _pdfGenerator.Generate(pdfData);
 
-        return generated;
+            return generated;
+        }
+
+        return [];
     }
 }

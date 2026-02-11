@@ -83,7 +83,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Offers",
                 type: "character varying(20)",
                 maxLength: 20,
@@ -95,7 +95,7 @@ namespace ByteBuy.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Offers");
 
             migrationBuilder.AlterColumn<string>(

@@ -652,7 +652,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid?>("PaymentId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("OrderStatus")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
@@ -790,7 +790,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("OrderStatus")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
@@ -872,7 +872,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("OrderStatus")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
@@ -984,7 +984,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("OrderStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Base;
 
 public abstract class HttpClientBase
 {

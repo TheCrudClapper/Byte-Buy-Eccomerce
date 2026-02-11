@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Category;
+﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Services.DTO.Category;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;

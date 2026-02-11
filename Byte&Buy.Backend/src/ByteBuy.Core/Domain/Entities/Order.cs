@@ -129,7 +129,7 @@ public class Order : AuditableEntity, ISoftDeletable
     {
         if (!CanChangeStatus(newStatus))
         {
-            return Result.Failure(Error.Validation("Order.Status", $"Cannot change status from {Status} to {newStatus}"));
+            return Result.Failure(Error.Validation("Order.OrderStatus", $"Cannot change status from {Status} to {newStatus}"));
         }
 
         Status = newStatus;

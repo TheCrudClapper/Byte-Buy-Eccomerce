@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { environment } from '../../../../../environments/environment';
@@ -8,6 +8,7 @@ import { OrderStatus } from '../../../../core/dto/order/enum/order-status';
 import { OrderDetailsResponse } from '../../../../core/dto/order/order-details-response';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { CommonModule } from '@angular/common';
+import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
 
 @Component({
   selector: 'app-seller-order-details',
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SellerOrderDetails implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
+  private readonly documentsApiService = inject(DocumentsApiService);
   private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -33,6 +35,30 @@ export class SellerOrderDetails implements OnInit {
 
     const guid = Guid.parse(id);
     this.loadOrderDetails(guid);
+  }
+
+  canDownloadPdf = computed(() => {
+    const order = this.orderDetails();
+    if (!order) return false;
+
+    return order.status === OrderStatus.Delivered ||
+      order.status === OrderStatus.Returned;
+  });
+
+  downloadPdf() {
+    if (!this.orderDetails() || !this.orderDetails()?.id)
+      return;
+
+    const orderId = this.orderDetails()!.id;
+    this.documentsApiService.downloadOrderDetails(orderId).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `order-details-${orderId}.pdf`;
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+    });
   }
 
   loadOrderDetails(id: Guid) {

@@ -1,7 +1,4 @@
-﻿using Avalonia.Controls;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Svg.Skia;
+﻿using Avalonia.Media.Imaging;
 using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Order.Enums;
 using ByteBuy.Services.ServiceContracts;
@@ -16,6 +13,7 @@ using CommunityToolkit.Mvvm.Input;
 using ExCSS;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,17 +61,23 @@ public partial class OrderDetailsPageViewModel : PageViewModel
 
     public string StatusIcon
         => OrderMappings.MapOrderStatusIcon(Status);
+    public bool CanGeneratePdf
+        => Status == OrderStatus.Returned
+        || Status == OrderStatus.Delivered;
 
     #endregion
 
     private readonly IOrderService _orderService;
     private readonly IImageService _imageService;
+    private readonly IDocumentService _documentService;
     public OrderDetailsPageViewModel(AlertViewModel alert,
         IOrderService orderService,
-        IImageService imageService) : base(alert)
+        IImageService imageService,
+        IDocumentService documentService) : base(alert)
     {
         _orderService = orderService;
         _imageService = imageService;
+        _documentService = documentService;
     }
 
     public async Task InitializeAsync(Guid orderId)
@@ -102,6 +106,24 @@ public partial class OrderDetailsPageViewModel : PageViewModel
             .Select(OrderLineViewModel.From)
             .ToList();
     }
+
+    [RelayCommand]
+    public async Task DownloadPdf()
+    {
+        var bytes = await _documentService.DownloadOrderDetailsRaport(OrderId);
+        var filePath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            $"order-details-{OrderId}.pdf");
+
+        await File.WriteAllBytesAsync(filePath, bytes);
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = filePath,
+            UseShellExecute = true,
+        });
+    }
+
 
     [RelayCommand]
     public async Task ShipOrder()
@@ -159,5 +181,6 @@ public partial class OrderDetailsPageViewModel : PageViewModel
         OnPropertyChanged(nameof(StatusIcon));
         OnPropertyChanged(nameof(CanShip));
         OnPropertyChanged(nameof(CanDeliver));
+        OnPropertyChanged(nameof(CanGeneratePdf));
     }
 }

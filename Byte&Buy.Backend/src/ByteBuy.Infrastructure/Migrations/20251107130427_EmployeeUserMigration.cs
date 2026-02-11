@@ -19,7 +19,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "ShippingAddresses");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Orders",
                 type: "character varying(20)",
                 maxLength: 20,
@@ -319,7 +319,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "ShippingAddresses");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Status",
+                name: "OrderStatus",
                 table: "Orders",
                 type: "text",
                 nullable: false,

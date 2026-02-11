@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.DTO.Auth;
+﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 

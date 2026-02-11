@@ -1,7 +1,10 @@
-﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
+﻿using ByteBuy.Core.Domain.Enums;
+
+namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
 public sealed record OrderDetailsPdfModel
 {
+    public OrderStatus OrderStatus { get; set; }
     public CompanyData CompanyData { get; init; } = null!;
     public CustomerData CustomerData { get; init; } = null!;
     public PaymentData PaymentData { get; init; } = null!;

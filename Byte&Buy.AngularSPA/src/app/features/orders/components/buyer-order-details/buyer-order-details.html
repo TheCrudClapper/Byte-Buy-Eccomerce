@@ -207,12 +207,17 @@
                     </span>
                 </div>
                 <hr>
-               <div class="col-12">
+                @if(canDownloadPdf()){
+                <div class="col-12">
                     <span class="fs-14-px open-sans-bold">
                         <i class="fa-regular fa-file-pdf me-1  fa-xl" style="color: #ffffff;"></i>
                     </span>
-                    <a class="link fs-14-px">Export to PDF</a>
+                    <a class="link fs-14-px" [class.disabled]="!canDownloadPdf()"
+                        (click)="canDownloadPdf() && downloadPdf()">
+                        Export to PDF
+                    </a>
                 </div>
+                }
             </div>
         </div>
 
