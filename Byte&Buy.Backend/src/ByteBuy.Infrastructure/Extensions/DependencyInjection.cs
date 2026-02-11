@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.Contracts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.DTO.Internal.DocumentModels;
+using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.HangfireJobs;
 using ByteBuy.Infrastructure.Repositories;
@@ -46,7 +48,8 @@ public static class DependencyInjection
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IRentalRepository, RentalRepository>();
         services.AddScoped<IStatisticsRepository, StatisticsRepository>();
-
+        services.AddScoped<IPdfGenerator<OrderDetailsPdfModel>, QuestOrderDetailsPdfGenerator>();
+        services.AddScoped<IDocumentRepository, DocumentRepository>();
 
         //Unit of work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
