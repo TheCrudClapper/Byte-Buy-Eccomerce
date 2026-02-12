@@ -29,7 +29,7 @@ public static class ItemMappings
             Id = response.Id,
             ImagesCount = response.ImagesCount,
             Name = response.Name,
-            RowNumber = index + 1,
+            RowNumber = index,
             StockQuantity = response.StockQuantity
         };
 

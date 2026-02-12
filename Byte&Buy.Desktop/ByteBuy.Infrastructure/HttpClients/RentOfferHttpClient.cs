@@ -1,7 +1,10 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -17,8 +20,11 @@ public class RentOfferHttpClient : HttpClientBase, IRentOfferHttpClient
     public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id)
         => await GetAsync<RentOfferResponse>($"{resource}/{id}");
 
-    public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync()
-        => await GetAsync<IReadOnlyCollection<RentOfferListResponse>>($"{resource}/list");
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<RentOfferListResponse>>(url);
+    }
 
     public async Task<Result<CreatedResponse>> PostRentOfferAsync(RentOfferAddRequest request)
         => await PostAsync<CreatedResponse>(resource, request);

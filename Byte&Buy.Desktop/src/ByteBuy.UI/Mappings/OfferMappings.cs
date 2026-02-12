@@ -74,7 +74,7 @@ public static class OfferMappings
             ItemName = response.ItemName,
             MaxRentalDays = response.MaxRentalDays,
             QuantityAvailable = response.QuantityAvailable,
-            RowNumber = index + 1,
+            RowNumber = index,
             PriceAndCurrencyPerDay = $"{response.Amount} {response.Currency}",
             CreatorEmail = response.CreatorEmail,
         };
@@ -87,7 +87,7 @@ public static class OfferMappings
             Id = response.Id,
             ItemName = response.ItemName,
             QuantityAvailable = response.QuantityAvailable,
-            RowNumber = index + 1,
+            RowNumber = index,
             PriceAndCurrencyPerItem = $"{response.PricePerItem} {response.Currency}",
             CreatorEmail = response.CreatorEmail,
         };

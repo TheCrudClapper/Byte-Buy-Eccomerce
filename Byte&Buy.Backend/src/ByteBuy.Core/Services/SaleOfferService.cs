@@ -4,8 +4,10 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.SaleOffer;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
@@ -116,10 +118,9 @@ public class SaleOfferService : ISaleOfferService
             : saleOfferDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetListAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery queryParams, CancellationToken ct = default)
     {
-        var spec = new SaleOfferToSaleOfferListResponseSpec();
-        return await _saleOfferRepository.GetListBySpecAsync(spec, ct);
+        return await _saleOfferRepository.GetSaleOffersListAsync(queryParams, ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)

@@ -1,7 +1,10 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Item;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -16,8 +19,11 @@ public class ItemHttpClient(HttpClient httpClient) : HttpClientBase(httpClient),
     public async Task<Result<ItemResponse>> GetByIdAsync(Guid id)
         => await GetAsync<ItemResponse>($"{resource}/{id}");
 
-    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetListAsync()
-        => await GetAsync<IReadOnlyCollection<ItemListResponse>>($"{resource}/list");
+    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<ItemListResponse>>(url);
+    }
 
     public async Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request)
         => await PostAsync<CreatedResponse>($"{resource}", request);

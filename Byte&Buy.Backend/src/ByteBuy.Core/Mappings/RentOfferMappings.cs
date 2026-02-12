@@ -9,7 +9,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class RentOfferMappings
 {
-    public static Expression<Func<RentOffer, RentOfferListResponse>> RentOfferListProjection
+    public static Expression<Func<RentOffer, RentOfferListResponse>> RentOfferListResponseProjection
         => ro => new RentOfferListResponse(
             ro.Id,
             ro.Item.Name,

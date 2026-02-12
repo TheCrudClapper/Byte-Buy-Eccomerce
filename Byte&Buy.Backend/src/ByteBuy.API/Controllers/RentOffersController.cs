@@ -2,6 +2,8 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.RentOffer;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,6 @@ public class RentOffersController : BaseApiController
         => HandleResult(await _rentOfferService.GetByIdAsync(id, ct));
 
     [HttpGet("list")]
-    public async Task<ActionResult<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct)
-        => HandleResult(await _rentOfferService.GetListAsync(ct));
+    public async Task<ActionResult<PagedList<RentOfferListResponse>>> GetListAsync([FromQuery] RentOfferListQuery queryParams, CancellationToken ct)
+        => HandleResult(await _rentOfferService.GetListAsync(queryParams, ct));
 }

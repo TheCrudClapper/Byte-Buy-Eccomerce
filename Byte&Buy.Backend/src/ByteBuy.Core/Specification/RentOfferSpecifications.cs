@@ -13,7 +13,7 @@ public static class RentOfferSpecifications
         {
             Query.AsNoTracking()
                  .Where(ro => ro.Item.IsCompanyItem)
-                 .Select(RentOfferMappings.RentOfferListProjection);
+                 .Select(RentOfferMappings.RentOfferListResponseProjection);
         }
     }
 

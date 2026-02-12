@@ -2,6 +2,8 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.SaleOffer;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,7 +35,7 @@ public class SaleOffersController : BaseApiController
         => HandleResult(await _saleOfferService.GetByIdAsync(id, cancellationToken));
 
     [HttpGet("list")]
-    public async Task<ActionResult<IReadOnlyCollection<SaleOfferListResponse>>> GetListAsync(CancellationToken ct)
-        => HandleResult(await _saleOfferService.GetListAsync(ct));
+    public async Task<ActionResult<PagedList<SaleOfferListResponse>>> GetListAsync([FromQuery] SaleOfferListQuery queryParams, CancellationToken ct)
+        => HandleResult(await _saleOfferService.GetListAsync(queryParams ,ct));
 
 }

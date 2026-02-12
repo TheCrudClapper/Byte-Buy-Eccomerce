@@ -4,8 +4,10 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.RentOffer;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
@@ -114,10 +116,9 @@ public class RentOfferService : IRentOfferService
             : rentOfferDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery queryParams, CancellationToken ct = default)
     {
-        var spec = new RentOfferToRentOfferListResponseSpec();
-        return await _rentOfferRepository.GetListBySpecAsync(spec, ct);
+        return await _rentOfferRepository.GetRentOffersListAsync(queryParams, ct);
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Items;
@@ -6,6 +7,7 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,6 +19,18 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
     IDialogService dialogNavigation,
     IItemService service) : ViewModelMany<ItemListItem, IItemService>(alert, navigation, dialogNavigation, service)
 {
+    #region Filtration fields
+
+    [ObservableProperty]
+    private string? _name;
+
+    [ObservableProperty]
+    private int? _stockQuantityFrom;
+
+    [ObservableProperty]
+    private int? _stockQuantityTo;
+    #endregion
+
     protected override async Task AddAsync()
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
@@ -54,15 +68,36 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
 
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetList();
+        var query = new ItemListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            Name = Name,
+            StockQuantityFrom = StockQuantityFrom,
+            StockQuantityTo = StockQuantityTo,
+        };
+
+        var result = await Service.GetList(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value
-            .Select((i, index) => i.ToListItem(index))
-            .ToList();
+        Items = new ObservableCollection<ItemListItem>(
+            value.Items.Select((i, index) =>
+                i.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<ItemListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        CurrentPage = value.Metadata.CurrentPage;
+        HasPreviousPage = value.Metadata.HasPrevious;
+    }
+
+    public override async Task ClearFilters()
+    {
+        Name = null;
+        StockQuantityFrom = null;
+        StockQuantityTo = null;
+        await LoadDataAsync();
     }
 }

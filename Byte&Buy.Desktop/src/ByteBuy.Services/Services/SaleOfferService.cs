@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -17,8 +19,8 @@ public class SaleOfferService(ISaleOfferHttpClient httpClient) : ISaleOfferServi
     public async Task<Result<SaleOfferResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IReadOnlyCollection<SaleOfferListResponse>>> GetList()
-        => await httpClient.GetListAsync();
+    public async Task<Result<PagedList<SaleOfferListResponse>>> GetList(SaleOfferListQuery query)
+        => await httpClient.GetListAsync(query);
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, SaleOfferUpdateRequest request)
         => await httpClient.PutRentOfferAsync(id, request);

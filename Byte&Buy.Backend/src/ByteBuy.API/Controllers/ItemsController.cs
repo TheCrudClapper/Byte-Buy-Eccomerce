@@ -2,7 +2,9 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Item;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Services.Filtration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
@@ -35,6 +37,6 @@ public class ItemsController : BaseApiController
         => HandleResult(await _itemsService.GetByIdAsync(id, cancellationToken));
 
     [HttpGet("list")]
-    public async Task<ActionResult<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsList(CancellationToken ct)
-      => HandleResult(await _itemsService.GetCompanyItemsListAsync(ct));
+    public async Task<ActionResult<PagedList<ItemListResponse>>> GetItemsList([FromQuery] ItemListQuery queryParams, CancellationToken ct)
+      => HandleResult(await _itemsService.GetListAsync(queryParams, ct));
 }

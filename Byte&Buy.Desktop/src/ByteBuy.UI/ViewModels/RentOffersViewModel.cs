@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.RentOffer;
@@ -6,19 +7,44 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class RentOffersViewModel(
+public partial class RentOffersViewModel(
     AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IRentOfferService service)
     : ViewModelMany<RentOfferListItem, IRentOfferService>(alert, navigation, dialogNavigation, service)
 {
+    #region Filtration fields
+
+    [ObservableProperty]
+    private string? _name;
+
+    [ObservableProperty]
+    private decimal? _priceFrom;
+
+    [ObservableProperty]
+    private decimal? _priceTo;
+
+    [ObservableProperty]
+    private int? _maxRentalDaysFrom;
+
+    [ObservableProperty]
+    private int? _maxRentalDaysTo;
+
+    [ObservableProperty]
+    private int? _quantityFrom;
+
+    [ObservableProperty]
+    private int? _quantityTo;
+    #endregion
+
     protected override async Task EditAsync(RentOfferListItem item)
     {
         var result = await DialogNavigation
@@ -37,21 +63,56 @@ public class RentOffersViewModel(
 
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetList();
+        var query = new RentOfferListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            Name = Name,
+            PriceFrom = PriceFrom,
+            PriceTo = PriceTo,
+            MaxRentalDaysFrom = MaxRentalDaysFrom,
+            MaxRentalDaysTo = MaxRentalDaysTo,
+            QuantityFrom = QuantityFrom,
+            QuantityTo = QuantityTo,
+        };
+
+        var result = await Service.GetList(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value
-            .Select((u, index) => u.ToListItem(index))
-            .ToList();
+        Items = new ObservableCollection<RentOfferListItem>(
+            value.Items.Select((u, i) =>
+                u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<RentOfferListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        CurrentPage = value.Metadata.CurrentPage;
+        HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    //Not used
-    protected override Task AddAsync()
+    public override async Task ClearFilters()
     {
-        throw new System.NotImplementedException();
+        Name = null;
+        PriceFrom = null;
+        PriceTo = null;
+        MaxRentalDaysFrom = null;
+        MaxRentalDaysTo = null;
+        QuantityFrom = null;
+        QuantityTo = null;
+        await LoadDataAsync();
+    }
+
+    protected override async Task AddAsync()
+    {
+        var result = await DialogNavigation
+            .OpenDialogAsync(ApplicationDialogNames.Offer);
+
+        if (result is bool ok && ok)
+        {
+            Alert.ShowSuccessAlert("Successfully updated offer!");
+            await LoadDataAsync();
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -17,8 +19,8 @@ public class RentOfferService(IRentOfferHttpClient httpClient) : IRentOfferServi
     public async Task<Result<RentOfferResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetList()
-        => await httpClient.GetListAsync();
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetList(RentOfferListQuery query)
+        => await httpClient.GetListAsync(query);
 
     public Task<Result<UpdatedResponse>> Update(Guid id, RentOfferUpdateRequest request)
         => httpClient.PutRentOfferAsync(id, request);

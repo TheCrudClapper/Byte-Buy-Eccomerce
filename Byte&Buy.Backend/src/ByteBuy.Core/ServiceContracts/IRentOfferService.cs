@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.RentOffer;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
@@ -10,6 +12,6 @@ public interface IRentOfferService
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request);
     Task<Result> DeleteAsync(Guid id);
     Task<Result<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct = default);
-    Task<Result<IReadOnlyCollection<RentOfferListResponse>>> GetListAsync(CancellationToken ct = default);
+    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery queryParams, CancellationToken ct = default);
 }
 

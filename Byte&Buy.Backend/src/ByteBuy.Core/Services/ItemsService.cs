@@ -4,8 +4,10 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Item;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Services.Filtration;
 using static ByteBuy.Core.Specification.ItemsSpecifications;
 
 namespace ByteBuy.Core.Services;
@@ -130,6 +132,6 @@ public class ItemsService : IItemsService
             : itemDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetCompanyItemsListAsync(CancellationToken ct)
-        => await _itemRepository.GetListBySpecAsync(new CompanyItemsToItemListResponseSpec(), ct);
+    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery queryParam, CancellationToken ct)
+        => await _itemRepository.GetCompanyItemsAsync(queryParam, ct);
 }

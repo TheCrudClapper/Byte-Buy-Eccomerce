@@ -1,7 +1,9 @@
 ﻿using ByteBuy.Core.DTO.Item;
 using ByteBuy.Services.DTO.Item;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -40,8 +42,8 @@ public class ItemService(IItemHttpClient httpClient) : IItemService
     public async Task<Result<ItemResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IReadOnlyCollection<ItemListResponse>>> GetList()
-        => await httpClient.GetListAsync();
+    public async Task<Result<PagedList<ItemListResponse>>> GetList(ItemListQuery query)
+        => await httpClient.GetListAsync(query);
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, ItemUpdateRequest request)
     {
