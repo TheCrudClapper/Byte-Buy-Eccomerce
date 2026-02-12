@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Mappings;
 
@@ -11,4 +12,13 @@ public static class ConditionMappings
 
     public static SelectListItemResponse<Guid> ToSelectListItemResponse(this Condition condition)
         => new SelectListItemResponse<Guid>(condition.Id, condition.Name);
+
+    public static PagedList<ConditionListResponse> ToResponse(this PagedList<Condition> pagedList)
+    {
+        return new PagedList<ConditionListResponse>()
+        {
+            Items = pagedList.Items.Select(c => c.ToConditionListResponse()).ToList(),
+            Metadata = pagedList.Metadata
+        };
+    }
 }

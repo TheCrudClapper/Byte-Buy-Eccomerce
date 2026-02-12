@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +22,12 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
     {
         return await _context.Conditions
             .ToListAsync(ct);
+    }
+
+    public async Task<PagedList<Condition>> GetPagedListAsync(PaginationParameters parameters, CancellationToken ct = default)
+    {
+        return await _context.Conditions
+            .ToPagedListAsync(parameters);
     }
 
     public async Task<bool> HasActiveRelations(Guid conditionId)
