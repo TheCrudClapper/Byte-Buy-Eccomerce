@@ -13,11 +13,13 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="50,*,50">
-			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
-				<Label Content="Filters" />
+		<Grid RowDefinitions="110,*,50">
+
+			<Grid Grid.ColumnDefinitions="*,170" RowDefinitions="30,10,60,10"  Grid.Row="0" >
 				<Button
-				Grid.Column="2"
+				Grid.Row="0"
+
+				Grid.Column="1"
 				Command="{Binding AddCommand}"
 				VerticalAlignment="Top"
 				HorizontalAlignment="Right">
@@ -25,8 +27,38 @@
 						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
 							   Width="15" Height="15" />
 					</StackPanel>
-
 				</Button>
+
+				<StackPanel Margin="2,0" Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+					<StackPanel VerticalAlignment="Center" Margin="0,0,5,0">
+						<TextBlock Text="Country" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding CountryName}" Watermark="Search by name"/>
+					</StackPanel>
+					<StackPanel VerticalAlignment="Center" Margin="0,0,5,0">
+						<TextBlock Text="Code" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding Code}" Watermark="Search by name"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+					<Button Margin="5,0" Command="{Binding LoadDataCommand}">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Filter"/>
+						</StackPanel>
+					</Button>
+
+					<Button Command="{Binding ClearFiltersCommand}">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Clear"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
 			</Grid>
 
 			<!-- Fetched items count -->
@@ -76,8 +108,8 @@
 										Command="{Binding DataContext.DeleteCommand,
 										RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}">
-										<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-											   Width="16" Height="16" />
+											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+												   Width="16" Height="16" />
 										</Button>
 									</StackPanel>
 								</DataTemplate>
@@ -90,20 +122,23 @@
 			</StackPanel>
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button>
+				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">
 					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>
 				<TextBlock
 				Margin="5,0,5,0"
-				Text="1 of 32"
 				FontSize="15"
 				FontWeight="600"
 				FontFamily="{DynamicResource RalewayMedium}"
 				VerticalAlignment="Center"
-				Foreground="{DynamicResource TextPrimaryBrush}"/>
-				<Button>
+				Foreground="{DynamicResource TextPrimaryBrush}">
+					<Run Text="{Binding CurrentPage}"/>
+					<Run Text="of"/>
+					<Run Text="{Binding TotalPages}"/>
+				</TextBlock>
+				<Button Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}">
 					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
 						   Height="15"
 						   Width="15" />

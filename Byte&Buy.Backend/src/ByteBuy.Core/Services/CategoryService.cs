@@ -3,7 +3,9 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Category;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
@@ -83,10 +85,9 @@ public class CategoryService : ICategoryService
             : category.ToCategoryResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<CategoryListResponse>>> GetCategoriesListAsync(CancellationToken ct)
+    public async Task<Result<PagedList<CategoryListResponse>>> GetCategoriesListAsync(CategoryListQuery queryParams, CancellationToken ct)
     {
-        var categories = await _categoryRepository.GetAllAsync(ct);
-        return categories.Select(c => c.ToCategoryListResponse()).ToList();
+        return await _categoryRepository.GetCategoryListAsync(queryParams);
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)

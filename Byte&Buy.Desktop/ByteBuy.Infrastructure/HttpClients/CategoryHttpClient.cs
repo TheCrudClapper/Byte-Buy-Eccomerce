@@ -1,7 +1,10 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Category;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -24,8 +27,12 @@ public class CategoryHttpClient(HttpClient httpClient)
     public async Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<CategoryResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<IEnumerable<CategoryListResponse>>> GetListAsync()
-        => await GetAsync<IEnumerable<CategoryListResponse>>($"{resource}/list");
+    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<CategoryListResponse>>(url);
+    }
+
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");

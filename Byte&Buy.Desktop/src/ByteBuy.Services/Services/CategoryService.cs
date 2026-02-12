@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Services.DTO.Category;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 namespace ByteBuy.Services.Services;
@@ -16,8 +18,8 @@ public class CategoryService(ICategoryHttpClient httpClient) : ICategoryService
     public async Task<Result<CategoryResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IEnumerable<CategoryListResponse>>> GetList()
-        => await httpClient.GetListAsync();
+    public async Task<Result<PagedList<CategoryListResponse>>> GetList(CategoryListQuery query)
+        => await httpClient.GetListAsync(query);
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
         => await httpClient.GetSelectListAsync();

@@ -1,6 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Category;
+using ByteBuy.Core.Filtration.Category;
+using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +25,20 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
     {
         return await _context.Categories
             .ToListAsync(ct);
+    }
+
+    public async Task<PagedList<CategoryListResponse>> GetCategoryListAsync(CategoryListQuery queryParams, CancellationToken ct = default)
+    {
+        var query = _context.Categories
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.CategoryName))
+            query = query.Where(c => c.Name.Contains(queryParams.CategoryName));
+
+        var projection = query.Select(c => c.ToCategoryListResponse());
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
     public async Task<bool> HasActiveRelations(Guid categoryId)

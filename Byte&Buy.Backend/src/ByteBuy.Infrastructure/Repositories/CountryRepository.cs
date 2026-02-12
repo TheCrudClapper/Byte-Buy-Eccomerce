@@ -1,7 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Country;
+using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
+using ByteBuy.Services.Filtration;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
@@ -20,6 +25,23 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
     {
         return await _context.Countries
             .ToListAsync(ct);
+    }
+
+    public async Task<PagedList<CountryResponse>> GetListAsync(CountryListQuery queryParams, CancellationToken ct = default)
+    {
+        var query = _context.Countries
+        .AsNoTracking()
+        .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.CountryName))
+            query = query.Where(c => c.Name.Contains(queryParams.CountryName));
+
+        if (!string.IsNullOrWhiteSpace(queryParams.Code))
+            query = query.Where(c => c.Code.Contains(queryParams.Code));
+
+        var projection = query.Select(c => c.ToCountryResponse());
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
     public async Task<bool> HasActiveRelationsAsync(Guid countryId)

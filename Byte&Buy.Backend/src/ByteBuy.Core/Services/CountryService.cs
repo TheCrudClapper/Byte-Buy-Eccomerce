@@ -4,8 +4,10 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Services.Filtration;
 
 namespace ByteBuy.Core.Services;
 
@@ -81,10 +83,9 @@ public class CountryService : ICountryService
             : country.ToCountryResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<CountryResponse>>> GetCountriesAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<CountryResponse>>> GetCountriesListAsync(CountryListQuery queryParams, CancellationToken ct = default)
     {
-        var countries = await _countryRepository.GetAllAsync(ct);
-        return countries.Select(c => c.ToCountryResponse()).ToList();
+        return await _countryRepository.GetListAsync(queryParams, ct);
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
@@ -93,4 +94,5 @@ public class CountryService : ICountryService
         return countries.Select(c => c.ToSelectListItemResponse())
             .ToList();
     }
+
 }

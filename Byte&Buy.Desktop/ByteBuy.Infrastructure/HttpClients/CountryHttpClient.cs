@@ -1,7 +1,10 @@
 ﻿using ByteBuy.Core.DTO.Country;
+using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -20,7 +23,7 @@ public class CountryHttpClient(HttpClient httpClient)
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 
-    public async Task<Result<IEnumerable<CountryResponse>>> GetCountriesAsync()
+    public async Task<Result<IEnumerable<CountryResponse>>> GetCountryListAsync()
         => await GetAsync<IEnumerable<CountryResponse>>($"{resource}");
 
     public async Task<Result<CountryResponse>> GetByIdAsync(Guid countryId)
@@ -29,4 +32,9 @@ public class CountryHttpClient(HttpClient httpClient)
     public async Task<Result> DeleteAsync(Guid countryId)
        => await DeleteAsync($"{resource}/{countryId}");
 
+    public async Task<Result<PagedList<CountryResponse>>> GetCountryListAsync(CountryListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<CountryResponse>>(url);
+    }
 }

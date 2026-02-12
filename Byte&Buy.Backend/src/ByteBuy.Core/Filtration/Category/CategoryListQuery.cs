@@ -1,6 +1,6 @@
-﻿namespace ByteBuy.Services.Filtration;
+﻿namespace ByteBuy.Core.Filtration.Category;
 
-public sealed class CategoriesListQuery
+public sealed class CategoryListQuery
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 11;

@@ -11,7 +11,7 @@ public static class CategoryMappings
         {
             Name = response.Name,
             Id = response.Id,
-            RowNumber = index + 1
+            RowNumber = index
         };
     }
 }

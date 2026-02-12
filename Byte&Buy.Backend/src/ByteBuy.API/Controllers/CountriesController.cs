@@ -2,14 +2,16 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
+using ByteBuy.Services.Filtration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
 
 [Resource("countries")]
-[Route("api/[controller]")]
+[Route("api/countries")]
 [ApiController]
 public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, CountryUpdateRequest, CountryResponse>
 {
@@ -17,10 +19,10 @@ public class CountriesController : CrudControllerBase<Guid, CountryAddRequest, C
     public CountriesController(ICountryService countryService) : base(countryService)
         => _countryService = countryService;
 
-    [HttpGet]
-    //[HasPermission("{resource}:read:many")]
-    public async Task<ActionResult<IReadOnlyCollection<CountryResponse>>> GetCountries(CancellationToken ct)
-        => HandleResult(await _countryService.GetCountriesAsync(ct));
+    [HttpGet("list")]
+    //[HasPermission("{resource}:read:list")]
+    public async Task<ActionResult<PagedList<CountryResponse>>> GetCountriesList([FromQuery] CountryListQuery queryParams, CancellationToken ct)
+        => HandleResult(await _countryService.GetCountriesListAsync(queryParams, ct));
 
     [HttpGet("options")]
     //[HasPermission("{resource}:read:options")]
