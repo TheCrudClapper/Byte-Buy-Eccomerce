@@ -12,7 +12,7 @@ public static class DeliveryCarrierMappings
             Code = response.Code,
             Id = response.Id,
             Name = response.Name,
-            RowNumber = index + 1
+            RowNumber = index
         };
     }
 }

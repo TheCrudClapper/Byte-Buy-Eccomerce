@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ByteBuy.Core.Filtration.Delivery;
+namespace ByteBuy.Services.Filtration;
 
-public sealed class DeliveryListQuery
+public sealed class ItemListQuery
 {
     [Range(1, int.MaxValue, ErrorMessage = "Page number must greater that 0")]
     public int PageNumber { get; init; } = 1;
@@ -10,7 +10,7 @@ public sealed class DeliveryListQuery
     [Range(1, int.MaxValue, ErrorMessage = "Page size must greater that 0")]
     public int PageSize { get; init; } = 10;
 
-    public string? DeliveryName { get; init; }
-    public decimal? PriceFrom { get; init; }
-    public decimal? PriceTo { get; init; }
+    public int? StockQuantityFrom { get; init; }
+    public int? StockQuantityTo { get; init; }
+    public string? Name { get; init; }
 }

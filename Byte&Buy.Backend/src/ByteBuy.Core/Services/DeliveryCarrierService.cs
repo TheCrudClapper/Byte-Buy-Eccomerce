@@ -3,7 +3,9 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.DeliveryCarrier;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.DeliveryCarrier;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
@@ -103,13 +105,8 @@ public class DeliveryCarrierService : IDeliveryCarrierService
             .ToList();
     }
 
-    public async Task<Result<IReadOnlyCollection<DeliveryCarrierResponse>>> GetDeliveryCarriersList(
-        CancellationToken ct = default)
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersList(DeliveryCarriersListQuery queryParams, CancellationToken ct = default)
     {
-        var carriers = await _deliveryCarrierRepository.GetAllAsync(ct);
-
-        return carriers
-            .Select(c => c.ToDeliveryCarrierResponse())
-            .ToList();
+        return await _deliveryCarrierRepository.GetDeliveryCarrierListAsync(queryParams, ct);
     }
 }
