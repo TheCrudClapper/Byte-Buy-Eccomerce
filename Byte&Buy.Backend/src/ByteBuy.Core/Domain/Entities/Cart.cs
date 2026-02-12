@@ -217,6 +217,7 @@ public class Cart : AuditableEntity, ISoftDeletable
 
         var changeResult = cartOffer
                .ChangeQuantityAndRentalDays(quantity, rentalDays);
+
         if (changeResult.IsFailure)
             return changeResult;
 

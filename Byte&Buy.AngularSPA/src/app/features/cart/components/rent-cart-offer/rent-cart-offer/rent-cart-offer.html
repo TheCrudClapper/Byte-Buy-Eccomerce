@@ -11,9 +11,9 @@
                     <div class="col-9">
                         <a [routerLink]="['/offers', 'rent', 'details', rentCartOffer.offerId]" class="offer-title">{{ rentCartOffer.title }}</a>
                         <br>
-                        <span class="price fw">Price / day:
-                            <span>
-                                {{ rentCartOffer.pricePerDay.amount}}
+                        <span class="price fw">Price /day:
+                            <span class="open-sans-bold">
+                                {{ rentCartOffer.pricePerDay.amount | number:'1.2-2'}}
                                 {{ rentCartOffer.pricePerDay.currency}}
                             </span>
 

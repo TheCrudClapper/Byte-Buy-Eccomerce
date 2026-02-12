@@ -1,16 +1,13 @@
 <div class="container">
     <div class="row mt-5 mb-5">
-
         <!-- Sidebar  -->
         <div class="col-12 col-md-3">
             <div class="sticky-top" style="top: 1rem;">
             <div class="text-center content-section">
-                <div class="mb-2">
+                <div class="mb-3">
                     <i class="fa-solid fa-user fa-6x" style="color: #ffffff;"></i>
                 </div>
-                <span class="badge primary-background bold-text d-inline-block">Portal User</span>
-                <br>
-                <span class="bold-text fs-14-px text-break">wojceichmucha12@gmail.com</span>
+                <p class="open-sans-bold">Account Management</p>
             </div>
             <div class="content-section">
                 <a class="action-link" [routerLink]="['/profile/personal-info']" routerLinkActive="active-link"
@@ -52,7 +49,7 @@
         </div>
 
         <!-- Right Side -->
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-9 mt-3 mt-md-0">
             <router-outlet></router-outlet>
         </div>
     </div>

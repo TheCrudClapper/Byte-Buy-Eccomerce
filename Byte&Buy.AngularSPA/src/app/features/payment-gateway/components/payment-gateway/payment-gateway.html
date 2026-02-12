@@ -31,28 +31,28 @@
                 <div class="col-12 mb-3">
                     <label class="form-label">Card Number</label>
                     <input type="text" class="form-control" formControlName="cardNumber">
-                     @if (getErrorMessage("blikCode")) {
+                     @if (getErrorMessage("cardNumber")) {
                         <span class="validation-error">{{ getErrorMessage("cardNumber") }}</span>
                     }
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">Expiration</label>
                     <input type="text" class="form-control" formControlName="expiration">
-                     @if (getErrorMessage("blikCode")) {
+                     @if (getErrorMessage("expiration")) {
                         <span class="validation-error">{{ getErrorMessage("expiration") }}</span>
                     }
                 </div>
                 <div class="col-6 mb-3">
                     <label class="form-label">CVC</label>
                     <input type="text" class="form-control" formControlName="cvc">
-                     @if (getErrorMessage("blikCode")) {
+                     @if (getErrorMessage("cvc")) {
                         <span class="validation-error">{{ getErrorMessage("cvc") }}</span>
                     }
                 </div>
                 <div class="col-12 mb-3">
                     <label class="form-label">Card Holder</label>
                     <input type="text" class="form-control" formControlName="cardHolder">
-                     @if (getErrorMessage("blikCode")) {
+                     @if (getErrorMessage("cardHolder")) {
                         <span class="validation-error">{{ getErrorMessage("cardHolder") }}</span>
                     }
                 </div>
@@ -65,7 +65,7 @@
                 <div class="col-12 mb-3">
                     <label class="form-label">Phone</label>
                     <input type="text" class="form-control" formControlName="phone" pattern="[0-9]*">
-                     @if (getErrorMessage("blikCode")){
+                     @if (getErrorMessage("phone")){
                     <span class="validation-error">{{ getErrorMessage("phone") }}</span>
                     }
                 </div>
@@ -73,7 +73,7 @@
                     <label class="form-label">BLIK Code</label>
                     <input type="text" maxlength="6" class="form-control" formControlName="blikCode">
                     @if (getErrorMessage("blikCode")) {
-                    <span class="validation-error">{{ getErrorMessage("name") }}</span>
+                    <span class="validation-error">{{ getErrorMessage("blikCode") }}</span>
                     }
                 </div>
             </div>
