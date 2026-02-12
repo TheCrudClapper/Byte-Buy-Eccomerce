@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.DTO.Public.Condition;
+using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
@@ -9,6 +10,6 @@ public interface IConditionService
     : IBaseCrudService<Guid, ConditionAddRequest, ConditionUpdateRequest, ConditionResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(PaginationParameters parameters, CancellationToken ct = default);
+    Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(ConditionListQuery queryParams, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default);
 }

@@ -1,23 +1,38 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class DeliveriesPageViewModel(AlertViewModel alert,
+public partial class DeliveriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IDeliveryService deliveryService)
     : ViewModelMany<DeliveryListItem, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
 {
+    #region Filtration Fields
+
+    [ObservableProperty]
+    public string? deliveryName;
+
+    [ObservableProperty]
+    public decimal? priceFrom;
+
+    [ObservableProperty]
+    public decimal? priceTo;
+
+    #endregion
     protected override async Task EditAsync(DeliveryListItem item)
     {
         var result = await DialogNavigation
@@ -36,16 +51,37 @@ public class DeliveriesPageViewModel(AlertViewModel alert,
 
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetList();
+        var queryParams = new DeliveryListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            DeliveryName = DeliveryName,
+            PriceFrom = PriceFrom,
+            PriceTo = PriceTo,
+        };
+
+        var result = await Service.GetList(queryParams);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value
-           .Select((d, index) => d.ToListItem(index))
-           .ToList();
+        Items = new ObservableCollection<DeliveryListItem>(
+            value.Items.Select((u, i) =>
+                u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<DeliveryListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        HasPreviousPage = value.Metadata.HasPrevious;
+        CurrentPage = value.Metadata.CurrentPage;
+    }
+
+    public override async Task ClearFilters()
+    {
+        DeliveryName = null;
+        PriceTo = null;
+        PriceFrom = null;
+        await LoadDataAsync();
     }
 
     protected override async Task AddAsync()

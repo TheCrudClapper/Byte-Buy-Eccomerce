@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Delivery;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
@@ -11,7 +13,7 @@ public interface IDeliveryService
 {
 
     Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct = default);
-    Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListAsync(CancellationToken ct = default);
+    Task<Result<PagedList<DeliveryListResponse>>> GetDeliveriesListAsync(DeliveryListQuery query, CancellationToken ct = default);
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels();
     Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetParcelLockerSizes();
     Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default);

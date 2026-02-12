@@ -2,6 +2,7 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,8 @@ public class ConditionsController
 
     [HttpGet("list")]
     //[HasPermission("category:read:many")]
-    public async Task<ActionResult<PagedList<ConditionListResponse>>> GetConditionsList([FromQuery] PaginationParameters parameters, CancellationToken ct)
-       => HandleResult(await _conditionService.GetConditionsListAsync(parameters, ct));
+    public async Task<ActionResult<PagedList<ConditionListResponse>>> GetConditionsList([FromQuery] ConditionListQuery queryParams, CancellationToken ct)
+       => HandleResult(await _conditionService.GetConditionsListAsync(queryParams, ct));
 
     [HttpGet]
     //[HasPermission("condition:read:many")]

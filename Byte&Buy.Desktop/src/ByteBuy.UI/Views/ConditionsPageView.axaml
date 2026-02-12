@@ -4,7 +4,7 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 Background="Transparent"
+			 Background="{DynamicResource CardBackgroundBrush}"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
 			 x:Class="ByteBuy.UI.Views.ConditionsPageView"
 			 x:DataType="vm:ConditionsPageViewModel">
@@ -14,11 +14,13 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid  RowDefinitions="50,*,50">
-			<Grid Grid.ColumnDefinitions="*,*,*" Grid.Row="0">
-				<Label Content="Filters" />
+		<Grid RowDefinitions="110,*,50">
+
+			<Grid Grid.ColumnDefinitions="*,170" RowDefinitions="30,10,60,10"  Grid.Row="0" >
 				<Button
-				Grid.Column="2"
+				Grid.Row="0"
+				
+				Grid.Column="1"
 				Command="{Binding AddCommand}"
 				VerticalAlignment="Top"
 				HorizontalAlignment="Right">
@@ -26,9 +28,37 @@
 						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
 							   Width="15" Height="15" />
 					</StackPanel>
-
 				</Button>
+
+				<StackPanel Margin="2,0" Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Condition Name" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding ConditionName}" Watermark="Search by name"/>
+					</StackPanel>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+					<Button Margin="5,0" Command="{Binding LoadDataCommand}">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Filter"/>
+						</StackPanel>
+					</Button>
+
+					<Button Command="{Binding ClearFiltersCommand}">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Clear"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
 			</Grid>
+
+
 
 			<!-- Fetched items count -->
 			<StackPanel Grid.Row="1">
@@ -37,7 +67,7 @@
 						   FontFamily="{DynamicResource RalewayMedium}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
-					<Label Content="{Binding ItemsCount}"
+					<Label Content="{Binding TotalCount}"
 						   FontFamily="{DynamicResource RalewayBold}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
 						   HorizontalAlignment="Right" />
@@ -90,20 +120,23 @@
 			</StackPanel>
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
-				<Button>
+				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">
 					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
 						   Height="15"
 						   Width="15" />
 				</Button>
 				<TextBlock
 				Margin="5,0,5,0"
-				Text="1 of 32"
 				FontSize="15"
 				FontWeight="600"
 				FontFamily="{DynamicResource RalewayMedium}"
 				VerticalAlignment="Center"
-				Foreground="{DynamicResource TextPrimaryBrush}"/>
-				<Button>
+				Foreground="{DynamicResource TextPrimaryBrush}">
+					<Run Text="{Binding CurrentPage}"/>
+					<Run Text="of"/>
+					<Run Text="{Binding TotalPages}"/>
+				</TextBlock>
+				<Button Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}">
 					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
 						   Height="15"
 						   Width="15" />

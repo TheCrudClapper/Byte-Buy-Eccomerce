@@ -1,8 +1,11 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
+using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -24,9 +27,11 @@ public class DeliveryHttpClient(HttpClient httpClient)
     public async Task<Result<DeliveryResponse>> GetByIdAsync(Guid deliveryId)
         => await GetAsync<DeliveryResponse>($"{resource}/{deliveryId}");
 
-    public async Task<Result<IEnumerable<DeliveryListResponse>>> GetListAsync()
-        => await GetAsync<IEnumerable<DeliveryListResponse>>($"{resource}/list");
-
+    public async Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<DeliveryListResponse>>(url);
+    }
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 

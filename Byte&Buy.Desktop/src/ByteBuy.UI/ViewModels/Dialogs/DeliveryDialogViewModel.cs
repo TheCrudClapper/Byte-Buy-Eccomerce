@@ -28,7 +28,7 @@ public partial class DeliveryDialogViewModel(
     private string? _description;
 
     [ObservableProperty]
-    [Range(1, double.MaxValue, ErrorMessage = "Price cannot be less that 1")]
+    [Range(1, double.MaxValue, ErrorMessage = "PriceFrom cannot be less that 1")]
     private decimal _price;
 
     [ObservableProperty]

@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Condition;
@@ -6,19 +7,27 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public class ConditionsPageViewModel(
+public partial class ConditionsPageViewModel(
     AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IConditionService conditionService)
     : ViewModelMany<ConditionListItem, IConditionService>(alert, navigation, dialogNavigation, conditionService)
 {
+    #region Filtration Fields
+
+    [ObservableProperty]
+    public string? _conditionName;
+
+    #endregion
+
     protected override async Task EditAsync(ConditionListItem item)
     {
         var result = await DialogNavigation
@@ -38,16 +47,33 @@ public class ConditionsPageViewModel(
 
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetList();
+        var query = new ConditionListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            ConditionName = ConditionName
+        };
+
+        var result = await Service.GetList(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value.Items
-            .Select((u, index) => u.ToListItem(index))
-            .ToList();
+        Items = new ObservableCollection<ConditionListItem>(
+            value.Items.Select((u, i) =>
+                u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<ConditionListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        CurrentPage = value.Metadata.CurrentPage;
+        HasPreviousPage = value.Metadata.HasPrevious;
+    }
+
+    public override async Task ClearFilters()
+    {
+        ConditionName = null;
+        await LoadDataAsync();
     }
 
     protected override async Task AddAsync()

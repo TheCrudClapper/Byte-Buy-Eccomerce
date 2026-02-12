@@ -3,6 +3,7 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
@@ -92,9 +93,8 @@ public class ConditionService : IConditionService
             .ToList();
     }
 
-    public async Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(PaginationParameters parameters, CancellationToken ct = default)
+    public async Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(ConditionListQuery queryParams, CancellationToken ct = default)
     {
-        var pagedResult = await _conditionRepository.GetPagedListAsync(parameters, ct);
-        return pagedResult.ToResponse();
+        return await _conditionRepository.GetPagedListAsync(queryParams, ct);
     }
 }

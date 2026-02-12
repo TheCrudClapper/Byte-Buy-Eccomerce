@@ -1,7 +1,10 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
+using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Delivery;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,8 +24,8 @@ public class DeliveriesController
 
     [HttpGet("list")]
     //[HasPermission("delivery:read:list")]
-    public async Task<ActionResult<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesList(CancellationToken ct)
-        => HandleResult(await _deliveryService.GetDeliveriesListAsync(ct));
+    public async Task<ActionResult<PagedList<DeliveryListResponse>>> GetDeliveriesList([FromQuery] DeliveryListQuery query, CancellationToken ct)
+        => HandleResult(await _deliveryService.GetDeliveriesListAsync(query, ct));
 
     [HttpGet("options")]
     //[HasPermission("delivery:read:options")]

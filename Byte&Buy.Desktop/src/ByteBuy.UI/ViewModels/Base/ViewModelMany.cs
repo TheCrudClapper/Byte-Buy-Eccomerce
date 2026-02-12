@@ -5,6 +5,7 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -17,7 +18,28 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     #region MVVM Fields
 
     [ObservableProperty]
+    private int _pageNumber = 1;
+
+    [ObservableProperty]
+    private int _pageSize = 20;
+
+    [ObservableProperty]
+    private int _totalCount;
+
+    [ObservableProperty]
+    private int _currentPage;
+
+    [ObservableProperty]
+    private int _totalPages;
+
+    [ObservableProperty]
     private int _itemsCount;
+
+    [ObservableProperty]
+    private bool _hasNextPage;
+
+    [ObservableProperty]
+    private bool _hasPreviousPage;
 
     [ObservableProperty]
     private TDataGridItem? _selectedItem;
@@ -40,23 +62,10 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
         Service = service;
     }
 
+    // Delete after all pages gets pagination
     partial void OnItemsChanged(ObservableCollection<TDataGridItem> value)
     {
-        ItemsCount = Items.Count;
-        UpdateRowNumbers();
-    }
-
-    //Updates Row Numbers everytime list gets updated
-    private void UpdateRowNumbers()
-    {
-        if (Items.Count == 0) return;
-
-        for (var i = 0; i < Items.Count; i++)
-        {
-            var prop = typeof(TDataGridItem).GetProperty("RowNumber");
-            if (prop != null && prop.CanWrite)
-                prop.SetValue(Items[i], i + 1);
-        }
+        ItemsCount = value.Count;
     }
 
     [RelayCommand]
@@ -83,8 +92,31 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     [RelayCommand]
     protected abstract Task EditAsync(TDataGridItem item);
 
+    [RelayCommand]
     public abstract Task LoadDataAsync();
 
     [RelayCommand]
+    public virtual Task ClearFilters()
+    {
+        throw new NotImplementedException();
+    }
+
+    [RelayCommand]
     protected abstract Task AddAsync();
+
+    [RelayCommand]
+    protected async Task NextPage()
+    {
+        if (!HasNextPage) return;
+        PageNumber++;
+        await LoadDataAsync();
+    }
+
+    [RelayCommand]
+    protected async Task PreviousPage()
+    {
+        if(!HasPreviousPage) return;
+        PageNumber--;
+        await LoadDataAsync();
+    }
 }

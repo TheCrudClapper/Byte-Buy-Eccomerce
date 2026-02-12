@@ -5,6 +5,5 @@
         string Name,
         string Currency,
         decimal Amount,
-        string Carrier
-        );
+        string Carrier);
 }

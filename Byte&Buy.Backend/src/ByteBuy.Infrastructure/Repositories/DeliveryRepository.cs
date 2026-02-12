@@ -1,7 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.DTO.Public.Delivery;
+using ByteBuy.Core.Filtration.Delivery;
+using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 namespace ByteBuy.Infrastructure.Repositories;
@@ -41,6 +46,26 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
                     .Select(od => od.Delivery.Price)
                     .First())
             .ToListAsync();
+    }
+
+    public async Task<PagedList<DeliveryListResponse>> GetDeliveriesListAsync(DeliveryListQuery queryParams, CancellationToken ct = default)
+    {
+        var query = _context.Deliveries
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (queryParams.PriceFrom is not null)
+            query = query.Where(d => d.Price.Amount >= queryParams.PriceFrom);
+
+        if (queryParams.PriceTo is not null)
+            query = query.Where(d => d.Price.Amount <= queryParams.PriceTo);
+
+        if (!string.IsNullOrWhiteSpace(queryParams.DeliveryName))
+            query= query.Where(d => d.Name.Contains(queryParams.DeliveryName));
+
+        var projection = query.Select(DeliveryMappings.DeliveryListResponseProjection);
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
     public async Task<bool> HasActiveRelations(Guid deliveryId)

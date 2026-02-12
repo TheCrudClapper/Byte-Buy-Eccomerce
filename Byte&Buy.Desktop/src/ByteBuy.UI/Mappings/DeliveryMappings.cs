@@ -14,7 +14,7 @@ public static class DeliveryMappings
             Currency = dto.Currency,
             Id = dto.Id,
             Name = dto.Name,
-            RowNumber = index + 1
+            RowNumber = index
         };
     }
 

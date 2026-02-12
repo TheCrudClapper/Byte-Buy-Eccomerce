@@ -27,7 +27,7 @@
 				<StackPanel>
 					<TextBlock Text=""/>
 				</StackPanel>
-				<Button Margin="5,0">
+				<Button Margin="5,0" Command="{Binding LoadDataCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
 						   Height="15"
@@ -36,7 +36,7 @@
 					</StackPanel>
 				</Button>
 
-				<Button>
+				<Button Command="{Binding ClearFiltersCommand}">
 					<StackPanel Orientation="Horizontal">
 						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
 						   Height="15"

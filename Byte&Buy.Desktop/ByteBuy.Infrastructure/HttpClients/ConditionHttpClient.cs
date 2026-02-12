@@ -1,6 +1,8 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
@@ -24,9 +26,12 @@ public class ConditionHttpClient(HttpClient httpClient)
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<ConditionResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync()
-        => await GetAsync<PagedList<ConditionListResponse>>($"{resource}/list");
-
+    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return await GetAsync<PagedList<ConditionListResponse>>(url);
+    }
+       
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
 }

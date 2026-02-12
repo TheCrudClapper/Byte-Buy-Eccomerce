@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Condition;
+using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Extensions;
@@ -24,10 +26,19 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
             .ToListAsync(ct);
     }
 
-    public async Task<PagedList<Condition>> GetPagedListAsync(PaginationParameters parameters, CancellationToken ct = default)
+    public async Task<PagedList<ConditionListResponse>> GetPagedListAsync(ConditionListQuery queryParams, CancellationToken ct = default)
     {
-        return await _context.Conditions
-            .ToPagedListAsync(parameters.PageNumber, parameters.PageSize);
+        var query = _context.Conditions
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.ConditionName))
+            query = query.Where(c => c.Name.Contains(queryParams.ConditionName));
+
+        var projection = query.Select(c => new ConditionListResponse(c.Id, c.Name));
+
+        return await projection
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
     public async Task<bool> HasActiveRelations(Guid conditionId)

@@ -9,7 +9,7 @@ public static class ConditionMappings
     {
         return new ConditionListItem
         {
-            RowNumber = index + 1,
+            RowNumber = index,
             Id = response.Id,
             Name = response.Name,
         };
