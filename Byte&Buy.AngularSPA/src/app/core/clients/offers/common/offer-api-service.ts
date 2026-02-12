@@ -10,6 +10,8 @@ import { SaleOfferDetails } from '../../../../features/offers/models/sale-offer-
 import { SaleOfferDetailsResponse } from '../../../dto/offers/sale/sale-offer-details-response';
 import { OfferUnion } from '../../../dto/offers/common/offer-browser-union';
 import { UserPanelOfferUnion } from '../../../dto/offers/common/user-panel-union';
+import { PagedList } from '../../../pagination/pagedList';
+import { OfferQueryParams } from '../../../dto/offers/query/offer-browser-query-params';
 
 @Injectable({
   providedIn: 'root',
@@ -63,8 +65,8 @@ export class OfferApiService {
       );
   }
 
-  browseOffers(): Observable<OfferUnion[]>{
-    return this.httpClient.get<OfferUnion[]>(`${this.resourceUri}/offers`); 
+  browseOffers(query: OfferQueryParams): Observable<PagedList<OfferUnion>>{
+    return this.httpClient.get<PagedList<OfferUnion>>(`${this.resourceUri}/offers`, { params: query as any}); 
   }
 
   getUserOffers(): Observable<UserPanelOfferUnion[]>{

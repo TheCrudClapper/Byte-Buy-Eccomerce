@@ -2,6 +2,8 @@
 using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
+using ByteBuy.Core.Filtration.Offer;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +30,8 @@ public class OffersReadController : BaseApiController
         => HandleResult(await _offerReadService.GetSaleOfferDetails(id, ct));
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<OfferBrowserItemResponse>>> GetBrowserOffers(CancellationToken ct)
-        => HandleResult(await _offerReadService.BrowseAsync(ct));
+    public async Task<ActionResult<PagedList<OfferBrowserItemResponse>>> GetBrowserOffers([FromQuery] OfferBrowserQuery queryParams, CancellationToken ct)
+        => HandleResult(await _offerReadService.BrowseAsync(queryParams, ct));
 
     [HttpGet("my")]
     public async Task<ActionResult<IReadOnlyCollection<UserPanelOfferResponse>>> GetUserOffers(CancellationToken ct)

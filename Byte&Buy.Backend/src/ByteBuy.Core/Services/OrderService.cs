@@ -4,7 +4,9 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Order;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.OrderSpecifications;
@@ -139,12 +141,10 @@ public class OrderService : IOrderService
             .ToList();
     }
 
-    public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams,CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
-
-        var spec = new CompanyOrderListResponseSpec(companyId);
-        return await _orderRepository.GetListBySpecAsync(spec, ct);
+        return await _orderRepository.GetCompanyOrdersList(queryParams, companyId, ct);
     }
 
     /// <summary>

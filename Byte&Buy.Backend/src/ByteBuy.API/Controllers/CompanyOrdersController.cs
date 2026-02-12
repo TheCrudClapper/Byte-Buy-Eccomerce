@@ -1,13 +1,14 @@
 ﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Order;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers;
 
-[Authorize]
 [Route("api/orders")]
 [ApiController]
 public class CompanyOrdersController : BaseApiController
@@ -17,8 +18,8 @@ public class CompanyOrdersController : BaseApiController
         => _orderService = orderService;
 
     [HttpGet("company")]
-    public async Task<ActionResult<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrders(CancellationToken ct)
-       => HandleResult(await _orderService.GetCompanyOrdersListAsync(ct));
+    public async Task<ActionResult<PagedList<CompanyOrderListResponse>>> GetCompanyOrders([FromQuery] OrderCompanyListQuery queryParams, CancellationToken ct)
+       => HandleResult(await _orderService.GetCompanyOrdersListAsync(queryParams, ct));
 
     [HttpGet("details/{orderId:guid}/company")]
     public async Task<ActionResult<OrderDetailsResponse>> GetCompanyOrderDetails(Guid orderId, CancellationToken ct)

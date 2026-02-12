@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Order;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
@@ -7,10 +9,8 @@ namespace ByteBuy.Core.ServiceContracts;
 public interface IOrderService
 {
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default);
-
     Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId, CancellationToken ct = default);
     Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default);
-
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default);
 
     /// <summary>
@@ -64,7 +64,7 @@ public interface IOrderService
     /// </summary>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(CancellationToken ct = default);
+    Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams, CancellationToken ct = default);
 
     /// <summary>
     /// Method that takes recent orders

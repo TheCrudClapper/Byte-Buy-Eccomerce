@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -17,7 +18,7 @@ public class ConditionService(IConditionHttpClient httpClient) : IConditionServi
     public async Task<Result<ConditionResponse>> GetById(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IEnumerable<ConditionListResponse>>> GetList()
+    public async Task<Result<PagedList<ConditionListResponse>>> GetList()
         => await httpClient.GetListAsync();
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()

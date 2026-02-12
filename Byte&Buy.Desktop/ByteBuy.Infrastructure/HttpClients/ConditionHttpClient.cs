@@ -2,6 +2,7 @@
 using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -23,8 +24,8 @@ public class ConditionHttpClient(HttpClient httpClient)
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<ConditionResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<IEnumerable<ConditionListResponse>>> GetListAsync()
-        => await GetAsync<IEnumerable<ConditionListResponse>>($"{resource}/list");
+    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync()
+        => await GetAsync<PagedList<ConditionListResponse>>($"{resource}/list");
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");

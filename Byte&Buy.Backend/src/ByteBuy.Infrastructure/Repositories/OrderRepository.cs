@@ -1,6 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Order;
+using ByteBuy.Core.Filtration.Order;
+using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,11 +32,58 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             .FirstOrDefaultAsync(ct);
     }
 
+
     public async Task<Order?> GetSellerOrder(Guid sellerId, Guid orderId, CancellationToken ct = default)
     {
         return await _context.Orders
             .Include(o => o.Lines)
             .Where(o => o.Id == orderId && o.SellerSnapshot.SellerId == sellerId)
             .FirstOrDefaultAsync(ct);
+    }
+
+    public async Task<PagedList<CompanyOrderListResponse>> GetCompanyOrdersList(
+        OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default)
+    {
+        var query = _context.Orders
+            .AsNoTracking()
+            .Where(o => o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company);
+
+        if (queryParams.Status.HasValue)
+            query = query.Where(o => o.Status == queryParams.Status.Value);
+
+        if (queryParams.PurchasedFrom.HasValue)
+        {
+            var fromUtc = DateTime.SpecifyKind(queryParams.PurchasedFrom.Value, DateTimeKind.Utc);
+            query = query.Where(o => o.DateCreated >= fromUtc);
+        }
+
+        if (queryParams.PurchasedTo.HasValue)
+        {
+            var fromUtc = DateTime.SpecifyKind(queryParams.PurchasedTo.Value, DateTimeKind.Utc);
+            query = query.Where(o => o.DateCreated <= fromUtc);
+        }
+
+        if (queryParams.TotalFrom.HasValue)
+            query = query.Where(o => o.Total.Amount >= queryParams.TotalFrom.Value);
+
+        if (queryParams.TotalTo.HasValue)
+            query = query.Where(o => o.Total.Amount <= queryParams.TotalTo.Value);
+
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerNamePhrase))
+            query = query
+                .Where(o => o.BuyerSnapshot.FullName
+                .Contains(queryParams.BuyerNamePhrase, StringComparison.OrdinalIgnoreCase));
+
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerEmailPhrase))
+            query = query
+                .Where(o => o.BuyerSnapshot.FullName
+                .Contains(queryParams.BuyerEmailPhrase, StringComparison.OrdinalIgnoreCase));
+
+        var projection = query.Select(OrderMappings.CompanyOrderListProjection);
+
+
+        return await projection
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -16,7 +17,7 @@ public class OrderService(IOrderHttpClient httpClient) : IOrderService
     public async Task<Result<UpdatedResponse>> DeliverOrder(Guid orderId)
         => await httpClient.DeliverOrderAsync(orderId);
 
-    public async Task<Result<IReadOnlyCollection<CompanyOrderListResponse>>> GetCompanyOrderList(CancellationToken ct = default)
+    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrderList(CancellationToken ct = default)
         => await httpClient.GetCompanyOrdersListAsync();
 
     public async Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId)

@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.InfraContracts.HttpClients;
@@ -7,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients;
 public interface IConditionHttpClient
 {
     Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
-    Task<Result<IEnumerable<ConditionListResponse>>> GetListAsync();
+    Task<Result<PagedList<ConditionListResponse>>> GetListAsync();
     Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request);
     Task<Result<UpdatedResponse>> PutConditionAsync(Guid conditionId, ConditionUpdateRequest request);

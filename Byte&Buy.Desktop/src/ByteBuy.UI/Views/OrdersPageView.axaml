@@ -23,9 +23,29 @@
 			</Grid>
 
 			<!-- Filters -->
-			<Grid Grid.Row="1">
-				<Label Content="Filters" />
-			</Grid>
+			<StackPanel Grid.Row="1" Orientation="Horizontal">
+				<StackPanel>
+					<TextBlock Text=""/>
+				</StackPanel>
+				<Button Margin="5,0">
+					<StackPanel Orientation="Horizontal">
+						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+						<TextBlock Text="Filter"/>
+					</StackPanel>
+				</Button>
+
+				<Button>
+					<StackPanel Orientation="Horizontal">
+						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+						<TextBlock Text="Clear"/>
+					</StackPanel>
+				</Button>
+			</StackPanel>
+			
 
 			<!-- Fetched items count -->
 			<StackPanel Grid.Row="2">

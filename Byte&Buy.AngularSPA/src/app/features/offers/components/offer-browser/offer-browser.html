@@ -130,9 +130,10 @@
 
 
         <!-- Sorting and Offer Section -->
+        @if(pagedList(); as page){
         <div class="col-12 col-lg-9">
             <span class="fw-bold">Offer Listings</span>
-            <span> - 10 found</span>
+            <span> - {{ page.metadata.totalCount }} found</span>
             <div class="content-section mt-1 mb-4">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center gap-2">
@@ -144,40 +145,55 @@
                             <option value="3">More expensive</option>
                         </select>
                     </div>
+
                     <div class="col-6 d-flex align-items-center justify-content-end gap-2">
-                        <button class="page-button">
+
+                        @if(page.metadata.hasPrevious)
+                        {
+                        <button class="page-button" (click)="previousPage()">
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-
+                        }
                         <div class="pagination d-flex align-items-center gap-1">
-                            <input type="number" class="form-control form-control-sm page-input page-input-narrow" />
+                            <input 
+                                type="number" 
+                                class="form-control form-control-sm page-input page-input-narrow"
+                                [value]="page.metadata.currentPage"
+                                [min] = "1"
+                                [max]="page.metadata.totalPages"
+                                (change)="goToPage($any($event.target).valueAsNumber)" />
                             <span>from</span>
-                            <span>600</span>
+                            <span>{{ page.metadata.totalPages }}</span>
                         </div>
 
-                        <button class="page-button">
+                        @if(page.metadata.hasNext){
+                        <button class="page-button" (click)="nextPage()">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
+                        }
+
                     </div>
+                    
                 </div>
             </div>
 
             <!-- Offer Section -->
-            @if(offers().length !== 0){
-            @for (item of offers(); track $index)
+            @if(page.items; as items){
+            @for (item of items; track $index)
             {
-                @if(item.type === 'rent'){
-                    <app-rent-browser-item [offer]="item">
-                    </app-rent-browser-item>
-                }
-
-                @if(item.type === 'sale'){
-                    <app-sale-browser-item [offer]="item">
-                    </app-sale-browser-item>
-                }
-                }
+            @if(item.type === 'rent'){
+            <app-rent-browser-item [offer]="item">
+            </app-rent-browser-item>
             }
-            
+
+            @if(item.type === 'sale'){
+            <app-sale-browser-item [offer]="item">
+            </app-sale-browser-item>
+            }
+            }
+            }
         </div>
+        }
+
     </div>
 </div>

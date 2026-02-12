@@ -5,6 +5,7 @@ using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
+using ByteBuy.Core.Pagination;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
@@ -143,6 +144,15 @@ public static class OfferMappings
             },
 
             _ => throw new NotSupportedException($"OrderStatus {dto.Status} is not a valid offer status")
+        };
+    }
+
+    public static PagedList<OfferBrowserItemResponse> ToPagedList(this PagedList<OfferBrowserItemQuery> pagetResult)
+    {
+        return new PagedList<OfferBrowserItemResponse>()
+        {
+            Items = pagetResult.Items.Select(o => o.ToBrowserItemResponse()).ToList(),
+            Metadata = pagetResult.Metadata
         };
     }
 }

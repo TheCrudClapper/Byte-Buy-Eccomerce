@@ -2,7 +2,9 @@
 using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
+using ByteBuy.Core.Filtration.Offer;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.OfferSpecifications;
@@ -25,12 +27,10 @@ public class OfferReadService : IOfferReadService
         _offerRepository = offerRepository;
     }
 
-    public async Task<Result<IReadOnlyCollection<OfferBrowserItemResponse>>> BrowseAsync(CancellationToken ct)
+    public async Task<Result<PagedList<OfferBrowserItemResponse>>> BrowseAsync(OfferBrowserQuery queryParams, CancellationToken ct)
     {
-        var spec = new OfferBrowserSpec();
-        var offers = await _offerRepository.GetListBySpecAsync(spec, ct);
-        return offers.Select(o => o.ToBrowserItemResponse())
-            .ToList();
+        var query = await _offerRepository.BrowserAsync(queryParams, ct);
+        return query.ToPagedList();
     }
 
     public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)

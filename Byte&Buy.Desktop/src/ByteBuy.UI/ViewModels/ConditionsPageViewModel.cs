@@ -43,7 +43,7 @@ public class ConditionsPageViewModel(
         if (!ok || value is null)
             return;
 
-        var list = value
+        var list = value.Items
             .Select((u, index) => u.ToListItem(index))
             .ToList();
 

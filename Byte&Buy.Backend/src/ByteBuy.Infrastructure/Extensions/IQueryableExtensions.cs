@@ -6,24 +6,24 @@ namespace ByteBuy.Infrastructure.Extensions;
 public static class IQueryableExtensions
 {
     public static async Task<PagedList<T>> ToPagedListAsync<T>(
-        this IQueryable<T> source, PaginationParameters paginationParameters)
+        this IQueryable<T> source, int pageNumber, int pageSize)
     {
         var totalCount = await source.CountAsync();
         var items = await source
-            .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
-            .Take(paginationParameters.PageSize)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
 
-        var totalPages = (int)Math.Ceiling(totalCount / (double)paginationParameters.PageSize);
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
         var metadata = new PaginationMetadata
         {
-            CurrentPage = paginationParameters.PageNumber,
-            PageSize = paginationParameters.PageSize,
+            CurrentPage = pageNumber,
+            PageSize = pageSize,
             TotalCount = totalCount,
             TotalPages = totalPages,
-            HasNext = paginationParameters.PageNumber < totalPages,
-            HasPrevious = paginationParameters.PageNumber > 1,
+            HasNext = pageNumber < totalPages,
+            HasPrevious = pageNumber > 1,
         };
 
         return new PagedList<T>

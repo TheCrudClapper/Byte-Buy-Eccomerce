@@ -62,20 +62,6 @@ public static class OrderSpecifications
         }
     }
 
-    /// <summary>
-    /// Specification that gets a list of orders for company
-    /// </summary>
-    public sealed class CompanyOrderListResponseSpec : Specification<Order, CompanyOrderListResponse>
-    {
-        public CompanyOrderListResponseSpec(Guid companyId)
-        {
-            Query.AsNoTracking()
-                .Where(o => o.SellerSnapshot.Type == SellerType.Company && o.SellerSnapshot.SellerId == companyId)
-                .Select(OrderMappings.CompanyOrderListProjection);
-        }
-    }
-
-
     public sealed class DashboardOrdersSpec : Specification<Order, OrderDashboardListResponse>
     {
         public DashboardOrdersSpec()

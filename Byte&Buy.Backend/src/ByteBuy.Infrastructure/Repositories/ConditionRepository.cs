@@ -27,7 +27,7 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
     public async Task<PagedList<Condition>> GetPagedListAsync(PaginationParameters parameters, CancellationToken ct = default)
     {
         return await _context.Conditions
-            .ToPagedListAsync(parameters);
+            .ToPagedListAsync(parameters.PageNumber, parameters.PageSize);
     }
 
     public async Task<bool> HasActiveRelations(Guid conditionId)
