@@ -10,7 +10,7 @@ public static class CountryMappings
     {
         return new CountryListItem
         {
-            RowNumber = index + 1,
+            RowNumber = index,
             Code = response.Code,
             Id = response.Id,
             Name = response.Name,

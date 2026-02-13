@@ -30,13 +30,13 @@ public class EmployeeRepository : EfBaseRepository<Employee>, IEmployeeRepositor
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.FirstName))
-            query = query.Where(e => e.FirstName.Contains(queryParams.FirstName));
+            query = query.Where(e => EF.Functions.ILike(e.FirstName, $"%{queryParams.FirstName}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.Email))
-            query = query.Where(e => e.Email!.Contains(queryParams.Email));
+            query = query.Where(e => EF.Functions.ILike(e.Email!, $"%{queryParams.Email}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.LastName))
-            query = query.Where(e => e.LastName.Contains(queryParams.LastName));
+            query = query.Where(e => EF.Functions.ILike(e.LastName, $"%{queryParams.LastName}%"));
 
         var projection = query.Select(EmployeeMappings.EmployeeListProjection);
 

@@ -34,10 +34,10 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
         .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.CountryName))
-            query = query.Where(c => c.Name.Contains(queryParams.CountryName));
+            query = query.Where(c => EF.Functions.ILike(c.Name, $"%{queryParams.CountryName}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.Code))
-            query = query.Where(c => c.Code.Contains(queryParams.Code));
+            query = query.Where(c => EF.Functions.ILike(c.Code, $"%{queryParams.Code}%"));
 
         var projection = query.Select(c => c.ToCountryResponse());
 

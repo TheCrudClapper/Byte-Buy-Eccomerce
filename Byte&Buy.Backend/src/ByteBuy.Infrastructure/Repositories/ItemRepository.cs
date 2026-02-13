@@ -31,7 +31,7 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
             .AsQueryable();
 
         if(!string.IsNullOrWhiteSpace(queryParam.Name))
-            query = query.Where(i => i.Name.Contains(queryParam.Name));
+            query = query.Where(i => EF.Functions.ILike(i.Name, $"%{queryParam.Name}%"));
 
         if(queryParam.StockQuantityFrom.HasValue)
             query = query.Where(i => i.StockQuantity >= queryParam.StockQuantityFrom.Value);

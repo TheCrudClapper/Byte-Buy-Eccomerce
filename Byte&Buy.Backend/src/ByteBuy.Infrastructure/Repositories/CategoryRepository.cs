@@ -34,7 +34,7 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.CategoryName))
-            query = query.Where(c => c.Name.Contains(queryParams.CategoryName));
+            query = query.Where(c => EF.Functions.ILike(c.Name, $"%{queryParams.CategoryName}%"));
 
         var projection = query.Select(c => c.ToCategoryListResponse());
 

@@ -26,10 +26,10 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
-            query = query.Where(r => r.ItemName.Contains(queryParams.ItemName));
+            query = query.Where(r => EF.Functions.ILike(r.ItemName, $"%{queryParams.ItemName}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.BorrowerEmail))
-            query = query.Where(r => r.Borrower.Email!.Contains(queryParams.BorrowerEmail));
+            query = query.Where(r => EF.Functions.ILike(r.Borrower.Email!, $"%{queryParams.BorrowerEmail}%"));
 
         if(queryParams.RentalDaysFrom.HasValue)
             query = query.Where(r => r.RentalDays >= queryParams.RentalDaysFrom.Value);

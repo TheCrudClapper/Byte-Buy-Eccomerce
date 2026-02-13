@@ -67,10 +67,10 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             query = query.Where(o => o.Total.Amount <= queryParams.TotalTo.Value);
 
         if (!string.IsNullOrWhiteSpace(queryParams.BuyerFullName))
-            query = query.Where(o => o.BuyerSnapshot.FullName.Contains(queryParams.BuyerFullName));
+            query = query.Where(o => EF.Functions.ILike(o.BuyerSnapshot.FullName, $"%{queryParams.BuyerFullName}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.BuyerEmail))
-            query = query.Where(o => o.BuyerSnapshot.Email.Contains(queryParams.BuyerEmail));
+            query = query.Where(o => EF.Functions.ILike(o.BuyerSnapshot.Email, $"%{queryParams.BuyerEmail}%"));
 
         var projection = query.Select(OrderMappings.CompanyOrderListProjection);
 

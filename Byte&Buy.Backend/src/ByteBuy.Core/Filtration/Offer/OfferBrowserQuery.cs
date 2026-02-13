@@ -22,6 +22,6 @@ public sealed class OfferBrowserQuery
     public decimal? MinPrice { get; init; }
     public decimal? MaxPrice { get; init; }
 
-    public int? MinRentalDays { get; init; } = 1;
-    public int? MaxRentalDays { get; init; } = 360;
+    public int? MinRentalDays { get; init; }
+    public int? MaxRentalDays { get; init; }
 }

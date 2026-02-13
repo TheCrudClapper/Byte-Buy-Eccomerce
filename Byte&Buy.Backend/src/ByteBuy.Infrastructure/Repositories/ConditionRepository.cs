@@ -33,7 +33,7 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.ConditionName))
-            query = query.Where(c => c.Name.Contains(queryParams.ConditionName));
+            query = query.Where(c => EF.Functions.ILike(c.Name, $"%{queryParams.ConditionName}%"));
 
         var projection = query.Select(c => new ConditionListResponse(c.Id, c.Name));
 

@@ -33,33 +33,33 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             query = query.Where(o => o.Seller.Type == queryParams.SellerType);
 
         if (!string.IsNullOrWhiteSpace(queryParams.SearchPhrase))
-            query = query.Where(o => o.Item.Name.Contains(queryParams.SearchPhrase));
+            query = query.Where(o => EF.Functions.ILike(o.Item.Name, $"%{queryParams.SearchPhrase}%"));
 
         if (!string.IsNullOrWhiteSpace(queryParams.City))
-            query = query.Where(o => o.OfferAddressSnapshot.City.Contains(queryParams.City));
+            query = query.Where(o => EF.Functions.ILike(o.OfferAddressSnapshot.City, $"%{queryParams.City}%"));
 
 
-        //if (queryParams.MinPrice is not null)
-        //{
-        //    query = query.Where(o => (((SaleOffer)o).PricePerItem.Amount >= queryParams.MinPrice)
-        //                          || (((RentOffer)o).PricePerDay.Amount >= queryParams.MinPrice));
-        //}
+        if (queryParams.MinPrice is not null)
+        {
+            query = query.Where(o => (((SaleOffer)o).PricePerItem.Amount >= queryParams.MinPrice)
+                                  || (((RentOffer)o).PricePerDay.Amount >= queryParams.MinPrice));
+        }
 
-        //if (queryParams.MaxPrice is not null)
-        //{
-        //    query = query.Where(o => (((SaleOffer)o).PricePerItem.Amount <= queryParams.MaxPrice)
-        //                          || (((RentOffer)o).PricePerDay.Amount <= queryParams.MaxPrice));
-        //}
+        if (queryParams.MaxPrice is not null)
+        {
+            query = query.Where(o => (((SaleOffer)o).PricePerItem.Amount <= queryParams.MaxPrice)
+                                  || (((RentOffer)o).PricePerDay.Amount <= queryParams.MaxPrice));
+        }
 
-        //if (queryParams.MaxRentalDays is not null)
-        //{
-        //    query = query.Where(o => ((RentOffer)o).MaxRentalDays <= queryParams.MaxRentalDays);
-        //}
+        if (queryParams.MaxRentalDays is not null)
+        {
+            query = query.Where(o => ((RentOffer)o).MaxRentalDays <= queryParams.MaxRentalDays);
+        }
 
-        //if(queryParams.MinRentalDays is not null)
-        //{
-        //    query = query.Where(o => (o is RentOffer) && ((RentOffer)o).MaxRentalDays >= queryParams.MinRentalDays);
-        //}
+        if (queryParams.MinRentalDays is not null)
+        {
+            query = query.Where(o => ((RentOffer)o).MaxRentalDays >= queryParams.MinRentalDays);
+        }
 
         query = queryParams.SortBy switch
         {
