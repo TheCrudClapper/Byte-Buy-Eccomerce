@@ -339,3 +339,20 @@ span {
     max-width: none !important;
   }
 }
+
+.page-input-narrow {
+    width: 60px;
+    padding-right: 4px;
+    text-align: center;
+    padding-left: 4px;
+}
+
+.page-button {
+    background-color: transparent;
+    border: unset;
+    color: var(--text-primary);
+}
+
+.page-button:hover {
+    color: var(--primary-accent);
+}

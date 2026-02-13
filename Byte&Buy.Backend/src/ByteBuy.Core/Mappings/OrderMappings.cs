@@ -10,14 +10,15 @@ using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Order.OrderLine;
 using ByteBuy.Core.DTO.Public.OrderDelivery;
 using ByteBuy.Core.DTO.Public.PortalUser;
+using ByteBuy.Core.Pagination;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
 
 public static class OrderMappings
 {
-    public static Expression<Func<Order, UserOrderListQuery>> UserOrderListQueryProjection
-        => o => new UserOrderListQuery(
+    public static Expression<Func<Order, UserOrderListQueryModel>> UserOrderListQueryModelProjection
+        => o => new UserOrderListQueryModel(
               o.Id,
               o.Status,
               o.DateCreated,
@@ -27,7 +28,7 @@ public static class OrderMappings
               new MoneyDto(o.LinesTotal.Amount, o.LinesTotal.Currency),
               new MoneyDto(o.Delivery.Price.Amount, o.Delivery.Price.Currency),
               new MoneyDto(o.Total.Amount, o.Total.Currency),
-              o.Lines.Select(line => new UserOrderLineQuery(
+              o.Lines.Select(line => new UserOrderLineQueryModel(
                   line.ItemName,
 
                    line is RentOrderLine
@@ -53,7 +54,7 @@ public static class OrderMappings
                  )).ToList()
         );
 
-    public static UserOrderListResponse ToUserOrderListResponse(this UserOrderListQuery query)
+    public static UserOrderListResponse ToUserOrderListResponse(this UserOrderListQueryModel query)
     {
         return new UserOrderListResponse(
             query.OrderId,
@@ -89,8 +90,8 @@ public static class OrderMappings
             .ToList());
     }
 
-    public static Expression<Func<Order, OrderDetailsQuery>> OrderDetailsQueryProjection
-      => o => new OrderDetailsQuery(
+    public static Expression<Func<Order, OrderDetailsQueryModel>> OrderDetailsQueryProjection
+      => o => new OrderDetailsQueryModel(
           o.Id,
           o.Status == OrderStatus.AwaitingPayment ? o.Payment.PaymentId : null,
           o.Status,
@@ -137,7 +138,7 @@ public static class OrderMappings
                   o.BuyerSnapshot.Address.FlatNumber
               )
           ),
-          o.Lines.Select(line => new UserOrderLineQuery(
+          o.Lines.Select(line => new UserOrderLineQueryModel(
               line.ItemName,
               line is RentOrderLine
                 ? OrderLineType.Rent
@@ -163,7 +164,7 @@ public static class OrderMappings
           .ToList()
       );
 
-    public static OrderDetailsResponse ToOrderDetailResponse(this OrderDetailsQuery query)
+    public static OrderDetailsResponse ToOrderDetailResponse(this OrderDetailsQueryModel query)
     {
         OrderDeliveryDetails deliveryDto;
 
@@ -266,7 +267,7 @@ public static class OrderMappings
             o.Lines.Count,
             o.BuyerSnapshot.Email,
             o.BuyerSnapshot.FullName,
-            o.Total.ToMoneyDto());
+            new MoneyDto(o.Total.Amount, o.Total.Currency));
 
     public static Expression<Func<Order, OrderDashboardListResponse>> OrderDashboardProjection
         => o => new OrderDashboardListResponse(
@@ -276,4 +277,16 @@ public static class OrderMappings
             o.Lines.Count,
             o.DateCreated,
             o.Status);
+
+    public static PagedList<UserOrderListResponse> ToResponse(this PagedList<UserOrderListQueryModel> pagedList)
+    {
+        return new PagedList<UserOrderListResponse>
+        {
+            Items = pagedList.Items
+                .Select(o => o.ToUserOrderListResponse())
+                .ToList(),
+
+            Metadata = pagedList.Metadata
+        };
+    }
 }

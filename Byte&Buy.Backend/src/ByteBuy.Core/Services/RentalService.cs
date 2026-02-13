@@ -58,6 +58,11 @@ public class RentalService : IRentalService
         return await _rentalRepository.GetListBySpecAsync(spec, ct);
     }
 
+    public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserRentalsAsync(UserRentalQuery queryParams, Guid borrowerId, CancellationToken ct = default)
+    {
+        return await _rentalRepository.GetUserBorrowerRentalsAsync(queryParams, borrowerId, ct);
+    }
+
     public async Task<Result<UpdatedResponse>> ReturnItemToLenderAsync(Guid borrowerId, Guid rentalId)
     {
         var rental = await _rentalRepository.GetUserRental(borrowerId, rentalId);

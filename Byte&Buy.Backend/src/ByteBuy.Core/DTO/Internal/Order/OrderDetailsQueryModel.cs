@@ -4,7 +4,7 @@ using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Internal.Order;
 
-public sealed record OrderDetailsQuery(
+public sealed record OrderDetailsQueryModel(
         Guid OrderId,
         //only when status == awaiting payment
         Guid? PaymentId,
@@ -17,4 +17,4 @@ public sealed record OrderDetailsQuery(
         MoneyDto TotalCost,
         OrderDeliveryQuery DeliveryQuery,
         BuyerSnapshotQuery BuyerDetailsQuery,
-        IReadOnlyCollection<UserOrderLineQuery> Lines);
+        IReadOnlyCollection<UserOrderLineQueryModel> Lines);

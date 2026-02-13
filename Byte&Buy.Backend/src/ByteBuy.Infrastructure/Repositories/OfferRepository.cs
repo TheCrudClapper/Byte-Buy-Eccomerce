@@ -63,8 +63,8 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
 
         query = queryParams.SortBy switch
         {
-            OfferSortBy.Oldest => query.OrderByDescending(o => o.DateCreated),
-            OfferSortBy.Newest => query.OrderBy(o => o.DateCreated),
+            OfferSortBy.Oldest => query.OrderBy(o => o.DateCreated),
+            OfferSortBy.Newest => query.OrderByDescending(o => o.DateCreated),
             _ => query,
         };
 
@@ -81,13 +81,24 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
+    public async Task<PagedList<UserPanelOfferQuery>> GetUserOffersAsync(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = _context.Offers
+             .Where(o => o.CreatedByUserId == userId)
+             .AsNoTracking()
+             .AsQueryable();
+
+        var projection = query.Select(OfferMappings.UserPanelOfferQueryProjection);
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+    }
+
     public async Task<IReadOnlyCollection<Offer>> GetOffersByIdsAsync(IEnumerable<Guid> offerIds, CancellationToken ct = default)
     {
         return await _context.Offers
             .Where(o => offerIds.Contains(o.Id))
             .ToListAsync(ct);
     }
-
 
 
     public async Task<IReadOnlyCollection<Offer>> GetOffersCreatedByUser(Guid userId, CancellationToken ct = default)
@@ -97,4 +108,6 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             .Where(o => o.CreatedByUserId == userId)
             .ToListAsync(ct);
     }
+
+   
 }

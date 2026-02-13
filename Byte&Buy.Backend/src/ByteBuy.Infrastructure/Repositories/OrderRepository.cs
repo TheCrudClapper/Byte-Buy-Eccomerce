@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Filtration.Order;
 using ByteBuy.Core.Mappings;
@@ -9,6 +10,7 @@ using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
@@ -16,7 +18,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 {
     public OrderRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentIdAscyn(Guid userId, Guid paymentId, CancellationToken ct = default)
     {
         return await _context.PaymentOrders
             .Where(po => po.PaymentId == paymentId && po.Order.BuyerId == userId)
@@ -24,7 +26,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             .ToListAsync(ct);
     }
 
-    public async Task<Order?> GetUserOrder(Guid userId, Guid orderId, CancellationToken ct = default)
+    public async Task<Order?> GetUserOrderAsync(Guid userId, Guid orderId, CancellationToken ct = default)
     {
         return await _context.Orders
             .Include(o => o.Lines)
@@ -33,7 +35,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
     }
 
 
-    public async Task<Order?> GetSellerOrder(Guid sellerId, Guid orderId, CancellationToken ct = default)
+    public async Task<Order?> GetSellerOrderAsync(Guid sellerId, Guid orderId, CancellationToken ct = default)
     {
         return await _context.Orders
             .Include(o => o.Lines)
@@ -41,12 +43,13 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             .FirstOrDefaultAsync(ct);
     }
 
-    public async Task<PagedList<CompanyOrderListResponse>> GetOrdersList(
+    public async Task<PagedList<CompanyOrderListResponse>> GetOrdersListAsync(
         OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default)
     {
         var query = _context.Orders
             .AsNoTracking()
-            .Where(o => o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company);
+            .Where(o => o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company)
+            .AsQueryable();
 
         if (queryParams.PurchasedFrom.HasValue)
         {
@@ -76,5 +79,18 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 
         return await projection
             .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+    }
+
+    public async Task<PagedList<UserOrderListQueryModel>> GetUserOrdersListAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = _context.Orders
+           .AsNoTracking()
+           .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
+           .Where(o => o.BuyerId == userId)
+           .AsQueryable();
+
+        var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 }

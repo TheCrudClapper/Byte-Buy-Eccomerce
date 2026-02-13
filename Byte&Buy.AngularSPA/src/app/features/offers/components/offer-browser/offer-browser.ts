@@ -25,7 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   ],
 })
 export class OfferBrowser implements OnInit {
-  private readonly PAGE_SIZE = 5;
+  private readonly PAGE_SIZE = 10;
   private readonly offerApiService = inject(OfferApiService);
   private readonly conditionApiService = inject(ConditionApiService);
   private readonly categoryApiSerivce = inject(CategoryApiService);
@@ -35,7 +35,7 @@ export class OfferBrowser implements OnInit {
   conditions = signal<SelectListItem[] | undefined>(undefined);
   categories = signal<SelectListItem[] | undefined>(undefined);
   pagedList = signal<PagedList<OfferUnion> | undefined>(undefined);
-  
+
   readonly OfferSortBy = OfferSortBy;
   readonly sortOptions = Object.values(OfferSortBy)
     .filter(v => typeof v === 'number');
@@ -61,8 +61,7 @@ export class OfferBrowser implements OnInit {
 
   constructor() {
     effect(() => {
-      const q = this.query();
-      this.fetchOffers(q);
+      this.fetchOffers(this.query());
     });
   }
 
@@ -148,11 +147,14 @@ export class OfferBrowser implements OnInit {
 
   onSortChange(value: string) {
     const sort = Number(value) as OfferSortBy;
-    this.query.update(q => ({
-      ...q,
-      sortBy: sort,
-      pageNumber: 1
-    }));
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        sortBy: sort,
+        pageNumber: 1
+      },
+      queryParamsHandling: 'merge'
+    });
   }
 
   goToPage(page: number) {
@@ -219,12 +221,23 @@ export class OfferBrowser implements OnInit {
   }
 
   clearFilters() {
+    this.selectedCategoryIds.set([]);
+    this.selectedConditionIds.set([]);
+    this.sellerType.set(null);
+    this.city.set(null);
+    this.minPrice.set(null);
+    this.maxPrice.set(null);
+    this.minRentalDays.set(null);
+    this.maxRentalDays.set(null);
+    this.searchPhrase.set(null);
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
         searchPhrase: this.searchPhrase()
       }
     });
+
   }
 
   toggleCategory(id: Guid, checked: boolean) {

@@ -36,7 +36,7 @@ public class OrderService : IOrderService
 
     public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
     {
-        var order = await _orderRepository.GetUserOrder(userId, orderId);
+        var order = await _orderRepository.GetUserOrderAsync(userId, orderId);
         if (order is null)
             return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
 
@@ -64,34 +64,29 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
+    public async Task<Result<PagedList<UserOrderListResponse>>> GetUserOrdersAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = await _orderRepository.GetUserOrdersListAsync(queryParams, userId, ct);
+        return query.ToResponse();
+    }
+
     public async Task<Result<UpdatedResponse>> ShipOrderAsCompany(Guid orderId)
     {
         var companyId = await _companyRepository.GetCompanyId();
-        return await ShipInternal(() => _orderRepository.GetSellerOrder(companyId, orderId));
+        return await ShipInternal(() => _orderRepository.GetSellerOrderAsync(companyId, orderId));
     }
 
     public async Task<Result<UpdatedResponse>> DeliverOrderAsCompany(Guid orderId)
     {
         var companyId = await _companyRepository.GetCompanyId();
-        return await DeliverOrderInternal(() => _orderRepository.GetSellerOrder(companyId, orderId));
+        return await DeliverOrderInternal(() => _orderRepository.GetSellerOrderAsync(companyId, orderId));
     }
 
     public async Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSeller(Guid sellerId, Guid orderId)
-        => await DeliverOrderInternal(() => _orderRepository.GetSellerOrder(sellerId, orderId));
+        => await DeliverOrderInternal(() => _orderRepository.GetSellerOrderAsync(sellerId, orderId));
 
     public async Task<Result<UpdatedResponse>> ShipOrderAsPrivateSeller(Guid sellerId, Guid orderId)
-        => await ShipInternal(() => _orderRepository.GetSellerOrder(sellerId, orderId));
-
-
-    public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default)
-    {
-        var spec = new UserOrderListQuerySpec(userId);
-        var queryResult = await _orderRepository.GetListBySpecAsync(spec, ct);
-
-        return queryResult
-            .Select(o => o.ToUserOrderListResponse())
-            .ToList();
-    }
+        => await ShipInternal(() => _orderRepository.GetSellerOrderAsync(sellerId, orderId));
 
     public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default)
     {
@@ -117,7 +112,7 @@ public class OrderService : IOrderService
 
     public async Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId)
     {
-        var order = await _orderRepository.GetUserOrder(userId, orderId);
+        var order = await _orderRepository.GetUserOrderAsync(userId, orderId);
         if (order is null)
             return Result.Failure<UpdatedResponse>(OrderErrors.NotFound);
 
@@ -144,7 +139,7 @@ public class OrderService : IOrderService
     public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams,CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
-        return await _orderRepository.GetOrdersList(queryParams, companyId, ct);
+        return await _orderRepository.GetOrdersListAsync(queryParams, companyId, ct);
     }
 
     /// <summary>
@@ -241,4 +236,5 @@ public class OrderService : IOrderService
         var spec = new DashboardOrdersSpec();
         return await _orderRepository.GetListBySpecAsync(spec, ct);
     }
+
 }

@@ -1,8 +1,36 @@
-<div class="content-section">
-    <span class="page-title">My Rentals ({{ rentalsList()?.length }})</span>
+@if(pagedList(); as page){
+<div class="content-section ">
+    <div class="row">
+        <div class="col-6">
+            <span class="page-title">My Rentals ({{ page.metadata.totalCount }})</span>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-end gap-2">
+
+            @if(page.metadata.hasPrevious)
+            {
+            <button class="page-button" (click)="previousPage()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            }
+            <div class="pagination d-flex align-items-center gap-1">
+                <input type="number" class="form-control form-control-sm page-input page-input-narrow"
+                    [value]="page.metadata.currentPage" [min]="1" [max]="page.metadata.totalPages"
+                    (change)="goToPage($any($event.target).valueAsNumber)" />
+                <span>from</span>
+                <span>{{ page.metadata.totalPages }}</span>
+            </div>
+
+            @if(page.metadata.hasNext){
+            <button class="page-button" (click)="nextPage()">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            }
+
+        </div>
+    </div>
+
 </div>
-@if(rentalsList(); as rentals){
-@for (rental of rentals; track rental.id)
+@for (rental of page.items; track rental.id)
 {
 <div class="content-section">
     <div class="d-flex d-align-items-center justify-content-between">
@@ -81,13 +109,13 @@
     </div>
     <hr>
     @if(rental.status === RentalStatus.Active || rental.status === RentalStatus.Overdue){
-        <div class="col-12 text-center">
-            <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
-        </div>
+    <div class="col-12 text-center">
+        <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
+    </div>
     }
 </div>
 }
-@if(rentals.length === 0){
+@if(page.items.length === 0){
 <div class="content-section flex-column  d-flex justify-content-center align-items-center">
     <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
     <p class="mt-2 mb-0">You haven't rented anything yet.</p>

@@ -2,7 +2,7 @@
 using ByteBuy.Core.DTO.Public.Money;
 namespace ByteBuy.Core.DTO.Internal.Order;
 
-public sealed record UserOrderListQuery(
+public sealed record UserOrderListQueryModel(
     Guid OrderId,
     OrderStatus Status,
     DateTime PurchasedDate,
@@ -12,5 +12,5 @@ public sealed record UserOrderListQuery(
     MoneyDto TotalLinesCost,
     MoneyDto DeliveryCost,
     MoneyDto TotalCost,
-    IReadOnlyCollection<UserOrderLineQuery> Lines
+    IReadOnlyCollection<UserOrderLineQueryModel> Lines
 );

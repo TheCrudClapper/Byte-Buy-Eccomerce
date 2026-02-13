@@ -12,34 +12,34 @@ public static class OrderSpecifications
     /// <summary>
     /// Specification that gets orders for specific user
     /// </summary>
-    public sealed class UserOrderListQuerySpec : Specification<Order, UserOrderListQuery>
+    public sealed class UserOrderListQuerySpec : Specification<Order, UserOrderListQueryModel>
     {
         public UserOrderListQuerySpec(Guid userId)
         {
             Query.AsNoTracking()
                  .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
                  .Where(o => o.BuyerId == userId)
-                 .Select(OrderMappings.UserOrderListQueryProjection);
+                 .Select(OrderMappings.UserOrderListQueryModelProjection);
         }
     }
 
     /// <summary>
     /// Specification that gets orders for specific seller
     /// </summary>
-    public sealed class SellerOrdersListQuerySpec : Specification<Order, UserOrderListQuery>
+    public sealed class SellerOrdersListQuerySpec : Specification<Order, UserOrderListQueryModel>
     {
         public SellerOrdersListQuerySpec(Guid sellerId)
         {
             Query.AsNoTracking()
                  .Where(o => o.SellerSnapshot.SellerId == sellerId)
-                 .Select(OrderMappings.UserOrderListQueryProjection);
+                 .Select(OrderMappings.UserOrderListQueryModelProjection);
         }
     }
 
     /// <summary>
     /// Specification that get order details for two ends: user and private seller
     /// </summary>
-    public sealed class OrderDetailsResponseSpec : Specification<Order, OrderDetailsQuery>
+    public sealed class OrderDetailsResponseSpec : Specification<Order, OrderDetailsQueryModel>
     {
         public OrderDetailsResponseSpec(Guid userId, Guid orderId)
         {
@@ -52,7 +52,7 @@ public static class OrderSpecifications
         }
     }
 
-    public sealed class CompanyOrderDetailsResponseSpec : Specification<Order, OrderDetailsQuery>
+    public sealed class CompanyOrderDetailsResponseSpec : Specification<Order, OrderDetailsQueryModel>
     {
         public CompanyOrderDetailsResponseSpec(Guid companyId, Guid orderId)
         {

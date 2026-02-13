@@ -9,6 +9,7 @@ using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
@@ -44,6 +45,18 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
             query = query.Where(r => r.RentalEndDate <= DateTime.SpecifyKind(queryParams.RentalEndPeriod.Value, DateTimeKind.Utc));
 
         var projection = query.Select(RentalMappings.CompanyRentalLenderResponseProjection);
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+    }
+
+    public async Task<PagedList<UserRentalBorrowerResponse>> GetUserBorrowerRentalsAsync(UserRentalQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = _context.Rentals
+            .Where(r => r.BorrowerId == userId)
+            .AsNoTracking()
+            .AsQueryable();
+
+        var projection = query.Select(RentalMappings.UserRentalBorrowerResponseProjection);
 
         return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }

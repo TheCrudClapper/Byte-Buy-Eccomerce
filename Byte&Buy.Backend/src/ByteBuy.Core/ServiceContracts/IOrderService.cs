@@ -8,7 +8,7 @@ namespace ByteBuy.Core.ServiceContracts;
 
 public interface IOrderService
 {
-    Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetUserOrdersAsync(Guid userId, CancellationToken ct = default);
+    Task<Result<PagedList<UserOrderListResponse>>> GetUserOrdersAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default);
     Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId, CancellationToken ct = default);
     Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default);

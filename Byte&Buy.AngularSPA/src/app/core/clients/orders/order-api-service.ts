@@ -9,6 +9,8 @@ import { UserOrderListResponse } from '../../dto/order/common/user-order-list-re
 import { OrderDetailsResponse } from '../../dto/order/order-details-response';
 import { Guid } from 'guid-typescript';
 import { UpdatedResponse } from '../../dto/common/updated-response';
+import { UserOrderListQuery } from '../../dto/order/common/user-order-list-query';
+import { PagedList } from '../../pagination/pagedList';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +24,9 @@ export class OrderApiService {
     return this.httpClient.post<OrderCreatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`, request);
   }
 
-  getUserOrders(): Observable<UserOrderListResponse[]> {
-    return this.httpClient.get<UserOrderListResponse[]>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`)
+  getUserOrders(query: UserOrderListQuery): Observable<PagedList<UserOrderListResponse>> {
+    return this.httpClient.get<PagedList<UserOrderListResponse>>(
+      `${this.baseApiUrl + API_ENDPOINTS.orders.base}`, { params: query as any })
   }
 
   getOrderDetails(id: Guid): Observable<OrderDetailsResponse> {

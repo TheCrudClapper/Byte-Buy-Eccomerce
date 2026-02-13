@@ -23,7 +23,7 @@ public static class OfferSpecifications
             Query.AsNoTracking()
                 .OrderByDescending(o => o.DateCreated)
                 .Where(o => o.CreatedByUserId == userId)
-                .Select(OfferMappings.UserOfferPanelQueryProjection);
+                .Select(OfferMappings.UserPanelOfferQueryProjection);
 
         }
     }

@@ -13,7 +13,7 @@ namespace ByteBuy.Core.Mappings;
 public static class OfferMappings
 {
 
-    public static Expression<Func<Offer, UserPanelOfferQuery>> UserOfferPanelQueryProjection =>
+    public static Expression<Func<Offer, UserPanelOfferQuery>> UserPanelOfferQueryProjection =>
         o => new UserPanelOfferQuery
         {
             DateCreated = o.DateCreated,
@@ -147,12 +147,21 @@ public static class OfferMappings
         };
     }
 
-    public static PagedList<OfferBrowserItemResponse> ToPagedList(this PagedList<OfferBrowserItemQuery> pagetResult)
+    public static PagedList<OfferBrowserItemResponse> ToResponse(this PagedList<OfferBrowserItemQuery> pagedList)
     {
         return new PagedList<OfferBrowserItemResponse>()
         {
-            Items = pagetResult.Items.Select(o => o.ToBrowserItemResponse()).ToList(),
-            Metadata = pagetResult.Metadata
+            Items = pagedList.Items.Select(o => o.ToBrowserItemResponse()).ToList(),
+            Metadata = pagedList.Metadata
+        };
+    }
+
+    public static PagedList<UserPanelOfferResponse> ToResponse(this PagedList<UserPanelOfferQuery> pagedList)
+    {
+        return new PagedList<UserPanelOfferResponse>()
+        {
+            Items = pagedList.Items.Select(o => o.ToUserOfferPanelResponse()).ToList(),
+            Metadata = pagedList.Metadata
         };
     }
 }

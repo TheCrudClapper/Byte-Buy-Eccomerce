@@ -12,5 +12,5 @@ public interface IOfferReadService
     Task<Result<PagedList<OfferBrowserItemResponse>>> BrowseAsync(OfferBrowserQuery queryParams, CancellationToken ct);
     Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default);
     Task<Result<SaleOfferDetailsResponse>> GetSaleOfferDetails(Guid id, CancellationToken ct = default);
-    Task<Result<IReadOnlyCollection<UserPanelOfferResponse>>> GetUserPanelOffers(Guid userId, CancellationToken ct = default);
+    Task<Result<PagedList<UserPanelOfferResponse>>> GetUserPanelOffers(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default);
 }

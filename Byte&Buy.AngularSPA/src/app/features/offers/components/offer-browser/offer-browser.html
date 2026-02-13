@@ -1,13 +1,7 @@
 <div class="container">
-    <div class="row row mt-3">
-        <div class="col-12">
-            <p class="page-title">You are searching for: " "</p>
-        </div>
-    </div>
-    <div class="row mb-5">
+    <div class="row mb-5 mt-5">
         <div class="col-12 col-lg-3">
             <div class="content-section p-4">
-
                 <!-- Category Filters -->
                 <p class="filter-section-title">Categories</p>
                 <hr>
@@ -16,9 +10,7 @@
                     @for (category of categories; track category.id)
                     {
                     <div class="mb-1">
-                        <input 
-                            type="checkbox" 
-                            class="form-check-input checkbox me-2"
+                        <input type="checkbox" class="form-check-input checkbox me-2"
                             [checked]="selectedCategoryIds().includes(category.id)"
                             (change)="toggleCategory(category.id, $any($event.target).checked)" />
                         <label class="form-label">{{ category.title }}</label>
@@ -33,9 +25,7 @@
                 @for (condition of conditions; track condition.id)
                 {
                 <div class="mb-1">
-                    <input 
-                        type="checkbox" 
-                        class="form-check-input checkbox me-2"
+                    <input type="checkbox" class="form-check-input checkbox me-2"
                         [checked]="selectedConditionIds().includes(condition.id)"
                         (change)="toggleCondition(condition.id, $any($event.target).checked)" />
                     <label class="form-label">{{ condition.title }}</label>
@@ -56,31 +46,19 @@
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Location</label>
-                    <input 
-                        [value]="city() ?? ''"
-                        (input)="city.set($any($event.target).value)"
-                        type="text" 
-                        class="form-control" 
-                        placeholder="Enter City, Place etc.">
+                    <input [value]="city() ?? ''" (input)="city.set($any($event.target).value)" type="text"
+                        class="form-control" placeholder="Enter City, Place etc.">
                 </div>
                 <div class="mb-4">
                     <label class="form-label">Price</label>
                     <div class="row">
                         <div class="col-6">
-                            <input 
-                                [value]="minPrice() ?? ''"
-                                (input)="minPrice.set($any($event.target).value)"
-                                type="number" 
-                                class="form-control" 
-                                placeholder="Min">
+                            <input [value]="minPrice() ?? ''" (input)="minPrice.set($any($event.target).value)"
+                                type="number" class="form-control" placeholder="Min">
                         </div>
                         <div class="col-6">
-                            <input
-                                [value]="maxPrice() ?? ''"
-                                (input)="maxPrice.set($any($event.target).value)"
-                                type="number"
-                                class="form-control"
-                                placeholder="To">
+                            <input [value]="maxPrice() ?? ''" (input)="maxPrice.set($any($event.target).value)"
+                                type="number" class="form-control" placeholder="To">
                         </div>
                     </div>
                 </div>
@@ -88,19 +66,13 @@
                     <label class="form-label">Max Rental Days</label>
                     <div class="row">
                         <div class="col-6">
-                            <input 
-                                type="number"
-                                [value]="minRentalDays() ?? ''"
-                                (input)="minRentalDays.set($any($event.target).value)"
-                                class="form-control"
+                            <input type="number" [value]="minRentalDays() ?? ''"
+                                (input)="minRentalDays.set($any($event.target).value)" class="form-control"
                                 placeholder="Min">
                         </div>
                         <div class="col-6">
-                            <input 
-                                type="number" 
-                                [value]="maxRentalDays() ?? ''"
-                                (input)="maxRentalDays.set($any($event.target).value)"
-                                class="form-control" 
+                            <input type="number" [value]="maxRentalDays() ?? ''"
+                                (input)="maxRentalDays.set($any($event.target).value)" class="form-control"
                                 placeholder="Max">
                         </div>
                     </div>
@@ -125,8 +97,7 @@
                 <div class="row">
                     <div class="col-6 d-flex align-items-center gap-2">
                         <span class="fw-bold">Sort by:</span>
-                        <select class="form-select form-select-sm w-auto"
-                            [value]="query().sortBy"
+                        <select class="form-select form-select-sm w-auto" [value]="query().sortBy"
                             (change)="onSortChange($any($event.target).value)">
                             @for (sort of sortOptions; track sort)
                             {
@@ -165,6 +136,8 @@
 
             <!-- Offer Section -->
             @if(page.items; as items){
+            @if(page.items.length > 0)
+            {
             @for (item of items; track $index)
             {
             @if(item.type === 'rent'){
@@ -176,6 +149,13 @@
             <app-sale-browser-item [offer]="item">
             </app-sale-browser-item>
             }
+            }
+            }@else {
+            <div class="content-section flex-column  d-flex justify-content-center align-items-center">
+                <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
+                <p class="mt-2 mb-0">No records found with given filters.</p>
+                <span class="fs-14-px">Change filters.</span>
+            </div>
             }
             }
         </div>

@@ -30,7 +30,7 @@ public class OfferReadService : IOfferReadService
     public async Task<Result<PagedList<OfferBrowserItemResponse>>> BrowseAsync(OfferBrowserQuery queryParams, CancellationToken ct)
     {
         var query = await _offerRepository.BrowserAsync(queryParams, ct);
-        return query.ToPagedList();
+        return query.ToResponse();
     }
 
     public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)
@@ -58,5 +58,11 @@ public class OfferReadService : IOfferReadService
         return userOffers
             .Select(uo => uo.ToUserOfferPanelResponse())
             .ToList();
+    }
+
+    public async Task<Result<PagedList<UserPanelOfferResponse>>> GetUserPanelOffers(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = await _offerRepository.GetUserOffersAsync(queryParams, userId, ct);
+        return query.ToResponse();
     }
 }

@@ -34,6 +34,6 @@ public class OffersReadController : BaseApiController
         => HandleResult(await _offerReadService.BrowseAsync(queryParams, ct));
 
     [HttpGet("my")]
-    public async Task<ActionResult<IReadOnlyCollection<UserPanelOfferResponse>>> GetUserOffers(CancellationToken ct)
-       => HandleResult(await _offerReadService.GetUserPanelOffers(CurrentUserId, ct));
+    public async Task<ActionResult<PagedList<UserPanelOfferResponse>>> GetUserOffers([FromQuery] UserOffersQuery queryParams, CancellationToken ct)
+       => HandleResult(await _offerReadService.GetUserPanelOffers(queryParams, CurrentUserId, ct));
 }
