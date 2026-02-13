@@ -21,6 +21,7 @@ public static class OfferSpecifications
         public UserOffersPanelSpec(Guid userId)
         {
             Query.AsNoTracking()
+                .OrderByDescending(o => o.DateCreated)
                 .Where(o => o.CreatedByUserId == userId)
                 .Select(OfferMappings.UserOfferPanelQueryProjection);
 

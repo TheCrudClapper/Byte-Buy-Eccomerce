@@ -17,6 +17,7 @@ public static class OrderSpecifications
         public UserOrderListQuerySpec(Guid userId)
         {
             Query.AsNoTracking()
+                 .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
                  .Where(o => o.BuyerId == userId)
                  .Select(OrderMappings.UserOrderListQueryProjection);
         }
@@ -51,9 +52,9 @@ public static class OrderSpecifications
         }
     }
 
-    public sealed class CompanyOrderDetalsResponseSpec : Specification<Order, OrderDetailsQuery>
+    public sealed class CompanyOrderDetailsResponseSpec : Specification<Order, OrderDetailsQuery>
     {
-        public CompanyOrderDetalsResponseSpec(Guid companyId, Guid orderId)
+        public CompanyOrderDetailsResponseSpec(Guid companyId, Guid orderId)
         {
             Query.AsNoTracking()
                 .Where(o => o.Id == orderId
@@ -62,6 +63,10 @@ public static class OrderSpecifications
         }
     }
 
+
+    /// <summary>
+    /// Gets x number of orders for dashboard
+    /// </summary>
     public sealed class DashboardOrdersSpec : Specification<Order, OrderDashboardListResponse>
     {
         public DashboardOrdersSpec()

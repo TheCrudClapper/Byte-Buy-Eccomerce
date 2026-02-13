@@ -65,7 +65,7 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
         {
             OfferSortBy.Oldest => query.OrderByDescending(o => o.DateCreated),
             OfferSortBy.Newest => query.OrderBy(o => o.DateCreated),
-            _ => query
+            _ => query,
         };
 
         query = queryParams.SellerType switch

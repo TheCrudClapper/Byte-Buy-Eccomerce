@@ -107,7 +107,7 @@ public class OrderService : IOrderService
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
 
-        var spec = new CompanyOrderDetalsResponseSpec(companyId, orderId);
+        var spec = new CompanyOrderDetailsResponseSpec(companyId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
 
         return queryResult is null

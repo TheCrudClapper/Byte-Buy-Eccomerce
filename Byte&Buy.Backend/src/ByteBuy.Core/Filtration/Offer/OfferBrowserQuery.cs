@@ -14,14 +14,13 @@ public sealed class OfferBrowserQuery
 
     public OfferSortBy SortBy { get; init; } = OfferSortBy.Newest;
 
-    public IReadOnlyCollection<Guid>? CategoryIds { get; init; } = [];
-    public IReadOnlyCollection<Guid>? ConditionIds { get; init; } = [];
+    public IReadOnlyCollection<Guid>? CategoryIds { get; init; }
+    public IReadOnlyCollection<Guid>? ConditionIds { get; init; }
     public SellerType? SellerType { get; init; }
     public string? SearchPhrase { get; init; }
     public string? City { get; init; }
     public decimal? MinPrice { get; init; }
     public decimal? MaxPrice { get; init; }
-
     public int? MinRentalDays { get; init; }
     public int? MaxRentalDays { get; init; }
 }
