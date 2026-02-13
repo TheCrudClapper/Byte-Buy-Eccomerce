@@ -5,7 +5,9 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Employee;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Extensions;
+using ByteBuy.Core.Filtration.Employee;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
@@ -196,7 +198,8 @@ public class EmployeeService : IEmployeeService
             : employeeDto;
     }
 
-    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(Guid employeeId, CancellationToken ct = default)
+    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(
+        Guid employeeId, CancellationToken ct = default)
     {
         var employeeDto = await _employeeRepository
             .GetBySpecAsync(new EmployeeToEmployeeProfileResponseDto(employeeId), ct);
@@ -212,13 +215,15 @@ public class EmployeeService : IEmployeeService
     /// <param name="excludedUserId">User Id corresponding to current user</param>
     /// <param name="ct">Cancelation for stopping async operations</param>
     /// <returns>A Dto list of employees within company</returns>
-    public async Task<Result<IReadOnlyCollection<EmployeeListResponse>>> GetEmployeesListAsync(Guid excludedUserId, CancellationToken ct = default)
+    public async Task<Result<PagedList<EmployeeListResponse>>> GetEmployeesListAsync(
+        Guid excludedUserId, EmployeeListQuery queryParams, CancellationToken ct = default)
     {
-        return await _employeeRepository.GetListBySpecAsync(new EmployeeToEmployeeListDtoSpec(excludedUserId), ct);
+        return await _employeeRepository.GetEmployeePagedListAsync(excludedUserId, queryParams, ct);
     }
 
 
-    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(
+        Guid employeeId, EmployeeAddressUpdateRequest request)
     {
         var employee = await _employeeRepository.GetByIdAsync(employeeId);
         if (employee is null)

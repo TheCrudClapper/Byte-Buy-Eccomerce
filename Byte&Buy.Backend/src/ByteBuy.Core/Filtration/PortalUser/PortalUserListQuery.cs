@@ -1,6 +1,6 @@
-﻿namespace ByteBuy.Services.Filtration;
+﻿namespace ByteBuy.Core.Filtration.PortalUser;
 
-public sealed class EmployeeListQuery
+public sealed class PortalUserListQuery
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 11;

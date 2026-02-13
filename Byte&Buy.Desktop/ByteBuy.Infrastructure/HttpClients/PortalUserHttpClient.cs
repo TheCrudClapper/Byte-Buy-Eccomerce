@@ -1,7 +1,10 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.PortalUser;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -22,6 +25,9 @@ public class PortalUserHttpClient(HttpClient httpClient)
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId)
         => await GetAsync<PortalUserResponse>($"{resource}/{userId}");
 
-    public async Task<Result<IEnumerable<PortalUserListResponse>>> GetListAsync()
-        => await GetAsync<IEnumerable<PortalUserListResponse>>($"{resource}/list");
+    public Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return GetAsync<PagedList<PortalUserListResponse>>(url);
+    }
 }

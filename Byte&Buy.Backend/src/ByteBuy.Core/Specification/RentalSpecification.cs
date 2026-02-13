@@ -50,7 +50,7 @@ public static class RentalSpecification
     /// <summary>
     /// Specification gets a list of rentals where company is lender
     /// </summary>
-    public sealed class CompanyRentalListLenderSpec : Specification<Rental, CompanyRentalLenderResponse>
+    public sealed class CompanyRentalListLenderSpec : Specification<Rental, CompanyRentalLenderListResponse>
     {
         public CompanyRentalListLenderSpec(Guid companyId)
         {

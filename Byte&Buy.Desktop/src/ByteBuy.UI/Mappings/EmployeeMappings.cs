@@ -13,7 +13,7 @@ public static class EmployeeMappings
         return new EmployeeListItem()
         {
             Id = employee.Id,
-            RowNumber = index + 1,
+            RowNumber = index,
             FirstName = employee.FirstName,
             LastName = employee.LastName,
             Role = employee.Role,

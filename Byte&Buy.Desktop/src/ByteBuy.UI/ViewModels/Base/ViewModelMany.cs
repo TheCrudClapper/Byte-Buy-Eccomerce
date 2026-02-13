@@ -21,7 +21,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     private int _pageNumber = 1;
 
     [ObservableProperty]
-    private int _pageSize = 20;
+    private int _pageSize = 10;
 
     [ObservableProperty]
     private int _totalCount;

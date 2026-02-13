@@ -1,7 +1,9 @@
 ﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -25,8 +27,8 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
     public async Task<Result> DeleteById(Guid id)
         => await employeeHttpClient.DeleteByIdAsync(id);
 
-    public async Task<Result<IEnumerable<EmployeeListResponse>>> GetList()
-        => await employeeHttpClient.GetListAsync();
+    public async Task<Result<PagedList<EmployeeListResponse>>> GetList(EmployeeListQuery query)
+        => await employeeHttpClient.GetListAsync(query);
 
     public async Task<Result<EmployeeProfileResponse>> GetSelf()
         => await employeeHttpClient.GetSelfAsync();

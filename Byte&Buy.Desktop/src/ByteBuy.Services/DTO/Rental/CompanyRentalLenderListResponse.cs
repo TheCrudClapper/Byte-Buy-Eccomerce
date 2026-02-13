@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Public.Rental;
 
-public sealed record CompanyRentalLenderResponse(
+public sealed record CompanyRentalLenderListResponse(
     Guid Id,
     RentalStatus Status,
     string ItemName,

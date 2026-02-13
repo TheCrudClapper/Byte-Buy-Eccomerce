@@ -43,7 +43,8 @@ public static class PortalUserMappings
             p.UserPermissions.Where(up => !up.IsGranted).Select(up => up.PermissionId).ToList());
 
     public static Expression<Func<PortalUser, PortalUserListResponse>> PortalUserListResponseProjection
-        => p => new PortalUserListResponse(p.Id,
+        => p => new PortalUserListResponse(
+            p.Id,
             p.FirstName,
             p.LastName,
             p.Email!,

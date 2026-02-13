@@ -13,56 +13,49 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="110,*,50">
+		<Grid RowDefinitions="50, auto, *, 50">
 
-			<Grid Grid.ColumnDefinitions="*,170" RowDefinitions="30,10,60,10"  Grid.Row="0" >
-				<Button
-				Grid.Row="0"
+			<Button
+			Grid.Row="0"
+			Grid.Column="1"
+			Command="{Binding AddCommand}"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Right">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+						   Width="15" Height="15" />
+				</StackPanel>
+			</Button>
 
-				Grid.Column="1"
-				Command="{Binding AddCommand}"
-				VerticalAlignment="Top"
-				HorizontalAlignment="Right">
+			<!--Filters-->
+			<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Text="Country Name" FontFamily="OpenSansBold" FontWeight="600"/>
+					<TextBox Width="150" Text="{Binding CountryName}" Watermark="Search by name"/>
+				</StackPanel>
+
+				<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
 					<StackPanel Orientation="Horizontal">
-						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-							   Width="15" Height="15" />
+						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+						<TextBlock Text="Filter"/>
 					</StackPanel>
 				</Button>
 
-				<StackPanel Margin="2,0" Grid.Column="0" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
-					<StackPanel VerticalAlignment="Center" Margin="0,0,5,0">
-						<TextBlock Text="Country" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding CountryName}" Watermark="Search by name"/>
+				<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+					<StackPanel Orientation="Horizontal">
+						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+						<TextBlock Text="Clear"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center" Margin="0,0,5,0">
-						<TextBlock Text="Code" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding Code}" Watermark="Search by name"/>
-					</StackPanel>
-				</StackPanel>
+				</Button>
+			</WrapPanel>
 
-				<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
-					<Button Margin="5,0" Command="{Binding LoadDataCommand}">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
-							<TextBlock Text="Filter"/>
-						</StackPanel>
-					</Button>
-
-					<Button Command="{Binding ClearFiltersCommand}">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
-							<TextBlock Text="Clear"/>
-						</StackPanel>
-					</Button>
-				</StackPanel>
-			</Grid>
 
 			<!-- Fetched items count -->
-			<StackPanel Grid.Row="1">
+			<StackPanel Grid.Row="2">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Records fetched:"
 						   FontFamily="{DynamicResource RalewayMedium}"

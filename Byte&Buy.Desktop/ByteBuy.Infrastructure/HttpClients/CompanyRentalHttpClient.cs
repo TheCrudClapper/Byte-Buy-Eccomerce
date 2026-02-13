@@ -1,7 +1,10 @@
 ﻿using ByteBuy.Core.DTO.Public.Rental;
+using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Rental;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients
@@ -11,8 +14,11 @@ namespace ByteBuy.Infrastructure.HttpClients
         private const string resource = "rentals";
         public CompanyRentalHttpClient(HttpClient httpClient) : base(httpClient) { }
 
-        public Task<Result<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentalsList()
-          => GetAsync<IReadOnlyCollection<CompanyRentalLenderResponse>>($"{resource}/company");
+        public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
+        {
+            var url = QueryStringHelper.ToQueryString($"{resource}/company", query);
+            return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url);
+        }
 
         public Task<Result<RentalLenderResponse>> GetCompanyRental(Guid rentalId)
             => GetAsync<RentalLenderResponse>($"{resource}/{rentalId}/company");

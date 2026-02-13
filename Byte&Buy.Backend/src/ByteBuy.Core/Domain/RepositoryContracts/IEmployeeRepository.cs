@@ -1,5 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
+using ByteBuy.Core.DTO.Public.Employee;
+using ByteBuy.Core.Filtration.Employee;
+using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
@@ -13,5 +16,6 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 /// access logic and promote testability.</remarks>
 public interface IEmployeeRepository : IRepositoryBase<Employee>
 {
-
+    Task<PagedList<EmployeeListResponse>> GetEmployeePagedListAsync(
+        Guid excludedUserId, EmployeeListQuery queryParams, CancellationToken ct = default);
 }

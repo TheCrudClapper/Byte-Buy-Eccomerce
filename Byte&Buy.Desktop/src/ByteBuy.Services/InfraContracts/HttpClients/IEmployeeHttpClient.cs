@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.InfraContracts.HttpClients;
@@ -13,5 +15,5 @@ public interface IEmployeeHttpClient
     Task<Result<EmployeeResponse>> GetByIdAsync(Guid id);
     Task<Result<UpdatedResponse>> PutEmployeeAsync(Guid id, EmployeeUpdateRequest request);
     Task<Result> DeleteByIdAsync(Guid id);
-    Task<Result<IEnumerable<EmployeeListResponse>>> GetListAsync();
+    Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query);
 }

@@ -1,7 +1,10 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
@@ -31,6 +34,9 @@ public class EmployeeHttpClient(HttpClient client)
     public Task<Result> DeleteByIdAsync(Guid employeeId)
         => DeleteAsync($"{resource}/{employeeId}");
 
-    public Task<Result<IEnumerable<EmployeeListResponse>>> GetListAsync()
-        => GetAsync<IEnumerable<EmployeeListResponse>>($"{resource}/list");
+    public Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
+        return GetAsync<PagedList<EmployeeListResponse>>(url);
+    }
 }

@@ -3,7 +3,9 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Role;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Extensions;
+using ByteBuy.Core.Filtration.Role;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
@@ -80,15 +82,14 @@ public class RoleService : IRoleService
         return Result.Success();
     }
 
-    public async Task<Result<IReadOnlyCollection<RoleResponse>>> GetAllRolesAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<RoleListResponse>>> GetRolesListAsync(RoleListQuery queryParams, CancellationToken ct = default)
     {
-        var spec = new RoleToRoleResponseSpec();
-        return await _roleRepository.GetListBySpecAsync(spec, ct);
+        return await _roleRepository.GetPagedRoleListAsync(queryParams, ct);
     }
 
     public async Task<Result<RoleResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var spec = new RoleToRoleResponseSpec(id);
+        var spec = new RoleResponseSpec(id);
         var roleDto = await _roleRepository.GetBySpecAsync(spec, ct);
 
         return roleDto is null
@@ -98,7 +99,7 @@ public class RoleService : IRoleService
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {
-        var spec = new RoleToSelectListItemResponseSpec();
+        var spec = new SelectListItemResponseSpec();
         return await _roleRepository.GetListBySpecAsync(spec, ct);
     }
 }

@@ -7,7 +7,7 @@ namespace ByteBuy.UI.Mappings;
 
 public static class RentalMappings
 {
-    public static RentalListItem ToListItem(this CompanyRentalLenderResponse dto, int index)
+    public static RentalListItem ToListItem(this CompanyRentalLenderListResponse dto, int index)
     {
         return new RentalListItem()
         {
@@ -18,7 +18,7 @@ public static class RentalMappings
             Quantity = dto.Quantity,
             RentalDays = dto.RentalDays,
             StartingRentalDate = dto.StartingRentalDate,
-            RowNumber = index + 1,
+            RowNumber = index,
             Status = dto.Status switch
             {
                 RentalStatus.Overdue => "Overdue",

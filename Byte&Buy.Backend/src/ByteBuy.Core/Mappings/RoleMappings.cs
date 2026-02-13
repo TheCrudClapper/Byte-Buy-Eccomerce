@@ -14,12 +14,20 @@ public static class RoleMappings
         => new UpdatedResponse(role.Id, role.DateEdited!.Value);
 
 
-    //LINQ TO SQL
-    public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> RoleToSelectListItemProjection
-        => r => new SelectListItemResponse<Guid>(r.Id, r.Name!);
+    public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> SelectListItemProjection
+        => r => new SelectListItemResponse<Guid>(
+            r.Id, 
+            r.Name!);
 
-    public static Expression<Func<ApplicationRole, RoleResponse>> RoleToRoleResponseProjection
-        => r => new RoleResponse(r.Id,
+    public static Expression<Func<ApplicationRole, RoleResponse>> RoleResponseProjection
+        => r => new RoleResponse(
+            r.Id,
             r.Name!,
             r.RolePermissions.Select(rp => rp.PermissionId).ToList());
+
+     public static Expression<Func<ApplicationRole, RoleListResponse>> RoleListResponseProjection
+        => r => new RoleListResponse(
+            r.Id,
+            r.Name!);
+
 }

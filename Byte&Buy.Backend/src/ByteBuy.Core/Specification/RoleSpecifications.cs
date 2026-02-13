@@ -8,26 +8,26 @@ namespace ByteBuy.Core.Specification;
 
 public static class RoleSpecifications
 {
-    public sealed class RoleToSelectListItemResponseSpec : Specification<ApplicationRole, SelectListItemResponse<Guid>>
+    public sealed class SelectListItemResponseSpec : Specification<ApplicationRole, SelectListItemResponse<Guid>>
     {
-        public RoleToSelectListItemResponseSpec()
+        public SelectListItemResponseSpec()
         {
             Query
                 .AsNoTracking()
-                .Select(RoleMappings.RoleToSelectListItemProjection);
+                .Select(RoleMappings.SelectListItemProjection);
         }
     }
 
-    public sealed class RoleToRoleResponseSpec : Specification<ApplicationRole, RoleResponse>
+    public sealed class RoleResponseSpec : Specification<ApplicationRole, RoleResponse>
     {
-        public RoleToRoleResponseSpec(Guid? id = null)
+        public RoleResponseSpec(Guid? id = null)
         {
             Query.AsNoTracking();
 
             if (id is not null)
                 Query.Where(i => i.Id == id);
 
-            Query.Select(RoleMappings.RoleToRoleResponseProjection);
+            Query.Select(RoleMappings.RoleResponseProjection);
         }
     }
 

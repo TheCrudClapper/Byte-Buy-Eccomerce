@@ -1,10 +1,12 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Employee;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,18 +20,43 @@ public partial class EmployeesPageViewModel(
     IEmployeeService service)
         : ViewModelMany<EmployeeListItem, IEmployeeService>(alert, navigation, dialogNavigation, service)
 {
+    #region Filtration fields
+
+    [ObservableProperty]
+    private string? _firstName;
+
+    [ObservableProperty]
+    private string? _lastName;
+
+    [ObservableProperty]
+    private string? _email;
+    #endregion
+
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetList();
+        var query = new EmployeeListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            FirstName = FirstName,
+            LastName = LastName,
+            Email = Email,
+        };
+
+        var result = await Service.GetList(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value
-            .Select((e, index) => e.ToListItem(index))
-            .ToList();
+        Items = new ObservableCollection<EmployeeListItem>(
+            value.Items.Select((e, index) =>
+                e.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<EmployeeListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        CurrentPage = value.Metadata.CurrentPage;
+        HasPreviousPage = value.Metadata.HasPrevious;
     }
 
     protected override async Task EditAsync(EmployeeListItem employee)
@@ -48,5 +75,13 @@ public partial class EmployeesPageViewModel(
             if (vm is EmployeePageViewModel employeeVm)
                 await employeeVm.InitializeForAdd();
         });
+    }
+
+    public override async Task ClearFilters()
+    {
+        FirstName = null;
+        LastName = null;
+        Email = null;
+        await LoadDataAsync();
     }
 }

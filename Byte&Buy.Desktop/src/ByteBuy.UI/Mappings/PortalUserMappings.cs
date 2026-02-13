@@ -19,7 +19,7 @@ public static class PortalUserMappings
     {
         return new PortalUserListItem
         {
-            RowNumber = index + 1,
+            RowNumber = index,
             Role = user.Role,
             Email = user.Email,
             LastName = user.LastName,

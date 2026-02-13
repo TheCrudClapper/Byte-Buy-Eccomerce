@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Employee;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Employee;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
@@ -14,5 +16,5 @@ public interface IEmployeeService : IBaseCrudService<Guid, EmployeeAddRequest, E
 {
     Task<Result<EmployeeProfileResponse>> GetEmployeeProfileInfoAsync(Guid employeeId, CancellationToken ct = default);
     Task<Result<UpdatedResponse>> UpdateEmployeeAddressAsync(Guid employeeId, EmployeeAddressUpdateRequest request);
-    Task<Result<IReadOnlyCollection<EmployeeListResponse>>> GetEmployeesListAsync(Guid excludedUserId, CancellationToken ct = default);
+    Task<Result<PagedList<EmployeeListResponse>>> GetEmployeesListAsync(Guid excludedUserId, EmployeeListQuery queryParams, CancellationToken ct = default);
 }

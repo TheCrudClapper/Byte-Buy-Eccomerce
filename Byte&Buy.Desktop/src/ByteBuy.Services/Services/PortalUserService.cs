@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Services.DTO.PortalUser;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -18,8 +20,8 @@ public class PortalUserService(IPortalUserHttpClient portalUserHttpClient) : IPo
     public async Task<Result<PortalUserResponse>> GetById(Guid userId)
         => await portalUserHttpClient.GetByIdAsync(userId);
 
-    public async Task<Result<IEnumerable<PortalUserListResponse>>> GetList()
-        => await portalUserHttpClient.GetListAsync();
+    public async Task<Result<PagedList<PortalUserListResponse>>> GetList(PortalUserListQuery query)
+        => await portalUserHttpClient.GetListAsync(query);
 
     public async Task<Result<UpdatedResponse>> Update(Guid userId, PortalUserUpdateRequest request)
         => await portalUserHttpClient.PutPortalUserAsync(userId, request);

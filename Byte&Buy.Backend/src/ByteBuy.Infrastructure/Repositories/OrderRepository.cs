@@ -41,15 +41,12 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             .FirstOrDefaultAsync(ct);
     }
 
-    public async Task<PagedList<CompanyOrderListResponse>> GetCompanyOrdersList(
+    public async Task<PagedList<CompanyOrderListResponse>> GetOrdersList(
         OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default)
     {
         var query = _context.Orders
             .AsNoTracking()
             .Where(o => o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company);
-
-        if (queryParams.Status.HasValue)
-            query = query.Where(o => o.Status == queryParams.Status.Value);
 
         if (queryParams.PurchasedFrom.HasValue)
         {
@@ -69,21 +66,15 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
         if (queryParams.TotalTo.HasValue)
             query = query.Where(o => o.Total.Amount <= queryParams.TotalTo.Value);
 
-        if (!string.IsNullOrWhiteSpace(queryParams.BuyerNamePhrase))
-            query = query
-                .Where(o => o.BuyerSnapshot.FullName
-                .Contains(queryParams.BuyerNamePhrase, StringComparison.OrdinalIgnoreCase));
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerFullName))
+            query = query.Where(o => o.BuyerSnapshot.FullName.Contains(queryParams.BuyerFullName));
 
-        if (!string.IsNullOrWhiteSpace(queryParams.BuyerEmailPhrase))
-            query = query
-                .Where(o => o.BuyerSnapshot.FullName
-                .Contains(queryParams.BuyerEmailPhrase, StringComparison.OrdinalIgnoreCase));
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerEmail))
+            query = query.Where(o => o.BuyerSnapshot.Email.Contains(queryParams.BuyerEmail));
 
         var projection = query.Select(OrderMappings.CompanyOrderListProjection);
 
-
         return await projection
             .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
-
     }
 }

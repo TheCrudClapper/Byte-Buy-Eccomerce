@@ -11,6 +11,6 @@ public interface IOrderRepository : IRepositoryBase<Order>
     Task<IReadOnlyCollection<Order>> GetOrdersByPaymentId(Guid userId, Guid paymentId, CancellationToken ct = default);
     Task<Order?> GetUserOrder(Guid userId, Guid orderId, CancellationToken ct = default);
     Task<Order?> GetSellerOrder(Guid sellerId, Guid orderId, CancellationToken ct = default);
-    Task<PagedList<CompanyOrderListResponse>> GetCompanyOrdersList(OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default);
+    Task<PagedList<CompanyOrderListResponse>> GetOrdersList(OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default);
 }
 

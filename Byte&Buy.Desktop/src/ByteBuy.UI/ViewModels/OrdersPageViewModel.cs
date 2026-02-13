@@ -1,4 +1,5 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Filtration;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Order;
@@ -6,6 +7,7 @@ using ByteBuy.UI.ModelsUI.RentOffer;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
@@ -17,18 +19,55 @@ namespace ByteBuy.UI.ViewModels;
 public partial class OrdersPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IOrderService service)
         : ViewModelMany<OrderListItem, IOrderService>(alert, navigation, dialogNavigation, service)
 {
+    #region Filtration fields
+
+    [ObservableProperty]
+    private string? _buyerFullName;
+
+    [ObservableProperty]
+    private string? _buyerEmail;
+
+    [ObservableProperty]
+    private DateTime? _purchasedFrom;
+
+    [ObservableProperty]
+    private DateTime? _purchasedTo;
+
+    [ObservableProperty]
+    private decimal? _totalFrom;
+
+    [ObservableProperty]
+    private decimal? _totalTo;
+    #endregion
+
     public override async Task LoadDataAsync()
     {
-        var result = await Service.GetCompanyOrderList();
+        var query = new OrderListQuery
+        {
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            BuyerFullName = BuyerFullName,
+            BuyerEmail = BuyerEmail,
+            PurchasedFrom = PurchasedFrom,
+            PurchasedTo = PurchasedTo,
+            TotalFrom = TotalFrom,
+            TotalTo = TotalTo,
+        };
+
+        var result = await Service.GetCompanyOrderList(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
-        var list = value.Items
-            .Select((u, index) => u.ToListItem(index))
-            .ToList();
+        Items = new ObservableCollection<OrderListItem>(
+            value.Items.Select((u, index) =>
+                u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
-        Items = new ObservableCollection<OrderListItem>(list);
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        CurrentPage = value.Metadata.CurrentPage;
+        HasPreviousPage = value.Metadata.HasPrevious;
     }
 
     [RelayCommand]
@@ -41,7 +80,18 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
         });
     }
 
-    protected override Task AddAsync(){ throw new System.NotImplementedException();}
+    protected override Task AddAsync() { throw new System.NotImplementedException(); }
 
     protected override Task EditAsync(OrderListItem item) { throw new System.NotImplementedException(); }
+
+    public override async Task ClearFilters()
+    {
+        BuyerFullName = null;
+        BuyerEmail = null;
+        PurchasedFrom = null;
+        PurchasedTo = null;
+        TotalFrom = null;
+        TotalTo = null;
+        await LoadDataAsync();
+    }
 }

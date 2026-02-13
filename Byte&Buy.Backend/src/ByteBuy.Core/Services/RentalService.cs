@@ -2,7 +2,9 @@
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Rental;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.RentalSpecification;
@@ -35,21 +37,22 @@ public class RentalService : IRentalService
             : dto;
     }
 
-    public async Task<Result<IReadOnlyCollection<CompanyRentalLenderResponse>>> GetCompanyRentalsListAsync(Guid sellerId, CancellationToken ct = default)
+    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(
+        RentalListQuery queryParams, CancellationToken ct = default)
     {
-        var companyId = await _companyRepository.GetCompanyId(ct);
-
-        var spec = new CompanyRentalListLenderSpec(companyId);
-        return await _rentalRepository.GetListBySpecAsync(spec, ct);
+        var companyId = await _companyRepository.GetCompanyId();
+        return await _rentalRepository.GetPagedCompanyRentalsList(companyId, queryParams, ct);
     }
 
-    public async Task<Result<IReadOnlyCollection<RentalLenderResponse>>> GetSellerRentalsAsync(Guid sellerId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<RentalLenderResponse>>> GetSellerRentalsAsync(
+        Guid sellerId, CancellationToken ct = default)
     {
         var spec = new UserRentalLenderSpec(sellerId);
         return await _rentalRepository.GetListBySpecAsync(spec, ct);
     }
 
-    public async Task<Result<IReadOnlyCollection<UserRentalBorrowerResponse>>> GetUserRentalsAsync(Guid borrowerId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<UserRentalBorrowerResponse>>> GetUserRentalsAsync(
+        Guid borrowerId, CancellationToken ct = default)
     {
         var spec = new UserRentalBorrowerSpec(borrowerId);
         return await _rentalRepository.GetListBySpecAsync(spec, ct);

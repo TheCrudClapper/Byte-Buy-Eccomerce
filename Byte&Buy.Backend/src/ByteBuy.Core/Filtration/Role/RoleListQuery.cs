@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Services.Filtration;
+﻿namespace ByteBuy.Core.Filtration.Role;
 
 public sealed class RoleListQuery
 {

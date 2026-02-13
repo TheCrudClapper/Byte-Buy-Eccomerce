@@ -6,7 +6,9 @@ using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Extensions;
+using ByteBuy.Core.Filtration.PortalUser;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
@@ -222,10 +224,10 @@ public class PortalUserService : IPortalUserService
             : portalUserDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<PortalUserListResponse>>> GetPortalUsersListAsync(CancellationToken ct = default)
+    public async Task<Result<PagedList<PortalUserListResponse>>> GetPortalUsersListAsync(
+        PortalUserListQuery queryParams, CancellationToken ct = default)
     {
-        var spec = new PortalUserToPortalUserListResponseSpec();
-        return await _portalUserRepository.GetListBySpecAsync(spec, ct);
+        return await _portalUserRepository.GetPortalUserPagedListAsync(queryParams, ct);
     }
 
     private async Task<Result> UpdateUserRoleAsync(ApplicationUser user, ApplicationRole newRole)

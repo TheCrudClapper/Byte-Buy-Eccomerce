@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -20,8 +22,8 @@ public class RoleService(IRoleHttpClient roleClient) : IRoleService
     public async Task<Result<RoleResponse>> GetById(Guid id)
         => await roleClient.GetByIdAsync(id);
 
-    public async Task<Result<IEnumerable<RoleResponse>>> GetAll()
-        => await roleClient.GetAllAsync();
+    public async Task<Result<PagedList<RoleListResponse>>> GetList(RoleListQuery query)
+        => await roleClient.GetListAsync(query);
 
     public async Task<Result> DeleteById(Guid id)
         => await roleClient.DeleteByIdAsync(id);

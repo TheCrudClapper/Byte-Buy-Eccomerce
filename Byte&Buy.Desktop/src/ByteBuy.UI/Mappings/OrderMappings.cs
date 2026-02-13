@@ -11,7 +11,7 @@ public static class OrderMappings
         return new OrderListItem()
         {
             Id = dto.Id,
-            RowNumber = index + 1,
+            RowNumber = index,
             Status = dto.Status,
             BuyerEmail = dto.BuyerEmail,
             BuyerFullName = dto.BuyerFullName,

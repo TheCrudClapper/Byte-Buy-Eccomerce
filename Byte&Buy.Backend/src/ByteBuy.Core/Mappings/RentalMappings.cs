@@ -37,8 +37,8 @@ public static class RentalMappings
             r.RentalStartDate,
             r.RentalEndDate!.Value);
 
-    public static Expression<Func<Rental, CompanyRentalLenderResponse>> CompanyRentalLenderResponseProjection
-      => r => new CompanyRentalLenderResponse(
+    public static Expression<Func<Rental, CompanyRentalLenderListResponse>> CompanyRentalLenderResponseProjection
+      => r => new CompanyRentalLenderListResponse(
           r.Id,
           r.Status,
           r.ItemName,

@@ -1,6 +1,8 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Base;
+﻿using ByteBuy.Infrastructure.Helpers;
+using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
@@ -12,8 +14,11 @@ public class OrderHttpClient(HttpClient httpClient)
 {
     private const string resource = "orders";
 
-    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync()
-        => await GetAsync<PagedList<CompanyOrderListResponse>>($"{resource}/company");
+    public Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query)
+    {
+        var url = QueryStringHelper.ToQueryString($"{resource}/company", query);
+        return GetAsync<PagedList<CompanyOrderListResponse>>(url);
+    }
 
     public async Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId)
         => await GetAsync<OrderDetailsResponse>($"{resource}/details/{orderId}/company");
