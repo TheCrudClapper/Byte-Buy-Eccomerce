@@ -36,7 +36,7 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
         if (!string.IsNullOrWhiteSpace(queryParams.CategoryName))
             query = query.Where(c => EF.Functions.ILike(c.Name, $"%{queryParams.CategoryName}%"));
 
-        var projection = query.Select(c => c.ToCategoryListResponse());
+        var projection = query.Select(CategoryMappings.CategoryListProjection);
 
         return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }

@@ -13,7 +13,7 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="50,270,*"
+		<Grid RowDefinitions="50,200,*"
 			  ColumnDefinitions="35*, 5*, 60*">
 
 			<!--Page Title-->
@@ -22,7 +22,6 @@
 			<!-- Profile Picture Section -->
 			<Border Grid.Row="1"
 					Classes="sectionBorder"
-					Height="250"
 					VerticalAlignment="Top"
 					Padding="20"
 					Grid.Column="0">
@@ -35,19 +34,6 @@
 							   Height="150"
 							   Width="150" />
 					</Border>
-
-					<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
-						<Button>
-							<StackPanel Orientation="Horizontal">
-								<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-									   Height="15"
-									   Width="15" />
-								<TextBlock Text="Add Profile Picture"
-                                           Classes="textBoxLabel" />
-							</StackPanel>
-
-						</Button>
-					</StackPanel>
 				</StackPanel>
 			</Border>
 
@@ -55,7 +41,6 @@
 			<Border Grid.Row="2"
 					Classes="sectionBorder"
 					Padding="20"
-					VerticalAlignment="Top"
 					Grid.Column="0">
 				<Grid RowDefinitions="50, *" ColumnDefinitions="5*, 1*, 94*">
 					<Image Grid.Row="0" Grid.Column="0"

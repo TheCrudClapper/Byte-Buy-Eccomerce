@@ -46,12 +46,12 @@
 
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Rented From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<DatePicker SelectedDate="{Binding RentalStartPeriod}"/>
+						<CalendarDatePicker SelectedDate="{Binding RentalStartPeriod}" Width="150"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Rented To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<DatePicker SelectedDate="{Binding RentalEndPeriod}"/>
+						<CalendarDatePicker SelectedDate="{Binding RentalEndPeriod}" Width="150"/>
 					</StackPanel>
 
 					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">

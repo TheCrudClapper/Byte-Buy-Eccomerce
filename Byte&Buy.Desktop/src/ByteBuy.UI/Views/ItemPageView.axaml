@@ -150,11 +150,11 @@
 								 Text="{Binding Name}"
 								 HorizontalAlignment="Stretch"/>
 
-						<TextBox
+						<NumericUpDown
 							Grid.Column="1"
 							Grid.Row="1"
 							IsVisible="{Binding !IsEditMode}"
-							Text="{Binding StockQuantity}"
+							Value="{Binding StockQuantity}"
 							Margin="10,0,0,0"
 							HorizontalAlignment="Stretch"/>
 
@@ -167,10 +167,10 @@
 							Margin="10,0,0,0"
 							HorizontalAlignment="Stretch"/>
 
-							<TextBox
+							<NumericUpDown
 							Grid.Column="1"
 							Grid.Row="1"
-							Text="{Binding StockQuantity}"
+							Value="{Binding StockQuantity}"
 							Margin="10,0,0,0"
 							HorizontalAlignment="Stretch"/>
 						</Grid>

@@ -14,7 +14,7 @@
 			 x:Class="ByteBuy.UI.Views.DashboardPageView">
 
 	<ScrollViewer>
-		<Grid RowDefinitions="60,10,100,10,300,10,250" ColumnDefinitions="*,30">
+		<Grid RowDefinitions="60,10,auto,10,300,10,250" ColumnDefinitions="*,30">
 
 			<!--First Row, User-->
 			<Grid ColumnDefinitions="50,*" VerticalAlignment="Center">
@@ -28,11 +28,11 @@
 			</Grid>
 
 			<!--Second Row, Cards-->
-			<ItemsControl Grid.Row="2" ItemsSource="{Binding Kpis}">
-				<ItemsControl Grid.Row="2" ItemsSource="{Binding Kpis}">
+			
+				<ItemsControl Grid.Row="2"  ItemsSource="{Binding Kpis}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
-							<StackPanel Orientation="Horizontal" Spacing="10"/>
+							<WrapPanel Orientation="Horizontal" ItemSpacing="10" LineSpacing="10"/>
 						</ItemsPanelTemplate>
 					</ItemsControl.ItemsPanel>
 
@@ -42,7 +42,7 @@
 								<Grid ColumnDefinitions="50*,50*" RowDefinitions="50*,50*" VerticalAlignment="Center">
 									<TextBlock Classes="cardStat" Text="{Binding DisplayValue}"/>
 									<TextBlock Classes="cardSubText" Grid.Row="1" Grid.Column="0" Text="{Binding Label}" TextWrapping="Wrap"/>
-									<Border Grid.RowSpan="2" Grid.Column="1" Classes="cardImageBorder">
+									<Border Grid.RowSpan="2" Grid.Column="1" Classes="cardImageBorder" Margin="5,0,0,0">
 										<Image Classes="cardImage">
 											<Image.Source>
 												<SvgImage Source="{Binding IconPath}"/>
@@ -54,8 +54,7 @@
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
-			</ItemsControl>
-
+			
 			<!--Third Row, Charts-->
 			<Grid Grid.Row="4" ColumnDefinitions="50*, 50*" ColumnSpacing="10">
 				<Border Grid.Column="0" Classes="card">

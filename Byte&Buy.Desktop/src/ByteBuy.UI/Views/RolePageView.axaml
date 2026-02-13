@@ -17,13 +17,13 @@
 
 	<Grid>
 		<ScrollViewer>
-			<Grid RowDefinitions="50, Auto,20,Auto,*"
-				  ColumnDefinitions="45*,10*, 45*">
+			<Grid RowDefinitions="50, Auto, 20, *, *"
+				  ColumnDefinitions="47*, 6*, 47*" Margin="0,0,30,0">
 
 				<!--Page Title-->
 				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Role"/>
 
-				<!-- Role System Tutorial -->
+				<!-- Role System Tutorial --> 
 				<Border Grid.Row="1"
 						Grid.ColumnSpan="3"
 						Padding="20"

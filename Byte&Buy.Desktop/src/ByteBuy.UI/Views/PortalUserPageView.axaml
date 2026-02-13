@@ -13,7 +13,7 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="50,270,*"
+		<Grid RowDefinitions="50,200,*"
 			  ColumnDefinitions="35*, 5*, 60*">
 			<!--Page Title-->
 			<TextBlock Grid.Row="0"
@@ -21,9 +21,25 @@
 					   Classes="pageTitle"
 					   Text="Portal User" />
 
-			<!-- Permissions Section -->
 			<Border Grid.Row="1"
+					Classes="sectionBorder"
 					VerticalAlignment="Top"
+					Padding="20"
+					Grid.Column="0">
+				<StackPanel>
+					<Border Background="{DynamicResource ButtonGradient}"
+							CornerRadius="10"
+							BorderBrush="{DynamicResource PrimaryAccentBrush}"
+							BorderThickness="1">
+						<Image Source="{SvgImage /Assets/Images/regular/user-solid-full.svg}"
+							   Height="150"
+							   Width="150" />
+					</Border>
+				</StackPanel>
+			</Border>
+
+			<!-- Permissions Section -->
+			<Border Grid.Row="2"
 					Padding="20"
 					Classes="sectionBorder"
 					Grid.Column="0">

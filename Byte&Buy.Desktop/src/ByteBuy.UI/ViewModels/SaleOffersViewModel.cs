@@ -93,15 +93,8 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
         await LoadDataAsync();
     }
 
-    protected override async Task AddAsync()
+    protected override Task AddAsync()
     {
-        var result = await DialogNavigation
-            .OpenDialogAsync(ApplicationDialogNames.Offer);
-
-        if (result is bool ok && ok)
-        {
-            Alert.ShowSuccessAlert("Successfully updated offer!");
-            await LoadDataAsync();
-        }
+        throw new System.NotImplementedException();
     }
 }

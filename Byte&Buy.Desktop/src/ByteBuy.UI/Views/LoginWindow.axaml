@@ -16,23 +16,38 @@
 	<Grid ColumnDefinitions="*">
 
 		<Grid.Background>
+
 			<LinearGradientBrush StartPoint="0%, 90%" EndPoint="30%, 0%">
-				<GradientStop Offset="0" Color="{DynamicResource Primary}"></GradientStop>
-				<GradientStop Offset="1" Color="{DynamicResource SecondaryLight}"></GradientStop>
+				<GradientStop Offset="0" Color="{DynamicResource Background}"></GradientStop>
+				<GradientStop Offset="1" Color="{DynamicResource CardBackground}"></GradientStop>
 			</LinearGradientBrush>
 		</Grid.Background>
 
 		<Grid Grid.Column="0">
 			<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-				<Border BorderBrush="Black" BorderThickness="1" Background="#FFFFFF" CornerRadius="5" Padding="40"
+
+				<Border BorderBrush="{DynamicResource PrimaryAccent}"
+						BorderThickness="1"
+						Background="{DynamicResource CardBackground}"
+						CornerRadius="5"
+						Padding="40"
 						Width="400" Height="450" Margin="0,30">
 					<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="20">
 
 						<!-- Header -->
 						<StackPanel Grid.Row="0">
-							<TextBlock Text="Welcome Back !" FontWeight="Bold" FontSize="30" Foreground="#1E1E1E" />
-							<TextBlock Text="Enter your credentials to access your account." FontSize="15"
-									   Foreground="#1E1E1E" TextWrapping="Wrap" FontWeight="600" />
+							<TextBlock
+							Text="Welcome Back !"
+							FontWeight="Bold"
+							FontSize="30"
+							FontFamily="RalewayBold"
+							Foreground="{DynamicResource TextPrimary}" />
+							<TextBlock 
+								Text="Enter your credentials to access your account." FontSize="15"
+							    Foreground="{DynamicResource TextPrimary}"
+								FontFamily="RalewayBold"
+								TextWrapping="Wrap"
+								FontWeight="600" />
 						</StackPanel>
 
 						<!-- Input Fields -->
@@ -40,9 +55,10 @@
 
 							<TextBlock Text="Email"
 									   Margin="0,4"
-									   FontWeight="700"
+									   FontWeight="600"
 									   FontSize="15"
-									   Foreground="{DynamicResource TextLight}" />
+									   FontFamily="OpenSansBold"
+									   Foreground="{DynamicResource TextPrimary}" />
 
 							<TextBox Watermark="Enter your email"
 									 Margin="0,0,0,20"
@@ -51,9 +67,10 @@
 
 							<TextBlock Text="Password"
 									   Margin="0,4"
-									   FontWeight="700"
+									   FontWeight="600"
 									   FontSize="15"
-									   Foreground="{DynamicResource TextLight}" />
+									   FontFamily="OpenSansBold"
+									   Foreground="{DynamicResource TextPrimary}" />
 
 							<TextBox Watermark="Enter your password"
 									 PasswordChar="*"

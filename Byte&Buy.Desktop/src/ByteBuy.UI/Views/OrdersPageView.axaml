@@ -36,12 +36,12 @@
 
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Purchased From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<DatePicker  SelectedDate="{Binding PurchasedFrom}"/>
+						<CalendarDatePicker SelectedDate="{Binding PurchasedFrom}" Width="150"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Purchased To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<DatePicker SelectedDate="{Binding PurchasedTo}"/>
+						<CalendarDatePicker SelectedDate="{Binding PurchasedTo}" Width="150"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">

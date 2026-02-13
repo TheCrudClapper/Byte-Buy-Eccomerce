@@ -16,20 +16,7 @@
 	<Grid>
 		<Grid RowDefinitions="50, auto, *,50">
 
-			<Button
-			Grid.Row="0"
-			Grid.Column="1"
-			Command="{Binding AddCommand}"
-			VerticalAlignment="Top"
-			HorizontalAlignment="Right">
-				<StackPanel Orientation="Horizontal">
-					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-						   Width="15" Height="15" />
-				</StackPanel>
-			</Button>
-
 			<!--Filters-->
-
 			<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
 
 				<StackPanel VerticalAlignment="Center">

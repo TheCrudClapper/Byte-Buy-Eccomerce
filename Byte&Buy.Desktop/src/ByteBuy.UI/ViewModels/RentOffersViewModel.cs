@@ -8,6 +8,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -106,13 +107,6 @@ public partial class RentOffersViewModel(
 
     protected override async Task AddAsync()
     {
-        var result = await DialogNavigation
-            .OpenDialogAsync(ApplicationDialogNames.Offer);
-
-        if (result is bool ok && ok)
-        {
-            Alert.ShowSuccessAlert("Successfully updated offer!");
-            await LoadDataAsync();
-        }
+        throw new NotImplementedException();
     }
 }

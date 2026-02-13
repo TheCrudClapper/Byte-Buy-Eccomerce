@@ -25,7 +25,6 @@
             <!-- Profile Picture Section -->
             <Border Grid.Row="1"
                     Classes="sectionBorder"
-                    Height="250"
                     VerticalAlignment="Top"
                     Padding="20"
                     Grid.Column="0">
@@ -38,20 +37,6 @@
                                Height="150"
                                Width="150" />
                     </Border>
-
-                    <StackPanel HorizontalAlignment="Center"
-                                Orientation="Horizontal"
-                                Margin="10">
-                        <Button>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
-                                       Height="15"
-                                       Width="15" />
-                                <TextBlock Text="Add Logo"
-                                           Classes="textBoxLabel" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
                 </StackPanel>
             </Border>
 

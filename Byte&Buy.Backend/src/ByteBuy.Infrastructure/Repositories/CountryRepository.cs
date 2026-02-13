@@ -39,7 +39,7 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
         if (!string.IsNullOrWhiteSpace(queryParams.Code))
             query = query.Where(c => EF.Functions.ILike(c.Code, $"%{queryParams.Code}%"));
 
-        var projection = query.Select(c => c.ToCountryResponse());
+        var projection = query.Select(CountryMappings.CountryResponseProjection);
 
         return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }
