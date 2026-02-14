@@ -1,14 +1,13 @@
 <div class="container ">
     <div class="page-wrapper mt-5 mb-5 ">
-        <div class="row">
-            <div class="col-12">
-                <p class="page-title">Client Orders</p>
-            </div>
-        </div>
-        <div class="content-section d-flex justify-content-end align-items-center">
+        @if(pagedList(); as page){
+        <div class="content-section d-flex justify-content-between align-items-center">
+            <span class="fs-16-px open-sans-bold">
+                Client Orders
+                ({{ page.metadata.totalCount }})
+            </span>
             <a class="link" data-bs-toggle="offcanvas" data-bs-target="#filtersOffcanvas" role="button">FILTERS</a>
         </div>
-        @if(pagedList(); as page){
         @for (order of page.items ; track $index)
         {
         <div class="content-section">
@@ -162,36 +161,56 @@
     <div class="offcanvas-body">
         <div class="mb-3">
             <label class="form-label">Search Buyer</label>
-            <input type="text" class="form-control" placeholder="Enter buyer name">
+
+            <input 
+                type="text"
+                class="form-control"
+                [value]="buyerFullName() ?? ''"
+                (input)="buyerFullName.set($any($event.target).value)"
+                placeholder="Enter buyer name">
         </div>
 
           <div class="mb-3">
             <label class="form-label">Search Item Name</label>
-            <input type="text" class="form-control" placeholder="Enter item name">
+
+             <input 
+                type="text" 
+                [value]="itemName() ?? ''" class="form-control" placeholder="Search phrase"
+                (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Order Status</label>
-            <select class="form-select">
-                <option value="">All</option>
-                <option value="created">Created</option>
-                <option value="active">Active</option>
-                <option value="overdue">Overdue</option>
-                <option value="completed">Completed</option>
+            <select class="form-select" 
+                [value]="selectedOrderStatus() ?? 'null'" 
+                (change)="onOrderStatusChange($any($event.target).value)">
+                <option value="null" disabled>Select Status</option>
+                @for (status of orderStatuses; track $index)
+                {
+                    <option [value]="status">
+                        {{ OrderStatus[status] }}
+                    </option>
+                }
             </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Purchased date</label>
-            <input type="date" class="form-control mb-2">
-            <input type="date" class="form-control">
+            <input type="date" 
+                [value]="purchasedFrom()"
+                (change)="purchasedFrom.set($any($event.target).value)" class="form-control mb-2">
+
+            <input type="date" 
+                [value]="purchasedTo()" 
+                (change)="purchasedTo.set($any($event.target).value)"
+                class="form-control">
         </div>
 
         <div class="d-grid gap-2 mt-4">
-            <button class="btn btn-primary" data-bs-dismiss="offcanvas">
+            <button class="btn btn-primary" (click)="applyFilters()" data-bs-dismiss="offcanvas">
                 Apply filters
             </button>
-            <button class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
+            <button class="btn btn-outline-secondary" (click)="clearFilters()" data-bs-dismiss="offcanvas">
                 Clear
             </button>
         </div>

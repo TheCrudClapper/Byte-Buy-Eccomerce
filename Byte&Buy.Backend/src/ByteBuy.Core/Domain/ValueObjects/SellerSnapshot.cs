@@ -28,6 +28,7 @@ public class SellerSnapshot
 
     public SellerSnapshot Copy()
     {
-        return new SellerSnapshot(Type, SellerId, DisplayName, TIN, Address);
+        var addressCopy = Address.Copy();
+        return new SellerSnapshot(Type, SellerId, DisplayName, TIN, addressCopy);
     }
 }

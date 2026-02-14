@@ -55,5 +55,10 @@ public class AddressValueObject
 
         return new AddressValueObject(street, houseNumber, postalCity, postalCode, city, country, flatNumber);
     }
+
+    public AddressValueObject Copy()
+    {
+        return new AddressValueObject(Street, HouseNumber, PostalCity, PostalCode, City, Country, FlatNumber);
+    }
 }
 

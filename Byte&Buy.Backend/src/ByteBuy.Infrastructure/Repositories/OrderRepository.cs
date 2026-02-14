@@ -85,18 +85,6 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
            .ThenByDescending(o => o.DateCreated)
            .AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
-            query = query.Where(o => o.Lines.Any(l => EF.Functions.ILike(l.ItemName, $"%{queryParams.ItemName}%")));
-
-        if (!string.IsNullOrWhiteSpace(queryParams.BuyerFullName))
-            query = query.Where(o => EF.Functions.ILike(o.BuyerSnapshot.FullName, $"%{queryParams.BuyerFullName}%"));
-
-        if (queryParams.Status.HasValue)
-            query = query.Where(o => o.Status == queryParams.Status.Value);
-
-        if (queryParams.PurchasedFrom.HasValue)
-            query = query.Where(o => o.DateCreated >= queryParams.PurchasedFrom.Value);
-
         var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
 
         return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
@@ -107,7 +95,24 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
         var query = _context.Orders
            .AsNoTracking()
            .Where(o => o.SellerSnapshot.SellerId == userId)
+           .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
+           .ThenByDescending(o => o.DateCreated)
            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
+            query = query.Where(o => o.Lines.Any(l => EF.Functions.ILike(l.ItemName, $"%{queryParams.ItemName}%")));
+
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerFullName))
+            query = query.Where(o => EF.Functions.ILike(o.BuyerSnapshot.FullName, $"%{queryParams.BuyerFullName}%"));
+
+        if (queryParams.Status.HasValue)
+            query = query.Where(o => o.Status == queryParams.Status.Value);
+
+        if (queryParams.PurchasedFrom.HasValue)
+            query = query.Where(o => o.DateCreated >= DateTime.SpecifyKind(queryParams.PurchasedFrom.Value, DateTimeKind.Utc));
+
+        if (queryParams.PurchasedTo.HasValue)
+            query = query.Where(o => o.DateCreated <= DateTime.SpecifyKind(queryParams.PurchasedTo.Value, DateTimeKind.Utc));
 
         var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
 

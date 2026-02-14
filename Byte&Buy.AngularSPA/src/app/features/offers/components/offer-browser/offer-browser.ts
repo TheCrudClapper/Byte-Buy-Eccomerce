@@ -157,23 +157,6 @@ export class OfferBrowser implements OnInit {
     });
   }
 
-  goToPage(page: number) {
-    const meta = this.pagedList()?.metadata;
-    if (!meta) return;
-
-    const safePage = Math.min(
-      Math.max(page, 1),
-      meta.totalPages
-    );
-
-    if (safePage === this.query().pageNumber) return;
-
-    this.query.update(q => ({
-      ...q,
-      pageNumber: safePage
-    }));
-  }
-
   applyFilters() {
     const newQuery: OfferQueryParams = {
       pageNumber: 1,
@@ -211,6 +194,8 @@ export class OfferBrowser implements OnInit {
     const phrase = this.searchPhrase()?.trim();
     if (phrase)
       newQuery.searchPhrase = phrase;
+
+    this.query.set(newQuery);
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -258,6 +243,23 @@ export class OfferBrowser implements OnInit {
 
     const current = this.query();
     this.goToPage(current.pageNumber + 1);
+  }
+
+   goToPage(page: number) {
+    const meta = this.pagedList()?.metadata;
+    if (!meta) return;
+
+    const safePage = Math.min(
+      Math.max(page, 1),
+      meta.totalPages
+    );
+
+    if (safePage === this.query().pageNumber) return;
+
+    this.query.update(q => ({
+      ...q,
+      pageNumber: safePage
+    }));
   }
 
   previousPage() {

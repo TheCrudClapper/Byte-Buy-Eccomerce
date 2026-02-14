@@ -10,10 +10,4 @@ public sealed class UserOrderListQuery
 
     [Range(1, int.MaxValue, ErrorMessage = "Page size must greater that 0")]
     public int PageSize { get; init; } = 10;
-
-    public string? BuyerFullName { get; init; }
-    public string? ItemName { get; init; }
-    public OrderStatus? Status { get; init; }
-    public DateTime? PurchasedFrom { get; init; }
-    public DateTime? PurchasedTo { get; init; }
 }

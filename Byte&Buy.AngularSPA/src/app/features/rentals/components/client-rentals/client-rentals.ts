@@ -29,7 +29,6 @@ export class ClientRentals implements OnInit {
 
   readonly RentalStatus = RentalStatus;
 
-
   readonly rentalStatuses = Object.values(RentalStatus)
     .filter(v => typeof v === 'number');
 
@@ -60,29 +59,17 @@ export class ClientRentals implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-
       const newQuery: UserRentalLenderQuery = {
         pageNumber: Number(params['pageNumber'] ?? 1),
         pageSize: this.PAGE_SIZE
       };
 
-      if (params['rentalStatus'] !== undefined)
-        newQuery.rentalStatus = Number(params['rentalStatus']);
+      if (params['rentalStatus'] !== undefined) newQuery.rentalStatus = Number(params['rentalStatus']);
+      if (params['itemName']) newQuery.itemName = params['itemName'];
+      if (params['rentalStartDate']) newQuery.rentalStartDate = params['rentalStartDate'];
+      if (params['rentalEndDate']) newQuery.rentalEndDate = params['rentalEndDate'];
 
-      if (params['itemName'])
-        newQuery.itemName = params['itemName'];
-
-      if (params['rentalStartDate'])
-        newQuery.rentalStartDate = params['rentalStartDate'];
-
-      if (params['rentalEndDate'])
-        newQuery.rentalEndDate = params['rentalEndDate'];
-
-      this.selectedRentalStatus.set(
-        params['rentalStatus'] !== undefined
-          ? Number(params['rentalStatus'])
-          : null
-      );
+      this.selectedRentalStatus.set(newQuery.rentalStatus ?? null);
 
       this.itemName.set(params['itemName'] ?? null);
 
@@ -101,7 +88,7 @@ export class ClientRentals implements OnInit {
     };
 
     if (this.selectedRentalStatus() !== null)
-      newQuery.rentalStatus = this.selectedRentalStatus()!;
+      newQuery.rentalStatus = this.selectedRentalStatus()!
 
     if (this.itemName() !== null)
       newQuery.itemName = this.itemName()!;
@@ -111,6 +98,8 @@ export class ClientRentals implements OnInit {
 
     if (this.rentalEndDate() !== null)
       newQuery.rentalEndDate = this.rentalEndDate()!;
+
+    this.query.set(newQuery);
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -162,15 +151,9 @@ export class ClientRentals implements OnInit {
   onRentalStatusChange(value: string) {
     if (value === 'null') {
       this.selectedRentalStatus.set(null);
-      return;
+    } else {
+      this.selectedRentalStatus.set(Number(value) as RentalStatus);
     }
-
-    this.selectedRentalStatus.set(Number(value) as RentalStatus);
-  }
-
-  private createUtcDateFromInput(value: string): Date {
-    const [year, month, day] = value.split('-').map(Number);
-    return new Date(Date.UTC(year, month - 1, day));
   }
 
   goToPage(page: number) {

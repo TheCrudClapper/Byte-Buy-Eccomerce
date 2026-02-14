@@ -4,7 +4,7 @@ export interface UserOrderSellerListQuery{
     pageNumber: number;
     pageSize: number;
     buyerFullName?: string;
-    status: OrderStatus;
+    status?: OrderStatus;
     itemName?: string; 
     purchasedFrom?: string;
     purchasedTo?: string;
