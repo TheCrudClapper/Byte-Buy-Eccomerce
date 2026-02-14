@@ -1,4 +1,4 @@
-export interface UserRentalBorrowerQuery{
+export interface UserRentalLenderQuery{
     pageNumber: number;
     pageSize: number;
 }

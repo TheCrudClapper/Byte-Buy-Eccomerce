@@ -6,7 +6,7 @@ import { UserRentalBorrowerResponse } from '../../../../core/dto/rental/user-ren
 import { RentalStatus } from '../../../../core/dto/rental/enum/rental-status';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
-import { RentalListQuery } from '../../../../core/dto/rental/common/rental-list-query';
+import { UserRentalBorrowerQuery } from '../../../../core/dto/rental/common/rental-list-query';
 import { PagedList } from '../../../../core/pagination/pagedList';
 
 @Component({
@@ -25,7 +25,7 @@ export class MyRentals {
   pagedList = signal<PagedList<UserRentalBorrowerResponse> | undefined>(undefined);
   readonly RentalStatus = RentalStatus;
 
-  query = signal<RentalListQuery>({
+  query = signal<UserRentalBorrowerQuery>({
     pageNumber: 1,
     pageSize: this.PAGE_SIZE,
   });
@@ -36,7 +36,7 @@ export class MyRentals {
     });
   }
 
-  fetch(query: RentalListQuery) {
+  fetch(query: UserRentalBorrowerQuery) {
     this.rentalApiSerivce.getBorrowerRentals(query).subscribe({
       next: data => {
         this.pagedList.set(data);

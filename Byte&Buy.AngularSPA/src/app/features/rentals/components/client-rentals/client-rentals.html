@@ -1,18 +1,15 @@
-<div class="container h-100">
+<div class="container">
     <div class="page-wrapper mt-5 mb-5 ">
         <div class="row">
             <div class="col-12">
                 <p class="page-title">Client Rentals</p>
             </div>
         </div>
-        <div class="content-section  d-flex justify-content-between align-items-center">
-            <div class="">
-                <input type="text" placeholder="Search phrase" class="form-control" id="searchField" />
-            </div>
-            <a class="link">FILTERS</a>
+        <div class="content-section d-flex justify-content-end align-items-center">
+            <a class="link" data-bs-toggle="offcanvas" data-bs-target="#filtersOffcanvas" role="button">FILTERS</a>
         </div>
-        @if(rentalsList(); as rentals){
-        @for (rental of rentals; track $index)
+        @if(pagedList(); as page){
+        @for (rental of page.items; track $index)
         {
         <div class="content-section">
             <div class="d-flex d-align-items-center justify-content-between">
@@ -94,7 +91,7 @@
             <hr>
         </div>
         }
-        @if(rentals.length === 0){
+        @if(page.items.length === 0){
         <div class="content-section flex-column  d-flex justify-content-center align-items-center">
             <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
             <p class="mt-2 mb-0">No one rented any of your items yet.</p>
@@ -103,7 +100,81 @@
                 <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
             </span>
         </div>
+        }@else {
+        <div class="content-section">
+            <div class="row">
+                <div class="col-4 d-flex justify-content-start">
+                    @if(page.metadata.hasPrevious){
+                    <button class="page-button" (click)="previousPage()">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    }
+
+                </div>
+                <div class="col-4 text-center d-flex justify-content-center">
+                    <div class="pagination d-flex align-items-center gap-1">
+                        <input type="number" class="form-control form-control-sm page-input page-input-narrow"
+                            [value]="page.metadata.currentPage" [min]="1" [max]="page.metadata.totalPages"
+                            (change)="goToPage($any($event.target).valueAsNumber)" />
+                        <span>from</span>
+                        <span>{{ page.metadata.totalPages }}</span>
+                    </div>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    @if(page.metadata.hasNext){
+                    <button class="page-button" (click)="nextPage()">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
         }
         }
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="filtersOffcanvas" aria-labelledby="filtersOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="filtersOffcanvasLabel">
+            Filters
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div class="mb-3">
+            <label class="form-label">Search</label>
+            <input type="text" class="form-control" placeholder="Search phrase">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rental Status</label>
+            <select class="form-select">
+                <option value="">All</option>
+                <option value="created">Created</option>
+                <option value="active">Active</option>
+                <option value="overdue">Overdue</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rental Period</label>
+            <input type="date" class="form-control mb-2">
+            <input type="date" class="form-control">
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button class="btn btn-primary" data-bs-dismiss="offcanvas">
+                Apply filters
+            </button>
+            <button class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
+                Clear
+            </button>
+        </div>
+
     </div>
 </div>

@@ -17,7 +17,7 @@ public static class RentalSpecification
         {
             Query.AsNoTracking()
                 .Where(r => r.Lender.SellerId == sellerId && r.Lender.Type == SellerType.PrivatePerson)
-                .Select(RentalMappings.RentalLenderResponseProjection);
+                .Select(RentalMappings.UserRentalLenderResponseProjection);
         }
     }
 
@@ -30,7 +30,7 @@ public static class RentalSpecification
         {
             Query.AsNoTracking()
                 .Where(r => r.Id == rentalId && (r.Lender.Type == SellerType.Company && r.Lender.SellerId == companyId))
-                .Select(RentalMappings.RentalLenderResponseProjection);
+                .Select(RentalMappings.UserRentalLenderResponseProjection);
         }
     }
 

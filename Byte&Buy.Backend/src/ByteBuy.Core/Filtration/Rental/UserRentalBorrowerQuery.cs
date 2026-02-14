@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.Filtration.Rental;
 
-public class UserRentalQuery
+public class UserRentalBorrowerQuery
 {
     [Range(1, int.MaxValue, ErrorMessage = "Page number must greater that 0")]
     public int PageNumber { get; init; } = 1;

@@ -19,15 +19,15 @@ public class RentalsController : BaseApiController
     }
 
     [HttpGet("borrower")]
-    public async Task<ActionResult<PagedList<UserRentalBorrowerResponse>>> GetUserRentals([FromQuery] UserRentalQuery queryParams, CancellationToken ct = default)
-        => HandleResult(await _rentalService.GetUserRentalsAsync(queryParams, CurrentUserId, ct));
+    public async Task<ActionResult<PagedList<UserRentalBorrowerResponse>>> GetBorrowerRentalsAsync([FromQuery] UserRentalBorrowerQuery queryParams, CancellationToken ct = default)
+        => HandleResult(await _rentalService.GetUserBorrowerRentalsAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("lender")]
-    public async Task<ActionResult<IReadOnlyCollection<RentalLenderResponse>>> GetLenderRentals(CancellationToken ct = default)
-        => HandleResult(await _rentalService.GetSellerRentalsAsync(CurrentUserId, ct));
+    public async Task<ActionResult<IReadOnlyCollection<RentalLenderResponse>>> GetLenderRentalsAsync([FromQuery] UserRentalLenderQuery queryParams, CancellationToken ct = default)
+        => HandleResult(await _rentalService.GetUserLenderRentalsAsync(queryParams, CurrentUserId, ct));
 
     [HttpPut("{rentalId:guid}/return")]
-    public async Task<ActionResult<UpdatedResponse>> ReturnRentedItem(Guid rentalId)
+    public async Task<ActionResult<UpdatedResponse>> ReturnRentedItemAsync(Guid rentalId)
         => HandleResult(await _rentalService.ReturnItemToLenderAsync(CurrentUserId, rentalId));
 
 }

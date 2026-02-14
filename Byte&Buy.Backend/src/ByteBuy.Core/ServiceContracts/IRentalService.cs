@@ -8,9 +8,9 @@ namespace ByteBuy.Core.ServiceContracts;
 
 public interface IRentalService
 {
-    Task<Result<IReadOnlyCollection<RentalLenderResponse>>> GetSellerRentalsAsync(Guid sellerId, CancellationToken ct = default);
-    Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserRentalsAsync(UserRentalQuery queryParams, Guid borrowerId, CancellationToken ct = default);
-    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery queryParams, CancellationToken ct = default);
+    Task<Result<PagedList<RentalLenderResponse>>> GetUserLenderRentalsAsync(UserRentalLenderQuery queryParams, Guid sellerId, CancellationToken ct = default);
+    Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid borrowerId, CancellationToken ct = default);
+    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyLenderRentalsListAsync(RentalListQuery queryParams, CancellationToken ct = default);
     Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId, CancellationToken ct = default);
     Task<Result<UpdatedResponse>> ReturnItemToLenderAsync(Guid lenderId, Guid rentalId);
 }

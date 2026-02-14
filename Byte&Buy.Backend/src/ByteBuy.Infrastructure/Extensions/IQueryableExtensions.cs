@@ -6,13 +6,13 @@ namespace ByteBuy.Infrastructure.Extensions;
 public static class IQueryableExtensions
 {
     public static async Task<PagedList<T>> ToPagedListAsync<T>(
-        this IQueryable<T> source, int pageNumber, int pageSize)
+        this IQueryable<T> source, int pageNumber, int pageSize, CancellationToken ct = default)
     {
         var totalCount = await source.CountAsync();
         var items = await source
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(ct);
 
         var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 

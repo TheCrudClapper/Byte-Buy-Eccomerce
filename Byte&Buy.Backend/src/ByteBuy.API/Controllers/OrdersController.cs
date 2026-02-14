@@ -30,8 +30,8 @@ public class OrdersController : BaseApiController
         => HandleResult(await _orderService.GetUserOrdersAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("seller")]
-    public async Task<ActionResult<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(CancellationToken ct)
-        => HandleResult(await _orderService.GetSellerOrdersAsync(CurrentUserId, ct));
+    public async Task<ActionResult<PagedList<UserOrderListResponse>>> GetSellerOrdersAsync([FromQuery] UserOrderSellerListQuery queryParams, CancellationToken ct)
+        => HandleResult(await _orderService.GetSellerOrdersAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("details/{orderId:guid}")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetailsAsync(Guid orderId, CancellationToken ct)

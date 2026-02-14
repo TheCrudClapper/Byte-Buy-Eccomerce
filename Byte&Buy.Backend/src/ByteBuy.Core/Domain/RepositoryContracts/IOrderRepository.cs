@@ -14,5 +14,6 @@ public interface IOrderRepository : IRepositoryBase<Order>
     Task<Order?> GetSellerOrderAsync(Guid sellerId, Guid orderId, CancellationToken ct = default);
     Task<PagedList<CompanyOrderListResponse>> GetOrdersListAsync(OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default);
     Task<PagedList<UserOrderListQueryModel>> GetUserOrdersListAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default);
+    Task<PagedList<UserOrderListQueryModel>> GetUserSellerOrdersListAsync(UserOrderSellerListQuery queryParams, Guid userId, CancellationToken ct = default);
 }
 

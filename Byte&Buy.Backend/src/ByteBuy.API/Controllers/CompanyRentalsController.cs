@@ -21,7 +21,7 @@ public class CompanyRentalsController : BaseApiController
     [HttpGet("company")]
     public async Task<ActionResult<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(
          [FromQuery] RentalListQuery queryParams, CancellationToken ct = default)
-       => HandleResult(await _rentalService.GetCompanyRentalsListAsync(queryParams, ct));
+       => HandleResult(await _rentalService.GetCompanyLenderRentalsListAsync(queryParams, ct));
 
     [HttpGet("{rentalId:guid}/company")]
     public async Task<ActionResult<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId, CancellationToken ct = default)

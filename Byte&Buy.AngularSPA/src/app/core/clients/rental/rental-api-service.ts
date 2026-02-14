@@ -8,7 +8,8 @@ import { API_ENDPOINTS } from '../../constants/api-constants';
 import { RentalLenderResponse } from '../../dto/rental/rental-lender-response';
 import { UpdatedResponse } from '../../dto/common/updated-response';
 import { PagedList } from '../../pagination/pagedList';
-import { RentalListQuery } from '../../dto/rental/common/rental-list-query';
+import { UserRentalBorrowerQuery } from '../../dto/rental/common/rental-list-query';
+import { UserRentalLenderQuery } from '../../dto/rental/common/user-rental-lender-query';
 
 @Injectable({
   providedIn: 'root',
@@ -17,13 +18,14 @@ export class RentalApiService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseUrl = environment.apiBaseUrl;
 
-   getBorrowerRentals(query: RentalListQuery): Observable<PagedList<UserRentalBorrowerResponse>> {
+   getBorrowerRentals(query: UserRentalBorrowerQuery): Observable<PagedList<UserRentalBorrowerResponse>> {
     return this.httpClient.get<PagedList<UserRentalBorrowerResponse>>(
       `${this.baseUrl}${API_ENDPOINTS.rentals.borrowerList}`, { params: query as any});
   }
 
-  getLenderRentals(): Observable<RentalLenderResponse[]> {
-    return this.httpClient.get<RentalLenderResponse[]>(`${this.baseUrl}${API_ENDPOINTS.rentals.lenderList}`);
+  getLenderRentals(query: UserRentalLenderQuery): Observable<PagedList<RentalLenderResponse>> {
+    return this.httpClient.get<PagedList<RentalLenderResponse>> (
+      `${this.baseUrl}${API_ENDPOINTS.rentals.lenderList}`, { params: query as any});
   }
 
   returnRental(id: Guid): Observable<UpdatedResponse> {

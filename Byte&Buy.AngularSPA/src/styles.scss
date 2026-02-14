@@ -167,9 +167,11 @@ input:checked {
   color: var(--error);
   font-weight: 450;
 }
-.error-placeholder{
+
+.error-placeholder {
   height: 14px;
 }
+
 p {
   font-family: 'raleway-bold';
 }
@@ -197,15 +199,15 @@ textarea:focus {
 }
 
 .link {
-    text-decoration: none;
-    color: var(--text-primary);
-    font-family: 'open-sans-bold';
-    transition: 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: 'open-sans-bold';
+  transition: 0.3s ease;
 }
 
 .link:hover {
-    cursor: pointer;
-    color: var(--primary-accent);
+  cursor: pointer;
+  color: var(--primary-accent);
 }
 
 
@@ -340,19 +342,35 @@ span {
   }
 }
 
+.form-label{
+  color: var(--text-primary);
+}
+.offcanvas-header {
+  background-color: var(--card-background) !important;
+}
+
+.offcanvas-body {
+  background-color: var(--background) !important;
+}
+
+.offcanvas-title {
+  font-family: 'raleway-bold';
+  color: var(--text-primary);
+}
+
 .page-input-narrow {
-    width: 60px;
-    padding-right: 4px;
-    text-align: center;
-    padding-left: 4px;
+  width: 60px;
+  padding-right: 4px;
+  text-align: center;
+  padding-left: 4px;
 }
 
 .page-button {
-    background-color: transparent;
-    border: unset;
-    color: var(--text-primary);
+  background-color: transparent;
+  border: unset;
+  color: var(--text-primary);
 }
 
 .page-button:hover {
-    color: var(--primary-accent);
+  color: var(--primary-accent);
 }

@@ -3,7 +3,9 @@ using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.Offer;
+using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Filtration.Offer;
+using ByteBuy.Core.Filtration.Order;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
@@ -109,5 +111,4 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             .ToListAsync(ct);
     }
 
-   
 }

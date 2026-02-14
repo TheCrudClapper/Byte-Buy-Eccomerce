@@ -78,7 +78,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
         var projection = query.Select(OrderMappings.CompanyOrderListProjection);
 
         return await projection
-            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<PagedList<UserOrderListQueryModel>> GetUserOrdersListAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default)
@@ -91,6 +91,18 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 
         var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
+    }
+
+    public async Task<PagedList<UserOrderListQueryModel>> GetUserSellerOrdersListAsync(UserOrderSellerListQuery queryParams, Guid userId, CancellationToken ct = default)
+    {
+        var query = _context.Orders
+           .AsNoTracking()
+           .Where(o => o.SellerSnapshot.SellerId == userId)
+           .AsQueryable();
+
+        var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
+
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

@@ -37,18 +37,16 @@ public class RentalService : IRentalService
             : dto;
     }
 
-    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(
+    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyLenderRentalsListAsync(
         RentalListQuery queryParams, CancellationToken ct = default)
     {
-        var companyId = await _companyRepository.GetCompanyId();
-        return await _rentalRepository.GetPagedCompanyRentalsList(companyId, queryParams, ct);
+        var companyId = await _companyRepository.GetCompanyId(ct);
+        return await _rentalRepository.GetCompanyRentalsListAsync(companyId, queryParams, ct);
     }
 
-    public async Task<Result<IReadOnlyCollection<RentalLenderResponse>>> GetSellerRentalsAsync(
-        Guid sellerId, CancellationToken ct = default)
+    public async Task<Result<PagedList<RentalLenderResponse>>> GetUserLenderRentalsAsync(UserRentalLenderQuery queryParams, Guid lenderId, CancellationToken ct = default)
     {
-        var spec = new UserRentalLenderSpec(sellerId);
-        return await _rentalRepository.GetListBySpecAsync(spec, ct);
+        return await _rentalRepository.GetUserLenderRentalsAsync(queryParams, lenderId, ct);
     }
 
     public async Task<Result<IReadOnlyCollection<UserRentalBorrowerResponse>>> GetUserRentalsAsync(
@@ -58,14 +56,14 @@ public class RentalService : IRentalService
         return await _rentalRepository.GetListBySpecAsync(spec, ct);
     }
 
-    public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserRentalsAsync(UserRentalQuery queryParams, Guid borrowerId, CancellationToken ct = default)
+    public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid borrowerId, CancellationToken ct = default)
     {
         return await _rentalRepository.GetUserBorrowerRentalsAsync(queryParams, borrowerId, ct);
     }
 
     public async Task<Result<UpdatedResponse>> ReturnItemToLenderAsync(Guid borrowerId, Guid rentalId)
     {
-        var rental = await _rentalRepository.GetUserRental(borrowerId, rentalId);
+        var rental = await _rentalRepository.GetUserRentalAsync(borrowerId, rentalId);
         if (rental is null)
             return Result.Failure<UpdatedResponse>(RentalErrors.NotFound);
 
