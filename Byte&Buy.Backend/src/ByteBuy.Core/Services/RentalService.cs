@@ -49,13 +49,6 @@ public class RentalService : IRentalService
         return await _rentalRepository.GetUserLenderRentalsAsync(queryParams, lenderId, ct);
     }
 
-    public async Task<Result<IReadOnlyCollection<UserRentalBorrowerResponse>>> GetUserRentalsAsync(
-        Guid borrowerId, CancellationToken ct = default)
-    {
-        var spec = new UserRentalBorrowerSpec(borrowerId);
-        return await _rentalRepository.GetListBySpecAsync(spec, ct);
-    }
-
     public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid borrowerId, CancellationToken ct = default)
     {
         return await _rentalRepository.GetUserBorrowerRentalsAsync(queryParams, borrowerId, ct);

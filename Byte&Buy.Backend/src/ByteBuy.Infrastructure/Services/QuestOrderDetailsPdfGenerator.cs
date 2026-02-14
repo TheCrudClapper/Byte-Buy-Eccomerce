@@ -74,7 +74,7 @@ public class QuestOrderDetailsPdfGenerator : IPdfGenerator<OrderDetailsPdfModel>
 
                             rec.Item().Text(orderDetails.CustomerData.CustomersFullName);
                             rec.Item().Text(orderDetails.CustomerData.Email);
-                            rec.Item().Text($"+ 48 { orderDetails.CustomerData.Phone}");
+                            rec.Item().Text($"+ 48 {orderDetails.CustomerData.Phone}");
                             rec.Item().Text($"{orderDetails.CustomerData.CustomerAddress.City} {orderDetails.CustomerData.CustomerAddress.Street} {orderDetails.CustomerData.CustomerAddress.HouseNumber}/{orderDetails.CustomerData.CustomerAddress.FlatNumber}");
                             rec.Item().Text($"{orderDetails.CustomerData.CustomerAddress.PostalCode} {orderDetails.CustomerData.CustomerAddress.PostalCity}");
                             rec.Item().Text(orderDetails.CustomerData.CustomerAddress.Country);

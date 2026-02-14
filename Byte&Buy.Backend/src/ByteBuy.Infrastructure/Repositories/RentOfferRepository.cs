@@ -22,11 +22,11 @@ public class RentOfferRepository : EfBaseRepository<RentOffer>, IRentOfferReposi
             .AsQueryable();
 
 
-        if(!string.IsNullOrWhiteSpace(queryParams.Name))
+        if (!string.IsNullOrWhiteSpace(queryParams.Name))
             query = query.Where(r => EF.Functions.ILike(r.Item.Name, $"%{queryParams.Name}%"));
 
-        if(queryParams.PriceFrom.HasValue)
-            query = query.Where(r => r.PricePerDay.Amount >=  queryParams.PriceFrom.Value);
+        if (queryParams.PriceFrom.HasValue)
+            query = query.Where(r => r.PricePerDay.Amount >= queryParams.PriceFrom.Value);
 
         if (queryParams.PriceTo.HasValue)
             query = query.Where(r => r.PricePerDay.Amount <= queryParams.PriceTo.Value);

@@ -8,5 +8,5 @@ public sealed record AddressModel
     public string? FlatNumber { get; init; } = null!;
     public string PostalCity { get; init; } = null!;
     public string PostalCode { get; init; } = null!;
-    public string Country{ get; init; } = null!;
+    public string Country { get; init; } = null!;
 }

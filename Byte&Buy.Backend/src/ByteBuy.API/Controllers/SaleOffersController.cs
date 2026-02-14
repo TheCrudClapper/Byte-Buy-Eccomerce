@@ -36,6 +36,6 @@ public class SaleOffersController : BaseApiController
 
     [HttpGet("list")]
     public async Task<ActionResult<PagedList<SaleOfferListResponse>>> GetListAsync([FromQuery] SaleOfferListQuery queryParams, CancellationToken ct)
-        => HandleResult(await _saleOfferService.GetListAsync(queryParams ,ct));
+        => HandleResult(await _saleOfferService.GetListAsync(queryParams, ct));
 
 }

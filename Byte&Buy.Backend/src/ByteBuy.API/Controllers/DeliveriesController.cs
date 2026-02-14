@@ -1,6 +1,5 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Delivery;

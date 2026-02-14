@@ -16,7 +16,7 @@ public static class RoleMappings
 
     public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> SelectListItemProjection
         => r => new SelectListItemResponse<Guid>(
-            r.Id, 
+            r.Id,
             r.Name!);
 
     public static Expression<Func<ApplicationRole, RoleResponse>> RoleResponseProjection
@@ -25,9 +25,9 @@ public static class RoleMappings
             r.Name!,
             r.RolePermissions.Select(rp => rp.PermissionId).ToList());
 
-     public static Expression<Func<ApplicationRole, RoleListResponse>> RoleListResponseProjection
-        => r => new RoleListResponse(
-            r.Id,
-            r.Name!);
+    public static Expression<Func<ApplicationRole, RoleListResponse>> RoleListResponseProjection
+       => r => new RoleListResponse(
+           r.Id,
+           r.Name!);
 
 }

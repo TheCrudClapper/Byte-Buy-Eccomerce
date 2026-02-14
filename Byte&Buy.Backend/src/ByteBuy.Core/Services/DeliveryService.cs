@@ -127,7 +127,7 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<PagedList<DeliveryListResponse>>> GetDeliveriesListAsync(DeliveryListQuery queryParams, CancellationToken ct = default)
     {
-         return await _deliveryRepository.GetDeliveriesListAsync(queryParams, ct);
+        return await _deliveryRepository.GetDeliveriesListAsync(queryParams, ct);
     }
 
     public Result<IReadOnlyCollection<SelectListItemResponse<int>>> GetDeliveryChannels()

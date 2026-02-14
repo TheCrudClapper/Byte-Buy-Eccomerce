@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.DTO.Public.Offer.Enum;
 using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Core.Filtration.Offer;

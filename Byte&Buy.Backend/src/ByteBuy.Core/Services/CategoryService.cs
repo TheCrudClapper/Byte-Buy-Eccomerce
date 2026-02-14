@@ -21,7 +21,7 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
     }
-       
+
 
     public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)
     {

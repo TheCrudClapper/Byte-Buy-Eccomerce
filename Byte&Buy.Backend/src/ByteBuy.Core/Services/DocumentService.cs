@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
 using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;

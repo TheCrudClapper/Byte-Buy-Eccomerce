@@ -50,12 +50,12 @@ public class OrderService : IOrderService
 
         var offerLookup = offers.ToDictionary(o => o.Id);
 
-        foreach(var line in order.Lines)
+        foreach (var line in order.Lines)
         {
-            if(offerLookup.TryGetValue(line.OfferId, out var offer))
+            if (offerLookup.TryGetValue(line.OfferId, out var offer))
             {
                 offer.RestoreQuantity(line.Quantity);
-            }        
+            }
         }
 
         await _orderRepository.UpdateAsync(order);
@@ -126,7 +126,7 @@ public class OrderService : IOrderService
         return order.ToUpdatedResponse();
     }
 
-    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams,CancellationToken ct = default)
+    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams, CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
         return await _orderRepository.GetOrdersListAsync(queryParams, companyId, ct);

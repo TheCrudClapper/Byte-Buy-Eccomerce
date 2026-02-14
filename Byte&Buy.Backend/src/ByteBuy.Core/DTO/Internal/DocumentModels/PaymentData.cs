@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.DTO.Public.Money;
-
-namespace ByteBuy.Core.DTO.Internal.DocumentModels;
+﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
 public sealed record PaymentData
 {

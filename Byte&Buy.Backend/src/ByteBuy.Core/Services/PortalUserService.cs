@@ -110,7 +110,7 @@ public class PortalUserService : IPortalUserService
             await _unitOfWork.RollbackAsync();
             return Result.Failure<CreatedResponse>(PortalUserErrors.PortalUserCreationFailed);
         }
-        
+
     }
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
@@ -192,7 +192,7 @@ public class PortalUserService : IPortalUserService
             userCart.Deactivate();
 
             var userOffers = await _offerRepository.GetOffersCreatedByUser(portalUser.Id);
-            foreach(var offer in userOffers)
+            foreach (var offer in userOffers)
             {
                 offer.Deactivate();
                 await _offerRepository.UpdateAsync(offer);
@@ -211,7 +211,7 @@ public class PortalUserService : IPortalUserService
             await _unitOfWork.RollbackAsync();
             return Result.Failure(PortalUserErrors.PortalUserDeletionFailed);
         }
-        
+
     }
 
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)

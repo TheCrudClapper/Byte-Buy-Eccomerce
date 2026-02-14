@@ -43,8 +43,8 @@ public class DocumentRepository : IDocumentRepository
 
         return await _context.Orders
             .AsNoTracking()
-            .Where(o => o.Id == orderId 
-                && o.DateDelivered != null 
+            .Where(o => o.Id == orderId
+                && o.DateDelivered != null
                 && (o.Status == OrderStatus.Delivered || o.Status == OrderStatus.Returned))
             .Select(o => new OrderDetailsPdfModel()
             {

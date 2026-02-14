@@ -9,23 +9,6 @@ namespace ByteBuy.Core.Mappings;
 
 public static class AddressMappings
 {
-    //In memory Mappings
-    public static ShippingAddressResponse ToAddressResponse(this ShippingAddress address)
-    {
-        return new ShippingAddressResponse(
-            address.Id,
-            address.CountryId,
-            address.Label,
-            address.Street,
-            address.HouseNumber,
-            address.PostalCity,
-            address.PostalCode,
-            address.City,
-            address.FlatNumber,
-            address.IsDefault
-            );
-    }
-
     //Ef db projections
     public static Expression<Func<ShippingAddress, ShippingAddressResponse>> AddressDtoProjection
         => a => new ShippingAddressResponse(

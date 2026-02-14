@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Mappings;
 

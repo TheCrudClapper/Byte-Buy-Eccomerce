@@ -89,7 +89,7 @@ public class AuthService : IAuthService
             await _unitOfWork.SaveChangesAsync();
 
             var roleResult = await _userManager.AddToRoleAsync(userResult.Value, defaultRoleName);
-            if(!roleResult.Succeeded)
+            if (!roleResult.Succeeded)
                 return roleResult.ToResult();
 
             await _unitOfWork.CommitAsync();
@@ -100,6 +100,6 @@ public class AuthService : IAuthService
             await _unitOfWork.RollbackAsync();
             return Result.Failure(AuthErrors.FailedToRegisterUser);
         }
-       
+
     }
 }

@@ -61,7 +61,7 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
             query = query.Where(d => d.Price.Amount <= queryParams.PriceTo);
 
         if (!string.IsNullOrWhiteSpace(queryParams.DeliveryName))
-            query= query.Where(d => EF.Functions.ILike(d.Name, $"%{queryParams.DeliveryName}%"));
+            query = query.Where(d => EF.Functions.ILike(d.Name, $"%{queryParams.DeliveryName}%"));
 
         var projection = query.Select(DeliveryMappings.DeliveryListResponseProjection);
 
