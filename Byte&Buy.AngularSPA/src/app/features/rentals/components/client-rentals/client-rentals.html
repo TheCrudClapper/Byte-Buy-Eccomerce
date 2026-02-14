@@ -146,19 +146,19 @@
 
     <div class="offcanvas-body">
         <div class="mb-3">
-            <label class="form-label">Item Name</label>
+            <label class="form-label"></label>
             <input 
                 type="text" 
-                [value]="itemName() ?? ''" class="form-control" placeholder="Name"
+                [value]="itemName() ?? ''" class="form-control" placeholder="Search phrase"
                 (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Rental Status</label>
             <select class="form-select" 
-                [value]="this.query().rentalStatus ?? null"
+                [value]="this.query().rentalStatus"
                 (change)="onRentalStatusChange($any($event.target).value)">
-                <option [value]="null" disabled>Select Status</option>
+                <option value="null" disabled>Select Status</option>
                 @for (status of rentalStatuses; track $index)
                 {
                     <option [value]="status">

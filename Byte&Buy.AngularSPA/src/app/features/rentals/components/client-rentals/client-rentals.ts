@@ -33,15 +33,15 @@ export class ClientRentals implements OnInit {
   readonly rentalStatuses = Object.values(RentalStatus)
     .filter(v => typeof v === 'number');
 
-  selectedRentalStatus = signal<RentalStatus | null>(null);
-  itemName = signal<string | null>(null);
-  rentalStartDate = signal<string | null>(null);
-  rentalEndDate = signal<string | null>(null);
-
   query = signal<UserRentalLenderQuery>({
     pageNumber: 1,
     pageSize: this.PAGE_SIZE,
   });
+
+  selectedRentalStatus = signal<RentalStatus | null>(null);
+  itemName = signal<string | null>(null);
+  rentalStartDate = signal<string | null>(null);
+  rentalEndDate = signal<string | null>(null);
 
   constructor() {
     effect(() => {
@@ -100,16 +100,16 @@ export class ClientRentals implements OnInit {
       pageSize: this.query().pageSize,
     };
 
-    if (this.selectedRentalStatus())
+    if (this.selectedRentalStatus() !== null)
       newQuery.rentalStatus = this.selectedRentalStatus()!;
 
-    if (this.itemName())
+    if (this.itemName() !== null)
       newQuery.itemName = this.itemName()!;
 
-    if (this.rentalStartDate())
+    if (this.rentalStartDate() !== null)
       newQuery.rentalStartDate = this.rentalStartDate()!;
 
-    if (this.rentalEndDate())
+    if (this.rentalEndDate() !== null)
       newQuery.rentalEndDate = this.rentalEndDate()!;
 
     this.router.navigate([], {
@@ -158,6 +158,7 @@ export class ClientRentals implements OnInit {
     if (!date) return null;
     return date.split('T')[0];
   }
+
   onRentalStatusChange(value: string) {
     if (value === 'null') {
       this.selectedRentalStatus.set(null);

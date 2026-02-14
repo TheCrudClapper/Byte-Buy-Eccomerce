@@ -129,7 +129,7 @@ public class OrderService : IOrderService
     public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams, CancellationToken ct = default)
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
-        return await _orderRepository.GetOrdersListAsync(queryParams, companyId, ct);
+        return await _orderRepository.GetCompanyOrdersListAsync(queryParams, companyId, ct);
     }
 
     /// <summary>

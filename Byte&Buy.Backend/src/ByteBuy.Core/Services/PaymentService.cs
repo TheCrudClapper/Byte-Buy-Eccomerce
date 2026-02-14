@@ -91,7 +91,7 @@ public class PaymentService : IPaymentService
         if (paymentResult.IsFailure)
             return Result.Failure(paymentResult.Error);
 
-        var orders = await _orderRepository.GetOrdersByPaymentIdAscyn(userId, payment.Id);
+        var orders = await _orderRepository.GetOrdersByPaymentIdAsync(userId, payment.Id);
 
         foreach (var order in orders)
         {

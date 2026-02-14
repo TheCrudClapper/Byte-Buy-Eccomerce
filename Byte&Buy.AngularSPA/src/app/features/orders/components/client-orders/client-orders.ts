@@ -28,6 +28,9 @@ export class ClientOrders {
   //declaring it so its visible in template
   readonly OrderStatus = OrderStatus;
 
+  readonly orderStatuses = Object.values(OrderStatus)
+    .filter(v => typeof v === 'number');
+
   query = signal<UserOrderSellerListQuery>({
     pageNumber: 1,
     pageSize: this.PAGE_SIZE,

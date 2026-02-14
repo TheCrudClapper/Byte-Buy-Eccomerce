@@ -17,7 +17,7 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 {
     public OrderRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentIdAscyn(Guid userId, Guid paymentId, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Order>> GetOrdersByPaymentIdAsync(Guid userId, Guid paymentId, CancellationToken ct = default)
     {
         return await _context.PaymentOrders
             .Where(po => po.PaymentId == paymentId && po.Order.BuyerId == userId)
@@ -42,25 +42,21 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
             .FirstOrDefaultAsync(ct);
     }
 
-    public async Task<PagedList<CompanyOrderListResponse>> GetOrdersListAsync(
+    public async Task<PagedList<CompanyOrderListResponse>> GetCompanyOrdersListAsync(
         OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default)
     {
         var query = _context.Orders
             .AsNoTracking()
             .Where(o => o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company)
+            .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
+            .ThenByDescending(o => o.DateCreated)
             .AsQueryable();
 
         if (queryParams.PurchasedFrom.HasValue)
-        {
-            var fromUtc = DateTime.SpecifyKind(queryParams.PurchasedFrom.Value, DateTimeKind.Utc);
-            query = query.Where(o => o.DateCreated >= fromUtc);
-        }
+            query = query.Where(o => o.DateCreated >= DateTime.SpecifyKind(queryParams.PurchasedFrom.Value, DateTimeKind.Utc));
 
         if (queryParams.PurchasedTo.HasValue)
-        {
-            var fromUtc = DateTime.SpecifyKind(queryParams.PurchasedTo.Value, DateTimeKind.Utc);
-            query = query.Where(o => o.DateCreated <= fromUtc);
-        }
+            query = query.Where(o => o.DateCreated <= DateTime.SpecifyKind(queryParams.PurchasedTo.Value, DateTimeKind.Utc));
 
         if (queryParams.TotalFrom.HasValue)
             query = query.Where(o => o.Total.Amount >= queryParams.TotalFrom.Value);
@@ -84,9 +80,22 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
     {
         var query = _context.Orders
            .AsNoTracking()
-           .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
            .Where(o => o.BuyerId == userId)
+           .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
+           .ThenByDescending(o => o.DateCreated)
            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
+            query = query.Where(o => o.Lines.Any(l => EF.Functions.ILike(l.ItemName, $"%{queryParams.ItemName}%")));
+
+        if (!string.IsNullOrWhiteSpace(queryParams.BuyerFullName))
+            query = query.Where(o => EF.Functions.ILike(o.BuyerSnapshot.FullName, $"%{queryParams.BuyerFullName}%"));
+
+        if (queryParams.Status.HasValue)
+            query = query.Where(o => o.Status == queryParams.Status.Value);
+
+        if (queryParams.PurchasedFrom.HasValue)
+            query = query.Where(o => o.DateCreated >= queryParams.PurchasedFrom.Value);
 
         var projection = query.Select(OrderMappings.UserOrderListQueryModelProjection);
 
