@@ -146,32 +146,49 @@
 
     <div class="offcanvas-body">
         <div class="mb-3">
-            <label class="form-label">Search</label>
-            <input type="text" class="form-control" placeholder="Search phrase">
+            <label class="form-label">Item Name</label>
+            <input 
+                type="text" 
+                [value]="itemName() ?? ''" class="form-control" placeholder="Name"
+                (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Rental Status</label>
-            <select class="form-select">
-                <option value="">All</option>
-                <option value="created">Created</option>
-                <option value="active">Active</option>
-                <option value="overdue">Overdue</option>
-                <option value="completed">Completed</option>
+            <select class="form-select" 
+                [value]="this.query().rentalStatus ?? null"
+                (change)="onRentalStatusChange($any($event.target).value)">
+                <option [value]="null" disabled>Select Status</option>
+                @for (status of rentalStatuses; track $index)
+                {
+                    <option [value]="status">
+                        {{ RentalStatus[status] }}
+                    </option>
+                }
             </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Rental Period</label>
-            <input type="date" class="form-control mb-2">
-            <input type="date" class="form-control">
+
+            <input 
+                type="date" 
+                [value]="toDateInputValue(rentalStartDate())"
+                (change)="onStartDateChange($any($event.target).value)"
+                class="form-control mb-2">
+
+            <input
+                type="date" 
+                [value]="toDateInputValue(rentalEndDate())"
+                (change)="onEndDateChange($any($event.target).value)"
+                class="form-control">
         </div>
 
         <div class="d-grid gap-2 mt-4">
-            <button class="btn btn-primary" data-bs-dismiss="offcanvas">
+            <button class="btn btn-primary" (click)="applyFilters()" data-bs-dismiss="offcanvas">
                 Apply filters
             </button>
-            <button class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
+            <button class="btn btn-outline-secondary" (click)="clearFilters()">
                 Clear
             </button>
         </div>

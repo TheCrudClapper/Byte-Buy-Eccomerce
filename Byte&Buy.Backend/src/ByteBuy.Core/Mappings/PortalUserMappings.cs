@@ -67,7 +67,7 @@ public static class PortalUserMappings
         => p => new SellerSnapshotDto(
             p.Id,
             SellerType.PrivatePerson,
-            p.FirstName + p.LastName,
+            $"{p.FirstName} {p.LastName}",
             null,
             p.HomeAddress!);
 

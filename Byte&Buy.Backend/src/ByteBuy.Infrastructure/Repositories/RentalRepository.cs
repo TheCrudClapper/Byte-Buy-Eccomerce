@@ -47,7 +47,7 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
             .Select(RentalMappings.CompanyRentalLenderResponseProjection);
 
         return await projection
-            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<PagedList<RentalLenderResponse>> GetUserLenderRentalsAsync(UserRentalLenderQuery queryParams, Guid userId, CancellationToken ct = default)
@@ -57,11 +57,23 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
            .AsNoTracking()
            .AsQueryable();
 
+        if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
+            query = query.Where(r => EF.Functions.ILike(r.ItemName, $"%{queryParams.ItemName}%"));
+
+        if (queryParams.RentalStartDate.HasValue)
+            query = query.Where(r => r.RentalStartDate >= DateTime.SpecifyKind(queryParams.RentalStartDate.Value, DateTimeKind.Utc));
+
+        if (queryParams.RentalEndDate.HasValue)
+            query = query.Where(r => r.RentalEndDate <= DateTime.SpecifyKind(queryParams.RentalEndDate.Value, DateTimeKind.Utc));
+
+        if (queryParams.RentalStatus.HasValue)
+            query = query.Where(r => r.Status == queryParams.RentalStatus);
+
         var projection = query
             .Select(RentalMappings.UserRentalLenderResponseProjection);
 
         return await projection
-            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<PagedList<UserRentalBorrowerResponse>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid userId, CancellationToken ct = default)
@@ -75,7 +87,7 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
             .Select(RentalMappings.UserRentalBorrowerResponseProjection);
 
         return await projection.
-            ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<Rental?> GetUserRentalAsync(Guid userId, Guid rentalId, CancellationToken ct = default)
