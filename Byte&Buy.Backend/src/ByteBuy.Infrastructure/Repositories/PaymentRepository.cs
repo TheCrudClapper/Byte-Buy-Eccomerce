@@ -28,7 +28,7 @@ public class PaymentRepository : EfBaseRepository<Payment>, IPaymentRepository
             .Where(p => p.PaymentId == paymentId
                     && p.Order.BuyerId == userId
                     && p.Payment.Status == PaymentStatus.Created)
-            .Select(p => new PaymentResponse(p.Payment.Method, p.Payment.Amount.ToMoneyDto()))
+            .Select(PaymentMappings.PaymentResponseProjection)
             .FirstOrDefaultAsync(ct);
     }
 }
