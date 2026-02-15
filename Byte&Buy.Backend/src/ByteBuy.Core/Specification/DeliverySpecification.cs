@@ -9,9 +9,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class DeliverySpecifications
 {
-    public class DeliveryToDeliveryListResponseSpec : Specification<Delivery, DeliveryListResponse>
+    public class DeliveryListResponseSpec : Specification<Delivery, DeliveryListResponse>
     {
-        public DeliveryToDeliveryListResponseSpec(Guid? offerId = null)
+        public DeliveryListResponseSpec(Guid? offerId = null)
         {
             if (offerId.HasValue)
                 Query.Where(d => d.OfferDeliveries.Any(od => od.OfferId == offerId && od.IsActive));
@@ -21,18 +21,18 @@ public static class DeliverySpecifications
         }
     }
 
-    public class DeliveryToSelectListItemSpec : Specification<Delivery, SelectListItemResponse<Guid>>
+    public class DeliverySelectListItemSpec : Specification<Delivery, SelectListItemResponse<Guid>>
     {
-        public DeliveryToSelectListItemSpec()
+        public DeliverySelectListItemSpec()
         {
             Query.AsNoTracking()
                 .Select(DeliveryMappings.DeliverySelectListProjection);
         }
     }
 
-    public class DeliveryToDeliveryOptionResponseSpec : Specification<Delivery, DeliveryOptionResponse>
+    public class DeliveryOptionResponseSpec : Specification<Delivery, DeliveryOptionResponse>
     {
-        public DeliveryToDeliveryOptionResponseSpec()
+        public DeliveryOptionResponseSpec()
         {
             Query.AsNoTracking()
                 .Select(DeliveryMappings.DeliveryOptionResponseProjection);
@@ -49,13 +49,13 @@ public static class DeliverySpecifications
         }
     }
 
-    public class DeliveryOrderQuerySpec : Specification<Delivery, DeliveryOrderQuery>
+    public class DeliveryOrderQuerySpec : Specification<Delivery, DeliveryOrderQueryModel>
     {
         public DeliveryOrderQuerySpec(IEnumerable<Guid> deliveryIds)
         {
             Query.AsNoTracking()
                  .Where(d => deliveryIds.Contains(d.Id))
-                 .Select(DeliveryMappings.DeliveryOrderQueryProjection);
+                 .Select(DeliveryMappings.DeliveryOrderQueryModelProjection);
         }
     }
 }

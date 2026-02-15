@@ -13,7 +13,6 @@ public static class RoleMappings
     public static UpdatedResponse ToUpdatedResponse(this ApplicationRole role)
         => new UpdatedResponse(role.Id, role.DateEdited!.Value);
 
-
     public static Expression<Func<ApplicationRole, SelectListItemResponse<Guid>>> SelectListItemProjection
         => r => new SelectListItemResponse<Guid>(
             r.Id,

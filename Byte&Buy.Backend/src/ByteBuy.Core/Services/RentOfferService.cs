@@ -52,7 +52,7 @@ public class RentOfferService : IRentOfferService
         if (stockUpdateResult.IsFailure)
             return Result.Failure<CreatedResponse>(stockUpdateResult.Error);
 
-        var spec = new CompanyInfoToAddressWithIdSpec();
+        var spec = new CompanyAddressWithIdSpec();
         var companyData = await _companyInfoRepository.GetBySpecAsync(spec);
         if (companyData is null)
             return Result.Failure<CreatedResponse>(CompanyInfoErrors.NotFound);
@@ -108,7 +108,7 @@ public class RentOfferService : IRentOfferService
 
     public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var spec = new RentOfferToRentOfferResponseSpec(id);
+        var spec = new RentOfferResponseSpec(id);
         var rentOfferDto = await _rentOfferRepository.GetBySpecAsync(spec, ct);
 
         return rentOfferDto is null

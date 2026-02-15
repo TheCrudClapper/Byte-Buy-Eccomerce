@@ -9,26 +9,13 @@ namespace ByteBuy.Core.Specification;
 
 public static class OrderSpecifications
 {
-    /// <summary>
-    /// Specification that gets orders for specific user
-    /// </summary>
-    public sealed class UserOrderListQuerySpec : Specification<Order, UserOrderListQueryModel>
-    {
-        public UserOrderListQuerySpec(Guid userId)
-        {
-            Query.AsNoTracking()
-                 .OrderByDescending(o => o.Status == OrderStatus.AwaitingPayment)
-                 .Where(o => o.BuyerId == userId)
-                 .Select(OrderMappings.UserOrderListQueryModelProjection);
-        }
-    }
 
     /// <summary>
     /// Specification that gets orders for specific seller
     /// </summary>
-    public sealed class SellerOrdersListQuerySpec : Specification<Order, UserOrderListQueryModel>
+    public sealed class SellerOrdersListQueryModelSpec : Specification<Order, UserOrderListQueryModel>
     {
-        public SellerOrdersListQuerySpec(Guid sellerId)
+        public SellerOrdersListQueryModelSpec(Guid sellerId)
         {
             Query.AsNoTracking()
                  .Where(o => o.SellerSnapshot.SellerId == sellerId)
@@ -39,37 +26,39 @@ public static class OrderSpecifications
     /// <summary>
     /// Specification that get order details for two ends: user and private seller
     /// </summary>
-    public sealed class OrderDetailsResponseSpec : Specification<Order, OrderDetailsQueryModel>
+    public sealed class OrderDetailsQueryModelSpec : Specification<Order, OrderDetailsQueryModel>
     {
-        public OrderDetailsResponseSpec(Guid userId, Guid orderId)
+        public OrderDetailsQueryModelSpec(Guid userId, Guid orderId)
         {
             Query
                 .AsNoTracking()
                 .Where(o => o.Id == orderId
                     && (o.BuyerId == userId
                     || (o.SellerSnapshot.SellerId == userId && o.SellerSnapshot.Type == SellerType.PrivatePerson)))
-                .Select(OrderMappings.OrderDetailsQueryProjection);
+                .Select(OrderMappings.OrderDetailsQueryModelProjection);
         }
     }
 
-    public sealed class CompanyOrderDetailsResponseSpec : Specification<Order, OrderDetailsQueryModel>
+    /// <summary>
+    /// Specification that gets and order details for company
+    /// </summary>
+    public sealed class CompanyOrderDetailsQueryModelSpec : Specification<Order, OrderDetailsQueryModel>
     {
-        public CompanyOrderDetailsResponseSpec(Guid companyId, Guid orderId)
+        public CompanyOrderDetailsQueryModelSpec(Guid companyId, Guid orderId)
         {
             Query.AsNoTracking()
                 .Where(o => o.Id == orderId
                     && (o.SellerSnapshot.SellerId == companyId && o.SellerSnapshot.Type == SellerType.Company))
-                .Select(OrderMappings.OrderDetailsQueryProjection);
+                .Select(OrderMappings.OrderDetailsQueryModelProjection);
         }
     }
-
 
     /// <summary>
     /// Gets x number of orders for dashboard
     /// </summary>
-    public sealed class DashboardOrdersSpec : Specification<Order, OrderDashboardListResponse>
+    public sealed class OrderDashboardListResponseSpec : Specification<Order, OrderDashboardListResponse>
     {
-        public DashboardOrdersSpec()
+        public OrderDashboardListResponseSpec()
         {
             Query.AsNoTracking()
                 .Take(10)

@@ -15,14 +15,13 @@ public static class EmployeeMappings
         => new CreatedResponse(employee.Id, employee.DateCreated);
 
     //Ef projections
-    public static Expression<Func<Employee, EmployeeListResponse>> EmployeeListProjection =>
+    public static Expression<Func<Employee, EmployeeListResponse>> EmployeeListResponseProjection =>
         e => new EmployeeListResponse(
             e.Id,
             e.FirstName,
             e.LastName,
             e.Email!,
-            e.UserRoles.Select(ur => ur.Role.Name).FirstOrDefault() ?? "Unknown"
-            );
+            e.UserRoles.Select(ur => ur.Role.Name).FirstOrDefault() ?? "Unknown");
 
     public static Expression<Func<Employee, EmployeeResponse>> EmployeeResponseProjection =>
         e => new EmployeeResponse(

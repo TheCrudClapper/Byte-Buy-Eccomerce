@@ -9,12 +9,12 @@ namespace ByteBuy.Core.Specification;
 
 public static class CompanyInfoSpecifications
 {
-    public sealed class CompanyInfoToAddressWithIdSpec : Specification<Company, CompanyAddressWithId>
+    public sealed class CompanyAddressWithIdSpec : Specification<Company, CompanyAddressWithIdQueryModel>
     {
-        public CompanyInfoToAddressWithIdSpec()
+        public CompanyAddressWithIdSpec()
         {
             Query.AsNoTracking()
-                .Select(CompanyInfoMappings.CompanyAddressWithItProjection);
+                .Select(CompanyInfoMappings.CompanyAddressWithIdProjection);
         }
     }
     public sealed class CompanyInfoToSellerCheckoutResponseSpec : Specification<Company, SellerCheckoutResponse>
@@ -31,7 +31,7 @@ public static class CompanyInfoSpecifications
         public CompanySellerSnapshotSpec()
         {
             Query.AsNoTracking()
-                .Select(CompanyInfoMappings.SellerSnapshotDtoProjection);
+                .Select(CompanyInfoMappings.SellerSnapshotQueryModelProjection);
         }
     }
 }

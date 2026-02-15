@@ -12,7 +12,7 @@ public static class OrderDeliveryFactory
     public static Result<OrderDelivery> CreateOrderDelivery(
         Guid orderId,
         SellerDeliveryRequest request,
-        DeliveryOrderQuery delivery,
+        DeliveryOrderQueryModel delivery,
         UserShippingAddressQueryModel? shippingAddress = null)
     {
         return delivery.Channel switch

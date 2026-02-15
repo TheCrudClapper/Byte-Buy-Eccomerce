@@ -18,49 +18,49 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserWithShippingAddresToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
+    public sealed class UserAndShippingAddressResponseSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
-        public UserWithShippingAddresToDtoSpec(Guid userId, Guid addressId)
+        public UserAndShippingAddressResponseSpec(Guid userId, Guid addressId)
         {
             Query.AsNoTracking()
                 .Where(a => a.Id == addressId && a.UserId == userId)
-                .Select(AddressMappings.AddressDtoProjection);
+                .Select(AddressMappings.ShippingAddressProjection);
         }
     }
 
-    public sealed class AddresToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
+    public sealed class ShippingAddressResponseSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
-        public AddresToDtoSpec(Guid addressId)
+        public ShippingAddressResponseSpec(Guid addressId)
         {
             Query.AsNoTracking()
                  .Where(a => a.Id == addressId)
-                 .Select(AddressMappings.AddressDtoProjection);
+                 .Select(AddressMappings.ShippingAddressProjection);
         }
     }
 
-    public sealed class UserAddressesToDtoSpec : Specification<ShippingAddress, ShippingAddressResponse>
+    public sealed class UserShippingAddressResponseSpec : Specification<ShippingAddress, ShippingAddressResponse>
     {
-        public UserAddressesToDtoSpec(Guid userId)
+        public UserShippingAddressResponseSpec(Guid userId)
         {
             Query
-           .Where(a => a.UserId == userId)
-           .AsNoTracking()
-           .Select(AddressMappings.AddressDtoProjection);
+               .AsNoTracking()
+               .Where(a => a.UserId == userId)
+               .Select(AddressMappings.ShippingAddressProjection);
         }
     }
 
-    public sealed class UserShippingAddressToList : Specification<ShippingAddress, ShippingAddressListResponse>
+    public sealed class UserShippingAddressListResponseSpec : Specification<ShippingAddress, ShippingAddressListResponse>
     {
-        public UserShippingAddressToList(Guid userId)
+        public UserShippingAddressListResponseSpec(Guid userId)
         {
             Query.Where(a => a.UserId == userId)
                 .Select(AddressMappings.ShippingAddressListProjection);
         }
     }
 
-    public sealed class UserShippingAddressCheckout : Specification<ShippingAddress, ShippingAddressCheckout>
+    public sealed class UserShippingAddressCheckoutSpec : Specification<ShippingAddress, ShippingAddressCheckout>
     {
-        public UserShippingAddressCheckout(Guid userId, Guid? addressId = null)
+        public UserShippingAddressCheckoutSpec(Guid userId, Guid? addressId = null)
         {
             if (addressId.HasValue)
                 Query.Where(a => a.Id == addressId);
@@ -72,13 +72,13 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserShippingAddressQuerySpec : Specification<ShippingAddress, UserShippingAddressQueryModel>
+    public sealed class UserShippingAddressQueryModelSpec : Specification<ShippingAddress, UserShippingAddressQueryModel>
     {
-        public UserShippingAddressQuerySpec(Guid userId, Guid addressId)
+        public UserShippingAddressQueryModelSpec(Guid userId, Guid addressId)
         {
             Query.AsNoTracking()
                 .Where(a => a.Id == addressId && a.UserId == userId)
-                .Select(AddressMappings.UserShippingAddressQueryProjection);
+                .Select(AddressMappings.UserShippingAddressQueryModelProjection);
         }
     }
 }

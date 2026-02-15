@@ -5,9 +5,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class CartSpecifications
 {
-    public sealed class CartAggregateWithOffersByUserIdSpec : Specification<Cart>
+    public sealed class UserCartAggregateAndOffersSpec : Specification<Cart>
     {
-        public CartAggregateWithOffersByUserIdSpec(Guid userId)
+        public UserCartAggregateAndOffersSpec(Guid userId)
         {
             Query
                 .Where(c => c.UserId == userId)
@@ -16,9 +16,9 @@ public static class CartSpecifications
         }
     }
 
-    public sealed class CartAggregateByUserIdSpec : Specification<Cart>
+    public sealed class UserCartAggregateSpec : Specification<Cart>
     {
-        public CartAggregateByUserIdSpec(Guid userId, bool includeOffer = false)
+        public UserCartAggregateSpec(Guid userId, bool includeOffer = false)
         {
             if (includeOffer)
             {
@@ -34,9 +34,9 @@ public static class CartSpecifications
         }
     }
 
-    public sealed class CartAggegateWithOffers : Specification<Cart>
+    public sealed class UserCartAggegateWithOffersAggregateSpec : Specification<Cart>
     {
-        public CartAggegateWithOffers(Guid userId)
+        public UserCartAggegateWithOffersAggregateSpec(Guid userId)
         {
             Query.Where(c => c.UserId == userId)
                 .AsSplitQuery()

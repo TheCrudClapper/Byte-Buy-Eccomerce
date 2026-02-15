@@ -46,7 +46,7 @@ public class RoleService : IRoleService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RoleUpdateRequest request)
     {
-        var spec = new RoleWithRolePermissionsSpec(id);
+        var spec = new RoleAndRolePermissionsSpec(id);
         var role = await _roleRepository.GetBySpecAsync(spec);
         if (role is null)
             return Result.Failure<UpdatedResponse>(RoleErrors.NotFound);
@@ -67,7 +67,7 @@ public class RoleService : IRoleService
         if (await _roleRepository.DoesRoleHaveActiveUsers(id))
             return Result.Failure(RoleErrors.HasActiveUsers);
 
-        var spec = new RoleWithRolePermissionsSpec(id, false);
+        var spec = new RoleAndRolePermissionsSpec(id, false);
         var role = await _roleRepository.GetBySpecAsync(spec);
 
         if (role is null)

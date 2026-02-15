@@ -33,7 +33,7 @@ public class CheckoutService : ICheckoutService
     public async Task<Result<CheckoutResponse>> GetCheckout(Guid userId, CancellationToken ct)
     {
         // Gathering data
-        var spec = new PortalUserToUserBasicInfoResponseSpec(userId);
+        var spec = new UserBasicInfoResponseSpec(userId);
         var userData = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         if (userData is null)
@@ -56,7 +56,7 @@ public class CheckoutService : ICheckoutService
                 return Result.Failure<CheckoutResponse>(CompanyInfoErrors.NotFound);
         }
 
-        var privateSellersSpec = new PortalUserToSellerCheckoutSpec(sellerIds
+        var privateSellersSpec = new UserSellerCheckoutSpec(sellerIds
             .Where(s => s.SellerType != SellerType.Company)
             .Select(i => i.SellerId));
 

@@ -18,18 +18,16 @@ public static class DeliveryMappings
             delivery.Price.Currency,
             (int?)delivery.ParcelSize ?? null,
             (int)delivery.Channel,
-            delivery.DeliveryCarrierId
-            );
+            delivery.DeliveryCarrierId);
 
     public static List<DeliveryOptionResponse> MapDeliveries(
     IEnumerable<DeliveryOptionResponse> deliveries,
     DeliveryChannel channel)
-    {
-        return deliveries
+    => deliveries
             .Where(d => d.DeliveryChannel == channel.ToString())
             .OrderBy(d => d.Name)
             .ToList();
-    }
+
 
     //LINQ to DB Projections
     public static Expression<Func<Delivery, DeliveryListResponse>> DeliveryListResponseProjection
@@ -52,8 +50,8 @@ public static class DeliveryMappings
             d.Price.Amount,
             d.Price.Currency);
 
-    public static Expression<Func<Delivery, DeliveryOrderQuery>> DeliveryOrderQueryProjection
-        => d => new DeliveryOrderQuery(
+    public static Expression<Func<Delivery, DeliveryOrderQueryModel>> DeliveryOrderQueryModelProjection
+        => d => new DeliveryOrderQueryModel(
             d.Id,
             d.Name,
             d.DeliveryCarrier.Code,

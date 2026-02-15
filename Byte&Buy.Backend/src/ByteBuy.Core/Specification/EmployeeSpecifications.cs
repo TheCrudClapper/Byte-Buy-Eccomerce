@@ -7,17 +7,6 @@ namespace ByteBuy.Core.Specification;
 
 public static class EmployeeSpecifications
 {
-    public sealed class EmployeeWithRolesAndPermissionsSpec : Specification<Employee>
-    {
-        public EmployeeWithRolesAndPermissionsSpec(Guid id)
-        {
-            Query.Where(e => e.Id == id)
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .Include(u => u.UserPermissions);
-        }
-    }
-
     public sealed class EmployeeAggregateSpec : Specification<Employee>
     {
         public EmployeeAggregateSpec(Guid id)
@@ -28,19 +17,9 @@ public static class EmployeeSpecifications
         }
     }
 
-    public sealed class EmployeeToEmployeeListDtoSpec : Specification<Employee, EmployeeListResponse>
+    public sealed class EmployeeResponseSpec : Specification<Employee, EmployeeResponse>
     {
-        public EmployeeToEmployeeListDtoSpec(Guid excludedUserId)
-        {
-            Query.AsNoTracking()
-                .Where(e => e.Id != excludedUserId)
-                .Select(EmployeeMappings.EmployeeListProjection);
-        }
-    }
-
-    public sealed class EmployeeToEmployeeResponseDtoSpec : Specification<Employee, EmployeeResponse>
-    {
-        public EmployeeToEmployeeResponseDtoSpec(Guid id)
+        public EmployeeResponseSpec(Guid id)
         {
             Query.AsNoTracking()
                 .Where(e => e.Id == id)
@@ -48,9 +27,9 @@ public static class EmployeeSpecifications
         }
     }
 
-    public sealed class EmployeeToEmployeeProfileResponseDto : Specification<Employee, EmployeeProfileResponse>
+    public sealed class EmployeeProfileResponseSpec : Specification<Employee, EmployeeProfileResponse>
     {
-        public EmployeeToEmployeeProfileResponseDto(Guid id)
+        public EmployeeProfileResponseSpec(Guid id)
         {
             Query.AsNoTracking()
                 .Where(e => e.Id == id)

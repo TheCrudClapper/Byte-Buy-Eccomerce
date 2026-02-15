@@ -90,7 +90,7 @@ public class OrderService : IOrderService
 
     public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default)
     {
-        var spec = new OrderDetailsResponseSpec(userId, orderId);
+        var spec = new OrderDetailsQueryModelSpec(userId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
 
         return queryResult is null
@@ -102,7 +102,7 @@ public class OrderService : IOrderService
     {
         var companyId = await _companyRepository.GetCompanyId(ct);
 
-        var spec = new CompanyOrderDetailsResponseSpec(companyId, orderId);
+        var spec = new CompanyOrderDetailsQueryModelSpec(companyId, orderId);
         var queryResult = await _orderRepository.GetBySpecAsync(spec, ct);
 
         return queryResult is null
@@ -223,7 +223,7 @@ public class OrderService : IOrderService
 
     public async Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrdersAsync(CancellationToken ct)
     {
-        var spec = new DashboardOrdersSpec();
+        var spec = new OrderDashboardListResponseSpec();
         return await _orderRepository.GetListBySpecAsync(spec, ct);
     }
 
@@ -235,7 +235,7 @@ public class OrderService : IOrderService
 
     public async Task<Result<IReadOnlyCollection<UserOrderListResponse>>> GetSellerOrdersAsync(Guid sellerId, CancellationToken ct = default)
     {
-        var spec = new SellerOrdersListQuerySpec(sellerId);
+        var spec = new SellerOrdersListQueryModelSpec(sellerId);
         var queryResult = await _orderRepository.GetListBySpecAsync(spec, ct);
 
         return queryResult

@@ -121,7 +121,7 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
     {
-        var spec = new DeliveryToSelectListItemSpec();
+        var spec = new DeliverySelectListItemSpec();
         return await _deliveryRepository.GetListBySpecAsync(spec, ct);
     }
 
@@ -138,7 +138,7 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync(CancellationToken ct)
     {
-        var spec = new DeliveryToDeliveryOptionResponseSpec();
+        var spec = new DeliveryOptionResponseSpec();
         var deliveries = await _deliveryRepository.GetListBySpecAsync(spec, ct);
 
         var response = new DeliveryOptionsResponse
@@ -161,7 +161,7 @@ public class DeliveryService : IDeliveryService
 
     public async Task<Result<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default)
     {
-        var spec = new DeliveryToDeliveryListResponseSpec(offerId);
+        var spec = new DeliveryListResponseSpec(offerId);
         return await _deliveryRepository.GetListBySpecAsync(spec, ct);
     }
 }

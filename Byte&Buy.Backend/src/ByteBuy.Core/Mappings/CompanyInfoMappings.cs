@@ -11,8 +11,7 @@ namespace ByteBuy.Core.Mappings;
 public static class CompanyInfoMappings
 {
     public static CompanyInfoResponse ToCompanyInfoResponse(this Company company)
-    {
-        return new CompanyInfoResponse(
+        => new CompanyInfoResponse(
             company.CompanyName,
             company.TIN,
             company.Email,
@@ -29,10 +28,10 @@ public static class CompanyInfoMappings
                 )
             );
 
-    }
 
-    public static Expression<Func<Company, CompanyAddressWithId>> CompanyAddressWithItProjection
-        => c => new CompanyAddressWithId(
+
+    public static Expression<Func<Company, CompanyAddressWithIdQueryModel>> CompanyAddressWithIdProjection
+        => c => new CompanyAddressWithIdQueryModel(
             c.Id,
             c.CompanyAddress);
 
@@ -42,7 +41,7 @@ public static class CompanyInfoMappings
             c.CompanyName,
             c.Email);
 
-    public static Expression<Func<Company, SellerSnapshotQueryModel>> SellerSnapshotDtoProjection
+    public static Expression<Func<Company, SellerSnapshotQueryModel>> SellerSnapshotQueryModelProjection
         => c => new SellerSnapshotQueryModel(
             c.Id,
             SellerType.Company,

@@ -148,21 +148,18 @@ public static class OfferMappings
     }
 
     public static PagedList<OfferBrowserItemResponse> ToResponse(this PagedList<OfferBrowserItemQuery> pagedList)
-    {
-        return new PagedList<OfferBrowserItemResponse>()
+        => new PagedList<OfferBrowserItemResponse>()
         {
             Items = pagedList.Items.Select(o => o.ToBrowserItemResponse()).ToList(),
             Metadata = pagedList.Metadata
         };
-    }
 
     public static PagedList<UserPanelOfferResponse> ToResponse(this PagedList<UserPanelOfferQuery> pagedList)
-    {
-        return new PagedList<UserPanelOfferResponse>()
+        => new PagedList<UserPanelOfferResponse>()
         {
             Items = pagedList.Items.Select(o => o.ToUserOfferPanelResponse()).ToList(),
             Metadata = pagedList.Metadata
         };
-    }
+
 }
 

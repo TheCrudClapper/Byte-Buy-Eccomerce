@@ -119,7 +119,7 @@ public class UserSaleOfferService : IUserSaleOfferService
 
     public async Task<Result<UserSaleOfferResponse>> GetByIdAsync(Guid userId, Guid id, CancellationToken ct = default)
     {
-        var spec = new UserSaleOfferAsResponseDtoSpec(userId, id);
+        var spec = new UserSaleOffeResponseSpec(userId, id);
         var offerDto = await _saleOfferRepository.GetBySpecAsync(spec, ct);
 
         return offerDto is null
@@ -129,7 +129,7 @@ public class UserSaleOfferService : IUserSaleOfferService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid userid, Guid id, UserSaleOfferUpdateRequest request)
     {
-        var spec = new SaleOfferWithOfferAggregate(id);
+        var spec = new SaleOfferAggregateSpec(id);
         var saleOffer = await _saleOfferRepository.GetBySpecAsync(spec);
         if (saleOffer is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.NotFound);

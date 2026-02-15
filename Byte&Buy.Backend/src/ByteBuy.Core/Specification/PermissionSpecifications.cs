@@ -7,9 +7,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class PermissionSpecifications
 {
-    public sealed class PermissionToSelectListItemSpec : Specification<Permission, SelectListItemResponse<Guid>>
+    public sealed class PermissionSelectListItemSpec : Specification<Permission, SelectListItemResponse<Guid>>
     {
-        public PermissionToSelectListItemSpec()
+        public PermissionSelectListItemSpec()
         {
             Query
                 .AsNoTracking()

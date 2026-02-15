@@ -10,7 +10,7 @@ namespace ByteBuy.Core.Mappings;
 public static class AddressMappings
 {
     //Ef db projections
-    public static Expression<Func<ShippingAddress, ShippingAddressResponse>> AddressDtoProjection
+    public static Expression<Func<ShippingAddress, ShippingAddressResponse>> ShippingAddressProjection
         => a => new ShippingAddressResponse(
            a.Id,
            a.CountryId,
@@ -25,8 +25,7 @@ public static class AddressMappings
             );
 
     public static HomeAddressDto ToHomeAddressDto(this AddressValueObject vo)
-    {
-        return new HomeAddressDto(
+     => new HomeAddressDto(
             vo.Street,
             vo.HouseNumber,
             vo.PostalCity,
@@ -34,7 +33,7 @@ public static class AddressMappings
             vo.City,
             vo.Country,
             vo.FlatNumber);
-    }
+
 
     public static Expression<Func<ShippingAddress, ShippingAddressListResponse>> ShippingAddressListProjection
         => a => new ShippingAddressListResponse(
@@ -61,7 +60,7 @@ public static class AddressMappings
             a.IsDefault
             );
 
-    public static Expression<Func<ShippingAddress, UserShippingAddressQueryModel>> UserShippingAddressQueryProjection
+    public static Expression<Func<ShippingAddress, UserShippingAddressQueryModel>> UserShippingAddressQueryModelProjection
         => a => new UserShippingAddressQueryModel(
             a.Id,
             a.Street,

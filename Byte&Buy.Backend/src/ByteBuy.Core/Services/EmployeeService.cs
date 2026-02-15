@@ -191,7 +191,7 @@ public class EmployeeService : IEmployeeService
     public async Task<Result<EmployeeResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         var employeeDto = await _employeeRepository
-           .GetBySpecAsync(new EmployeeToEmployeeResponseDtoSpec(id), ct);
+           .GetBySpecAsync(new EmployeeResponseSpec(id), ct);
 
         return employeeDto is null
             ? Result.Failure<EmployeeResponse>(Error.NotFound)
@@ -202,7 +202,7 @@ public class EmployeeService : IEmployeeService
         Guid employeeId, CancellationToken ct = default)
     {
         var employeeDto = await _employeeRepository
-            .GetBySpecAsync(new EmployeeToEmployeeProfileResponseDto(employeeId), ct);
+            .GetBySpecAsync(new EmployeeProfileResponseSpec(employeeId), ct);
         if (employeeDto is null)
             return Result.Failure<EmployeeProfileResponse>(Error.NotFound);
 

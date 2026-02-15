@@ -7,15 +7,6 @@ namespace ByteBuy.Core.Specification;
 
 public static class OfferSpecifications
 {
-    public sealed class OfferBrowserSpec : Specification<Offer, OfferBrowserItemQuery>
-    {
-        public OfferBrowserSpec()
-        {
-            Query.AsNoTracking()
-                 .Select(OfferMappings.OfferBrowserItemQueryProjection);
-        }
-    }
-
     public sealed class UserOffersPanelSpec : Specification<Offer, UserPanelOfferQuery>
     {
         public UserOffersPanelSpec(Guid userId)

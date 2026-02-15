@@ -12,9 +12,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class PortalUserSpecifications
 {
-    public sealed class PortalUserWithAddressAndPermissionSpec : Specification<PortalUser>
+    public sealed class PortalUserAggregateAndUserPermissionSpec : Specification<PortalUser>
     {
-        public PortalUserWithAddressAndPermissionSpec(Guid id)
+        public PortalUserAggregateAndUserPermissionSpec(Guid id)
         {
             Query.Where(p => p.Id == id)
                 .Include(p => p.UserPermissions)
@@ -30,27 +30,27 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class PortalUserWithPermissionsSpec : Specification<PortalUser>
+    public sealed class PortalUserWithUserPermissionsSpec : Specification<PortalUser>
     {
-        public PortalUserWithPermissionsSpec(Guid id)
+        public PortalUserWithUserPermissionsSpec(Guid id)
         {
             Query.Where(p => p.Id == id)
                 .Include(p => p.UserPermissions);
         }
     }
 
-    public sealed class PortalUserWithShippingAddressesSpec : Specification<PortalUser>
+    public sealed class PortalUserAggregateSpec : Specification<PortalUser>
     {
-        public PortalUserWithShippingAddressesSpec(Guid id)
+        public PortalUserAggregateSpec(Guid id)
         {
             Query.Where(p => p.Id == id)
                 .Include(p => p.ShippingAddresses);
         }
     }
 
-    public sealed class PortalUserToPortalUserReponseSpec : Specification<PortalUser, PortalUserResponse>
+    public sealed class PortalUserReponseSpec : Specification<PortalUser, PortalUserResponse>
     {
-        public PortalUserToPortalUserReponseSpec(Guid id)
+        public PortalUserReponseSpec(Guid id)
         {
             Query.AsNoTracking()
                  .Where(p => p.Id == id)
@@ -58,18 +58,18 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class PortalUserToUserBasicInfoResponseSpec : Specification<PortalUser, UserBasicInfoResponse>
+    public sealed class UserBasicInfoResponseSpec : Specification<PortalUser, UserBasicInfoResponse>
     {
-        public PortalUserToUserBasicInfoResponseSpec(Guid id)
+        public UserBasicInfoResponseSpec(Guid id)
         {
             Query.Where(p => p.Id == id)
                 .Select(PortalUserMappings.UserBasicInfoResponseProjection);
         }
     }
 
-    public sealed class PortalUserToSellerCheckoutSpec : Specification<PortalUser, SellerCheckoutResponse>
+    public sealed class UserSellerCheckoutSpec : Specification<PortalUser, SellerCheckoutResponse>
     {
-        public PortalUserToSellerCheckoutSpec(IEnumerable<Guid> sellerIds)
+        public UserSellerCheckoutSpec(IEnumerable<Guid> sellerIds)
         {
             Query
                 .Where(p => sellerIds.Contains(p.Id))
@@ -77,9 +77,9 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class PrivateSellerSnapshotSpec : Specification<PortalUser, SellerSnapshotQueryModel>
+    public sealed class PrivateSellersSnapshotSpec : Specification<PortalUser, SellerSnapshotQueryModel>
     {
-        public PrivateSellerSnapshotSpec(IEnumerable<Guid> sellersIds)
+        public PrivateSellersSnapshotSpec(IEnumerable<Guid> sellersIds)
         {
             Query
                 .AsNoTracking()
@@ -88,9 +88,9 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class BuyserSnapshotQuerySpec : Specification<PortalUser, PortalUserBuyerQuery>
+    public sealed class BuyserSnapshotQueryModelSpec : Specification<PortalUser, PortalUserBuyerQueryModel>
     {
-        public BuyserSnapshotQuerySpec(Guid userId)
+        public BuyserSnapshotQueryModelSpec(Guid userId)
         {
             Query
                 .AsNoTracking()

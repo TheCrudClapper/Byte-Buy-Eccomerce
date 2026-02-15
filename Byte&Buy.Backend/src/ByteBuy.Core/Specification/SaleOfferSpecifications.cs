@@ -7,19 +7,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class SaleOfferSpecifications
 {
-    public sealed class SaleOfferToSaleOfferListResponseSpec : Specification<SaleOffer, SaleOfferListResponse>
+    public sealed class SaleOfferResponseSpec : Specification<SaleOffer, SaleOfferResponse>
     {
-        public SaleOfferToSaleOfferListResponseSpec()
-        {
-            Query.AsNoTracking()
-                 .Where(ro => ro.Item.IsCompanyItem)
-                 .Select(SaleOfferMappings.SaleOfferListProjection);
-        }
-    }
-
-    public sealed class SaleOfferToSaleOfferResponseSpec : Specification<SaleOffer, SaleOfferResponse>
-    {
-        public SaleOfferToSaleOfferResponseSpec(Guid id)
+        public SaleOfferResponseSpec(Guid id)
         {
             Query.AsNoTracking()
                  .Where(so => so.Id == id)
@@ -27,9 +17,9 @@ public static class SaleOfferSpecifications
         }
     }
 
-    public sealed class SaleOfferWithOfferAggregate : Specification<SaleOffer>
+    public sealed class SaleOfferAggregateSpec : Specification<SaleOffer>
     {
-        public SaleOfferWithOfferAggregate(Guid id, bool ignoreQueryFilters = true)
+        public SaleOfferAggregateSpec(Guid id, bool ignoreQueryFilters = true)
         {
             if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();
@@ -51,9 +41,9 @@ public static class SaleOfferSpecifications
         }
     }
 
-    public sealed class UserSaleOfferAsResponseDtoSpec : Specification<SaleOffer, UserSaleOfferResponse>
+    public sealed class UserSaleOffeResponseSpec : Specification<SaleOffer, UserSaleOfferResponse>
     {
-        public UserSaleOfferAsResponseDtoSpec(Guid userId, Guid id)
+        public UserSaleOffeResponseSpec(Guid userId, Guid id)
         {
             Query
                 .AsNoTracking()

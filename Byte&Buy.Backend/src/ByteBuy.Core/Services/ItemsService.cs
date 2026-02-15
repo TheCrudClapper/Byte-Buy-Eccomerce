@@ -125,7 +125,7 @@ public class ItemsService : IItemsService
 
     public async Task<Result<ItemResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var itemDto = await _itemRepository.GetBySpecAsync(new CompanyItemToItemResponseDtoSpec(id), ct);
+        var itemDto = await _itemRepository.GetBySpecAsync(new CompanyItemResponseSpec(id), ct);
 
         return itemDto is null
             ? Result.Failure<ItemResponse>(Error.NotFound)

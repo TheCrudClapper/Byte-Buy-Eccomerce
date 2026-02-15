@@ -39,7 +39,7 @@ public class EmployeeRepository : EfBaseRepository<Employee>, IEmployeeRepositor
         if (!string.IsNullOrWhiteSpace(queryParams.LastName))
             query = query.Where(e => EF.Functions.ILike(e.LastName, $"%{queryParams.LastName}%"));
 
-        var projection = query.Select(EmployeeMappings.EmployeeListProjection);
+        var projection = query.Select(EmployeeMappings.EmployeeListResponseProjection);
 
         return projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
     }

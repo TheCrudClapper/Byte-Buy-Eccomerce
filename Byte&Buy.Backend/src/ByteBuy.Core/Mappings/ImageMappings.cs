@@ -10,29 +10,25 @@ namespace ByteBuy.Core.Mappings;
 public static class ImageMappings
 {
     public static ImageResponse ToImageResponse(this Image image)
-    {
-        return new ImageResponse(image.Id, image.ImagePath, image.AltText);
-    }
+        => new ImageResponse(image.Id, image.ImagePath, image.AltText);
+    
 
     public static Expression<Func<Image, ImageResponse>> ImageResponseProjection =>
        i => new ImageResponse(
            i.Id,
            i.ImagePath,
-           i.AltText
-           );
+           i.AltText);
 
     public static Expression<Func<Image, ImageThumbnailDto>> ImageThumbnailProjection =>
         i => new ImageThumbnailDto(i.ImagePath, i.AltText);
 
     public static ExistingImageUpdate ToExistingImageUpdate(this ExistingImageUpdateRequest dto)
-    {
-        return new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
-    }
+        => new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
+    
 
 
     public static ImageDraft ToImageDraft(this SavedImage image)
-    {
-        return new ImageDraft(image.ImagePath, image.AltText);
-    }
+        => new ImageDraft(image.ImagePath, image.AltText);
+    
 }
 

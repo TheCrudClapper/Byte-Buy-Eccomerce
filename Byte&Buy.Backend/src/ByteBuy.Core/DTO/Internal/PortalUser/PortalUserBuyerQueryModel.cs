@@ -10,7 +10,7 @@ namespace ByteBuy.Core.DTO.Internal.PortalUser;
 /// <param name="Email"></param>
 /// <param name="Phone"></param>
 /// <param name="Address"></param>
-public record PortalUserBuyerQuery(
+public record PortalUserBuyerQueryModel(
     string FirstName,
     string LastName,
     string Email,

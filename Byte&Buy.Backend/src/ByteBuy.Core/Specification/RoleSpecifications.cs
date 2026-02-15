@@ -31,9 +31,9 @@ public static class RoleSpecifications
         }
     }
 
-    public sealed class RoleWithRolePermissionsSpec : Specification<ApplicationRole>
+    public sealed class RoleAndRolePermissionsSpec : Specification<ApplicationRole>
     {
-        public RoleWithRolePermissionsSpec(Guid id, bool ignoreQueryFilters = true)
+        public RoleAndRolePermissionsSpec(Guid id, bool ignoreQueryFilters = true)
         {
             if (ignoreQueryFilters)
                 Query.IgnoreQueryFilters();

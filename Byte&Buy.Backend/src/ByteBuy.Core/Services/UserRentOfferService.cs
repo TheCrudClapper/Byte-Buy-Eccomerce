@@ -121,7 +121,7 @@ public class UserRentOfferService : IUserRentOfferService
 
     public async Task<Result<UserRentOfferResponse>> GetByIdAsync(Guid userId, Guid id, CancellationToken ct = default)
     {
-        var spec = new UserRentOfferToResponseSpec(userId, id);
+        var spec = new UserRentOfferResponseSpec(userId, id);
         var dto = await _rentOfferRepository.GetBySpecAsync(spec);
 
         return dto is null

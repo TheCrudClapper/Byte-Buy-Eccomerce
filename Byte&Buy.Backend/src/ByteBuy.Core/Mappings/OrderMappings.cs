@@ -90,7 +90,7 @@ public static class OrderMappings
             .ToList());
     }
 
-    public static Expression<Func<Order, OrderDetailsQueryModel>> OrderDetailsQueryProjection
+    public static Expression<Func<Order, OrderDetailsQueryModel>> OrderDetailsQueryModelProjection
       => o => new OrderDetailsQueryModel(
           o.Id,
           o.Status == OrderStatus.AwaitingPayment ? o.Payment.PaymentId : null,
@@ -279,8 +279,7 @@ public static class OrderMappings
             o.Status);
 
     public static PagedList<UserOrderListResponse> ToResponse(this PagedList<UserOrderListQueryModel> pagedList)
-    {
-        return new PagedList<UserOrderListResponse>
+        => new PagedList<UserOrderListResponse>
         {
             Items = pagedList.Items
                 .Select(o => o.ToUserOrderListResponse())
@@ -288,5 +287,5 @@ public static class OrderMappings
 
             Metadata = pagedList.Metadata
         };
-    }
+
 }

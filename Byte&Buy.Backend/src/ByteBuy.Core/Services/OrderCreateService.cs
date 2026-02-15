@@ -58,7 +58,7 @@ public class OrderCreateService : IOrderCreateService
                 return Result.Failure<OrderCreatedReponse>(buyerSnapshotResult.Error);
 
             //Get whole cart aggregate with cart offer + offer for further calc
-            var cartSpec = new CartAggegateWithOffers(userId);
+            var cartSpec = new UserCartAggegateWithOffersAggregateSpec(userId);
             var cart = await _cartRepository.GetBySpecAsync(cartSpec);
 
             //var cart = await _cartRepository.GetCartOffersForCheckout(userId);
@@ -92,7 +92,7 @@ public class OrderCreateService : IOrderCreateService
                     return Result.Failure<OrderCreatedReponse>(CompanyInfoErrors.NotFound);
             }
 
-            var privateSellerSpec = new PrivateSellerSnapshotSpec(sellerIds
+            var privateSellerSpec = new PrivateSellersSnapshotSpec(sellerIds
                 .Where(i => i.Type != SellerType.Company)
                 .Select(i => i.Id));
 
@@ -116,7 +116,7 @@ public class OrderCreateService : IOrderCreateService
 
             if (courierDeliveryRequest is not null)
             {
-                var addressSpec = new UserShippingAddressQuerySpec(userId, courierDeliveryRequest.ShippingAddressId!.Value);
+                var addressSpec = new UserShippingAddressQueryModelSpec(userId, courierDeliveryRequest.ShippingAddressId!.Value);
                 shippingAddress = await _addressReadRepository.GetBySpecAsync(addressSpec);
 
                 if (shippingAddress is null)
@@ -212,7 +212,7 @@ public class OrderCreateService : IOrderCreateService
 
     private async Task<Result> ClearUserCart(Guid userId)
     {
-        var cartSpec = new CartAggregateByUserIdSpec(userId);
+        var cartSpec = new UserCartAggregateSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(cartSpec);
         if (cart is null)
             return Result.Failure(CartErrors.NotFound);
@@ -224,7 +224,7 @@ public class OrderCreateService : IOrderCreateService
 
     private async Task<Result<BuyerSnapshot>> CreateUserSnapshot(Guid userId)
     {
-        var userSpec = new BuyserSnapshotQuerySpec(userId);
+        var userSpec = new BuyserSnapshotQueryModelSpec(userId);
         var queryResult = await _portalUserRepository.GetBySpecAsync(userSpec);
         if (queryResult is null)
             return Result.Failure<BuyerSnapshot>(CommonUserErrors.NotFound);

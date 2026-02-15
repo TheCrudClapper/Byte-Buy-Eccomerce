@@ -35,7 +35,7 @@ public class OfferReadService : IOfferReadService
 
     public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)
     {
-        var spec = new RentOfferDetailsSpec(id);
+        var spec = new RentOfferDetailsResponseSpec(id);
         var detailsDto = await _rentOfferRepository.GetBySpecAsync(spec, ct);
         return detailsDto is null
             ? Result.Failure<RentOfferDetailsResponse>(OfferErrors.NotFound)

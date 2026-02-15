@@ -29,7 +29,7 @@ public class CartService : ICartService
 
     public async Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request)
     {
-        var spec = new CartAggregateByUserIdSpec(userId, true);
+        var spec = new UserCartAggregateSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure(CartErrors.NotFound);
@@ -53,7 +53,7 @@ public class CartService : ICartService
 
     public async Task<Result> AddSaleCartOffer(Guid userId, SaleCartOfferAddRequest request)
     {
-        var spec = new CartAggregateByUserIdSpec(userId, true);
+        var spec = new UserCartAggregateSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure(CartErrors.NotFound);
@@ -77,7 +77,7 @@ public class CartService : ICartService
 
     public async Task<Result<CartSummaryResponse>> DeleteCartOffer(Guid userId, Guid cartItemId)
     {
-        var spec = new CartAggregateWithOffersByUserIdSpec(userId);
+        var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure<CartSummaryResponse>(Error.NotFound);
@@ -98,7 +98,7 @@ public class CartService : ICartService
 
     public async Task<Result<CartResponse>> GetCart(Guid userId, CancellationToken ct = default)
     {
-        var spec = new CartAggegateWithOffers(userId);
+        var spec = new UserCartAggegateWithOffersAggregateSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec, ct);
 
         if (cart is null)
@@ -153,7 +153,7 @@ public class CartService : ICartService
 
     public async Task<Result<CartSummaryResponse>> UpdateRentCartOffer(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request)
     {
-        var spec = new CartAggregateWithOffersByUserIdSpec(userId);
+        var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure<CartSummaryResponse>(CartErrors.NotFound);
@@ -176,7 +176,7 @@ public class CartService : ICartService
 
     public async Task<Result<CartSummaryResponse>> UpdateSaleCartOffer(Guid userId, Guid cartItemId, SaleCartOfferUpdateRequest request)
     {
-        var spec = new CartAggregateWithOffersByUserIdSpec(userId);
+        var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
         if (cart is null)
             return Result.Failure<CartSummaryResponse>(CartErrors.NotFound);
@@ -197,7 +197,7 @@ public class CartService : ICartService
 
     public async Task<Result> ClearCart(Guid userId)
     {
-        var spec = new CartAggregateByUserIdSpec(userId);
+        var spec = new UserCartAggregateSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
 
         if (cart is null)

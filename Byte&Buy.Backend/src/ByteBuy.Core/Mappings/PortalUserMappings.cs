@@ -71,8 +71,8 @@ public static class PortalUserMappings
             null,
             p.HomeAddress!);
 
-    public static Expression<Func<PortalUser, PortalUserBuyerQuery>> BuyerSnapshotQueryProjection
-        => p => new PortalUserBuyerQuery(
+    public static Expression<Func<PortalUser, PortalUserBuyerQueryModel>> BuyerSnapshotQueryProjection
+        => p => new PortalUserBuyerQueryModel(
             p.FirstName,
             p.LastName,
             p.Email!,

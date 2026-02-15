@@ -6,20 +6,10 @@ using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 
 public static class RentOfferSpecifications
-{
-    public sealed class RentOfferToRentOfferListResponseSpec : Specification<RentOffer, RentOfferListResponse>
+{        
+    public sealed class RentOfferResponseSpec : Specification<RentOffer, RentOfferResponse>
     {
-        public RentOfferToRentOfferListResponseSpec()
-        {
-            Query.AsNoTracking()
-                 .Where(ro => ro.Item.IsCompanyItem)
-                 .Select(RentOfferMappings.RentOfferListResponseProjection);
-        }
-    }
-
-    public sealed class RentOfferToRentOfferResponseSpec : Specification<RentOffer, RentOfferResponse>
-    {
-        public RentOfferToRentOfferResponseSpec(Guid id)
+        public RentOfferResponseSpec(Guid id)
         {
             Query.AsNoTracking()
                  .Where(ro => ro.Id == id)
@@ -36,15 +26,6 @@ public static class RentOfferSpecifications
         }
     }
 
-    public sealed class UserRentOfferToResponseSpec : Specification<RentOffer, UserRentOfferResponse>
-    {
-        public UserRentOfferToResponseSpec(Guid userId, Guid id)
-        {
-            Query.Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
-                .Select(RentOfferMappings.UserRentOfferResponseProjection);
-        }
-    }
-
     public sealed class RentOfferAggregateSpec : Specification<RentOffer>
     {
         public RentOfferAggregateSpec(Guid id, bool ignoreQueryFilters = true)
@@ -57,9 +38,18 @@ public static class RentOfferSpecifications
         }
     }
 
-    public sealed class RentOfferDetailsSpec : Specification<RentOffer, RentOfferDetailsResponse>
+    public sealed class UserRentOfferResponseSpec : Specification<RentOffer, UserRentOfferResponse>
     {
-        public RentOfferDetailsSpec(Guid id)
+        public UserRentOfferResponseSpec(Guid userId, Guid id)
+        {
+            Query.Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
+                .Select(RentOfferMappings.UserRentOfferResponseProjection);
+        }
+    }
+
+    public sealed class RentOfferDetailsResponseSpec : Specification<RentOffer, RentOfferDetailsResponse>
+    {
+        public RentOfferDetailsResponseSpec(Guid id)
         {
             Query
                 .AsNoTracking()
@@ -67,6 +57,5 @@ public static class RentOfferSpecifications
                 .Select(RentOfferMappings.RentOfferDetailsResponseProjection);
         }
     }
-
 
 }

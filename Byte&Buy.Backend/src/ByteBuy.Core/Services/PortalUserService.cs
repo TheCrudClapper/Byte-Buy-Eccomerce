@@ -115,7 +115,7 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request)
     {
-        var spec = new PortalUserWithPermissionsSpec(id);
+        var spec = new PortalUserWithUserPermissionsSpec(id);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
 
         if (user is null)
@@ -174,12 +174,12 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result> DeleteAsync(Guid id)
     {
-        var spec = new PortalUserWithAddressAndPermissionSpec(id);
+        var spec = new PortalUserAggregateAndUserPermissionSpec(id);
         var portalUser = await _portalUserRepository.GetBySpecAsync(spec);
         if (portalUser is null)
             return Result.Failure(CommonUserErrors.NotFound);
 
-        var cartSpec = new CartAggregateByUserIdSpec(portalUser.Id);
+        var cartSpec = new UserCartAggregateSpec(portalUser.Id);
         var userCart = await _cartRepository.GetBySpecAsync(cartSpec);
         if (userCart is null)
             return Result.Failure(CartErrors.NotFound);
@@ -216,7 +216,7 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        var spec = new PortalUserToPortalUserReponseSpec(id);
+        var spec = new PortalUserReponseSpec(id);
         var portalUserDto = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         return portalUserDto is null
@@ -254,7 +254,7 @@ public class PortalUserService : IPortalUserService
 
     public async Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default)
     {
-        var spec = new PortalUserToUserBasicInfoResponseSpec(userId);
+        var spec = new UserBasicInfoResponseSpec(userId);
         var userInfo = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         return userInfo is null

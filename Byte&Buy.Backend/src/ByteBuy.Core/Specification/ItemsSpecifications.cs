@@ -6,18 +6,9 @@ namespace ByteBuy.Core.Specification;
 
 public static class ItemsSpecifications
 {
-    public sealed class CompanyItemsToItemListResponseSpec : Specification<Item, ItemListResponse>
+    public sealed class CompanyItemResponseSpec : Specification<Item, ItemResponse>
     {
-        public CompanyItemsToItemListResponseSpec()
-        {
-            Query.AsNoTracking()
-                 .Where(i => i.IsCompanyItem)
-                 .Select(ItemsMappings.ItemListResponseProjection);
-        }
-    }
-    public sealed class CompanyItemToItemResponseDtoSpec : Specification<Item, ItemResponse>
-    {
-        public CompanyItemToItemResponseDtoSpec(Guid id)
+        public CompanyItemResponseSpec(Guid id)
         {
             Query.AsNoTracking()
                  .Where(i => i.Id == id && i.IsCompanyItem)

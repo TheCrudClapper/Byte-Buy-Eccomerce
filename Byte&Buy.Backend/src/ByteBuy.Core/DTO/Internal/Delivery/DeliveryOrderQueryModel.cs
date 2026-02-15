@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Internal.Delivery;
 
-public sealed record DeliveryOrderQuery(
+public sealed record DeliveryOrderQueryModel(
     Guid Id,
     string Name,
     string CarrierCode,
