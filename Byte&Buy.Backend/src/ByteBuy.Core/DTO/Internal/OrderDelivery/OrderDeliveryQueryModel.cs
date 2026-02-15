@@ -3,7 +3,7 @@ using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Internal.OrderDelivery;
 
-public sealed record OrderDeliveryQuery(
+public sealed record OrderDeliveryQueryModel(
        string CarrierCode,
        string DeliveryName,
 

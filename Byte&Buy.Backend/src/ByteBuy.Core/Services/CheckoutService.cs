@@ -46,7 +46,7 @@ public class CheckoutService : ICheckoutService
             .Distinct()
             .ToList();
 
-        SellerCheckoutResponse? companyData = null;
+        SellerCheckoutQueryModel? companyData = null;
         if (sellerIds.Any(s => s.SellerType == SellerType.Company))
         {
             var companySellerSpec = new CompanyInfoToSellerCheckoutResponseSpec();
@@ -134,7 +134,7 @@ public class CheckoutService : ICheckoutService
     }
 
 
-    public static IReadOnlyCollection<Guid> ResolveCommonDeliveries(IEnumerable<CheckoutItemQuery> sellerOffers)
+    public static IReadOnlyCollection<Guid> ResolveCommonDeliveries(IEnumerable<CheckoutItemQueryModel> sellerOffers)
     {
         var offers = sellerOffers.ToList();
 

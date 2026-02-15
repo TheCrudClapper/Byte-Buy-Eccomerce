@@ -16,7 +16,7 @@ public class StatisticsRepository : IStatisticsRepository
         => _context = context;
 
 
-    public async Task<KpiSnapshotQuery> GetBasicKpisAsync(CancellationToken ct = default)
+    public async Task<KpiSnapshotQueryModel> GetBasicKpisAsync(CancellationToken ct = default)
     {
         var users = await _context.PortalUsers.CountAsync(ct);
         var employees = await _context.Employees.CountAsync(ct);
@@ -42,7 +42,7 @@ public class StatisticsRepository : IStatisticsRepository
             .Distinct()
             .CountAsync(ct);
 
-        return new KpiSnapshotQuery
+        return new KpiSnapshotQueryModel
         {
             Users = users,
             Employees = employees,
@@ -53,7 +53,7 @@ public class StatisticsRepository : IStatisticsRepository
         };
     }
 
-    public async Task<GMVBySellerTypeQuery> GetGMVBySellerTypeAsync(CancellationToken ct = default)
+    public async Task<GMVBySellerTypeQueryModel> GetGMVBySellerTypeAsync(CancellationToken ct = default)
     {
         // calulcation of private sellers gmv
         var privateSellerGMV = await _context.Orders
@@ -65,7 +65,7 @@ public class StatisticsRepository : IStatisticsRepository
             .Where(o => o.Status != OrderStatus.Canceled && o.SellerSnapshot.Type == SellerType.Company)
             .SumAsync(o => (decimal?)o.LinesTotal.Amount, ct) ?? 0m;
 
-        var response = new GMVBySellerTypeQuery
+        var response = new GMVBySellerTypeQueryModel
         {
             CompanyGMV = companyGMV == 0 ? Money.Zero : Money.Create(companyGMV).Value,
             PrivateSellerGMV = privateSellerGMV == 0 ? Money.Zero : Money.Create(privateSellerGMV).Value

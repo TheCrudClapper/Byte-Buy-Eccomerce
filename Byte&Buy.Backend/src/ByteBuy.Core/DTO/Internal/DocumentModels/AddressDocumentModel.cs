@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
-public sealed record AddressModel
+public sealed record AddressDocumentModel
 {
     public string City { get; init; } = null!;
     public string Street { get; init; } = null!;

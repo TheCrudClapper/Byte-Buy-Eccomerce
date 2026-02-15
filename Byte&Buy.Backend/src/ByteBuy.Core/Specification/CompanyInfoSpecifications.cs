@@ -17,7 +17,7 @@ public static class CompanyInfoSpecifications
                 .Select(CompanyInfoMappings.CompanyAddressWithIdProjection);
         }
     }
-    public sealed class CompanyInfoToSellerCheckoutResponseSpec : Specification<Company, SellerCheckoutResponse>
+    public sealed class CompanyInfoToSellerCheckoutResponseSpec : Specification<Company, SellerCheckoutQueryModel>
     {
         public CompanyInfoToSellerCheckoutResponseSpec()
         {

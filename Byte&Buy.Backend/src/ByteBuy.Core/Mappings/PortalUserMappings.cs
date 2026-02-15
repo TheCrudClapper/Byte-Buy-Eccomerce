@@ -57,8 +57,8 @@ public static class PortalUserMappings
             p.Email!,
             p.PhoneNumber);
 
-    public static Expression<Func<PortalUser, SellerCheckoutResponse>> SellerPortalResponseProjection
-        => p => new SellerCheckoutResponse(
+    public static Expression<Func<PortalUser, SellerCheckoutQueryModel>> SellerPortalResponseProjection
+        => p => new SellerCheckoutQueryModel(
             p.Id,
             p.FirstName + p.LastName,
             p.Email!);

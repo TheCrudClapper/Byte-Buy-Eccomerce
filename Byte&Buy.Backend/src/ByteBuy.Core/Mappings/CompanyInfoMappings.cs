@@ -35,8 +35,8 @@ public static class CompanyInfoMappings
             c.Id,
             c.CompanyAddress);
 
-    public static Expression<Func<Company, SellerCheckoutResponse>> SellerCheckoutProjection
-        => c => new SellerCheckoutResponse(
+    public static Expression<Func<Company, SellerCheckoutQueryModel>> SellerCheckoutProjection
+        => c => new SellerCheckoutQueryModel(
             c.Id,
             c.CompanyName,
             c.Email);

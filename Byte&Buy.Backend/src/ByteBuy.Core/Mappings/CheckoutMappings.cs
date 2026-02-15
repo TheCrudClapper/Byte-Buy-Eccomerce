@@ -11,7 +11,7 @@ namespace ByteBuy.Core.Mappings;
 
 public static class CheckoutMappings
 {
-    public static CheckoutItem MapToCheckoutItem(this CheckoutItemQuery co)
+    public static CheckoutItem MapToCheckoutItem(this CheckoutItemQueryModel co)
     {
         return co.Type switch
         {
@@ -46,8 +46,8 @@ public static class CheckoutMappings
         };
     }
 
-    public static Expression<Func<CartOffer, CheckoutItemQuery>> CheckoutItemQueryProjection
-        => co => new CheckoutItemQuery
+    public static Expression<Func<CartOffer, CheckoutItemQueryModel>> CheckoutItemQueryProjection
+        => co => new CheckoutItemQueryModel
         {
             OfferId = co.OfferId,
             Quantity = co.Quantity,

@@ -10,14 +10,14 @@ public interface IStatisticsRepository
     /// </summary>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<KpiSnapshotQuery> GetBasicKpisAsync(CancellationToken ct = default);
+    Task<KpiSnapshotQueryModel> GetBasicKpisAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Gets the Gross Merchandise Value split into company and private seller gmv
     /// </summary>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<GMVBySellerTypeQuery> GetGMVBySellerTypeAsync(CancellationToken ct = default);
+    Task<GMVBySellerTypeQueryModel> GetGMVBySellerTypeAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Get order count per given month count and gmv by month

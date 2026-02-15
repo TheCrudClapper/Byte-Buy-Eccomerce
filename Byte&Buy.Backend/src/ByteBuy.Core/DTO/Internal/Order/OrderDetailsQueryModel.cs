@@ -15,6 +15,6 @@ public sealed record OrderDetailsQueryModel(
         int LinesCount,
         MoneyDto TotalLinesCost,
         MoneyDto TotalCost,
-        OrderDeliveryQuery DeliveryQuery,
-        BuyerSnapshotQuery BuyerDetailsQuery,
+        OrderDeliveryQueryModel DeliveryQuery,
+        BuyerSnapshotQueryModel BuyerDetailsQuery,
         IReadOnlyCollection<UserOrderLineQueryModel> Lines);

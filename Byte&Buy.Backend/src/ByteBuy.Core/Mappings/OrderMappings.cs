@@ -102,7 +102,7 @@ public static class OrderMappings
           new MoneyDto(o.LinesTotal.Amount, o.LinesTotal.Currency),
           new MoneyDto(o.Total.Amount, o.Total.Currency),
 
-          new OrderDeliveryQuery(
+          new OrderDeliveryQueryModel(
               o.Delivery.CarrierCode,
               o.Delivery.DeliveryName,
               o.Delivery.Channel,
@@ -124,7 +124,7 @@ public static class OrderMappings
 
               o.Delivery.Channel == DeliveryChannel.ParcelLocker ? o.Delivery.ParcelLockerId : null
           ),
-          new BuyerSnapshotQuery(
+          new BuyerSnapshotQueryModel(
               o.BuyerSnapshot.FullName,
               o.BuyerSnapshot.Email,
               o.BuyerSnapshot.PhoneNumber!,

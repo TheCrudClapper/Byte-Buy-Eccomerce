@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.ValueObjects;
 namespace ByteBuy.Core.DTO.Internal.Statistics;
 
-public sealed record KpiSnapshotQuery
+public sealed record KpiSnapshotQueryModel
 {
     public int Users { get; init; }
     public int Employees { get; init; }

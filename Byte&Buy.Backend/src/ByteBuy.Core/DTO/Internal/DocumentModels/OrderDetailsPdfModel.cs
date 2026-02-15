@@ -5,9 +5,9 @@ namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 public sealed record OrderDetailsPdfModel
 {
     public OrderStatus OrderStatus { get; set; }
-    public CompanyData CompanyData { get; init; } = null!;
-    public CustomerData CustomerData { get; init; } = null!;
-    public PaymentData PaymentData { get; init; } = null!;
-    public DeliveryData DeliveryData { get; init; } = null!;
-    public OrderData OrderData { get; init; } = null!;
+    public CompanyDocumentModel CompanyData { get; init; } = null!;
+    public CustomerDocumentModel CustomerData { get; init; } = null!;
+    public PaymentDocumentModel PaymentData { get; init; } = null!;
+    public DeliveryDocumentModel DeliveryData { get; init; } = null!;
+    public OrderDocumentModel OrderData { get; init; } = null!;
 }

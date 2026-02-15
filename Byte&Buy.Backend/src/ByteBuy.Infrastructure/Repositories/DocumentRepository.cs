@@ -16,15 +16,15 @@ public class DocumentRepository : IDocumentRepository
         _context = context;
     }
 
-    private async Task<CompanyData?> GetCompanyDataForDocument(CancellationToken ct)
+    private async Task<CompanyDocumentModel?> GetCompanyDataForDocument(CancellationToken ct)
     {
-        return await _context.Company.Select(c => new CompanyData()
+        return await _context.Company.Select(c => new CompanyDocumentModel()
         {
             CompanyName = c.CompanyName,
             Email = c.Email,
             Phone = c.Phone,
             TIN = c.TIN,
-            CompanyAddress = new AddressModel()
+            CompanyAddress = new AddressDocumentModel()
             {
                 City = c.CompanyAddress.City,
                 Country = c.CompanyAddress.Country,
@@ -49,7 +49,7 @@ public class DocumentRepository : IDocumentRepository
             .Select(o => new OrderDetailsPdfModel()
             {
                 OrderStatus = o.Status,
-                OrderData = new OrderData()
+                OrderData = new OrderDocumentModel()
                 {
                     Total = o.Total.Amount,
                     Tax = o.Total.Amount * 0.23m,
@@ -59,7 +59,7 @@ public class DocumentRepository : IDocumentRepository
                     LinesTotal = o.LinesTotal.Amount,
                     LinesTotalCurrency = o.LinesTotal.Currency,
                     DateCreated = o.DateCreated,
-                    Lines = o.Lines.Select(l => new OrderLineData()
+                    Lines = o.Lines.Select(l => new OrderLineDocumentModel()
                     {
                         ItemTitle = l.ItemName,
                         Type = l is RentOrderLine ? OrderLineType.Rent : OrderLineType.Sale,
@@ -75,7 +75,7 @@ public class DocumentRepository : IDocumentRepository
                         TotalCurrency = l.TotalPrice.Currency
                     }).ToList(),
                 },
-                PaymentData = new PaymentData()
+                PaymentData = new PaymentDocumentModel()
                 {
                     DateCreated = o.Payment.DateCreated,
                     PaymentId = o.Payment.PaymentId,
@@ -83,7 +83,7 @@ public class DocumentRepository : IDocumentRepository
                     Total = o.Payment.Amount.Amount,
                     TotalCurrency = o.Payment.Amount.Currency
                 },
-                DeliveryData = new DeliveryData()
+                DeliveryData = new DeliveryDocumentModel()
                 {
                     CarrierCode = o.Delivery.CarrierCode,
                     DeliveredDate = o.DateDelivered.GetValueOrDefault(),
@@ -91,12 +91,12 @@ public class DocumentRepository : IDocumentRepository
                     Total = o.Delivery.Price.Amount,
                     TotalCurrency = o.Delivery.Price.Currency
                 },
-                CustomerData = new CustomerData()
+                CustomerData = new CustomerDocumentModel()
                 {
                     Email = o.BuyerSnapshot.Email,
                     CustomersFullName = o.BuyerSnapshot.FullName,
                     Phone = o.BuyerSnapshot.PhoneNumber!,
-                    CustomerAddress = new AddressModel()
+                    CustomerAddress = new AddressDocumentModel()
                     {
                         City = o.BuyerSnapshot.Address.City,
                         FlatNumber = o.BuyerSnapshot.Address.FlatNumber,

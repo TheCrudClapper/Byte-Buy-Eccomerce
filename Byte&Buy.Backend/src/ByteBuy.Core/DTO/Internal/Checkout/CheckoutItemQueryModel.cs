@@ -5,7 +5,7 @@ using ByteBuy.Core.DTO.Public.Money;
 
 namespace ByteBuy.Core.DTO.Internal.Checkout;
 
-public sealed record CheckoutItemQuery
+public sealed record CheckoutItemQueryModel
 {
     public Guid OfferId { get; init; }
     public Guid SellerId { get; init; }

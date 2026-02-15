@@ -13,8 +13,8 @@ namespace ByteBuy.Core.Mappings;
 public static class OfferMappings
 {
 
-    public static Expression<Func<Offer, UserPanelOfferQuery>> UserPanelOfferQueryProjection =>
-        o => new UserPanelOfferQuery
+    public static Expression<Func<Offer, UserPanelOfferQueryModel>> UserPanelOfferQueryProjection =>
+        o => new UserPanelOfferQueryModel
         {
             DateCreated = o.DateCreated,
             Id = o.Id,
@@ -42,7 +42,7 @@ public static class OfferMappings
                 : OfferType.Rent
         };
 
-    public static UserPanelOfferResponse ToUserOfferPanelResponse(this UserPanelOfferQuery dto)
+    public static UserPanelOfferResponse ToUserOfferPanelResponse(this UserPanelOfferQueryModel dto)
     {
         return dto.Type switch
         {
@@ -73,8 +73,8 @@ public static class OfferMappings
         };
     }
 
-    public static Expression<Func<Offer, OfferBrowserItemQuery>> OfferBrowserItemQueryProjection
-        => o => new OfferBrowserItemQuery
+    public static Expression<Func<Offer, OfferBrowserItemQueryModel>> OfferBrowserItemQueryProjection
+        => o => new OfferBrowserItemQueryModel
         {
             Condition = o.Item.Condition.Name,
             Category = o.Item.Category.Name,
@@ -108,7 +108,7 @@ public static class OfferMappings
                 : OfferType.Rent
         };
 
-    public static OfferBrowserItemResponse ToBrowserItemResponse(this OfferBrowserItemQuery dto)
+    public static OfferBrowserItemResponse ToBrowserItemResponse(this OfferBrowserItemQueryModel dto)
     {
         return dto.Type switch
         {
@@ -147,14 +147,14 @@ public static class OfferMappings
         };
     }
 
-    public static PagedList<OfferBrowserItemResponse> ToResponse(this PagedList<OfferBrowserItemQuery> pagedList)
+    public static PagedList<OfferBrowserItemResponse> ToResponse(this PagedList<OfferBrowserItemQueryModel> pagedList)
         => new PagedList<OfferBrowserItemResponse>()
         {
             Items = pagedList.Items.Select(o => o.ToBrowserItemResponse()).ToList(),
             Metadata = pagedList.Metadata
         };
 
-    public static PagedList<UserPanelOfferResponse> ToResponse(this PagedList<UserPanelOfferQuery> pagedList)
+    public static PagedList<UserPanelOfferResponse> ToResponse(this PagedList<UserPanelOfferQueryModel> pagedList)
         => new PagedList<UserPanelOfferResponse>()
         {
             Items = pagedList.Items.Select(o => o.ToUserOfferPanelResponse()).ToList(),

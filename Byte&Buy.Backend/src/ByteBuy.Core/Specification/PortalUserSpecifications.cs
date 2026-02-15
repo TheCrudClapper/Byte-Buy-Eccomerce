@@ -67,7 +67,7 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class UserSellerCheckoutSpec : Specification<PortalUser, SellerCheckoutResponse>
+    public sealed class UserSellerCheckoutSpec : Specification<PortalUser, SellerCheckoutQueryModel>
     {
         public UserSellerCheckoutSpec(IEnumerable<Guid> sellerIds)
         {

@@ -12,7 +12,7 @@ public class CartRepository : EfBaseRepository<Cart>, ICartRepository
 {
     public CartRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<IReadOnlyCollection<CheckoutItemQuery>> GetCartOffersAsCheckoutItemQuery(Guid userId, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<CheckoutItemQueryModel>> GetCartOffersAsCheckoutItemQuery(Guid userId, CancellationToken ct = default)
     {
         return await _context.CartOffers
           .AsNoTracking()

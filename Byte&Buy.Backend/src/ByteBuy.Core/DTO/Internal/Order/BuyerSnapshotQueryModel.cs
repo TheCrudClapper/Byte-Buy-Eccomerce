@@ -2,7 +2,7 @@
 
 namespace ByteBuy.Core.DTO.Internal.Order;
 
-public sealed record BuyerSnapshotQuery(
+public sealed record BuyerSnapshotQueryModel(
     string FullName,
     string Email,
     string PhoneNumber,

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 
-public class CompanyInfoRepository : EfBaseRepository<Company>, ICompanyRepository
+public class CompanyRepository : EfBaseRepository<Company>, ICompanyRepository
 {
-    public CompanyInfoRepository(ApplicationDbContext context) : base(context) { }
+    public CompanyRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<bool> ExistAsync(CancellationToken ct = default)
     {

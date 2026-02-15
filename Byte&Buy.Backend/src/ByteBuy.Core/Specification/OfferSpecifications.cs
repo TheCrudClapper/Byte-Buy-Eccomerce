@@ -7,7 +7,7 @@ namespace ByteBuy.Core.Specification;
 
 public static class OfferSpecifications
 {
-    public sealed class UserOffersPanelSpec : Specification<Offer, UserPanelOfferQuery>
+    public sealed class UserOffersPanelSpec : Specification<Offer, UserPanelOfferQueryModel>
     {
         public UserOffersPanelSpec(Guid userId)
         {

@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
-public sealed record DeliveryData
+public sealed record DeliveryDocumentModel
 {
     public string CarrierCode { get; init; } = null!;
     public string DeliveryName { get; init; } = null!;

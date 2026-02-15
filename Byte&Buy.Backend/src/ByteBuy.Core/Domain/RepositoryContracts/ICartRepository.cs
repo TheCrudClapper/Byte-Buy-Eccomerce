@@ -5,5 +5,5 @@ namespace ByteBuy.Core.Domain.RepositoryContracts;
 
 public interface ICartRepository : IRepositoryBase<Cart>
 {
-    Task<IReadOnlyCollection<CheckoutItemQuery>> GetCartOffersAsCheckoutItemQuery(Guid userId, CancellationToken ct = default);
+    Task<IReadOnlyCollection<CheckoutItemQueryModel>> GetCartOffersAsCheckoutItemQuery(Guid userId, CancellationToken ct = default);
 }

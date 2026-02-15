@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
-public sealed record OrderData
+public sealed record OrderDocumentModel
 {
     public Guid OrderId { get; init; }
     public DateTime DateCreated { get; init; }
@@ -10,5 +10,5 @@ public sealed record OrderData
     public string TotalCurrency { get; init; } = null!;
     public decimal LinesTotal { get; init; }
     public string LinesTotalCurrency { get; init; } = null!;
-    public IReadOnlyCollection<OrderLineData> Lines { get; init; } = [];
+    public IReadOnlyCollection<OrderLineDocumentModel> Lines { get; init; } = [];
 }

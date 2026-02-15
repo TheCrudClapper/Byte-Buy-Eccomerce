@@ -17,7 +17,7 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
 {
     public OfferRepository(ApplicationDbContext context) : base(context) { }
 
-    public async Task<PagedList<OfferBrowserItemQuery>> BrowserAsync(OfferBrowserQuery queryParams, CancellationToken ct = default)
+    public async Task<PagedList<OfferBrowserItemQueryModel>> BrowserAsync(OfferBrowserQuery queryParams, CancellationToken ct = default)
     {
         var query = _context.Offers
             .AsNoTracking()
@@ -82,7 +82,7 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
             .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
-    public async Task<PagedList<UserPanelOfferQuery>> GetUserOffersAsync(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
+    public async Task<PagedList<UserPanelOfferQueryModel>> GetUserOffersAsync(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
     {
         var query = _context.Offers
              .AsNoTracking()

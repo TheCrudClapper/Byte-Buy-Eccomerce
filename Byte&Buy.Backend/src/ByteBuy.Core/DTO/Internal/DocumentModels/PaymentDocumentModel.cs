@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 
-public sealed record PaymentData
+public sealed record PaymentDocumentModel
 {
     public Guid PaymentId { get; init; }
     public decimal Total { get; init; }

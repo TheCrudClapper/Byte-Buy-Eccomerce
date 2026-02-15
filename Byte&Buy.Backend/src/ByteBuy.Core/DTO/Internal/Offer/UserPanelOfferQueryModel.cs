@@ -6,7 +6,7 @@ using ByteBuy.Core.DTO.Public.Offer.Enum;
 namespace ByteBuy.Core.DTO.Internal.Offer;
 
 //Query object that is used for fetching all types of offers in one go.
-public record UserPanelOfferQuery
+public record UserPanelOfferQueryModel
 {
     public Guid Id { get; init; }
     public OfferType Type { get; init; }
