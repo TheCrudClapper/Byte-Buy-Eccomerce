@@ -82,7 +82,7 @@ public class OrderCreateService : IOrderCreateService
               .Distinct()
               .ToList();
 
-            SellerSnapshotDto? companySnapshot = null;
+            SellerSnapshotQueryModel? companySnapshot = null;
             if (sellerIds.Any(type => type.Type == SellerType.Company))
             {
                 var companySpec = new CompanySellerSnapshotSpec();
@@ -109,7 +109,7 @@ public class OrderCreateService : IOrderCreateService
                 sellerLookup[companySnapshot.SellerId] = companySnapshot;
 
             // if in request any courier is selected donwload queryResult's address
-            UserShippingAddressQuery? shippingAddress = null;
+            UserShippingAddressQueryModel? shippingAddress = null;
             var courierDeliveryRequest = request.SelectedDeliveries
                 .FirstOrDefault(d => d.ShippingAddressId is not null
                              && deliveryLookup[d.DeliveryId].Channel == DeliveryChannel.Courier);

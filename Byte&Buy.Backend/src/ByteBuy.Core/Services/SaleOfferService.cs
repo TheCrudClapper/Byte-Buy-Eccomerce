@@ -119,9 +119,8 @@ public class SaleOfferService : ISaleOfferService
     }
 
     public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery queryParams, CancellationToken ct = default)
-    {
-        return await _saleOfferRepository.GetSaleOffersListAsync(queryParams, ct);
-    }
+       => await _saleOfferRepository.GetSaleOffersListAsync(queryParams, ct);
+
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
     {

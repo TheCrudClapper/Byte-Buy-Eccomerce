@@ -8,7 +8,7 @@ namespace ByteBuy.Core.DTO.Public.AddressValueObj;
 /// </summary>
 public record HomeAddressDto(
     [Required, MaxLength(50)] string Street,
-    [Required, MaxLength(20)] string HouseNumber,
+    [Required, MaxLength(10)] string HouseNumber,
     [Required, MaxLength(50)] string PostalCity,
     [Required, MaxLength(20)] string PostalCode,
     [Required, MaxLength(50)] string City,

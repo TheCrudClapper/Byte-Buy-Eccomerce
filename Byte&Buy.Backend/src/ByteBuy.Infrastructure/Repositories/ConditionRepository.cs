@@ -30,6 +30,7 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
     {
         var query = _context.Conditions
             .AsNoTracking()
+            .OrderByDescending(c => c.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.ConditionName))
@@ -38,7 +39,7 @@ public class ConditionRepository : EfBaseRepository<Condition>, IConditionReposi
         var projection = query.Select(c => new ConditionListResponse(c.Id, c.Name));
 
         return await projection
-            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<bool> HasActiveRelations(Guid conditionId)

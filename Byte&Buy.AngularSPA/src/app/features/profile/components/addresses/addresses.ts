@@ -31,13 +31,13 @@ export class Addresses implements OnInit {
   selectedShippingId: Guid | null = null;
 
   homeAddressForm: FormGroup = new FormGroup({
-    street: new FormControl<string>("", Validators.required),
-    houseNumber: new FormControl("", Validators.required),
-    postalCity: new FormControl("", Validators.required),
-    postalCode: new FormControl("", Validators.required),
-    city: new FormControl("", Validators.required),
-    country: new FormControl("", Validators.required),
-    flatNumber: new FormControl(""),
+    street: new FormControl<string>("", [Validators.required, Validators.maxLength(50)]),
+    houseNumber: new FormControl("", [Validators.required, Validators.maxLength(10)]),
+    postalCity: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    postalCode: new FormControl("", [Validators.required, Validators.maxLength(20)]),
+    city: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    country: new FormControl("", [Validators.required, Validators.maxLength(50)]),
+    flatNumber: new FormControl("", Validators.maxLength(10)),
   });
 
   ngOnInit(): void {

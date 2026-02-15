@@ -9,5 +9,4 @@ public record ShippingAddressCheckout(
     string City,
     string HouseNumber,
     string? FlatNumber,
-    bool IsDefault
-    );
+    bool IsDefault);

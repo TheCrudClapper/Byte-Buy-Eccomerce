@@ -11,7 +11,7 @@ public class EfBaseRepository<T> : Core.Domain.RepositoryContracts.Base.IReposit
     where T : class, IEntity
 {
     protected readonly ApplicationDbContext _context;
-    private readonly ISpecificationEvaluator _specEval
+    private readonly SpecificationEvaluator _specEval
         = SpecificationEvaluator.Default;
 
     public EfBaseRepository(ApplicationDbContext context)

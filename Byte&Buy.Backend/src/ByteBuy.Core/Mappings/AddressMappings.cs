@@ -61,8 +61,8 @@ public static class AddressMappings
             a.IsDefault
             );
 
-    public static Expression<Func<ShippingAddress, UserShippingAddressQuery>> UserShippingAddressQueryProjection
-        => a => new UserShippingAddressQuery(
+    public static Expression<Func<ShippingAddress, UserShippingAddressQueryModel>> UserShippingAddressQueryProjection
+        => a => new UserShippingAddressQueryModel(
             a.Id,
             a.Street,
             a.City,

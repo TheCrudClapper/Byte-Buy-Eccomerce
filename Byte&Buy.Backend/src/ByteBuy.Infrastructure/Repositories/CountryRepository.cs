@@ -31,6 +31,7 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
     {
         var query = _context.Countries
         .AsNoTracking()
+        .OrderByDescending(c => c.DateCreated)
         .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.CountryName))
@@ -41,7 +42,7 @@ public class CountryRepository : EfBaseRepository<Country>, ICountryRepository
 
         var projection = query.Select(CountryMappings.CountryResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<bool> HasActiveRelationsAsync(Guid countryId)

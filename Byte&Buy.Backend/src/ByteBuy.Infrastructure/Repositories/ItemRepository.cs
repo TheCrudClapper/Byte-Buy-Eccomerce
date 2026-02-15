@@ -28,6 +28,8 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
     {
         var query = _context.Items
             .AsNoTracking()
+            .Where(i => i.IsCompanyItem)
+            .OrderByDescending(i => i.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParam.Name))
@@ -41,7 +43,7 @@ public class ItemRepository : EfBaseRepository<Item>, IItemRepository
 
         var projection = query.Select(ItemsMappings.ItemListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParam.PageNumber, queryParam.PageSize);
+        return await projection.ToPagedListAsync(queryParam.PageNumber, queryParam.PageSize, ct);
     }
 
     public async Task<bool> HasActiveRelationsAsync(Guid itemId)

@@ -14,9 +14,11 @@ namespace ByteBuy.Infrastructure.Repositories;
 public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDeliveryCarrierRepository
 {
     public DeliveryCarrierRepository(ApplicationDbContext context) : base(context) { }
+
     public async Task<bool> ExistWithNameOrCodeAsync(string name, string code, Guid? excludeId = null)
         => await _context.DeliveryCarriers
             .AnyAsync(dc => dc.Id != excludeId && (dc.Name == name || dc.Code == code));
+
     public async Task<IReadOnlyCollection<DeliveryCarrier>> GetAllAsync(CancellationToken ct = default)
         => await _context.DeliveryCarriers.ToListAsync(ct);
 
@@ -27,6 +29,7 @@ public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDel
     {
         var query = _context.DeliveryCarriers
             .AsNoTracking()
+            .OrderByDescending(d => d.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.DeliveryCarrierName))
@@ -37,6 +40,6 @@ public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDel
 
         var projection = query.Select(DeliveryCarrierMappings.DeliveryCarrierResponseProjection);
 
-        return projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

@@ -42,8 +42,8 @@ public static class CompanyInfoMappings
             c.CompanyName,
             c.Email);
 
-    public static Expression<Func<Company, SellerSnapshotDto>> SellerSnapshotDtoProjection
-        => c => new SellerSnapshotDto(
+    public static Expression<Func<Company, SellerSnapshotQueryModel>> SellerSnapshotDtoProjection
+        => c => new SellerSnapshotQueryModel(
             c.Id,
             SellerType.Company,
             c.CompanyName,

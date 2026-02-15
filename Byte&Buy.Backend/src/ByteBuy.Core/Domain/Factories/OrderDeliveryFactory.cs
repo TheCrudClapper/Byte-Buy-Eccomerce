@@ -13,7 +13,7 @@ public static class OrderDeliveryFactory
         Guid orderId,
         SellerDeliveryRequest request,
         DeliveryOrderQuery delivery,
-        UserShippingAddressQuery? shippingAddress = null)
+        UserShippingAddressQueryModel? shippingAddress = null)
     {
         return delivery.Channel switch
         {

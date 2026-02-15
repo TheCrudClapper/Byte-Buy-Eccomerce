@@ -21,6 +21,7 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
     {
         var query = _context.Offers
             .AsNoTracking()
+            .OrderByDescending(o => o.DateCreated)
             .AsQueryable();
 
         if (queryParams.ConditionIds is not null && queryParams.ConditionIds.Count > 0)
@@ -78,19 +79,20 @@ public class OfferRepository : EfBaseRepository<Offer>, IOfferRepository
         var projection = query.Select(OfferMappings.OfferBrowserItemQueryProjection);
 
         return await projection
-            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<PagedList<UserPanelOfferQuery>> GetUserOffersAsync(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
     {
         var query = _context.Offers
-             .Where(o => o.CreatedByUserId == userId)
              .AsNoTracking()
+             .Where(o => o.CreatedByUserId == userId)
+             .OrderByDescending(o => o.DateCreated)
              .AsQueryable();
 
         var projection = query.Select(OfferMappings.UserPanelOfferQueryProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<IReadOnlyCollection<Offer>> GetOffersByIdsAsync(IEnumerable<Guid> offerIds, CancellationToken ct = default)

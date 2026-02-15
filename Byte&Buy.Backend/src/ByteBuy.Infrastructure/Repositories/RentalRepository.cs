@@ -21,6 +21,7 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
     {
         var query = _context.Rentals
             .AsNoTracking()
+            .OrderByDescending(r => r.DateCreated)
             .Where(r => r.Lender.Type == SellerType.Company
                    && r.Lender.SellerId == companyId)
             .AsQueryable();
@@ -53,8 +54,9 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
     public async Task<PagedList<RentalLenderResponse>> GetUserLenderRentalsAsync(UserRentalLenderQuery queryParams, Guid userId, CancellationToken ct = default)
     {
         var query = _context.Rentals
-           .Where(r => r.Lender.SellerId == userId)
            .AsNoTracking()
+           .OrderByDescending(r => r.DateCreated)
+           .Where(r => r.Lender.SellerId == userId)
            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.ItemName))
@@ -79,8 +81,9 @@ public class RentalRepository : EfBaseRepository<Rental>, IRentalRepository
     public async Task<PagedList<UserRentalBorrowerResponse>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid userId, CancellationToken ct = default)
     {
         var query = _context.Rentals
-            .Where(r => r.BorrowerId == userId)
             .AsNoTracking()
+            .Where(r => r.BorrowerId == userId)
+            .OrderByDescending(r => r.DateCreated)
             .AsQueryable();
 
         var projection = query

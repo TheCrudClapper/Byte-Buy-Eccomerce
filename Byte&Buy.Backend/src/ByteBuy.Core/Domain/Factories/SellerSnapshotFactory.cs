@@ -6,7 +6,7 @@ namespace ByteBuy.Core.Domain.Factories;
 
 public static class SellerSnapshotFactory
 {
-    public static SellerSnapshot CreateSnapshot(SellerSnapshotDto dto)
+    public static SellerSnapshot CreateSnapshot(SellerSnapshotQueryModel dto)
     {
         return dto.Type switch
         {

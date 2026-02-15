@@ -63,8 +63,8 @@ public static class PortalUserMappings
             p.FirstName + p.LastName,
             p.Email!);
 
-    public static Expression<Func<PortalUser, SellerSnapshotDto>> SellerSnapshotDtoProjection
-        => p => new SellerSnapshotDto(
+    public static Expression<Func<PortalUser, SellerSnapshotQueryModel>> SellerSnapshotDtoProjection
+        => p => new SellerSnapshotQueryModel(
             p.Id,
             SellerType.PrivatePerson,
             $"{p.FirstName} {p.LastName}",

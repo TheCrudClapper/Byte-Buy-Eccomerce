@@ -26,7 +26,7 @@ public static class CompanyInfoSpecifications
         }
     }
 
-    public sealed class CompanySellerSnapshotSpec : Specification<Company, SellerSnapshotDto>
+    public sealed class CompanySellerSnapshotSpec : Specification<Company, SellerSnapshotQueryModel>
     {
         public CompanySellerSnapshotSpec()
         {

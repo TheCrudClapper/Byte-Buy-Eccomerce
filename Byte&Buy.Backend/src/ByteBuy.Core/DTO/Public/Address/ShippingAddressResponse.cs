@@ -10,6 +10,5 @@ public record ShippingAddressResponse(
     string PostalCode,
     string City,
     string? FlatNumber,
-    bool IsDefault
-    );
+    bool IsDefault);
 

@@ -25,26 +25,28 @@ public class SaleOfferRepository : EfBaseRepository<SaleOffer>, ISaleOfferReposi
     {
         var query = _context.SaleOffers
            .AsNoTracking()
+           .Where(so => so.Item.IsCompanyItem)
+           .OrderByDescending(so => so.DateCreated)
            .AsQueryable();
 
 
         if (!string.IsNullOrWhiteSpace(queryParams.Name))
-            query = query.Where(r => EF.Functions.ILike(r.Item.Name, $"%{queryParams.Name}%"));
+            query = query.Where(so => EF.Functions.ILike(so.Item.Name, $"%{queryParams.Name}%"));
 
         if (queryParams.PriceFrom.HasValue)
-            query = query.Where(r => r.PricePerItem.Amount >= queryParams.PriceFrom.Value);
+            query = query.Where(so => so.PricePerItem.Amount >= queryParams.PriceFrom.Value);
 
         if (queryParams.PriceTo.HasValue)
-            query = query.Where(r => r.PricePerItem.Amount <= queryParams.PriceTo.Value);
+            query = query.Where(so => so.PricePerItem.Amount <= queryParams.PriceTo.Value);
 
         if (queryParams.QuantityFrom.HasValue)
-            query = query.Where(r => r.QuantityAvailable >= queryParams.QuantityFrom.Value);
+            query = query.Where(so => so.QuantityAvailable >= queryParams.QuantityFrom.Value);
 
         if (queryParams.QuantityTo.HasValue)
-            query = query.Where(r => r.QuantityAvailable <= queryParams.QuantityTo.Value);
+            query = query.Where(so => so.QuantityAvailable <= queryParams.QuantityTo.Value);
 
         var projection = query.Select(SaleOfferMappings.SaleOfferListProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

@@ -32,6 +32,7 @@ public class RoleRepository : EfBaseRepository<ApplicationRole>, IRoleRepository
     {
         var query = _context.Roles
             .AsNoTracking()
+            .OrderByDescending(r => r.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.RoleName))
@@ -39,6 +40,6 @@ public class RoleRepository : EfBaseRepository<ApplicationRole>, IRoleRepository
 
         var projection = query.Select(RoleMappings.RoleListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

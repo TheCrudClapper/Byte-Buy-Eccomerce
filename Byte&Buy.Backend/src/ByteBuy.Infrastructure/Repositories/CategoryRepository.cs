@@ -31,6 +31,7 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
     {
         var query = _context.Categories
             .AsNoTracking()
+            .OrderByDescending(c => c.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.CategoryName))
@@ -38,7 +39,7 @@ public class CategoryRepository : EfBaseRepository<Category>, ICategoryRepositor
 
         var projection = query.Select(CategoryMappings.CategoryListProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<bool> HasActiveRelations(Guid categoryId)

@@ -4,12 +4,15 @@ namespace ByteBuy.Core.Domain.Enums;
 
 public enum PaymentStatus
 {
+    /// <summary>
+    /// Status that describes unpaid payment
+    /// </summary>
     [Description("Created")]
     Created = 0,
 
+    /// <summary>
+    /// Status that describes completed - PAID payment
+    /// </summary>
     [Description("Completed")]
     Completed = 2,
-
-    [Description("Failed")]
-    Failed = 3,
 }

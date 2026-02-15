@@ -17,7 +17,7 @@ public class DeliveryCarrierHttpClient : HttpClientBase, IDeliveryCarrierHttpCli
     public DeliveryCarrierHttpClient(HttpClient httpClient) : base(httpClient) { }
 
     public async Task<Result> DeleteAsync(Guid carrierId)
-        => await DeleteAsync(carrierId);
+        => await DeleteAsync($"{resource}/{carrierId}");
 
     public async Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid carrierId)
         => await GetAsync<DeliveryCarrierResponse>($"{resource}/{carrierId}");

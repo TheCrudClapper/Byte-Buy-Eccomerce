@@ -58,15 +58,6 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class PortalUserToPortalUserListResponseSpec : Specification<PortalUser, PortalUserListResponse>
-    {
-        public PortalUserToPortalUserListResponseSpec()
-        {
-            Query.AsNoTracking()
-                .Select(PortalUserMappings.PortalUserListResponseProjection);
-        }
-    }
-
     public sealed class PortalUserToUserBasicInfoResponseSpec : Specification<PortalUser, UserBasicInfoResponse>
     {
         public PortalUserToUserBasicInfoResponseSpec(Guid id)
@@ -86,7 +77,7 @@ public static class PortalUserSpecifications
         }
     }
 
-    public sealed class PrivateSellerSnapshotSpec : Specification<PortalUser, SellerSnapshotDto>
+    public sealed class PrivateSellerSnapshotSpec : Specification<PortalUser, SellerSnapshotQueryModel>
     {
         public PrivateSellerSnapshotSpec(IEnumerable<Guid> sellersIds)
         {

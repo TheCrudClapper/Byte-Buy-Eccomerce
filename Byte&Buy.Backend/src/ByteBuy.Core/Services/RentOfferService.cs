@@ -116,10 +116,10 @@ public class RentOfferService : IRentOfferService
             : rentOfferDto;
     }
 
-    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery queryParams, CancellationToken ct = default)
-    {
-        return await _rentOfferRepository.GetRentOffersListAsync(queryParams, ct);
-    }
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(
+        RentOfferListQuery queryParams, CancellationToken ct = default)
+        => await _rentOfferRepository.GetRentOffersListAsync(queryParams, ct);
+
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
     {

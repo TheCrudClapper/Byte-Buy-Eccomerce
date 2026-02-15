@@ -20,6 +20,7 @@ public class PortalUserRepository : EfBaseRepository<PortalUser>, IPortalUserRep
     {
         var query = _context.PortalUsers
             .AsNoTracking()
+            .OrderByDescending(p => p.DateCreated)
             .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(queryParams.FirstName))
@@ -33,6 +34,6 @@ public class PortalUserRepository : EfBaseRepository<PortalUser>, IPortalUserRep
 
         var projection = query.Select(PortalUserMappings.PortalUserListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

@@ -72,7 +72,7 @@ public static class AddressSpecifications
         }
     }
 
-    public sealed class UserShippingAddressQuerySpec : Specification<ShippingAddress, UserShippingAddressQuery>
+    public sealed class UserShippingAddressQuerySpec : Specification<ShippingAddress, UserShippingAddressQueryModel>
     {
         public UserShippingAddressQuerySpec(Guid userId, Guid addressId)
         {

@@ -52,6 +52,7 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
     {
         var query = _context.Deliveries
             .AsNoTracking()
+            .OrderByDescending(d => d.DateCreated)
             .AsQueryable();
 
         if (queryParams.PriceFrom is not null)
@@ -65,7 +66,7 @@ public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepositor
 
         var projection = query.Select(DeliveryMappings.DeliveryListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 
     public async Task<bool> HasActiveRelations(Guid deliveryId)

@@ -19,32 +19,34 @@ public class RentOfferRepository : EfBaseRepository<RentOffer>, IRentOfferReposi
     {
         var query = _context.RentOffers
             .AsNoTracking()
+            .Where(ro => ro.Item.IsCompanyItem)
+            .OrderByDescending(o => o.DateCreated)
             .AsQueryable();
 
 
         if (!string.IsNullOrWhiteSpace(queryParams.Name))
-            query = query.Where(r => EF.Functions.ILike(r.Item.Name, $"%{queryParams.Name}%"));
+            query = query.Where(ro => EF.Functions.ILike(ro.Item.Name, $"%{queryParams.Name}%"));
 
         if (queryParams.PriceFrom.HasValue)
-            query = query.Where(r => r.PricePerDay.Amount >= queryParams.PriceFrom.Value);
+            query = query.Where(ro => ro.PricePerDay.Amount >= queryParams.PriceFrom.Value);
 
         if (queryParams.PriceTo.HasValue)
-            query = query.Where(r => r.PricePerDay.Amount <= queryParams.PriceTo.Value);
+            query = query.Where(ro => ro.PricePerDay.Amount <= queryParams.PriceTo.Value);
 
         if (queryParams.MaxRentalDaysFrom.HasValue)
-            query = query.Where(r => r.MaxRentalDays >= queryParams.MaxRentalDaysFrom.Value);
+            query = query.Where(ro => ro.MaxRentalDays >= queryParams.MaxRentalDaysFrom.Value);
 
         if (queryParams.MaxRentalDaysTo.HasValue)
-            query = query.Where(r => r.MaxRentalDays <= queryParams.MaxRentalDaysTo.Value);
+            query = query.Where(ro => ro.MaxRentalDays <= queryParams.MaxRentalDaysTo.Value);
 
         if (queryParams.QuantityFrom.HasValue)
-            query = query.Where(r => r.QuantityAvailable >= queryParams.QuantityFrom.Value);
+            query = query.Where(ro => ro.QuantityAvailable >= queryParams.QuantityFrom.Value);
 
         if (queryParams.QuantityTo.HasValue)
-            query = query.Where(r => r.QuantityAvailable <= queryParams.QuantityTo.Value);
+            query = query.Where(ro => ro.QuantityAvailable <= queryParams.QuantityTo.Value);
 
         var projection = query.Select(RentOfferMappings.RentOfferListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize);
+        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

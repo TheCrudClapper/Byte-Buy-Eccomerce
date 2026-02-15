@@ -18,8 +18,8 @@
 		<Grid.Background>
 
 			<LinearGradientBrush StartPoint="0%, 90%" EndPoint="30%, 0%">
-				<GradientStop Offset="0" Color="{DynamicResource Background}"></GradientStop>
-				<GradientStop Offset="1" Color="{DynamicResource CardBackground}"></GradientStop>
+				<GradientStop Offset="0" Color="{DynamicResource PrimaryAccent}"/>
+				<GradientStop Offset="1" Color="{DynamicResource CardBackground}"/>
 			</LinearGradientBrush>
 		</Grid.Background>
 

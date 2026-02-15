@@ -6,9 +6,8 @@ public class RentalStatusJob
 {
     private readonly IRentalStatusService _rentalStatusService;
     public RentalStatusJob(IRentalStatusService rentalStatusService)
-    {
-        _rentalStatusService = rentalStatusService;
-    }
+       => _rentalStatusService = rentalStatusService;
+
 
     public async Task Execute()
     {

@@ -12,6 +12,5 @@ public record ShippingAddressUpdateRequest(
     [Required, MaxLength(50)] string PostalCity,
     [Required, MaxLength(50)] string City,
     [MaxLength(10)] string? FlatNumber,
-    [Required] bool IsDefault
-    );
+    [Required] bool IsDefault);
 

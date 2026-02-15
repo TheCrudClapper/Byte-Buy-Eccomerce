@@ -1,6 +1,6 @@
 ﻿namespace ByteBuy.Core.DTO.Internal.Address;
 
-public record UserShippingAddressQuery(
+public record UserShippingAddressQueryModel(
     Guid Id,
     string Street,
     string City,
