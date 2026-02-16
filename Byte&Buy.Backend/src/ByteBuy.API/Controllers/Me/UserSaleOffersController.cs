@@ -3,7 +3,6 @@ using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Me;
@@ -16,7 +15,7 @@ public class UserSaleOffersController : BaseApiController
     private readonly IUserSaleOfferService _saleOfferService;
     public UserSaleOffersController(IUserSaleOfferService saleOfferService)
        => _saleOfferService = saleOfferService;
-    
+
 
     [HttpPost]
     [HasPermission("user-sale-offers:create:one")]

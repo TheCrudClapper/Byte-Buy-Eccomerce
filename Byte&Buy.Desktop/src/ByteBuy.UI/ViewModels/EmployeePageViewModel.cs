@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
-using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -16,45 +15,59 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 {
     #region MVVM Fields
 
-    [ObservableProperty][Required] private string _firstName = string.Empty;
-
-    [ObservableProperty][Required] private string _lastName = string.Empty;
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    private string _firstName = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required]
+    private string _lastName = string.Empty;
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [EmailAddress]
     private string _email = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _street = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _postalCity = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _city = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(10)]
     private string? _flatNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [Phone]
     [MaxLength(15)]
@@ -67,10 +80,12 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     private ObservableCollection<SelectListItemResponse<Guid>> _countries = [];
 
     [ObservableProperty]
-    [Required]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Choose country")]
     private SelectListItemResponse<Guid>? _selectedCountry;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Choose employee's roles")]
     private SelectListItemResponse<Guid>? _selectedRole;
 

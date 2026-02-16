@@ -5,6 +5,7 @@ using ByteBuy.Services.DTO.Order.OrderLine;
 using ByteBuy.Services.DTO.OrderDelivery;
 
 namespace ByteBuy.Services.DTO.Order;
+
 public sealed record BuyerSnapshotResponse(
      string FullName,
      string Email,

@@ -2,7 +2,6 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Payment;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers.Me;
 
@@ -14,7 +13,7 @@ public class UserPaymentController : BaseApiController
     private readonly IPaymentService _paymentService;
     public UserPaymentController(IPaymentService paymentService)
        => _paymentService = paymentService;
-    
+
 
     [HttpGet("{paymentId:guid}")]
     [HasPermission("user-payments:read:one")]

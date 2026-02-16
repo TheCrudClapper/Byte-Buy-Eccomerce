@@ -115,7 +115,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     [RelayCommand]
     protected async Task PreviousPage()
     {
-        if(!HasPreviousPage) return;
+        if (!HasPreviousPage) return;
         PageNumber--;
         await LoadDataAsync();
     }

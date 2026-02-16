@@ -13,10 +13,12 @@ public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deli
 {
     #region MVVM Properties
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(50)]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(20)]
     private string _code = string.Empty;
 

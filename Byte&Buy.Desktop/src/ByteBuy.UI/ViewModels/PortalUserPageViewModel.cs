@@ -18,38 +18,46 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     #region MVVM Fields
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     private string _firstName = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required] private string _lastName = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [EmailAddress]
     private string _email = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _street = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _postalCity = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     [MaxLength(50)]
     private string _city = string.Empty;
@@ -58,7 +66,9 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private string? _flatNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(15)]
+    [Phone]
     private string? _phoneNumber;
 
     [ObservableProperty]
@@ -71,10 +81,12 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private ObservableCollection<SelectListItemResponse<Guid>> _countries = [];
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [RequiredIf(nameof(IsAddressIncluded))]
     private SelectListItemResponse<Guid>? _selectedCountry;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Choose user's role")]
     private SelectListItemResponse<Guid>? _selectedRole;
 

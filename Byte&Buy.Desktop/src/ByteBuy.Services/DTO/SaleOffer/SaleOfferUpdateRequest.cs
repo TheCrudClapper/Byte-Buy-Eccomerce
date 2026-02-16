@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ByteBuy.Services.DTO.SaleOffer;
+﻿namespace ByteBuy.Services.DTO.SaleOffer;
 
 public record SaleOfferUpdateRequest(
     int AdditionalQuantity,

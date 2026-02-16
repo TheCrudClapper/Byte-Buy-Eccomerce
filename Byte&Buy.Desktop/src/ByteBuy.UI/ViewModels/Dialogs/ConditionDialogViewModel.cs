@@ -13,10 +13,12 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
 {
     #region MVVM Fields
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(20)]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(50)]
     private string? _description;
     #endregion

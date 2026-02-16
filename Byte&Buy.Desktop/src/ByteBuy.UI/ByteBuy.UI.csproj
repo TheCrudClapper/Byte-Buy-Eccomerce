@@ -71,6 +71,5 @@
 
   <ItemGroup>
     <Folder Include="ModelsUI\Image\" />
-    <Folder Include="ViewModels\Rental\" />
   </ItemGroup>
 </Project>

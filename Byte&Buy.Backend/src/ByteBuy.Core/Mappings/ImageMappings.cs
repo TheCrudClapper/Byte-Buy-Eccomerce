@@ -11,7 +11,7 @@ public static class ImageMappings
 {
     public static ImageResponse ToImageResponse(this Image image)
         => new ImageResponse(image.Id, image.ImagePath, image.AltText);
-    
+
 
     public static Expression<Func<Image, ImageResponse>> ImageResponseProjection =>
        i => new ImageResponse(
@@ -24,9 +24,9 @@ public static class ImageMappings
 
     public static ExistingImageUpdate ToExistingImageUpdate(this ExistingImageUpdateRequest dto)
         => new ExistingImageUpdate(dto.Id, dto.AltText, dto.IsDeleted);
-    
+
     public static ImageDraft ToImageDraft(this SavedImage image)
         => new ImageDraft(image.ImagePath, image.AltText);
-    
+
 }
 

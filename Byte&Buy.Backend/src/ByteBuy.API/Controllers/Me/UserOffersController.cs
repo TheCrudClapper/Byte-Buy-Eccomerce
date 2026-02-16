@@ -16,7 +16,7 @@ public class UserOffersController : BaseApiController
     private readonly IOfferReadService _offerReadService;
     public UserOffersController(IOfferReadService offerReadService)
         => _offerReadService = offerReadService;
-    
+
     [HttpGet]
     [HasPermission("user-offers:read:many")]
     public async Task<ActionResult<PagedList<UserPanelOfferResponse>>> GetUserOffers([FromQuery] UserOffersQuery queryParams, CancellationToken ct)

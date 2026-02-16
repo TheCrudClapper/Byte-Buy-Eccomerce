@@ -3,7 +3,6 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Category;
-using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;

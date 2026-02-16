@@ -1,7 +1,6 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;

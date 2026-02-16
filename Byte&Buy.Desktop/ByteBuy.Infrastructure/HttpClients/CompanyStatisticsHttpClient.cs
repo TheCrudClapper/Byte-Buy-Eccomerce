@@ -8,7 +8,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyStatisticsHttpClient : HttpClientBase, IStatisticsHttpClient
 {
     private const string resource = "company/statistics";
-    public CompanyStatisticsHttpClient(HttpClient httpClient) : base(httpClient){}
+    public CompanyStatisticsHttpClient(HttpClient httpClient) : base(httpClient) { }
 
     public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync()
         => await GetAsync<IReadOnlyCollection<KeyPerformanceIndicatorDto>>($"{resource}/kpi");

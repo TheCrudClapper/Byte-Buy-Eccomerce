@@ -1,5 +1,4 @@
-﻿using Avalonia.Controls.Shapes;
-using Avalonia.Media.Imaging;
+﻿using Avalonia.Media.Imaging;
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;

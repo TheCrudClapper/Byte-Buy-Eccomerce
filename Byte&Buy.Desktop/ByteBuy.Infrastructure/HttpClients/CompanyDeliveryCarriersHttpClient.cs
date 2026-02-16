@@ -6,7 +6,6 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using System.Collections;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 

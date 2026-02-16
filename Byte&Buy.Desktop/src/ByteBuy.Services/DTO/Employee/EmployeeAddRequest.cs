@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Services.DTO.Address;
-using System.ComponentModel.DataAnnotations;
 
 namespace ByteBuy.Services.DTO.Employee;
 

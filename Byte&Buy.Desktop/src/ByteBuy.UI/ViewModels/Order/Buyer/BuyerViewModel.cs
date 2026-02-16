@@ -14,7 +14,7 @@ public sealed class BuyerViewModel
     {
         FullName = response.FullName;
         Email = response.Email;
-        PhoneNumber =  $"+48 {response.PhoneNumber}";
+        PhoneNumber = $"+48 {response.PhoneNumber}";
         HomeAddress = new HomeAddressViewModel(response.Address);
     }
 }

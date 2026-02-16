@@ -6,7 +6,7 @@ using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 
 public static class RentOfferSpecifications
-{        
+{
     public sealed class RentOfferResponseSpec : Specification<RentOffer, RentOfferResponse>
     {
         public RentOfferResponseSpec(Guid id)

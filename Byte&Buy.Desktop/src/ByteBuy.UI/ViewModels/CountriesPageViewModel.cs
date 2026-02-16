@@ -2,7 +2,6 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.ModelsUI.Country;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;

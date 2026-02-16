@@ -29,40 +29,48 @@ public partial class ProfilePageViewModel : PageViewModel
 
     [ObservableProperty]
     [Required]
+    [NotifyDataErrorInfo]
     [MaxLength(50)]
     private string _street = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _postalCity = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(10)]
     private string _houseNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _city = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _country = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(10)]
     private string? _flatNumber = string.Empty;
 
     [ObservableProperty]
-    [DataType(DataType.PhoneNumber)]
+    [NotifyDataErrorInfo]
+    [Phone]
     [MaxLength(15)]
     private string _phoneNumber = string.Empty;
     #endregion
@@ -92,7 +100,7 @@ public partial class ProfilePageViewModel : PageViewModel
             City = City,
             Street = Street,
             Country = Country,
-            FlatNumber = FlatNumber        
+            FlatNumber = FlatNumber
         };
         var request = new EmployeeAddressUpdateRequest(
             address, PhoneNumber

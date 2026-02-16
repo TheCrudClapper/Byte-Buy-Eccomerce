@@ -14,56 +14,74 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
     #region MVVM Fields
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _companyName = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _postalCity = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(20)]
     private string _tin = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [EmailAddress]
     [MaxLength(50)]
     private string _email = string.Empty;
 
-    [ObservableProperty][Required][MaxLength(30)] private string _slogan = string.Empty;
+    [ObservableProperty]
+    [Required]
+    [MaxLength(30)]
+    private string _slogan = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _street = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(20)]
     private string _houseNumber = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(20)]
     private string _postalCode = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _city = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(50)]
     private string _country = string.Empty;
 
-    [ObservableProperty][MaxLength(10)] private string? _flatNumber = string.Empty;
+    [ObservableProperty]
+    [MaxLength(10)]
+    private string? _flatNumber = string.Empty;
 
-    [ObservableProperty][Required][MaxLength(16)] private string _phoneNumber = string.Empty;
+    [ObservableProperty]
+    [Required]
+    [Phone]
+    [MaxLength(16)]
+    private string _phoneNumber = string.Empty;
 
     #endregion
 

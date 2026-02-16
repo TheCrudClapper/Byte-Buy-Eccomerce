@@ -13,10 +13,12 @@ public partial class CountryDialogViewModel(ICountryService countryService)
 {
     #region MVVM Properties
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(50)]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(3)]
     private string _code = string.Empty;
     #endregion

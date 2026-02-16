@@ -20,15 +20,18 @@ public partial class DeliveryDialogViewModel(
 {
     #region MVVM Properties
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(50)]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(50)]
     private string? _description;
 
     [ObservableProperty]
-    [Range(1, double.MaxValue, ErrorMessage = "PriceFrom cannot be less that 1")]
+    [NotifyDataErrorInfo]
+    [Range(1, double.MaxValue, ErrorMessage = "Price cannot be less that 1")]
     private decimal _price;
 
     [ObservableProperty]
@@ -44,15 +47,17 @@ public partial class DeliveryDialogViewModel(
     private SelectListItemResponse<int>? _selectedSize;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     private SelectListItemResponse<int>? _selectedChannel;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     private SelectListItemResponse<Guid>? _selectedDeliveryCarrier;
     #endregion
 
-    //Optimize it
+
     public async Task InitializeAsync()
     {
         var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectList();
@@ -80,6 +85,7 @@ public partial class DeliveryDialogViewModel(
             Error = result.Error!.Description;
             return;
         }
+
         await InitializeAsync();
 
         Name = result.Value.Name;

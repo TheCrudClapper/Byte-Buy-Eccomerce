@@ -4,6 +4,7 @@ using ByteBuy.Core.DTO.Public.Payment;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;
+
 public static class PaymentMappings
 {
     public static Expression<Func<PaymentOrder, PaymentResponse>> PaymentResponseProjection

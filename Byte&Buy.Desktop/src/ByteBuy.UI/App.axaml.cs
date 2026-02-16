@@ -63,8 +63,8 @@ namespace ByteBuy.UI
                 ApplicationPageNames.DeliveryCarriers => x.GetRequiredService<DeliveryCarriersViewModel>(),
                 ApplicationPageNames.Orders => x.GetRequiredService<OrdersPageViewModel>(),
                 ApplicationPageNames.OrderDetails => x.GetRequiredService<OrderDetailsPageViewModel>(),
-                ApplicationPageNames.Rentals=> x.GetRequiredService<RentalsPageViewModel>(),
-                ApplicationPageNames.RentalDetails=> x.GetRequiredService<RentalDetailsPageViewModel>(),
+                ApplicationPageNames.Rentals => x.GetRequiredService<RentalsPageViewModel>(),
+                ApplicationPageNames.RentalDetails => x.GetRequiredService<RentalDetailsPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

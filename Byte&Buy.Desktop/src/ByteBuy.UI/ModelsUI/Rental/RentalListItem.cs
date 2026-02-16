@@ -1,5 +1,4 @@
-﻿using ByteBuy.Services.DTO.Rental.Enum;
-using ByteBuy.UI.ModelsUI.Abstractions;
+﻿using ByteBuy.UI.ModelsUI.Abstractions;
 using System;
 namespace ByteBuy.UI.ModelsUI.Rental;
 

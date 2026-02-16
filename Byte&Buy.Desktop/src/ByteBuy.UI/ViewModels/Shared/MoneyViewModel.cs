@@ -4,9 +4,9 @@ namespace ByteBuy.UI.ViewModels.Shared;
 
 public sealed class MoneyViewModel
 {
-	public string Display { get; }
+    public string Display { get; }
     public MoneyViewModel(MoneyDto dto)
-	{
-		Display = $"{dto.Amount:0.00} {dto.Currency}";
-	}
+    {
+        Display = $"{dto.Amount:0.00} {dto.Currency}";
+    }
 }

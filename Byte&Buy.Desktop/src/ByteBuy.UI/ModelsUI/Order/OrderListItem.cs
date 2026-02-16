@@ -1,5 +1,4 @@
 ﻿using ByteBuy.UI.ModelsUI.Abstractions;
-using ByteBuy.UI.ModelsUI.Money;
 using System;
 
 namespace ByteBuy.UI.ModelsUI.Order;

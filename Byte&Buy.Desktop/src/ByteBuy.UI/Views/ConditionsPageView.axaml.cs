@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using ByteBuy.UI.ViewModels;
 
 namespace ByteBuy.UI.Views;
 

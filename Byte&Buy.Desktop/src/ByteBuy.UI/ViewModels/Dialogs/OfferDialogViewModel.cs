@@ -22,6 +22,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private bool _isSaleOffer;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     private decimal _pricePerDay;
 
@@ -32,10 +33,12 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private int? _currentAvaliableQuantity;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     private int _rentalDays;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, Range(0, double.MaxValue)]
     private decimal _pricePerItem;
 
@@ -43,6 +46,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private ItemListItem? _selectedItem;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, Range(0, int.MaxValue)]
     private int _quantity;
 

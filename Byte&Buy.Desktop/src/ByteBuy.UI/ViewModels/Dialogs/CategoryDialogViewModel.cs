@@ -13,10 +13,12 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
 {
     #region MVVM Fields
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Name is required"), MaxLength(20)]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [MaxLength(50)]
     private string? _description;
     #endregion
@@ -61,6 +63,4 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
         }
         return true;
     }
-
-
 }

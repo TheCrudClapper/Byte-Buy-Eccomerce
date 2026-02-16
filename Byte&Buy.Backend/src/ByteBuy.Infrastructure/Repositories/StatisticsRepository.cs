@@ -34,7 +34,7 @@ public class StatisticsRepository : IStatisticsRepository
         var cashFlow = await _context.Payments
             .Where(o => o.Status == PaymentStatus.Completed)
             .SumAsync(p => (decimal?)p.Amount.Amount, ct) ?? 0m;
-        
+
         // counting all private seller that sold anything
         var activeSellers = await _context.Orders
             .Where(o => o.SellerSnapshot.Type == SellerType.PrivatePerson)

@@ -7,7 +7,7 @@ public static class ProfilePageMappings
 {
     public static void MapFromResponse(this ProfilePageViewModel vm, EmployeeProfileResponse response)
     {
-        
+
         vm.FirstName = response.FirstName;
         vm.LastName = response.LastName;
         vm.RoleName = response.RoleName;

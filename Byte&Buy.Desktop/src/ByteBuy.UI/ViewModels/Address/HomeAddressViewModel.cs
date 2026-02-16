@@ -10,16 +10,16 @@ public class HomeAddressViewModel
     public string PostalCity { get; } = null!;
     public string City { get; } = null!;
     public string Country { get; } = null!;
-    public string? FlatNumber { get;} = null!;
+    public string? FlatNumber { get; } = null!;
 
     public HomeAddressViewModel(HomeAddressDto dto)
     {
         Street = dto.Street;
         HouseNumber = dto.HouseNumber;
         PostalCode = dto.PostalCode;
-        PostalCity = dto.PostalCity;    
+        PostalCity = dto.PostalCity;
         City = dto.City;
         Country = dto.Country;
-        FlatNumber = dto.FlatNumber is not null ?  $"/ {dto.FlatNumber}" : ""; 
+        FlatNumber = dto.FlatNumber is not null ? $"/ {dto.FlatNumber}" : "";
     }
 }

@@ -4,7 +4,6 @@ using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Filtration.PortalUser;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;

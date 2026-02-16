@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace ByteBuy.Services.DTO.Order.Enums;
+﻿namespace ByteBuy.Services.DTO.Order.Enums;
 
 public enum OrderStatus
 {

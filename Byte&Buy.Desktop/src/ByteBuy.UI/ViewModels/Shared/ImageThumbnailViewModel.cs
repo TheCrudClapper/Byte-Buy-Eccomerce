@@ -8,11 +8,11 @@ public partial class ImageThumbnailViewModel : ObservableObject
     public string ImagePath { get; set; } = null!;
 
     [ObservableProperty]
-    public Bitmap? _preview; 
+    public Bitmap? _preview;
 
     public ImageThumbnailViewModel(string imagePath)
     {
         ImagePath = imagePath;
-     
+
     }
 }

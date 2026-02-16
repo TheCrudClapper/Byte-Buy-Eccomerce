@@ -31,7 +31,7 @@ public class ConditionHttpClient(HttpClient httpClient)
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
         return await GetAsync<PagedList<ConditionListResponse>>(url);
     }
-       
+
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"conditions/options");
 }

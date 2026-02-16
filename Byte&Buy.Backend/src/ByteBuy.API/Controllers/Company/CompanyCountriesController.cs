@@ -4,7 +4,6 @@ using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Services.Filtration;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
