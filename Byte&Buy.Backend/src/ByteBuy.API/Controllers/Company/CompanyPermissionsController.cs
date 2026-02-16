@@ -2,11 +2,12 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 
-[Resource("permissions")]
+[Resource("company-permissions")]
 [Route("api/company/permissions")]
 [ApiController]
 public class CompanyPermissionsController : BaseApiController
@@ -18,7 +19,7 @@ public class CompanyPermissionsController : BaseApiController
     }
 
     [HttpGet("options")]
-    //[HasPermission("permission:read:options")]
+    [HasPermission("company-permissions:read:options")]
     public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _permissionService.GetSelectListAsync(ct));
 }

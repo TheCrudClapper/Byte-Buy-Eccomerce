@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -187,6 +188,9 @@ public abstract class HttpClientBase
     {
         try
         {
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+                return new Error("Access to this resource is forbidden");
+
             var details = await response.Content.ReadFromJsonAsync<ProblemDetails>();
             if (details is null)
                 return ApiErrors.UnknownError;

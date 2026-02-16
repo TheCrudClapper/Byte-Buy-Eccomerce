@@ -16,14 +16,14 @@
 	</UserControl.Styles>
 
 	<Grid>
-		<ScrollViewer>
-			<Grid RowDefinitions="50, Auto, 20, *, *"
+		
+			<Grid RowDefinitions="50, Auto, 20, *,"
 				  ColumnDefinitions="47*, 6*, 47*" Margin="0,0,30,0">
 
 				<!--Page Title-->
 				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Role"/>
 
-				<!-- Role System Tutorial --> 
+				<!-- Role System Tutorial -->
 				<Border Grid.Row="1"
 						Grid.ColumnSpan="3"
 						Padding="20"
@@ -98,26 +98,29 @@
 						Grid.Column="0"
 						Classes="sectionBorder">
 
-					<Grid RowDefinitions="50, *"
-						  ColumnDefinitions="5*, 1*, 94*">
+					<ScrollViewer>
+						<Grid RowDefinitions="50, *"
+							  ColumnDefinitions="5*, 1*, 94*">
 
-						<Image Grid.Row="0" Grid.Column="0"
-							   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-							   Classes="sectionMarker"/>
+							<Image Grid.Row="0" Grid.Column="0"
+								   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+								   Classes="sectionMarker"/>
 
-						<TextBlock Grid.Row="0"
-								   Grid.Column="2"
-								   Text="Permissions"
-								   VerticalAlignment="Center"
-								   Classes="sectionLabel"/>
+							<TextBlock Grid.Row="0"
+									   Grid.Column="2"
+									   Text="Permissions"
+									   VerticalAlignment="Center"
+									   Classes="sectionLabel"/>
 
-						<views:PermissionListBoxView
-						Grid.Column="0"
-						Grid.Row="1"
-						Grid.ColumnSpan="3"
-						DataContext="{Binding PermissionListBox}" />
+							<views:PermissionListBoxView
+							Grid.Column="0"
+							Grid.Row="1"
+							Grid.ColumnSpan="3"
+							DataContext="{Binding PermissionListBox}" />
 
-					</Grid>
+						</Grid>
+					</ScrollViewer>
+
 
 				</Border>
 
@@ -166,9 +169,7 @@
 					</StackPanel>
 
 				</Border>
-
 			</Grid>
-		</ScrollViewer>
 
 		<!-- ALERT -->
 		<views:AlertView

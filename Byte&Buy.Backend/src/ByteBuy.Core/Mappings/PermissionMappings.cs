@@ -7,5 +7,5 @@ namespace ByteBuy.Core.Mappings;
 public static class PermissionMappings
 {
     public static Expression<Func<Permission, SelectListItemResponse<Guid>>> SelectListItemResponseProjection
-        => p => new SelectListItemResponse<Guid>(p.Id, p.Name);
+        => p => new SelectListItemResponse<Guid>(p.Id, p.Description ?? "");
 }

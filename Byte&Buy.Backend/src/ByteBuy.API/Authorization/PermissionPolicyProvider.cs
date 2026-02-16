@@ -14,9 +14,12 @@ namespace ByteBuy.API.Authorization
 
         public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
         {
-            var policy = new AuthorizationPolicyBuilder();
-            policy.AddRequirements(new PermissionRequirement(policyName));
-            return Task.FromResult<AuthorizationPolicy?>(policy.Build());
+            var policy = new AuthorizationPolicyBuilder()
+               .RequireAuthenticatedUser()
+               .AddRequirements(new PermissionRequirement(policyName))
+               .Build();
+
+            return Task.FromResult<AuthorizationPolicy?>(policy);
         }
     }
 }

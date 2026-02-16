@@ -4,11 +4,12 @@ using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Filtration.PortalUser;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 
-[Resource("portalusers")]
+[Resource("company-portalusers")]
 [Route("api/company/portal-users")]
 [ApiController]
 public class CompanyPortalUsersController
@@ -19,6 +20,7 @@ public class CompanyPortalUsersController
        => _portalUserService = portalUserService;
 
     [HttpGet("list")]
+    [HasPermission("company-portalusers:read:many")]
     public async Task<ActionResult<PagedList<PortalUserListResponse>>> GetPortalUsersListAsync(
         [FromQuery] PortalUserListQuery queryParams, CancellationToken ct)
         => HandleResult(await _portalUserService.GetPortalUsersListAsync(queryParams, ct));

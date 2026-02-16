@@ -5,11 +5,12 @@ using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Delivery;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 
-[Resource("deliveries")]
+[Resource("company-deliveries")]
 [Route("api/company/deliveries")]
 [ApiController]
 public class CompanyDeliveriesController
@@ -21,15 +22,17 @@ public class CompanyDeliveriesController
 
 
     [HttpGet("list")]
-    //[HasPermission("delivery:read:list")]
+    [HasPermission("company-deliveries:read:many")]
     public async Task<ActionResult<PagedList<DeliveryListResponse>>> GetDeliveriesList([FromQuery] DeliveryListQuery query, CancellationToken ct)
         => HandleResult(await _deliveryService.GetDeliveriesListAsync(query, ct));
 
     [HttpGet("sizes/list")]
+    [HasPermission("company-deliveries:read:sizes")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList()
        => HandleResult(_deliveryService.GetParcelLockerSizes());
 
     [HttpGet("channels/list")]
+    [HasPermission("company-deliveries:read:channels")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectList()
         => HandleResult(_deliveryService.GetDeliveryChannels());
 }

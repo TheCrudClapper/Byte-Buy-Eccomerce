@@ -17,7 +17,7 @@ public class PermissionService : IPermissionService
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
     {
         var spec = new PermissionSelectListItemSpec();
-        return await _permissionRepository.GetListBySpecAsync(spec);
+        return await _permissionRepository.GetListBySpecAsync(spec, ct);
     }
 
     public async Task<bool> HasPermissionAsync(Guid userId, string permissionName)

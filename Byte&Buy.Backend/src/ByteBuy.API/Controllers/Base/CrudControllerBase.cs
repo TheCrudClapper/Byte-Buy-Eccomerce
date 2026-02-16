@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Shared;
+﻿using ByteBuy.API.Attributes;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts.Base;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,22 +23,22 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
         => _service = service;
 
     [HttpPost]
-    //[HasPermission("{resource}.create")]
+    [HasPermission("{resource}:create:one")]
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync(TAddRequest request)
         => HandleResult(await _service.AddAsync(request));
 
     [HttpPut("{id:guid}")]
-    //[HasPermission("{resource}.update")]
+    [HasPermission("{resource}:update:one")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(TId id, TUpdateRequest request)
         => HandleResult(await _service.UpdateAsync(id, request));
 
     [HttpDelete("{id:guid}")]
-    //[HasPermission("{resource}.delete")]
+    [HasPermission("{resource}:delete:one")]
     public virtual async Task<IActionResult> DeleteAsync(TId id)
         => HandleResult(await _service.DeleteAsync(id));
 
     [HttpGet("{id:guid}")]
-    //[HasPermission("{resource}:read")]
+    [HasPermission("{resource}:read:one")]
     public virtual async Task<ActionResult<TResponse>> GetByIdAsync(TId id, CancellationToken cancellationToken)
         => HandleResult(await _service.GetByIdAsync(id, cancellationToken));
 

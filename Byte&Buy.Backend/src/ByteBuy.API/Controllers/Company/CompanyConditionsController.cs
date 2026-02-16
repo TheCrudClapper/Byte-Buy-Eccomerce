@@ -5,11 +5,12 @@ using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 
-[Resource("conditions")]
+[Resource("company-conditions")]
 [Route("api/company/conditions")]
 [ApiController]
 public class CompanyConditionsController
@@ -20,7 +21,7 @@ public class CompanyConditionsController
         => _conditionService = conditionService;
 
     [HttpGet("list")]
-    //[HasPermission("category:read:many")]
+    [HasPermission("company-conditions:read:many")]
     public async Task<ActionResult<PagedList<ConditionListResponse>>> GetConditionsList([FromQuery] ConditionListQuery queryParams, CancellationToken ct)
        => HandleResult(await _conditionService.GetConditionsListAsync(queryParams, ct)); 
 }
