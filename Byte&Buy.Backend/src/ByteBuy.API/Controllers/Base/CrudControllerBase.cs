@@ -27,10 +27,12 @@ public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : B
         => HandleResult(await _service.AddAsync(request));
 
     [HttpPut("{id:guid}")]
+    //[HasPermission("{resource}.update")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(TId id, TUpdateRequest request)
         => HandleResult(await _service.UpdateAsync(id, request));
 
     [HttpDelete("{id:guid}")]
+    //[HasPermission("{resource}.delete")]
     public virtual async Task<IActionResult> DeleteAsync(TId id)
         => HandleResult(await _service.DeleteAsync(id));
 

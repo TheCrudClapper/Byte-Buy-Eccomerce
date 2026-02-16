@@ -8,6 +8,9 @@ public static class RoleErrors
     public static readonly Error NotFound = new(
        ErrorType.NotFound, "Role.NotFound", "Role is not found");
 
+    public static readonly Error SystemRoleDeleteForbidden = new(
+       ErrorType.NotFound, "Role.SystemRoleDeleteForbidden", "System role deletion is forbidden");
+
     public static readonly Error AlreadyExist = new(
         ErrorType.Conflict, "Role.RoleAlreadyExists", "Role of given name already exists");
 

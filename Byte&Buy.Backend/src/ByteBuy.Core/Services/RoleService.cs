@@ -73,6 +73,9 @@ public class RoleService : IRoleService
         if (role is null)
             return Result.Failure(RoleErrors.NotFound);
 
+        if (role.IsSystemRole)
+            return Result.Failure(RoleErrors.SystemRoleDeleteForbidden);
+
         role.Deactivate();
 
         var updationResult = await _roleManager.UpdateAsync(role);

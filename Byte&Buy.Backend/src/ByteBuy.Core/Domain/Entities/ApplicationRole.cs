@@ -6,8 +6,9 @@ namespace ByteBuy.Core.Domain.Entities;
 
 public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
 {
-    public ICollection<RolePermission> RolePermissions { get; private set; } = new List<RolePermission>();
-    public ICollection<ApplicationUserRole> UserRoles { get; private set; } = new List<ApplicationUserRole>();
+    public ICollection<RolePermission> RolePermissions { get; private set; } = [];
+    public ICollection<ApplicationUserRole> UserRoles { get; private set; } = [];
+    public bool IsSystemRole { get; private set; } = false;
     public bool IsActive { get; private set; }
     public DateTime DateCreated { get; private set; }
     public DateTime? DateEdited { get; private set; }
@@ -18,6 +19,7 @@ public class ApplicationRole : IdentityRole<Guid>, ISoftDeletable, IEntity
     {
         Name = name;
         IsActive = true;
+        IsSystemRole = false;
         DateCreated = DateTime.UtcNow;
     }
 
