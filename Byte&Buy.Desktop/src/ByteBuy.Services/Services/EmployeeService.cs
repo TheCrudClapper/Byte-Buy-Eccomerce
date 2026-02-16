@@ -31,7 +31,7 @@ public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpCl
         => await employeeHttpClient.GetListAsync(query);
 
     public async Task<Result<EmployeeProfileResponse>> GetSelf()
-        => await employeeHttpClient.GetSelfAsync();
+        => await employeeHttpClient.GetEmployeeProfileData();
 
     public async Task<Result<UpdatedResponse>> UpdateAddress(EmployeeAddressUpdateRequest request)
         => await employeeHttpClient.PutEmployeeAddressAsync(request);

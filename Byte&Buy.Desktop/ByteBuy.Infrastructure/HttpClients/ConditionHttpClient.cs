@@ -12,7 +12,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class ConditionHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IConditionHttpClient
 {
-    private const string resource = "conditions";
+    private const string resource = "company/conditions";
 
     public async Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
@@ -33,5 +33,5 @@ public class ConditionHttpClient(HttpClient httpClient)
     }
        
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"conditions/options");
 }

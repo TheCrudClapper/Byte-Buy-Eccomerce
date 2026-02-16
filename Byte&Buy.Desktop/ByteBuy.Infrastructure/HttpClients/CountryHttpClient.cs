@@ -12,7 +12,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CountryHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), ICountryHttpClient
 {
-    private const string resource = "countries";
+    private const string resource = "company/countries";
 
     public async Task<Result<CreatedResponse>> PostCountryAsync(CountryAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
@@ -21,7 +21,7 @@ public class CountryHttpClient(HttpClient httpClient)
         => await PutAsync<UpdatedResponse>($"{resource}/{countryId}", request);
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"countries/options");
 
     public async Task<Result<IEnumerable<CountryResponse>>> GetCountryListAsync()
         => await GetAsync<IEnumerable<CountryResponse>>($"{resource}");

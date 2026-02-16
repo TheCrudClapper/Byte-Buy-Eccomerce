@@ -5,7 +5,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public class DocumentsHttpClient : HttpClientBase, IDocumentsHttpClient
 {
-    private const string resource = "documents";
+    private const string resource = "company/documents";
     public DocumentsHttpClient(HttpClient httpClient) : base(httpClient)
     {
     }

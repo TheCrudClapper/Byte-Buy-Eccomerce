@@ -23,28 +23,28 @@ public static class DependencyInjection
         services.AddHttpClient<IUserHttpClient, UserHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IRoleHttpClient, RoleHttpClient>()
+        services.AddHttpClient<IRoleHttpClient, CompanyRolesHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<ICompanyInfoHttpClient, CompanyInfoHttpClient>()
+        services.AddHttpClient<ICompanyInfoHttpClient, CompanyHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IPortalUserHttpClient, PortalUserHttpClient>()
+        services.AddHttpClient<IPortalUserHttpClient, CompanyPortalUserHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<ICountryHttpClient, CountryHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IDeliveryHttpClient, DeliveryHttpClient>()
+        services.AddHttpClient<IDeliveryHttpClient, CompanyDeliveriesHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IConditionHttpClient, ConditionHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<ICategoryHttpClient, CategoryHttpClient>()
+        services.AddHttpClient<ICategoryHttpClient, CompanyCategoriesHttpClient>()
           .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IItemHttpClient, ItemHttpClient>()
+        services.AddHttpClient<IItemHttpClient, CompanyItemsHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IImagePreviewHttpClient, ImagePreviewHttpClient>(options =>
@@ -52,25 +52,25 @@ public static class DependencyInjection
             options.BaseAddress = new Uri("http://localhost:5099/Images/");
         }).AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IDeliveryCarrierHttpClient, DeliveryCarrierHttpClient>()
+        services.AddHttpClient<IDeliveryCarrierHttpClient, CompanyDeliveryCarriersHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<ISaleOfferHttpClient, SaleOfferHttpClient>()
+        services.AddHttpClient<ISaleOfferHttpClient, CompanySaleOfferHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IRentOfferHttpClient, RentOfferHttpClient>()
+        services.AddHttpClient<IRentOfferHttpClient, CompanyRentOffersHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IAddressHttpClient, AddressHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IOrderHttpClient, OrderHttpClient>()
+        services.AddHttpClient<IOrderHttpClient, CompanyOrdersHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IRentalHttpClient, CompanyRentalHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IStatisticsHttpClient, StatisticsHttpClient>()
+        services.AddHttpClient<IStatisticsHttpClient, CompanyStatisticsHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IDocumentsHttpClient, DocumentsHttpClient>()

@@ -12,9 +12,9 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class EmployeeHttpClient(HttpClient client)
     : HttpClientBase(client), IEmployeeHttpClient
 {
-    private const string resource = "employees";
-    public async Task<Result<EmployeeProfileResponse>> GetSelfAsync()
-        => await GetAsync<EmployeeProfileResponse>($"{resource}/me");
+    private const string resource = "company/employees";
+    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileData()
+        => await GetAsync<EmployeeProfileResponse>($"me/employee");
 
     public async Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/address", request);

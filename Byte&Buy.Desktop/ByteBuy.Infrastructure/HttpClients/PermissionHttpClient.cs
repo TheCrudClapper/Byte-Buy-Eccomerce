@@ -8,7 +8,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class PermissionHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IPermissionHttpClient
 {
-    private const string resource = "permissions";
+    private const string resource = "company/permissions";
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");
 }

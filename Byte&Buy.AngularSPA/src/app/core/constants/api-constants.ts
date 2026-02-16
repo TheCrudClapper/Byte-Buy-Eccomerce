@@ -9,10 +9,10 @@ export const API_ENDPOINTS = {
 
     //Carts
     carts: {
-        base: '/carts',
-        saleOffer: '/carts/sale-offer',
-        rentOffer: '/carts/rent-offer',
-        clear: '/carts/clear'
+        base: '/me/carts',
+        saleOffer: '/me/carts/sale-offer',
+        rentOffer: '/me/carts/rent-offer',
+        clear: '/me/carts/clear'
     },
 
     //Addresses
@@ -31,7 +31,7 @@ export const API_ENDPOINTS = {
     },
 
     companyInfo: {
-        get: '/companyInfo'
+        get: '/public/company/info'
     },
 
     conditions: {
@@ -44,7 +44,6 @@ export const API_ENDPOINTS = {
 
     deliveries: {
         options: '/deliveries/options',
-        list: '/deliveries/list',
         offer: '/deliveries/offer',
         available: '/deliveries/available'
     },
@@ -60,40 +59,40 @@ export const API_ENDPOINTS = {
     },
 
     users: {
-        password: '/users/password'
+        password: '/me/password'
     },
 
     portalUsers: {
-        me: '/portalusers/me'
+        me: '/me'
     },
 
     checkout: {
-        base: '/checkout'   
+        base: '/me/checkout'   
     },
 
     orders: {
-        base: '/orders',
-        sellerOrders: '/orders/seller',
-        cancel: (id: string | Guid) => `/orders/${id}/cancel`,
-        details: (id: string | Guid) => `/orders/details/${id}`,
-        return: (id: string | Guid) => `/orders/${id}/return`,
-        ship: (id: string | Guid) => `/orders/${id}/ship`,
-        deliver: (id: string | Guid) => `/orders/${id}/deliver`,
+        base: '/me/orders',
+        sellerOrders: '/me/orders/seller',
+        cancel: (id: string | Guid) => `/me/orders/${id}/cancel`,
+        details: (id: string | Guid) => `/me/orders/details/${id}`,
+        return: (id: string | Guid) => `/me/orders/${id}/return`,
+        ship: (id: string | Guid) => `/me/orders/${id}/ship`,
+        deliver: (id: string | Guid) => `/me/orders/${id}/deliver`,
     },
 
     payments:{
-        get: '/payments',
-        blik: '/blik',
-        card: '/card',
+        get: '/me/payments',
+        blik: '/me/blik',
+        card: '/me/card',
     },
 
     rentals: {
-        borrowerList: '/rentals/borrower',
-        lenderList: '/rentals/lender',
-        return: (id: string | Guid) => `/rentals/${id}/return`,  
+        borrowerList: '/me/rentals/borrower',
+        lenderList: '/me/rentals/lender',
+        return: (id: string | Guid) => `/me/rentals/${id}/return`,  
     },
 
      documents: {
-        orderDetails: (id: string | Guid) => `/documents/order-details/${id}`
+        orderDetails: (id: string | Guid) => `/company/documents/order-details/${id}`
     },
 }

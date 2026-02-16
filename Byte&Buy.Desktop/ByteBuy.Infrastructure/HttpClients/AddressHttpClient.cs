@@ -8,7 +8,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 
 public class AddressHttpClient : HttpClientBase, IAddressHttpClient
 {
-    private const string resource = "users";
+    private const string resource = "company/users";
     public AddressHttpClient(HttpClient httpClient) : base(httpClient) { }
 
     public async Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request)

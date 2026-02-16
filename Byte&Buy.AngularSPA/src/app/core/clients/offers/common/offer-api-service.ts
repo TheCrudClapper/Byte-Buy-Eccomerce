@@ -13,13 +13,14 @@ import { UserPanelOfferUnion } from '../../../dto/offers/common/user-panel-union
 import { PagedList } from '../../../pagination/pagedList';
 import { OfferQueryParams } from '../../../dto/offers/query/offer-browser-query-params';
 import { UserOffersQuery } from '../../../dto/offers/query/user-offers-query';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OfferApiService {
   private readonly httpClient = inject(HttpClient);
-  private readonly resourceUri = "http://localhost:5099/api";
+  private readonly resourceUri = environment.apiBaseUrl;
 
   getRentOfferDetails(id: Guid): Observable<RentOfferDetails> {
     return this.httpClient.get<RentOfferDetailsResponse>(`${this.resourceUri}/offers/rent/details/${id}`)
@@ -71,7 +72,7 @@ export class OfferApiService {
   }
 
   getUserOffers(query: UserOffersQuery): Observable<PagedList<UserPanelOfferUnion>>{
-    return this.httpClient.get<PagedList<UserPanelOfferUnion>>(`${this.resourceUri}/offers/my`, {params: query as any});
+    return this.httpClient.get<PagedList<UserPanelOfferUnion>>(`${this.resourceUri}/me/offers`, {params: query as any});
   }    
 }
 

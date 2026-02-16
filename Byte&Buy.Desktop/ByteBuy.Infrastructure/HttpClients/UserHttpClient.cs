@@ -8,7 +8,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class UserHttpClient(HttpClient httpClient)
     : HttpClientBase(httpClient), IUserHttpClient
 {
-    private const string resource = "users";
+    private const string resource = "me";
     public async Task<Result> PutPasswordAsync(PasswordChangeRequest request)
         => await PutAsync($"{resource}/password", request);
 }

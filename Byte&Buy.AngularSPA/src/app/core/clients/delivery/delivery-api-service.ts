@@ -26,20 +26,6 @@ export class DeliveryApiService {
     );
   }
 
-  getDeliveriesList(): Observable<DeliveryOption[]> {
-    return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.list}`).pipe(
-      map((response: DeliveryResponse[]) =>
-        response.map((item: DeliveryResponse): DeliveryOption => ({
-          id: item.id,
-          name: item.name,
-          currency: item.currency,
-          amount: item.amount,
-          carrier: item.carrier
-        }))
-      )
-    );
-  }
-
   getDeliveriesListPerOffer(id: Guid): Observable<DeliveryOption[]> {
     return this.httpClient.get<DeliveryResponse[]>(`${this.baseUrl}${API_ENDPOINTS.deliveries.offer}/${id}`).pipe(
       map((response: DeliveryResponse[]) =>

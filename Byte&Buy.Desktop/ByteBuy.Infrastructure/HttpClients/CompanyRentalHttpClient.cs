@@ -11,16 +11,16 @@ namespace ByteBuy.Infrastructure.HttpClients
 {
     internal class CompanyRentalHttpClient : HttpClientBase, IRentalHttpClient
     {
-        private const string resource = "rentals";
+        private const string resource = "company/rentals";
         public CompanyRentalHttpClient(HttpClient httpClient) : base(httpClient) { }
 
         public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
         {
-            var url = QueryStringHelper.ToQueryString($"{resource}/company", query);
+            var url = QueryStringHelper.ToQueryString($"{resource}", query);
             return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url);
         }
 
         public Task<Result<RentalLenderResponse>> GetCompanyRental(Guid rentalId)
-            => GetAsync<RentalLenderResponse>($"{resource}/{rentalId}/company");
+            => GetAsync<RentalLenderResponse>($"{resource}/{rentalId}");
     }
 }
