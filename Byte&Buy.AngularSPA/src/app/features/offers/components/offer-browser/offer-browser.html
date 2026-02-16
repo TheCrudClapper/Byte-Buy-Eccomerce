@@ -36,15 +36,6 @@
                 <p class="filter-section-title mt-5">Filters</p>
                 <hr class="mb-2">
                 <div class="mb-4">
-                    <label class="form-label">Seller</label>
-                    <div class="mb-1">
-                        <span>
-                            <input type="checkbox" class="form-check-input checkbox me-2" />
-                            <label class="form-label m-0">Company</label>
-                        </span>
-                    </div>
-                </div>
-                <div class="mb-4">
                     <label class="form-label">Location</label>
                     <input [value]="city() ?? ''" (input)="city.set($any($event.target).value)" type="text"
                         class="form-control" placeholder="Enter City, Place etc.">

@@ -22,12 +22,14 @@ public partial class ItemPageViewModel : ViewModelSingle
 {
     #region MVVM Fields
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required]
     [MaxLength(75, ErrorMessage = "Name must have at most 75 characters")]
     [MinLength(16, ErrorMessage = "Name must have at least 16 characters")]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [StockQuantityValidation]
     private int _stockQuantity;
 
@@ -39,6 +41,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     private SelectListItemResponse<Guid>? _selectedCategory;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required(ErrorMessage = "You need to select condition")]
     private SelectListItemResponse<Guid>? _selectedCondition;
 
@@ -46,6 +49,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     private int _descriptionCharCount;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
     [Required, MaxLength(2000)]
     private string _description = string.Empty;
 

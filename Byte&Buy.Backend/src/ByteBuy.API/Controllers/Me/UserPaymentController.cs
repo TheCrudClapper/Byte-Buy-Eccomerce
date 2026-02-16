@@ -13,9 +13,8 @@ public class UserPaymentController : BaseApiController
 {
     private readonly IPaymentService _paymentService;
     public UserPaymentController(IPaymentService paymentService)
-    {
-        _paymentService = paymentService;
-    }
+       => _paymentService = paymentService;
+    
 
     [HttpGet("{paymentId:guid}")]
     [HasPermission("user-payments:read:one")]

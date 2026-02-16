@@ -110,7 +110,6 @@ export class CheckoutPage implements OnInit {
     );
     this.checkoutApiService.getCheckout().subscribe(data => {
       this.checkout.set(data);
-      console.log(data);
       this.totalCost.set(data.totalCost);
     });
   }

@@ -23,7 +23,7 @@ public class DeliveryCarrierRepository : EfBaseRepository<DeliveryCarrier>, IDel
         => await _context.DeliveryCarriers.ToListAsync(ct);
 
     public async Task<bool> HasActiveRelationsAsync(Guid carrierId)
-        => await _context.DeliveryCarriers.AnyAsync(dc => dc.Deliveries.Any());
+        => await _context.DeliveryCarriers.AnyAsync(dc => dc.Deliveries.Any(d => d.DeliveryCarrierId == carrierId));
 
     public Task<PagedList<DeliveryCarrierResponse>> GetDeliveryCarrierListAsync(DeliveryCarriersListQuery queryParams, CancellationToken ct = default)
     {

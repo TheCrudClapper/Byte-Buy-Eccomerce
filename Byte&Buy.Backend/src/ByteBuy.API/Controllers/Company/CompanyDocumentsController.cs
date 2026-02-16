@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 
-[Resource("documents")]
+[Resource("company-documents")]
 [Route("api/company/documents")]
 [ApiController]
 public class CompanyDocumentsController : BaseApiController
@@ -18,7 +18,7 @@ public class CompanyDocumentsController : BaseApiController
     }
 
     [HttpGet("order-details/{orderId:guid}")]
-    [HasPermission("documents:read:order-details")]
+    [HasPermission("company-documents:read:order-details")]
     public async Task<ActionResult> DownloadOrderDetailsPdf(Guid orderId, CancellationToken ct)
     {
         var pdfBytesResult = await _documentService.GenerateOrderDetailsPdf(orderId, ct);

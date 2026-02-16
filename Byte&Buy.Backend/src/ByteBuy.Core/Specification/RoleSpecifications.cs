@@ -14,6 +14,7 @@ public static class RoleSpecifications
         {
             Query
                 .AsNoTracking()
+                .Where(r => !r.IsSystemRole)
                 .Select(RoleMappings.SelectListItemProjection);
         }
     }

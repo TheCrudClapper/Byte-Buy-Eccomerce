@@ -85,9 +85,9 @@ export const API_ENDPOINTS = {
     },
 
     payments: {
-        get: '/me/payments',
-        blik: '/me/blik',
-        card: '/me/card',
+        get: (id: string | Guid)  => `/me/payments/${id}`,
+        blik: (id: string | Guid) => `/me/payments/${id}/blik`,
+        card: (id: string | Guid) => `/me/payments/${id}/card`,
     },
 
     rentals: {

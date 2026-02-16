@@ -26,7 +26,7 @@ public class CountryService : ICountryService
     {
         var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code);
         if (exist)
-            return Result.Failure<CreatedResponse>(DeliveryCarrierErrors.AlreadyExists);
+            return Result.Failure<CreatedResponse>(CountryErrors.AlreadyExists);
 
         var countryResult = Country.Create(request.Name, request.Code);
         if (countryResult.IsFailure)
@@ -43,7 +43,7 @@ public class CountryService : ICountryService
     {
         var exist = await _countryRepository.ExistWithNameOrCodeAsync(request.Name, request.Code, id);
         if (exist)
-            return Result.Failure<UpdatedResponse>(DeliveryCarrierErrors.AlreadyExists);
+            return Result.Failure<UpdatedResponse>(CountryErrors.AlreadyExists);
 
         var country = await _countryRepository.GetByIdAsync(id);
         if (country is null)
@@ -62,11 +62,11 @@ public class CountryService : ICountryService
     public async Task<Result> DeleteAsync(Guid id)
     {
         if (await _countryRepository.HasActiveRelationsAsync(id))
-            return Result.Failure(DeliveryCarrierErrors.HasActiveDeliveries);
+            return Result.Failure(CountryErrors.HasActiveAddresses);
 
         var country = await _countryRepository.GetByIdAsync(id);
         if (country is null)
-            return Result.Failure(DeliveryCarrierErrors.NotFound);
+            return Result.Failure(CountryErrors.NotFound);
 
         country.Deactivate();
 

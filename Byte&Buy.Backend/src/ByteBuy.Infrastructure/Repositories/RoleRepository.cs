@@ -32,6 +32,7 @@ public class RoleRepository : EfBaseRepository<ApplicationRole>, IRoleRepository
     {
         var query = _context.Roles
             .AsNoTracking()
+            .Where(r => !r.IsSystemRole)
             .OrderByDescending(r => r.DateCreated)
             .AsQueryable();
 

@@ -130,13 +130,13 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         IsEditMode = true;
         EditingItemId = itemId;
-        await InitializeAsync();
 
         var result = await _employeeService.GetById(itemId);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
+        await InitializeAsync();
         EmployeeMappings.MapFromResponse(this, value);
     }
 

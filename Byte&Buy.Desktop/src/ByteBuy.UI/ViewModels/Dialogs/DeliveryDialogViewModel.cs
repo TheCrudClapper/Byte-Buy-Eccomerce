@@ -72,7 +72,6 @@ public partial class DeliveryDialogViewModel(
 
     public async override Task InitializeForEdit(Guid id)
     {
-        await InitializeAsync();
         IsEditMode = true;
         EditingItemId = id;
         var result = await deliveryService.GetById(id);
@@ -81,6 +80,7 @@ public partial class DeliveryDialogViewModel(
             Error = result.Error!.Description;
             return;
         }
+        await InitializeAsync();
 
         Name = result.Value.Name;
         Description = result.Value.Description;

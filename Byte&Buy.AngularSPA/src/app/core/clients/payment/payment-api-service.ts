@@ -17,16 +17,16 @@ export class PaymentApiService {
 
   getPaymentResponse(id: Guid): Observable<PaymentResponse>{
     return this.httpClient
-      .get<PaymentResponse>(`${this.baseApiUrl}${API_ENDPOINTS.payments.get}/${id}`);
+      .get<PaymentResponse>(`${this.baseApiUrl}${API_ENDPOINTS.payments.get(id)}`);
   }
 
   payWithBlik(id: Guid, request: BlikPaymentRequest){
     return this.httpClient
-      .put(`${this.baseApiUrl}${API_ENDPOINTS.payments.get}/${id}${API_ENDPOINTS.payments.blik}`, request);
+      .put(`${this.baseApiUrl}${API_ENDPOINTS.payments.blik(id)}`, request);
   }
 
    payWithCard(id: Guid, request: CardPaymentRequest){
     return this.httpClient
-      .put(`${this.baseApiUrl}${API_ENDPOINTS.payments.get}/${id}${API_ENDPOINTS.payments.card}`, request);
+      .put(`${this.baseApiUrl}${API_ENDPOINTS.payments.card(id)}`, request);
   }
 }
