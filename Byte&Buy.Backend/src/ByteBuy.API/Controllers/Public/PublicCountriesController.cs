@@ -14,7 +14,6 @@ public class PublicCountriesController : BaseApiController
         => _countryService = countryService;
 
     [HttpGet("options")]
-    //[HasPermission("{resource}:read:options")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectListAsync(ct));
 }

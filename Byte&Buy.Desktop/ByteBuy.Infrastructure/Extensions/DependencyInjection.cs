@@ -61,7 +61,7 @@ public static class DependencyInjection
         services.AddHttpClient<IRentOfferHttpClient, CompanyRentOffersHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IAddressHttpClient, AddressHttpClient>()
+        services.AddHttpClient<ICompanyUserHomeAddressHttpClient, CompanyUserHomeAddressHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IOrderHttpClient, CompanyOrdersHttpClient>()

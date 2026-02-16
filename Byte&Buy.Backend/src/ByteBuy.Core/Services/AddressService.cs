@@ -102,7 +102,7 @@ public class AddressService : IAddressService
         return updated.ToUpdatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> SetHomeUserAddress(Guid userId, HomeAddressDto request)
+    public async Task<Result<UpdatedResponse>> SetHomeUserAddressAsync(Guid userId, HomeAddressDto request)
     {
         var user = await _portalUserRepository.GetByIdAsync(userId);
         if (user is null)
@@ -126,7 +126,7 @@ public class AddressService : IAddressService
         return user.ToUpdatedResponse();
     }
 
-    public async Task<Result<HomeAddressDto>> GetUserHomeAddress(Guid userId, CancellationToken ct = default)
+    public async Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserHomeAddressSpec(userId);
         var address = await _portalUserRepository.GetBySpecAsync(spec);

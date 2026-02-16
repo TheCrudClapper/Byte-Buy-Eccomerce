@@ -15,15 +15,19 @@ export const API_ENDPOINTS = {
         clear: '/me/carts/clear'
     },
 
-    //Addresses
-    addresses: {
-        base: '/me',
-        homeAddress: '/me/home-address',
+    //Shipping Addresses
+    shippingAddresses: {
+        base: '/me/shiping-addresses',
         shippingAddressesList: '/me/shipping-addresses/list',
-        shippingAddressById: '/me/shipping-addresses',
+        shippingAddressById: (id: string | Guid) => `/me/shipping-addresses/${id}`,
         shippingAddressAdd: '/me/shipping-addresses',
-        shippingAddressDelete: '/me/shipping-addresses',
-        shippingAddressCheckout: '/me/shipping-addresses/checkout'
+        shippingAddressDelete: (id: string | Guid) => `/me/shipping-addresses/${id}`,
+        shippingAddressCheckout: (id: string | Guid | undefined) => `/me/shipping-addresses/checkout/${id ?? ''}`
+    },
+
+    //Home Address
+    homeAdresses: {
+        base: '/me/home-address',
     },
 
     categories: {
@@ -67,7 +71,7 @@ export const API_ENDPOINTS = {
     },
 
     checkout: {
-        base: '/me/checkout'   
+        base: '/me/checkout'
     },
 
     orders: {
@@ -80,7 +84,7 @@ export const API_ENDPOINTS = {
         deliver: (id: string | Guid) => `/me/orders/${id}/deliver`,
     },
 
-    payments:{
+    payments: {
         get: '/me/payments',
         blik: '/me/blik',
         card: '/me/card',
@@ -89,10 +93,10 @@ export const API_ENDPOINTS = {
     rentals: {
         borrowerList: '/me/rentals/borrower',
         lenderList: '/me/rentals/lender',
-        return: (id: string | Guid) => `/me/rentals/${id}/return`,  
+        return: (id: string | Guid) => `/me/rentals/${id}/return`,
     },
 
-     documents: {
+    documents: {
         orderDetails: (id: string | Guid) => `/company/documents/order-details/${id}`
     },
 }

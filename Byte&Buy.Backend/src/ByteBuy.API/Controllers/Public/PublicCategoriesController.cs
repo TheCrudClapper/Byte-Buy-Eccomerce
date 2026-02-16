@@ -15,7 +15,6 @@ public class PublicCategoriesController : BaseApiController
         => _categoryService = categoryService;
 
     [HttpGet("options")]
-    //[HasPermission("category:read:options")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
     => HandleResult(await _categoryService.GetSelectListAsync(ct));
 }

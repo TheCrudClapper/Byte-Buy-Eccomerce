@@ -10,8 +10,8 @@ public interface IAddressService
     Task<Result<CreatedResponse>> AddUserShippingAddressAsync(Guid userId, ShippingAddressAddRequest request);
     Task<Result<UpdatedResponse>> UpdateUserShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request);
     Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct = default);
-    Task<Result<UpdatedResponse>> SetHomeUserAddress(Guid userId, HomeAddressDto request);
-    Task<Result<HomeAddressDto>> GetUserHomeAddress(Guid userId, CancellationToken ct = default);
+    Task<Result<UpdatedResponse>> SetHomeUserAddressAsync(Guid userId, HomeAddressDto request);
+    Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct = default);
     Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid addressId, Guid userId, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAddressesAsync(Guid userId, CancellationToken ct = default);

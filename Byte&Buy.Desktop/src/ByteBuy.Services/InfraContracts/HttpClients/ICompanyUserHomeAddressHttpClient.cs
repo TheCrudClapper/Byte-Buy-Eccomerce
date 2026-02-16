@@ -4,7 +4,7 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.InfraContracts.HttpClients;
 
-public interface IAddressHttpClient
+public interface ICompanyUserHomeAddressHttpClient
 {
     Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request);
 }

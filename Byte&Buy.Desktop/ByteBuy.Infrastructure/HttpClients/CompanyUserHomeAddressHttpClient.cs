@@ -6,10 +6,10 @@ using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class AddressHttpClient : HttpClientBase, IAddressHttpClient
+public class CompanyUserHomeAddressHttpClient : HttpClientBase, ICompanyUserHomeAddressHttpClient
 {
-    private const string resource = "company/users";
-    public AddressHttpClient(HttpClient httpClient) : base(httpClient) { }
+    private const string resource = "users";
+    public CompanyUserHomeAddressHttpClient(HttpClient httpClient) : base(httpClient) { }
 
     public async Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request)
         => await PutAsync<UpdatedResponse>($"{resource}/{userId}/home-address", request);
