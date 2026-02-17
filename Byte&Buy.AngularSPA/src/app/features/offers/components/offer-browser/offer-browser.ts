@@ -13,10 +13,12 @@ import { OfferSortBy } from '../../models/offer-sort-by';
 import { SellerType } from '../../../../shared/models/seller-type';
 import { Guid } from 'guid-typescript';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
+import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 
 @Component({
   selector: 'app-offer-browser',
-  imports: [CommonModule, RentBrowserItem, SaleBrowserItem],
+  imports: [CommonModule, RentBrowserItem, SaleBrowserItem, EmptyState],
   templateUrl: './offer-browser.html',
   standalone: true,
   styleUrls: [
@@ -31,6 +33,12 @@ export class OfferBrowser implements OnInit {
   private readonly categoryApiSerivce = inject(CategoryApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+
+  readonly emptyStateModel: EmptyStateModel = {
+    description: `Change your filters for better results.`,
+    header: "0 offers found",
+    mainIconClass: "fa-brands fa-sistrix",
+  };
 
   conditions = signal<SelectListItem[] | undefined>(undefined);
   categories = signal<SelectListItem[] | undefined>(undefined);
@@ -245,7 +253,7 @@ export class OfferBrowser implements OnInit {
     this.goToPage(current.pageNumber + 1);
   }
 
-   goToPage(page: number) {
+  goToPage(page: number) {
     const meta = this.pagedList()?.metadata;
     if (!meta) return;
 

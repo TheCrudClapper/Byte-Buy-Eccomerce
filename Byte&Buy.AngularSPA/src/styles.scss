@@ -276,7 +276,7 @@ span {
 }
 
 .muted {
-    color: #94a3b8 !important;
+  color: #94a3b8 !important;
 }
 
 .text-primary {
@@ -343,9 +343,10 @@ span {
   }
 }
 
-.form-label{
+.form-label {
   color: var(--text-primary);
 }
+
 .offcanvas-header {
   background-color: var(--card-background) !important;
 }
@@ -375,3 +376,12 @@ span {
 .page-button:hover {
   color: var(--primary-accent);
 }
+
+.my-dialog {
+  background: var(--background);
+  border: 1px solid var(--primary-accent);
+  backdrop-filter: blur(12px);
+  padding: 24px;
+  font-family: 'open-sans-medium';
+}
+

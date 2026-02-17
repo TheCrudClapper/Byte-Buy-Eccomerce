@@ -10,6 +10,7 @@ import { ToastService } from '../../../../shared/services/snackbar/toast-service
 import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-seller-order-details',
@@ -18,10 +19,12 @@ import { ProblemDetails } from '../../../../core/dto/problem-details';
   templateUrl: './seller-order-details.html',
   styleUrl: './seller-order-details.scss',
 })
+
 export class SellerOrderDetails implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
   private readonly documentsApiService = inject(DocumentsApiService);
   private readonly toastService = inject(ToastService);
+  private readonly dialogService = inject(DialogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly imageBaseUrl = environment.staticImagesBaseUrl;
@@ -64,7 +67,6 @@ export class SellerOrderDetails implements OnInit {
         },
         error: (err: ProblemDetails) => this.toastService.error(err.detail ?? "Failed to generate pdf")
       });
-
   }
 
   loadOrderDetails(id: Guid) {
@@ -83,18 +85,24 @@ export class SellerOrderDetails implements OnInit {
       return;
 
     const orderId = this.orderDetails()!.id;
-    this.orderApiService.shipOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully shipped order.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Shipped }
-        })
-      },
-      error: (err) => {
-        this.toastService.error(err.detail ?? "Failed to return your order");
-      }
-    })
+
+    this.dialogService.confirm({ title: "Ship order to consumer ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.orderApiService.shipOrder(orderId).subscribe({
+            next: () => {
+              this.orderDetails.update(o => {
+                if (!o) return;
+                return { ...o, status: OrderStatus.Shipped }
+              });
+              this.dialogService.success("Successfully shipped order.");
+            },
+            error: (err) => {
+              this.dialogService.error(err.detail ?? "Failed to ship order.")
+            }
+          });
+        }
+      });
   }
 
   deliverOrder() {
@@ -102,18 +110,24 @@ export class SellerOrderDetails implements OnInit {
       return;
 
     const orderId = this.orderDetails()!.id;
-    this.orderApiService.deliverOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully delivered order to user.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Delivered }
-        })
-      },
-      error: (err) => {
-        this.toastService.error(err.detail ?? "Failed to deliver your order");
-      }
-    })
+
+    this.dialogService.confirm({ title: "Deliver order to consumer ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.orderApiService.deliverOrder(orderId).subscribe({
+            next: () => {
+              this.orderDetails.update(o => {
+                if (!o) return;
+                return { ...o, status: OrderStatus.Delivered }
+              });
+              this.dialogService.success("Successfully delivered order.");
+            },
+            error: (err) => {
+              this.toastService.error(err.detail ?? "Failed to deliver your order.");
+            }
+          });
+        }
+      });
   }
 
   actionButtonsVisible(): boolean {

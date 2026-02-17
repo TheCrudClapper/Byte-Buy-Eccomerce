@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-addresses',
@@ -23,18 +24,19 @@ import { EmptyState } from "../../../../shared/components/empty-state/empty-stat
   standalone: true
 })
 export class Addresses implements OnInit {
-  private readonly addressApiService: AddressApiService = inject(AddressApiService);
-  private readonly countriesApiService: CountryApiService = inject(CountryApiService);
-  private readonly toastService: ToastService = inject(ToastService);
+  private readonly addressApiService = inject(AddressApiService);
+  private readonly countriesApiService = inject(CountryApiService);
+  private readonly dialogService = inject(DialogService);
+  private readonly toastService = inject(ToastService);
 
   readonly emptyStateModel: EmptyStateModel = {
-      description: `You haven't defined any shipping address.
+    description: `You haven't defined any shipping address.
        To use courier delivery, you need to add one.`,
-      header: "No shipping addresses",
-      mainIconClass: "fa-solid fa-location-dot",
-      backgroundClass: 'var(--background)'
-    };
-  
+    header: "No shipping addresses",
+    mainIconClass: "fa-solid fa-location-dot",
+    backgroundClass: 'var(--background)'
+  };
+
   isLoading = signal<boolean>(false);
   countriesList = signal<SelectListItem[]>([]);
   shippingAddresses = signal<ShippingAddressListItem[]>([]);
@@ -116,13 +118,13 @@ export class Addresses implements OnInit {
       });
   }
 
-  loadCountries(){
+  loadCountries() {
     this.countriesApiService.getSelectList()
-    .subscribe({
-      next: data => { this.countriesList.set(data) }
-    });
+      .subscribe({
+        next: data => { this.countriesList.set(data) }
+      });
   }
-  
+
   showShippingDialog(id: Guid | null) {
     this.selectedShippingId = id;
     this.displayShippingDialog.set(true);
@@ -139,18 +141,22 @@ export class Addresses implements OnInit {
   }
 
   deleteShippingAddress(id: Guid) {
-    if (confirm("Are you sure you want to delete this address ?")) {
-      this.addressApiService.deleteShippingAddress(id)
-        .subscribe({
-          next: () => {
-            const currentAddresses = this.shippingAddresses();
-            this.shippingAddresses.set(
-            currentAddresses.filter(address => address.id !== id));
-          },
-          error: (err: ProblemDetails) => {
-            this.toastService.error(err.detail ?? "Failed to delete shipping address");
-          }
-        });
-    }
+    this.dialogService.confirm({ title: "Are you sure you want to delete this address ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.addressApiService.deleteShippingAddress(id)
+            .subscribe({
+              next: () => {
+                const currentAddresses = this.shippingAddresses();
+                this.shippingAddresses.set(
+                  currentAddresses.filter(address => address.id !== id));
+                this.dialogService.success("Successfully deleted shipping address.");
+              },
+              error: (err: ProblemDetails) => {
+                this.dialogService.error(err.detail ?? "Failed to delete shipping address.");
+              }
+            });
+        }
+      })
   }
 }

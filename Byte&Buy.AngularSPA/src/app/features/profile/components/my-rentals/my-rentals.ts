@@ -10,7 +10,9 @@ import { UserRentalBorrowerQuery } from '../../../../core/dto/rental/common/rent
 import { PagedList } from '../../../../core/pagination/pagedList';
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
-import { CtaButton } from '../../../../shared/components/cta-button/cta-button';
+import Swal from 'sweetalert2';
+
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-my-rentals',
@@ -22,6 +24,7 @@ import { CtaButton } from '../../../../shared/components/cta-button/cta-button';
 export class MyRentals {
   private readonly PAGE_SIZE = 10;
   private readonly rentalApiSerivce = inject(RentalApiService);
+  private readonly dialogService = inject(DialogService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
 
@@ -95,23 +98,45 @@ export class MyRentals {
     this.goToPage(current.pageNumber - 1);
   }
 
-  returnRental(id: Guid) {
-    this.rentalApiSerivce.returnRental(id).subscribe({
-      next: () => {
-        this.pagedList.update(list => {
-          if (!list) return list;
-
-          return {
-            ...list,
-            items: list.items.map(rental => rental.id === id
-              ? { ...rental, status: RentalStatus.Completed }
-              : rental)
-          };
-        });
-
-        this.toastService.success("Successfully returned item")
-      },
-      error: (err) => this.toastService.error(err?.detail ?? "Failed to return item back to lender")
+  openDialog() {
+    Swal.fire({
+      title: 'You want to return this item to lender ?',
+      iconColor: 'var(--primary-accent)',
+      color: 'var(--text-primary)',
+      icon: 'info',
+      customClass: { popup: 'my-dialog', confirmButton: 'btn', cancelButton: 'btn' },
+      showCancelButton: true
     });
   }
+
+  returnRental(id: Guid) {
+    this.dialogService
+      .confirm({
+        title: 'You want to return this item to lender?',
+        icon: 'info',
+        confirmText: 'Yes, return it',
+        cancelText: 'Cancel'
+      })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.rentalApiSerivce.returnRental(id).subscribe({
+            next: () => {
+              this.pagedList.update(list => {
+                if (!list) return list;
+
+                return {
+                  ...list,
+                  items: list.items.map(rental => rental.id === id
+                    ? { ...rental, status: RentalStatus.Completed }
+                    : rental)
+                };
+              });
+              this.dialogService.success("Lender got his stuff back.");
+            },
+            error: (err) => this.dialogService.error(err.detail ?? "Failed to return item.")
+          });
+        }
+      })
+  }
 }
+

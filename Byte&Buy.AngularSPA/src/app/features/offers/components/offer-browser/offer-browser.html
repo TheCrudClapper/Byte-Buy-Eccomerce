@@ -129,24 +129,20 @@
             @if(page.items; as items){
             @if(page.items.length > 0)
             {
-            @for (item of items; track $index)
-            {
-            @if(item.type === 'rent'){
-            <app-rent-browser-item [offer]="item">
-            </app-rent-browser-item>
-            }
+                @for (item of items; track $index)
+                {
+                    @if(item.type === 'rent'){
+                    <app-rent-browser-item [offer]="item">
+                    </app-rent-browser-item>
+                    }
 
-            @if(item.type === 'sale'){
-            <app-sale-browser-item [offer]="item">
-            </app-sale-browser-item>
-            }
-            }
+                    @if(item.type === 'sale'){
+                    <app-sale-browser-item [offer]="item">
+                    </app-sale-browser-item>
+                    }
+                }
             }@else {
-            <div class="content-section flex-column  d-flex justify-content-center align-items-center">
-                <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
-                <p class="mt-2 mb-0">No records found.</p>
-                <span class="fs-14-px">Change filters.</span>
-            </div>
+                <app-empty-state [model]="emptyStateModel"></app-empty-state>
             }
             }
         </div>

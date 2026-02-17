@@ -10,6 +10,7 @@ import { OrderDetailsResponse } from '../../../../core/dto/order/order-details-r
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-buyer-order-details',
@@ -21,6 +22,7 @@ import { DocumentsApiService } from '../../../../core/clients/documents/document
 export class BuyerOrderDetails implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
   private readonly toastService = inject(ToastService);
+  private readonly dialogService = inject(DialogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly documentsApiService = inject(DocumentsApiService);
@@ -78,37 +80,48 @@ export class BuyerOrderDetails implements OnInit {
       return;
 
     const orderId = this.orderDetails()!.id;
-    this.orderApiService.cancelOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully canceled order.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Canceled }
-        })
-      },
-      error: (err: ProblemDetails) => {
-        this.toastService.error(err.detail ?? "Failed to cancel your order");
-      }
-    })
+
+    this.dialogService.confirm({ title: "Are you sure you want to cancel order ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.orderApiService.cancelOrder(orderId).subscribe({
+            next: () => {
+              this.orderDetails.update(o => {
+                if (!o) return;
+                return { ...o, status: OrderStatus.Canceled }
+              })
+              this.dialogService.success("Successfully canceled your order.")
+            },
+            error: (err: ProblemDetails) => {
+              this.dialogService.error(err.detail ?? "Failed to cancel your order.")
+            }
+          });
+        }
+      })
   }
 
   returnOrder() {
     if (!this.orderDetails() || !this.orderDetails()?.id)
       return;
-
     const orderId = this.orderDetails()!.id;
-    this.orderApiService.returnOrder(orderId).subscribe({
-      next: () => {
-        this.toastService.success("Successfully returned order.");
-        this.orderDetails.update(o => {
-          if (!o) return;
-          return { ...o, status: OrderStatus.Returned }
-        })
-      },
-      error: (err: ProblemDetails) => {
-        this.toastService.error(err.detail ?? "Failed to return your order");
-      }
-    })
+
+    this.dialogService.confirm({ title: "Are you sure you want to return this order ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.orderApiService.returnOrder(orderId).subscribe({
+            next: () => {
+              this.orderDetails.update(o => {
+                if (!o) return;
+                return { ...o, status: OrderStatus.Returned }
+              });
+              this.dialogService.success("Successfully returned your order.")
+            },
+            error: (err: ProblemDetails) => {
+              this.dialogService.error(err.detail ?? "Failed to return your order.")
+            }
+          });
+        }
+      });
   }
 
   actionButtonsVisible(): boolean {
