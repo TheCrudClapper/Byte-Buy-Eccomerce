@@ -11,6 +11,7 @@ import { ShippingAddressListItem } from '../../model/shipping-address-list-item'
 import { Guid } from 'guid-typescript';
 import { ShippingAddressDialog } from "../shipping-address-modal/shipping-address-dialog/shipping-address-dialog";
 import { CommonModule } from '@angular/common';
+import { ProblemDetails } from '../../../../core/dto/problem-details';
 
 @Component({
   selector: 'app-addresses',
@@ -22,7 +23,7 @@ import { CommonModule } from '@angular/common';
 export class Addresses implements OnInit {
   private readonly addressApiService: AddressApiService = inject(AddressApiService);
   private readonly countriesApiService: CountryApiService = inject(CountryApiService);
-  private readonly snackbarService: ToastService = inject(ToastService);
+  private readonly toastService: ToastService = inject(ToastService);
 
   isLoading = signal<boolean>(false);
   countriesList = signal<SelectListItem[]>([]);
@@ -67,10 +68,10 @@ export class Addresses implements OnInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.snackbarService.success("Successfully saved changes");
+          this.toastService.success("Successfully saved changes");
         },
         error: () => {
-          this.snackbarService.success("Something went wrong");
+          this.toastService.success("Something went wrong");
         }
       });
   }
@@ -101,7 +102,7 @@ export class Addresses implements OnInit {
     this.addressApiService.getShippingAddressesList()
       .subscribe({
         next: data => { this.shippingAddresses.set(data) },
-        error: () => this.snackbarService.error('Failed to load shipping addresses')
+        error: () => this.toastService.error('Failed to load shipping addresses')
       });
   }
 
@@ -136,8 +137,8 @@ export class Addresses implements OnInit {
             this.shippingAddresses.set(
             currentAddresses.filter(address => address.id !== id));
           },
-          error: () => {
-            alert("Failed to delete address");
+          error: (err: ProblemDetails) => {
+            this.toastService.error(err.detail ?? "Failed to delete shipping address");
           }
         });
     }

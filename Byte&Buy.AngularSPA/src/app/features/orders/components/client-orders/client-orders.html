@@ -154,7 +154,7 @@
         <h5 class="offcanvas-title" id="filtersOffcanvasLabel">
             Filters
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close">
         </button>
     </div>
 
@@ -162,47 +162,37 @@
         <div class="mb-3">
             <label class="form-label">Search Buyer</label>
 
-            <input 
-                type="text"
-                class="form-control"
-                [value]="buyerFullName() ?? ''"
-                (input)="buyerFullName.set($any($event.target).value)"
-                placeholder="Enter buyer name">
+            <input type="text" class="form-control" [value]="buyerFullName() ?? ''"
+                (input)="buyerFullName.set($any($event.target).value)" placeholder="Enter buyer name">
         </div>
 
-          <div class="mb-3">
+        <div class="mb-3">
             <label class="form-label">Search Item Name</label>
 
-             <input 
-                type="text" 
-                [value]="itemName() ?? ''" class="form-control" placeholder="Search phrase"
+            <input type="text" [value]="itemName() ?? ''" class="form-control" placeholder="Search phrase"
                 (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Order Status</label>
-            <select class="form-select" 
-                [value]="selectedOrderStatus() ?? 'null'" 
+            <select class="form-select" [value]="selectedOrderStatus() ?? 'null'"
                 (change)="onOrderStatusChange($any($event.target).value)">
                 <option value="null" disabled>Select Status</option>
                 @for (status of orderStatuses; track $index)
                 {
-                    <option [value]="status">
-                        {{ OrderStatus[status] }}
-                    </option>
+                <option [value]="status">
+                    {{ OrderStatus[status] }}
+                </option>
                 }
             </select>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Purchased date</label>
-            <input type="date" 
-                [value]="purchasedFrom()"
-                (change)="purchasedFrom.set($any($event.target).value)" class="form-control mb-2">
+            <input type="date" [value]="purchasedFrom()" (change)="purchasedFrom.set($any($event.target).value)"
+                class="form-control mb-2">
 
-            <input type="date" 
-                [value]="purchasedTo()" 
-                (change)="purchasedTo.set($any($event.target).value)"
+            <input type="date" [value]="purchasedTo()" (change)="purchasedTo.set($any($event.target).value)"
                 class="form-control">
         </div>
 

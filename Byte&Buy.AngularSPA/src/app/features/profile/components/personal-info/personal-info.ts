@@ -58,15 +58,15 @@ export class PersonalInfo implements OnInit {
     }
 
     this.userApiService.changePassword(payload)
-    .pipe(finalize(() => {this.passwordDataLoading.set(false)}))
-    .subscribe({
-      next: () => {
-        this.snackBarService.success("Successfully updated password !");
-      },
-      error: (err: ProblemDetails) => {
-        this.snackBarService.error(err.detail ?? "Failed to update password");
-      }
-    })
+      .pipe(finalize(() => this.passwordDataLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.snackBarService.success("Successfully updated password !");
+        },
+        error: (err: ProblemDetails) => {
+          this.snackBarService.error(err.detail ?? "Failed to update password");
+        }
+      })
   }
 
   onUserInfoSubmit() {
@@ -75,6 +75,7 @@ export class PersonalInfo implements OnInit {
       return;
     }
 
+    this.userDataLoading.set(true);
     const data = this.userInfoForm.value;
 
     const payload: UserBasicInfoUpdateRequest = {
@@ -84,35 +85,37 @@ export class PersonalInfo implements OnInit {
       lastName: data.lastName,
     }
 
-    this.portalUserApiService.putUserBasicInfo(payload).subscribe({
-      next: (response) => {
-        this.snackBarService.success("Successfully updated user data.");
-      },
-      error: (err: ProblemDetails) => {
-        this.snackBarService.error(err?.detail ?? "Failed to update user data.");
-      }
-    });
+    this.portalUserApiService.putUserBasicInfo(payload)
+      .pipe(finalize(() => this.userDataLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.snackBarService.success("Successfully updated user data.");
+        },
+        error: (err: ProblemDetails) => {
+          this.snackBarService.error(err?.detail ?? "Failed to update user data.");
+        }
+      });
   }
 
   loadBasicInfo(): void {
     this.portalUserApiService.getUserBasicInfo()
       .pipe(finalize(() => this.userDataLoading.set(false)))
-      .subscribe(response =>  
-        { this.userInfoForm.patchValue(
-        {
-          firstName: response.firstName,
-          lastName: response.lastName,
-          email: response.email,
-          phoneNumber: response.phoneNumber ?? null
-        })
-    });
+      .subscribe(response => {
+        this.userInfoForm.patchValue(
+          {
+            firstName: response.firstName,
+            lastName: response.lastName,
+            email: response.email,
+            phoneNumber: response.phoneNumber ?? null
+          })
+      });
   }
 
   getUserErrorMessage(path: string) {
     return getErrorMessage(this.userInfoForm, path);
   }
 
-  getPasswordErroMessage(path: string){
+  getPasswordErroMessage(path: string) {
     return getErrorMessage(this.passwordForm, path);
   }
 }

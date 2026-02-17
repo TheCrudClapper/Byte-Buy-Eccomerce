@@ -126,7 +126,7 @@ public class AddressService : IAddressService
         return user.ToUpdatedResponse();
     }
 
-    public async Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct = default)
+    public async Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct)
     {
         var spec = new UserHomeAddressSpec(userId);
         var address = await _portalUserRepository.GetBySpecAsync(spec);
@@ -136,7 +136,7 @@ public class AddressService : IAddressService
             : address.ToHomeAddressDto();
     }
 
-    public async Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct = default)
+    public async Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new UserAndShippingAddressResponseSpec(userId, addressId), ct);
         if (addressDto is null)
@@ -145,7 +145,7 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct = default)
+    public async Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct)
     {
         var spec = new UserShippingAddressListResponseSpec(userId);
         var addressDtoList = await _addressReadRepository.GetListBySpecAsync(spec);
@@ -155,7 +155,7 @@ public class AddressService : IAddressService
             : addressDtoList;
     }
 
-    public async Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct = default)
+    public async Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new ShippingAddressResponseSpec(addressId), ct);
         if (addressDto is null)
@@ -185,7 +185,7 @@ public class AddressService : IAddressService
         return Result.Success();
     }
 
-    public async Task<Result<ShippingAddressCheckout>> GetCheckoutAddress(Guid? addressId, Guid userId, CancellationToken ct = default)
+    public async Task<Result<ShippingAddressCheckout>> GetCheckoutAddress(Guid? addressId, Guid userId, CancellationToken ct)
     {
         var spec = new UserShippingAddressCheckoutSpec(userId, addressId);
         var address = await _addressReadRepository.GetBySpecAsync(spec, ct);

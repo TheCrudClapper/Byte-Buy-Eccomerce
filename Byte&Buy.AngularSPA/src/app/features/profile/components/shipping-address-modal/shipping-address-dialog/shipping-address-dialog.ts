@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, EventEmitter, inject, Input, input, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
@@ -11,7 +11,6 @@ import { ShippingAddressUpdateRequest } from '../../../../../core/dto/shipping-a
 import { ShippingAddressAddRequest } from '../../../../../core/dto/shipping-address/shipping-address-add-request';
 import { SelectListItem } from '../../../../../shared/models/select-list-item';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-shipping-address-dialog',
@@ -30,10 +29,10 @@ export class ShippingAddressDialog {
   @Output() onSaved = new EventEmitter<void>();
 
   private addressApiService = inject(AddressApiService);
-  private snackbarService = inject(ToastService);
+  private toastService = inject(ToastService);
 
   shippingForm!: FormGroup;
-  loading = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   isEditMode = false;
   error = signal<string | null>(null);
 
@@ -55,10 +54,10 @@ export class ShippingAddressDialog {
     this.shippingForm = new FormGroup({
       label: new FormControl(data?.label || '', [Validators.required, Validators.maxLength(50)]),
       street: new FormControl(data?.street || '', [Validators.required, Validators.maxLength(50)]),
-      houseNumber: new FormControl(data?.houseNumber || '', Validators.required),
-      postalCity: new FormControl(data?.postalCity || '', Validators.required),
-      postalCode: new FormControl(data?.postalCode || '', [Validators.required]),
-      city: new FormControl(data?.city || '', Validators.required),
+      houseNumber: new FormControl(data?.houseNumber || '', [Validators.required, Validators.maxLength(10)]),
+      postalCity: new FormControl(data?.postalCity || '', [Validators.required, Validators.maxLength(50)]),
+      postalCode: new FormControl(data?.postalCode || '', [Validators.required, Validators.maxLength(20)]),
+      city: new FormControl(data?.city || '', [Validators.required, Validators.maxLength(50)]),
       flatNumber: new FormControl(data?.flatNumber || '', Validators.maxLength(10)),
       selectedCountryId: new FormControl(data?.countryId || null, Validators.required),
       isDefault: new FormControl(data?.isDefault ?? false)
@@ -71,19 +70,18 @@ export class ShippingAddressDialog {
       return;
     }
 
-    this.loading.set(true);
+    this.isLoading.set(true);
     const payload = this.buildPayload();
 
     const request$: Observable<unknown> = this.addressId
       ? this.addressApiService.putShippingAddress(this.addressId, payload as ShippingAddressUpdateRequest)
       : this.addressApiService.postShippingAddress(payload as ShippingAddressAddRequest);
 
-
     request$
-      .pipe(finalize(() => this.loading.set(false)))
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: () => {
-          this.snackbarService.success(`Shipping address ${this.isEditMode ? 'updated' : 'created'}!`);
+          this.toastService.success(`Shipping address ${this.isEditMode ? 'updated' : 'created'}!`);
           this.close();
           this.onSaved.emit();
         },
@@ -98,15 +96,15 @@ export class ShippingAddressDialog {
   }
 
   loadAddressData() {
-    this.loading.set(true);
+    this.isLoading.set(true);
     this.addressApiService.getShippingAddress(this.addressId!)
-      .pipe(finalize(() => this.loading.set(false)))
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (address) => {
           this.initForm(address);
         },
         error: (err: ProblemDetails) => {
-          this.snackbarService.error(err.detail ?? "Failed to load address");
+          this.toastService.error(err.detail ?? "Failed to load address");
           this.close();
         }
       })
@@ -133,7 +131,7 @@ export class ShippingAddressDialog {
     this.visible.set(false);
     this.visibleChange.emit(false);
     this.shippingForm?.reset();
-    this.loading.set(false);
+    this.isLoading.set(false);
     this.error.set(null);
   }
 }
