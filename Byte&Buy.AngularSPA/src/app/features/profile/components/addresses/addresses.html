@@ -100,7 +100,7 @@
         order creation.
     </p>
     @if(shippingAddresses().length === 0 ){
-    <p class="fs-14-px">No shipping addresses defined yet.</p>
+        <app-empty-state [model]="emptyStateModel"></app-empty-state>
     }
     <div class="row">
         @for (item of shippingAddresses(); track $index)

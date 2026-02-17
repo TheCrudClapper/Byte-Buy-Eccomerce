@@ -2,34 +2,45 @@
     color: var(--text-primary);
     font-weight: 500;
 }
-.login-window{
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.login-window {
     padding: 50px;
-    border-radius: 6px;
+    border-radius: 12px;
     border: 1px solid var(--primary-accent);
     background: var(--card-background);
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
-.brand-section{
-  background: var(--text-primary);
-  background-clip: text;
-  font-family: 'raleway-bold';
-  color: transparent;
+.brand-section {
+    background: var(--text-primary);
+    background-clip: text;
+    font-family: 'raleway-bold';
+    color: transparent;
 }
 
-a{
+a {
     color: var(--text-primary);
     transition: color 0.3s ease;
     text-decoration: none;
     cursor: pointer;
 }
 
-a:hover{
+a:hover {
     color: var(--primary-accent);
 }
 
-.divider{
+.divider {
     border-color: var(--text-primary);
 }
 
@@ -42,18 +53,18 @@ a:hover{
     font-size: 16px;
 }
 
-    .separator::before,
-    .separator::after {
-        content: "";
-        flex: 1;
-        border-bottom: 1px solid var(--text-primary);
-    }
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid var(--text-primary);
+}
 
-    .separator:not(:empty)::before {
-        margin-right: 10px;
-    }
+.separator:not(:empty)::before {
+    margin-right: 10px;
+}
 
-    .separator:not(:empty)::after {
-        margin-left: 10px;
-    }
+.separator:not(:empty)::after {
+    margin-left: 10px;
+}
 

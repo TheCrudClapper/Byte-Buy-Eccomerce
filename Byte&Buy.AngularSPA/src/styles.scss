@@ -275,15 +275,17 @@ span {
   background-color: var(--primary-accent);
 }
 
+.muted {
+    color: #94a3b8 !important;
+}
+
 .text-primary {
   color: var(--text-primary) !important;
 }
 
-
 .toast-top-right {
   margin-top: 65px;
 }
-
 
 .icon-btn {
   background: none;

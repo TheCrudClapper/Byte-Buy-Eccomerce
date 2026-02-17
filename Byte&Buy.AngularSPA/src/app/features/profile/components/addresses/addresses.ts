@@ -12,10 +12,12 @@ import { Guid } from 'guid-typescript';
 import { ShippingAddressDialog } from "../shipping-address-modal/shipping-address-dialog/shipping-address-dialog";
 import { CommonModule } from '@angular/common';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
+import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
+import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 
 @Component({
   selector: 'app-addresses',
-  imports: [CommonModule, ReactiveFormsModule, ShippingAddressDialog],
+  imports: [CommonModule, ReactiveFormsModule, ShippingAddressDialog, EmptyState],
   templateUrl: './addresses.html',
   styleUrl: './addresses.scss',
   standalone: true
@@ -25,6 +27,14 @@ export class Addresses implements OnInit {
   private readonly countriesApiService: CountryApiService = inject(CountryApiService);
   private readonly toastService: ToastService = inject(ToastService);
 
+  readonly emptyStateModel: EmptyStateModel = {
+      description: `You haven't defined any shipping address.
+       To use courier delivery, you need to add one.`,
+      header: "No shipping addresses",
+      mainIconClass: "fa-solid fa-location-dot",
+      backgroundClass: 'var(--background)'
+    };
+  
   isLoading = signal<boolean>(false);
   countriesList = signal<SelectListItem[]>([]);
   shippingAddresses = signal<ShippingAddressListItem[]>([]);

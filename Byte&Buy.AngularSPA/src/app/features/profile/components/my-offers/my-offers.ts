@@ -11,20 +11,42 @@ import { environment } from '../../../../../environments/environment';
 import { OfferStatus } from '../../../../core/dto/offers/enum/offer-status';
 import { PagedList } from '../../../../core/pagination/pagedList';
 import { UserOffersQuery } from '../../../../core/dto/offers/query/user-offers-query';
+import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
+import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 
 @Component({
   selector: 'app-my-offers',
-  imports: [DatePipe, DecimalPipe, RouterLink],
+  imports: [DatePipe, DecimalPipe, RouterLink, EmptyState],
   templateUrl: './my-offers.html',
+  standalone: true,
   styleUrl: './my-offers.scss',
 })
-export class MyOffers{
+export class MyOffers {
   private readonly PAGE_SIZE = 10;
   private readonly offerApiService = inject(OfferApiService);
   private readonly rentOfferApiService = inject(RentOfferApiService);
   private readonly saleOfferApiService = inject(SaleOfferApiService);
   private readonly toastService = inject(ToastService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
+
+  readonly emptyStateModel: EmptyStateModel = {
+    description: ` You haven't created any offers so far.
+        When you create and offer, it will appear here.`,
+    header: "No offers yet",
+    mainIconClass: "fa-solid fa-box-open",
+    buttonArray: [
+      {
+        buttonIconClass: "fa-solid fa-hand-holding-heart me-1",
+        buttonText: " Add rent offer",
+        buttonLink: `/offers/rent/create`,
+      },
+      {
+        buttonIconClass: "fa-solid fa-money-bill-wave me-1",
+        buttonText: " Add sale offer",
+        buttonLink: `/offers/sale/create`,
+      },
+    ]
+  };
 
   pagedList = signal<PagedList<UserPanelOfferUnion> | undefined>(undefined);
   readonly OfferStatus = OfferStatus;

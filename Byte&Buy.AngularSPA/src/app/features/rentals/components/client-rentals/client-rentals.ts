@@ -8,10 +8,12 @@ import { RentalStatus } from '../../../../core/dto/rental/enum/rental-status';
 import { PagedList } from '../../../../core/pagination/pagedList';
 import { UserRentalLenderQuery } from '../../../../core/dto/rental/common/user-rental-lender-query';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
+import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 
 @Component({
   selector: 'app-client-rentals',
-  imports: [DecimalPipe, DatePipe],
+  imports: [DecimalPipe, DatePipe, EmptyState],
   standalone: true,
   templateUrl: './client-rentals.html',
   styleUrl: './client-rentals.scss',
@@ -28,6 +30,20 @@ export class ClientRentals implements OnInit {
   pagedList = signal<PagedList<RentalLenderResponse> | undefined>(undefined);
 
   readonly RentalStatus = RentalStatus;
+
+  readonly emptyStateModel: EmptyStateModel = {
+    description: `None of your items have been rented so far.
+       Once a client rents something, it will appear here.`,
+    header: "No rentals yet",
+    mainIconClass: "fa-solid fa-hand-holding-dollar",
+    buttonArray: [
+      {
+        buttonIconClass: "fa-solid fa-plus me-1",
+        buttonText: "Add new rent item",
+        buttonLink: `/offers/rent/create`,
+      }
+    ]
+  }
 
   readonly rentalStatuses = Object.values(RentalStatus)
     .filter(v => typeof v === 'number');

@@ -91,15 +91,9 @@
         </div>
         }
         @if(page.items.length === 0){
-        <div class="content-section flex-column  d-flex justify-content-center align-items-center">
-            <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
-            <p class="mt-2 mb-0">No one rented any of your items yet.</p>
-            <span class="fs-14-px">
-                We hope that it will change soon
-                <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
-            </span>
-        </div>
-        }@else {
+        <app-empty-state [model]="emptyStateModel"></app-empty-state>
+        }
+        @else {
         <div class="content-section">
             <div class="row">
                 <div class="col-4 d-flex justify-content-start">
@@ -146,23 +140,20 @@
     <div class="offcanvas-body">
         <div class="mb-3">
             <label class="form-label">Item Name</label>
-            <input 
-                type="text" 
-                [value]="itemName() ?? ''" class="form-control" placeholder="Enter item name"
+            <input type="text" [value]="itemName() ?? ''" class="form-control" placeholder="Enter item name"
                 (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Rental Status</label>
-            <select class="form-select" 
-                [value]="selectedRentalStatus() ?? 'null'"
+            <select class="form-select" [value]="selectedRentalStatus() ?? 'null'"
                 (change)="onRentalStatusChange($any($event.target).value)">
                 <option value="null" disabled>Select Status</option>
                 @for (status of rentalStatuses; track $index)
                 {
-                    <option [value]="status">
-                        {{ RentalStatus[status] }}
-                    </option>
+                <option [value]="status">
+                    {{ RentalStatus[status] }}
+                </option>
                 }
             </select>
         </div>
@@ -170,17 +161,11 @@
         <div class="mb-3">
             <label class="form-label">Rental Period</label>
 
-            <input 
-                type="date" 
-                [value]="toDateInputValue(rentalStartDate())"
-                (change)="onStartDateChange($any($event.target).value)"
-                class="form-control mb-2">
+            <input type="date" [value]="toDateInputValue(rentalStartDate())"
+                (change)="onStartDateChange($any($event.target).value)" class="form-control mb-2">
 
-            <input
-                type="date" 
-                [value]="toDateInputValue(rentalEndDate())"
-                (change)="onEndDateChange($any($event.target).value)"
-                class="form-control">
+            <input type="date" [value]="toDateInputValue(rentalEndDate())"
+                (change)="onEndDateChange($any($event.target).value)" class="form-control">
         </div>
 
         <div class="d-grid gap-2 mt-4">

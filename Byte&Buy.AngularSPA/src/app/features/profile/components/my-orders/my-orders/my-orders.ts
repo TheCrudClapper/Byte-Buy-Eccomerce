@@ -9,18 +9,36 @@ import { OrderStatus } from '../../../../../core/dto/order/enum/order-status';
 import { RouterLink } from '@angular/router';
 import { UserOrderListQuery } from '../../../../../core/dto/order/common/user-order-list-query';
 import { PagedList } from '../../../../../core/pagination/pagedList';
+import { EmptyStateModel } from '../../../../../shared/models/empty-state-model';
+import { EmptyState } from "../../../../../shared/components/empty-state/empty-state";
 
 @Component({
   selector: 'app-my-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.scss',
+  standalone: true,
 })
+
 export class MyOrders {
   private readonly PAGE_SIZE = 10;
   private readonly orderApiService = inject(OrderApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
+
+  readonly emptyStateModel: EmptyStateModel = {
+    description: ` You haven't purchased anything yet,
+          When you place an order, it will appear here.`,
+    header: "No orders placed yet",
+    mainIconClass: "fa-solid fa-truck",
+    buttonArray: [
+      {
+        buttonIconClass: "fa-solid fa-fire me-1",
+        buttonLink: `/offers`,
+        buttonText: "Find something for yourself",
+      }
+    ]
+  }
 
   pagedList = signal<PagedList<UserOrderListResponse> | undefined>(undefined);
 
@@ -34,7 +52,7 @@ export class MyOrders {
       this.fetch(this.query());
     })
   }
-  
+
   //declaring it so its visible in template
   readonly OrderStatus = OrderStatus;
 

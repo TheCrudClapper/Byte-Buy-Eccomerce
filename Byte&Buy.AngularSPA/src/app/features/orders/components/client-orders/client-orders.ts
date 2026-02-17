@@ -9,10 +9,12 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserOrderSellerListQuery } from '../../../../core/dto/order/common/user-order-seller-list-query';
 import { PagedList } from '../../../../core/pagination/pagedList';
+import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
+import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 
 @Component({
   selector: 'app-client-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState],
   standalone: true,
   templateUrl: './client-orders.html',
   styleUrl: './client-orders.scss',
@@ -24,6 +26,20 @@ export class ClientOrders implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
+
+  readonly emptyStateModel: EmptyStateModel = {
+    description: ` No one has purchased any of your offers so far.
+      When a client places an order, it will appear here.`,
+    header: "No orders yet",
+    mainIconClass: "fa-solid fa-receipt",
+    buttonArray: [
+      {
+        buttonIconClass: "fa-solid fa-box-open me-1",
+        buttonText: " View my offers",
+        buttonLink: `/profile/my-offers`,
+      }
+    ]
+  }
 
   pagedList = signal<PagedList<UserOrderListResponse> | undefined>(undefined);
 

@@ -1,11 +1,37 @@
 @if(cartModel(); as cartModel){
 <div class="container" style="min-height: 100vh;">
     @if(!cartModel || cartModel.items.length === 0){
-    <div class="empty-cart-container my-5">
-        <i class="fa-solid fa-basket-shopping fa-10x d-block" style="color: #ffffff;"></i>
-        <p class="empty-cart-title text-primary open-sans-medium ">Your cart is empty!</p>
-        <span class="fs-14-px">Looks like you haven't added anything to your cart <span
-                class="fw-bold">yet.</span></span>
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 col-md-8 col-lg-6 text-center">
+
+                <div class="content-section p-5 shadow-sm  primary-accent-border">
+                    <div class="mb-4">
+                        <i class="fa-solid fa-basket-shopping fa-5x text-primary"></i>
+                    </div>
+
+                    <h2 class="fw-bold mb-2">Your cart is empty</h2>
+
+                    <p class="text-primary muted mb-4">
+                        Looks like you haven’t added anything to your cart yet.
+                        Browse our offers and find something for yourself.
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a class="btn btn-primary px-4" routerLink="">
+                            <i class="fa-solid fa-house "></i>
+                            Go to home
+                        </a>
+
+                        <a class="btn btn-outline-secondary px-4" routerLink="/offers">
+                            <i class="fa-solid fa-fire me-2"></i>
+                            View offers
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     }
     @else {

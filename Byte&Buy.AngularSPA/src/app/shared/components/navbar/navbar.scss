@@ -76,3 +76,12 @@
   border-radius: 0 10px 10px 0;
   border: 1px solid var(--secondary-accent);
 }
+
+.navbar-toggler{
+  color: var(--text-primary) !important;
+  border-color: var(--primary-accent) !important; 
+}
+
+.navbar-toggler:focus{
+  border: 0px;
+}

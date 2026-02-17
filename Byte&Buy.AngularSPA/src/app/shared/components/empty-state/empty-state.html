@@ -1,0 +1,24 @@
+<div class="content-section empty-state" [style.background-color]="model.backgroundClass">
+
+    <div class="empty-icon mb-3">
+        <i [class]="model.mainIconClass"></i>
+    </div>
+
+    <h5 class="fw-bold mb-2">{{ model.header }}</h5>
+
+    <p class="empty-description mb-4">
+        {{ model.description }}
+    </p>
+
+    
+    <div class="d-flex gap-2 flex-wrap justify-content-center">
+    @for (button of model.buttonArray; track $index)
+    {
+        <a class="btn btn-primary btn-sm" [routerLink]="button.buttonLink">
+            <i [class]="button.buttonIconClass"></i>
+            {{ button.buttonText }}
+        </a>
+    }
+    </div>
+
+</div>

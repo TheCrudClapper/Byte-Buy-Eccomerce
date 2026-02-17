@@ -6,6 +6,7 @@ import { AuthService } from '../../../../core/clients/auth/auth-service';
   imports: [RouterOutlet, RouterLinkActive, RouterLinkWithHref],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
+  standalone: true
 })
 export class ProfilePage {
   private readonly auth: AuthService = inject(AuthService);

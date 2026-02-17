@@ -1,80 +1,81 @@
-<div class="container">
+<div class="register-page">
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
 
-    <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-7 col-xl-6 col-xxl-5 register-window">
 
-        <div class="col-md-8 col-lg-7 col-xl-6 col-xxl-5 register-window">
-            <!--Brand-->
-            <div class="mb-5 d-flex justify-content-center brand-section align-items-center">
-                <i class="fa-solid fa-laptop-code fa-4x"></i>
-                <h1 class="fw-bold">Byte&Buy</h1>
-            </div>
+                <!-- Brand -->
+                <div class="mb-5 d-flex justify-content-center brand-section align-items-center">
+                    <i class="fa-solid fa-laptop-code fa-3x me-3"></i>
+                    <h1 class="fw-bold mb-0">Byte&Buy</h1>
+                </div>
 
-            <!--Login Form-->
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="mb-3">
-                    <label for="inputFirstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" formControlName="firstName" id="inputFirstName">
-                    @if(getErrorMessage('firstName')){
+                <!-- Register Form -->
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+                    <div class="mb-3">
+                        <label for="inputFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" formControlName="firstName" id="inputFirstName">
+                        @if(getErrorMessage('firstName')){
                         <span class="validation-error">{{ getErrorMessage('firstName')}}</span>
-                    }
-                    
-                </div>
-                <div class="mb-3">
-                    <label for="inputLastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" formControlName="lastName" id="inputLastName">
-                    @if(getErrorMessage('lastName')){
-                        <span class="validation-error"> {{ getErrorMessage('lastName') }}</span>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="inputEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" formControlName="email" id="inputEmail">
-                    @if(getErrorMessage('email')){
-                        <span class="validation-error"> {{ getErrorMessage('email') }}</span>
-                    }
-                </div>
-                <div class="mb-3">
-                    <label for="inputPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" formControlName="password" id="inputPassword">
-                    @if(getErrorMessage('password')){
-                       <span class="validation-error"> {{ getErrorMessage('password') }}</span>
-                    }
-                </div>
-
-                
-                <span class="validation-error">{{ errorMessage() }}</span>
-                
-                <!--Log in Button-->
-                <div class="mb-3">
-                    <button type="submit" class="btn w-100" [disabled]="loading()">Register</button>
-                </div>
-
-                <!--Separator-->
-                <div class="mb-3">
-                    <div class="separator">
-                        <span>Or continue with</span>
+                        }
                     </div>
-                </div>
 
-                <!--Other Loggin in Metods-->
-                <div class="mb-3 d-flex justify-content-between">
-                    <button type="submit" class="btn w-100 disabled me-1">
-                        <i class="fa-brands fa-facebook me-1"></i>
-                        <span>Facebook</span>
-                    </button>
-                    <button type="submit" class="btn w-100 disabled ms-1">
-                        <i class="fa-brands fa-google me-1"></i>
-                        <span>Google</span>
-                    </button>
-                </div>
+                    <div class="mb-3">
+                        <label for="inputLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" formControlName="lastName" id="inputLastName">
+                        @if(getErrorMessage('lastName')){
+                        <span class="validation-error">{{ getErrorMessage('lastName') }}</span>
+                        }
+                    </div>
 
-                <div class="mb-3">
-                    <button type="submit" class="btn w-100 disabled">
-                        <i class="fa-brands fa-github me-1"></i>
-                        <span>Register using GitHub</span>
-                    </button>
-                </div>
-            </form>
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" formControlName="email" id="inputEmail">
+                        @if(getErrorMessage('email')){
+                        <span class="validation-error">{{ getErrorMessage('email') }}</span>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" formControlName="password" id="inputPassword">
+                        @if(getErrorMessage('password')){
+                        <span class="validation-error">{{ getErrorMessage('password') }}</span>
+                        }
+                    </div>
+
+                    <span class="validation-error">{{ errorMessage() }}</span>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn w-100" [disabled]="loading()">Register</button>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="separator">
+                            <span>Or continue with</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-between">
+                        <button type="button" class="btn w-100 disabled me-1">
+                            <i class="fa-brands fa-facebook me-1"></i> Facebook
+                        </button>
+                        <button type="button" class="btn w-100 disabled ms-1">
+                            <i class="fa-brands fa-google me-1"></i> Google
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="button" class="btn w-100 disabled">
+                            <i class="fa-brands fa-github me-1"></i>
+                            Register using GitHub
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
         </div>
     </div>
 </div>

@@ -122,15 +122,7 @@
     </div>
     }
         @if(offers.length === 0){
-        <div class="content-section flex-column  d-flex justify-content-center align-items-center">
-            <i class="fa-regular fa-face-frown fa-3x" style="color: #ffffff;"></i>
-            <p class="mt-2 mb-0">You haven't published anything yet.</p>
-            <span class="fs-14-px">
-                We hope that it will change soon
-                <i class="fa-regular fa-face-smile-beam" style="color: #ffffff;"></i>
-            </span>
-
-        </div>
-        }
+            <app-empty-state [model]="emptyStateModel"></app-empty-state>
+    }
     }
 }

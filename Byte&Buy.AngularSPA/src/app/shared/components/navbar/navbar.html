@@ -2,8 +2,7 @@
   <div class="container">
 
     <!--Brand Logo-->
-    <a class="navbar-brand" href="#">Byte&Buy</a>
-
+    <a class="navbar-brand" [routerLink]="['']">Byte&Buy</a>
 
     <!--Toggler-->
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -27,9 +26,6 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" routerLink=""><i class="fa-solid fa-house fa-lg"></i>Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-users fa-lg"></i>About Us</a>
-        </li>
       </ul>
 
       <!--Search Form-->
@@ -51,13 +47,6 @@
 
       <!--Right Side-->
       <ul class="navbar-nav mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fa-solid fa-heart fa-lg"></i>
-            <span class="d-inline d-lg-none">
-              Favourites
-            </span>
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="cart">
             <i class="fa-solid fa-cart-shopping fa-lg"></i>
@@ -120,7 +109,7 @@
 
             <li>
               <a routerLink="/client-orders" class="dropdown-item">
-                <i class="fa-solid fa-truck-fast"></i>
+                <i class="fa-solid fa-receipt"></i>
                 Client Orders
               </a>
             </li>
@@ -136,7 +125,6 @@
               </a>
             </li>
             }
-
           </ul>
         </li>
       </ul>
