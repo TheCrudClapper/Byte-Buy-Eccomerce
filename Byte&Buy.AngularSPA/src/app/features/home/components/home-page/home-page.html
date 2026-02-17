@@ -1,3 +1,148 @@
-<div class="container-fluid h-100">
-    <p class="text-white">Home Page in tact</p>
+<div class="container-fluid g-0">
+
+    <div class="g-0 position-relative hero-wrapper">
+        <img class="hero-image" src="cinematic.jpg" alt="ByteBuy hero">
+        <div class="hero-overlay d-flex align-items-center">
+            <div class="container text-center text-lg-start">
+                <h1 class="fw-bold raleway-bold text-primary">
+                    The future of IT hardware marketplace
+                </h1>
+                <p class="muted mt-3">
+                    Community focused IT marketplace.
+                </p>
+
+                <div class="mt-4">
+                    <a class="btn btn-primary me-2" href="#howItWorks">How it works</a>
+                    <a class="btn btn-outline-light" [routerLink]="['/register']">Enroll now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="section content-section primary-border mt-5">
+
+            <div class="row align-items-center gy-5">
+                <div class="col-12 col-lg-6 px-5">
+                    <div class="ui-mockup-wrapper">
+                        <img src="ui-browser.PNG" class="ui-mockup main" alt="Dashboard mockup">
+                        <img src="ui-rent.PNG" class="ui-mockup floating" alt="Item mockup">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 px-5">
+                    <h2 class="fw-bold raleway-bold mb-4">
+                        We build a better way to trade and rent
+                        <span class="primary-accent-text">IT equipment</span>.
+                    </h2>
+
+                    <p class="muted mb-4">
+                        ByteBuy was created to eliminate chaos from the used hardware market.
+                        Not many marketplaces focuses on community aspect of their platforms.
+                        In ByteBuy we belive that
+                        <span class="primary-accent-text">community driven platform</span>
+                        is the key to go.
+                    </p>
+
+                    <ul class="list-unstyled muted mb-4">
+                        <li class="mb-2">✔ Sale and rent your IT equipment fast & securely.</li>
+                        <li class="mb-2">✔ Buy and rent other members IT gear.</li>
+                        <li class="mb-2">✔ Built for community by community.</li>
+                    </ul>
+
+                    <p class="muted">
+                        Our vision is to become the default platform for circular IT economy —
+                        where hardware lives longer and users trade without risk.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How it works section -->
+        <section class="section text-center" id="howItWorks">
+            <h2 class="fw-bold mb-5 text-primary raleway-bold ">How This Works ?</h2>
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="service-card primary-border h-100 p-4">
+                        <div class="step-number">01</div>
+                        <h5 class="service-title primary-accent-text">Find gear</h5>
+                        <p class="muted">Browser various IT gear via rental and sale offers.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="service-card h-100 p-4">
+                        <div class="step-number">02</div>
+                        <h5 class="service-title primary-accent-text">Stack them</h5>
+                        <p class="muted">Add offers for sale or rental to one cart.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="service-card h-100 p-4">
+                        <div class="step-number">03</div>
+                        <h5 class="service-title primary-accent-text">Payment and Delivery</h5>
+                        <p class="muted">Issue payment, wait for your toys to come.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="service-card h-100 p-4">
+                        <div class="step-number">04</div>
+                        <h5 class="service-title primary-accent-text">Work. Play. Enjoy.</h5>
+                        <p class="muted">Fullfill your dreams, work needs, whatever you like.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- For who ? -->
+
+        <section class="section content-section primary-border">
+            <div class="container text-center">
+                <h2 class="fw-bold mb-5 raleway-bold">
+                    <span class="primary-accent-text">Byte&Buy</span>
+                    for every market segment.
+                </h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100">
+                            <h5>
+                                <i class="fa-solid fa-headset fa-lg" style="color: rgba(255, 255, 255, 1.00);"></i>
+                                <span>Gamers.</span>
+                            </h5>
+                            <p class="muted">Buy efficient equipment at a better price, without risk.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100">
+                            <h5>
+                                <i class="fa-solid fa-building fa-lg" style="color: rgba(255, 255, 255, 1.00);"></i>
+                                Companies.
+                            </h5>
+                            <p class="muted">Manage surplus equipment and optimize IT costs.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100">
+                            <h5>
+                                <i class="fa-solid fa-screwdriver-wrench fa-lg"
+                                    style="color: rgba(255, 255, 255, 1.00);"></i>
+                                IT Services.
+                            </h5>
+                            <p class="muted">Sell ​​professionally and and boost your reputation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- User Interactioc -->
+    <section class="section text-center">
+        <div class="container primary-border user-interaction content-section p-5">
+            <h2 class="fw-bold mb-4 raleway-bold text-primary">Ready to join our IT community ?</h2>
+            <a [routerLink]="['/register']" class="btn">Sure I do !</a>
+        </div>
+    </section>
+
 </div>
