@@ -13,6 +13,7 @@ import { PagedList } from '../../../../core/pagination/pagedList';
 import { UserOffersQuery } from '../../../../core/dto/offers/query/user-offers-query';
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-my-offers',
@@ -28,6 +29,7 @@ export class MyOffers {
   private readonly saleOfferApiService = inject(SaleOfferApiService);
   private readonly toastService = inject(ToastService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
+  private readonly dialogService = inject(DialogService);
 
   readonly emptyStateModel: EmptyStateModel = {
     description: ` You haven't created any offers so far.
@@ -105,16 +107,29 @@ export class MyOffers {
   }
 
   remove(offer: UserPanelOfferUnion) {
-    if (!confirm("Are you sure you want to delete this offer ?")) {
-      return;
-    }
+    this.dialogService.confirm({ title: "Are you sure you want to delete this offer ?" })
+      .then(result => {
+        if (!result.isConfirmed) {
+          return;
+        }
+        if (offer.type === 'rent') {
+          this.rentOfferApiService.delete(offer.id).subscribe({
+            next: onSuccess,
+            error: onError
+          });
+        } else {
+          this.saleOfferApiService.delete(offer.id).subscribe({
+            next: onSuccess,
+            error: onError
+          });
+        }
+      });
 
     const onSuccess = () => {
-      this.toastService.success("Successfully deleted offer.");
-
       this.pagedList.update(offers => {
         if (!offers) return offers;
 
+        this.dialogService.success("Successfully deleted offer.");
         return {
           ...offers,
           items: offers.items.filter(o => o.id !== offer.id),
@@ -124,22 +139,12 @@ export class MyOffers {
           }
         };
       });
+
     };
 
     const onError = (err: ProblemDetails) => {
-      this.toastService.error(err?.detail ?? "Failed to delete offer");
+      this.dialogService.error(err.detail ?? "Failed to delete offer.")
     };
 
-    if (offer.type === 'rent') {
-      this.rentOfferApiService.delete(offer.id).subscribe({
-        next: onSuccess,
-        error: onError
-      });
-    } else {
-      this.saleOfferApiService.delete(offer.id).subscribe({
-        next: onSuccess,
-        error: onError
-      });
-    }
   }
 }

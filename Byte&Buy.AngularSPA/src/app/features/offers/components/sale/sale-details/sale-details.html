@@ -107,13 +107,12 @@
                         <div class="row mt-2 d-flex align-items-center pt-3">
                             <div class="col-4">
                                 <input type="number" min="1" class="form-control" formControlName="quantity">
-                                <span class="validation-error"> {{ getError('quantity') }}</span>
                             </div>
 
                             <div class="col-8">
                                 <button 
                                     class="btn w-100"
-                                    [disabled]="cartForm.disabled || saleOfferDetails()?.status === OfferStatus.SoldOut">
+                                    [disabled]="cartForm.disabled || cartForm.invalid || saleOfferDetails()?.status === OfferStatus.SoldOut">
                                     <i class="fa-solid fa-cart-arrow-down me-1" style="color: #ffffff;"></i>
                                     To Cart
                                 </button>
