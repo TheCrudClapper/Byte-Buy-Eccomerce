@@ -16,25 +16,22 @@
                     <div class="mb-3">
                         <label for="inputEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" formControlName="email" id="inputEmail">
-                        @if(getErrorMessage('email')){
-                        <span class="validation-error"> {{ getErrorMessage('email') }}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error"> {{ getErrorMessage('email') }}</span>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="inputPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" formControlName="password" id="inputPassword">
-                        @if(getErrorMessage('password')){
-                        <span class="validation-error"> {{ getErrorMessage('password') }}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error"> {{ getErrorMessage('password') }}</span>
+                        </div>
                     </div>
 
                     <div class="mb-3 d-flex justify-content-between">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input checkbox" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
-                        <a class="text-normal-size">Forgot Password?</a>
+                        <span class="fs-14-px open-sans-bold" for="rememberMe">No account ?</span>
+                        <a class="link fs-14-px" [routerLink]="['/register']">Register now</a>
                     </div>
 
                     <span class="validation-error">{{ errorMessage() }}</span>

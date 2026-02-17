@@ -4,13 +4,13 @@ import { AuthService } from '../../../../core/clients/auth/auth-service';
 import { LoginRequest } from '../../../../core/dto/auth/login-request';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 
 @Component({
   selector: 'app-login',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, RouterLink],
   standalone: true,
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',

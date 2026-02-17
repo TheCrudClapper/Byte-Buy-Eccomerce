@@ -3,7 +3,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalForm
 import { RegisterRequest } from '../../../../core/dto/auth/register-request';
 import { AuthService } from '../../../../core/clients/auth/auth-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 import { finalize } from 'rxjs';

@@ -16,38 +16,39 @@
                     <div class="mb-3">
                         <label for="inputFirstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" formControlName="firstName" id="inputFirstName">
-                        @if(getErrorMessage('firstName')){
-                        <span class="validation-error">{{ getErrorMessage('firstName')}}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error">{{ getErrorMessage('firstName')}}</span>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="inputLastName" class="form-label">Last Name</label>
                         <input type="text" class="form-control" formControlName="lastName" id="inputLastName">
-                        @if(getErrorMessage('lastName')){
-                        <span class="validation-error">{{ getErrorMessage('lastName') }}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error">{{ getErrorMessage('lastName') }}</span>
+                        </div>
+
                     </div>
 
                     <div class="mb-3">
                         <label for="inputEmail" class="form-label">Email</label>
                         <input type="email" class="form-control" formControlName="email" id="inputEmail">
-                        @if(getErrorMessage('email')){
-                        <span class="validation-error">{{ getErrorMessage('email') }}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error">{{ getErrorMessage('email') }}</span>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="inputPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" formControlName="password" id="inputPassword">
-                        @if(getErrorMessage('password')){
-                        <span class="validation-error">{{ getErrorMessage('password') }}</span>
-                        }
+                        <div class="error-placeholder">
+                            <span class="validation-error">{{ getErrorMessage('password') }}</span>
+                        </div>
                     </div>
 
                     <span class="validation-error">{{ errorMessage() }}</span>
 
-                    <div class="mb-3">
+                    <div class="mb-5 mt-1">
                         <button type="submit" class="btn w-100" [disabled]="loading()">Register</button>
                     </div>
 
