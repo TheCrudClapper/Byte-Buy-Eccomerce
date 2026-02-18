@@ -77,7 +77,7 @@ export abstract class BaseOfferForm implements OnInit {
           new FormControl<Guid | null>(null)
         );
       }
-    })
+    });
   }
 
   //extracts parcel lockers from form

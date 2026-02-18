@@ -41,7 +41,11 @@ export class CartPage implements OnInit {
   clearCart() {
     this.cartApiService.clearCart().subscribe({
       next: () => {
-        this.cartModel.set(null);
+        this.cartModel.update(cart =>
+          cart
+            ? { ...cart, items: [] }
+            : cart
+        );
       },
       error: (err: ProblemDetails) => {
         this.toastService.error(err?.detail ?? "Failed to clear cart.")
