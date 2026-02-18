@@ -83,6 +83,7 @@
   --card-background: #2d3059;
   --success: #22C55E;
   --error: #EF4444;
+  --muted: #94a3b8;
 }
 
 html,
@@ -383,5 +384,37 @@ span {
   backdrop-filter: blur(12px);
   padding: 24px;
   font-family: 'open-sans-medium';
+}
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.page-btn {
+    border: none;
+    background: var(--primary-accent);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+
+.page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.page-info {
+    font-size: 14px;
+    font-family: 'open-sans-medium';
 }
 

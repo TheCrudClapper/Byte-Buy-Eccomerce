@@ -1,16 +1,43 @@
-.filter-section-title {
-    font-size: 18px;
+.filter-card {
+    background: var(--card-background);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--primary-accent);
+}
+
+.filter-header {
     font-family: 'raleway-bold';
-    color: var(--text-primary);
+    font-size: 18px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    color: var(--muted);
 }
 
-hr {
-    background-color: var(--primary-accent);
-    height: 3px;
-    border: none;
-    border-radius: 20px;
+.filter-group {
+    margin-bottom: 20px;
 }
 
-.badge {
-    background-color: var(--primary-accent);
+.filter-title {
+    font-size: 14px;
+    font-family: 'open-sans-bold';
+    margin-bottom: 8px;
+    color: var(--muted);
+}
+
+.filter-checkbox {
+    display: flex;
+    align-items: bottom;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.list-header{
+    font-family: 'open-sans-bold';
+}
+
+.header-container {
+    border: 1px solid var(--primary-accent);
 }

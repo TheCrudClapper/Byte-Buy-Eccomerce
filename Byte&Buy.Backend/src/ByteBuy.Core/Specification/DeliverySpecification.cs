@@ -17,6 +17,7 @@ public static class DeliverySpecifications
                 Query.Where(d => d.OfferDeliveries.Any(od => od.OfferId == offerId && od.IsActive));
 
             Query.AsNoTracking()
+                .OrderBy(d => d.Price.Amount)
                 .Select(DeliveryMappings.DeliveryListResponseProjection);
         }
     }

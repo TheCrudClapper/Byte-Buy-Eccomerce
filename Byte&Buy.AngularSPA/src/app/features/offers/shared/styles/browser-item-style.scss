@@ -27,11 +27,20 @@
     font-size: 14px;
 }
 
-.offer-title:hover{
-    color: var(--primary-accent);
+.content-section {
+    transition: 0.2s ease;
 }
 
-.badge {
-    background-color: var(--primary-accent);
-    font-family: 'open-sans-medium';
+.content-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+
+@media (max-width: 991.98px) {
+    .content-section{
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
 }

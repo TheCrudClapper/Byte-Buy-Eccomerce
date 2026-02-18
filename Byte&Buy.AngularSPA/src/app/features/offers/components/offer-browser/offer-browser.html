@@ -1,61 +1,68 @@
 <div class="container">
     <div class="row mb-5 mt-5">
         <div class="col-12 col-lg-3">
-            <div class="content-section p-4">
-                <!-- Category Filters -->
-                <p class="filter-section-title">Categories</p>
-                <hr>
-                <div class="mb-4">
-                    @if(categories(); as categories){
-                    @for (category of categories; track category.id)
-                    {
-                    <div class="mb-1">
-                        <input type="checkbox" class="form-check-input checkbox me-2"
+            <div class="filter-card sticky-top">
+
+                <div class="filter-header ">
+                    <i class="fa-solid fa-sliders me-2"></i>
+                    Filters
+                </div>
+
+                <!-- Categories -->
+                <div class="filter-group">
+                    <p class="filter-title">Categories</p>
+                    @for (category of categories(); track category.id) {
+                    <label class="filter-checkbox">
+                        <input type="checkbox" class="form-check-input checkbox"
                             [checked]="selectedCategoryIds().includes(category.id)"
-                            (change)="toggleCategory(category.id, $any($event.target).checked)" />
-                        <label class="form-label">{{ category.title }}</label>
-                    </div>
-                    }
+                            (change)="toggleCategory(category.id, $any($event.target).checked)">
+                        <span>{{ category.title }}</span>
+                    </label>
                     }
                 </div>
 
-                <p class="filter-section-title mt-5">Product Conditions</p>
-                <hr>
-                @if(conditions(); as conditions){
-                @for (condition of conditions; track condition.id)
-                {
-                <div class="mb-1">
-                    <input type="checkbox" class="form-check-input checkbox me-2"
-                        [checked]="selectedConditionIds().includes(condition.id)"
-                        (change)="toggleCondition(condition.id, $any($event.target).checked)" />
-                    <label class="form-label">{{ condition.title }}</label>
+                <!-- Conditions -->
+                <div class="filter-group">
+                    <p class="filter-title">Condition</p>
+                    @for (condition of conditions(); track condition.id) {
+                    <label class="filter-checkbox">
+                        <input type="checkbox" class="form-check-input checkbox"
+                            [checked]="selectedConditionIds().includes(condition.id)"
+                            (change)="toggleCondition(condition.id, $any($event.target).checked)">
+                        <span>{{ condition.title }}</span>
+                    </label>
+                    }
                 </div>
-                }
-                }
-                <!-- General Filters -->
-                <p class="filter-section-title mt-5">Filters</p>
-                <hr class="mb-2">
-                <div class="mb-4">
-                    <label class="form-label">Location</label>
-                    <input [value]="city() ?? ''" (input)="city.set($any($event.target).value)" type="text"
-                        class="form-control" placeholder="Enter City, Place etc.">
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">Price</label>
-                    <div class="row">
+
+                <!-- Price -->
+                <div class="filter-group">
+                    <p class="filter-title">Price range</p>
+                    <div class="row g-2">
                         <div class="col-6">
                             <input [value]="minPrice() ?? ''" (input)="minPrice.set($any($event.target).value)"
-                                type="number" class="form-control" placeholder="Min">
+                                class="form-control" placeholder="Min" type="number">
                         </div>
                         <div class="col-6">
                             <input [value]="maxPrice() ?? ''" (input)="maxPrice.set($any($event.target).value)"
-                                type="number" class="form-control" placeholder="To">
+                                class="form-control" placeholder="Max" type="number">
                         </div>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label class="form-label">Max Rental Days</label>
-                    <div class="row">
+
+                <div class="filter-group">
+                    <p class="filter-title">City</p>
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <input [value]="city() ?? ''" (input)="city.set($any($event.target).value)" type="text"
+                                class="form-control" placeholder="Enter city">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rental Days -->
+                <div class="filter-group">
+                    <p class="filter-title">Rental Days</p>
+                    <div class="row g-2">
                         <div class="col-6">
                             <input type="number" [value]="minRentalDays() ?? ''"
                                 (input)="minRentalDays.set($any($event.target).value)" class="form-control"
@@ -69,12 +76,16 @@
                     </div>
                 </div>
 
-                <p class="filter-section-title mt-5">Actions</p>
-                <hr>
-                <div class="mb-4">
-                    <button class="btn w-100 mb-2" (click)="applyFilters()">Apply Filtering</button>
-                    <button class="btn w-100" (click)="clearFilters()">Clear Filters</button>
+                <!-- Actions -->
+                <div class="filter-actions">
+                    <button class="btn btn-primary w-100 mb-2" (click)="applyFilters()">
+                        Apply filters
+                    </button>
+                    <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+                        Clear
+                    </button>
                 </div>
+
             </div>
         </div>
 
@@ -82,46 +93,25 @@
         <!-- Sorting and Offer Section -->
         @if(pagedList(); as page){
         <div class="col-12 col-lg-9">
-            <span class="fw-bold">Offer Listings</span>
-            <span> - {{ page.metadata.totalCount }} found</span>
-            <div class="content-section mt-1 mb-4">
-                <div class="row">
-                    <div class="col-6 d-flex align-items-center gap-2">
-                        <span class="fw-bold">Sort by:</span>
-                        <select class="form-select form-select-sm w-auto" [value]="query().sortBy"
-                            (change)="onSortChange($any($event.target).value)">
-                            @for (sort of sortOptions; track sort)
-                            {
-                            <option [value]="sort">
-                                {{ OfferSortBy[sort] }}
-                            </option>
-                            }
-                        </select>
-                    </div>
+            <div class="d-flex justify-content-between content-section 
+                align-items-center header-container mb-3">
+                <div>
+                    <h6 class="list-header">Offer listings</h6>
+                    <small>
+                        {{ page.metadata.totalCount }} results
+                    </small>
+                </div>
 
-                    <div class="col-6 d-flex align-items-center justify-content-end gap-2">
-
-                        @if(page.metadata.hasPrevious)
-                        {
-                        <button class="page-button" (click)="previousPage()">
-                            <i class="fa-solid fa-chevron-left"></i>
-                        </button>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="small">Sort by:</span>
+                    <select class="form-select form-select-sm w-auto" [value]="query().sortBy"
+                        (change)="onSortChange($any($event.target).value)">
+                        @for (sort of sortOptions; track sort) {
+                        <option [value]="sort">
+                            {{ OfferSortBy[sort] }}
+                        </option>
                         }
-                        <div class="pagination d-flex align-items-center gap-1">
-                            <input type="number" class="form-control form-control-sm page-input page-input-narrow"
-                                [value]="page.metadata.currentPage" [min]="1" [max]="page.metadata.totalPages"
-                                (change)="goToPage($any($event.target).valueAsNumber)" />
-                            <span>from</span>
-                            <span>{{ page.metadata.totalPages }}</span>
-                        </div>
-
-                        @if(page.metadata.hasNext){
-                        <button class="page-button" (click)="nextPage()">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                        }
-
-                    </div>
+                    </select>
                 </div>
             </div>
 
@@ -129,21 +119,37 @@
             @if(page.items; as items){
             @if(page.items.length > 0)
             {
-                @for (item of items; track $index)
-                {
-                    @if(item.type === 'rent'){
-                    <app-rent-browser-item [offer]="item">
-                    </app-rent-browser-item>
-                    }
-
-                    @if(item.type === 'sale'){
-                    <app-sale-browser-item [offer]="item">
-                    </app-sale-browser-item>
-                    }
-                }
-            }@else {
-                <app-empty-state [model]="emptyStateModel"></app-empty-state>
+            @for (item of items; track $index)
+            {
+            @if(item.type === 'rent'){
+            <app-rent-browser-item [offer]="item">
+            </app-rent-browser-item>
             }
+
+            @if(item.type === 'sale'){
+            <app-sale-browser-item [offer]="item">
+            </app-sale-browser-item>
+            }
+            }
+            }@else {
+            <app-empty-state [model]="emptyStateModel"></app-empty-state>
+            }
+            }
+            @if(page.metadata.totalPages > 1) {
+            <div class="pagination-wrapper mt-4">
+                <button class="page-btn" [disabled]="!page.metadata.hasPrevious" (click)="previousPage()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <span class="page-info">
+                    Page {{ page.metadata.currentPage }}
+                    of {{ page.metadata.totalPages }}
+                </span>
+
+                <button class="page-btn" [disabled]="!page.metadata.hasNext" (click)="nextPage()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
             }
         </div>
         }

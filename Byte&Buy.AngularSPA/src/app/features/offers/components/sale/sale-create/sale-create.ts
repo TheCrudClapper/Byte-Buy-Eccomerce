@@ -50,7 +50,8 @@ export class SaleCreate extends BaseOfferForm {
       fd.append(`OtherDeliveriesIds[${index}]`, String(id));
     });
 
-    console.log(fd);
+    const parcelIds = this.getSelectedParcelLockers();
+    parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
     return fd;
   }
 }
