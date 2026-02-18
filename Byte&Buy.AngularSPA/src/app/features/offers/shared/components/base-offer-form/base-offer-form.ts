@@ -36,7 +36,6 @@ export abstract class BaseOfferForm implements OnInit {
     if (parcels.length === 0) return;
 
     this.initParcelControls();
-    this.restoreSelectedParcelLockers();
   });
 
   ngOnInit(): void {

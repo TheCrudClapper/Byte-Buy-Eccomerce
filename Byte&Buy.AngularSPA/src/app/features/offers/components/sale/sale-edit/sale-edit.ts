@@ -59,10 +59,6 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
       pricePerItem: offer.pricePerItem.amount,
     });
 
-    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
-    otherDeliveries.clear();
-    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
-
     this.images.set([
       ...offer.images.map(img => ({
         id: img.id,
@@ -72,6 +68,12 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
         isDeleted: false
       }))
     ]);
+
+    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
+    otherDeliveries.clear();
+    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
+
+    this.restoreSelectedParcelLockers();
   }
 
   protected override getOfferId(): Guid | undefined {
@@ -106,8 +108,6 @@ export class SaleEdit extends BaseOfferForm implements OnInit {
 
     const parcelIds = this.getSelectedParcelLockers();
     parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
-    return fd;
-
     return fd;
   }
 

@@ -63,12 +63,8 @@ export class RentEdit extends BaseOfferForm implements OnInit {
       selectedCategoryId: offer.categoryId,
       selectedConditionId: offer.conditionId,
       description: offer.description,
-      pricePerItem: offer.pricePerDay.amount
+      pricePerDay: offer.pricePerDay.amount
     });
-
-    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
-    otherDeliveries.clear();
-    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
 
     this.images.set([
       ...offer.images.map(img => ({
@@ -79,6 +75,12 @@ export class RentEdit extends BaseOfferForm implements OnInit {
         isDeleted: false
       }))
     ]);
+
+    const otherDeliveries = this.form.get('otherDeliveriesIds') as FormArray;
+    otherDeliveries.clear();
+    offer.otherDeliveriesIds.forEach(id => otherDeliveries.push(new FormControl(id)));
+
+    this.restoreSelectedParcelLockers();
   }
 
   buildFormData(): FormData {
@@ -110,8 +112,6 @@ export class RentEdit extends BaseOfferForm implements OnInit {
 
     const parcelIds = this.getSelectedParcelLockers();
     parcelIds.forEach((id, i) => fd.append(`ParcelLockerDeliveries[${i}]`, String(id)));
-    return fd;
-
     return fd;
   }
 

@@ -308,7 +308,9 @@
                         {
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <input type="checkbox" (change)="onDeliveryToggle(item.id, $event.target.checked)"
+                                <input type="checkbox" 
+                                    [checked]="form.value.otherDeliveriesIds?.includes(item.id)"
+                                    (change)="onDeliveryToggle(item.id, $event.target.checked)"
                                     class="form-check-input checkbox me-2" />
                                 <span>{{ item.name }}</span>
                             </div>
