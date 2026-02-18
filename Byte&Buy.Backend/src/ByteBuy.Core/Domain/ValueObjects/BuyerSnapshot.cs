@@ -38,6 +38,11 @@ public class BuyerSnapshot
 
         var fullName = $"{firstName} {lastName}";
 
-        return new BuyerSnapshot(fullName, email, phoneNumber, address);
+        return new BuyerSnapshot(fullName, email, phoneNumber, address.Copy());
+    }
+
+    public BuyerSnapshot Copy()
+    {
+        return new BuyerSnapshot(FullName, Email, PhoneNumber, Address.Copy());
     }
 }

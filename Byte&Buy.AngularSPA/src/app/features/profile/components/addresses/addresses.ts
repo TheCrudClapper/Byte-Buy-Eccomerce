@@ -83,7 +83,7 @@ export class Addresses implements OnInit {
           this.toastService.success("Successfully saved changes");
         },
         error: () => {
-          this.toastService.success("Something went wrong");
+          this.toastService.error("Something went wrong");
         }
       });
   }

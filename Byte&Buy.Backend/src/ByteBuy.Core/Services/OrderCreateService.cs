@@ -177,7 +177,7 @@ public class OrderCreateService : IOrderCreateService
                     userId,
                     deliveryResult.Value,
                     sellerSnapshot,
-                    buyerSnapshotResult.Value,
+                    buyerSnapshotResult.Value.Copy(),
                     lines);
 
                 orders.Add(orderResult.Value);
