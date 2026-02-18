@@ -27,7 +27,7 @@ export class RentDetails extends BaseOfferDetail {
   rentOfferDetails = signal<RentOfferDetails | null>(null);
   seller = computed(() => this.rentOfferDetails()?.seller);
   readonly OfferStatus = OfferStatus;
-  
+
   cartForm = new FormGroup({
     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
     rentalDays: new FormControl(1, [Validators.required, Validators.min(1)]),
@@ -39,13 +39,13 @@ export class RentDetails extends BaseOfferDetail {
         next: (data) => {
           this.rentOfferDetails.set(data);
 
-          if(data.status === OfferStatus.SoldOut){
+          if (data.status === OfferStatus.SoldOut) {
             this.cartForm.disable()
-          }else{
+          } else {
             this.cartForm.enable();
           }
         },
-        error: (err: ProblemDetails) => this.router.navigate(['/not-found'])
+        error: () => this.router.navigate(['/not-found'])
       })
   };
 

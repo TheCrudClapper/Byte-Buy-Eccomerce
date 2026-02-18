@@ -13,7 +13,7 @@
 
                 <div class="mt-4">
                     <a class="btn btn-primary me-2" href="#howItWorks">How it works</a>
-                    <a class="btn btn-outline-light" [routerLink]="['/register']">Enroll now</a>
+                    <button class="btn btn-outline-light" [disabled]="this.authService.isLoggedIn()" [routerLink]="['/register']">Enroll now</button>
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
     <section class="section text-center">
         <div class="container primary-border user-interaction content-section p-5">
             <h2 class="fw-bold mb-4 raleway-bold text-primary">Ready to join our IT community ?</h2>
-            <a [routerLink]="['/register']" class="btn">Sure I do !</a>
+            <button [disabled]="this.authService.isLoggedIn()"  [routerLink]="['/register']" class="btn">Sure I do !</button>
         </div>
     </section>
 
