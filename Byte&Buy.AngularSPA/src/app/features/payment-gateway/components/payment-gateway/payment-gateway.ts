@@ -10,9 +10,9 @@ import { PaymentMethod } from '../../models/payment-method';
 import { FormBuilder, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { BlikPaymentRequest } from '../../../../core/dto/payment/blik-payment-request';
 import { CardPaymentRequest } from '../../../../core/dto/payment/card-payment-request';
-import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { getErrorMessage } from '../../../../shared/helpers/form-helper';
+import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-payment-gateway',
@@ -24,9 +24,9 @@ import { getErrorMessage } from '../../../../shared/helpers/form-helper';
 export class PaymentGateway implements OnInit {
   private readonly paymentApiService = inject(PaymentApiService);
   protected readonly route = inject(ActivatedRoute);
+  private readonly dialogService = inject(DialogService);
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
-  private readonly toastService = inject(ToastService);
 
   private readonly paymentId = signal<Guid | undefined>(undefined);
   public paymentModel = signal<PaymentModel | undefined>(undefined);
@@ -88,6 +88,7 @@ export class PaymentGateway implements OnInit {
       this.form.controls.cvc.setValidators([
         Validators.required,
         Validators.minLength(3),
+        Validators.maxLength(4),
       ]);
       this.form.controls.cardHolder.setValidators(Validators.required);
     }
@@ -128,10 +129,10 @@ export class PaymentGateway implements OnInit {
 
       this.paymentApiService.payWithCard(id, payload).subscribe({
         next: () => {
-          this.toastService.success("Successfully paid for order with Card");
+          this.dialogService.success("Success paid with Cart.");
           this.router.navigate(['/profile', 'my-orders']);
         },
-        error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to pay using card")
+        error: (err: ProblemDetails) => this.dialogService.error(err.detail ?? "Failed to pay with Card.")
       });
     }
 
@@ -142,10 +143,10 @@ export class PaymentGateway implements OnInit {
 
       this.paymentApiService.payWithBlik(id, payload).subscribe({
         next: () => {
-          this.toastService.success("Successfully paid for order with Blik !")
+          this.dialogService.success("Success paid with Blik.")
           this.router.navigate(['/profile', 'my-orders']);
         },
-        error: (err: ProblemDetails) => this.toastService.error(err?.detail ?? "Failed to pay using blik")
+        error: (err: ProblemDetails) =>  this.dialogService.error(err.detail ?? "Failed to pay with Blik.")
       });
     }
   }

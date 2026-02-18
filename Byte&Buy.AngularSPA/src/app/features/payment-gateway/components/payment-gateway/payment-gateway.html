@@ -1,86 +1,97 @@
-@if (paymentModel(); as model) {
+<div class="payment-gate">
+    @if (paymentModel(); as model) {
+    <div class="payment-card">
 
-<div class="container h-100 d-flex justify-content-center align-items-center">
-    <div class="col-md-9 col-lg-7 col-xl-6 col-xxl-5 content-section">
         <form [formGroup]="form" (ngSubmit)="submit()">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="payment-title">Payment with</span>
+
+            <!-- Heder-->
+            <div class="payment-header">
+                <span class="payment-title">Payment</span>
 
                 @if (model.method === PaymentMethod.Blik) {
-                <img height="31" src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg">
+                <img height="28" src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg" alt="BLIK" />
                 }
 
                 @if (model.method === PaymentMethod.Card) {
-                <i class="fa-regular fa-credit-card fa-2x"></i>
+                <i class="fa-regular fa-credit-card fa-2x" style="color: white;"></i>
                 }
             </div>
 
-
-            <div class="d-flex justify-content-between align-items-center">
-                <span class="payment-title">Total Charge</span>
-                <span class="payment-title">
-                    {{ model.paymentTotal.amount | number:'1.2-2' }} {{ model.paymentTotal.currency }}
+            <!-- TOTAL -->
+            <div class="payment-total">
+                <span>Total charge</span>
+                <span class="amount">
+                    {{ model.paymentTotal.amount | number:'1.2-2' }}
+                    {{ model.paymentTotal.currency }}
                 </span>
             </div>
 
-            <hr>
+            <hr />
 
-
+            <!-- CARD PAYMENT -->
             @if (model.method === PaymentMethod.Card) {
             <div class="row">
                 <div class="col-12 mb-3">
                     <label class="form-label">Card Number</label>
                     <input type="text" class="form-control" formControlName="cardNumber">
-                     @if (getErrorMessage("cardNumber")) {
-                        <span class="validation-error">{{ getErrorMessage("cardNumber") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('cardNumber') }}</span>
+                    </div>
                 </div>
+
                 <div class="col-6 mb-3">
                     <label class="form-label">Expiration</label>
                     <input type="text" class="form-control" formControlName="expiration">
-                     @if (getErrorMessage("expiration")) {
-                        <span class="validation-error">{{ getErrorMessage("expiration") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('expiration') }}</span>
+                    </div>
                 </div>
+
                 <div class="col-6 mb-3">
                     <label class="form-label">CVC</label>
                     <input type="text" class="form-control" formControlName="cvc">
-                     @if (getErrorMessage("cvc")) {
-                        <span class="validation-error">{{ getErrorMessage("cvc") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('cvc') }}</span>
+                    </div>
                 </div>
+
                 <div class="col-12 mb-3">
                     <label class="form-label">Card Holder</label>
                     <input type="text" class="form-control" formControlName="cardHolder">
-                     @if (getErrorMessage("cardHolder")) {
-                        <span class="validation-error">{{ getErrorMessage("cardHolder") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('cardHolder') }}</span>
+                    </div>
                 </div>
             </div>
             }
 
-
+            <!-- BLIK PAYMENT -->
             @if (model.method === PaymentMethod.Blik) {
             <div class="row">
                 <div class="col-12 mb-3">
                     <label class="form-label">Phone</label>
                     <input type="text" class="form-control" formControlName="phone" pattern="[0-9]*">
-                     @if (getErrorMessage("phone")){
-                    <span class="validation-error">{{ getErrorMessage("phone") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('phone') }}</span>/
+                    </div>
                 </div>
+
                 <div class="col-12 mb-3">
                     <label class="form-label">BLIK Code</label>
                     <input type="text" maxlength="6" class="form-control" formControlName="blikCode">
-                    @if (getErrorMessage("blikCode")) {
-                    <span class="validation-error">{{ getErrorMessage("blikCode") }}</span>
-                    }
+                    <div class="error-placeholder">
+                        <span class="validation-error">{{ getErrorMessage('blikCode') }}</span>
+                    </div>
                 </div>
             </div>
             }
 
-            <button class="btn btn-primary w-100">Pay</button>
+            <!-- SUBMIT -->
+            <button class="btn w-100 pay-button">
+                Pay securely
+            </button>
+
         </form>
     </div>
+    }
 </div>
-}
