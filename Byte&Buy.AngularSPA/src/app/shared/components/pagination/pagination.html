@@ -1,0 +1,14 @@
+<div class="pagination-wrapper mt-4">
+    <button class="page-btn" [disabled]="!metadata.hasPrevious" (click)="emitPrevious()">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <span class="page-info">
+        Page {{ metadata.currentPage }}
+        of {{ metadata.totalPages }}
+    </span>
+
+    <button class="page-btn" [disabled]="!metadata.hasNext" (click)="emitNext()">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+</div>

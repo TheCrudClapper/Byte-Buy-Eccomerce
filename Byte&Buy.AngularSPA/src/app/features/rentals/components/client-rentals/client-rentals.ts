@@ -10,10 +10,11 @@ import { UserRentalLenderQuery } from '../../../../core/dto/rental/common/user-r
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
+import { Pagination } from "../../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-client-rentals',
-  imports: [DecimalPipe, DatePipe, EmptyState],
+  imports: [DecimalPipe, DatePipe, EmptyState, Pagination],
   standalone: true,
   templateUrl: './client-rentals.html',
   styleUrl: './client-rentals.scss',

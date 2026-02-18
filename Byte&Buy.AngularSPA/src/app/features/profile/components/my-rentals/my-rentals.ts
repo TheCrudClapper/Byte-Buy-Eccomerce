@@ -13,10 +13,11 @@ import { EmptyState } from "../../../../shared/components/empty-state/empty-stat
 import Swal from 'sweetalert2';
 
 import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
+import { Pagination } from "../../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-my-rentals',
-  imports: [DecimalPipe, DatePipe, EmptyState],
+  imports: [DecimalPipe, DatePipe, EmptyState, Pagination],
   standalone: true,
   templateUrl: './my-rentals.html',
   styleUrl: './my-rentals.scss',

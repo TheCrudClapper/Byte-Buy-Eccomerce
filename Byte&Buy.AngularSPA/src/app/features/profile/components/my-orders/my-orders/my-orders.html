@@ -1,35 +1,7 @@
 @if(pagedList(); as page){
- <div class="content-section ">
-        <div class="row">
-            <div class="col-6">
-                <span class="page-title">My Orders ({{ page.metadata.totalCount }})</span>
-            </div>
-            <div class="col-6 d-flex align-items-center justify-content-end gap-2">
-
-                @if(page.metadata.hasPrevious)
-                {
-                <button class="page-button" (click)="previousPage()">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                }
-                <div class="pagination d-flex align-items-center gap-1">
-                    <input type="number" class="form-control form-control-sm page-input page-input-narrow"
-                        [value]="page.metadata.currentPage" [min]="1" [max]="page.metadata.totalPages"
-                        (change)="goToPage($any($event.target).valueAsNumber)" />
-                    <span>from</span>
-                    <span>{{ page.metadata.totalPages }}</span>
-                </div>
-
-                @if(page.metadata.hasNext){
-                <button class="page-button" (click)="nextPage()">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-                }
-
-            </div>
-        </div>
-
-    </div>
+<div class="content-section">
+    <span class="page-title">My Orders ({{ page.metadata.totalCount }})</span>
+</div>
 
 @if(pagedList()?.items; as orders){
 @for (order of orders; track $index)
@@ -133,6 +105,9 @@
 }
 @if(orders.length === 0){
 <app-empty-state [model]="emptyStateModel"></app-empty-state>
+}
+@else {
+<app-pagination [metadata]="page.metadata" (goToNext)="nextPage()" (goToPrevious)="previousPage()"></app-pagination>
 }
 }
 }

@@ -14,10 +14,11 @@ import { UserOffersQuery } from '../../../../core/dto/offers/query/user-offers-q
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
+import { Pagination } from "../../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-my-offers',
-  imports: [DatePipe, DecimalPipe, RouterLink, EmptyState],
+  imports: [DatePipe, DecimalPipe, RouterLink, EmptyState, Pagination],
   templateUrl: './my-offers.html',
   standalone: true,
   styleUrl: './my-offers.scss',

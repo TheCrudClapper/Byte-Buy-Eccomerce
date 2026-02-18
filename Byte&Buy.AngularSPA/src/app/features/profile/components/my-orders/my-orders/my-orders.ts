@@ -11,10 +11,11 @@ import { UserOrderListQuery } from '../../../../../core/dto/order/common/user-or
 import { PagedList } from '../../../../../core/pagination/pagedList';
 import { EmptyStateModel } from '../../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../../shared/components/empty-state/empty-state";
+import { Pagination } from "../../../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-my-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.scss',
   standalone: true,

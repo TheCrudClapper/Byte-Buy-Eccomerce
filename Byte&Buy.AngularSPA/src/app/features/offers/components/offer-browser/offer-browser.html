@@ -119,37 +119,21 @@
             @if(page.items; as items){
             @if(page.items.length > 0)
             {
-            @for (item of items; track $index)
-            {
-            @if(item.type === 'rent'){
-            <app-rent-browser-item [offer]="item">
-            </app-rent-browser-item>
-            }
+                @for (item of items; track $index){
+                    @if(item.type === 'rent'){
+                        <app-rent-browser-item [offer]="item">
+                        </app-rent-browser-item>
+                    }
 
-            @if(item.type === 'sale'){
-            <app-sale-browser-item [offer]="item">
-            </app-sale-browser-item>
-            }
-            }
+                    @if(item.type === 'sale'){
+                        <app-sale-browser-item [offer]="item">
+                        </app-sale-browser-item>
+                    }
+                }
+                <app-pagination [metadata]="page.metadata" (goToNext)="nextPage()" (goToPrevious)="previousPage()"></app-pagination>
             }@else {
-            <app-empty-state [model]="emptyStateModel"></app-empty-state>
+                <app-empty-state [model]="emptyStateModel"></app-empty-state>
             }
-            }
-            @if(page.metadata.totalPages > 1) {
-            <div class="pagination-wrapper mt-4">
-                <button class="page-btn" [disabled]="!page.metadata.hasPrevious" (click)="previousPage()">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-
-                <span class="page-info">
-                    Page {{ page.metadata.currentPage }}
-                    of {{ page.metadata.totalPages }}
-                </span>
-
-                <button class="page-btn" [disabled]="!page.metadata.hasNext" (click)="nextPage()">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
             }
         </div>
         }

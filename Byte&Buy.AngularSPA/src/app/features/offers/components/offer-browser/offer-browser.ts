@@ -15,10 +15,11 @@ import { Guid } from 'guid-typescript';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
+import { Pagination } from "../../../../shared/components/pagination/pagination";
 
 @Component({
   selector: 'app-offer-browser',
-  imports: [CommonModule, RentBrowserItem, SaleBrowserItem, EmptyState],
+  imports: [CommonModule, RentBrowserItem, SaleBrowserItem, EmptyState, Pagination],
   templateUrl: './offer-browser.html',
   standalone: true,
   styleUrls: [
