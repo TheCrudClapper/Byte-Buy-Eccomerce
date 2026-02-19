@@ -12,10 +12,11 @@ import { PagedList } from '../../../../core/pagination/pagedList';
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 import { Pagination } from "../../../../shared/components/pagination/pagination";
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-client-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, ReactiveFormsModule],
   standalone: true,
   templateUrl: './client-orders.html',
   styleUrl: './client-orders.scss',
@@ -46,7 +47,6 @@ export class ClientOrders implements OnInit {
 
   //declaring it so its visible in template
   readonly OrderStatus = OrderStatus;
-
   readonly orderStatuses = Object.values(OrderStatus)
     .filter(v => typeof v === 'number');
 
@@ -55,11 +55,13 @@ export class ClientOrders implements OnInit {
     pageSize: this.PAGE_SIZE,
   });
 
-  selectedOrderStatus = signal<OrderStatus | null>(null);
-  buyerFullName = signal<string | null>(null);
-  itemName = signal<string | null>(null);
-  purchasedFrom = signal<string | null>(null);
-  purchasedTo = signal<string | null>(null);
+  filterFrom = new FormGroup({
+    orderStatus: new FormControl<OrderStatus | null>(null),
+    buyerFullName: new FormControl<string | null>(null),
+    itemName: new FormControl<string | null>(null),
+    purchasedFrom: new FormControl<string | null>(null),
+    purchasedTo: new FormControl<string | null>(null)
+  });
 
   constructor() {
     effect(() => {
@@ -87,48 +89,51 @@ export class ClientOrders implements OnInit {
       if (params['purchasedTo']) newQuery.purchasedTo = params['purchasedTo'];
       if (params['status'] !== undefined) newQuery.status = Number(params['status']);
 
-      this.selectedOrderStatus.set(newQuery.status ?? null);
-
       this.query.set(newQuery);
+
+      this.filterFrom.patchValue({
+        itemName: newQuery.itemName ?? null,
+        buyerFullName: newQuery.buyerFullName ?? null,
+        orderStatus: newQuery.status ?? null,
+        purchasedFrom: this.toDateInputValue(newQuery.purchasedFrom ?? null),
+        purchasedTo: this.toDateInputValue(newQuery.purchasedTo ?? null),
+      })
     });
   }
 
   applyFilters() {
+    const formValue = this.filterFrom.value;
+
     const newQuery: UserOrderSellerListQuery = {
       pageNumber: 1,
       pageSize: this.query().pageSize,
     };
 
-    if (this.buyerFullName() !== null)
-      newQuery.buyerFullName = this.buyerFullName()!;
+    if (formValue.itemName)
+      newQuery.itemName = formValue.itemName;
 
-    if (this.selectedOrderStatus() !== null)
-      newQuery.status = this.selectedOrderStatus()!;
+    if (formValue.buyerFullName)
+      newQuery.buyerFullName = formValue.buyerFullName;
 
-    if (this.itemName() !== null)
-      newQuery.itemName = this.itemName()!;
+    if (formValue.orderStatus !== null)
+      newQuery.status = formValue.orderStatus;
 
-    if (this.purchasedFrom() !== null)
-      newQuery.purchasedFrom = this.purchasedFrom()!;
+    if (formValue.purchasedFrom)
+      newQuery.purchasedFrom = formValue.purchasedFrom
 
-    if (this.purchasedTo() !== null)
-      newQuery.purchasedTo = this.purchasedTo()!;
+    if (formValue.purchasedTo)
+      newQuery.purchasedTo = formValue.purchasedTo
 
     this.query.set(newQuery);
 
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: newQuery,
-      queryParamsHandling: 'merge'
     });
   }
 
   clearFilters() {
-    this.selectedOrderStatus.set(null);
-    this.purchasedFrom.set(null);
-    this.purchasedTo.set(null);
-    this.itemName.set(null);
-    this.buyerFullName.set(null);
+    this.filterFrom.reset();
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -139,12 +144,9 @@ export class ClientOrders implements OnInit {
     });
   }
 
-  onOrderStatusChange(value: string) {
-    if (value === 'null') {
-      this.selectedOrderStatus.set(null);
-    } else {
-      this.selectedOrderStatus.set(Number(value) as OrderStatus);
-    }
+  private toDateInputValue(date: string | null): string | null {
+    if (!date) return null;
+    return date.split('T')[0];
   }
 
   goToPage(page: number) {

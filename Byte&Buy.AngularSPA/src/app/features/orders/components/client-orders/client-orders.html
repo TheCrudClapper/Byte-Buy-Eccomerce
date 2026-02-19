@@ -112,7 +112,8 @@
         @if(page.items.length === 0){
         <app-empty-state [model]="emptyStateModel"></app-empty-state>
         }@else {
-            <app-pagination [metadata]="page.metadata" (goToNext)="nextPage()" (goToPrevious)="previousPage()"></app-pagination>
+        <app-pagination [metadata]="page.metadata" (goToNext)="nextPage()"
+            (goToPrevious)="previousPage()"></app-pagination>
         }
         }
     </div>
@@ -127,29 +128,24 @@
         </button>
     </div>
 
-    <div class="offcanvas-body">
+    <div class="offcanvas-body" [formGroup]="filterFrom">
         <div class="mb-3">
             <label class="form-label muted">Search Buyer</label>
-
-            <input type="text" class="form-control" [value]="buyerFullName() ?? ''"
-                (input)="buyerFullName.set($any($event.target).value)" placeholder="Enter buyer name">
+            <input type="text" class="form-control" formControlName="buyerFullName" placeholder="Enter buyer name">
         </div>
 
         <div class="mb-3">
             <label class="form-label muted">Search Item Name</label>
-
-            <input type="text" [value]="itemName() ?? ''" class="form-control" placeholder="Search phrase"
-                (input)="itemName.set($any($event.target).value)">
+            <input type="text" class="form-control" formControlName="itemName" placeholder="Enter search phrase">
         </div>
 
         <div class="mb-3">
             <label class="form-label muted">Order Status</label>
-            <select class="form-select" [value]="selectedOrderStatus() ?? 'null'"
-                (change)="onOrderStatusChange($any($event.target).value)">
-                <option value="null" disabled>Select Status</option>
+            <select class="form-select" formControlName="orderStatus">
+                <option [ngValue]="null">Select Status</option>
                 @for (status of orderStatuses; track $index)
                 {
-                <option [value]="status">
+                <option [ngValue]="status">
                     {{ OrderStatus[status] }}
                 </option>
                 }
@@ -158,11 +154,8 @@
 
         <div class="mb-3">
             <label class="form-label muted">Purchased date</label>
-            <input type="date" [value]="purchasedFrom()" (change)="purchasedFrom.set($any($event.target).value)"
-                class="form-control mb-2">
-
-            <input type="date" [value]="purchasedTo()" (change)="purchasedTo.set($any($event.target).value)"
-                class="form-control">
+            <input type="date" formControlName="purchasedFrom" class="form-control mb-2">
+            <input type="date" formControlName="purchasedTo" class="form-control">
         </div>
 
         <div class="d-grid gap-2 mt-4">
