@@ -111,21 +111,21 @@
         </button>
     </div>
 
-    <div class="offcanvas-body">
+    <div class="offcanvas-body" [formGroup]="filterForm">
+
         <div class="mb-3">
             <label class="form-label muted">Item Name</label>
-            <input type="text" [value]="itemName() ?? ''" class="form-control" placeholder="Enter item name"
-                (input)="itemName.set($any($event.target).value)">
+            <input type="text" class="form-control" placeholder="Enter item name" formControlName="itemName">
         </div>
 
         <div class="mb-3">
             <label class="form-label muted">Rental Status</label>
-            <select class="form-select" [value]="selectedRentalStatus() ?? 'null'"
-                (change)="onRentalStatusChange($any($event.target).value)">
-                <option value="null" disabled>Select Status</option>
+            <select class="form-select" formControlName="rentalStatus">
+                <option [ngValue]="null">Select Status</option>
+
                 @for (status of rentalStatuses; track $index)
                 {
-                <option [value]="status">
+                <option [ngValue]="status">
                     {{ RentalStatus[status] }}
                 </option>
                 }
@@ -135,17 +135,16 @@
         <div class="mb-3">
             <label class="form-label muted">Rental Period</label>
 
-            <input type="date" [value]="toDateInputValue(rentalStartDate())"
-                (change)="onStartDateChange($any($event.target).value)" class="form-control mb-2">
+            <input type="date" class="form-control mb-2" formControlName="rentalStartDate">
 
-            <input type="date" [value]="toDateInputValue(rentalEndDate())"
-                (change)="onEndDateChange($any($event.target).value)" class="form-control">
+            <input type="date" class="form-control" formControlName="rentalEndDate">
         </div>
 
         <div class="d-grid gap-2 mt-4">
             <button class="btn btn-primary" (click)="applyFilters()" data-bs-dismiss="offcanvas">
                 Apply filters
             </button>
+
             <button class="btn btn-outline-secondary" (click)="clearFilters()">
                 Clear
             </button>

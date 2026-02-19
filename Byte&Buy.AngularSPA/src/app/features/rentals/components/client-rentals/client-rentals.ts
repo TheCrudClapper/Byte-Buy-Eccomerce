@@ -11,10 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { Pagination } from "../../../../shared/components/pagination/pagination";
+import { FormControl, FormGroup, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@angular/forms';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-client-rentals',
-  imports: [DecimalPipe, DatePipe, EmptyState, Pagination],
+  imports: [DecimalPipe, DatePipe, EmptyState, Pagination, ɵInternalFormsSharedModule, ReactiveFormsModule],
   standalone: true,
   templateUrl: './client-rentals.html',
   styleUrl: './client-rentals.scss',
@@ -31,6 +33,8 @@ export class ClientRentals implements OnInit {
   pagedList = signal<PagedList<RentalLenderResponse> | undefined>(undefined);
 
   readonly RentalStatus = RentalStatus;
+  readonly rentalStatuses = Object.values(RentalStatus)
+    .filter(v => typeof v === 'number');
 
   readonly emptyStateModel: EmptyStateModel = {
     description: `None of your items have been rented so far.
@@ -46,18 +50,12 @@ export class ClientRentals implements OnInit {
     ]
   }
 
-  readonly rentalStatuses = Object.values(RentalStatus)
-    .filter(v => typeof v === 'number');
-
-  query = signal<UserRentalLenderQuery>({
-    pageNumber: 1,
-    pageSize: this.PAGE_SIZE,
+  filterForm = new FormGroup({
+    itemName: new FormControl<string | null>(null),
+    rentalStatus: new FormControl<RentalStatus | null>(null),
+    rentalStartDate: new FormControl<string | null>(null),
+    rentalEndDate: new FormControl<string | null>(null),
   });
-
-  selectedRentalStatus = signal<RentalStatus | null>(null);
-  itemName = signal<string | null>(null);
-  rentalStartDate = signal<string | null>(null);
-  rentalEndDate = signal<string | null>(null);
 
   constructor() {
     effect(() => {
@@ -65,71 +63,81 @@ export class ClientRentals implements OnInit {
     });
   }
 
-  fetch(query: UserRentalLenderQuery) {
-    this.rentalApiSerivce.getLenderRentals(query).subscribe({
-      next: data => {
-        this.pagedList.set(data)
-      },
-      error: (err) => this.toastService.error(err?.detail ?? "Failed to fetch your rented offers")
-    });
-  }
+  query = signal<UserRentalLenderQuery>({
+    pageNumber: 1,
+    pageSize: this.PAGE_SIZE,
+  });
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+
       const newQuery: UserRentalLenderQuery = {
         pageNumber: Number(params['pageNumber'] ?? 1),
         pageSize: this.PAGE_SIZE
       };
 
-      if (params['rentalStatus'] !== undefined) newQuery.rentalStatus = Number(params['rentalStatus']);
-      if (params['itemName']) newQuery.itemName = params['itemName'];
-      if (params['rentalStartDate']) newQuery.rentalStartDate = params['rentalStartDate'];
-      if (params['rentalEndDate']) newQuery.rentalEndDate = params['rentalEndDate'];
+      if (params['rentalStatus'] !== undefined)
+        newQuery.rentalStatus = Number(params['rentalStatus']);
 
-      this.selectedRentalStatus.set(newQuery.rentalStatus ?? null);
+      if (params['itemName'])
+        newQuery.itemName = params['itemName'];
 
-      this.itemName.set(params['itemName'] ?? null);
+      if (params['rentalStartDate'])
+        newQuery.rentalStartDate = params['rentalStartDate'];
 
-      this.rentalStartDate.set(params['rentalStartDate']);
-
-      this.rentalEndDate.set(params['rentalEndDate']);
+      if (params['rentalEndDate'])
+        newQuery.rentalEndDate = params['rentalEndDate'];
 
       this.query.set(newQuery);
+
+      this.filterForm.patchValue({
+        itemName: newQuery.itemName ?? null,
+        rentalStatus: newQuery.rentalStatus ?? null,
+        rentalStartDate: this.toDateInputValue(newQuery.rentalStartDate ?? null),
+        rentalEndDate: this.toDateInputValue(newQuery.rentalEndDate ?? null),
+      }, { emitEvent: false });
+    });
+  }
+
+  fetch(query: UserRentalLenderQuery) {
+    this.rentalApiSerivce.getLenderRentals(query).subscribe({
+      next: data => this.pagedList.set(data),
+      error: err => this.toastService.error(
+        err?.detail ?? "Failed to fetch your rented offers"
+      )
     });
   }
 
   applyFilters() {
+    const formValue = this.filterForm.value;
+
     const newQuery: UserRentalLenderQuery = {
       pageNumber: 1,
-      pageSize: this.query().pageSize,
+      pageSize: this.PAGE_SIZE,
     };
 
-    if (this.selectedRentalStatus() !== null)
-      newQuery.rentalStatus = this.selectedRentalStatus()!
+    if (formValue.itemName)
+      newQuery.itemName = formValue.itemName;
 
-    if (this.itemName() !== null)
-      newQuery.itemName = this.itemName()!;
+    if (formValue.rentalStatus !== null)
+      newQuery.rentalStatus = formValue.rentalStatus;
 
-    if (this.rentalStartDate() !== null)
-      newQuery.rentalStartDate = this.rentalStartDate()!;
+    if (formValue.rentalStartDate)
+      newQuery.rentalStartDate = formValue.rentalStartDate
 
-    if (this.rentalEndDate() !== null)
-      newQuery.rentalEndDate = this.rentalEndDate()!;
+    if (formValue.rentalEndDate)
+      newQuery.rentalEndDate = formValue.rentalEndDate
 
     this.query.set(newQuery);
 
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: newQuery,
-      queryParamsHandling: 'merge'
     });
   }
 
   clearFilters() {
-    this.selectedRentalStatus.set(null);
-    this.rentalStartDate.set(null);
-    this.rentalEndDate.set(null);
-    this.itemName.set(null);
+    this.filterForm.reset();
 
     this.router.navigate([], {
       relativeTo: this.route,
@@ -140,47 +148,16 @@ export class ClientRentals implements OnInit {
     });
   }
 
-  onStartDateChange(value: string) {
-    if (!value) {
-      this.rentalStartDate.set(null);
-      return;
-    }
-
-    const iso = new Date(value + 'T00:00:00Z').toISOString();
-    this.rentalStartDate.set(iso);
-  }
-
-  onEndDateChange(value: string) {
-    if (!value) {
-      this.rentalEndDate.set(null);
-      return;
-    }
-
-    const iso = new Date(value + 'T00:00:00Z').toISOString();
-    this.rentalEndDate.set(iso);
-  }
-
-  toDateInputValue(date: string | null): string | null {
+  private toDateInputValue(date: string | null): string | null {
     if (!date) return null;
     return date.split('T')[0];
-  }
-
-  onRentalStatusChange(value: string) {
-    if (value === 'null') {
-      this.selectedRentalStatus.set(null);
-    } else {
-      this.selectedRentalStatus.set(Number(value) as RentalStatus);
-    }
   }
 
   goToPage(page: number) {
     const meta = this.pagedList()?.metadata;
     if (!meta) return;
 
-    const safePage = Math.min(
-      Math.max(page, 1),
-      meta.totalPages
-    );
+    const safePage = Math.min(Math.max(page, 1), meta.totalPages);
 
     if (safePage === this.query().pageNumber) return;
 
@@ -192,17 +169,13 @@ export class ClientRentals implements OnInit {
 
   nextPage() {
     const meta = this.pagedList()?.metadata;
-    if (!meta || !meta.hasNext) return;
-
-    const current = this.query();
-    this.goToPage(current.pageNumber + 1);
+    if (!meta?.hasNext) return;
+    this.goToPage(this.query().pageNumber + 1);
   }
 
   previousPage() {
     const meta = this.pagedList()?.metadata;
-    if (!meta || !meta.hasPrevious) return;
-
-    const current = this.query();
-    this.goToPage(current.pageNumber - 1);
+    if (!meta?.hasPrevious) return;
+    this.goToPage(this.query().pageNumber - 1);
   }
 }
