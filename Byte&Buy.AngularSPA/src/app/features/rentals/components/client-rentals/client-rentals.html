@@ -113,13 +113,13 @@
 
     <div class="offcanvas-body">
         <div class="mb-3">
-            <label class="form-label">Item Name</label>
+            <label class="form-label muted">Item Name</label>
             <input type="text" [value]="itemName() ?? ''" class="form-control" placeholder="Enter item name"
                 (input)="itemName.set($any($event.target).value)">
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Rental Status</label>
+            <label class="form-label muted">Rental Status</label>
             <select class="form-select" [value]="selectedRentalStatus() ?? 'null'"
                 (change)="onRentalStatusChange($any($event.target).value)">
                 <option value="null" disabled>Select Status</option>
@@ -133,7 +133,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Rental Period</label>
+            <label class="form-label muted">Rental Period</label>
 
             <input type="date" [value]="toDateInputValue(rentalStartDate())"
                 (change)="onStartDateChange($any($event.target).value)" class="form-control mb-2">
