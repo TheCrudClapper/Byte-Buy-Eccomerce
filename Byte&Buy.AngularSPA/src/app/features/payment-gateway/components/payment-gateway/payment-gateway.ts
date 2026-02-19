@@ -82,7 +82,8 @@ export class PaymentGateway implements OnInit {
     if (method === PaymentMethod.Card) {
       this.form.controls.cardNumber.setValidators([
         Validators.required,
-        Validators.minLength(16)
+        Validators.minLength(16),
+        Validators.maxLength(19)
       ]);
       this.form.controls.expiration.setValidators(Validators.required);
       this.form.controls.cvc.setValidators([
@@ -129,7 +130,10 @@ export class PaymentGateway implements OnInit {
 
       this.paymentApiService.payWithCard(id, payload).subscribe({
         next: () => {
-          this.dialogService.success("Success paid with Cart.");
+          this.dialogService.success("Successfully paid with Cart.").then(result => {
+            if (result.isConfirmed)
+              this.router.navigate(['/profile', 'my-orders']);
+          });
           this.router.navigate(['/profile', 'my-orders']);
         },
         error: (err: ProblemDetails) => this.dialogService.error(err.detail ?? "Failed to pay with Card.")
@@ -143,10 +147,12 @@ export class PaymentGateway implements OnInit {
 
       this.paymentApiService.payWithBlik(id, payload).subscribe({
         next: () => {
-          this.dialogService.success("Success paid with Blik.")
-          this.router.navigate(['/profile', 'my-orders']);
+          this.dialogService.success("Successfully paid with Blik.").then(result => {
+            if (result.isConfirmed)
+              this.router.navigate(['/profile', 'my-orders']);
+          });
         },
-        error: (err: ProblemDetails) =>  this.dialogService.error(err.detail ?? "Failed to pay with Blik.")
+        error: (err: ProblemDetails) => this.dialogService.error(err.detail ?? "Failed to pay with Blik.")
       });
     }
   }

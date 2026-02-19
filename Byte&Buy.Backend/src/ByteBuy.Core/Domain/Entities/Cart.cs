@@ -147,8 +147,14 @@ public class Cart : AuditableEntity, ISoftDeletable
             .FirstOrDefault(co => co.OfferId == rentOffer.Id &&
                             co.RentalDays == rentalDays);
 
-        var currentExistingQuantity = existingCartOffer?.Quantity ?? 0;
-        var requestedQuantity = currentExistingQuantity + quantity;
+        var totalReservedQuantity = CartOffers
+            .OfType<RentCartOffer>()
+            .Where(co => co.OfferId == rentOffer.Id)
+            .Sum(co => co.Quantity);
+
+
+        //var currentExistingQuantity = existingCartOffer?.Quantity ?? 0;
+        var requestedQuantity = totalReservedQuantity + quantity;
 
         if (requestedQuantity > rentOffer.QuantityAvailable)
             return Result.Failure(CartErrors.RequestedQuantityTooHigh);

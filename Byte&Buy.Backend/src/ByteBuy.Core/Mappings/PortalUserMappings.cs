@@ -60,7 +60,7 @@ public static class PortalUserMappings
     public static Expression<Func<PortalUser, SellerCheckoutQueryModel>> SellerPortalResponseProjection
         => p => new SellerCheckoutQueryModel(
             p.Id,
-            p.FirstName + p.LastName,
+            $"{p.FirstName} {p.LastName}",
             p.Email!);
 
     public static Expression<Func<PortalUser, SellerSnapshotQueryModel>> SellerSnapshotDtoProjection

@@ -12,7 +12,8 @@ public sealed class CardPaymentDetails : PaymentDetails
 
     private CardPaymentDetails(Guid paymentId, PaymentMethod method, string maskedCardNumber, string cardHolderName) : base(method, paymentId)
     {
-        MaskedCardNumber = maskedCardNumber;
+        var num = maskedCardNumber.Remove(0, maskedCardNumber.Length - 4);
+        MaskedCardNumber = num.PadLeft(maskedCardNumber.Length, '*');
         CardHolderName = cardHolderName;
     }
 
@@ -21,7 +22,7 @@ public sealed class CardPaymentDetails : PaymentDetails
         if (string.IsNullOrWhiteSpace(cardNumber) || cardNumber.Length < 16 || cardNumber.Length > 19)
             return Result.Failure<CardPaymentDetails>(PaymentErrors.InvalidCardNumber);
 
-        if (string.IsNullOrWhiteSpace(cardHolderName))
+        if (string.IsNullOrWhiteSpace(cardHolderName) || cardHolderName.Length > 30)
             return Result.Failure<CardPaymentDetails>(PaymentErrors.InvalidCartHolder);
 
         return new CardPaymentDetails(paymentId, method, cardNumber, cardHolderName);
