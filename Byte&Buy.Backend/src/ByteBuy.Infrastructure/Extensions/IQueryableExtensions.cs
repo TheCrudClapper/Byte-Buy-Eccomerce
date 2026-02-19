@@ -8,7 +8,7 @@ public static class IQueryableExtensions
     public static async Task<PagedList<T>> ToPagedListAsync<T>(
         this IQueryable<T> source, int pageNumber, int pageSize, CancellationToken ct = default)
     {
-        var totalCount = await source.CountAsync();
+        var totalCount = await source.CountAsync(ct);
         var items = await source
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)

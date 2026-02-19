@@ -41,7 +41,6 @@ export class CheckoutPage implements OnInit {
   // Holds selected deliveries key -> seller id, value -> type representing given delivery
   deliveryBySeller = signal<Record<string, SellerDeliveryState | null>>({});
 
-
   // Declaring enums to be visible in template
   readonly OfferStatus = OfferStatus;
   readonly PaymentMethod = PaymentMethod;
@@ -77,40 +76,55 @@ export class CheckoutPage implements OnInit {
   });
 
   canPay = computed(() => {
-    const deliveries = Object.values(this.deliveryBySeller());
-    if (deliveries.length === 0) return false;
-
-    if (!this.checkout() || !this.checkout()?.canPlaceOrder)
+    const checkout = this.checkout();
+    if (!checkout?.canPlaceOrder)
       return false;
 
-    return deliveries.every(d => {
-      if (!d) return false;
+    const deliveries = Object.values(this.deliveryBySeller());
+    if (!deliveries.length)
+      return false;
 
-      switch (d.channel) {
-        case 'Courier':
-          return !!d.shippingAddressId;
-
-        case 'ParcelLocker':
-          return !!d.parcelLocker.lockerId;
-
-        case 'PickupPoint':
-          const p = d.pickupPoint;
-          return !!(p.street && p.city && p.localNumber && p.pickupPointId);
-
-        default:
-          return false;
-      }
-    });
+    return deliveries.every(this.isDeliveryValid);
   });
+
+  private isDeliveryValid(d: SellerDeliveryState | null | undefined): boolean {
+    if (!d) return false;
+
+    switch (d.channel) {
+      case 'Courier':
+        return !!d.shippingAddressId?.trim();
+
+      case 'ParcelLocker':
+        return !!d.parcelLocker?.lockerId?.trim();
+
+      case 'PickupPoint':
+        const p = d.pickupPoint;
+        return !!(
+          p?.pickupPointId?.trim() &&
+          p?.street?.trim() &&
+          p?.city?.trim() &&
+          p?.localNumber?.trim()
+        );
+
+      default:
+        return false;
+    }
+  }
 
   ngOnInit(): void {
     this.addressApiService.getShippingAddressCheckout().subscribe(data => {
       this.shippingAddress.set(data);
-    }
-    );
+    });
+
     this.checkoutApiService.getCheckout().subscribe(data => {
       this.checkout.set(data);
       this.totalCost.set(data.totalCost);
+
+      const initialDeliveries: Record<string, SellerDeliveryState | null> = {};
+      for (const sg of data.sellersGroups) {
+        initialDeliveries[sg.sellerId.toString()] = null;
+      }
+      this.deliveryBySeller.set(initialDeliveries);
     });
   }
 
@@ -154,11 +168,7 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-  selectPaymentMethod(id: number) {
-    this.selectedPaymentMethod.set(id);
-  }
-
-  setParcelLocker(sellerId: string, lockerId: string) {
+   setParcelLocker(sellerId: string, lockerId: string) {
     this.deliveryBySeller.update(s => {
       const current = s[sellerId];
       if (!current || current.channel !== 'ParcelLocker') return s;
@@ -195,6 +205,11 @@ export class CheckoutPage implements OnInit {
     });
   }
 
+
+  selectPaymentMethod(id: number) {
+    this.selectedPaymentMethod.set(id);
+  }
+  
   //On failed order creation -> refres checkout
   submit() {
     const sellerPayload = buildSellerDeliveriesPayload(this.deliveryBySeller());
