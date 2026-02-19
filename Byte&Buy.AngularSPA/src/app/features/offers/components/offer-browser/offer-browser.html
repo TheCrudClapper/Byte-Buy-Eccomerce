@@ -1,9 +1,8 @@
 <div class="container">
-    <div class="row mb-5 mt-5">
+    <div class="row mb-5 mt-5" [formGroup]="filterForm">
         <div class="col-12 col-lg-3">
-            <div class="filter-card sticky-top">
-
-                <div class="filter-header ">
+            <div class="filter-card sticky-top" >
+                <div class="filter-header">
                     <i class="fa-solid fa-sliders me-2"></i>
                     Filters
                 </div>
@@ -14,8 +13,8 @@
                     @for (category of categories(); track category.id) {
                     <label class="filter-checkbox">
                         <input type="checkbox" class="form-check-input checkbox"
-                            [checked]="selectedCategoryIds().includes(category.id)"
-                            (change)="toggleCategory(category.id, $any($event.target).checked)">
+                            [checked]="filterForm.value.categoryIds?.includes(category.id)"
+                            (change)="toggleCategory(category.id, $event.target.checked)">
                         <span>{{ category.title }}</span>
                     </label>
                     }
@@ -27,8 +26,8 @@
                     @for (condition of conditions(); track condition.id) {
                     <label class="filter-checkbox">
                         <input type="checkbox" class="form-check-input checkbox"
-                            [checked]="selectedConditionIds().includes(condition.id)"
-                            (change)="toggleCondition(condition.id, $any($event.target).checked)">
+                            [checked]="filterForm.value.conditionIds?.includes(condition.id)"
+                            (change)="toggleCategory(condition.id, $event.target.checked)">
                         <span>{{ condition.title }}</span>
                     </label>
                     }
@@ -39,12 +38,10 @@
                     <p class="filter-title">Price range</p>
                     <div class="row g-2">
                         <div class="col-6">
-                            <input [value]="minPrice() ?? ''" (input)="minPrice.set($any($event.target).value)"
-                                class="form-control" placeholder="Min" type="number">
+                            <input formControlName="minPrice" class="form-control" placeholder="Min" type="number">
                         </div>
                         <div class="col-6">
-                            <input [value]="maxPrice() ?? ''" (input)="maxPrice.set($any($event.target).value)"
-                                class="form-control" placeholder="Max" type="number">
+                            <input formControlName="maxPrice" class="form-control" placeholder="Max" type="number">
                         </div>
                     </div>
                 </div>
@@ -53,8 +50,7 @@
                     <p class="filter-title">City</p>
                     <div class="row g-2">
                         <div class="col-12">
-                            <input [value]="city() ?? ''" (input)="city.set($any($event.target).value)" type="text"
-                                class="form-control" placeholder="Enter city">
+                            <input formControlName="city" class="form-control" placeholder="Enter city">
                         </div>
                     </div>
                 </div>
@@ -64,14 +60,10 @@
                     <p class="filter-title">Rental Days</p>
                     <div class="row g-2">
                         <div class="col-6">
-                            <input type="number" [value]="minRentalDays() ?? ''"
-                                (input)="minRentalDays.set($any($event.target).value)" class="form-control"
-                                placeholder="Min">
+                            <input type="number" formControlName="minRentalDays" class="form-control" placeholder="Min">
                         </div>
                         <div class="col-6">
-                            <input type="number" [value]="maxRentalDays() ?? ''"
-                                (input)="maxRentalDays.set($any($event.target).value)" class="form-control"
-                                placeholder="Max">
+                            <input type="number" formControlName="maxRentalDays" class="form-control" placeholder="Max">
                         </div>
                     </div>
                 </div>
@@ -104,7 +96,7 @@
 
                 <div class="d-flex align-items-center gap-2">
                     <span class="small">Sort by:</span>
-                    <select class="form-select form-select-sm w-auto" [value]="query().sortBy"
+                    <select class="form-select form-select-sm w-auto" formControlName="sortBy"
                         (change)="onSortChange($any($event.target).value)">
                         @for (sort of sortOptions; track sort) {
                         <option [value]="sort">
@@ -119,20 +111,21 @@
             @if(page.items; as items){
             @if(page.items.length > 0)
             {
-                @for (item of items; track $index){
-                    @if(item.type === 'rent'){
-                        <app-rent-browser-item [offer]="item">
-                        </app-rent-browser-item>
-                    }
+            @for (item of items; track $index){
+            @if(item.type === 'rent'){
+            <app-rent-browser-item [offer]="item">
+            </app-rent-browser-item>
+            }
 
-                    @if(item.type === 'sale'){
-                        <app-sale-browser-item [offer]="item">
-                        </app-sale-browser-item>
-                    }
-                }
-                <app-pagination [metadata]="page.metadata" (goToNext)="nextPage()" (goToPrevious)="previousPage()"></app-pagination>
+            @if(item.type === 'sale'){
+            <app-sale-browser-item [offer]="item">
+            </app-sale-browser-item>
+            }
+            }
+            <app-pagination [metadata]="page.metadata" (goToNext)="nextPage()"
+                (goToPrevious)="previousPage()"></app-pagination>
             }@else {
-                <app-empty-state [model]="emptyStateModel"></app-empty-state>
+            <app-empty-state [model]="emptyStateModel"></app-empty-state>
             }
             }
         </div>
