@@ -43,13 +43,12 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         IsEditMode = true;
         EditingItemId = id;
-        await InitializeAsync();
-
         var result = await _roleService.GetById(id);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
 
+        await InitializeAsync();
         RoleName = value.Name;
         var permissionIds = value.PermissionIds;
         PermissionListBox.SetSelectedPermissions(permissionIds);

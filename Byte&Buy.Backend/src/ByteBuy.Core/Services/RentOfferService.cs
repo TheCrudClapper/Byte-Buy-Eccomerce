@@ -93,9 +93,12 @@ public class RentOfferService : IRentOfferService
         if (item is null)
             return Result.Failure(OfferErrors.ItemNotFound);
 
-        var stockUpdateResult = item.AddStock(rentOffer.QuantityAvailable);
-        if (stockUpdateResult.IsFailure)
-            return Result.Failure(stockUpdateResult.Error);
+        if (rentOffer.QuantityAvailable > 0)
+        {
+            var stockUpdateResult = item.AddStock(rentOffer.QuantityAvailable);
+            if (stockUpdateResult.IsFailure)
+                return Result.Failure(stockUpdateResult.Error);
+        }
 
         rentOffer.Deactivate();
 

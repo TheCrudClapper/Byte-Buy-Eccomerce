@@ -97,9 +97,9 @@ public partial class ItemPageViewModel : ViewModelSingle
         var cat = await categoryTask;
 
 
-        Conditions = new ObservableCollection<SelectListItemResponse<Guid>>(cond?.Value ?? []);
+        Conditions = new ObservableCollection<SelectListItemResponse<Guid>>(cond.Value ?? []);
 
-        Categories = new ObservableCollection<SelectListItemResponse<Guid>>(cat?.Value ?? []);
+        Categories = new ObservableCollection<SelectListItemResponse<Guid>>(cat.Value ?? []);
     }
 
     public async Task InitializeForEdit(Guid id)

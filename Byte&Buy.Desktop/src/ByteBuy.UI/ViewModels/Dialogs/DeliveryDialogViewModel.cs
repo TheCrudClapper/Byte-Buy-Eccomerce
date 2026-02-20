@@ -67,12 +67,12 @@ public partial class DeliveryDialogViewModel(
         await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
 
         var parcelResult = parcelLockerSizesTask.Result;
-        var deliveryChannelResult = deliveryChannelsTask.Result;
-        var deliveryCarriersResult = deliveryCarriersTask.Result;
+        var channelResult = deliveryChannelsTask.Result;
+        var carriersResult = deliveryCarriersTask.Result;
 
-        ParcelLockerSize = new ObservableCollection<SelectListItemResponse<int>>(parcelResult.Value ?? []);
-        DeliveryChannels = new ObservableCollection<SelectListItemResponse<int>>(deliveryChannelResult.Value ?? []);
-        DeliveryCarriers = new ObservableCollection<SelectListItemResponse<Guid>>(deliveryCarriersResult.Value ?? []);
+        ParcelLockerSize = new ObservableCollection<SelectListItemResponse<int>>(parcelResult.Success ? parcelResult.Value : []);
+        DeliveryChannels = new ObservableCollection<SelectListItemResponse<int>>(channelResult.Success ? channelResult.Value : []);
+        DeliveryCarriers = new ObservableCollection<SelectListItemResponse<Guid>>(carriersResult.Success ? carriersResult.Value : []);
     }
 
     public async override Task InitializeForEdit(Guid id)

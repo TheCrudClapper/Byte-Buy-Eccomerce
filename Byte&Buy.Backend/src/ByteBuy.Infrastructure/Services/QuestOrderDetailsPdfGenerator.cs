@@ -40,7 +40,13 @@ public class QuestOrderDetailsPdfGenerator : IPdfGenerator<OrderDetailsPdfModel>
                             company.Item().Text(orderDetails.CompanyData.CompanyName)
                                 .Bold().FontSize(14);
 
-                            company.Item().Text($"{orderDetails.CompanyData.CompanyAddress.Street} {orderDetails.CompanyData.CompanyAddress.HouseNumber}/{orderDetails.CompanyData.CompanyAddress.FlatNumber}");
+                            company.Item().Text(
+                                $"{orderDetails.CompanyData.CompanyAddress.Street} " +
+                                $"{orderDetails.CompanyData.CompanyAddress.HouseNumber}" +
+                                $"{(orderDetails.CompanyData.CompanyAddress.FlatNumber != null
+                                    ? " / " + orderDetails.CompanyData.CompanyAddress.FlatNumber
+                                    : string.Empty)}"
+                            );
                             company.Item().Text($"{orderDetails.CompanyData.CompanyAddress.PostalCode} {orderDetails.CompanyData.CompanyAddress.PostalCity}, {orderDetails.CompanyData.CompanyAddress.Country}");
                             company.Item().Text($"TIN: {orderDetails.CompanyData.TIN}");
                             company.Item().Text(orderDetails.CompanyData.Email);

@@ -94,6 +94,8 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     public async Task InitializeAsync()
     {
         var deliveries = await deliveryService.GetAvaliableDeliveries();
+        if (!deliveries.Success || deliveries.Value is null)
+            return;
 
         //Group parcel by carrier so user can select only one parcel locker delivery option per carrier
         ParcelLockerGroups = new ObservableCollection<ParcelLockerCarrierGroup>(

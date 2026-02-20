@@ -95,9 +95,12 @@ public class SaleOfferService : ISaleOfferService
         if (item is null)
             return Result.Failure(Error.NotFound);
 
-        var stockUpdateResult = item.AddStock(saleOffer.QuantityAvailable);
-        if (stockUpdateResult.IsFailure)
-            return Result.Failure(stockUpdateResult.Error);
+        if (saleOffer.QuantityAvailable > 0)
+        {
+            var stockUpdateResult = item.AddStock(saleOffer.QuantityAvailable);
+            if (stockUpdateResult.IsFailure)
+                return Result.Failure(stockUpdateResult.Error);
+        }
 
         saleOffer.Deactivate();
 

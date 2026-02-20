@@ -1,4 +1,4 @@
-@if(companyInfo()){
+@if(companyInfo(); as info){
 <footer>
 
     <!--Spacer-->
@@ -8,10 +8,10 @@
         <!--Brand & Slogan-->
         <div class="row">
             <div class="col-6 d-flex justify-content-left align-items-center ps-5">
-                <h4 class="fw-bold">{{companyInfo()?.companyName}}</h4>
+                <h4 class="fw-bold">{{info.companyName}}</h4>
             </div>
             <div class="col-6 d-flex justify-content-end align-items-center pe-5">
-                <span class="fw-bold">{{companyInfo()?.slogan}}</span>
+                <span class="fw-bold">{{info.slogan}}</span>
             </div>
         </div>
 
@@ -22,12 +22,12 @@
             <div class="col-12 col-md-4 text-center text-md-start pb-5 pb-mb-0 ps-md-5">
                 <div class="row">
                     <div class="col-12">
-                        {{companyInfo()?.companyName}}<br>
-                        {{companyInfo()?.address?.street}} {{companyInfo()?.address?.houseNumber}}<br>
-                        {{companyInfo()?.address?.postalCode}} {{companyInfo()?.address?.city}},
-                        {{companyInfo()?.address?.country}}<br>
-                        {{companyInfo()?.email}}<br>
-                        {{companyInfo()?.phone}}
+                        {{info.companyName}}<br>
+                        {{info.address.street}} {{info.address.houseNumber}} {{ info.address.flatNumber ? `/ ${info.address.flatNumber}` : '' }} <br>
+                        {{info.address.postalCode}} {{info.address.city}},
+                        {{info.address.country}}<br>
+                        {{info.email}}<br>
+                        {{info.phone}}
                     </div>
                 </div>
             </div>

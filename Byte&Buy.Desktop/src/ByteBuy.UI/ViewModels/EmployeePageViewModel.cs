@@ -123,9 +123,10 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         var roles = roleTask.Result;
         var countries = countriesTask.Result;
 
-        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Value ?? []);
-        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);
+        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Success ? roles.Value : []);
+        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Success ? countries.Value : []);
     }
+
     protected override void Clear()
     {
         FirstName = string.Empty;
@@ -141,6 +142,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         FlatNumber = string.Empty;
         PermissionListBox.ClearSelectedPermissions();
     }
+
     public async Task InitializeForEdit(Guid itemId)
     {
         IsEditMode = true;

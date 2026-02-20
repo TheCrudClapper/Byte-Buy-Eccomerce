@@ -135,9 +135,9 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         var countries = countriesTask.Result;
         var roles = roleTask.Result;
 
-        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Value ?? []);
+        Countries = new ObservableCollection<SelectListItemResponse<Guid>>(countries.Success ? countries.Value : []);
 
-        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Value ?? []);
+        Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Success ? roles.Value : []);
     }
 
     protected override async Task AddItem()
