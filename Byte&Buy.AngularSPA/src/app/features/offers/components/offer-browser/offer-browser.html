@@ -27,7 +27,7 @@
                     <label class="filter-checkbox">
                         <input type="checkbox" class="form-check-input checkbox"
                             [checked]="filterForm.value.conditionIds?.includes(condition.id)"
-                            (change)="toggleCategory(condition.id, $event.target.checked)">
+                            (change)="toggleCondition(condition.id, $event.target.checked)">
                         <span>{{ condition.title }}</span>
                     </label>
                     }
