@@ -112,7 +112,7 @@
                             <div class="col-8">
                                 <button 
                                     class="btn w-100"
-                                    [disabled]="cartForm.disabled || cartForm.invalid || saleOfferDetails()?.status === OfferStatus.SoldOut">
+                                    [disabled]="!authService.isLoggedIn() || cartForm.disabled || cartForm.invalid || saleOfferDetails()?.status === OfferStatus.SoldOut">
                                     <i class="fa-solid fa-cart-arrow-down me-1" style="color: #ffffff;"></i>
                                     To Cart
                                 </button>

@@ -28,41 +28,41 @@ import { MyRentals } from './features/profile/components/my-rentals/my-rentals';
 import { ClientRentals } from './features/rentals/components/client-rentals/client-rentals';
 
 export const routes: Routes = [
-    { path: '', component: HomePage},
-    { path: 'login', component: LoginPage},
-    { path: 'register', component: RegisterPage},
+    { path: '', component: HomePage },
+    { path: 'login', component: LoginPage },
+    { path: 'register', component: RegisterPage },
     {
         canActivate: [authGuard],
         path: '',
         children: [
-            { path: 'offers/rent/create', component: RentCreate}, 
-            { path: 'offers/rent/edit/:id', component: RentEdit, canMatch: [guidParameterGuard]}, 
-            { path: 'offers/rent/details/:id', component: RentDetails, canMatch: [guidParameterGuard]}, 
-            { path: 'offers/sale/create', component: SaleCreate}, 
-            { path: 'offers/sale/edit/:id', component: SaleEdit, canMatch: [guidParameterGuard]}, 
-            { path: 'offers/sale/details/:id', component: SaleDetails, canMatch: [guidParameterGuard]},
-            { path: 'order/details/:id', component: BuyerOrderDetails, canMatch: [guidParameterGuard]},
-            { path: 'order/seller-details/:id', component: SellerOrderDetails, canMatch: [guidParameterGuard]},
-            { path: 'client-orders', component: ClientOrders},
-            { path: 'client-rentals', component: ClientRentals, canMatch: [guidParameterGuard]},
-            { path: 'cart', component: CartPage},
+            { path: 'offers/rent/create', component: RentCreate },
+            { path: 'offers/rent/edit/:id', component: RentEdit, canMatch: [guidParameterGuard] },
+            { path: 'offers/sale/create', component: SaleCreate },
+            { path: 'offers/sale/edit/:id', component: SaleEdit, canMatch: [guidParameterGuard] },
+            { path: 'order/details/:id', component: BuyerOrderDetails, canMatch: [guidParameterGuard] },
+            { path: 'order/seller-details/:id', component: SellerOrderDetails, canMatch: [guidParameterGuard] },
+            { path: 'client-orders', component: ClientOrders },
+            { path: 'client-rentals', component: ClientRentals, canMatch: [guidParameterGuard] },
+            { path: 'cart', component: CartPage },
             {
                 path: 'profile',
                 component: ProfilePage,
                 children: [
                     { path: '', redirectTo: 'personal-info', pathMatch: 'full' },
                     { path: 'personal-info', component: PersonalInfo },
-                    { path: 'addresses', component: Addresses},
-                    { path: 'my-offers', component: MyOffers},
-                    { path: 'my-orders', component: MyOrders},
-                    { path: 'my-rentals', component: MyRentals}
+                    { path: 'addresses', component: Addresses },
+                    { path: 'my-offers', component: MyOffers },
+                    { path: 'my-orders', component: MyOrders },
+                    { path: 'my-rentals', component: MyRentals }
                 ]
             },
-            { path: 'checkout', component: CheckoutPage},
-            { path: 'payment/:id', component: PaymentGateway, canMatch: [guidParameterGuard]},
+            { path: 'checkout', component: CheckoutPage },
+            { path: 'payment/:id', component: PaymentGateway, canMatch: [guidParameterGuard] },
         ]
     },
     { path: 'forbidden', component: Fobidden },
-    { path: 'offers', component: OfferBrowser},
+    { path: 'offers', component: OfferBrowser },
+    { path: 'offers/rent/details/:id', component: RentDetails, canMatch: [guidParameterGuard] },
+    { path: 'offers/sale/details/:id', component: SaleDetails, canMatch: [guidParameterGuard] },
     { path: '**', component: NotFound }
 ];

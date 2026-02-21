@@ -9,6 +9,7 @@ import { ProblemDetails } from '../../../../../core/dto/problem-details';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { FormBuilder } from '@angular/forms';
 import { environment } from '../../../../../../environments/environment';
+import { AuthService } from '../../../../../core/clients/auth/auth-service';
 
 @Component({
   selector: 'app-base-offer-detail',
@@ -22,6 +23,7 @@ export abstract class BaseOfferDetail {
   protected readonly route = inject(ActivatedRoute);
   protected readonly offerService = inject(OfferApiService);
   protected readonly cartService = inject(CartApiService);
+  protected readonly authService = inject(AuthService);
   protected readonly toastService = inject(ToastService);
   protected readonly deliveryService = inject(DeliveryApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
