@@ -27,6 +27,7 @@ public class EmployeeRepository : EfBaseRepository<Employee>, IEmployeeRepositor
         var query = _context.Employees
             .AsNoTracking()
             .Where(e => e.Id != excludedUserId)
+            .Where(e => !e.UserRoles.Any(r => r.Role.IsSystemRole))
             .OrderByDescending(e => e.DateCreated)
             .AsQueryable();
 
