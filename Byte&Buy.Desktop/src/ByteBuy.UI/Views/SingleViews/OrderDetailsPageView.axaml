@@ -11,8 +11,8 @@
 
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
-		<StyleInclude Source="../Styles/OrderRentalStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/OrderRentalStyles.axaml" />
 	</UserControl.Styles>
 
 

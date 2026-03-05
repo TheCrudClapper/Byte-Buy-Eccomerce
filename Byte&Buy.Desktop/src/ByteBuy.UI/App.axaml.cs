@@ -13,6 +13,7 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views;
 using ByteBuy.UI.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;

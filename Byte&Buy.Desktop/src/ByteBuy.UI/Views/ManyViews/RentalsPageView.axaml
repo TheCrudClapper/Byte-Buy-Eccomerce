@@ -1,57 +1,57 @@
 <UserControl xmlns="https://github.com/avaloniaui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:views="using:ByteBuy.UI.Views.Shared"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="1300" d:DesignHeight="450"
-			 x:Class="ByteBuy.UI.Views.OrdersPageView"
-			 x:DataType="vm:OrdersPageViewModel">
+			 x:Class="ByteBuy.UI.Views.RentalsPageView"
+			 x:DataType="vm:RentalsPageViewModel">
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
-
 		<Grid x:Name="Root" RowDefinitions="50,auto,*,50">
 			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
 
 				<!--Page Title-->
-				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"  Text="Orders"/>
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"  Text="Rentals"/>
+
 			</Grid>
 
 			<!-- Filters -->
 			<Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" Padding="15" CornerRadius="10">
-				<WrapPanel Orientation="Horizontal" ItemSpacing="10" LineSpacing="10">
+				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" LineSpacing="10">
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Buyer Name" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding BuyerFullName}"/>
+						<TextBlock Text="Item" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding ItemName}"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Buyer Email" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding BuyerEmail}"/>
+						<TextBlock Text="Borrower Email" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding BorrowerEmail}"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Purchased From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<CalendarDatePicker SelectedDate="{Binding PurchasedFrom}" Width="150"/>
+						<TextBlock Text="Rental Days From" FontFamily="OpenSansBold" FontWeight="600"/>
+						<NumericUpDown Width="150" Value="{Binding RentalDaysFrom}"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Purchased To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<CalendarDatePicker SelectedDate="{Binding PurchasedTo}" Width="150"/>
+						<TextBlock Text="Rentals Days To" FontFamily="OpenSansBold" FontWeight="600"/>
+						<NumericUpDown Width="150" Value="{Binding RentalDaysTo}"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Total From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding TotalFrom}"/>
+						<TextBlock Text="Rented From" FontFamily="OpenSansBold" FontWeight="600"/>
+						<CalendarDatePicker SelectedDate="{Binding RentalStartPeriod}" Width="150"/>
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Total To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding TotalTo}"/>
+						<TextBlock Text="Rented To" FontFamily="OpenSansBold" FontWeight="600"/>
+						<CalendarDatePicker SelectedDate="{Binding RentalEndPeriod}" Width="150"/>
 					</StackPanel>
 
 					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
@@ -73,6 +73,7 @@
 					</Button>
 				</WrapPanel>
 			</Border>
+
 			<!-- Fetched items count -->
 			<StackPanel Grid.Row="2">
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -101,12 +102,12 @@
 
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-						<DataGridTextColumn Header="Buyer Full Name" Binding="{Binding BuyerFullName}" Width="*" />
-						<DataGridTextColumn Header="Buyer Email" Binding="{Binding BuyerEmail}" Width="*" />
-						<DataGridTextColumn Header="Order Status" Binding="{Binding Status}" Width="*" />
-						<DataGridTextColumn Header="Lines" Binding="{Binding LinesCount}" Width="*" />
-						<DataGridTextColumn Header="Purchased" Binding="{Binding PurchaseDate}" Width="*" />
-						<DataGridTextColumn Header="Total" Binding="{Binding TotalCost}" Width="*" />
+						<DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" />
+						<DataGridTextColumn Header="Borrower Email" Binding="{Binding BorrowerEmail}" Width="*" />
+						<DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*" />
+						<DataGridTextColumn Header="Days" Binding="{Binding RentalDays}" Width="*" />
+						<DataGridTextColumn Header="Rental Start" Binding="{Binding StartingRentalDate}" Width="*" />
+						<DataGridTextColumn Header="Rental End" Binding="{Binding EndingRentalDate}" Width="*" />
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>

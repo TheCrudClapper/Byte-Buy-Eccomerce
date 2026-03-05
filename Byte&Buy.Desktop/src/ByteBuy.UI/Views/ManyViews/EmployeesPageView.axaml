@@ -1,0 +1,175 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 Background="Transparent"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:local="clr-namespace:ByteBuy.UI.Views"
+			 x:DataType="vm:EmployeesPageViewModel"
+			 x:Class="ByteBuy.UI.Views.EmployeesPageView">
+
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+	</UserControl.Styles>
+
+	<Grid>
+
+		<Grid x:Name="Root" RowDefinitions="50,auto,*,50">
+			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+				<!--Page Title-->
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Employees"/>
+
+				<Button
+				Command="{Binding AddCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right"
+				Grid.Column="2">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+						<Label Content="Add"/>
+					</StackPanel>
+
+				</Button>
+
+			</Grid>
+
+			<!-- Filters -->
+			<Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" Padding="15" CornerRadius="10">
+					<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" LineSpacing="10">
+						<StackPanel VerticalAlignment="Center">
+							<TextBlock Text="First Name" FontFamily="OpenSansBold" FontWeight="600"/>
+							<TextBox Width="150" Text="{Binding FirstName}"/>
+						</StackPanel>
+
+						<StackPanel VerticalAlignment="Center">
+							<TextBlock Text="Last Name" FontFamily="OpenSansBold" FontWeight="600"/>
+							<TextBox Width="150" Text="{Binding LastName}"/>
+						</StackPanel>
+
+						<StackPanel VerticalAlignment="Center">
+							<TextBlock Text="Email" FontFamily="OpenSansBold" FontWeight="600"/>
+							<TextBox Width="150" Text="{Binding Email}"/>
+						</StackPanel>
+
+						<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+							<StackPanel Orientation="Horizontal">
+								<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+									   Height="15"
+									   Width="15" />
+								<TextBlock Text="Filter"/>
+							</StackPanel>
+						</Button>
+
+						<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+							<StackPanel Orientation="Horizontal">
+								<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+									   Height="15"
+									   Width="15" />
+								<TextBlock Text="Clear"/>
+							</StackPanel>
+						</Button>
+					</WrapPanel>
+			</Border>
+
+			<!-- Fetched items count -->
+			<StackPanel Grid.Row="2">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<Label Content="Records fetched:"
+						   FontFamily="{DynamicResource RalewayMedium}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
+						   HorizontalAlignment="Right" />
+					<Label Content="{Binding ItemsCount}"
+						   FontFamily="{DynamicResource RalewayBold}"
+						   Foreground="{DynamicResource TextPrimaryBrush}"
+						   HorizontalAlignment="Right" />
+				</StackPanel>
+
+				<!-- Data Grid Containing All Items -->
+				<DataGrid
+				x:Name="ItemsGrid"
+				ItemsSource="{Binding Items}"
+				AutoGenerateColumns="False"
+				SelectedItem="{Binding SelectedItem}"
+				GridLinesVisibility="All"
+				IsReadOnly="True"
+				HeadersVisibility="All"
+				CanUserSortColumns="True"
+				CanUserResizeColumns="True"
+				RowHeight="36">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
+						<DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
+						<DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+						<DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
+						<DataGridTemplateColumn Header="Actions">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
+										<Button
+										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
+										<Button
+										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}">
+
+											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+									</StackPanel>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+
+				</DataGrid>
+
+			</StackPanel>
+
+			
+			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+				<TextBlock
+				Margin="5,0,5,0"
+				FontSize="15"
+				FontWeight="600"
+				FontFamily="{DynamicResource RalewayMedium}"
+				VerticalAlignment="Center"
+				Foreground="{DynamicResource TextPrimaryBrush}">
+					<Run Text="{Binding CurrentPage}"/>
+					<Run Text="of"/>
+					<Run Text="{Binding TotalPages}"/>
+				</TextBlock>
+				<Button Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}">
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
+						   Height="15"
+						   Width="15" />
+				</Button>
+			</StackPanel>
+
+		</Grid>
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+	</Grid>
+</UserControl>

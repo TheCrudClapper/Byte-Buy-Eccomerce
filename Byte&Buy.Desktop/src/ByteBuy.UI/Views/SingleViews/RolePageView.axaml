@@ -9,7 +9,7 @@
 			 x:DataType="vm:RolePageViewModel">
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 		<Style Selector="TextBlock">
 			<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
 		</Style>

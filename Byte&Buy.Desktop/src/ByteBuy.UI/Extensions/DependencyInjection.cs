@@ -1,6 +1,7 @@
 ﻿using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
+using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using DashboardPageViewModel = ByteBuy.UI.ViewModels.DashboardPageViewModel;

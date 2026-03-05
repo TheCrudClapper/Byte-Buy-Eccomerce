@@ -6,59 +6,63 @@
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 Background="Transparent"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="ByteBuy.UI.Views.SaleOffersView"
-			 x:DataType="vm:SaleOffersViewModel">
+			 x:Class="ByteBuy.UI.Views.ItemsPageView"
+			 x:DataType="vm:ItemsPageViewModel">
+
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
 		<Grid RowDefinitions="50, auto, *,50">
 
+			<Button
+			Grid.Row="0"
+			Grid.Column="1"
+			Command="{Binding AddCommand}"
+			VerticalAlignment="Top"
+			HorizontalAlignment="Right">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+						   Width="15" Height="15" />
+				</StackPanel>
+			</Button>
+
 			<!--Filters-->
 
-				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+			<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Text="Item" FontFamily="OpenSansBold" FontWeight="600"/>
+					<TextBox Width="150" Text="{Binding Name}"/>
+				</StackPanel>
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Text="Quantity From" FontFamily="OpenSansBold" FontWeight="600"/>
+					<NumericUpDown Width="150" Value="{Binding StockQuantityFrom}"/>
+				</StackPanel>
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Text="Quantity To" FontFamily="OpenSansBold" FontWeight="600"/>
+					<NumericUpDown Width="150" Value="{Binding StockQuantityTo}"/>
+				</StackPanel>
+				<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+					<StackPanel Orientation="Horizontal">
+						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+						<TextBlock Text="Filter"/>
+					</StackPanel>
+				</Button>
 
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Item" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding Name}"/>
+				<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+					<StackPanel Orientation="Horizontal">
+						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+							   Height="15"
+							   Width="15" />
+						<TextBlock Text="Clear"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Price From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding PriceFrom}"/>
-					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Price To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding PriceTo}"/>
-					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Quantity From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding QuantityFrom}"/>
-					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Quantity To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding QuantityTo}"/>
-					</StackPanel>
-					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
-							<TextBlock Text="Filter"/>
-						</StackPanel>
-					</Button>
+				</Button>
+			</WrapPanel>
 
-					<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
-							<TextBlock Text="Clear"/>
-						</StackPanel>
-					</Button>
-				</WrapPanel>
-			
 
 			<!-- Fetched items count -->
 			<StackPanel Grid.Row="2">
@@ -88,14 +92,25 @@
 
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-						<DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*" />
-						<DataGridTextColumn Header="Quantity" Binding="{Binding QuantityAvailable}" Width="*" />
-						<DataGridTextColumn Header="Unit Price" Binding="{Binding PriceAndCurrencyPerItem}" Width="*" />
-						<DataGridTextColumn Header="Created By" Binding="{Binding CreatorEmail}" Width="*" />
-						<DataGridTemplateColumn Header="Actions">
+						<DataGridTextColumn Header="Item" Binding="{Binding Name}" Width="*" />
+						<DataGridTextColumn Header="Conditionn" Binding="{Binding ConditionName}" Width="*" />
+						<DataGridTextColumn Header="Category" Binding="{Binding CategoryName}" Width="*" />
+						<DataGridTextColumn Header="Stock Quantity" Binding="{Binding StockQuantity}" Width="*" />
+						<DataGridTextColumn Header="Images Count" Binding="{Binding ImagesCount}" Width="*" />
+						<DataGridTemplateColumn Header="Actions" MinWidth="130">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
 									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
+										<Button
+										Command="{Binding DataContext.PublishCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+										CommandParameter="{Binding}"
+										FontSize="10"
+										Margin="0,0,5,0">
+
+											<Image Source="{SvgImage /Assets/Images/regular/upload-solid-full.svg}"
+												   Width="16" Height="16"/>
+										</Button>
+
 										<Button
 										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
@@ -107,8 +122,7 @@
 
 										<Button
 										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										FontSize="10">
+										CommandParameter="{Binding}">
 
 											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
 												   Width="16" Height="16"/>
@@ -122,6 +136,7 @@
 				</DataGrid>
 
 			</StackPanel>
+
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">

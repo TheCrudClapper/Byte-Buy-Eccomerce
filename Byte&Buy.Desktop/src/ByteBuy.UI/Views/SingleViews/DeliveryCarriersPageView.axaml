@@ -6,10 +6,11 @@
 			 Background="Transparent"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="ByteBuy.UI.Views.CountriesPageView"
-			 x:DataType="vm:CountriesPageViewModel">
+			 x:DataType="vm:DeliveryCarriersViewModel"
+			 x:Class="ByteBuy.UI.Views.DeliveryCarriersView">
+
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
@@ -28,30 +29,35 @@
 			</Button>
 
 			<!--Filters-->
-			<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Country Name" FontFamily="OpenSansBold" FontWeight="600"/>
-					<TextBox Width="150" Text="{Binding CountryName}" Watermark="Search by name"/>
-				</StackPanel>
 
-				<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
-					<StackPanel Orientation="Horizontal">
-						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
-							   Height="15"
-							   Width="15" />
-						<TextBlock Text="Filter"/>
+				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Carrier Name" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding DeliveryCarrierName}" Watermark="Search by name"/>
 					</StackPanel>
-				</Button>
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Code" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding Code}"/>
+					</StackPanel>
 
-				<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
-					<StackPanel Orientation="Horizontal">
-						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
-							   Height="15"
-							   Width="15" />
-						<TextBlock Text="Clear"/>
-					</StackPanel>
-				</Button>
-			</WrapPanel>
+					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Filter"/>
+						</StackPanel>
+					</Button>
+
+					<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Clear"/>
+						</StackPanel>
+					</Button>
+				</WrapPanel>
 
 
 			<!-- Fetched items count -->
@@ -64,7 +70,8 @@
 					<Label Content="{Binding ItemsCount}"
 						   FontFamily="{DynamicResource RalewayBold}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
-						   HorizontalAlignment="Right" />
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Center"/>
 				</StackPanel>
 
 				<!-- Data Grid Containing All Items -->
@@ -92,6 +99,8 @@
 										Command="{Binding DataContext.EditCommand,
 										RelativeSource={RelativeSource AncestorType=UserControl}}"
 										CommandParameter="{Binding}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}"
 										Margin="0,0,5,0">
 											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
 												   Width="16" Height="16" />
@@ -100,7 +109,9 @@
 										<Button
 										Command="{Binding DataContext.DeleteCommand,
 										RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}">
+										CommandParameter="{Binding}"
+										FontSize="10"
+										Foreground="{DynamicResource BackgroundLightBrush}">
 											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
 												   Width="16" Height="16" />
 										</Button>
@@ -137,6 +148,7 @@
 						   Width="15" />
 				</Button>
 			</StackPanel>
+
 
 		</Grid>
 		<views:AlertView

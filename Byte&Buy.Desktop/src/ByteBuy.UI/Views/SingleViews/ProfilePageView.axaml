@@ -10,7 +10,7 @@
 			 x:DataType="vm:ProfilePageViewModel">
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>

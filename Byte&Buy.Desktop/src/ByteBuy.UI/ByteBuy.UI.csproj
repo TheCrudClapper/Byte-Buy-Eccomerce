@@ -50,17 +50,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\DeliveryCarriersPageView.axaml.cs">
+    <Compile Update="Views\SingleViews\DeliveryCarriersPageView.axaml.cs">
       <DependentUpon>DeliveryCarriersPageView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Dialogs\CategoryDialogView.axaml.cs">
       <DependentUpon>CategoryDialogView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EmployeePageView.axaml.cs">
+    <Compile Update="Views\SingleViews\EmployeePageView.axaml.cs">
       <DependentUpon>EmployeePageView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ItemsPageView.axaml.cs">
+    <Compile Update="Views\ManyViews\ItemsPageView.axaml.cs">
       <DependentUpon>ItemsPageView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Shared\PermissionGrantRevokeView.axaml.cs">

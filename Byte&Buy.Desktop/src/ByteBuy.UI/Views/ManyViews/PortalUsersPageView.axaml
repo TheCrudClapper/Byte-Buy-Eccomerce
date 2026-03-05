@@ -2,71 +2,77 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:views="using:ByteBuy.UI.Views.Shared"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 Background="Transparent"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:DataType="vm:RentOffersViewModel"
-			 x:Class="ByteBuy.UI.Views.RentOffersView">
+			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+			 mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="900"
+			 x:DataType="vm:PortalUsersPageViewModel"
+			 x:Class="ByteBuy.UI.Views.PortalUsersPageView">
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 	<Grid>
-		<Grid RowDefinitions="50, auto, *,50">
 
-			<!--Filters-->
-			<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+		<Grid x:Name="Root" RowDefinitions="50,auto,*,50">
+			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
 
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Item" FontFamily="OpenSansBold" FontWeight="600"/>
-					<TextBox Width="150" Text="{Binding Name}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Price From" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding PriceFrom}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Price To" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding PriceTo}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Rental From(days)" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding MaxRentalDaysFrom}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Rental To(days)" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding MaxRentalDaysTo}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Quantity From" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding QuantityFrom}"/>
-				</StackPanel>
-				<StackPanel VerticalAlignment="Center">
-					<TextBlock Text="Quantity To" FontFamily="OpenSansBold" FontWeight="600"/>
-					<NumericUpDown Width="150" Value="{Binding QuantityTo}"/>
-				</StackPanel>
+				<!--Page Title-->
+				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Portal Users"/>
 
-				<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+				<Button
+				Command="{Binding AddCommand}"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right"
+				Grid.Column="2">
 					<StackPanel Orientation="Horizontal">
-						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
-							   Height="15"
-							   Width="15" />
-						<TextBlock Text="Filter"/>
+						<Image Source="{SvgImage /Assets/Images/regular/plus-solid-full.svg}"
+							   Width="15" Height="15" />
+						<Label Content="Add"/>
 					</StackPanel>
+
 				</Button>
 
-				<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
-					<StackPanel Orientation="Horizontal">
-						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
-							   Height="15"
-							   Width="15" />
-						<TextBlock Text="Clear"/>
-					</StackPanel>
-				</Button>
-			</WrapPanel>
+			</Grid>
 
+			<!-- Filters -->
+			<Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" Padding="15" CornerRadius="10">
+				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" LineSpacing="10">
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="First Name" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding FirstName}"/>
+					</StackPanel>
+
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Last Name" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding LastName}"/>
+					</StackPanel>
+
+					<StackPanel VerticalAlignment="Center">
+						<TextBlock Text="Email" FontFamily="OpenSansBold" FontWeight="600"/>
+						<TextBox Width="150" Text="{Binding Email}"/>
+					</StackPanel>
+
+					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Filter"/>
+						</StackPanel>
+					</Button>
+
+					<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+						<StackPanel Orientation="Horizontal">
+							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
+								   Height="15"
+								   Width="15" />
+							<TextBlock Text="Clear"/>
+						</StackPanel>
+					</Button>
+				</WrapPanel>
+			</Border>
 
 			<!-- Fetched items count -->
 			<StackPanel Grid.Row="2">
@@ -96,11 +102,10 @@
 
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-						<DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*" />
-						<DataGridTextColumn Header="Quantity" Binding="{Binding QuantityAvailable}" Width="*" />
-						<DataGridTextColumn Header="Price per Day" Binding="{Binding PriceAndCurrencyPerDay}" Width="*" />
-						<DataGridTextColumn Header="Max rental days" Binding="{Binding MaxRentalDays}" Width="*" />
-						<DataGridTextColumn Header="Created By" Binding="{Binding CreatorEmail}" Width="*" />
+						<DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="*" />
+						<DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*" />
+						<DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+						<DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
 						<DataGridTemplateColumn Header="Actions">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
@@ -130,6 +135,7 @@
 				</DataGrid>
 
 			</StackPanel>
+
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">

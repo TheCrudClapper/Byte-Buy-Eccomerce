@@ -3,7 +3,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using System.Threading.Tasks;
 
-namespace ByteBuy.UI.ViewModels;
+namespace ByteBuy.UI.ViewModels.SingleViewModels;
 
 public partial class AdministrationPageViewModel : PageViewModel
 {

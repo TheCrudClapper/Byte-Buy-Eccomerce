@@ -10,8 +10,8 @@
 			 x:DataType="vm:ItemPageViewModel">
 
 	<UserControl.Styles>
-		<StyleInclude Source="../Styles/VerticalFormStyles.axaml" />
-		<StyleInclude Source="../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/VerticalFormStyles.axaml" />
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
 	</UserControl.Styles>
 
 
