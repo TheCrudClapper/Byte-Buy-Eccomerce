@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Country;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Country;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,7 +18,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICountryService countryService)
-    : ViewModelMany<CountryListItem, ICountryService>(alert, navigation, dialogNavigation, countryService)
+    : ViewModelMany<CountryListItemViewModel, ICountryService>(alert, navigation, dialogNavigation, countryService)
 {
     #region Filtraion fields
 
@@ -29,7 +29,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
     private string? _code;
     #endregion
 
-    protected override async Task EditAsync(CountryListItem item)
+    protected override async Task EditAsync(CountryListItemViewModel item)
     {
         var result = await DialogNavigation
           .OpenDialogAsync(ApplicationDialogNames.Country, async vm =>
@@ -60,7 +60,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<CountryListItem>(
+        Items = new ObservableCollection<CountryListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

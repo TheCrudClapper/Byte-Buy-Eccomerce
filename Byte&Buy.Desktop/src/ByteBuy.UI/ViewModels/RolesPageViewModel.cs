@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Role;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Role;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -17,7 +17,7 @@ public partial class RolesPageViewModel(
     AlertViewModel alert,
     INavigationService navigationService,
     IDialogService dialogNavigation,
-    IRoleService roleService) : ViewModelMany<RoleListItem, IRoleService>(alert, navigationService, dialogNavigation, roleService)
+    IRoleService roleService) : ViewModelMany<RoleListItemViewModel, IRoleService>(alert, navigationService, dialogNavigation, roleService)
 {
     #region Filtration fields
 
@@ -25,7 +25,7 @@ public partial class RolesPageViewModel(
     private string? _roleName;
     #endregion
 
-    protected override async Task EditAsync(RoleListItem item)
+    protected override async Task EditAsync(RoleListItemViewModel item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
         {
@@ -48,7 +48,7 @@ public partial class RolesPageViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<RoleListItem>(
+        Items = new ObservableCollection<RoleListItemViewModel>(
             value.Items.Select((r, index) =>
                 r.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 

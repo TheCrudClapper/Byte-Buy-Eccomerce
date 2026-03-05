@@ -68,8 +68,4 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ModelsUI\Image\" />
-  </ItemGroup>
 </Project>

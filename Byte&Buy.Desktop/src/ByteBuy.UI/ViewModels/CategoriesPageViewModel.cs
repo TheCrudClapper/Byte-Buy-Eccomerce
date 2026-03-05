@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Category;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Category;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,14 +18,14 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICategoryService categoryService)
-    : ViewModelMany<CategoryListItem, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
+    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
 {
     #region Filtration fields
 
     [ObservableProperty]
     private string? _categoryName;
     #endregion
-    protected override async Task EditAsync(CategoryListItem item)
+    protected override async Task EditAsync(CategoryListItemViewModel item)
     {
         var result = await DialogNavigation
              .OpenDialogAsync(ApplicationDialogNames.Category, async vm =>
@@ -56,7 +56,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<CategoryListItem>(
+        Items = new ObservableCollection<CategoryListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

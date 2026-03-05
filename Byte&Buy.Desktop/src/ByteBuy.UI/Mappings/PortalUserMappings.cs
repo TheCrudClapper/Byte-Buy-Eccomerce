@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.PortalUser;
-using ByteBuy.UI.ModelsUI.PortalUser;
 using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.PortalUser;
 using System.Linq;
 
 namespace ByteBuy.UI.Mappings;
@@ -14,9 +14,9 @@ public static class PortalUserMappings
     /// <param name="user"></param>
     /// <param name="index"></param>
     /// <returns></returns>
-    public static PortalUserListItem ToListItem(this PortalUserListResponse user, int index)
+    public static PortalUserListItemViewModel ToListItem(this PortalUserListResponse user, int index)
     {
-        return new PortalUserListItem
+        return new PortalUserListItemViewModel
         {
             RowNumber = index,
             Role = user.Role,

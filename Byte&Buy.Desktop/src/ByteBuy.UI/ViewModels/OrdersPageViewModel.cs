@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Order;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Order;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels;
 
 public partial class OrdersPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IOrderService service)
-        : ViewModelMany<OrderListItem, IOrderService>(alert, navigation, dialogNavigation, service)
+        : ViewModelMany<OrderListItemViewModel, IOrderService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -58,7 +58,7 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<OrderListItem>(
+        Items = new ObservableCollection<OrderListItemViewModel>(
             value.Items.Select((u, index) =>
                 u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
@@ -70,7 +70,7 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
     }
 
     [RelayCommand]
-    public async Task OpenDetailsPage(OrderListItem listItem)
+    public async Task OpenDetailsPage(OrderListItemViewModel listItem)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.OrderDetails, async vm =>
         {
@@ -81,7 +81,7 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
 
     protected override Task AddAsync() { throw new System.NotImplementedException(); }
 
-    protected override Task EditAsync(OrderListItem item) { throw new System.NotImplementedException(); }
+    protected override Task EditAsync(OrderListItemViewModel item) { throw new System.NotImplementedException(); }
 
     public override async Task ClearFilters()
     {

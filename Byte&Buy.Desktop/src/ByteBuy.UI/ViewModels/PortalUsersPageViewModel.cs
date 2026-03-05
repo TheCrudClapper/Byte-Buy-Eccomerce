@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.PortalUser;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.PortalUser;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -17,7 +17,7 @@ public partial class PortalUsersPageViewModel(
     AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IPortalUserService userService) : ViewModelMany<PortalUserListItem, IPortalUserService>(alert, navigation, dialogNavigation, userService)
+    IPortalUserService userService) : ViewModelMany<PortalUserListItemViewModel, IPortalUserService>(alert, navigation, dialogNavigation, userService)
 {
     #region Filtration fields
 
@@ -31,7 +31,7 @@ public partial class PortalUsersPageViewModel(
     private string? _email;
     #endregion
 
-    protected override async Task EditAsync(PortalUserListItem item)
+    protected override async Task EditAsync(PortalUserListItemViewModel item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
         {
@@ -56,7 +56,7 @@ public partial class PortalUsersPageViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<PortalUserListItem>(
+        Items = new ObservableCollection<PortalUserListItemViewModel>(
             value.Items.Select((u, index) =>
                 u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 

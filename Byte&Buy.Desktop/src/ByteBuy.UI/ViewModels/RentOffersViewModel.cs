@@ -2,10 +2,10 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.RentOffer;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.RentOffer;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -20,7 +20,7 @@ public partial class RentOffersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IRentOfferService service)
-    : ViewModelMany<RentOfferListItem, IRentOfferService>(alert, navigation, dialogNavigation, service)
+    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -46,7 +46,7 @@ public partial class RentOffersViewModel(
     private int? _quantityTo;
     #endregion
 
-    protected override async Task EditAsync(RentOfferListItem item)
+    protected override async Task EditAsync(RentOfferListItemViewModel item)
     {
         var result = await DialogNavigation
           .OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
@@ -82,7 +82,7 @@ public partial class RentOffersViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<RentOfferListItem>(
+        Items = new ObservableCollection<RentOfferListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

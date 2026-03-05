@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
-using ByteBuy.UI.ModelsUI.Abstractions;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Base;
 
 public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageViewModel
-    where TDataGridItem : IListItem
+    where TDataGridItem : IListItemViewModel
     where ServiceType : IBaseService
 {
     #region MVVM Fields

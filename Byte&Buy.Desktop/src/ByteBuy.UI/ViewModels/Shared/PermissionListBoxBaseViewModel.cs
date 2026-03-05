@@ -10,7 +10,7 @@ namespace ByteBuy.UI.ViewModels.Shared;
 public abstract partial class PermissionListBoxBaseViewModel : ObservableValidator
 {
     #region Mvvm Fields
-    [ObservableProperty] private ObservableCollection<PermissionListItem> _permissions = [];
+    [ObservableProperty] private ObservableCollection<PermissionListItemViewModel> _permissions = [];
     #endregion
 
     private readonly IPermissionService _permissionService;
@@ -26,7 +26,7 @@ public abstract partial class PermissionListBoxBaseViewModel : ObservableValidat
         if (!result.Success || result.Value is null)
             return;
 
-        var list = result.Value.Select((p, index) => new PermissionListItem()
+        var list = result.Value.Select((p, index) => new PermissionListItemViewModel()
         {
             Id = p.Id,
             RowNumber = index + 1,
@@ -34,7 +34,7 @@ public abstract partial class PermissionListBoxBaseViewModel : ObservableValidat
             Name = p.Title,
         });
 
-        Permissions = new ObservableCollection<PermissionListItem>(list);
+        Permissions = new ObservableCollection<PermissionListItemViewModel>(list);
     }
 
     public virtual void ClearSelectedPermissions() { }

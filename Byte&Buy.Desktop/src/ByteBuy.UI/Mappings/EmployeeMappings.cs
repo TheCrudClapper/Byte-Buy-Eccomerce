@@ -1,16 +1,16 @@
 ﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.Employee;
-using ByteBuy.UI.ModelsUI.Employee;
 using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.Employee;
 using System.Linq;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class EmployeeMappings
 {
-    public static EmployeeListItem ToListItem(this EmployeeListResponse employee, int index)
+    public static EmployeeListItemViewModel ToListItem(this EmployeeListResponse employee, int index)
     {
-        return new EmployeeListItem()
+        return new EmployeeListItemViewModel()
         {
             Id = employee.Id,
             RowNumber = index,

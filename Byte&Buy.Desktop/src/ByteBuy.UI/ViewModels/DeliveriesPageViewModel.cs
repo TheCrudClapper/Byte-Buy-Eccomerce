@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Delivery;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,7 +18,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IDeliveryService deliveryService)
-    : ViewModelMany<DeliveryListItem, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
+    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(alert, navigation, dialogNavigation, deliveryService)
 {
     #region Filtration Fields
 
@@ -32,7 +32,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
     public decimal? priceTo;
 
     #endregion
-    protected override async Task EditAsync(DeliveryListItem item)
+    protected override async Task EditAsync(DeliveryListItemViewModel item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Delivery, async vm =>
@@ -64,7 +64,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<DeliveryListItem>(
+        Items = new ObservableCollection<DeliveryListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

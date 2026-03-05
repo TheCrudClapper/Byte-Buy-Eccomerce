@@ -21,7 +21,6 @@ public partial class ImageViewModel : ObservableValidator
     [Required, MaxLength(50)]
     private string _altText = string.Empty;
 
-    //public Stream FileStream { get; } = fileStream;
     public byte[] FileBytes { get; } = [];
 
     //For existing picture

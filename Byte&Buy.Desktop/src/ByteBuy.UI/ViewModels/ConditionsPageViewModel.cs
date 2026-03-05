@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Condition;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Condition;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,7 +19,7 @@ public partial class ConditionsPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IConditionService conditionService)
-    : ViewModelMany<ConditionListItem, IConditionService>(alert, navigation, dialogNavigation, conditionService)
+    : ViewModelMany<ConditionListItemViewModel, IConditionService>(alert, navigation, dialogNavigation, conditionService)
 {
     #region Filtration Fields
 
@@ -28,7 +28,7 @@ public partial class ConditionsPageViewModel(
 
     #endregion
 
-    protected override async Task EditAsync(ConditionListItem item)
+    protected override async Task EditAsync(ConditionListItemViewModel item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Condition, async vm =>
@@ -59,7 +59,7 @@ public partial class ConditionsPageViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<ConditionListItem>(
+        Items = new ObservableCollection<ConditionListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

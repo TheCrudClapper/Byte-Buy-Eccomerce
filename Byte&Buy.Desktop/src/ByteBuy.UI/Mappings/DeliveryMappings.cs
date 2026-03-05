@@ -1,14 +1,15 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.UI.ModelsUI.Delivery;
+using ByteBuy.UI.ViewModels.Delivery;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class DeliveryMappings
 {
-    public static DeliveryListItem ToListItem(this DeliveryListResponse dto, int index)
+    public static DeliveryListItemViewModel ToListItem(this DeliveryListResponse dto, int index)
     {
-        return new DeliveryListItem
+        return new DeliveryListItemViewModel
         {
             Amount = dto.Amount,
             Currency = dto.Currency,
@@ -18,9 +19,9 @@ public static class DeliveryMappings
         };
     }
 
-    public static DeliveryOption ToDeliveryOption(this DeliveryOptionResponse dto)
+    public static DeliveryOptionViewModel ToDeliveryOption(this DeliveryOptionResponse dto)
     {
-        return new DeliveryOption
+        return new DeliveryOptionViewModel
         {
             Carrier = dto.Carrier,
             DeliveryChannel = dto.DeliveryChannel,

@@ -1,15 +1,15 @@
 ﻿using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Services.DTO.Rental.Enum;
-using ByteBuy.UI.ModelsUI.Rental;
+using ByteBuy.UI.ViewModels.Rental;
 using System;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class RentalMappings
 {
-    public static RentalListItem ToListItem(this CompanyRentalLenderListResponse dto, int index)
+    public static RentalListItemViewModel ToListItem(this CompanyRentalLenderListResponse dto, int index)
     {
-        return new RentalListItem()
+        return new RentalListItemViewModel()
         {
             BorrowerEmail = dto.BorrowerEmail,
             EndingRentalDate = dto.EndingRentalDate,

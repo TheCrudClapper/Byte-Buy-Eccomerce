@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Rental;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Rental;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,7 +19,7 @@ public partial class RentalsPageViewModel(
     AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IRentalService service) : ViewModelMany<RentalListItem, IRentalService>(alert, navigation, dialogNavigation, service)
+    IRentalService service) : ViewModelMany<RentalListItemViewModel, IRentalService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -61,7 +61,7 @@ public partial class RentalsPageViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<RentalListItem>(
+        Items = new ObservableCollection<RentalListItemViewModel>(
             value.Items.Select((u, index) =>
                 u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
@@ -74,7 +74,7 @@ public partial class RentalsPageViewModel(
 
 
     [RelayCommand]
-    public async Task OpenDetailsPage(RentalListItem listItem)
+    public async Task OpenDetailsPage(RentalListItemViewModel listItem)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.RentalDetails, async vm =>
         {
@@ -88,7 +88,7 @@ public partial class RentalsPageViewModel(
         throw new System.NotImplementedException();
     }
 
-    protected override Task EditAsync(RentalListItem item)
+    protected override Task EditAsync(RentalListItemViewModel item)
     {
         throw new System.NotImplementedException();
     }

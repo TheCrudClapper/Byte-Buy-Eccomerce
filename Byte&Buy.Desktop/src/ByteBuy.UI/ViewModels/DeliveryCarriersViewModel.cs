@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Delivery;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.DeliveryCarriers;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,7 +18,7 @@ public partial class DeliveryCarriersViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IDeliveryCarrierService service)
-    : ViewModelMany<DeliveryCarrierListItem, IDeliveryCarrierService>(alert, navigation, dialogNavigation, service)
+    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration Fields
 
@@ -43,7 +43,7 @@ public partial class DeliveryCarriersViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<DeliveryCarrierListItem>(
+        Items = new ObservableCollection<DeliveryCarrierListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 
@@ -72,7 +72,7 @@ public partial class DeliveryCarriersViewModel(AlertViewModel alert,
             await LoadDataAsync();
         }
     }
-    protected override async Task EditAsync(DeliveryCarrierListItem item)
+    protected override async Task EditAsync(DeliveryCarrierListItemViewModel item)
     {
         var result = await DialogNavigation
          .OpenDialogAsync(ApplicationDialogNames.DeliveryCarrier, async vm =>

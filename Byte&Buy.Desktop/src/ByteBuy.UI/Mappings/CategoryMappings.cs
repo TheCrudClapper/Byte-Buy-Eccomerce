@@ -1,13 +1,13 @@
 ﻿using ByteBuy.Services.DTO.Category;
-using ByteBuy.UI.ModelsUI.Category;
+using ByteBuy.UI.ViewModels.Category;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class CategoryMappings
 {
-    public static CategoryListItem ToListItem(this CategoryListResponse response, int index)
+    public static CategoryListItemViewModel ToListItem(this CategoryListResponse response, int index)
     {
-        return new CategoryListItem
+        return new CategoryListItemViewModel
         {
             Name = response.Name,
             Id = response.Id,

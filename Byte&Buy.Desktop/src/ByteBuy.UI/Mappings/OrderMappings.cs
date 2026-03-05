@@ -1,14 +1,14 @@
 ﻿using ByteBuy.Services.DTO.Order.Enums;
-using ByteBuy.UI.ModelsUI.Order;
+using ByteBuy.UI.ViewModels.Order;
 using System;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class OrderMappings
 {
-    public static OrderListItem ToListItem(this CompanyOrderListResponse dto, int index)
+    public static OrderListItemViewModel ToListItem(this CompanyOrderListResponse dto, int index)
     {
-        return new OrderListItem()
+        return new OrderListItemViewModel()
         {
             Id = dto.Id,
             RowNumber = index,

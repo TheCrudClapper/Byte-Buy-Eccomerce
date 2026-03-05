@@ -2,10 +2,10 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.SaleOffer;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -18,7 +18,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     ISaleOfferService service)
-    : ViewModelMany<SaleOfferListItem, ISaleOfferService>(alert, navigation, dialogNavigation, service)
+    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -38,7 +38,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
     private int? _quantityTo;
     #endregion
 
-    protected override async Task EditAsync(SaleOfferListItem item)
+    protected override async Task EditAsync(SaleOfferListItemViewModel item)
     {
         var result = await DialogNavigation
             .OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
@@ -72,7 +72,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<SaleOfferListItem>(
+        Items = new ObservableCollection<SaleOfferListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
 

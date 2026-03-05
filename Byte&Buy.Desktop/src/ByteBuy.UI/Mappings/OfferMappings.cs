@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Services.DTO.RentOffer;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.UI.ModelsUI.Delivery;
-using ByteBuy.UI.ModelsUI.RentOffer;
-using ByteBuy.UI.ModelsUI.SaleOffer;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.RentOffer;
+using ByteBuy.UI.ViewModels.SaleOffer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +52,7 @@ public static class OfferMappings
             MapOtherDeliveries(vm));
     }
 
-    private static List<Guid> MapParcelLockers(IEnumerable<ParcelLockerCarrierGroup> list)
+    private static List<Guid> MapParcelLockers(IEnumerable<ParcelLockerGroupViewModel> list)
         => list
             .SelectMany(p => p.Options)
             .Where(o => o.IsSelected)
@@ -66,9 +66,9 @@ public static class OfferMappings
             .Select(d => d.Id)
             .ToList();
 
-    public static RentOfferListItem ToListItem(this RentOfferListResponse response, int index)
+    public static RentOfferListItemViewModel ToListItem(this RentOfferListResponse response, int index)
     {
-        return new RentOfferListItem
+        return new RentOfferListItemViewModel
         {
             Id = response.Id,
             ItemName = response.ItemName,
@@ -80,9 +80,9 @@ public static class OfferMappings
         };
     }
 
-    public static SaleOfferListItem ToListItem(this SaleOfferListResponse response, int index)
+    public static SaleOfferListItemViewModel ToListItem(this SaleOfferListResponse response, int index)
     {
-        return new SaleOfferListItem
+        return new SaleOfferListItemViewModel
         {
             Id = response.Id,
             ItemName = response.ItemName,

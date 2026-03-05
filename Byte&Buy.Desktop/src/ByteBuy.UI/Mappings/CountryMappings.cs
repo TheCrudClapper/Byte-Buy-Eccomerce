@@ -1,14 +1,14 @@
 ﻿
 using ByteBuy.Core.DTO.Country;
-using ByteBuy.UI.ModelsUI.Country;
+using ByteBuy.UI.ViewModels.Country;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class CountryMappings
 {
-    public static CountryListItem ToListItem(this CountryResponse response, int index)
+    public static CountryListItemViewModel ToListItem(this CountryResponse response, int index)
     {
-        return new CountryListItem
+        return new CountryListItemViewModel
         {
             RowNumber = index,
             Code = response.Code,

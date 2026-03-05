@@ -1,13 +1,13 @@
 ﻿using ByteBuy.Services.DTO.DeliveryCarrier;
-using ByteBuy.UI.ModelsUI.Delivery;
+using ByteBuy.UI.ViewModels.DeliveryCarriers;
 
 namespace ByteBuy.UI.Mappings;
 
 public static class DeliveryCarrierMappings
 {
-    public static DeliveryCarrierListItem ToListItem(this DeliveryCarrierResponse response, int index)
+    public static DeliveryCarrierListItemViewModel ToListItem(this DeliveryCarrierResponse response, int index)
     {
-        return new DeliveryCarrierListItem
+        return new DeliveryCarrierListItemViewModel
         {
             Code = response.Code,
             Id = response.Id,

@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ModelsUI.Delivery;
-using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Items;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -43,7 +43,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private decimal _pricePerItem;
 
     [ObservableProperty]
-    private ItemListItem? _selectedItem;
+    private ItemListItemViewModel? _selectedItem;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -51,13 +51,13 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
     private int _quantity;
 
     [ObservableProperty]
-    private ObservableCollection<ParcelLockerCarrierGroup> _parcelLockerGroups = [];
+    private ObservableCollection<ParcelLockerGroupViewModel> _parcelLockerGroups = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOption> _courierDeliveries = [];
+    private ObservableCollection<DeliveryOptionViewModel> _courierDeliveries = [];
 
     [ObservableProperty]
-    private ObservableCollection<DeliveryOption> _pickupPointDeliveries = [];
+    private ObservableCollection<DeliveryOptionViewModel> _pickupPointDeliveries = [];
     #endregion
 
     public override async Task InitializeForEdit(Guid id)
@@ -98,20 +98,20 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
             return;
 
         //Group parcel by carrier so user can select only one parcel locker delivery option per carrier
-        ParcelLockerGroups = new ObservableCollection<ParcelLockerCarrierGroup>(
+        ParcelLockerGroups = new ObservableCollection<ParcelLockerGroupViewModel>(
             deliveries.Value.ParcelLockerDeliveries
             .GroupBy(d => d.Carrier)
-            .Select(g => new ParcelLockerCarrierGroup()
+            .Select(g => new ParcelLockerGroupViewModel()
             {
                 Carrier = g.Key,
-                Options = new ObservableCollection<DeliveryOption>(g.Select(d => d.ToDeliveryOption()).ToList())
+                Options = new ObservableCollection<DeliveryOptionViewModel>(g.Select(d => d.ToDeliveryOption()).ToList())
             }));
 
-        CourierDeliveries = new ObservableCollection<DeliveryOption>(deliveries.Value.CourierDeliveries.Select(d => d.ToDeliveryOption()).ToList());
-        PickupPointDeliveries = new ObservableCollection<DeliveryOption>(deliveries.Value.PickupPointDeliveries.Select(d => d.ToDeliveryOption()).ToList());
+        CourierDeliveries = new ObservableCollection<DeliveryOptionViewModel>(deliveries.Value.CourierDeliveries.Select(d => d.ToDeliveryOption()).ToList());
+        PickupPointDeliveries = new ObservableCollection<DeliveryOptionViewModel>(deliveries.Value.PickupPointDeliveries.Select(d => d.ToDeliveryOption()).ToList());
     }
 
-    public async Task InitializeForAdd(ItemListItem item)
+    public async Task InitializeForAdd(ItemListItemViewModel item)
     {
         await InitializeAsync();
         SelectedItem = item;

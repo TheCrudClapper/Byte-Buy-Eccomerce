@@ -2,9 +2,9 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Employee;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Employee;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
@@ -18,7 +18,7 @@ public partial class EmployeesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IEmployeeService service)
-        : ViewModelMany<EmployeeListItem, IEmployeeService>(alert, navigation, dialogNavigation, service)
+        : ViewModelMany<EmployeeListItemViewModel, IEmployeeService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -48,7 +48,7 @@ public partial class EmployeesPageViewModel(
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<EmployeeListItem>(
+        Items = new ObservableCollection<EmployeeListItemViewModel>(
             value.Items.Select((e, index) =>
                 e.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
@@ -59,7 +59,7 @@ public partial class EmployeesPageViewModel(
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    protected override async Task EditAsync(EmployeeListItem employee)
+    protected override async Task EditAsync(EmployeeListItemViewModel employee)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {

@@ -1,8 +1,8 @@
 ﻿using ByteBuy.Core.DTO.Item;
 using ByteBuy.Services.DTO.Image;
 using ByteBuy.Services.DTO.Item;
-using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.ViewModels;
+using ByteBuy.UI.ViewModels.Items;
 using System;
 using System.Linq;
 
@@ -21,8 +21,8 @@ public static class ItemMappings
             images);
     }
 
-    public static ItemListItem ToListItem(this ItemListResponse response, int index)
-        => new ItemListItem
+    public static ItemListItemViewModel ToListItem(this ItemListResponse response, int index)
+        => new ItemListItemViewModel
         {
             CategoryName = response.CategoryName,
             ConditionName = response.ConditionName,

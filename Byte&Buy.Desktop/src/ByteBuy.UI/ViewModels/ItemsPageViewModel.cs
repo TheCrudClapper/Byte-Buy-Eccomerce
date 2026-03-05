@@ -2,10 +2,10 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
-using ByteBuy.UI.ModelsUI.Items;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.Items;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -17,7 +17,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
     IDialogService dialogNavigation,
-    IItemService service) : ViewModelMany<ItemListItem, IItemService>(alert, navigation, dialogNavigation, service)
+    IItemService service) : ViewModelMany<ItemListItemViewModel, IItemService>(alert, navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -40,7 +40,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         });
     }
 
-    protected override async Task EditAsync(ItemListItem item)
+    protected override async Task EditAsync(ItemListItemViewModel item)
     {
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
         {
@@ -50,7 +50,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
     }
 
     [RelayCommand]
-    protected async Task Publish(ItemListItem item)
+    protected async Task Publish(ItemListItemViewModel item)
     {
         var result = await DialogNavigation.OpenDialogAsync(ApplicationDialogNames.Offer, async vm =>
         {
@@ -82,7 +82,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         if (!ok || value is null)
             return;
 
-        Items = new ObservableCollection<ItemListItem>(
+        Items = new ObservableCollection<ItemListItemViewModel>(
             value.Items.Select((i, index) =>
                 i.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
 
