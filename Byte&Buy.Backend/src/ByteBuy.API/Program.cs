@@ -32,8 +32,10 @@ builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 // Adding Hangfire
 // -----------------------------
 builder.Services.AddHangfire(config =>
-    config.UsePostgreSqlStorage(
-        builder.Configuration.GetConnectionString("Default")));
+    config
+        .UsePostgreSqlStorage(bootstraper => bootstraper
+            .UseNpgsqlConnection(builder.Configuration.GetConnectionString("Default"))));
+
 builder.Services.AddHangfireServer();
 
 // -----------------------------

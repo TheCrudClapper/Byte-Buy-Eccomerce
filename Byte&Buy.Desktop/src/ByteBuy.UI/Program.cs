@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Diagnostics;
 
 namespace ByteBuy.UI
 {
@@ -9,8 +10,22 @@ namespace ByteBuy.UI
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
         [STAThread]
-        public static void Main(string[] args) => BuildAvaloniaApp()
-            .StartWithClassicDesktopLifetime(args);
+        public static void Main(string[] args)
+        {
+            try
+            {
+                BuildAvaloniaApp()
+                    .StartWithClassicDesktopLifetime(args);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    Process.Start(typeof(Program).Assembly.Location);
+                }
+                catch { }
+            }
+        }
 
         // Avalonia configuration, don't remove; also used by visual designer.
         //Designer
@@ -19,6 +34,5 @@ namespace ByteBuy.UI
                 .UsePlatformDetect()
                 .UseSkia()
                 .LogToTrace();
-
     }
 }
