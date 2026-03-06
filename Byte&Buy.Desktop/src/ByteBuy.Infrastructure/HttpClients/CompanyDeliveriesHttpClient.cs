@@ -1,18 +1,19 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyDeliveriesHttpClient(HttpClient httpClient, IConfiguration config)
-    : HttpClientBase(httpClient, config), IDeliveryHttpClient
+public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), IDeliveryHttpClient
 {
     private const string resource = "company/deliveries";
 

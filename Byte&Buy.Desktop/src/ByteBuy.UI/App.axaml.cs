@@ -21,6 +21,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
+using Microsoft.Extensions.Options;
+using ByteBuy.Infrastructure.Options;
 
 
 namespace ByteBuy.UI
@@ -48,6 +50,9 @@ namespace ByteBuy.UI
             services.AddServiceLayer();
             services.AddInfrastructureLayer();
             services.AddSingleton<IConfiguration>(configuration);
+
+            services.Configure<ApiEndpointsOptions>(
+                configuration.GetSection("ApiEnpoints"));
 
             services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
             {

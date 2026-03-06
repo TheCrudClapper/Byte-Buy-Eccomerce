@@ -1,20 +1,20 @@
 ﻿using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.DeliveryCarrier;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyDeliveryCarriersHttpClient : HttpClientBase, IDeliveryCarrierHttpClient
+public class CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), IDeliveryCarrierHttpClient
 {
     private const string resource = "company/delivery-carriers";
-
-    public CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IConfiguration config) : base(httpClient, config) { }
 
     public async Task<Result> DeleteAsync(Guid carrierId)
         => await DeleteAsync($"{resource}/{carrierId}");

@@ -1,17 +1,18 @@
 ﻿using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class ConditionHttpClient(HttpClient httpClient, IConfiguration config)
-    : HttpClientBase(httpClient, config), IConditionHttpClient
+public class ConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), IConditionHttpClient
 {
     private const string resource = "company/conditions";
 

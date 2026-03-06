@@ -1,18 +1,17 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyUserHomeAddressHttpClient : HttpClientBase, ICompanyUserHomeAddressHttpClient
+public class CompanyUserHomeAddressHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), ICompanyUserHomeAddressHttpClient
 {
     private const string resource = "users";
-    public CompanyUserHomeAddressHttpClient(HttpClient httpClient, IConfiguration config)
-        : base(httpClient, config) { }
-
     public async Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request)
         => await PutAsync<UpdatedResponse>($"{resource}/{userId}/home-address", request);
 }

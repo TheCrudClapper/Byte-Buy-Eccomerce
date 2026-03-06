@@ -1,9 +1,11 @@
 ﻿using ByteBuy.Infrastructure.HttpClients;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Infrastructure.Stores;
 using ByteBuy.Services.Handlers;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.InfraContracts.Stores;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.Extensions;
 

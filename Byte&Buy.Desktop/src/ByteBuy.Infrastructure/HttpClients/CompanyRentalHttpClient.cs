@@ -1,28 +1,27 @@
 ﻿using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients
+namespace ByteBuy.Infrastructure.HttpClients;
+
+internal class CompanyRentalHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), IRentalHttpClient
 {
-    internal class CompanyRentalHttpClient : HttpClientBase, IRentalHttpClient
+    private const string resource = "company/rentals";
+
+    public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
     {
-        private const string resource = "company/rentals";
-        public CompanyRentalHttpClient(HttpClient httpClient, IConfiguration config) 
-            : base(httpClient, config) { }
-
-        public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
-        {
-            var url = QueryStringHelper.ToQueryString($"{resource}", query);
-            return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url);
-        }
-
-        public Task<Result<RentalLenderResponse>> GetCompanyRental(Guid rentalId)
-            => GetAsync<RentalLenderResponse>($"{resource}/{rentalId}");
+        var url = QueryStringHelper.ToQueryString($"{resource}", query);
+        return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url);
     }
+
+    public Task<Result<RentalLenderResponse>> GetCompanyRental(Guid rentalId)
+        => GetAsync<RentalLenderResponse>($"{resource}/{rentalId}");
 }

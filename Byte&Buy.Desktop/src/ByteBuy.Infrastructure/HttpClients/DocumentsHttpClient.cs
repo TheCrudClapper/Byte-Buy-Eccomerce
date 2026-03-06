@@ -1,14 +1,14 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.InfraContracts.HttpClients;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class DocumentsHttpClient : HttpClientBase, IDocumentsHttpClient
+public class DocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), IDocumentsHttpClient
 {
     private const string resource = "company/documents";
-    public DocumentsHttpClient(HttpClient httpClient, IConfiguration config) 
-        : base(httpClient, config) { }
 
     public async Task<byte[]> DownloadOrderDetailsAsync(Guid orderId)
     {

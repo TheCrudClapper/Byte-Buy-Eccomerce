@@ -1,17 +1,18 @@
 ﻿using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class EmployeeHttpClient(HttpClient client, IConfiguration config)
-    : HttpClientBase(client, config), IEmployeeHttpClient
+public class EmployeeHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(client, options), IEmployeeHttpClient
 {
     private const string resource = "company/employees";
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileData()

@@ -1,7 +1,8 @@
-﻿using ByteBuy.Services.ResultTypes;
+﻿using ByteBuy.Infrastructure.Options;
+using ByteBuy.Services.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
@@ -13,15 +14,11 @@ public abstract class HttpClientBase
 {
     protected readonly HttpClient Client;
     private readonly JsonSerializerOptions _jsonOptions;
-    private readonly IConfiguration _configuration;
 
-    protected HttpClientBase(HttpClient httpClient, IConfiguration configuration)
+    protected HttpClientBase(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     {
         Client = httpClient;
-        _configuration = configuration;
-
-        Client.BaseAddress = new(_configuration.GetSection("Environment")
-            .GetValue<string>("DefaultApiUrl") ?? "http://localhost:5099/api/");
+        Client.BaseAddress = new(options.Value.DefaultApiUrl);
 
         _jsonOptions = new JsonSerializerOptions()
         {

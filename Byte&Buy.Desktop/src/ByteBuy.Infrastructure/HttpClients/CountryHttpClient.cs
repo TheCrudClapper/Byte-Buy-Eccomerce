@@ -1,17 +1,18 @@
 ﻿using ByteBuy.Core.DTO.Country;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CountryHttpClient(HttpClient httpClient, IConfiguration config)
-    : HttpClientBase(httpClient, config), ICountryHttpClient
+public class CountryHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), ICountryHttpClient
 {
     private const string resource = "company/countries";
 

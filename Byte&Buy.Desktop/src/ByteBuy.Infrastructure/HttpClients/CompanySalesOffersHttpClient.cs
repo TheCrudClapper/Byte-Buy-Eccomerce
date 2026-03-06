@@ -1,20 +1,20 @@
 ﻿using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.SaleOffer;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanySaleOfferHttpClient : HttpClientBase, ISaleOfferHttpClient
+public class CompanySaleOfferHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(httpClient, options), ISaleOfferHttpClient
 {
     private const string resource = "company/sale-offers";
-    public CompanySaleOfferHttpClient(HttpClient httpClient, IConfiguration config) 
-        : base(httpClient, config) { }
 
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await DeleteAsync($"{resource}/{id}");
