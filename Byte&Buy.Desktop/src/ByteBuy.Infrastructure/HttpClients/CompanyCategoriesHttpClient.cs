@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyCategoriesHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), ICategoryHttpClient
+public class CompanyCategoriesHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), ICategoryHttpClient
 {
 
     private const string resource = "company/categories";

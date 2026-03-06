@@ -1,64 +1,71 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <UserSecretsId>a5b82b30-b0a4-472a-a2d0-ada11bbdf3d5</UserSecretsId>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<UserSecretsId>a5b82b30-b0a4-472a-a2d0-ada11bbdf3d5</UserSecretsId>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-    <AvaloniaXaml Remove="App.axaml" />
-    <AvaloniaResource Include="App.axaml" />
-  </ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+		<AvaloniaXaml Remove="App.axaml" />
+		<AvaloniaResource Include="App.axaml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.8" />
-    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.8">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="DialogHost.Avalonia" Version="0.10.2" />
-    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc6.1" />
-    <PackageReference Include="MessageBox.Avalonia" Version="3.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
-    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.6.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.3.8" />
+		<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.3.0" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.8" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.8">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="DialogHost.Avalonia" Version="0.10.2" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc6.1" />
+		<PackageReference Include="MessageBox.Avalonia" Version="3.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.0" />
+		<PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.6.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
-    <ProjectReference Include="..\ByteBuy.Services\ByteBuy.Services.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Views\SingleViews\DeliveryCarriersPageView.axaml.cs">
-      <DependentUpon>DeliveryCarriersPageView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Dialogs\CategoryDialogView.axaml.cs">
-      <DependentUpon>CategoryDialogView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\SingleViews\EmployeePageView.axaml.cs">
-      <DependentUpon>EmployeePageView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ManyViews\ItemsPageView.axaml.cs">
-      <DependentUpon>ItemsPageView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Shared\PermissionGrantRevokeView.axaml.cs">
-      <DependentUpon>PermissionRevokeGrantListBoxView.axaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
+		<ProjectReference Include="..\ByteBuy.Services\ByteBuy.Services.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Views\SingleViews\DeliveryCarriersPageView.axaml.cs">
+			<DependentUpon>DeliveryCarriersPageView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Dialogs\CategoryDialogView.axaml.cs">
+			<DependentUpon>CategoryDialogView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SingleViews\EmployeePageView.axaml.cs">
+			<DependentUpon>EmployeePageView.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Views\ManyViews\ItemsPageView.axaml.cs">
+			<DependentUpon>ItemsPageView.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Shared\PermissionGrantRevokeView.axaml.cs">
+			<DependentUpon>PermissionRevokeGrantListBoxView.axaml</DependentUpon>
+			<SubType>Code</SubType>
+		</Compile>
+	</ItemGroup>
 </Project>

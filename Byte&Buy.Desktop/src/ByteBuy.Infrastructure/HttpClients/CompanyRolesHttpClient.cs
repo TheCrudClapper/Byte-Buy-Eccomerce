@@ -6,10 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyRolesHttpClient(HttpClient httpClient) : HttpClientBase(httpClient), IRoleHttpClient
+public class CompanyRolesHttpClient(HttpClient httpClient, IConfiguration config) 
+    : HttpClientBase(httpClient, config), IRoleHttpClient
 {
     private const string resource = "company/roles";
     public async Task<Result<UpdatedResponse>> PutAsync(Guid roleId, RoleUpdateRequest request)

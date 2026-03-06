@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Services.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
@@ -11,11 +13,15 @@ public abstract class HttpClientBase
 {
     protected readonly HttpClient Client;
     private readonly JsonSerializerOptions _jsonOptions;
-    protected readonly Uri BaseAddress = new Uri("http://localhost:5099/api/");
-    protected HttpClientBase(HttpClient httpClient)
+    private readonly IConfiguration _configuration;
+
+    protected HttpClientBase(HttpClient httpClient, IConfiguration configuration)
     {
         Client = httpClient;
-        Client.BaseAddress = BaseAddress;
+        _configuration = configuration;
+
+        Client.BaseAddress = new(_configuration.GetSection("Environment")
+            .GetValue<string>("DefaultApiUrl") ?? "http://localhost:5099/api/");
 
         _jsonOptions = new JsonSerializerOptions()
         {

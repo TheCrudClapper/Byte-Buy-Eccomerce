@@ -3,11 +3,12 @@ using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), ICompanyInfoHttpClient
+public class CompanyHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), ICompanyInfoHttpClient
 {
     private const string resource = "company/info";
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()

@@ -2,11 +2,12 @@
 using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class UserHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), IUserHttpClient
+public class UserHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), IUserHttpClient
 {
     private const string resource = "me";
     public async Task<Result> PutPasswordAsync(PasswordChangeRequest request)

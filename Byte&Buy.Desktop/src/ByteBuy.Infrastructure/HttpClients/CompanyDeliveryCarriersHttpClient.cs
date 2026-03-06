@@ -6,6 +6,7 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
@@ -13,7 +14,7 @@ public class CompanyDeliveryCarriersHttpClient : HttpClientBase, IDeliveryCarrie
 {
     private const string resource = "company/delivery-carriers";
 
-    public CompanyDeliveryCarriersHttpClient(HttpClient httpClient) : base(httpClient) { }
+    public CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IConfiguration config) : base(httpClient, config) { }
 
     public async Task<Result> DeleteAsync(Guid carrierId)
         => await DeleteAsync($"{resource}/{carrierId}");

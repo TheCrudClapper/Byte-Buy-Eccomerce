@@ -6,13 +6,15 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
 public class CompanySaleOfferHttpClient : HttpClientBase, ISaleOfferHttpClient
 {
     private const string resource = "company/sale-offers";
-    public CompanySaleOfferHttpClient(HttpClient httpClient) : base(httpClient) { }
+    public CompanySaleOfferHttpClient(HttpClient httpClient, IConfiguration config) 
+        : base(httpClient, config) { }
 
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await DeleteAsync($"{resource}/{id}");

@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class ConditionHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), IConditionHttpClient
+public class ConditionHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), IConditionHttpClient
 {
     private const string resource = "company/conditions";
 

@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CountryHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), ICountryHttpClient
+public class CountryHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), ICountryHttpClient
 {
     private const string resource = "company/countries";
 

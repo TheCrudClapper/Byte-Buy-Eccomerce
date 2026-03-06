@@ -2,13 +2,15 @@
 using ByteBuy.Services.DTO.Statistics;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
 public class CompanyStatisticsHttpClient : HttpClientBase, IStatisticsHttpClient
 {
     private const string resource = "company/statistics";
-    public CompanyStatisticsHttpClient(HttpClient httpClient) : base(httpClient) { }
+    public CompanyStatisticsHttpClient(HttpClient httpClient, IConfiguration config) 
+        : base(httpClient, config) { }
 
     public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync()
         => await GetAsync<IReadOnlyCollection<KeyPerformanceIndicatorDto>>($"{resource}/kpi");

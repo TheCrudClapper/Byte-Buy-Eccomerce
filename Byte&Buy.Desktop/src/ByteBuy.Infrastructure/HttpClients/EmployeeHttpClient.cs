@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class EmployeeHttpClient(HttpClient client)
-    : HttpClientBase(client), IEmployeeHttpClient
+public class EmployeeHttpClient(HttpClient client, IConfiguration config)
+    : HttpClientBase(client, config), IEmployeeHttpClient
 {
     private const string resource = "company/employees";
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileData()

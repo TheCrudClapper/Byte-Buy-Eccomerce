@@ -13,6 +13,7 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
+using Microsoft.Extensions.Configuration;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views;
 using ByteBuy.UI.Views.Dialogs;
@@ -34,12 +35,19 @@ namespace ByteBuy.UI
 
         public override void OnFrameworkInitializationCompleted()
         {
+            //Add Configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
             //Registering Services
             var services = new ServiceCollection();
             services.AddAuthHeaderHandler();
             services.AddUserInterfaceLayer();
             services.AddServiceLayer();
             services.AddInfrastructureLayer();
+            services.AddSingleton<IConfiguration>(configuration);
 
             services.AddSingleton<Func<ApplicationPageNames, PageViewModel>>(x => name => name switch
             {

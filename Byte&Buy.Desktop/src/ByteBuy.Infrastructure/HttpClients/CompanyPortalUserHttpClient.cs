@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyPortalUserHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), IPortalUserHttpClient
+public class CompanyPortalUserHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), IPortalUserHttpClient
 {
     private const string resource = "company/portal-users";
 

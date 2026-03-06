@@ -7,11 +7,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyDeliveriesHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), IDeliveryHttpClient
+public class CompanyDeliveriesHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), IDeliveryHttpClient
 {
     private const string resource = "company/deliveries";
 

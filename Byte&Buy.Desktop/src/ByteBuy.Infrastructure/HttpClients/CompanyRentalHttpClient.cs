@@ -6,13 +6,15 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients
 {
     internal class CompanyRentalHttpClient : HttpClientBase, IRentalHttpClient
     {
         private const string resource = "company/rentals";
-        public CompanyRentalHttpClient(HttpClient httpClient) : base(httpClient) { }
+        public CompanyRentalHttpClient(HttpClient httpClient, IConfiguration config) 
+            : base(httpClient, config) { }
 
         public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
         {

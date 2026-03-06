@@ -6,11 +6,12 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.Extensions.Configuration;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CompanyOrdersHttpClient(HttpClient httpClient)
-    : HttpClientBase(httpClient), IOrderHttpClient
+public class CompanyOrdersHttpClient(HttpClient httpClient, IConfiguration config)
+    : HttpClientBase(httpClient, config), IOrderHttpClient
 {
     private const string resource = "company/orders";
 
