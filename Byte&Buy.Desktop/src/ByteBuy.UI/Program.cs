@@ -19,11 +19,7 @@ namespace ByteBuy.UI
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Process.Start(typeof(Program).Assembly.Location);
-                }
-                catch { }
+                //ignore
             }
         }
 
