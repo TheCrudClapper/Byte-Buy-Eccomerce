@@ -14,7 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IDeliveryCarrierHttpClient
 {
-    private const string resource = "company/delivery-carriers";
+    private readonly string resource = options.Value.CompanyDeliveryCarriers;
 
     public async Task<Result> DeleteAsync(Guid carrierId)
         => await DeleteAsync($"{resource}/{carrierId}");

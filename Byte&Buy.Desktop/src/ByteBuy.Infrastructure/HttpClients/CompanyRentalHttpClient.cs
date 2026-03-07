@@ -14,7 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 internal class CompanyRentalHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IRentalHttpClient
 {
-    private const string resource = "company/rentals";
+    private readonly string resource = options.Value.CompanyRentals;
 
     public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
     {

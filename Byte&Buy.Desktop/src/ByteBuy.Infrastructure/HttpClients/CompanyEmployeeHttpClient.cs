@@ -11,10 +11,11 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class EmployeeHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
+public class CompanyEmployeeHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(client, options), IEmployeeHttpClient
 {
-    private const string resource = "company/employees";
+    private readonly string resource = options.Value.CompanyEmployees;
+
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileData()
         => await GetAsync<EmployeeProfileResponse>($"me/employee");
 

@@ -7,10 +7,11 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class PermissionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IPermissionHttpClient
 {
-    private const string resource = "company/permissions";
+    private readonly string resource = options.Value.CompanyPermissions;
+
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");
 }

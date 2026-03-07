@@ -15,7 +15,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IDeliveryHttpClient
 {
-    private const string resource = "company/deliveries";
+    private readonly string resource = options.Value.CompanyDeliveries;
 
     public async Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
@@ -34,6 +34,7 @@ public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
         return await GetAsync<PagedList<DeliveryListResponse>>(url);
     }
+
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"deliveries/options");
 
@@ -45,5 +46,4 @@ public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync()
         => await GetAsync<DeliveryOptionsResponse>($"deliveries/available");
-
 }

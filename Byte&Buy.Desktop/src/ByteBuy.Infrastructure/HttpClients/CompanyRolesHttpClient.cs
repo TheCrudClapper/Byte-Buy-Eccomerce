@@ -14,7 +14,8 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IRoleHttpClient
 {
-    private const string resource = "company/roles";
+    private readonly string resource = options.Value.CompanyRoles;
+
     public async Task<Result<UpdatedResponse>> PutAsync(Guid roleId, RoleUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{roleId}", request);
 

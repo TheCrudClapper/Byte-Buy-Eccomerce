@@ -11,10 +11,10 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class CountryHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+public class CompanyCountryHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ICountryHttpClient
 {
-    private const string resource = "company/countries";
+    private readonly string resource = options.Value.CompanyCountries;
 
     public async Task<Result<CreatedResponse>> PostCountryAsync(CountryAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);

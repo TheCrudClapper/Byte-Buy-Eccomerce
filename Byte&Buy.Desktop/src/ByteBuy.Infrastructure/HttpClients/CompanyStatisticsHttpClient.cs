@@ -10,7 +10,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyStatisticsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IStatisticsHttpClient
 {
-    private const string resource = "company/statistics";
+    private readonly string resource = options.Value.CompanyStatistics;
 
     public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync()
         => await GetAsync<IReadOnlyCollection<KeyPerformanceIndicatorDto>>($"{resource}/kpi");

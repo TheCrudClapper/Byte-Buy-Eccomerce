@@ -10,7 +10,9 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(client, options), IAuthHttpClient
 {
+    private readonly string resource = options.Value.Auth;
+
     public async Task<Result<TokenResponse>> LoginAsync(LoginRequest request)
-        => await PostAsync<TokenResponse>("auth/login-employee", request);
+        => await PostAsync<TokenResponse>($"{resource}/login-employee", request);
 
 }

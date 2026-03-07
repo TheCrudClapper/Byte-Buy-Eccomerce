@@ -16,13 +16,13 @@ public static class DependencyInjection
         //Add Http Clients
         services.AddHttpClient<IAuthHttpClient, AuthHttpClient>();
 
-        services.AddHttpClient<IEmployeeHttpClient, EmployeeHttpClient>()
+        services.AddHttpClient<IEmployeeHttpClient, CompanyEmployeeHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IPermissionHttpClient, PermissionHttpClient>()
+        services.AddHttpClient<IPermissionHttpClient, CompanyPermissionHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IUserHttpClient, UserHttpClient>()
+        services.AddHttpClient<IUserHttpClient, UserPasswordsHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IRoleHttpClient, CompanyRolesHttpClient>()
@@ -34,13 +34,13 @@ public static class DependencyInjection
         services.AddHttpClient<IPortalUserHttpClient, CompanyPortalUserHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<ICountryHttpClient, CountryHttpClient>()
+        services.AddHttpClient<ICountryHttpClient, CompanyCountryHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<IDeliveryHttpClient, CompanyDeliveriesHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IConditionHttpClient, ConditionHttpClient>()
+        services.AddHttpClient<IConditionHttpClient, CompanyConditionHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
         services.AddHttpClient<ICategoryHttpClient, CompanyCategoriesHttpClient>()
@@ -75,7 +75,7 @@ public static class DependencyInjection
         services.AddHttpClient<IStatisticsHttpClient, CompanyStatisticsHttpClient>()
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<IDocumentsHttpClient, DocumentsHttpClient>()
+        services.AddHttpClient<IDocumentsHttpClient, CompanyDocumentsHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
         //Add Token Store

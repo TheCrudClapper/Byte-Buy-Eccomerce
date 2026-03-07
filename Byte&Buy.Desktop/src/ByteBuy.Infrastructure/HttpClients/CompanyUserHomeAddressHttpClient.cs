@@ -11,7 +11,8 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyUserHomeAddressHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ICompanyUserHomeAddressHttpClient
 {
-    private const string resource = "users";
+    private readonly string resource = options.Value.Users;
+
     public async Task<Result<UpdatedResponse>> PutUserHomeAddressAsync(Guid userId, HomeAddressDto request)
         => await PutAsync<UpdatedResponse>($"{resource}/{userId}/home-address", request);
 }

@@ -14,8 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ICategoryHttpClient
 {
-
-    private string resource = "company/categories";
+    private readonly string resource = options.Value.CompanyCategories;
     public async Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
 

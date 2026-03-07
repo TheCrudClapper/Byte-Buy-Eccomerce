@@ -14,7 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyOrdersHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IOrderHttpClient
 {
-    private const string resource = "company/orders";
+    private readonly string resource = options.Value.CompanyOrders;
 
     public Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query)
     {

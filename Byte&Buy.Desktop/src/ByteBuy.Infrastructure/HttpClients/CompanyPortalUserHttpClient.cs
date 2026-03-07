@@ -14,7 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyPortalUserHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IPortalUserHttpClient
 {
-    private const string resource = "company/portal-users";
+    private readonly string resource = options.Value.CompanyPortalUsers;
 
     public async Task<Result<CreatedResponse>> PostPortalUserAsync(PortalUserAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);

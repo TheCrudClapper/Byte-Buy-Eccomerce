@@ -7,10 +7,11 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class UserHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+public class UserPasswordsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IUserHttpClient
 {
-    private const string resource = "me";
+    private readonly string resource = options.Value.UserMe;
+
     public async Task<Result> PutPasswordAsync(PasswordChangeRequest request)
         => await PutAsync($"{resource}/password", request);
 }

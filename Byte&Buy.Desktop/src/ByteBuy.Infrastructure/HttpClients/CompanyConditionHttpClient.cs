@@ -11,10 +11,10 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class ConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+public class CompanyConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IConditionHttpClient
 {
-    private const string resource = "company/conditions";
+    private readonly string resource = options.Value.CompanyConditions;
 
     public async Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);

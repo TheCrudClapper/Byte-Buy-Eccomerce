@@ -5,10 +5,10 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients;
 
-public class DocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+public class CompanyDocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IDocumentsHttpClient
 {
-    private const string resource = "company/documents";
+    private readonly string resource = options.Value.CompanyDocuments;
 
     public async Task<byte[]> DownloadOrderDetailsAsync(Guid orderId)
     {

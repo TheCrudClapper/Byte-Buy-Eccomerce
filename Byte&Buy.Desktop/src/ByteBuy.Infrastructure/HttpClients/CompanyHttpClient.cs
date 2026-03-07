@@ -11,7 +11,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanyHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ICompanyInfoHttpClient
 {
-    private const string resource = "company/info";
+    private readonly string resource = options.Value.Company;
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()
         => GetAsync<CompanyInfoResponse>($"{resource}");
 

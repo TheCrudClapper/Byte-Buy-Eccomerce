@@ -14,7 +14,7 @@ namespace ByteBuy.Infrastructure.HttpClients;
 public class CompanySaleOfferHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ISaleOfferHttpClient
 {
-    private const string resource = "company/sale-offers";
+    private readonly string resource = options.Value.CompanySalesOffers;
 
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await DeleteAsync($"{resource}/{id}");
