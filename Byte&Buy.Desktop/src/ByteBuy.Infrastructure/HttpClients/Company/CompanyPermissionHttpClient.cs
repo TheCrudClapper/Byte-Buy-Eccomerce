@@ -5,7 +5,7 @@ using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IPermissionHttpClient

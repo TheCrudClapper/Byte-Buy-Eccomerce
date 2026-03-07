@@ -5,7 +5,7 @@ using ByteBuy.Services.InfraContracts.HttpClients;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Public;
 
 public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(client, options), IAuthHttpClient

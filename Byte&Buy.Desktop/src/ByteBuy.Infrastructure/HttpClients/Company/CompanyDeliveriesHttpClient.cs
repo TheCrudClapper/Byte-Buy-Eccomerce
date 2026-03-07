@@ -10,12 +10,14 @@ using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IDeliveryHttpClient
 {
     private readonly string resource = options.Value.CompanyDeliveries;
+    private readonly string optionsResource = options.Value.DeliveriesOptions;
+    private readonly string availableResource = options.Value.DeliveriesAvailable;
 
     public async Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
@@ -36,7 +38,7 @@ public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
     }
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"deliveries/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{optionsResource}");
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsList()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/channels/list");
@@ -45,5 +47,5 @@ public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
          => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/sizes/list");
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync()
-        => await GetAsync<DeliveryOptionsResponse>($"deliveries/available");
+        => await GetAsync<DeliveryOptionsResponse>($"{availableResource}");
 }

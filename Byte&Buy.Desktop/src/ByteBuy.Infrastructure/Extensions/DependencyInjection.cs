@@ -1,4 +1,6 @@
-﻿using ByteBuy.Infrastructure.HttpClients;
+﻿using ByteBuy.Infrastructure.HttpClients.Company;
+using ByteBuy.Infrastructure.HttpClients.Me;
+using ByteBuy.Infrastructure.HttpClients.Public;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Infrastructure.Stores;
 using ByteBuy.Services.Handlers;
@@ -77,6 +79,12 @@ public static class DependencyInjection
 
         services.AddHttpClient<IDocumentsHttpClient, CompanyDocumentsHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
+
+        //Add Public Http Clients
+        services.AddHttpClient<PublicCategoriesHttpClient>();
+        services.AddHttpClient<PublicConditionsHttpClient>();
+        services.AddHttpClient<PublicCountriesHttpClient>();
+        services.AddHttpClient<PublicDeliveriesHttpClient>();
 
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();

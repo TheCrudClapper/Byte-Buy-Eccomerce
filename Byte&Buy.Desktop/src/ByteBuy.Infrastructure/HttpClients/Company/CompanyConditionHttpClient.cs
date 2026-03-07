@@ -9,12 +9,13 @@ using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IConditionHttpClient
 {
     private readonly string resource = options.Value.CompanyConditions;
+    private readonly string optionsResource = options.Value.ConditionsOptions;
 
     public async Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
@@ -35,5 +36,5 @@ public class CompanyConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpo
     }
 
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"conditions/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{optionsResource}");
 }

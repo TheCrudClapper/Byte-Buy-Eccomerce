@@ -4,8 +4,11 @@ public class ApiEndpointsOptions
 {
     public string DefaultApiUrl { get; set; } = default!;
     public string CompanyCategories { get; set; } = default!;
+    public string CategoriesOptions { get; set; } = default!;
     public string Auth { get; set; } = default!;
     public string CompanyDeliveries { get; set; } = default!;
+    public string DeliveriesOptions { get; set; } = default!;
+    public string DeliveriesAvailable { get; set; } = default!;
     public string CompanyDeliveryCarriers { get; set; } = default!;
     public string CompanyOrders { get; set; } = default!;
     public string CompanyRentals { get; set; } = default!;
@@ -18,7 +21,9 @@ public class ApiEndpointsOptions
     public string CompanyStatistics { get; set; } = default!;
     public string Users { get; set; } = default!;
     public string CompanyConditions { get; set; } = default!;
+    public string ConditionsOptions { get; set; } = default!;
     public string CompanyCountries { get; set; } = default!;
+    public string CountriesOptions { get; set; } = default!;
     public string CompanyDocuments { get; set; } = default!;
     public string CompanyEmployees { get; set; } = default!;
     public string CompanyPermissions { get; set; } = default!;

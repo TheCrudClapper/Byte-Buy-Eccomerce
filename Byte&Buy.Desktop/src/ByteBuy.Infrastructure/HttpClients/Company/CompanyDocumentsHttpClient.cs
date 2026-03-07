@@ -3,7 +3,7 @@ using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.InfraContracts.HttpClients;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyDocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), IDocumentsHttpClient

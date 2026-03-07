@@ -9,12 +9,14 @@ using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(httpClient, options), ICategoryHttpClient
 {
     private readonly string resource = options.Value.CompanyCategories;
+    private readonly string optionsResource = options.Value.CategoriesOptions;
+
     public async Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
 
@@ -32,6 +34,7 @@ public class CompanyCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
         return await GetAsync<PagedList<CategoryListResponse>>(url);
     }
+
     public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>("categories/options");
+        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{optionsResource}");
 }

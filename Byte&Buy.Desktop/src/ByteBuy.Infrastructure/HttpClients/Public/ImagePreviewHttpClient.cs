@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.InfraContracts.HttpClients;
 
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Public;
 
 
 public class ImagePreviewHttpClient(HttpClient client) : IImagePreviewHttpClient

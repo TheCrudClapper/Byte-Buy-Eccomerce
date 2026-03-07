@@ -9,7 +9,7 @@ using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
-namespace ByteBuy.Infrastructure.HttpClients;
+namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyEmployeeHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
     : HttpClientBase(client, options), IEmployeeHttpClient
