@@ -2,14 +2,15 @@
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
+using ByteBuy.Services.InfraContracts.HttpClients.Me;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class EmployeeService(IEmployeeHttpClient employeeHttpClient, IUserHttpClient userHttpClient)
+public class EmployeeService(ICompanyEmployeeHttpClient employeeHttpClient, IUserPasswordHttpClient userHttpClient)
     : IEmployeeService
 {
     public async Task<Result<CreatedResponse>> Add(EmployeeAddRequest request)

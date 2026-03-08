@@ -8,7 +8,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddServiceLayer(this IServiceCollection services)
     {
-        //Add Services
+        //AddAsync Services
         services.AddSingleton<IAuthService, AuthService>();
         services.AddSingleton<IEmployeeService, EmployeeService>();
         services.AddSingleton<IRoleService, RoleService>();

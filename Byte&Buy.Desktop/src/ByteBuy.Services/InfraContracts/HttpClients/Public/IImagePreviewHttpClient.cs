@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Services.InfraContracts.HttpClients;
+﻿namespace ByteBuy.Services.InfraContracts.HttpClients.Public;
 
 public interface IImagePreviewHttpClient
 {

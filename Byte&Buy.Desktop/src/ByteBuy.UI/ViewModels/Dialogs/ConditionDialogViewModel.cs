@@ -26,7 +26,7 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await conditionService.GetById(id);
+        var result = await conditionService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -43,7 +43,7 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
             return false;
 
         var request = new ConditionUpdateRequest(Name, Description);
-        var response = await conditionService.Update(EditingItemId.Value, request);
+        var response = await conditionService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -55,7 +55,7 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
     protected override async Task<bool> AddItem()
     {
         var request = new ConditionAddRequest(Name, Description);
-        var response = await conditionService.Add(request);
+        var response = await conditionService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

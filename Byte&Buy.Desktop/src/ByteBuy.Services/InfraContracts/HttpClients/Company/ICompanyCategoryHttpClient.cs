@@ -4,11 +4,10 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface ICategoryHttpClient
+public interface ICompanyCategoryHttpClient
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query);
     Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request);

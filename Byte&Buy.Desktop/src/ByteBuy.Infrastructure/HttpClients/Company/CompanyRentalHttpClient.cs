@@ -4,7 +4,7 @@ using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 internal class CompanyRentalHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), IRentalHttpClient
+    : HttpClientBase(httpClient, options), ICompanyRentalHttpClient
 {
     private readonly string resource = options.Value.CompanyRentals;
 

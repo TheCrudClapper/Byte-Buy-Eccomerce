@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.DTO;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Public;
 
 public interface IAuthHttpClient
 {

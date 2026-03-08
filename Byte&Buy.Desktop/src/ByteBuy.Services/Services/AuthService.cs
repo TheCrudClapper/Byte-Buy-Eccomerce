@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Services.DTO;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.InfraContracts.Stores;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;

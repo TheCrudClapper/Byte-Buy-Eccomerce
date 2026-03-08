@@ -127,7 +127,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     protected override async Task InitializeAsync()
     {
         var listBoxTask = PermissionListBox.InitializeAsync();
-        var countriesTask = _countryService.GetSelectList();
+        var countriesTask = _countryService.GetSelectListAsync();
         var roleTask = _roleService.GetSelectList();
 
         await Task.WhenAll(listBoxTask, countriesTask, roleTask);

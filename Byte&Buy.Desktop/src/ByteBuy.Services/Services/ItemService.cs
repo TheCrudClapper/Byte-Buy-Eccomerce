@@ -2,14 +2,14 @@
 using ByteBuy.Services.DTO.Item;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class ItemService(IItemHttpClient httpClient) : IItemService
+public class ItemService(ICompanyItemHttpClient httpClient) : IItemService
 {
     public async Task<Result<CreatedResponse>> Add(ItemAddRequest request)
     {

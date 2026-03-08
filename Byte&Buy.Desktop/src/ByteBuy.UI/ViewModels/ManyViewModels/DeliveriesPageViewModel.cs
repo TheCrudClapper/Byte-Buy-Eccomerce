@@ -59,7 +59,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
             PriceTo = PriceTo,
         };
 
-        var result = await Service.GetList(queryParams);
+        var result = await Service.GetListAsync(queryParams);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;

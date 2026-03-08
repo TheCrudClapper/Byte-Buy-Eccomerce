@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface ISaleOfferHttpClient
+public interface ICompanySaleOfferHttpClient
 {
     Task<Result<CreatedResponse>> PostSaleOffer(SaleOfferAddRequest request);
     Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id);

@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.DTO.Shared;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 

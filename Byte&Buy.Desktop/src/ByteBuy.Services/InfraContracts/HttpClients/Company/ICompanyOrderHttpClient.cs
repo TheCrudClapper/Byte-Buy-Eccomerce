@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IOrderHttpClient
+public interface ICompanyOrderHttpClient
 {
     Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query);
     Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId);

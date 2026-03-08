@@ -60,8 +60,8 @@ public partial class DeliveryDialogViewModel(
 
     public async Task InitializeAsync()
     {
-        var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectList();
-        var deliveryChannelsTask = deliveryService.GetDeliveryChannelsSelectList();
+        var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectListAsync();
+        var deliveryChannelsTask = deliveryService.GetDeliveryChannelsSelectListAsync();
         var deliveryCarriersTask = carrierService.GetSelectList();
 
         await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
@@ -79,7 +79,7 @@ public partial class DeliveryDialogViewModel(
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await deliveryService.GetById(id);
+        var result = await deliveryService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -107,7 +107,7 @@ public partial class DeliveryDialogViewModel(
             SelectedChannel?.Id ?? default,
             SelectedDeliveryCarrier?.Id ?? Guid.Empty);
 
-        var response = await deliveryService.Add(request);
+        var response = await deliveryService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -129,7 +129,7 @@ public partial class DeliveryDialogViewModel(
             SelectedChannel?.Id ?? default,
             SelectedDeliveryCarrier?.Id ?? Guid.Empty);
 
-        var response = await deliveryService.Update(EditingItemId.Value, request);
+        var response = await deliveryService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

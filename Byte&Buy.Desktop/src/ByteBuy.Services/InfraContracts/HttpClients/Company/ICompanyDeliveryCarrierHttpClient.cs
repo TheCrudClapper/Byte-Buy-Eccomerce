@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IDeliveryCarrierHttpClient
+public interface ICompanyDeliveryCarrierHttpClient
 {
     Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query);

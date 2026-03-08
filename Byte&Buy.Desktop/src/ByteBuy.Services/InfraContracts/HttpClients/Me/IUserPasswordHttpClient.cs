@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Me;
 
-public interface IUserHttpClient
+public interface IUserPasswordHttpClient
 {
     Task<Result> PutPasswordAsync(PasswordChangeRequest request);
 }

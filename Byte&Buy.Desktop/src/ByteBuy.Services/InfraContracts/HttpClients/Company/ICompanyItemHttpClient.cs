@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IItemHttpClient
+public interface ICompanyItemHttpClient
 {
     Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request);
     Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, MultipartContent request);

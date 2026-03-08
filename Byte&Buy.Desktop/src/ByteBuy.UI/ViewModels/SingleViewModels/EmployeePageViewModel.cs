@@ -115,7 +115,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     protected override async Task InitializeAsync()
     {
         var permissionListBoxTask = PermissionListBox.InitializeAsync();
-        var countriesTask = _countryService.GetSelectList();
+        var countriesTask = _countryService.GetSelectListAsync();
         var roleTask = _roleService.GetSelectList();
 
         await Task.WhenAll(permissionListBoxTask, roleTask, countriesTask);

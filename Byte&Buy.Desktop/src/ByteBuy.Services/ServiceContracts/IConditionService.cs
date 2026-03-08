@@ -8,9 +8,9 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IConditionService : IBaseService
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
-    Task<Result<CreatedResponse>> Add(ConditionAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, ConditionUpdateRequest request);
-    Task<Result<ConditionResponse>> GetById(Guid id);
-    Task<Result<PagedList<ConditionListResponse>>> GetList(ConditionListQuery query);
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
+    Task<Result<CreatedResponse>> AddAsync(ConditionAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ConditionUpdateRequest request);
+    Task<Result<ConditionResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query);
 }

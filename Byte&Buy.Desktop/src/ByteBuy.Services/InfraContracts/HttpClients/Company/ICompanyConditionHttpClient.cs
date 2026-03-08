@@ -4,11 +4,10 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IConditionHttpClient
+public interface ICompanyConditionHttpClient
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query);
     Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request);

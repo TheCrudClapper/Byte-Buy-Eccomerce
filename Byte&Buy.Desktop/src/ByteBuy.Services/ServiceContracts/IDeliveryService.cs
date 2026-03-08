@@ -9,12 +9,12 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IDeliveryService : IBaseService
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
-    Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectList();
-    Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectList();
-    Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveries();
-    Task<Result<CreatedResponse>> Add(DeliveryAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, DeliveryUpdateRequest request);
-    Task<Result<DeliveryResponse>> GetById(Guid id);
-    Task<Result<PagedList<DeliveryListResponse>>> GetList(DeliveryListQuery query);
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectListAsync();
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectListAsync();
+    Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync();
+    Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryUpdateRequest request);
+    Task<Result<DeliveryResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query);
 }

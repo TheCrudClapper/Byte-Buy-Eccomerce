@@ -93,7 +93,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
 
     public async Task InitializeAsync()
     {
-        var deliveries = await deliveryService.GetAvaliableDeliveries();
+        var deliveries = await deliveryService.GetAvaliableDeliveriesAsync();
         if (!deliveries.Success || deliveries.Value is null)
             return;
 

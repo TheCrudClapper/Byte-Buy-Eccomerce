@@ -1,4 +1,4 @@
-﻿using ByteBuy.Services.InfraContracts.HttpClients;
+﻿using ByteBuy.Services.InfraContracts.HttpClients.Public;
 
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;

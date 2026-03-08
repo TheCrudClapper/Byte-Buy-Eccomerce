@@ -55,7 +55,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
             CountryName = CountryName,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;

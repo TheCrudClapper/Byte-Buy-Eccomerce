@@ -27,7 +27,7 @@ public partial class CountryDialogViewModel(ICountryService countryService)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await countryService.GetById(id);
+        var result = await countryService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -44,7 +44,7 @@ public partial class CountryDialogViewModel(ICountryService countryService)
             return false;
 
         var request = new CountryUpdateRequest(Name, Code);
-        var response = await countryService.Update(EditingItemId.Value, request);
+        var response = await countryService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -56,7 +56,7 @@ public partial class CountryDialogViewModel(ICountryService countryService)
     protected override async Task<bool> AddItem()
     {
         var request = new CountryAddRequest(Name, Code);
-        var response = await countryService.Add(request);
+        var response = await countryService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

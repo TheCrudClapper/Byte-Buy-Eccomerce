@@ -1,14 +1,14 @@
 ﻿using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class OrderService(IOrderHttpClient httpClient) : IOrderService
+public class OrderService(ICompanyOrderHttpClient httpClient) : IOrderService
 {
     public Task<Result> DeleteById(Guid id)
     {

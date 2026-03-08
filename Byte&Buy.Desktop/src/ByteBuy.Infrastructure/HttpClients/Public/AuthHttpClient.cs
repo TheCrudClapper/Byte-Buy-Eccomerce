@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 

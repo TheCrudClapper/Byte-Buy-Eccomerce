@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IPortalUserHttpClient
+public interface ICompanyPortalUserHttpClient
 {
     Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query);
     Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId);

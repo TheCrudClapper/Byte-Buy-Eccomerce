@@ -1,14 +1,14 @@
 ﻿using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class RentalService(IRentalHttpClient httpClient) : IRentalService
+public class RentalService(ICompanyRentalHttpClient httpClient) : IRentalService
 {
     public Task<Result> DeleteById(Guid id)
     {

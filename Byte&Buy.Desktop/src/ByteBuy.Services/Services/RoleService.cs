@@ -1,14 +1,14 @@
 ﻿using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class RoleService(IRoleHttpClient roleClient) : IRoleService
+public class RoleService(ICompanyRoleHttpClient roleClient) : IRoleService
 {
     public async Task<Result<CreatedResponse>> Add(RoleAddRequest request)
         => await roleClient.PostAsync(request);

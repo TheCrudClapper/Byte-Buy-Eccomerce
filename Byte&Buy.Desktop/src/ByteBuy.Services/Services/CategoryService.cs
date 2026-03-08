@@ -1,13 +1,15 @@
 ﻿using ByteBuy.Services.DTO.Category;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
+using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 namespace ByteBuy.Services.Services;
 
-public class CategoryService(ICategoryHttpClient httpClient) : ICategoryService
+public class CategoryService(ICompanyCategoryHttpClient httpClient, IPublicCategoriesHttpClient publicClient) 
+    : ICategoryService
 {
     public async Task<Result<CreatedResponse>> Add(CategoryAddRequest request)
         => await httpClient.PostCategoryAsync(request);
@@ -21,8 +23,8 @@ public class CategoryService(ICategoryHttpClient httpClient) : ICategoryService
     public async Task<Result<PagedList<CategoryListResponse>>> GetList(CategoryListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
-        => await httpClient.GetSelectListAsync();
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList()
+        => await publicClient.GetSelectListAsync();
 
     public async Task<Result<UpdatedResponse>> Update(Guid id, CategoryUpdateRequest request)
         => await httpClient.PutCategoryAsync(id, request);

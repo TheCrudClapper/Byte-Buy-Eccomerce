@@ -4,7 +4,7 @@ using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
@@ -12,10 +12,9 @@ using Microsoft.Extensions.Options;
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), IRoleHttpClient
+    : HttpClientBase(httpClient, options), ICompanyRoleHttpClient
 {
     private readonly string resource = options.Value.CompanyRoles;
-
     public async Task<Result<UpdatedResponse>> PutAsync(Guid roleId, RoleUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{roleId}", request);
 

@@ -4,9 +4,9 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
-namespace ByteBuy.Services.InfraContracts.HttpClients;
+namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
-public interface IRoleHttpClient
+public interface ICompanyRoleHttpClient
 {
     Task<Result<UpdatedResponse>> PutAsync(Guid id, RoleUpdateRequest request);
     Task<Result<CreatedResponse>> PostAsync(RoleAddRequest request);

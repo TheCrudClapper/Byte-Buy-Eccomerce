@@ -88,7 +88,7 @@ public partial class ItemPageViewModel : ViewModelSingle
 
     protected override async Task InitializeAsync()
     {
-        var conditionTask = _conditionService.GetSelectList();
+        var conditionTask = _conditionService.GetSelectListAsync();
         var categoryTask = _categoryService.GetSelectList();
 
         await Task.WhenAll(conditionTask, categoryTask);

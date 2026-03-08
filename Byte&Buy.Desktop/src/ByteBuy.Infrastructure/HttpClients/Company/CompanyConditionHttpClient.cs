@@ -4,7 +4,7 @@ using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.Filtration;
-using ByteBuy.Services.InfraContracts.HttpClients;
+using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
@@ -12,11 +12,9 @@ using Microsoft.Extensions.Options;
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
 public class CompanyConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), IConditionHttpClient
+    : HttpClientBase(httpClient, options), ICompanyConditionHttpClient
 {
     private readonly string resource = options.Value.CompanyConditions;
-    private readonly string optionsResource = options.Value.ConditionsOptions;
-
     public async Task<Result<CreatedResponse>> PostConditionAsync(ConditionAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);
 
@@ -34,7 +32,4 @@ public class CompanyConditionHttpClient(HttpClient httpClient, IOptions<ApiEndpo
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
         return await GetAsync<PagedList<ConditionListResponse>>(url);
     }
-
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{optionsResource}");
 }
