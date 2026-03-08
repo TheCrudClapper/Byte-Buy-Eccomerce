@@ -11,5 +11,4 @@ public interface IConditionService
       ISelectableService<Guid>
 {
     Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(ConditionListQuery queryParams, CancellationToken ct = default);
-    Task<Result<IReadOnlyCollection<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default);
 }

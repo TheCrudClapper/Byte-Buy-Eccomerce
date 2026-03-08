@@ -252,7 +252,7 @@ public class PortalUserService : IPortalUserService
         return Result.Success();
     }
 
-    public async Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default)
+    public async Task<Result<UserBasicInfoResponse>> GetBasicInfoAsync(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserBasicInfoResponseSpec(userId);
         var userInfo = await _portalUserRepository.GetBySpecAsync(spec, ct);
@@ -262,7 +262,7 @@ public class PortalUserService : IPortalUserService
             : userInfo;
     }
 
-    public async Task<Result<UpdatedResponse>> PutUserBasicInfo(Guid userId, UserBasicInfoUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateBasicInfoAsync(Guid userId, UserBasicInfoUpdateRequest request)
     {
         var spec = new PortalUserSpec(userId);
         var portalUser = await _portalUserRepository.GetBySpecAsync(spec);

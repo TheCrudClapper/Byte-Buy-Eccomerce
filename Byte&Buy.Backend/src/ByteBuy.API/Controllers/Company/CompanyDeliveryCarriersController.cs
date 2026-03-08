@@ -21,12 +21,12 @@ public class CompanyDeliveryCarriersController
 
     [HttpGet("list")]
     [HasPermission("company-delivery-carriers:read:many")]
-    public async Task<ActionResult<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersList([FromQuery] DeliveryCarriersListQuery queryParams, CancellationToken ct)
-        => HandleResult(await _carrierService.GetDeliveryCarriersList(queryParams, ct));
+    public async Task<ActionResult<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersListAsync([FromQuery] DeliveryCarriersListQuery queryParams, CancellationToken ct)
+        => HandleResult(await _carrierService.GetDeliveryCarriersListAsync(queryParams, ct));
 
     [HttpGet("options")]
     [HasPermission("company-delivery-carriers:read:options")]
-    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _carrierService.GetSelectListAsync(ct));
 
 }

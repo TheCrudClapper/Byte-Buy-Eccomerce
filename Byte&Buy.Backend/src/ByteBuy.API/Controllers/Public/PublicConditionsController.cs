@@ -15,6 +15,6 @@ public class PublicConditionsController : BaseApiController
         => _conditionService = conditionService;
 
     [HttpGet("options")]
-    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
       => HandleResult(await _conditionService.GetSelectListAsync(ct));
 }

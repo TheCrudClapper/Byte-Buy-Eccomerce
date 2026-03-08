@@ -86,13 +86,6 @@ public class ConditionService : IConditionService
         return conditions.Select(c => c.ToSelectListItemResponse()).ToList();
     }
 
-    public async Task<Result<IReadOnlyCollection<ConditionResponse>>> GetConditionsAsync(CancellationToken ct = default)
-    {
-        var conditions = await _conditionRepository.GetAllAsync(ct);
-        return conditions.Select(c => c.ToConditionResponse())
-            .ToList();
-    }
-
     public async Task<Result<PagedList<ConditionListResponse>>> GetConditionsListAsync(ConditionListQuery queryParams, CancellationToken ct = default)
     {
         return await _conditionRepository.GetPagedListAsync(queryParams, ct);

@@ -20,6 +20,6 @@ public class CompanyConditionsController
 
     [HttpGet("list")]
     [HasPermission("company-conditions:read:many")]
-    public async Task<ActionResult<PagedList<ConditionListResponse>>> GetConditionsList([FromQuery] ConditionListQuery queryParams, CancellationToken ct)
+    public async Task<ActionResult<PagedList<ConditionListResponse>>> GetConditionsListAsync([FromQuery] ConditionListQuery queryParams, CancellationToken ct)
        => HandleResult(await _conditionService.GetConditionsListAsync(queryParams, ct));
 }

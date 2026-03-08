@@ -27,7 +27,7 @@ public class CartService : ICartService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result> AddRentCartOffer(Guid userId, RentCartOfferAddRequest request)
+    public async Task<Result> AddRentCartOfferAsync(Guid userId, RentCartOfferAddRequest request)
     {
         var spec = new UserCartAggregateSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
@@ -51,7 +51,7 @@ public class CartService : ICartService
         return Result.Success();
     }
 
-    public async Task<Result> AddSaleCartOffer(Guid userId, SaleCartOfferAddRequest request)
+    public async Task<Result> AddSaleCartOfferAsync(Guid userId, SaleCartOfferAddRequest request)
     {
         var spec = new UserCartAggregateSpec(userId, true);
         var cart = await _cartRepository.GetBySpecAsync(spec);
@@ -75,7 +75,7 @@ public class CartService : ICartService
         return Result.Success();
     }
 
-    public async Task<Result<CartSummaryResponse>> DeleteCartOffer(Guid userId, Guid cartItemId)
+    public async Task<Result<CartSummaryResponse>> DeleteCartOfferAsync(Guid userId, Guid cartItemId)
     {
         var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
@@ -96,7 +96,7 @@ public class CartService : ICartService
         return cartSummaryResult.Value;
     }
 
-    public async Task<Result<CartResponse>> GetCart(Guid userId, CancellationToken ct = default)
+    public async Task<Result<CartResponse>> GetCartAsync(Guid userId, CancellationToken ct = default)
     {
         var spec = new UserCartAggegateWithOffersAggregateSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec, ct);
@@ -151,7 +151,7 @@ public class CartService : ICartService
             totalCost.ToMoneyDto());
     }
 
-    public async Task<Result<CartSummaryResponse>> UpdateRentCartOffer(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request)
+    public async Task<Result<CartSummaryResponse>> UpdateRentCartOfferAsync(Guid userId, Guid cartItemId, RentCartOfferUpdateRequest request)
     {
         var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
@@ -174,7 +174,7 @@ public class CartService : ICartService
         return cartSummaryResult.Value;
     }
 
-    public async Task<Result<CartSummaryResponse>> UpdateSaleCartOffer(Guid userId, Guid cartItemId, SaleCartOfferUpdateRequest request)
+    public async Task<Result<CartSummaryResponse>> UpdateSaleCartOfferAsync(Guid userId, Guid cartItemId, SaleCartOfferUpdateRequest request)
     {
         var spec = new UserCartAggregateAndOffersSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);
@@ -195,7 +195,7 @@ public class CartService : ICartService
         return cartSummaryResult.Value;
     }
 
-    public async Task<Result> ClearCart(Guid userId)
+    public async Task<Result> ClearCartAsync(Guid userId)
     {
         var spec = new UserCartAggregateSpec(userId);
         var cart = await _cartRepository.GetBySpecAsync(spec);

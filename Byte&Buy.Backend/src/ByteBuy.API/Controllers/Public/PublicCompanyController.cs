@@ -14,6 +14,6 @@ public class PublicCompanyController : BaseApiController
         => _companyInfoService = companyInfoService;
 
     [HttpGet]
-    public async Task<ActionResult<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct)
-        => HandleResult(await _companyInfoService.GetCompanyInfo(ct));
+    public async Task<ActionResult<CompanyInfoResponse>> GetCompanyInfoAsync(CancellationToken ct)
+        => HandleResult(await _companyInfoService.GetCompanyInfoAsync(ct));
 }

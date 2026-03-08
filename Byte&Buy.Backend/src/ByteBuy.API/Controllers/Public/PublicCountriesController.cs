@@ -14,6 +14,6 @@ public class PublicCountriesController : BaseApiController
         => _countryService = countryService;
 
     [HttpGet("options")]
-    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _countryService.GetSelectListAsync(ct));
 }

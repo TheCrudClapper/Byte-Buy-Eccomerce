@@ -19,7 +19,7 @@ public interface IOrderService
     /// <param name="userId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId);
+    Task<Result<UpdatedResponse>> CancelOrderAsync(Guid userId, Guid orderId);
 
     /// <summary>
     /// Method that allows user to return order up to 14 days time after purchase
@@ -27,7 +27,7 @@ public interface IOrderService
     /// <param name="userId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId);
+    Task<Result<UpdatedResponse>> ReturnOrderAsync(Guid userId, Guid orderId);
 
     /// <summary>
     /// Method that is designated only for private sellers, allows sending offer to clients
@@ -35,14 +35,14 @@ public interface IOrderService
     /// <param name="sellerId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> ShipOrderAsPrivateSeller(Guid sellerId, Guid orderId);
+    Task<Result<UpdatedResponse>> ShipOrderAsPrivateSellerAsync(Guid sellerId, Guid orderId);
 
     /// <summary>
     /// Method designated only for company, allows sending offers to clients
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> ShipOrderAsCompany(Guid orderId);
+    Task<Result<UpdatedResponse>> ShipOrderAsCompanyAsync(Guid orderId);
 
     /// <summary>
     /// Method that is designated only for seller, allows delivering orders
@@ -50,14 +50,14 @@ public interface IOrderService
     /// <param name="sellerId"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSeller(Guid sellerId, Guid orderId);
+    Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSellerAsync(Guid sellerId, Guid orderId);
 
     /// <summary>
     /// Method that is designated only for company, allows delivering orders.
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns></returns>
-    Task<Result<UpdatedResponse>> DeliverOrderAsCompany(Guid orderId);
+    Task<Result<UpdatedResponse>> DeliverOrderAsCompanyAsync(Guid orderId);
 
     /// <summary>
     /// Method that is designated only for company context

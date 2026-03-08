@@ -18,16 +18,16 @@ public class CompanyStatisticsController : BaseApiController
 
     [HttpGet("kpi")]
     [HasPermission("company-statistics:read:kpi")]
-    public async Task<ActionResult<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync(CancellationToken ct)
         => HandleResult(await _statisticsService.GetKpisAsync(ct));
 
     [HttpGet("gmv-seller-type")]
     [HasPermission("company-statistics:read:gmv-seller-type")]
-    public async Task<ActionResult<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerType(CancellationToken ct)
-        => HandleResult(await _statisticsService.GetGMVBySellerType(ct));
+    public async Task<ActionResult<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerTypeAsync(CancellationToken ct)
+        => HandleResult(await _statisticsService.GetGMVBySellerTypeAsync(ct));
 
     [HttpGet("gmv-months")]
     [HasPermission("company-statistics:read:gmv-months")]
-    public async Task<ActionResult<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonths(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonthsAsync(CancellationToken ct)
         => HandleResult(await _statisticsService.GetOrdersAndGmvByMonthAsync(6, ct));
 }

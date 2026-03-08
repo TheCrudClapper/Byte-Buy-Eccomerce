@@ -18,9 +18,9 @@ public class CompanyDocumentsController : BaseApiController
 
     [HttpGet("order-details/{orderId:guid}")]
     [HasPermission("company-documents:read:order-details")]
-    public async Task<ActionResult> DownloadOrderDetailsPdf(Guid orderId, CancellationToken ct)
+    public async Task<ActionResult> DownloadOrderDetailsPdfAsync(Guid orderId, CancellationToken ct)
     {
-        var pdfBytesResult = await _documentService.GenerateOrderDetailsPdf(orderId, ct);
+        var pdfBytesResult = await _documentService.GenerateOrderDetailsPdfAsync(orderId, ct);
 
         return pdfBytesResult.IsFailure
             ? Problem(

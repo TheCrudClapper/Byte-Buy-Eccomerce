@@ -20,10 +20,10 @@ public class UserController : BaseApiController
     [HttpGet]
     [HasPermission("user:read:one")]
     public async Task<ActionResult<UserBasicInfoResponse>> GetUserBasicInfoAsync()
-        => HandleResult(await _portalUserService.GetBasicUserInfoAsync(CurrentUserId));
+        => HandleResult(await _portalUserService.GetBasicInfoAsync(CurrentUserId));
 
     [HttpPut]
     [HasPermission("user:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutUserBasicInfoAsync(UserBasicInfoUpdateRequest request)
-        => HandleResult(await _portalUserService.PutUserBasicInfo(CurrentUserId, request));
+        => HandleResult(await _portalUserService.UpdateBasicInfoAsync(CurrentUserId, request));
 }

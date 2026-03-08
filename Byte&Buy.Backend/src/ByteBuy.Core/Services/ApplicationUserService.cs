@@ -13,7 +13,7 @@ public class ApplicationUserService : IApplicationUserService
     public ApplicationUserService(UserManager<ApplicationUser> userManager)
         => _userManager = userManager;
 
-    public async Task<Result> ChangePassword(Guid userId, PasswordChangeRequest request)
+    public async Task<Result> ChangePasswordAsync(Guid userId, PasswordChangeRequest request)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null)

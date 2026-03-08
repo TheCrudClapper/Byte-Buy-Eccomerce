@@ -19,16 +19,16 @@ public class CompanyController : BaseApiController
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<ActionResult<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct)
-        => HandleResult(await _companyInfoService.GetCompanyInfo());
+    public async Task<ActionResult<CompanyInfoResponse>> GetCompanyInfoAsync(CancellationToken ct)
+        => HandleResult(await _companyInfoService.GetCompanyInfoAsync());
 
     [HttpPost]
     [HasPermission("company-info:create:one")]
-    public async Task<ActionResult<CreatedResponse>> PostCompanyInfo(CompanyInfoAddRequest request)
+    public async Task<ActionResult<CreatedResponse>> PostCompanyInfoAsync(CompanyInfoAddRequest request)
         => HandleResult(await _companyInfoService.AddAsync(request));
 
     [HttpPut]
     [HasPermission("company-info:update:one")]
-    public async Task<ActionResult<UpdatedResponse>> PutCompanyInfo(CompanyInfoUpdateRequest request)
+    public async Task<ActionResult<UpdatedResponse>> PutCompanyInfoAsync(CompanyInfoUpdateRequest request)
         => HandleResult(await _companyInfoService.UpdateAsync(request));
 }

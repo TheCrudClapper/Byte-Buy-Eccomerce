@@ -5,5 +5,5 @@ namespace ByteBuy.Core.ServiceContracts;
 
 public interface ICheckoutService
 {
-    Task<Result<CheckoutResponse>> GetCheckout(Guid userId, CancellationToken ct = default);
+    Task<Result<CheckoutResponse>> GetCheckoutAsync(Guid userId, CancellationToken ct = default);
 }

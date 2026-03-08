@@ -30,12 +30,12 @@ public class ItemsService : IItemsService
     public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
     {
         var validationResult = await _itemHelperService
-            .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
+            .ValidateCategoryAndConditionAsync(request.CategoryId, request.ConditionId);
 
         if (validationResult.IsFailure)
             return Result.Failure<CreatedResponse>(validationResult.Error);
 
-        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.Images);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDraftsAsync(request.Images);
         if (draftsResult.IsFailure)
             return Result.Failure<CreatedResponse>(draftsResult.Error);
 
@@ -69,12 +69,12 @@ public class ItemsService : IItemsService
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         var validationResult = await _itemHelperService
-            .ValidateCategoryAndCondition(request.CategoryId, request.ConditionId);
+            .ValidateCategoryAndConditionAsync(request.CategoryId, request.ConditionId);
 
         if (validationResult.IsFailure)
             return Result.Failure<UpdatedResponse>(validationResult.Error);
 
-        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.NewImages);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDraftsAsync(request.NewImages);
         if (draftsResult.IsFailure)
             return Result.Failure<UpdatedResponse>(draftsResult.Error);
 

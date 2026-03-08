@@ -31,12 +31,12 @@ public class CompanyOrdersController : BaseApiController
     [HttpPut("{orderId:guid}/ship")]
     [HasPermission("company-orders:update:ship")]
     public async Task<ActionResult<UpdatedResponse>> ShipCompanyOrderAsync(Guid orderId)
-        => HandleResult(await _orderService.ShipOrderAsCompany(orderId));
+        => HandleResult(await _orderService.ShipOrderAsCompanyAsync(orderId));
 
     [HttpPut("{orderId:guid}/deliver")]
     [HasPermission("company-orders:update:deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
-       => HandleResult(await _orderService.DeliverOrderAsCompany(orderId));
+       => HandleResult(await _orderService.DeliverOrderAsCompanyAsync(orderId));
 
     [HttpGet("dashboard")]
     [HasPermission("company-orders:read:dashboard")]

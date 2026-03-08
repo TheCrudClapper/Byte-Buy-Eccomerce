@@ -19,10 +19,10 @@ public class UserHomeAddressController : BaseApiController
     [HttpGet]
     [HasPermission("user-home-address:read:one")]
     public async Task<ActionResult<HomeAddressDto>> GetHomeAddressAsync(CancellationToken ct)
-        => HandleResult(await _addressService.GetUserHomeAddressAsync(CurrentUserId, ct));
+        => HandleResult(await _addressService.GetHomeAddressAsync(CurrentUserId, ct));
 
     [HttpPut]
     [HasPermission("user-home-address:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutHomeAddresAsync(HomeAddressDto request)
-       => HandleResult(await _addressService.SetHomeUserAddressAsync(CurrentUserId, request));
+       => HandleResult(await _addressService.SetHomeAddressAsync(CurrentUserId, request));
 }

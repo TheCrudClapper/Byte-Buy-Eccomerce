@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ByteBuy.API.Controllers.Me;
 
 [Resource("user-payments")]
-[ApiController]
 [Route("api/me/payments")]
+[ApiController]
 public class UserPaymentController : BaseApiController
 {
     private readonly IPaymentService _paymentService;
@@ -17,16 +17,16 @@ public class UserPaymentController : BaseApiController
 
     [HttpGet("{paymentId:guid}")]
     [HasPermission("user-payments:read:one")]
-    public async Task<ActionResult<PaymentResponse>> GetPayment(Guid paymentId, CancellationToken ct)
-        => HandleResult(await _paymentService.GetUnpaidPayment(CurrentUserId, paymentId, ct));
+    public async Task<ActionResult<PaymentResponse>> GetPaymentAsync(Guid paymentId, CancellationToken ct)
+        => HandleResult(await _paymentService.GetUnpaidPaymentAsync(CurrentUserId, paymentId, ct));
 
     [HttpPut("{paymentId:guid}/blik")]
     [HasPermission("user-payments:update:blik")]
-    public async Task<ActionResult> PayUsingBlik(Guid paymentId, BlikPaymentRequest request)
-        => HandleResult(await _paymentService.PayViaBlik(CurrentUserId, paymentId, request));
+    public async Task<ActionResult> PayUsingBlikAsync(Guid paymentId, BlikPaymentRequest request)
+        => HandleResult(await _paymentService.PayViaBlikAsync(CurrentUserId, paymentId, request));
 
     [HttpPut("{paymentId:guid}/card")]
     [HasPermission("user-payments:update:card")]
-    public async Task<ActionResult> PayUsingCard(Guid paymentId, CardPaymentRequest request)
-        => HandleResult(await _paymentService.PayViaCard(CurrentUserId, paymentId, request));
+    public async Task<ActionResult> PayUsingCardAsync(Guid paymentId, CardPaymentRequest request)
+        => HandleResult(await _paymentService.PayViaCardAsync(CurrentUserId, paymentId, request));
 }

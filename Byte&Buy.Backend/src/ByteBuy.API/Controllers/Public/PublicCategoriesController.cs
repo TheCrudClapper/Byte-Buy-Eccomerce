@@ -15,6 +15,6 @@ public class PublicCategoriesController : BaseApiController
         => _categoryService = categoryService;
 
     [HttpGet("options")]
-    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     => HandleResult(await _categoryService.GetSelectListAsync(ct));
 }

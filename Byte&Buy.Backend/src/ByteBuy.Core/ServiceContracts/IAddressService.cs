@@ -7,14 +7,14 @@ namespace ByteBuy.Core.ServiceContracts;
 
 public interface IAddressService
 {
-    Task<Result<CreatedResponse>> AddUserShippingAddressAsync(Guid userId, ShippingAddressAddRequest request);
-    Task<Result<UpdatedResponse>> UpdateUserShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request);
+    Task<Result<CreatedResponse>> AddShippingAddressAsync(Guid userId, ShippingAddressAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request);
     Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct = default);
-    Task<Result<UpdatedResponse>> SetHomeUserAddressAsync(Guid userId, HomeAddressDto request);
-    Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct = default);
-    Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid addressId, Guid userId, CancellationToken ct = default);
-    Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct = default);
+    Task<Result<UpdatedResponse>> SetHomeAddressAsync(Guid userId, HomeAddressDto request);
+    Task<Result<HomeAddressDto>> GetHomeAddressAsync(Guid userId, CancellationToken ct = default);
+    Task<Result<ShippingAddressResponse>> GetShippingAddressAsync(Guid addressId, Guid userId, CancellationToken ct = default);
+    Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesListAsync(Guid userId, CancellationToken ct = default);
     Task<Result<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAddressesAsync(Guid userId, CancellationToken ct = default);
-    Task<Result> DeleteUserShippingAddressAsync(Guid addressId, Guid userId);
-    Task<Result<ShippingAddressCheckout>> GetCheckoutAddress(Guid? addressId, Guid userId, CancellationToken ct = default);
+    Task<Result> DeleteShippingAddressAsync(Guid addressId, Guid userId);
+    Task<Result<ShippingAddressCheckout>> GetCheckoutAddressAsync(Guid? addressId, Guid userId, CancellationToken ct = default);
 }

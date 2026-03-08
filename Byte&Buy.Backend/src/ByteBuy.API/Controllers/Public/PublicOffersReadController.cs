@@ -22,14 +22,14 @@ public class PublicOffersReadController : BaseApiController
     }
 
     [HttpGet("rent/details/{id:guid}")]
-    public async Task<ActionResult<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct)
-        => HandleResult(await _offerReadService.GetRentOfferDetails(id, ct));
+    public async Task<ActionResult<RentOfferDetailsResponse>> GetRentOfferDetailsAsync(Guid id, CancellationToken ct)
+        => HandleResult(await _offerReadService.GetRentOfferDetailsAsync(id, ct));
 
     [HttpGet("sale/details/{id:guid}")]
     public async Task<ActionResult<SaleOfferDetailsResponse>> GetSaleOfferDetails(Guid id, CancellationToken ct)
-        => HandleResult(await _offerReadService.GetSaleOfferDetails(id, ct));
+        => HandleResult(await _offerReadService.GetSaleOfferDetailsAsync(id, ct));
 
     [HttpGet]
-    public async Task<ActionResult<PagedList<OfferBrowserItemResponse>>> GetBrowserOffers([FromQuery] OfferBrowserQuery queryParams, CancellationToken ct)
+    public async Task<ActionResult<PagedList<OfferBrowserItemResponse>>> GetBrowserOffersAsync([FromQuery] OfferBrowserQuery queryParams, CancellationToken ct)
         => HandleResult(await _offerReadService.BrowseAsync(queryParams, ct));
 }

@@ -20,5 +20,5 @@ public class CompanyUserHomeAddressesController : BaseApiController
     [HttpPut]
     [HasPermission("company-user-home-addresses:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutHomeAddresAsync(Guid userId, HomeAddressDto request)
-       => HandleResult(await _addressService.SetHomeUserAddressAsync(userId, request));
+       => HandleResult(await _addressService.SetHomeAddressAsync(userId, request));
 }

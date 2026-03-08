@@ -10,5 +10,5 @@ public interface IDeliveryCarrierService
     : IBaseCrudService<Guid, DeliveryCarrierAddRequest, DeliveryCarrierUpdateRequest, DeliveryCarrierResponse>,
       ISelectableService<Guid>
 {
-    Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersList(DeliveryCarriersListQuery queryParams, CancellationToken ct = default);
+    Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersListAsync(DeliveryCarriersListQuery queryParams, CancellationToken ct = default);
 }

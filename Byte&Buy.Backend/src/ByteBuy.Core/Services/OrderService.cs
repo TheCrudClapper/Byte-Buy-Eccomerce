@@ -34,7 +34,7 @@ public class OrderService : IOrderService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<UpdatedResponse>> CancelOrder(Guid userId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> CancelOrderAsync(Guid userId, Guid orderId)
     {
         var order = await _orderRepository.GetUserOrderAsync(userId, orderId);
         if (order is null)
@@ -70,22 +70,22 @@ public class OrderService : IOrderService
         return query.ToResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> ShipOrderAsCompany(Guid orderId)
+    public async Task<Result<UpdatedResponse>> ShipOrderAsCompanyAsync(Guid orderId)
     {
         var companyId = await _companyRepository.GetCompanyId();
         return await ShipInternal(() => _orderRepository.GetSellerOrderAsync(companyId, orderId));
     }
 
-    public async Task<Result<UpdatedResponse>> DeliverOrderAsCompany(Guid orderId)
+    public async Task<Result<UpdatedResponse>> DeliverOrderAsCompanyAsync(Guid orderId)
     {
         var companyId = await _companyRepository.GetCompanyId();
         return await DeliverOrderInternal(() => _orderRepository.GetSellerOrderAsync(companyId, orderId));
     }
 
-    public async Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSeller(Guid sellerId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> DeliverOrderAsPrivateSellerAsync(Guid sellerId, Guid orderId)
         => await DeliverOrderInternal(() => _orderRepository.GetSellerOrderAsync(sellerId, orderId));
 
-    public async Task<Result<UpdatedResponse>> ShipOrderAsPrivateSeller(Guid sellerId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> ShipOrderAsPrivateSellerAsync(Guid sellerId, Guid orderId)
         => await ShipInternal(() => _orderRepository.GetSellerOrderAsync(sellerId, orderId));
 
     public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid userId, Guid orderId, CancellationToken ct = default)
@@ -110,7 +110,7 @@ public class OrderService : IOrderService
             : queryResult.ToOrderDetailResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> ReturnOrder(Guid userId, Guid orderId)
+    public async Task<Result<UpdatedResponse>> ReturnOrderAsync(Guid userId, Guid orderId)
     {
         var order = await _orderRepository.GetUserOrderAsync(userId, orderId);
         if (order is null)

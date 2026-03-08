@@ -27,7 +27,7 @@ public class ItemHelperService : IItemHelperService
         _deliveryRepository = deliveryRepository;
     }
 
-    public async Task<Result> ValidateCategoryAndCondition(Guid categoryId, Guid conditionId)
+    public async Task<Result> ValidateCategoryAndConditionAsync(Guid categoryId, Guid conditionId)
     {
         if (!await _categoryRepository.ExistsByCondition(cat => cat.Id == categoryId))
             return Result.Failure(CategoryErrors.NotFound);
@@ -38,7 +38,7 @@ public class ItemHelperService : IItemHelperService
         return Result.Success();
     }
 
-    public async Task<Result<IReadOnlyList<ImageDraft>>> SaveImageAndCreateDrafts(IEnumerable<ImageAddRequest>? newImages)
+    public async Task<Result<IReadOnlyList<ImageDraft>>> SaveImageAndCreateDraftsAsync(IEnumerable<ImageAddRequest>? newImages)
     {
         if (newImages is null || !newImages.Any())
             return Array.Empty<ImageDraft>();
@@ -57,11 +57,11 @@ public class ItemHelperService : IItemHelperService
         _imageService.RollbackImageSave(paths, ImageTypeEnum.Items);
     }
 
-    public async Task<Result> ValidateCountryConditonDelivery(Guid categoryId,
+    public async Task<Result> ValidateCountryConditonDeliveryAsync(Guid categoryId,
         Guid conditionId, IEnumerable<Guid>? parcelLockerDeliveries,
         IEnumerable<Guid> otherDeliveries)
     {
-        var validation = await ValidateCategoryAndCondition(categoryId, conditionId);
+        var validation = await ValidateCategoryAndConditionAsync(categoryId, conditionId);
 
         if (validation.IsFailure)
             return Result.Failure(validation.Error);

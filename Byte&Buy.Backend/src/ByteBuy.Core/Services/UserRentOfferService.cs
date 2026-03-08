@@ -35,7 +35,7 @@ public class UserRentOfferService : IUserRentOfferService
     }
     public async Task<Result<CreatedResponse>> AddAsync(Guid userId, UserRentOfferAddRequest request)
     {
-        var validation = await _itemHelperService.ValidateCountryConditonDelivery(
+        var validation = await _itemHelperService.ValidateCountryConditonDeliveryAsync(
            request.CategoryId,
            request.ConditionId,
            request.ParcelLockerDeliveries,
@@ -50,7 +50,7 @@ public class UserRentOfferService : IUserRentOfferService
         if (homeAddress is null)
             return Result.Failure<CreatedResponse>(PortalUserErrors.HomeAddressNotSet);
 
-        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.Images);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDraftsAsync(request.Images);
         if (draftsResult.IsFailure)
             return Result.Failure<CreatedResponse>(draftsResult.Error);
 
@@ -140,7 +140,7 @@ public class UserRentOfferService : IUserRentOfferService
         if (item is null)
             return Result.Failure<UpdatedResponse>(OfferErrors.ItemNotFound);
 
-        var validation = await _itemHelperService.ValidateCountryConditonDelivery(
+        var validation = await _itemHelperService.ValidateCountryConditonDeliveryAsync(
             request.CategoryId,
             request.ConditionId,
             request.ParcelLockerDeliveries,
@@ -149,7 +149,7 @@ public class UserRentOfferService : IUserRentOfferService
         if (validation.IsFailure)
             return Result.Failure<UpdatedResponse>(validation.Error);
 
-        var draftsResult = await _itemHelperService.SaveImageAndCreateDrafts(request.NewImages);
+        var draftsResult = await _itemHelperService.SaveImageAndCreateDraftsAsync(request.NewImages);
         if (draftsResult.IsFailure)
             return Result.Failure<UpdatedResponse>(draftsResult.Error);
 

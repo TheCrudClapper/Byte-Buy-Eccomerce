@@ -59,7 +59,7 @@ public class StatisticsService : IStatisticsService
         };
     }
 
-    public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerType(CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerTypeAsync(CancellationToken ct)
     {
         var gmvs = await _statisticsRepo.GetGMVBySellerTypeAsync(ct);
 

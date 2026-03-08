@@ -33,7 +33,7 @@ public class OfferReadService : IOfferReadService
         return query.ToResponse();
     }
 
-    public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetails(Guid id, CancellationToken ct = default)
+    public async Task<Result<RentOfferDetailsResponse>> GetRentOfferDetailsAsync(Guid id, CancellationToken ct = default)
     {
         var spec = new RentOfferDetailsResponseSpec(id);
         var detailsDto = await _rentOfferRepository.GetBySpecAsync(spec, ct);
@@ -42,7 +42,7 @@ public class OfferReadService : IOfferReadService
             : detailsDto;
     }
 
-    public async Task<Result<SaleOfferDetailsResponse>> GetSaleOfferDetails(Guid id, CancellationToken ct = default)
+    public async Task<Result<SaleOfferDetailsResponse>> GetSaleOfferDetailsAsync(Guid id, CancellationToken ct = default)
     {
         var spec = new SaleOfferDetailsResponseSpec(id);
         var detailsDto = await _saleOfferRepository.GetBySpecAsync(spec, ct);
@@ -60,7 +60,7 @@ public class OfferReadService : IOfferReadService
             .ToList();
     }
 
-    public async Task<Result<PagedList<UserPanelOfferResponse>>> GetUserPanelOffers(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
+    public async Task<Result<PagedList<UserPanelOfferResponse>>> GetUserPanelOffersAsync(UserOffersQuery queryParams, Guid userId, CancellationToken ct = default)
     {
         var query = await _offerRepository.GetUserOffersAsync(queryParams, userId, ct);
         return query.ToResponse();

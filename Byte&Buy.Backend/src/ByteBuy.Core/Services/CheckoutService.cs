@@ -30,7 +30,7 @@ public class CheckoutService : ICheckoutService
         _deliveryRepository = deliveryRepository;
     }
 
-    public async Task<Result<CheckoutResponse>> GetCheckout(Guid userId, CancellationToken ct)
+    public async Task<Result<CheckoutResponse>> GetCheckoutAsync(Guid userId, CancellationToken ct)
     {
         // Gathering data
         var spec = new UserBasicInfoResponseSpec(userId);

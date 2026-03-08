@@ -19,6 +19,6 @@ public class CompanyPermissionsController : BaseApiController
 
     [HttpGet("options")]
     [HasPermission("company-permissions:read:options")]
-    public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _permissionService.GetSelectListAsync(ct));
 }

@@ -23,7 +23,7 @@ public class PaymentService : IPaymentService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<PaymentResponse>> GetUnpaidPayment(Guid userId, Guid paymentId, CancellationToken ct)
+    public async Task<Result<PaymentResponse>> GetUnpaidPaymentAsync(Guid userId, Guid paymentId, CancellationToken ct)
     {
         var dto = await _paymentRepository.GetUnpaidUserPayment(userId, paymentId, ct);
         return dto is null
@@ -31,7 +31,7 @@ public class PaymentService : IPaymentService
             : dto;
     }
 
-    public async Task<Result> PayViaBlik(Guid userId, Guid paymentId, BlikPaymentRequest request)
+    public async Task<Result> PayViaBlikAsync(Guid userId, Guid paymentId, BlikPaymentRequest request)
     {
         var payment = await _paymentRepository.GetPaymentByUserId(userId, paymentId);
         if (payment is null)
@@ -57,7 +57,7 @@ public class PaymentService : IPaymentService
         return Result.Success();
     }
 
-    public async Task<Result> PayViaCard(Guid userId, Guid paymentId, CardPaymentRequest request)
+    public async Task<Result> PayViaCardAsync(Guid userId, Guid paymentId, CardPaymentRequest request)
     {
         var payment = await _paymentRepository.GetByIdAsync(paymentId);
         if (payment is null)

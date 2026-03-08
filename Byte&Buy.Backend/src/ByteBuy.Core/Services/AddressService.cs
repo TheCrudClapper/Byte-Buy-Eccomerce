@@ -32,7 +32,7 @@ public class AddressService : IAddressService
         _countryRepository = countryRepository;
     }
 
-    public async Task<Result<CreatedResponse>> AddUserShippingAddressAsync(Guid userId, ShippingAddressAddRequest request)
+    public async Task<Result<CreatedResponse>> AddShippingAddressAsync(Guid userId, ShippingAddressAddRequest request)
     {
         var spec = new PortalUserAggregateSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
@@ -67,7 +67,7 @@ public class AddressService : IAddressService
         return address.ToCreatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> UpdateUserShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request)
     {
         var spec = new PortalUserAggregateSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
@@ -102,7 +102,7 @@ public class AddressService : IAddressService
         return updated.ToUpdatedResponse();
     }
 
-    public async Task<Result<UpdatedResponse>> SetHomeUserAddressAsync(Guid userId, HomeAddressDto request)
+    public async Task<Result<UpdatedResponse>> SetHomeAddressAsync(Guid userId, HomeAddressDto request)
     {
         var user = await _portalUserRepository.GetByIdAsync(userId);
         if (user is null)
@@ -126,7 +126,7 @@ public class AddressService : IAddressService
         return user.ToUpdatedResponse();
     }
 
-    public async Task<Result<HomeAddressDto>> GetUserHomeAddressAsync(Guid userId, CancellationToken ct)
+    public async Task<Result<HomeAddressDto>> GetHomeAddressAsync(Guid userId, CancellationToken ct)
     {
         var spec = new UserHomeAddressSpec(userId);
         var address = await _portalUserRepository.GetBySpecAsync(spec);
@@ -136,7 +136,7 @@ public class AddressService : IAddressService
             : address.ToHomeAddressDto();
     }
 
-    public async Task<Result<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct)
+    public async Task<Result<ShippingAddressResponse>> GetShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct)
     {
         var addressDto = await _addressReadRepository.GetBySpecAsync(new UserAndShippingAddressResponseSpec(userId, addressId), ct);
         if (addressDto is null)
@@ -145,7 +145,7 @@ public class AddressService : IAddressService
         return addressDto;
     }
 
-    public async Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesList(Guid userId, CancellationToken ct)
+    public async Task<Result<IReadOnlyCollection<ShippingAddressListResponse>>> GetShippingAddressesListAsync(Guid userId, CancellationToken ct)
     {
         var spec = new UserShippingAddressListResponseSpec(userId);
         var addressDtoList = await _addressReadRepository.GetListBySpecAsync(spec);
@@ -168,7 +168,7 @@ public class AddressService : IAddressService
         => await _addressReadRepository.GetListBySpecAsync(new UserShippingAddressResponseSpec(userId), ct);
 
 
-    public async Task<Result> DeleteUserShippingAddressAsync(Guid addressId, Guid userId)
+    public async Task<Result> DeleteShippingAddressAsync(Guid addressId, Guid userId)
     {
         var spec = new PortalUserAggregateSpec(userId);
         var user = await _portalUserRepository.GetBySpecAsync(spec);
@@ -185,7 +185,7 @@ public class AddressService : IAddressService
         return Result.Success();
     }
 
-    public async Task<Result<ShippingAddressCheckout>> GetCheckoutAddress(Guid? addressId, Guid userId, CancellationToken ct)
+    public async Task<Result<ShippingAddressCheckout>> GetCheckoutAddressAsync(Guid? addressId, Guid userId, CancellationToken ct)
     {
         var spec = new UserShippingAddressCheckoutSpec(userId, addressId);
         var address = await _addressReadRepository.GetBySpecAsync(spec, ct);

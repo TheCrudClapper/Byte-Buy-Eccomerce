@@ -19,6 +19,6 @@ public class CompanyCountriesController : CrudControllerBase<Guid, CountryAddReq
 
     [HttpGet("list")]
     [HasPermission("company-countries:read:many")]
-    public async Task<ActionResult<PagedList<CountryResponse>>> GetCountriesList([FromQuery] CountryListQuery queryParams, CancellationToken ct)
+    public async Task<ActionResult<PagedList<CountryResponse>>> GetCountriesListAsync([FromQuery] CountryListQuery queryParams, CancellationToken ct)
         => HandleResult(await _countryService.GetCountriesListAsync(queryParams, ct));
 }

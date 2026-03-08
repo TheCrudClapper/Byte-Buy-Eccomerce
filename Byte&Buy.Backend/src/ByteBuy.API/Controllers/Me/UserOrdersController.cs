@@ -45,20 +45,20 @@ public class UserOrdersController : BaseApiController
     [HttpPut("{orderId:guid}/cancel")]
     [HasPermission("user-orders:update:cancel")]
     public async Task<ActionResult<UpdatedResponse>> CancelOrderAsync(Guid orderId)
-        => HandleResult(await _orderService.CancelOrder(CurrentUserId, orderId));
+        => HandleResult(await _orderService.CancelOrderAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/return")]
     [HasPermission("user-orders:update:return")]
     public async Task<ActionResult<UpdatedResponse>> ReturnOrderAsync(Guid orderId)
-        => HandleResult(await _orderService.ReturnOrder(CurrentUserId, orderId));
+        => HandleResult(await _orderService.ReturnOrderAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/ship")]
     [HasPermission("user-orders:update:ship")]
     public async Task<ActionResult<UpdatedResponse>> ShipOrderAsync(Guid orderId)
-        => HandleResult(await _orderService.ShipOrderAsPrivateSeller(CurrentUserId, orderId));
+        => HandleResult(await _orderService.ShipOrderAsPrivateSellerAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/deliver")]
     [HasPermission("user-orders:update:deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
-       => HandleResult(await _orderService.DeliverOrderAsPrivateSeller(CurrentUserId, orderId));
+       => HandleResult(await _orderService.DeliverOrderAsPrivateSellerAsync(CurrentUserId, orderId));
 }

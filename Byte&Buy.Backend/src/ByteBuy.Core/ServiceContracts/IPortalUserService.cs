@@ -13,6 +13,6 @@ public interface IPortalUserService
 {
     Task<Result<PagedList<PortalUserListResponse>>> GetPortalUsersListAsync(
         PortalUserListQuery queryParams, CancellationToken ct = default);
-    Task<Result<UserBasicInfoResponse>> GetBasicUserInfoAsync(Guid userId, CancellationToken ct = default);
-    Task<Result<UpdatedResponse>> PutUserBasicInfo(Guid userId, UserBasicInfoUpdateRequest request);
+    Task<Result<UserBasicInfoResponse>> GetBasicInfoAsync(Guid userId, CancellationToken ct = default);
+    Task<Result<UpdatedResponse>> UpdateBasicInfoAsync(Guid userId, UserBasicInfoUpdateRequest request);
 }

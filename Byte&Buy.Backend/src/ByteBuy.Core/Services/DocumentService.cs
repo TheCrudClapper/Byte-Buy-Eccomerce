@@ -17,7 +17,7 @@ public class DocumentService : IDocumentService
         _pdfGenerator = pdfGenerator;
     }
 
-    public async Task<Result<byte[]>> GenerateOrderDetailsPdf(Guid orderId, CancellationToken ct)
+    public async Task<Result<byte[]>> GenerateOrderDetailsPdfAsync(Guid orderId, CancellationToken ct)
     {
         var pdfData = await _documentRepository.GetOrderDetails(orderId, ct);
         if (pdfData is null)

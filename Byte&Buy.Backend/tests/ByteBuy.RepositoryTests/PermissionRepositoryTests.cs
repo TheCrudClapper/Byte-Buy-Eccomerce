@@ -37,7 +37,7 @@ public class PermissionRepositoryTests
         //var userResult = PortalUser.Create("Jan", "Kowalski", "test123@gmail.com");
         //var user = userResult.Value;
 
-        //await _context.Users.AddUserShippingAddressAsync(user);
+        //await _context.Users.AddShippingAddressAsync(user);
         //await _context.SaveChangesAsync();
 
     }

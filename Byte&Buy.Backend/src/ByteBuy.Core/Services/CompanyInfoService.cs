@@ -53,7 +53,7 @@ public class CompanyInfoService : ICompanyInfoService
         return createResult.Value.ToCreatedResponse();
     }
 
-    public async Task<Result<CompanyInfoResponse>> GetCompanyInfo(CancellationToken ct)
+    public async Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync(CancellationToken ct)
     {
         var companyInfo = await _companyInfoRepository.GetAsync(ct);
         return companyInfo is null

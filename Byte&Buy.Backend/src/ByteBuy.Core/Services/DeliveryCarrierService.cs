@@ -105,7 +105,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
             .ToList();
     }
 
-    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersList(DeliveryCarriersListQuery queryParams, CancellationToken ct = default)
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersListAsync(DeliveryCarriersListQuery queryParams, CancellationToken ct = default)
     {
         return await _deliveryCarrierRepository.GetDeliveryCarrierListAsync(queryParams, ct);
     }

@@ -17,14 +17,14 @@ public class PublicDeliveryController : BaseApiController
     }
 
     [HttpGet("options")]
-    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList(CancellationToken ct)
+    public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _deliveryService.GetSelectListAsync(ct));
 
     [HttpGet("offer/{offerId:guid}")]
-    public async Task<ActionResult<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOffer(Guid offerId, CancellationToken ct = default)
+    public async Task<ActionResult<IReadOnlyCollection<DeliveryListResponse>>> GetDeliveriesListPerOfferAsync(Guid offerId, CancellationToken ct = default)
         => HandleResult(await _deliveryService.GetDeliveriesListPerOffer(offerId, ct));
 
     [HttpGet("available")]
-    public async Task<ActionResult<DeliveryOptionsResponse>> GetAvailableDeliveries(CancellationToken ct)
+    public async Task<ActionResult<DeliveryOptionsResponse>> GetAvailableDeliveriesAsync(CancellationToken ct)
         => HandleResult(await _deliveryService.GetAvaliableDeliveriesAsync(ct));
 }
