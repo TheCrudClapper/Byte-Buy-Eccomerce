@@ -13,30 +13,30 @@ namespace ByteBuy.Services.Services;
 public class EmployeeService(ICompanyEmployeeHttpClient employeeHttpClient, IUserPasswordHttpClient userHttpClient)
     : IEmployeeService
 {
-    public async Task<Result<CreatedResponse>> Add(EmployeeAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(EmployeeAddRequest request)
         => await employeeHttpClient.PostEmployeeAsync(request);
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, EmployeeUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, EmployeeUpdateRequest request)
         => await employeeHttpClient.PutEmployeeAsync(id, request);
 
-    public async Task<Result<IEnumerable<EmployeeResponse>>> GetAll()
+    public async Task<Result<IReadOnlyCollection<EmployeeResponse>>> GetListAsync()
         => await employeeHttpClient.GetAllAsync();
 
-    public async Task<Result<EmployeeResponse>> GetById(Guid id)
+    public async Task<Result<EmployeeResponse>> GetByIdAsync(Guid id)
         => await employeeHttpClient.GetByIdAsync(id);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await employeeHttpClient.DeleteByIdAsync(id);
 
-    public async Task<Result<PagedList<EmployeeListResponse>>> GetList(EmployeeListQuery query)
+    public async Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query)
         => await employeeHttpClient.GetListAsync(query);
 
-    public async Task<Result<EmployeeProfileResponse>> GetSelf()
-        => await employeeHttpClient.GetEmployeeProfileData();
+    public async Task<Result<EmployeeProfileResponse>> GetCurrentEmployeeDetailsAsync()
+        => await employeeHttpClient.GetEmployeeProfileDataAsync();
 
-    public async Task<Result<UpdatedResponse>> UpdateAddress(EmployeeAddressUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateCurrentEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await employeeHttpClient.PutEmployeeAddressAsync(request);
 
-    public async Task<Result> ChangePassword(PasswordChangeRequest request)
+    public async Task<Result> ChangePasswordAsync(PasswordChangeRequest request)
         => await userHttpClient.PutPasswordAsync(request);
 }

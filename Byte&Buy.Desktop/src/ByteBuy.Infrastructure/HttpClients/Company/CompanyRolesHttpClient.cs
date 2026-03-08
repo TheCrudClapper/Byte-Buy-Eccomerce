@@ -21,8 +21,8 @@ public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpoints
     public async Task<Result<CreatedResponse>> PostAsync(RoleAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListItemsAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");
 
     public Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query)
     {

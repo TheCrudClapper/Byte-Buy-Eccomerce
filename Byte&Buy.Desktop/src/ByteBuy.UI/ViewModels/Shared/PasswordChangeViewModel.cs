@@ -42,7 +42,7 @@ public partial class PasswordChangeViewModel(IEmployeeService employeeService)
             return;
 
         var request = new PasswordChangeRequest(NewPassword, CurrentPassword, ConfirmPassword);
-        var response = await employeeService.ChangePassword(request);
+        var response = await employeeService.ChangePasswordAsync(request);
         if (!response.Success)
             Error = response?.Error?.Description ?? "Error occured";
     }

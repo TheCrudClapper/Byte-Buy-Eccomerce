@@ -8,8 +8,8 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface ISaleOfferService : IBaseService
 {
-    Task<Result<CreatedResponse>> Add(SaleOfferAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, SaleOfferUpdateRequest request);
-    Task<Result<SaleOfferResponse>> GetById(Guid id);
-    Task<Result<PagedList<SaleOfferListResponse>>> GetList(SaleOfferListQuery query);
+    Task<Result<CreatedResponse>> AddAsync(SaleOfferAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request);
+    Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query);
 }

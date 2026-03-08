@@ -28,8 +28,8 @@ public class CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IOptions<A
         return await GetAsync<PagedList<DeliveryCarrierResponse>>(url);
     }
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListAsync()
-        => await GetAsync<IEnumerable<SelectListItemResponse<Guid>>>($"{resource}/options");
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");
 
     public async Task<Result<CreatedResponse>> PostCarrierAsync(DeliveryCarrierAddRequest request)
         => await PostAsync<CreatedResponse>(resource, request);

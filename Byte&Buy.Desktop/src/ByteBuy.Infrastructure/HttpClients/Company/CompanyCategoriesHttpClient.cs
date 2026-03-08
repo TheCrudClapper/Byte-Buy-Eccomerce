@@ -15,7 +15,6 @@ public class CompanyCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
     : HttpClientBase(httpClient, options), ICompanyCategoryHttpClient
 {
     private readonly string resource = options.Value.CompanyCategories;
-    private readonly string optionsResource = options.Value.CategoriesOptions;
 
     public async Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request)
        => await PostAsync<CreatedResponse>($"{resource}", request);

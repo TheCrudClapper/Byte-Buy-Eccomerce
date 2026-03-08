@@ -28,7 +28,7 @@ public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deli
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await deliveryCarrierService.GetById(id);
+        var result = await deliveryCarrierService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -42,7 +42,7 @@ public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deli
     protected override async Task<bool> AddItem()
     {
         var request = new DeliveryCarrierAddRequest(Name, Code);
-        var response = await deliveryCarrierService.Add(request);
+        var response = await deliveryCarrierService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -57,7 +57,7 @@ public partial class DeliveryCarrierDialogViewModel(IDeliveryCarrierService deli
             return false;
 
         var request = new DeliveryCarrierUpdateRequest(Name, Code);
-        var response = await deliveryCarrierService.Update(EditingItemId.Value, request);
+        var response = await deliveryCarrierService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

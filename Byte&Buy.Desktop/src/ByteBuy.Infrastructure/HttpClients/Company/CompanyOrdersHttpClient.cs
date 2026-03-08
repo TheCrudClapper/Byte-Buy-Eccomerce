@@ -21,7 +21,6 @@ public class CompanyOrdersHttpClient(HttpClient httpClient, IOptions<ApiEndpoint
         var url = QueryStringHelper.ToQueryString($"{resource}", query);
         return GetAsync<PagedList<CompanyOrderListResponse>>(url);
     }
-
     public async Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId)
         => await GetAsync<OrderDetailsResponse>($"{resource}/details/{orderId}");
 

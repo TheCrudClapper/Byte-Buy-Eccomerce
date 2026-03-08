@@ -93,6 +93,19 @@ public abstract class HttpClientBase
             return Result<T>.Fail(ApiErrors.RequestFailed);
         }
     }
+    protected async Task<Result<T>> PostAsyncAsync<T>(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await Client.PostAsync(resource, serialized);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
     protected async Task<Result<T>> PutAsync<T>(string resource, HttpContent? content)
     {
         try
@@ -121,6 +134,46 @@ public abstract class HttpClientBase
     }
 
     protected async Task<Result<T>> PutAsync<T>(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await Client.PutAsync(resource, serialized);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+    protected async Task<Result<T>> PutAsyncAsync<T>(string resource, HttpContent? content)
+    {
+        try
+        {
+            var response = await Client.PutAsync(resource, content);
+            return await HandleResponseAsync<T>(response);
+        }
+        catch (Exception)
+        {
+            return Result<T>.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result> PutAsyncAsync(string resource, object payload)
+    {
+        try
+        {
+            var serialized = CreateJsonContent(payload);
+            var response = await Client.PutAsync(resource, serialized);
+            return await HandleResponseAsync(response);
+        }
+        catch (Exception)
+        {
+            return Result.Fail(ApiErrors.RequestFailed);
+        }
+    }
+
+    protected async Task<Result<T>> PutAsyncAsync<T>(string resource, object payload)
     {
         try
         {

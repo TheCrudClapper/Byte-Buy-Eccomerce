@@ -56,7 +56,7 @@ public partial class RentalsPageViewModel(
             RentalEndPeriod = RentalEndPeriod,
         };
 
-        var result = await Service.GetCompanyRentalsList(query);
+        var result = await Service.GetCompanyRentalsListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -93,7 +93,7 @@ public partial class RentalsPageViewModel(
         throw new System.NotImplementedException();
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         ItemName = null;
         BorrowerEmail = null;

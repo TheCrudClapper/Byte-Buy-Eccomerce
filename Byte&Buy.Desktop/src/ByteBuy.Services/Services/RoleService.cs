@@ -10,21 +10,21 @@ namespace ByteBuy.Services.Services;
 
 public class RoleService(ICompanyRoleHttpClient roleClient) : IRoleService
 {
-    public async Task<Result<CreatedResponse>> Add(RoleAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(RoleAddRequest request)
         => await roleClient.PostAsync(request);
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RoleUpdateRequest request)
         => await roleClient.PutAsync(id, request);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
-        => await roleClient.GetSelectListItemsAsync();
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
+        => await roleClient.GetSelectListAsync();
 
-    public async Task<Result<RoleResponse>> GetById(Guid id)
+    public async Task<Result<RoleResponse>> GetByIdAsync(Guid id)
         => await roleClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<RoleListResponse>>> GetList(RoleListQuery query)
+    public async Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query)
         => await roleClient.GetListAsync(query);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await roleClient.DeleteByIdAsync(id);
 }

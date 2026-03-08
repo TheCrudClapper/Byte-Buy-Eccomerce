@@ -71,7 +71,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         CountryName = null;
         Code = null;

@@ -8,9 +8,9 @@ namespace ByteBuy.Services.Services;
 
 public class CompanyInfoService(ICompanyInfoHttpClient companyInfoClient) : ICompanyInfoService
 {
-    public Task<Result<CompanyInfoResponse>> GetCompanyInfo()
+    public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()
         => companyInfoClient.GetCompanyInfoAsync();
 
-    public Task<Result<UpdatedResponse>> Update(CompanyInfoUpdateRequest request)
+    public Task<Result<UpdatedResponse>> UpdateAsync(CompanyInfoUpdateRequest request)
         => companyInfoClient.PutCompanyInfoAsync(request);
 }

@@ -2,5 +2,5 @@
 
 public interface IDocumentService
 {
-    Task<byte[]> DownloadOrderDetailsRaport(Guid orderId);
+    Task<byte[]> DownloadOrderDetailsRaportAsync(Guid orderId);
 }

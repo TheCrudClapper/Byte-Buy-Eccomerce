@@ -114,13 +114,13 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         _portalUserService = userService;
     }
 
-    protected override async Task UpdateItem()
+    protected override async Task UpdateAsync()
     {
         if (EditingItemId is null)
             return;
 
         var request = PortalUserMappings.MapToUpdateRequest(this);
-        var result = await _portalUserService.Update(EditingItemId.Value, request);
+        var result = await _portalUserService.UpdateAsync(EditingItemId.Value, request);
         HandleResult(result, "Successfully updated user!");
     }
 
@@ -128,7 +128,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     {
         var listBoxTask = PermissionListBox.InitializeAsync();
         var countriesTask = _countryService.GetSelectListAsync();
-        var roleTask = _roleService.GetSelectList();
+        var roleTask = _roleService.GetSelectListAsync();
 
         await Task.WhenAll(listBoxTask, countriesTask, roleTask);
 
@@ -140,7 +140,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         Roles = new ObservableCollection<SelectListItemResponse<Guid>>(roles.Success ? roles.Value : []);
     }
 
-    protected override async Task AddItem()
+    protected override async Task AddAsync()
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
@@ -149,7 +149,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         }
 
         var request = PortalUserMappings.MapToAddRequest(this);
-        var result = await _portalUserService.Add(request);
+        var result = await _portalUserService.AddAsync(request);
         HandleResult(result, "Successfullt added new user!");
     }
 
@@ -171,11 +171,11 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     }
 
     [RelayCommand]
-    private async Task SaveAddress()
+    private async Task SaveAddressAsync()
     {
         ValidateAllProperties();
         var address = PortalUserMappings.MapToHomeAddress(this);
-        var result = await _addressService.SetHomeAddress(EditingItemId.GetValueOrDefault(), address);
+        var result = await _addressService.SetHomeAddressAsync(EditingItemId.GetValueOrDefault(), address);
         HandleResult(result, "Successfully assigned address for user");
     }
 
@@ -185,7 +185,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         IsEditMode = true;
         await InitializeAsync();
 
-        var result = await _portalUserService.GetById(itemId);
+        var result = await _portalUserService.GetByIdAsync(itemId);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;

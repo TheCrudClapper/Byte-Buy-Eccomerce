@@ -26,7 +26,7 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await categoryService.GetById(id);
+        var result = await categoryService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -43,7 +43,7 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
             return false;
 
         var request = new CategoryUpdateRequest(Name, Description);
-        var response = await categoryService.Update(EditingItemId.Value, request);
+        var response = await categoryService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -55,7 +55,7 @@ public partial class CategoryDialogViewModel(ICategoryService categoryService)
     protected override async Task<bool> AddItem()
     {
         var request = new CategoryAddRequest(Name, Description);
-        var response = await categoryService.Add(request);
+        var response = await categoryService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;

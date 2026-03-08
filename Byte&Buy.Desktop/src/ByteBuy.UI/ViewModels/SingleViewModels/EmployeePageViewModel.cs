@@ -116,7 +116,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         var permissionListBoxTask = PermissionListBox.InitializeAsync();
         var countriesTask = _countryService.GetSelectListAsync();
-        var roleTask = _roleService.GetSelectList();
+        var roleTask = _roleService.GetSelectListAsync();
 
         await Task.WhenAll(permissionListBoxTask, roleTask, countriesTask);
 
@@ -148,7 +148,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         IsEditMode = true;
         EditingItemId = itemId;
 
-        var result = await _employeeService.GetById(itemId);
+        var result = await _employeeService.GetByIdAsync(itemId);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -157,7 +157,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         EmployeeMappings.MapFromResponse(this, value);
     }
 
-    protected override async Task AddItem()
+    protected override async Task AddAsync()
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
@@ -165,17 +165,17 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
             return;
         }
         var request = EmployeeMappings.MapToAddRequest(this);
-        var result = await _employeeService.Add(request);
+        var result = await _employeeService.AddAsync(request);
         HandleResult(result, "Successfully added employee!");
     }
 
-    protected override async Task UpdateItem()
+    protected override async Task UpdateAsync()
     {
         if (EditingItemId is null)
             return;
 
         var request = EmployeeMappings.MapToUpdateRequest(this);
-        var result = await _employeeService.Update(EditingItemId.Value, request);
+        var result = await _employeeService.UpdateAsync(EditingItemId.Value, request);
         HandleResult(result, "Employee updated successfully");
     }
 

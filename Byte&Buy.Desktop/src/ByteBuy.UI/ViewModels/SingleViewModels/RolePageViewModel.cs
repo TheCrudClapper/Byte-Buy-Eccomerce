@@ -43,7 +43,7 @@ public partial class RolePageViewModel : ViewModelSingle
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await _roleService.GetById(id);
+        var result = await _roleService.GetByIdAsync(id);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -54,22 +54,22 @@ public partial class RolePageViewModel : ViewModelSingle
         PermissionListBox.SetSelectedPermissions(permissionIds);
     }
 
-    protected override async Task UpdateItem()
+    protected override async Task UpdateAsync()
     {
         if (EditingItemId is null)
             return;
 
         var request = new RoleUpdateRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
-        var result = await _roleService.Update(EditingItemId.Value, request);
+        var result = await _roleService.UpdateAsync(EditingItemId.Value, request);
         HandleResult(result, "Successfully updated role!");
     }
 
-    protected override async Task AddItem()
+    protected override async Task AddAsync()
     {
         var request = new RoleAddRequest(RoleName, PermissionListBox.ExtractSelectedPermissions());
 
-        var result = await _roleService.Add(request);
+        var result = await _roleService.AddAsync(request);
         HandleResult(result, "Successfully added new role!");
     }
 

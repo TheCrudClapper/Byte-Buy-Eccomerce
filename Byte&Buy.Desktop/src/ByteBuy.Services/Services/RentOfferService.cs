@@ -10,18 +10,18 @@ namespace ByteBuy.Services.Services;
 
 public class RentOfferService(ICompanyRentOfferHttpClient httpClient) : IRentOfferService
 {
-    public async Task<Result<CreatedResponse>> Add(RentOfferAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(RentOfferAddRequest request)
         => await httpClient.PostRentOfferAsync(request);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteByIdAsync(id);
 
-    public async Task<Result<RentOfferResponse>> GetById(Guid id)
+    public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<RentOfferListResponse>>> GetList(RentOfferListQuery query)
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public Task<Result<UpdatedResponse>> Update(Guid id, RentOfferUpdateRequest request)
+    public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
         => httpClient.PutRentOfferAsync(id, request);
 }

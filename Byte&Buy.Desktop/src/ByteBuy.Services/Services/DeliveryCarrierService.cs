@@ -8,23 +8,24 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class DeliveryCarrierService(ICompanyDeliveryCarrierHttpClient httpClient) : IDeliveryCarrierService
+public class DeliveryCarrierService(ICompanyDeliveryCarrierHttpClient httpClient) 
+    : IDeliveryCarrierService
 {
-    public async Task<Result<CreatedResponse>> Add(DeliveryCarrierAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(DeliveryCarrierAddRequest request)
         => await httpClient.PostCarrierAsync(request);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteAsync(id);
 
-    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetList(DeliveryCarriersListQuery query)
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public async Task<Result<DeliveryCarrierResponse>> GetById(Guid id)
+    public async Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await httpClient.GetSelectListAsync();
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, DeliveryCarrierUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryCarrierUpdateRequest request)
         => await httpClient.PutCarrierAsync(id, request);
 }

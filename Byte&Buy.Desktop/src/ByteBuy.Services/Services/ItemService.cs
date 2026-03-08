@@ -11,7 +11,7 @@ namespace ByteBuy.Services.Services;
 
 public class ItemService(ICompanyItemHttpClient httpClient) : IItemService
 {
-    public async Task<Result<CreatedResponse>> Add(ItemAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(ItemAddRequest request)
     {
         using var content = new MultipartFormDataContent();
 
@@ -33,19 +33,19 @@ public class ItemService(ICompanyItemHttpClient httpClient) : IItemService
             content.Add(fileContent, $"Images[{i}].Image", img.FileName);
         }
 
-        return await httpClient.PostCompanyItem(content);
+        return await httpClient.PostCompanyItemAsync(content);
     }
 
-    public async Task<Result> DeleteById(Guid id)
-        => await httpClient.DeleteCompanyItem(id);
+    public async Task<Result> DeleteByIdAsync(Guid id)
+        => await httpClient.DeleteCompanyItemAsync(id);
 
-    public async Task<Result<ItemResponse>> GetById(Guid id)
+    public async Task<Result<ItemResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<ItemListResponse>>> GetList(ItemListQuery query)
+    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, ItemUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ItemUpdateRequest request)
     {
         using var content = new MultipartFormDataContent();
 
@@ -77,6 +77,6 @@ public class ItemService(ICompanyItemHttpClient httpClient) : IItemService
             content.Add(new StringContent(img.IsDeleted.ToString()), $"ExistingImages[{i}].IsDeleted");
         }
 
-        return await httpClient.PutCompanyItem(id, content);
+        return await httpClient.PutCompanyItemAsync(id, content);
     }
 }

@@ -5,7 +5,7 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IStatisticsService
 {
-    Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis();
-    Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerType();
-    Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonths();
+    Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync();
+    Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerTypeAsync();
+    Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonthsAsync();
 }

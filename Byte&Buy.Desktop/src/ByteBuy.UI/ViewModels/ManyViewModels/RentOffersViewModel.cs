@@ -77,7 +77,7 @@ public partial class RentOffersViewModel(
             QuantityTo = QuantityTo,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -93,7 +93,7 @@ public partial class RentOffersViewModel(
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         Name = null;
         PriceFrom = null;

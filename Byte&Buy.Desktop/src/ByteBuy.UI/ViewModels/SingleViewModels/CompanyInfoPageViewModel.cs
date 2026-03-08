@@ -112,7 +112,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
 
     public async Task LoadData()
     {
-        var response = await _companyInfoService.GetCompanyInfo();
+        var response = await _companyInfoService.GetCompanyInfoAsync();
         var (ok, value) = HandleResult(response);
         if (!ok || value is null)
             return;
@@ -129,7 +129,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
             return;
 
         var request = CompanyInfoMappings.MapToUpdateRequest(this);
-        var result = await _companyInfoService.Update(request);
+        var result = await _companyInfoService.UpdateAsync(request);
         HandleResult(result, "Successfully updated company details !");
     }
 }

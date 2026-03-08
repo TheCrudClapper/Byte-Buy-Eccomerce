@@ -10,7 +10,7 @@ public interface ICompanyRoleHttpClient
 {
     Task<Result<UpdatedResponse>> PutAsync(Guid id, RoleUpdateRequest request);
     Task<Result<CreatedResponse>> PostAsync(RoleAddRequest request);
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectListItemsAsync();
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
     Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query);
     Task<Result> DeleteByIdAsync(Guid id);
     Task<Result<RoleResponse>> GetByIdAsync(Guid id);

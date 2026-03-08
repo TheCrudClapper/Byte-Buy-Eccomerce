@@ -16,14 +16,14 @@ public class CompanyEmployeeHttpClient(HttpClient client, IOptions<ApiEndpointsO
 {
     private readonly string resource = options.Value.CompanyEmployees;
 
-    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileData()
+    public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileDataAsync()
         => await GetAsync<EmployeeProfileResponse>($"me/employee");
 
     public async Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/address", request);
 
-    public Task<Result<IEnumerable<EmployeeResponse>>> GetAllAsync()
-        => GetAsync<IEnumerable<EmployeeResponse>>($"{resource}");
+    public Task<Result<IReadOnlyCollection<EmployeeResponse>>> GetAllAsync()
+        => GetAsync<IReadOnlyCollection<EmployeeResponse>>($"{resource}");
 
     public async Task<Result<CreatedResponse>> PostEmployeeAsync(EmployeeAddRequest request)
         => await PostAsync<CreatedResponse>($"{resource}", request);

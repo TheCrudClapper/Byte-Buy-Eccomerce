@@ -8,8 +8,8 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IRentOfferService : IBaseService
 {
-    Task<Result<CreatedResponse>> Add(RentOfferAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, RentOfferUpdateRequest request);
-    Task<Result<RentOfferResponse>> GetById(Guid id);
-    Task<Result<PagedList<RentOfferListResponse>>> GetList(RentOfferListQuery query);
+    Task<Result<CreatedResponse>> AddAsync(RentOfferAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request);
+    Task<Result<RentOfferResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query);
 }

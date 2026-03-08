@@ -15,7 +15,7 @@ public class ConditionService(ICompanyConditionHttpClient httpClient, IPublicCon
     public async Task<Result<CreatedResponse>> AddAsync(ConditionAddRequest request)
         => await httpClient.PostConditionAsync(request);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteAsync(id);
 
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid id)

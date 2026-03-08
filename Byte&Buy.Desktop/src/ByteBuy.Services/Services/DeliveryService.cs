@@ -16,7 +16,7 @@ public class DeliveryService(ICompanyDeliveryHttpClient httpClient, IPublicDeliv
     public async Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request)
         => await httpClient.PostDeliveryAsync(request);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteAsync(id);
 
     public async Task<Result<DeliveryOptionsResponse>> GetAvaliableDeliveriesAsync()
@@ -26,13 +26,13 @@ public class DeliveryService(ICompanyDeliveryHttpClient httpClient, IPublicDeliv
         => await httpClient.GetByIdAsync(id);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectListAsync()
-        => await httpClient.GetDeliveryChannelsList();
+        => await httpClient.GetDeliveryChannelsListAsync();
 
     public async Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query)
         => await httpClient.GetListAsync(query);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectListAsync()
-        => await httpClient.GetParcelLockerSizeList();
+        => await httpClient.GetParcelLockerSizeListAsync();
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await publicClient.GetSelectListAsync();

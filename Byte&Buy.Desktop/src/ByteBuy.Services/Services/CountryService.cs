@@ -16,7 +16,7 @@ public class CountryService(ICompanyCountryHttpClient httpClient, IPublicCountri
     public async Task<Result<CreatedResponse>> AddAsync(CountryAddRequest request)
         => await httpClient.PostCountryAsync(request);
 
-    public async Task<Result> DeleteById(Guid countryId)
+    public async Task<Result> DeleteByIdAsync(Guid countryId)
         => await httpClient.DeleteAsync(countryId);
 
     public async Task<Result<CountryResponse>> GetByIdAsync(Guid coutryId)

@@ -36,7 +36,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         await Navigation.NavigateToAsync(ApplicationPageNames.Item, async vm =>
         {
             if (vm is ItemPageViewModel itemVm)
-                await itemVm.InitializeForAdd();
+                await itemVm.InitializeForAddAsync();
         });
     }
 
@@ -77,7 +77,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
             StockQuantityTo = StockQuantityTo,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -93,7 +93,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         Name = null;
         StockQuantityFrom = null;

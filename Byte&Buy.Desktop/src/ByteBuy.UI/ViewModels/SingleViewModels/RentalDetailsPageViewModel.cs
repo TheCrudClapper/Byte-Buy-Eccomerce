@@ -63,7 +63,7 @@ public partial class RentalDetailsPageViewModel : PageViewModel
 
     public async Task InitializeAsync(Guid rentalId)
     {
-        var detailsResult = await _rentalService.GetCompanyRental(rentalId);
+        var detailsResult = await _rentalService.GetCompanyRentalAsync(rentalId);
         var (ok, value) = HandleResult(detailsResult);
         if (!ok || value is null)
             return;

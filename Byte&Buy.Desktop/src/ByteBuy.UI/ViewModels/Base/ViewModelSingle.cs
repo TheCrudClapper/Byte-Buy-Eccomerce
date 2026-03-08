@@ -14,8 +14,8 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
 
     protected Guid? EditingItemId = Guid.Empty;
 
-    protected abstract Task UpdateItem();
-    protected abstract Task AddItem();
+    protected abstract Task UpdateAsync();
+    protected abstract Task AddAsync();
     protected virtual Task InitializeAsync() => Task.CompletedTask;
 
     [RelayCommand]
@@ -27,12 +27,12 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
 
         await (IsEditMode switch
         {
-            true => UpdateItem(),
-            false => AddItem()
+            true => UpdateAsync(),
+            false => AddAsync()
         });
     }
 
-    public virtual async Task InitializeForAdd()
+    public virtual async Task InitializeForAddAsync()
     {
         IsEditMode = false;
         EditingItemId = null;

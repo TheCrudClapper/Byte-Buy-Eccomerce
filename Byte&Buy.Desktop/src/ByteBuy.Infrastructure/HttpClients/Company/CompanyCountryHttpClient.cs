@@ -22,9 +22,6 @@ public class CompanyCountryHttpClient(HttpClient httpClient, IOptions<ApiEndpoin
     public async Task<Result<UpdatedResponse>> PutCountryAsync(Guid countryId, CountryUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/{countryId}", request);
 
-    public async Task<Result<IEnumerable<CountryResponse>>> GetCountryListAsync()
-        => await GetAsync<IEnumerable<CountryResponse>>($"{resource}");
-
     public async Task<Result<CountryResponse>> GetByIdAsync(Guid countryId)
         => await GetAsync<CountryResponse>($"{resource}/{countryId}");
 

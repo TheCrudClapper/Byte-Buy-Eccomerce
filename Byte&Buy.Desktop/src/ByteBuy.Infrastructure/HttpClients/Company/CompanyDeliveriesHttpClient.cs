@@ -35,9 +35,9 @@ public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndp
         return await GetAsync<PagedList<DeliveryListResponse>>(url);
     }
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/channels/list");
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizeList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizeListAsync()
          => await GetAsync<IReadOnlyCollection<SelectListItemResponse<int>>>($"{resource}/sizes/list");
 }

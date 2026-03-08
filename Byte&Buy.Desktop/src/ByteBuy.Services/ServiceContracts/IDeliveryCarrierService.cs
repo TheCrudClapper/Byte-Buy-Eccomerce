@@ -8,9 +8,9 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IDeliveryCarrierService : IBaseService
 {
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
-    Task<Result<CreatedResponse>> Add(DeliveryCarrierAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, DeliveryCarrierUpdateRequest request);
-    Task<Result<DeliveryCarrierResponse>> GetById(Guid id);
-    Task<Result<PagedList<DeliveryCarrierResponse>>> GetList(DeliveryCarriersListQuery query);
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
+    Task<Result<CreatedResponse>> AddAsync(DeliveryCarrierAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryCarrierUpdateRequest request);
+    Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query);
 }

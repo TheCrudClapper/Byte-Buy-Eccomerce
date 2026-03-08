@@ -89,7 +89,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     protected override async Task InitializeAsync()
     {
         var conditionTask = _conditionService.GetSelectListAsync();
-        var categoryTask = _categoryService.GetSelectList();
+        var categoryTask = _categoryService.GetSelectListAsync();
 
         await Task.WhenAll(conditionTask, categoryTask);
 
@@ -108,7 +108,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         IsEditMode = true;
         await InitializeAsync();
 
-        var result = await _itemService.GetById(id);
+        var result = await _itemService.GetByIdAsync(id);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -130,10 +130,11 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         await Task.WhenAll(tasks);
     }
-    protected override async Task AddItem()
+
+    protected override async Task AddAsync()
     {
         var request = ItemMappings.MapAddToRequest(this);
-        var result = await _itemService.Add(request);
+        var result = await _itemService.AddAsync(request);
         HandleResult(result, "Successfully added new item !");
     }
 
@@ -146,7 +147,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         StockQuantity = 0;
     }
 
-    protected override async Task UpdateItem()
+    protected override async Task UpdateAsync()
     {
         if (EditingItemId is null)
             return;
@@ -161,7 +162,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         }
 
         var request = ItemMappings.MapToUpdateRequest(this);
-        var result = await _itemService.Update(EditingItemId.Value, request);
+        var result = await _itemService.UpdateAsync(EditingItemId.Value, request);
         HandleResult(result, "Successfully updated item !");
     }
 
@@ -182,8 +183,8 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         await (IsEditMode switch
         {
-            true => UpdateItem(),
-            false => AddItem(),
+            true => UpdateAsync(),
+            false => AddAsync(),
         });
     }
 
@@ -203,7 +204,7 @@ public partial class ItemPageViewModel : ViewModelSingle
     }
 
     [RelayCommand]
-    public async Task AddImages()
+    public async Task AddImagesAsync()
     {
         var result = await _dialogService.SelectImages(true);
         foreach (var image in result)

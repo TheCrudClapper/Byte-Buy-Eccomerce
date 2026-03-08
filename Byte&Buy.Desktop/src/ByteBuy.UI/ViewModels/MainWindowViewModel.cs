@@ -59,7 +59,7 @@ public partial class MainWindowViewModel : WindowViewModel
     private async Task GoToProfile() => await _navigation.NavigateToAsync(ApplicationPageNames.Profile, async vm =>
     {
         if (vm is ProfilePageViewModel profVm)
-            await profVm.LoadData();
+            await profVm.LoadDataAsync();
     });
 
     [RelayCommand]

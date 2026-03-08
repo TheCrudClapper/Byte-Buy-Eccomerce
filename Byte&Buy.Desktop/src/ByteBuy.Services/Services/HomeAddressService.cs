@@ -8,6 +8,6 @@ namespace ByteBuy.Services.Services;
 
 public class HomeAddressService(ICompanyUserHomeAddressHttpClient client) : IHomeAddressService
 {
-    public async Task<Result<UpdatedResponse>> SetHomeAddress(Guid userId, HomeAddressDto request)
+    public async Task<Result<UpdatedResponse>> SetHomeAddressAsync(Guid userId, HomeAddressDto request)
         => await client.PutUserHomeAddressAsync(userId, request);
 }

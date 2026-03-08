@@ -51,7 +51,7 @@ public partial class PortalUsersPageViewModel(
             Email = Email,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -72,11 +72,11 @@ public partial class PortalUsersPageViewModel(
         await Navigation.NavigateToAsync(ApplicationPageNames.PortalUser, async vm =>
         {
             if (vm is PortalUserPageViewModel userVm)
-                await userVm.InitializeForAdd();
+                await userVm.InitializeForAddAsync();
         });
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         FirstName = null;
         LastName = null;

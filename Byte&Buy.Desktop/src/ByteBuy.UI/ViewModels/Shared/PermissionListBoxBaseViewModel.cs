@@ -22,7 +22,7 @@ public abstract partial class PermissionListBoxBaseViewModel : ObservableValidat
 
     public virtual async Task InitializeAsync()
     {
-        var result = await _permissionService.GetSelectList();
+        var result = await _permissionService.GetSelectListAsync();
         if (!result.Success || result.Value is null)
             return;
 

@@ -6,6 +6,6 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface ICompanyInfoService
 {
-    Task<Result<CompanyInfoResponse>> GetCompanyInfo();
-    Task<Result<UpdatedResponse>> Update(CompanyInfoUpdateRequest request);
+    Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync();
+    Task<Result<UpdatedResponse>> UpdateAsync(CompanyInfoUpdateRequest request);
 }

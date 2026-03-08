@@ -6,5 +6,5 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IHomeAddressService
 {
-    Task<Result<UpdatedResponse>> SetHomeAddress(Guid userId, HomeAddressDto request);
+    Task<Result<UpdatedResponse>> SetHomeAddressAsync(Guid userId, HomeAddressDto request);
 }

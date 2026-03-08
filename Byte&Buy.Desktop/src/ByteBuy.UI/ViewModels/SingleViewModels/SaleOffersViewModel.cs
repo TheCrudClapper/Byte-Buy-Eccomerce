@@ -67,7 +67,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
             QuantityTo = QuantityTo,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -83,7 +83,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         Name = null;
         PriceFrom = null;

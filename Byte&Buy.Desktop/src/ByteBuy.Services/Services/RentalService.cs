@@ -10,14 +10,14 @@ namespace ByteBuy.Services.Services;
 
 public class RentalService(ICompanyRentalHttpClient httpClient) : IRentalService
 {
-    public Task<Result> DeleteById(Guid id)
+    public Task<Result> DeleteByIdAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsList(RentalListQuery query)
-        => await httpClient.GetCompanyRentalsList(query);
+    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query)
+        => await httpClient.GetCompanyRentalsListAsync(query);
 
-    public async Task<Result<RentalLenderResponse>> GetCompanyRental(Guid rentalId)
-        => await httpClient.GetCompanyRental(rentalId);
+    public async Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId)
+        => await httpClient.GetCompanyRentalAsync(rentalId);
 }

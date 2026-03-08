@@ -18,6 +18,6 @@ public class CompanyStatisticsHttpClient(HttpClient httpClient, IOptions<ApiEndp
     public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGMVBySellerTypeAsync()
          => await GetAsync<IReadOnlyCollection<GMVBySellerTypeDto>>($"{resource}/gmv-seller-type");
 
-    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonths()
+    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersAndGmvByMonthsAsync()
         => await GetAsync<IReadOnlyList<OrdersAndGmvByMonthDto>>($"{resource}/gmv-months");
 }

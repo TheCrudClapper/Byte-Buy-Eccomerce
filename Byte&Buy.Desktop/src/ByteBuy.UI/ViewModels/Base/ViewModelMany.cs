@@ -75,7 +75,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
 
         if (decision is bool ok && ok)
         {
-            var result = await Service.DeleteById(item.Id);
+            var result = await Service.DeleteByIdAsync(item.Id);
             if (!result.Success)
             {
                 Alert.ShowErrorAlert(result.Error!.Description);
@@ -95,7 +95,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     public abstract Task LoadDataAsync();
 
     [RelayCommand]
-    public virtual Task ClearFilters()
+    public virtual Task ClearFiltersAsync()
     {
         throw new NotImplementedException();
     }

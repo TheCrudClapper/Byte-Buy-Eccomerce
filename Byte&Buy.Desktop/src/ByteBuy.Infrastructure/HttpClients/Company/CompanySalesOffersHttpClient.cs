@@ -28,7 +28,7 @@ public class CompanySaleOfferHttpClient(HttpClient httpClient, IOptions<ApiEndpo
         return await GetAsync<PagedList<SaleOfferListResponse>>(url);
     }
 
-    public async Task<Result<CreatedResponse>> PostSaleOffer(SaleOfferAddRequest request)
+    public async Task<Result<CreatedResponse>> PostSaleOfferAsync(SaleOfferAddRequest request)
         => await PostAsync<CreatedResponse>(resource, request);
 
     public async Task<Result<UpdatedResponse>> PutRentOfferAsync(Guid id, SaleOfferUpdateRequest request)

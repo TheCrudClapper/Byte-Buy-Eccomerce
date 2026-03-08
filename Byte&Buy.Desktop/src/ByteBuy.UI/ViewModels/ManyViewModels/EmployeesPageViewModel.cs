@@ -43,7 +43,7 @@ public partial class EmployeesPageViewModel(
             Email = Email,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -73,11 +73,11 @@ public partial class EmployeesPageViewModel(
         await Navigation.NavigateToAsync(ApplicationPageNames.Employee, async vm =>
         {
             if (vm is EmployeePageViewModel employeeVm)
-                await employeeVm.InitializeForAdd();
+                await employeeVm.InitializeForAddAsync();
         });
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         FirstName = null;
         LastName = null;

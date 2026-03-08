@@ -8,9 +8,9 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IOrderService : IBaseService
 {
-    Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrderList(OrderListQuery query, CancellationToken ct = default);
-    Task<Result<OrderDetailsResponse>> GetOrderDetails(Guid orderId);
-    Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrders();
-    Task<Result<UpdatedResponse>> DeliverOrder(Guid orderId);
-    Task<Result<UpdatedResponse>> ShipOrder(Guid orderId);
+    Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrderListAsync(OrderListQuery query, CancellationToken ct = default);
+    Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid orderId);
+    Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrdersAsync();
+    Task<Result<UpdatedResponse>> DeliverOrderAsync(Guid orderId);
+    Task<Result<UpdatedResponse>> ShipOrderAsync(Guid orderId);
 }

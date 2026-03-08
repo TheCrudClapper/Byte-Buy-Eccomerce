@@ -10,18 +10,18 @@ namespace ByteBuy.Services.Services;
 
 public class SaleOfferService(ICompanySaleOfferHttpClient httpClient) : ISaleOfferService
 {
-    public async Task<Result<CreatedResponse>> Add(SaleOfferAddRequest request)
-        => await httpClient.PostSaleOffer(request);
+    public async Task<Result<CreatedResponse>> AddAsync(SaleOfferAddRequest request)
+        => await httpClient.PostSaleOfferAsync(request);
 
-    public async Task<Result> DeleteById(Guid id)
+    public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteByIdAsync(id);
 
-    public async Task<Result<SaleOfferResponse>> GetById(Guid id)
+    public async Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<SaleOfferListResponse>>> GetList(SaleOfferListQuery query)
+    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, SaleOfferUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
         => await httpClient.PutRentOfferAsync(id, request);
 }

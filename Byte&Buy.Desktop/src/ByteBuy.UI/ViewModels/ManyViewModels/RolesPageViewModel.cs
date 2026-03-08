@@ -43,7 +43,7 @@ public partial class RolesPageViewModel(
             RoleName = RoleName,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -64,11 +64,11 @@ public partial class RolesPageViewModel(
         await Navigation.NavigateToAsync(ApplicationPageNames.Role, async vm =>
         {
             if (vm is RolePageViewModel roleVm)
-                await roleVm.InitializeForAdd();
+                await roleVm.InitializeForAddAsync();
         });
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         RoleName = null;
         await LoadDataAsync();

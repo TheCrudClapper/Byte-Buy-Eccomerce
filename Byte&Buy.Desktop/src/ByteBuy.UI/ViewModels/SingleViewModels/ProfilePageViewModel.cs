@@ -106,7 +106,7 @@ public partial class ProfilePageViewModel : PageViewModel
             address, PhoneNumber
         );
 
-        var result = await _employeeService.UpdateAddress(request);
+        var result = await _employeeService.UpdateCurrentEmployeeAddressAsync(request);
         HandleResult(result, "Address updated successfully !");
     }
 
@@ -123,9 +123,9 @@ public partial class ProfilePageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    public async Task LoadData()
+    public async Task LoadDataAsync()
     {
-        var result = await _employeeService.GetSelf();
+        var result = await _employeeService.GetCurrentEmployeeDetailsAsync();
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;

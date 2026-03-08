@@ -11,18 +11,18 @@ namespace ByteBuy.Services.Services;
 public class PortalUserService(ICompanyPortalUserHttpClient portalUserHttpClient) : IPortalUserService
 {
 
-    public async Task<Result<CreatedResponse>> Add(PortalUserAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(PortalUserAddRequest request)
         => await portalUserHttpClient.PostPortalUserAsync(request);
 
-    public async Task<Result> DeleteById(Guid userId)
+    public async Task<Result> DeleteByIdAsync(Guid userId)
         => await portalUserHttpClient.DeleteByIdAsync(userId);
 
-    public async Task<Result<PortalUserResponse>> GetById(Guid userId)
+    public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId)
         => await portalUserHttpClient.GetByIdAsync(userId);
 
-    public async Task<Result<PagedList<PortalUserListResponse>>> GetList(PortalUserListQuery query)
+    public async Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query)
         => await portalUserHttpClient.GetListAsync(query);
 
-    public async Task<Result<UpdatedResponse>> Update(Guid userId, PortalUserUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid userId, PortalUserUpdateRequest request)
         => await portalUserHttpClient.PutPortalUserAsync(userId, request);
 }

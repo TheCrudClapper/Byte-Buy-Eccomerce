@@ -8,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanySaleOfferHttpClient
 {
-    Task<Result<CreatedResponse>> PostSaleOffer(SaleOfferAddRequest request);
+    Task<Result<CreatedResponse>> PostSaleOfferAsync(SaleOfferAddRequest request);
     Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id);
     Task<Result> DeleteByIdAsync(Guid id);
     Task<Result<UpdatedResponse>> PutRentOfferAsync(Guid id, SaleOfferUpdateRequest request);

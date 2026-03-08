@@ -36,14 +36,14 @@ public partial class LoginWindowViewModel : WindowViewModel
     public event Action? LoginSuccess;
 
     [RelayCommand]
-    private async Task Login()
+    private async Task LoginAsync()
     {
         ValidateAllProperties();
         if (HasErrors)
             return;
 
         LoginRequest request = new(Email, Password);
-        var result = await _authService.Login(request);
+        var result = await _authService.LoginAsync(request);
 
         if (!result.Success)
         {

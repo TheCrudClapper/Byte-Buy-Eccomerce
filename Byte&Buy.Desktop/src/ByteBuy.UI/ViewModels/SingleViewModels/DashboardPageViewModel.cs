@@ -45,7 +45,7 @@ public partial class DashboardPageViewModel : PageViewModel
     {
         var t1 = LoadOrdersAsync();
         var t2 = LoadKpisAsync();
-        var t3 = LoadGmvBySellerType();
+        var t3 = LoadGmvBySellerTypeAsync();
         var t4 = LoadOrdersAndGmvChartAsync();
 
         await Task.WhenAll(t1, t2, t3, t4);
@@ -53,7 +53,7 @@ public partial class DashboardPageViewModel : PageViewModel
 
     private async Task LoadKpisAsync()
     {
-        var kpisResult = await _statisticsService.GetKpis();
+        var kpisResult = await _statisticsService.GetKpisAsync();
         var (ok, value) = HandleResult(kpisResult);
         if (!ok || value is null)
             return;
@@ -61,9 +61,9 @@ public partial class DashboardPageViewModel : PageViewModel
         Kpis = new ObservableCollection<KpiViewModel>(value.Select(k => new KpiViewModel(k)));
     }
 
-    private async Task LoadGmvBySellerType()
+    private async Task LoadGmvBySellerTypeAsync()
     {
-        var gmvResult = await _statisticsService.GetGmvBySellerType();
+        var gmvResult = await _statisticsService.GetGmvBySellerTypeAsync();
         var (ok, value) = HandleResult(gmvResult);
         if (!ok || value is null)
             return;
@@ -73,7 +73,7 @@ public partial class DashboardPageViewModel : PageViewModel
 
     private async Task LoadOrdersAsync()
     {
-        var ordersResult = await _orderService.GetDashboardOrders();
+        var ordersResult = await _orderService.GetDashboardOrdersAsync();
         var (ok, value) = HandleResult(ordersResult);
         if (!ok || value is null)
             return;
@@ -83,7 +83,7 @@ public partial class DashboardPageViewModel : PageViewModel
 
     private async Task LoadOrdersAndGmvChartAsync()
     {
-        var result = await _statisticsService.GetOrdersGmvByMonths();
+        var result = await _statisticsService.GetOrdersGmvByMonthsAsync();
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;

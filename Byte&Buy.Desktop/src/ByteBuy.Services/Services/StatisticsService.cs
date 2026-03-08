@@ -7,12 +7,12 @@ namespace ByteBuy.Services.Services;
 
 public class StatisticsService(ICompanyStatisticsHttpClient httpClient) : IStatisticsService
 {
-    public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpis()
+    public async Task<Result<IReadOnlyCollection<KeyPerformanceIndicatorDto>>> GetKpisAsync()
         => await httpClient.GetKpisAsync();
 
-    public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerType()
+    public async Task<Result<IReadOnlyCollection<GMVBySellerTypeDto>>> GetGmvBySellerTypeAsync()
         => await httpClient.GetGMVBySellerTypeAsync();
 
-    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonths()
-        => await httpClient.GetOrdersAndGmvByMonths();
+    public async Task<Result<IReadOnlyList<OrdersAndGmvByMonthDto>>> GetOrdersGmvByMonthsAsync()
+        => await httpClient.GetOrdersAndGmvByMonthsAsync();
 }

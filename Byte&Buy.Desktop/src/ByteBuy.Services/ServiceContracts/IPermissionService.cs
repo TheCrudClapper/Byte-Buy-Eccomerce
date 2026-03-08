@@ -5,5 +5,5 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IPermissionService
 {
-    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList();
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
 }

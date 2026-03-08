@@ -66,7 +66,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         IsEditMode = true;
         EditingItemId = id;
         await InitializeAsync();
-        var result = await saleOfferService.GetById(id);
+        var result = await saleOfferService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -81,7 +81,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         IsEditMode = true;
         EditingItemId = id;
         await InitializeAsync();
-        var result = await rentOfferService.GetById(id);
+        var result = await rentOfferService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -126,7 +126,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         {
 
             var request = OfferMappings.MapToSaleAddRequest(this);
-            var response = await saleOfferService.Add(request);
+            var response = await saleOfferService.AddAsync(request);
             if (!response.Success)
             {
                 Error = response.Error!.Description;
@@ -136,7 +136,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         else
         {
             var request = OfferMappings.MapToRentAddRequest(this);
-            var response = await rentOfferService.Add(request);
+            var response = await rentOfferService.AddAsync(request);
             if (!response.Success)
             {
                 Error = response.Error!.Description;
@@ -153,7 +153,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         if (IsSaleOffer)
         {
             var request = OfferMappings.MapToSaleUpdateRequest(this);
-            var response = await saleOfferService.Update(EditingItemId!.Value, request);
+            var response = await saleOfferService.UpdateAsync(EditingItemId!.Value, request);
             if (!response.Success)
             {
                 Error = response.Error!.Description;
@@ -163,7 +163,7 @@ public partial class OfferDialogViewModel(IDeliveryService deliveryService,
         else
         {
             var request = OfferMappings.MapToRentUpdateRequest(this);
-            var response = await rentOfferService.Update(EditingItemId!.Value, request);
+            var response = await rentOfferService.UpdateAsync(EditingItemId!.Value, request);
             if (!response.Success)
             {
                 Error = response.Error!.Description;

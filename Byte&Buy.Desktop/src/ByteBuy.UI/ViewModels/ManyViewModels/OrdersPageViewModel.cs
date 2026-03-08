@@ -53,7 +53,7 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
             TotalTo = TotalTo,
         };
 
-        var result = await Service.GetCompanyOrderList(query);
+        var result = await Service.GetCompanyOrderListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -83,7 +83,7 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
 
     protected override Task EditAsync(OrderListItemViewModel item) { throw new System.NotImplementedException(); }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         BuyerFullName = null;
         BuyerEmail = null;

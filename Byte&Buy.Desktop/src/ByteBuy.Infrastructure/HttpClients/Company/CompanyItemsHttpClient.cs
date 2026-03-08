@@ -16,7 +16,7 @@ public class CompanyItemsHttpClient(HttpClient httpClient, IOptions<ApiEndpoints
 {
     private readonly string resource = options.Value.CompanyItems;
 
-    public async Task<Result> DeleteCompanyItem(Guid id)
+    public async Task<Result> DeleteCompanyItemAsync(Guid id)
         => await DeleteAsync($"{resource}/{id}");
 
     public async Task<Result<ItemResponse>> GetByIdAsync(Guid id)
@@ -28,9 +28,9 @@ public class CompanyItemsHttpClient(HttpClient httpClient, IOptions<ApiEndpoints
         return await GetAsync<PagedList<ItemListResponse>>(url);
     }
 
-    public async Task<Result<CreatedResponse>> PostCompanyItem(MultipartContent request)
+    public async Task<Result<CreatedResponse>> PostCompanyItemAsync(MultipartContent request)
         => await PostAsync<CreatedResponse>($"{resource}", request);
 
-    public async Task<Result<UpdatedResponse>> PutCompanyItem(Guid id, MultipartContent request)
+    public async Task<Result<UpdatedResponse>> PutCompanyItemAsync(Guid id, MultipartContent request)
         => await PutAsync<UpdatedResponse>($"{resource}/{id}", request);
 }

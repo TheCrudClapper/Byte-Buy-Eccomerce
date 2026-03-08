@@ -75,7 +75,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
         CurrentPage = value.Metadata.CurrentPage;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         DeliveryName = null;
         PriceTo = null;

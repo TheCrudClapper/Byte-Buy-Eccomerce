@@ -62,7 +62,7 @@ public partial class DeliveryDialogViewModel(
     {
         var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectListAsync();
         var deliveryChannelsTask = deliveryService.GetDeliveryChannelsSelectListAsync();
-        var deliveryCarriersTask = carrierService.GetSelectList();
+        var deliveryCarriersTask = carrierService.GetSelectListAsync();
 
         await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
 

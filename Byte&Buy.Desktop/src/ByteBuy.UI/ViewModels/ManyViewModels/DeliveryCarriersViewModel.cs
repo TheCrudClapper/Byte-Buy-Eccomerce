@@ -38,7 +38,7 @@ public partial class DeliveryCarriersViewModel(AlertViewModel alert,
             DeliveryCarrierName = DeliveryCarrierName
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -54,7 +54,7 @@ public partial class DeliveryCarriersViewModel(AlertViewModel alert,
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         DeliveryCarrierName = null;
         Code = null;

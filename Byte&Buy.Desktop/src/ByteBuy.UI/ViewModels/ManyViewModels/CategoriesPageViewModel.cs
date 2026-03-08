@@ -51,7 +51,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
             CategoryName = CategoryName,
         };
 
-        var result = await Service.GetList(query);
+        var result = await Service.GetListAsync(query);
         var (ok, value) = HandleResult(result);
         if (!ok || value is null)
             return;
@@ -68,7 +68,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
 
       
     }
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         CategoryName = null;
         await LoadDataAsync();

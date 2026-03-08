@@ -82,7 +82,7 @@ public partial class OrderDetailsPageViewModel : PageViewModel
 
     public async Task InitializeAsync(Guid orderId)
     {
-        var detailsResult = await _orderService.GetOrderDetails(orderId);
+        var detailsResult = await _orderService.GetOrderDetailsAsync(orderId);
         var (ok, value) = HandleResult(detailsResult);
         if (!ok || value is null)
             return;
@@ -108,9 +108,9 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    public async Task DownloadPdf()
+    public async Task DownloadPdfAsync()
     {
-        var bytes = await _documentService.DownloadOrderDetailsRaport(OrderId);
+        var bytes = await _documentService.DownloadOrderDetailsRaportAsync(OrderId);
         var filePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             $"order-details-{OrderId}.pdf");
@@ -126,12 +126,12 @@ public partial class OrderDetailsPageViewModel : PageViewModel
 
 
     [RelayCommand]
-    public async Task ShipOrder()
+    public async Task ShipOrderAsync()
     {
         if (!CanShip)
             return;
 
-        var result = await _orderService.ShipOrder(OrderId);
+        var result = await _orderService.ShipOrderAsync(OrderId);
         var (ok, value) = HandleResult(result, "Successfully shipped order.");
         if (!ok || value is null)
             return;
@@ -140,12 +140,12 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    public async Task DeliverOrder()
+    public async Task DeliverOrderAsync()
     {
         if (!CanDeliver)
             return;
 
-        var result = await _orderService.DeliverOrder(OrderId);
+        var result = await _orderService.DeliverOrderAsync(OrderId);
         var (ok, value) = HandleResult(result, "Successfully shipped order.");
         if (!ok || value is null) return;
 

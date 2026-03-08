@@ -11,21 +11,21 @@ namespace ByteBuy.Services.Services;
 public class CategoryService(ICompanyCategoryHttpClient httpClient, IPublicCategoriesHttpClient publicClient) 
     : ICategoryService
 {
-    public async Task<Result<CreatedResponse>> Add(CategoryAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)
         => await httpClient.PostCategoryAsync(request);
 
-    public Task<Result> DeleteById(Guid id)
+    public Task<Result> DeleteByIdAsync(Guid id)
         => httpClient.DeleteAsync(id);
 
-    public async Task<Result<CategoryResponse>> GetById(Guid id)
+    public async Task<Result<CategoryResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<CategoryListResponse>>> GetList(CategoryListQuery query)
+    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query)
         => await httpClient.GetListAsync(query);
 
-    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectList()
+    public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await publicClient.GetSelectListAsync();
 
-    public async Task<Result<UpdatedResponse>> Update(Guid id, CategoryUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, CategoryUpdateRequest request)
         => await httpClient.PutCategoryAsync(id, request);
 }

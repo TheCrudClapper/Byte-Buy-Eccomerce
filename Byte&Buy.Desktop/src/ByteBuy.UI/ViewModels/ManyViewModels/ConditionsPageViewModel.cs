@@ -70,7 +70,7 @@ public partial class ConditionsPageViewModel(
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 
-    public override async Task ClearFilters()
+    public override async Task ClearFiltersAsync()
     {
         ConditionName = null;
         await LoadDataAsync();

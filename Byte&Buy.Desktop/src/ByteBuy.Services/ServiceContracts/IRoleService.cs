@@ -8,9 +8,9 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IRoleService : IBaseService
 {
-    Task<Result<CreatedResponse>> Add(RoleAddRequest request);
-    Task<Result<UpdatedResponse>> Update(Guid id, RoleUpdateRequest request);
-    Task<Result<RoleResponse>> GetById(Guid id);
-    Task<Result<PagedList<RoleListResponse>>> GetList(RoleListQuery query);
-    Task<Result<IEnumerable<SelectListItemResponse<Guid>>>> GetSelectList();
+    Task<Result<CreatedResponse>> AddAsync(RoleAddRequest request);
+    Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RoleUpdateRequest request);
+    Task<Result<RoleResponse>> GetByIdAsync(Guid id);
+    Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query);
+    Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
 }
