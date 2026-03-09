@@ -1,7 +1,10 @@
-﻿using ByteBuy.Core.Domain.DomainServicesContracts;
-using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Carts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Roles;
+using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+using ByteBuy.Core.Domain.Users;
+using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.DTO.Public.Shared;

@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Deliveries.Enums;
 
 namespace ByteBuy.Core.DTO.Internal.Delivery;
 

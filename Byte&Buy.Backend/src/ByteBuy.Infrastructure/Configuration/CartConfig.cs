@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Carts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

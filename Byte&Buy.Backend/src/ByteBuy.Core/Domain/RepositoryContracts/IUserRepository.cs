@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.RepositoryContracts.Base;
+﻿using ByteBuy.Core.Domain.RepositoryContracts.Base;
+using ByteBuy.Core.Domain.Users.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

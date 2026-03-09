@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.RepositoryContracts.Base;
+﻿using ByteBuy.Core.Domain.RepositoryContracts.Base;
+using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Public.Employee;
 using ByteBuy.Core.Filtration.Employee;
 using ByteBuy.Core.Pagination;

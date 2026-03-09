@@ -1,5 +1,7 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Deliveries.Enums;
+using ByteBuy.Core.Domain.Orders;
+using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Internal.Order.Enum;
 using ByteBuy.Core.DTO.Internal.OrderDelivery;

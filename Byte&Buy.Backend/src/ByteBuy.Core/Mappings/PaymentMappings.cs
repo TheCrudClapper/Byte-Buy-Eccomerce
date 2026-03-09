@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Orders.Entities;
 using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.DTO.Public.Payment;
 using System.Linq.Expressions;

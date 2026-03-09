@@ -1,5 +1,7 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Deliveries.Enums;
+using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Checkout;
 using ByteBuy.Core.DTO.Public.Delivery;

@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.DeliveryCarriers;
 using ByteBuy.Core.DTO.Public.DeliveryCarrier;
 using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;

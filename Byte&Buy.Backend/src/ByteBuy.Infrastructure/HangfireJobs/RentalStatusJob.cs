@@ -8,7 +8,6 @@ public class RentalStatusJob
     public RentalStatusJob(IRentalStatusService rentalStatusService)
        => _rentalStatusService = rentalStatusService;
 
-
     public async Task Execute()
     {
         await _rentalStatusService.UpdateRentalStatusesAsync();

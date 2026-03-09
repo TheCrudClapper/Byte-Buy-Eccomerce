@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Companies;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.Company;
 using ByteBuy.Core.DTO.Internal.Seller;

@@ -7,5 +7,5 @@
 /// data persistence or entity tracking scenarios.</remarks>
 public interface IEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; }
 }

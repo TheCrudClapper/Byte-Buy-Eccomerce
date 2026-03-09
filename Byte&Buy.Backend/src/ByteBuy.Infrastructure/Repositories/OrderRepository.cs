@@ -1,6 +1,7 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Orders;
+using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Filtration.Order;

@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Offers.Entities;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Mappings;
 

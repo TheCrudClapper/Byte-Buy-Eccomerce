@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.DomainModels;
+﻿using ByteBuy.Core.Domain.Shared.DomainModels;
 using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.ResultTypes;
 

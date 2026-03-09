@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
 using ByteBuy.Core.DTO.Internal.Order.Enum;

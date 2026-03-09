@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Conditions;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
 

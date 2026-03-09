@@ -1,5 +1,6 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Carts.Entities;
+using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers.Enums;
 using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Cart.CartOffer;

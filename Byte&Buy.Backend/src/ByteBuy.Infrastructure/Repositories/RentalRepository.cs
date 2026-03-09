@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.Filtration.Rental;
 using ByteBuy.Core.Mappings;

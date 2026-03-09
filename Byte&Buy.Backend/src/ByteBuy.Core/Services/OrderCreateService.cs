@@ -1,9 +1,13 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
-using ByteBuy.Core.Domain.Factories;
+﻿using ByteBuy.Core.Domain.Deliveries.Enums;
+using ByteBuy.Core.Domain.Orders;
+using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Payments;
+using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.Domain.Shared.Enums;
+using ByteBuy.Core.Domain.Shared.Factories;
+using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.Order;

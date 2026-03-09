@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Payments;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Payment;
 

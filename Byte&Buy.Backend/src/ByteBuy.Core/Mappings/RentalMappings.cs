@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.DTO.Public.Rental;

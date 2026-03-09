@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Roles.Entities;
 using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 

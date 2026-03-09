@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.DTO.Public.Money;
 using System.Text.Json.Serialization;
 

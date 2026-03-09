@@ -36,7 +36,6 @@ public static class DependencyInjection
         services.AddScoped<IDeliveryRepository, DeliveryRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IPortalUserRepository, PortalUserRepository>();
-        services.AddScoped<IAddressReadRepository, AddressRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IDeliveryCarrierRepository, DeliveryCarrierRepository>();
         services.AddScoped<IImageStorage, ImageStorage>();
@@ -50,6 +49,7 @@ public static class DependencyInjection
         services.AddScoped<IStatisticsRepository, StatisticsRepository>();
         services.AddScoped<IPdfGenerator<OrderDetailsPdfModel>, QuestOrderDetailsPdfGenerator>();
         services.AddScoped<IDocumentRepository, DocumentRepository>();
+        services.AddScoped<IAddressReadRepository, AddressReadRepository>();
 
         //Unit of work
         services.AddScoped<IUnitOfWork, UnitOfWork>();

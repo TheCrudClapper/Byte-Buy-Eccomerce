@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Roles.Entities;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;

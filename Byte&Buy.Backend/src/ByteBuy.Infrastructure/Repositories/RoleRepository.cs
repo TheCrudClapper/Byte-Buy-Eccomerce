@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.DTO.Public.Role;
 using ByteBuy.Core.Filtration.Role;
 using ByteBuy.Core.Mappings;

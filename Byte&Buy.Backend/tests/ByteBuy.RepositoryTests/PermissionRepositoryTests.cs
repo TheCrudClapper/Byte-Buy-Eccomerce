@@ -1,6 +1,8 @@
 ﻿using AutoFixture;
-using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Roles;
+using ByteBuy.Core.Domain.Roles.Entities;
+using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;
@@ -13,8 +15,6 @@ public class PermissionRepositoryTests
 {
     private readonly ApplicationDbContext _context;
     private readonly IPermissionRepository _permissionRepository;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly Fixture _fixture;
     public PermissionRepositoryTests()
     {

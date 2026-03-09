@@ -1,7 +1,8 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Carts;
+using ByteBuy.Core.Domain.Offers.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Cart;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ResultTypes;

@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Deliveries;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.Filtration.Delivery;
 using ByteBuy.Core.Mappings;

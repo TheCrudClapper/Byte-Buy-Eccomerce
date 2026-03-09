@@ -1,7 +1,8 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+using ByteBuy.Core.Domain.Offers;
+using ByteBuy.Core.Domain.Offers.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Offer;
 using ByteBuy.Core.Filtration.Offer;
 using ByteBuy.Core.Mappings;

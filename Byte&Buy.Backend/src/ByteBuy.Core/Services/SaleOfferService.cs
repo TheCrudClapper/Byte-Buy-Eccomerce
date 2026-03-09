@@ -1,7 +1,7 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Offers.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.ValueObjects;
+using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.SaleOffer;

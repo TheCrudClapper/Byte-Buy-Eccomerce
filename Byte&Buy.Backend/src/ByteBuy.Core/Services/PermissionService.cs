@@ -24,7 +24,7 @@ public class PermissionService : IPermissionService
     {
         var permission = await _permissionRepository.GetByNameAsync(permissionName);
         //if permision of given name not found -> deny access
-        if (permission == null) return false;
+        if (permission is null) return false;
 
         return await _permissionRepository
             .HasUserOrRolePermissionAsync(userId, permission.Id);

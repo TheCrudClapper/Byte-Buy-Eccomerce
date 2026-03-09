@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.Shared.ValueObjects;
+using ByteBuy.Core.Domain.Users.Entities;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;

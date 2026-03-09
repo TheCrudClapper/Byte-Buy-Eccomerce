@@ -1,7 +1,9 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Exceptions;
+﻿using ByteBuy.Core.Domain.Orders;
+using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.Exceptions;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Order;

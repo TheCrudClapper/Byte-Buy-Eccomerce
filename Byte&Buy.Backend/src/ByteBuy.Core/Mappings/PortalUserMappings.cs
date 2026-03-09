@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Shared.Enums;
+using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Internal.PortalUser;
 using ByteBuy.Core.DTO.Internal.Seller;

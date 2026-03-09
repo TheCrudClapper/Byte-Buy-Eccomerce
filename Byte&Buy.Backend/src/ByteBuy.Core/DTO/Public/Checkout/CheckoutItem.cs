@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Offers.Enums;
 using ByteBuy.Core.DTO.Public.Cart.CartOffer;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;
 using ByteBuy.Core.DTO.Public.Money;

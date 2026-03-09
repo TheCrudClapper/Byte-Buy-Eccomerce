@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Payments.Enums;
 
 namespace ByteBuy.Core.DTO.Public.Order;
 

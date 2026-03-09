@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Countries;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.Pagination;

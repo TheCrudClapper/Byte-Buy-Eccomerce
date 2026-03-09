@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Core.DTO.Public.Money;
 namespace ByteBuy.Core.DTO.Internal.Order;
 

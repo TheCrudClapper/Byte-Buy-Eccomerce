@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Orders.Enums;
 
 namespace ByteBuy.Core.DTO.Internal.DocumentModels;
 

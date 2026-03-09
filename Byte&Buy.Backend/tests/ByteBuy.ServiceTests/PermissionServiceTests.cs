@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
-using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Roles.Entities;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using FluentAssertions;

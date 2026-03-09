@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Carts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.Mappings;

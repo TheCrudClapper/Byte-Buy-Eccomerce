@@ -1,4 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Roles;
+using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Infrastructure.DbContexts;
 using Microsoft.AspNetCore.Identity;
 

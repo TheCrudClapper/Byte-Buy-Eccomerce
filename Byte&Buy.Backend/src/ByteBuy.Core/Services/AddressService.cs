@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.Domain.DomainServicesContracts;
-using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -166,7 +166,6 @@ public class AddressService : IAddressService
 
     public async Task<Result<IReadOnlyCollection<ShippingAddressResponse>>> GetUserShippingAddressesAsync(Guid userId, CancellationToken ct)
         => await _addressReadRepository.GetListBySpecAsync(new UserShippingAddressResponseSpec(userId), ct);
-
 
     public async Task<Result> DeleteShippingAddressAsync(Guid addressId, Guid userId)
     {

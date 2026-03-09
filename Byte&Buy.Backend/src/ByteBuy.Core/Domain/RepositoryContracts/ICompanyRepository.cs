@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Companies;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;

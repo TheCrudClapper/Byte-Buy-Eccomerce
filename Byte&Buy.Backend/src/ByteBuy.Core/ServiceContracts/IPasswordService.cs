@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Users.Base;
 using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.ServiceContracts;

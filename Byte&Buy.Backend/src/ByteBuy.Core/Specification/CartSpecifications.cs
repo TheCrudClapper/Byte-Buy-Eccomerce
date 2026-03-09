@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using ByteBuy.Core.Domain.Entities;
+using ByteBuy.Core.Domain.Carts;
 
 namespace ByteBuy.Core.Specification;
 

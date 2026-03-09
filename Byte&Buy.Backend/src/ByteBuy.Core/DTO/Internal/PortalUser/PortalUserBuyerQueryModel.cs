@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.Shared.ValueObjects;
 
 namespace ByteBuy.Core.DTO.Internal.PortalUser;
 

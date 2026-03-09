@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.Domain.DomainModels;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.DomainModels;
 using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;

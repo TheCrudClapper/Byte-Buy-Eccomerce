@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Rentals.Enums;
 namespace ByteBuy.Core.DTO.Public.Rental;
 
 public sealed record CompanyRentalLenderListResponse(

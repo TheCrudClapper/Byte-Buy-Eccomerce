@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Payments;
+using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Payment;
 using ByteBuy.Core.Mappings;

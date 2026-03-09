@@ -10,20 +10,16 @@ public abstract class ValueObject : IEquatable<ValueObject>
             return false;
 
         var valueObject = (ValueObject)obj;
-        
+
         return GetEqualityComponents()
             .SequenceEqual(valueObject.GetEqualityComponents());
     }
 
-    public static bool operator ==(ValueObject left, ValueObject right)
-    {
-        return Equals(left, right);
-    }
+    public static bool operator ==(ValueObject? left, ValueObject? right)
+        => Equals(left, right);
 
-    public static bool operator !=(ValueObject left, ValueObject right)
-    {
-        return !Equals(left, right);
-    }
+    public static bool operator !=(ValueObject? left, ValueObject? right) 
+        => !Equals(left, right);
 
     public override int GetHashCode()
     {

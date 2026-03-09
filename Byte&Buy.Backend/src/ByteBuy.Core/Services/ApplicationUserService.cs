@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Entities;
+﻿using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;

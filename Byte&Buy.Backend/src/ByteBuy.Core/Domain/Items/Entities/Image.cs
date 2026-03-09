@@ -1,0 +1,71 @@
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.ResultTypes;
+
+namespace ByteBuy.Core.Domain.Items.Entities;
+
+public class Image : Entity, ISoftDeletable
+{
+    public string ImagePath { get; private set; } = null!;
+    public Guid ItemId { get; private set; }
+    public Item Item { get; private set; } = null!;
+    public string? AltText { get; private set; }
+    public bool IsActive { get; private set; }
+    public DateTime? DateDeleted { get; private set; }
+
+    public void Deactivate()
+    {
+        if (!IsActive)
+            return;
+
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+    }
+
+    private Image() { }
+    private Image(string imagePath, string? altText)
+    {
+        ImagePath = imagePath;
+        AltText = altText;
+        IsActive = true;
+        DateCreated = DateTime.UtcNow;
+    }
+
+    public Result ChangeImageAltText(string? altText)
+    {
+        var validationResult = Validate(altText);
+        if (validationResult.IsFailure)
+            return Result.Failure(validationResult.Error);
+
+        AltText = altText;
+        return Result.Success();
+    }
+
+    private static Result Validate(string? altText)
+    {
+        if (!string.IsNullOrEmpty(altText))
+        {
+            if (altText.Length > 50)
+                return Result.Failure(ImageErrors.AltTextInvalid);
+        }
+
+        return Result.Success();
+    }
+
+    internal static Result<Image> Create(string imagePath, string? altText)
+    {
+        var validationResult = Validate(altText);
+        if (validationResult.IsFailure)
+            return Result.Failure<Image>(validationResult.Error);
+
+        if (string.IsNullOrWhiteSpace(imagePath))
+            return Result.Failure<Image>(ImageErrors.ImagePathInvalid);
+
+        return new Image(imagePath, altText);
+    }
+
+    internal void AssignToItem(Item item)
+    {
+        ItemId = item.Id;
+        Item = item;
+    }
+}
