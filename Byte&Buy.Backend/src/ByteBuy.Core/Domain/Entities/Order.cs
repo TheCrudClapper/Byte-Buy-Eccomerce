@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.EntityContracts;
+﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Enums;
 using ByteBuy.Core.Domain.Exceptions;
 using ByteBuy.Core.Domain.ValueObjects;

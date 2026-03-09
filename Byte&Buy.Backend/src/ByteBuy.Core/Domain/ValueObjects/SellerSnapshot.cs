@@ -1,7 +1,8 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.Enums;
 namespace ByteBuy.Core.Domain.ValueObjects;
 
-public class SellerSnapshot
+public class SellerSnapshot : ValueObject
 {
     public SellerType Type { get; private set; }
     public Guid SellerId { get; private set; }
@@ -30,5 +31,14 @@ public class SellerSnapshot
     {
         var addressCopy = Address.Copy();
         return new SellerSnapshot(Type, SellerId, DisplayName, TIN, addressCopy);
+    }
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Type;
+        yield return SellerId;
+        yield return DisplayName;
+        yield return TIN;
+        yield return Address;
     }
 }

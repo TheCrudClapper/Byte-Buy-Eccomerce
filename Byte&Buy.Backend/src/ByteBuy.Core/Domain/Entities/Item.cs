@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.EntityContracts;
-using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.DomainModels;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Entities;

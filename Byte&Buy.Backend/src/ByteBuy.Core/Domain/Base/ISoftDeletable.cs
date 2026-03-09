@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.Domain.EntityContracts;
+﻿namespace ByteBuy.Core.Domain.Base;
 
 /// <summary>
 /// Defines members for entities that support soft deletion, allowing them to be marked as inactive without being

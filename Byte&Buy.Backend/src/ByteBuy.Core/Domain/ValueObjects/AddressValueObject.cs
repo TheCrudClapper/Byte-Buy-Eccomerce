@@ -1,9 +1,10 @@
-﻿using ByteBuy.Core.Domain.DomainServicesContracts;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.DomainServicesContracts;
 using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
-public class AddressValueObject
+public class AddressValueObject : ValueObject
 {
     public string Street { get; private set; } = null!;
     public string HouseNumber { get; private set; } = null!;
@@ -59,6 +60,17 @@ public class AddressValueObject
     public AddressValueObject Copy()
     {
         return new AddressValueObject(Street, HouseNumber, PostalCity, PostalCode, City, Country, FlatNumber);
+    }
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Street;
+        yield return HouseNumber;
+        yield return PostalCity;
+        yield return PostalCode;
+        yield return City;
+        yield return Country;
+        yield return FlatNumber;
     }
 }
 

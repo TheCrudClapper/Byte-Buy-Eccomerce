@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.Domain.Entities;
-using ByteBuy.Core.Domain.ValueObjects;
+﻿using ByteBuy.Core.Domain.DomainModels;
+using ByteBuy.Core.Domain.Entities;
 using ByteBuy.Core.DTO.Internal.Image;
 using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.DTO.Public.ImageThumbnail;

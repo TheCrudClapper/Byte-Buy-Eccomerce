@@ -1,9 +1,10 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
 // Value Object that represents image thumbnail 
-public record ImageThumbnail
+public class ImageThumbnail : ValueObject
 {
     public string ImagePath { get; private set; } = null!;
     public string? AltText { get; private set; }
@@ -27,5 +28,11 @@ public record ImageThumbnail
         }
 
         return new ImageThumbnail(imagePath, altText);
+    }
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return ImagePath;
+        yield return AltText;
     }
 }

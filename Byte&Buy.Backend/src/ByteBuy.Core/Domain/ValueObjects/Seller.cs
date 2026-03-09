@@ -1,9 +1,10 @@
-﻿using ByteBuy.Core.Domain.Enums;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.Enums;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
 // Represents a business representation of a seller based of Seller Type.
-public record Seller
+public class Seller : ValueObject
 {
     public SellerType Type { get; init; }
 
@@ -21,4 +22,10 @@ public record Seller
 
     public static Seller CreateCompanySeller(Guid companyId)
         => new Seller(SellerType.Company, companyId);
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Type;
+        yield return Id;
+    }
 }

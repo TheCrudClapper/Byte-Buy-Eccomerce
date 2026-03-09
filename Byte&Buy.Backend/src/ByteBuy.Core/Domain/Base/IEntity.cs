@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.Domain.EntityContracts;
+﻿namespace ByteBuy.Core.Domain.Base;
 
 /// <summary>
 /// Defines a contract for entities that have a unique identifier.

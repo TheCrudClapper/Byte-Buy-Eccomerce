@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.EntityContracts;
+﻿using ByteBuy.Core.Domain.Base;
 
 namespace ByteBuy.Core.Domain.Entities;
 

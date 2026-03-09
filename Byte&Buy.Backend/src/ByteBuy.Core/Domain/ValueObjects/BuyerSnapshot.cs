@@ -1,8 +1,9 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
-public class BuyerSnapshot
+public class BuyerSnapshot : ValueObject
 {
     public string FullName { get; private set; } = null!;
     public string Email { get; private set; } = null!;
@@ -44,5 +45,13 @@ public class BuyerSnapshot
     public BuyerSnapshot Copy()
     {
         return new BuyerSnapshot(FullName, Email, PhoneNumber, Address.Copy());
+    }
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return FullName;
+        yield return Email;
+        yield return PhoneNumber;
+        yield return Address;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ByteBuy.Core.Domain.EntityContracts;
+﻿namespace ByteBuy.Core.Domain.Base;
 
 /// <summary>
 /// Abstract class that defines typical fields used in entities

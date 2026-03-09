@@ -1,8 +1,9 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.ValueObjects;
 
-public sealed class Money : IEquatable<Money>
+public sealed class Money : ValueObject
 {
     public decimal Amount { get; private set; } = 0;
     public string Currency { get; private set; } = "PLN";
@@ -93,5 +94,11 @@ public sealed class Money : IEquatable<Money>
             return false;
 
         return true;
+    }
+
+    public override IEnumerable<object?> GetEqualityComponents()
+    {
+        yield return Currency;
+        yield return Amount;
     }
 }
