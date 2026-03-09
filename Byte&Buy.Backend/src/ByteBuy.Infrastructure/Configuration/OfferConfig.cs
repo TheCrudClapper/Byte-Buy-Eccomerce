@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Offers;
+﻿using ByteBuy.Core.Domain.Offers.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -31,7 +31,7 @@ public class OfferConfig : IEntityTypeConfiguration<Offer>
 
         builder.OwnsOne(o => o.Seller, s =>
         {
-            s.Property(x => x.Id)
+            s.Property(x => x.SellerId)
                 .HasColumnName("Seller_Id")
                 .IsRequired();
 

@@ -372,12 +372,12 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_PaymentOrders",
                 table: "PaymentOrders",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Payments",
                 table: "Payments",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.CreateTable(
                 name: "OrderDeliveries",
@@ -416,7 +416,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderDeliveries_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -441,7 +441,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderGroups_AspNetUsers_BuyerId",
                         column: x => x.BuyerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -472,7 +472,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderLines_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -522,14 +522,14 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "BuyerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_OrderDeliveries_DeliveryId",
                 table: "Orders",
                 column: "DeliveryId",
                 principalTable: "OrderDeliveries",
-                principalColumn: "Id",
+                principalColumn: "SellerId",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
@@ -537,28 +537,28 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "OrderGroupId",
                 principalTable: "OrderGroups",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PaymentOrders_OrderGroups_OrderGroupId",
                 table: "PaymentOrders",
                 column: "OrderGroupId",
                 principalTable: "OrderGroups",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PaymentOrders_Payments_PaymentId",
                 table: "PaymentOrders",
                 column: "PaymentId",
                 principalTable: "Payments",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Rental_AspNetUsers_BorrowerId",
                 table: "Rental",
                 column: "BorrowerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -893,12 +893,12 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Payment",
                 table: "Payment",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_PaymentOrder",
                 table: "PaymentOrder",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.CreateTable(
                 name: "OrderItems",
@@ -923,12 +923,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderItems_Offers_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Offers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -946,7 +946,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_RentOrderItems_OrderItems_Id",
                         column: x => x.Id,
                         principalTable: "OrderItems",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -963,7 +963,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_SaleOrderItems_OrderItems_Id",
                         column: x => x.Id,
                         principalTable: "OrderItems",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -988,42 +988,42 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "CartOffers",
                 column: "OrderId",
                 principalTable: "Offers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Offers_OrderId",
                 table: "OfferDeliveries",
                 column: "OrderId",
                 principalTable: "Offers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_UserId",
                 table: "Orders",
                 column: "UserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PaymentOrder_Orders_OrderId",
                 table: "PaymentOrder",
                 column: "OrderId",
                 principalTable: "Orders",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PaymentOrder_Payment_PaymentId",
                 table: "PaymentOrder",
                 column: "PaymentId",
                 principalTable: "Payment",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Rental_RentOrderItems_RentOrderItemId",
                 table: "Rental",
                 column: "RentOrderItemId",
                 principalTable: "RentOrderItems",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

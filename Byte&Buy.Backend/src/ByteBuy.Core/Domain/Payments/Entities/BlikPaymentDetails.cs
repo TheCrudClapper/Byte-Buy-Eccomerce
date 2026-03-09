@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.ResultTypes;
 
-namespace ByteBuy.Core.Domain.Payments;
+namespace ByteBuy.Core.Domain.Payments.Entities;
 
 public sealed class BlikPaymentDetails : PaymentDetails
 {

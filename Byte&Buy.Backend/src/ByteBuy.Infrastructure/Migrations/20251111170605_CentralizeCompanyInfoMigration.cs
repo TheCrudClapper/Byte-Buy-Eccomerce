@@ -64,7 +64,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "CompanyInfoId",
                 principalTable: "CompanyInfo",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

@@ -222,14 +222,14 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "CompanyInfoId",
                 principalTable: "CompanyInfo",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_UserId",
                 table: "Orders",
                 column: "UserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -375,7 +375,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "UserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id",
+                principalColumn: "SellerId",
                 onDelete: ReferentialAction.Cascade);
         }
     }

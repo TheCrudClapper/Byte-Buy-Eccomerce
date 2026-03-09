@@ -32,7 +32,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Carts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -127,7 +127,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Orders_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -154,17 +154,17 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Items_AspNetUsers_CreatedByUserId",
                         column: x => x.CreatedByUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_Items_Category_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Category",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_Items_Condition_ConditionId",
                         column: x => x.ConditionId,
                         principalTable: "Condition",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -191,12 +191,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Addresses_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_Addresses_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -219,7 +219,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Images_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -240,7 +240,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Offers_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -263,12 +263,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_CartOffers_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_CartOffers_Offers_OfferId",
                         column: x => x.OfferId,
                         principalTable: "Offers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -290,12 +290,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OfferDelivery_Delivery_DeliveryId",
                         column: x => x.DeliveryId,
                         principalTable: "Delivery",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_OfferDelivery_Offers_OfferId",
                         column: x => x.OfferId,
                         principalTable: "Offers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -322,12 +322,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderItems_Offers_OfferId",
                         column: x => x.OfferId,
                         principalTable: "Offers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -346,7 +346,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_RentOffers_Offers_Id",
                         column: x => x.Id,
                         principalTable: "Offers",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -365,7 +365,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_SaleOffers_Offers_Id",
                         column: x => x.Id,
                         principalTable: "Offers",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -384,7 +384,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_RentCartOffers_CartOffers_Id",
                         column: x => x.Id,
                         principalTable: "CartOffers",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -401,7 +401,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_SaleCartOffers_CartOffers_Id",
                         column: x => x.Id,
                         principalTable: "CartOffers",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -422,7 +422,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_RentOrderItems_OrderItems_Id",
                         column: x => x.Id,
                         principalTable: "OrderItems",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -439,7 +439,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_SaleOrderItems_OrderItems_Id",
                         column: x => x.Id,
                         principalTable: "OrderItems",
-                        principalColumn: "Id",
+                        principalColumn: "SellerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

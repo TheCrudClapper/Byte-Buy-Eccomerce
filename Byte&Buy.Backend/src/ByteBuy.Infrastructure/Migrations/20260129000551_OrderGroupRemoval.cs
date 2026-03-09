@@ -58,7 +58,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "PaymentId",
                 principalTable: "Payments",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />

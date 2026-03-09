@@ -77,7 +77,7 @@ public sealed class Money : ValueObject
             .Combine(decimal.Round(Amount, 2, MidpointRounding.AwayFromZero), Currency);
     }
 
-    public Money Clone()
+    public Money Copy()
     {
         return new Money(Amount, Currency);
     }

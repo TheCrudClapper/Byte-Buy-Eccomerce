@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Deliveries;
+using ByteBuy.Core.Domain.Offers.Base;
 
 namespace ByteBuy.Core.Domain.Offers.Entities;
 

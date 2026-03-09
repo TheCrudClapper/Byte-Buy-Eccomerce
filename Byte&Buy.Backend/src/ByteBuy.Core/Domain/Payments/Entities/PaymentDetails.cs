@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Payments.Enums;
 
-namespace ByteBuy.Core.Domain.Payments;
+namespace ByteBuy.Core.Domain.Payments.Entities;
 
 public abstract class PaymentDetails : Entity, ISoftDeletable
 {

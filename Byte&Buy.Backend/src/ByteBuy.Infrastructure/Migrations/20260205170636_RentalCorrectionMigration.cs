@@ -30,14 +30,14 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Rentals",
                 table: "Rentals",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Rentals_AspNetUsers_BorrowerId",
                 table: "Rentals",
                 column: "BorrowerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -63,14 +63,14 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Rental",
                 table: "Rental",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Rental_AspNetUsers_BorrowerId",
                 table: "Rental",
                 column: "BorrowerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

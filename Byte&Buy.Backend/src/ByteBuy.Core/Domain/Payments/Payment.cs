@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Payments.Entities;
 using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.ResultTypes;

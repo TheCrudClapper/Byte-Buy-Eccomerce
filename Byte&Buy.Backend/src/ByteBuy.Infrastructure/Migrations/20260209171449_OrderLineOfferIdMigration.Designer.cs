@@ -27,7 +27,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -55,7 +55,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -66,7 +66,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -144,7 +144,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(21)
                         .HasColumnType("character varying(21)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -180,7 +180,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Cart", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -199,7 +199,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -209,7 +209,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.CartOffer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -234,7 +234,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("CartId");
 
@@ -247,7 +247,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -272,14 +272,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Company", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -314,14 +314,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Company", (string)null);
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Condition", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -346,14 +346,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Country", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -379,14 +379,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Delivery", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -423,7 +423,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("DeliveryCarrierId");
 
@@ -432,7 +432,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.DeliveryCarrier", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -458,14 +458,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("DeliveryCarriers");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Image", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -492,7 +492,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("ItemId");
 
@@ -501,7 +501,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Item", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -539,7 +539,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<int>("StockQuantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("CategoryId");
 
@@ -550,7 +550,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Offer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -580,7 +580,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("CreatedByUserId");
 
@@ -593,7 +593,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OfferDelivery", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -615,7 +615,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("OfferId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("DeliveryId");
 
@@ -626,7 +626,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -653,7 +653,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("BuyerId");
 
@@ -662,7 +662,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderDelivery", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -742,7 +742,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("Channel");
 
@@ -754,7 +754,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.OrderLine", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -788,7 +788,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("OrderId");
 
@@ -801,7 +801,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Payment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -830,14 +830,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentDetails", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -859,7 +859,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("PaymentId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("PaymentId")
                         .IsUnique();
@@ -873,7 +873,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.PaymentOrder", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -895,7 +895,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("PaymentId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("OrderId")
                         .IsUnique();
@@ -907,7 +907,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Permission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -930,14 +930,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Rental", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -984,7 +984,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("BorrowerId");
 
@@ -993,7 +993,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RolePermission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -1015,7 +1015,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("PermissionId");
 
@@ -1026,7 +1026,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ShippingAddress", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -1085,7 +1085,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("CountryId");
 
@@ -1096,7 +1096,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.UserPermission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -1121,7 +1121,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("PermissionId");
 
@@ -1132,11 +1132,11 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SellerId"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -1147,7 +1147,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("RoleId");
 
@@ -1156,11 +1156,11 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SellerId"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -1171,7 +1171,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("UserId");
 
@@ -1656,7 +1656,7 @@ namespace ByteBuy.Infrastructure.Migrations
                             b1.Property<Guid>("OfferId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<Guid>("Id")
+                            b1.Property<Guid>("SellerId")
                                 .HasColumnType("uuid")
                                 .HasColumnName("Seller_Id");
 
@@ -2346,7 +2346,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.CartOffer", null)
                         .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.RentCartOffer", "Id")
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.RentCartOffer", "SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2355,7 +2355,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.CartOffer", null)
                         .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.SaleCartOffer", "Id")
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.SaleCartOffer", "SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2364,7 +2364,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.Offer", null)
                         .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.RentOffer", "Id")
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.RentOffer", "SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2398,7 +2398,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 {
                     b.HasOne("ByteBuy.Core.Domain.Entities.Offer", null)
                         .WithOne()
-                        .HasForeignKey("ByteBuy.Core.Domain.Entities.SaleOffer", "Id")
+                        .HasForeignKey("ByteBuy.Core.Domain.Entities.SaleOffer", "SellerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

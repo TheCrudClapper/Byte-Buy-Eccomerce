@@ -28,7 +28,7 @@ public sealed record Error(ErrorType Type, string Code, string Description)
         = new(ErrorType.Validation, "Common.NullValue", "NullValue");
 
     public static readonly Error NotFound
-        = new(ErrorType.NotFound, "Common.NotFound", "Resource of given Id doesn't exist");
+        = new(ErrorType.NotFound, "Common.NotFound", "Resource of given SellerId doesn't exist");
 
     public static Error Validation(string code, string message)
         => new(ErrorType.Validation, code, message);

@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Carts.Entities;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Orders.Entities;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Core.ResultTypes;

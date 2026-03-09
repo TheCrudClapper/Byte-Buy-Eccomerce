@@ -30,7 +30,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_PaymentDetails_Payments_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payments",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateIndex(

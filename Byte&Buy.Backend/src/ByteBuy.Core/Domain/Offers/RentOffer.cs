@@ -1,7 +1,8 @@
-﻿using ByteBuy.Core.Domain.Shared.ValueObjects;
+﻿using ByteBuy.Core.Domain.Offers.Base;
+using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.ResultTypes;
 
-namespace ByteBuy.Core.Domain.Offers.Entities;
+namespace ByteBuy.Core.Domain.Offers;
 
 public class RentOffer : Offer
 {

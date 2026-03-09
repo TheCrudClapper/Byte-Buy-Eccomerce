@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Offers;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers.Base;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Offer;
 using ByteBuy.Core.DTO.Public.Offer.Common;

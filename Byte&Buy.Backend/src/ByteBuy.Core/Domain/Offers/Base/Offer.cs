@@ -7,7 +7,7 @@ using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.ResultTypes;
 
-namespace ByteBuy.Core.Domain.Offers;
+namespace ByteBuy.Core.Domain.Offers.Base;
 
 public abstract class Offer : AggregateRoot, ISoftDeletable
 {

@@ -44,7 +44,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "DeliveryId",
                 principalTable: "OrderDeliveries",
-                principalColumn: "Id",
+                principalColumn: "SellerId",
                 onDelete: ReferentialAction.Cascade);
         }
     }

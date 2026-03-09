@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Carts.Entities;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.DTO.Public.Cart.CartOffer;
 
 namespace ByteBuy.Core.Mappings;

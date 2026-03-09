@@ -27,7 +27,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -55,7 +55,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -66,7 +66,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.ApplicationUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -139,7 +139,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -153,7 +153,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.Permission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -176,14 +176,14 @@ namespace ByteBuy.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.RolePermission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -205,7 +205,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("PermissionId");
 
@@ -216,7 +216,7 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("ByteBuy.Core.Domain.Entities.UserPermission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -241,7 +241,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("PermissionId");
 
@@ -252,11 +252,11 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SellerId"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -267,7 +267,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("RoleId");
 
@@ -276,11 +276,11 @@ namespace ByteBuy.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SellerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SellerId"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("text");
@@ -291,7 +291,7 @@ namespace ByteBuy.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("SellerId");
 
                     b.HasIndex("UserId");
 

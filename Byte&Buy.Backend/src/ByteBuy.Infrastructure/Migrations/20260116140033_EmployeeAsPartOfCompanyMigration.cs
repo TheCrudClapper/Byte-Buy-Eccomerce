@@ -54,7 +54,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "CompanyId",
                 principalTable: "Company",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />

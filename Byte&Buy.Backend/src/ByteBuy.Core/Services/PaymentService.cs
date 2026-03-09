@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Payments;
+using ByteBuy.Core.Domain.Payments.Entities;
 using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;

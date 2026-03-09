@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Offers.Entities;
+﻿using ByteBuy.Core.Domain.Offers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

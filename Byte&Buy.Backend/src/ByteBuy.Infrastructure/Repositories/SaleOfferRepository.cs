@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.Domain.Offers.Entities;
+﻿using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Filtration.SaleOffer;

@@ -10,7 +10,7 @@ namespace ByteBuy.API.Controllers.Base;
 public class BaseApiController : ControllerBase
 {
     /// <summary>
-    /// Gets Logged User Id from Authentication Token
+    /// Gets Logged User SellerId from Authentication Token
     /// </summary>
     protected Guid CurrentUserId => this.GetLoggedUserId();
 

@@ -44,7 +44,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Deliveries",
                 column: "DeliveryCarrierId",
                 principalTable: "DeliveryCarrier",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />

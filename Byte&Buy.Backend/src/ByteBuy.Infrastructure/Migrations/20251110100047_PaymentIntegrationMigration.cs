@@ -51,7 +51,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_Rental_RentOrderItems_RentOrderItemId",
                         column: x => x.RentOrderItemId,
                         principalTable: "RentOrderItems",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -74,12 +74,12 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_PaymentOrder_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                     table.ForeignKey(
                         name: "FK_PaymentOrder_Payment_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payment",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateIndex(

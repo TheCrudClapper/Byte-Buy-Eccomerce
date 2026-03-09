@@ -89,14 +89,14 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Deliveries",
                 table: "Deliveries",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Deliveries_DeliveryId",
                 table: "OfferDeliveries",
                 column: "DeliveryId",
                 principalTable: "Deliveries",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -177,14 +177,14 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Delivery",
                 table: "Delivery",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Delivery_DeliveryId",
                 table: "OfferDeliveries",
                 column: "DeliveryId",
                 principalTable: "Delivery",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

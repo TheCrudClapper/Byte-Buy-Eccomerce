@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Items;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Shared.ValueObjects;

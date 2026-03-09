@@ -74,7 +74,7 @@ namespace ByteBuy.Infrastructure.Migrations
                         name: "FK_OrderGroups_AspNetUsers_BuyerId",
                         column: x => x.BuyerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "SellerId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -97,14 +97,14 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "OrderGroupId",
                 principalTable: "OrderGroups",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PaymentOrders_OrderGroups_OrderGroupId",
                 table: "PaymentOrders",
                 column: "OrderGroupId",
                 principalTable: "OrderGroups",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

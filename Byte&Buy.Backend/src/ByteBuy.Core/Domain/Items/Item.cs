@@ -2,7 +2,7 @@
 using ByteBuy.Core.Domain.Categories;
 using ByteBuy.Core.Domain.Conditions;
 using ByteBuy.Core.Domain.Items.Entities;
-using ByteBuy.Core.Domain.Offers;
+using ByteBuy.Core.Domain.Offers.Base;
 using ByteBuy.Core.Domain.Shared.DomainModels;
 using ByteBuy.Core.ResultTypes;
 

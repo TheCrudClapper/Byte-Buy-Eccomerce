@@ -1,6 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Carts.Entities;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Offers.Enums;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
@@ -285,8 +285,8 @@ public class Cart : AggregateRoot, ISoftDeletable
             }
         }
 
-        TotalCartValue = ItemsTotal.Clone();
-        TotalItemsValue = ItemsTotal.Clone();
+        TotalCartValue = ItemsTotal.Copy();
+        TotalItemsValue = ItemsTotal.Copy();
 
         return Result.Success();
     }

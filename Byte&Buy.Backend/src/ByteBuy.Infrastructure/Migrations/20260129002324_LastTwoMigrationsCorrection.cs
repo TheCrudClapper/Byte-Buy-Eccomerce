@@ -33,7 +33,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "PaymentOrders",
                 column: "OrderId",
                 principalTable: "Orders",
-                principalColumn: "Id",
+                principalColumn: "SellerId",
                 onDelete: ReferentialAction.NoAction);
         }
 
@@ -64,7 +64,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Orders",
                 column: "PaymentId",
                 principalTable: "Payments",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

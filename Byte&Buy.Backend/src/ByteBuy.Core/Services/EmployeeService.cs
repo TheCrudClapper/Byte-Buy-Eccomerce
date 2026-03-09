@@ -214,7 +214,7 @@ public class EmployeeService : IEmployeeService
     /// <summary>
     /// Get list of all employees except current logged user
     /// </summary>
-    /// <param name="excludedUserId">User Id corresponding to current user</param>
+    /// <param name="excludedUserId">User SellerId corresponding to current user</param>
     /// <param name="ct">Cancelation for stopping async operations</param>
     /// <returns>A Dto list of employees within company</returns>
     public async Task<Result<PagedList<EmployeeListResponse>>> GetEmployeesListAsync(

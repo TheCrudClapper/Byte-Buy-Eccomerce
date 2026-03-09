@@ -75,14 +75,14 @@ public class OrderCreateService : IOrderCreateService
             var paymentMethod = (PaymentMethod)request.PaymentMethodId;
 
             var offersBySeller = cart.CartOffers
-                .GroupBy(o => o.Offer.Seller.Id);
+                .GroupBy(o => o.Offer.Seller.SellerId);
 
             // download all needed deliveries
             var deliveriesSpec = new DeliveryOrderQuerySpec(request.SelectedDeliveries.Select(d => d.DeliveryId));
             var deliveries = await _deliveryRepository.GetListBySpecAsync(deliveriesSpec);
 
             var sellerIds = cart.CartOffers
-              .Select(co => (co.Offer.Seller.Id, co.Offer.Seller.Type))
+              .Select(co => (co.Offer.Seller.SellerId, co.Offer.Seller.Type))
               .Distinct()
               .ToList();
 
@@ -98,7 +98,7 @@ public class OrderCreateService : IOrderCreateService
 
             var privateSellerSpec = new PrivateSellersSnapshotSpec(sellerIds
                 .Where(i => i.Type != SellerType.Company)
-                .Select(i => i.Id));
+                .Select(i => i.SellerId));
 
             var privateSellers = await _portalUserRepository.GetListBySpecAsync(privateSellerSpec);
 

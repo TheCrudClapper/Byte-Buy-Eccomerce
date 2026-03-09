@@ -8,12 +8,12 @@ public class Seller : ValueObject
 {
     public SellerType Type { get; init; }
 
-    // Id is evaluated based on type property
-    public Guid Id { get; init; }
+    // SellerId is evaluated based on type property
+    public Guid SellerId { get; init; }
 
     private Seller(SellerType type, Guid id)
     {
-        Id = id;
+        SellerId = id;
         Type = type;
     }
 
@@ -26,6 +26,6 @@ public class Seller : ValueObject
     public override IEnumerable<object?> GetEqualityComponents()
     {
         yield return Type;
-        yield return Id;
+        yield return SellerId;
     }
 }

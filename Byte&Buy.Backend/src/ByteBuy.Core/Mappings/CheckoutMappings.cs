@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Carts.Entities;
-using ByteBuy.Core.Domain.Offers.Entities;
+using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Offers.Enums;
 using ByteBuy.Core.DTO.Internal.Cart.Enum;
 using ByteBuy.Core.DTO.Internal.Checkout;
@@ -66,7 +66,7 @@ public static class CheckoutMappings
                 ? ((RentCartOffer)co).RentalDays
                 : null,
 
-            SellerId = co.Offer.Seller.Id,
+            SellerId = co.Offer.Seller.SellerId,
             SellerType = co.Offer.Seller.Type,
             Thumbnail = co.Offer.Item.Images
                 .AsQueryable()

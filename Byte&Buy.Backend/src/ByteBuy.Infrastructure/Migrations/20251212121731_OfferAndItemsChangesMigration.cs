@@ -53,7 +53,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Offers",
                 column: "CreatedByUserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -96,7 +96,7 @@ namespace ByteBuy.Infrastructure.Migrations
                 table: "Items",
                 column: "CreatedByUserId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }

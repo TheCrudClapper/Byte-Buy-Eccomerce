@@ -63,45 +63,45 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_OfferDeliveries",
                 table: "OfferDeliveries",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Conditions",
                 table: "Conditions",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Categories",
                 table: "Categories",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Items_Categories_CategoryId",
                 table: "Items",
                 column: "CategoryId",
                 principalTable: "Categories",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Items_Conditions_ConditionId",
                 table: "Items",
                 column: "ConditionId",
                 principalTable: "Conditions",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Delivery_DeliveryId",
                 table: "OfferDeliveries",
                 column: "DeliveryId",
                 principalTable: "Delivery",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDeliveries_Offers_OfferId",
                 table: "OfferDeliveries",
                 column: "OrderId",
                 principalTable: "Offers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
 
         /// <inheritdoc />
@@ -160,45 +160,45 @@ namespace ByteBuy.Infrastructure.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_OfferDelivery",
                 table: "OfferDelivery",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Condition",
                 table: "Condition",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Category",
                 table: "Category",
-                column: "Id");
+                column: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Items_Category_CategoryId",
                 table: "Items",
                 column: "CategoryId",
                 principalTable: "Category",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Items_Condition_ConditionId",
                 table: "Items",
                 column: "ConditionId",
                 principalTable: "Condition",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDelivery_Delivery_DeliveryId",
                 table: "OfferDelivery",
                 column: "DeliveryId",
                 principalTable: "Delivery",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OfferDelivery_Offers_OfferId",
                 table: "OfferDelivery",
                 column: "OrderId",
                 principalTable: "Offers",
-                principalColumn: "Id");
+                principalColumn: "SellerId");
         }
     }
 }
