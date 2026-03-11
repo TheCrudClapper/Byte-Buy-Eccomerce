@@ -11,6 +11,7 @@ public class Seller : ValueObject
     // SellerId is evaluated based on type property
     public Guid SellerId { get; init; }
 
+    private Seller() { }
     private Seller(SellerType type, Guid id)
     {
         SellerId = id;
