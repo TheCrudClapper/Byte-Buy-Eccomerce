@@ -99,9 +99,6 @@ public class Cart : AggregateRoot, ISoftDeletable
         if (offer is null || offer is not SaleOffer saleOffer)
             return Result.Failure(CartErrors.NullOffer);
 
-        if (saleOffer.Status == OfferStatus.SoldOut)
-            return Result.Failure(CartErrors.OfferIsSoldOut);
-
         //in this case, we delete item from cart
         if (quantity <= 0)
         {
@@ -112,6 +109,9 @@ public class Cart : AggregateRoot, ISoftDeletable
 
             return Result.Success();
         }
+
+        if (saleOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
 
         if (quantity > saleOffer.QuantityAvailable)
             return Result.Failure(CartErrors.RequestedQuantityTooHigh);
@@ -202,9 +202,6 @@ public class Cart : AggregateRoot, ISoftDeletable
         if (offer is null || offer is not RentOffer rentOffer)
             return Result.Failure(CartErrors.NullOffer);
 
-        if (rentOffer.Status == OfferStatus.SoldOut)
-            return Result.Failure(CartErrors.OfferIsSoldOut);
-
         if (quantity <= 0)
         {
             cartOffer.Deactivate();
@@ -220,6 +217,9 @@ public class Cart : AggregateRoot, ISoftDeletable
 
         if (rentalDays > rentOffer.MaxRentalDays)
             return Result.Failure(CartErrors.RentalDaysTooHigh);
+
+        if (rentOffer.Status == OfferStatus.SoldOut)
+            return Result.Failure(CartErrors.OfferIsSoldOut);
 
         if (quantity > rentOffer.QuantityAvailable)
             return Result.Failure(CartErrors.RequestedQuantityTooHigh);

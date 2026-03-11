@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="src/ByteBuy.Infrastructure/ByteBuy.Infrastructure.csproj" />
-  <Project Path="src/ByteBuy.Services/ByteBuy.Services.csproj" />
+  <Project Path="src/ByteBuy.Services/ByteBuy.Core.csproj" />
   <Project Path="src/ByteBuy.UI/ByteBuy.UI.csproj" />
 </Solution>

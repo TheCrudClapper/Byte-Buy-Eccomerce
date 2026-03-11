@@ -46,7 +46,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
-		<ProjectReference Include="..\ByteBuy.Services\ByteBuy.Services.csproj" />
+		<ProjectReference Include="..\ByteBuy.Services\ByteBuy.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
