@@ -89,6 +89,12 @@ RecurringJob.AddOrUpdate<RentalStatusJob>(
     Cron.Daily(0, 0)
 );
 
+RecurringJob.AddOrUpdate<OrderStatusJob>(
+    "cancel-unpaid-orders",
+    job => job.Execute(),
+    Cron.Daily(0, 0)
+);
+
 // -----------------------------
 // Https
 // -----------------------------

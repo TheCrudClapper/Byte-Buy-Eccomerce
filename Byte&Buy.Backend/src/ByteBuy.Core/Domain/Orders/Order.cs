@@ -12,11 +12,12 @@ public static class OrderStatusTransitions
 {
     public static readonly Dictionary<OrderStatus, OrderStatus[]> AllowedTransitions = new()
     {
-        { OrderStatus.AwaitingPayment, [ OrderStatus.Paid, OrderStatus.Canceled ] },
+        { OrderStatus.AwaitingPayment, [ OrderStatus.Paid, OrderStatus.Canceled, OrderStatus.SystemCanceled ] },
         { OrderStatus.Paid, [ OrderStatus.Shipped ] },
         { OrderStatus.Shipped, [ OrderStatus.Delivered ] },
         { OrderStatus.Delivered, [ OrderStatus.Returned ] },
         { OrderStatus.Canceled, [] },
+        { OrderStatus.SystemCanceled, [] },
         { OrderStatus.Returned, [] }
     };
 }
