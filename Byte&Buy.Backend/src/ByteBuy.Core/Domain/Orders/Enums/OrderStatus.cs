@@ -35,5 +35,11 @@ public enum OrderStatus
     /// OrderStatus when orders is returned within first 14 days
     /// </summary>
     [Description("Returned")]
-    Returned = 5
+    Returned = 5,
+
+    /// <summary>
+    /// Order Canceled when orders is not paid withing 24 from purchase
+    /// </summary>
+    [Description("System Canceled")]
+    SystemCanceled = 6,
 }
