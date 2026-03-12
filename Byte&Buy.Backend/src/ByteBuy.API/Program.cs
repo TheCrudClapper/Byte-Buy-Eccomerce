@@ -3,7 +3,6 @@ using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.HangfireJobs;
 using EquipmentService.API.Extensions;
 using Hangfire;
 using Hangfire.PostgreSql;
@@ -77,23 +76,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 // -----------------------------
 // Hangfire
 // -----------------------------
 app.UseHangfireDashboard("/hangfire");
 
-
-RecurringJob.AddOrUpdate<RentalStatusJob>(
-    "update-rental-statuses",
-    job => job.Execute(),
-    Cron.Daily(0, 0)
-);
-
-RecurringJob.AddOrUpdate<OrderStatusJob>(
-    "cancel-unpaid-orders",
-    job => job.Execute(),
-    Cron.Daily(0, 0)
-);
+// -----------------------------
+// Add Recurring Jobs
+// -----------------------------
+app.AddRecurringJobs();
 
 // -----------------------------
 // Https
