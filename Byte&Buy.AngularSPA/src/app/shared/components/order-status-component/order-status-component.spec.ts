@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CtaButton } from './cta-button';
+import { OrderStatusComponent } from './order-status-component';
 
-describe('CtaButton', () => {
-  let component: CtaButton;
-  let fixture: ComponentFixture<CtaButton>;
+describe('OrderStatusComponent', () => {
+  let component: OrderStatusComponent;
+  let fixture: ComponentFixture<OrderStatusComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CtaButton]
+      imports: [OrderStatusComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CtaButton);
+    fixture = TestBed.createComponent(OrderStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

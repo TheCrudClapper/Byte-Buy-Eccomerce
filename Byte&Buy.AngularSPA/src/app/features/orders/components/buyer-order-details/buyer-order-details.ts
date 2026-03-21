@@ -1,6 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { OrderApiService } from '../../../../core/clients/orders/order-api-service';
-import { ToastService } from '../../../../shared/services/snackbar/toast-service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
 import { OrderStatus } from '../../../../core/dto/order/enum/order-status';
@@ -11,17 +10,17 @@ import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
 import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
+import { OrderStatusComponent } from '../../../../shared/components/order-status-component/order-status-component';
 
 @Component({
   selector: 'app-buyer-order-details',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, OrderStatusComponent],
   standalone: true,
   templateUrl: './buyer-order-details.html',
   styleUrl: './buyer-order-details.scss',
 })
 export class BuyerOrderDetails implements OnInit {
   private readonly orderApiService = inject(OrderApiService);
-  private readonly toastService = inject(ToastService);
   private readonly dialogService = inject(DialogService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

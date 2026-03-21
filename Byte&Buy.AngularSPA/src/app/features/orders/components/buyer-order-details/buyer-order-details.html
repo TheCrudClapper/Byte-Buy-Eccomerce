@@ -8,50 +8,8 @@
         @if(orderDetails(); as order){
         <div class="content-section">
             <div class="delivery-row">
-                @if(order.status === OrderStatus.AwaitingPayment){
-                <i class="fa-solid fa-hourglass-end" style="color: #ffffff;"></i>
-                <span class="content-title open-sans-bold">
-                    Awaiting Payment
-                </span>
-                }
-                @if(order.status === OrderStatus.Paid){
-                <i class="fa-solid fa-coins" style="color: #ffffff;"></i>
-                <span class="content-title open-sans-bold">
-                    Order Paid
-                </span>
-                }
-                @if(order.status === OrderStatus.Canceled){
-                <i class="fa-solid fa-ban" style="color: #ffffff;"></i>
-                <span class="content-title open-sans-bold">
-                    Order Canceled by user
-                </span>
-                }
-                @if(order.status === OrderStatus.Shipped){
-                <i class="fa-solid fa-truck" style="color: #ffffff;"></i>
-                <span class="content-title open-sans-bold">
-                    Order in shipment
-                </span>
-                }
-                @if(order.status === OrderStatus.Returned){
-                <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
-                <span class="content-title open-sans-bold">
-                    Order returned
-                </span>
-                }
-                @if(order.status === OrderStatus.Delivered){
-                <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
-                <div class="delivery-text">
-                    <span class="content-title open-sans-bold">
-                        Package delivered
-                    </span>
-                    <span class="fs-12-px">
-                        @if(order.dateDelivered){
-                        {{ order.dateDelivered | date:'dd MMM yyyy, HH:mm' }}
-                        }
-                    </span>
-                </div>
-                }
-
+                <app-order-status-component [dateDelivered]="order.dateDelivered"
+                    [status]="order.status"></app-order-status-component>
             </div>
             <hr>
 

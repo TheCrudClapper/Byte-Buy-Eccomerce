@@ -1,4 +1,3 @@
-import { CtaButton } from "../components/cta-button/cta-button";
 import { CtaButtonModel } from "./cta-button-model";
 
 export interface EmptyStateModel{

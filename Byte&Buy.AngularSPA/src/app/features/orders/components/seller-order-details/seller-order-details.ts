@@ -11,11 +11,12 @@ import { CommonModule } from '@angular/common';
 import { DocumentsApiService } from '../../../../core/clients/documents/documents-api-service';
 import { ProblemDetails } from '../../../../core/dto/problem-details';
 import { DialogService } from '../../../../shared/services/dialog-service/dialog-service';
+import { OrderStatusComponent } from '../../../../shared/components/order-status-component/order-status-component';
 
 @Component({
   selector: 'app-seller-order-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, OrderStatusComponent],
   templateUrl: './seller-order-details.html',
   styleUrl: './seller-order-details.scss',
 })

@@ -13,10 +13,11 @@ import { EmptyStateModel } from '../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../shared/components/empty-state/empty-state";
 import { Pagination } from "../../../../shared/components/pagination/pagination";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { OrderStatusComponent } from '../../../../shared/components/order-status-component/order-status-component';
 
 @Component({
   selector: 'app-client-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, ReactiveFormsModule],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, ReactiveFormsModule, OrderStatusComponent],
   standalone: true,
   templateUrl: './client-orders.html',
   styleUrl: './client-orders.scss',

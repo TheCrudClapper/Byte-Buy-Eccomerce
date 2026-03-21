@@ -1,0 +1,46 @@
+@if(status === OrderStatusEnum.AwaitingPayment){
+<i class="fa-solid fa-hourglass-end" style="color: #ffffff;"></i>
+<span class="content-title open-sans-bold">
+    Awaiting Payment
+</span>
+}
+
+@if(status === OrderStatusEnum.Paid){
+<i class="fa-solid fa-coins" style="color: #ffffff;"></i>
+<span class="content-title open-sans-bold">
+    Order Paid
+</span>
+}
+
+@if(status === OrderStatusEnum.Canceled){
+<i class="fa-solid fa-ban" style="color: #ffffff;"></i>
+<span class="content-title open-sans-bold">
+    Order Canceled by user
+</span>
+}
+
+@if(status === OrderStatusEnum.Shipped){
+<i class="fa-solid fa-truck" style="color: #ffffff;"></i>
+<span class="content-title open-sans-bold">
+    Order in shipment
+</span>
+}
+
+@if(status === OrderStatusEnum.Returned){
+<i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i>
+<span class="content-title open-sans-bold">
+    Order returned
+</span>
+}
+
+@if(status === OrderStatusEnum.Delivered && dateDelivered){
+<i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i>
+<div class="delivery-text">
+    <span class="content-title open-sans-bold">
+        Package delivered
+    </span>
+    <span class="fs-12-px">
+        {{ dateDelivered | date:'dd MMM yyyy, HH:mm' }}
+    </span>
+</div>
+}
