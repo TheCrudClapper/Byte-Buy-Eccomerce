@@ -12,10 +12,11 @@ import { PagedList } from '../../../../../core/pagination/pagedList';
 import { EmptyStateModel } from '../../../../../shared/models/empty-state-model';
 import { EmptyState } from "../../../../../shared/components/empty-state/empty-state";
 import { Pagination } from "../../../../../shared/components/pagination/pagination";
+import { OrderStatusComponent } from "../../../../../shared/components/order-status-component/order-status-component";
 
 @Component({
   selector: 'app-my-orders',
-  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination],
+  imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, OrderStatusComponent],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.scss',
   standalone: true,

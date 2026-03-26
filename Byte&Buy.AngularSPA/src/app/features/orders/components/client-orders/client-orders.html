@@ -13,24 +13,8 @@
         <div class="content-section">
             <div class="d-flex d-align-items-center justify-content-between">
                 <p class="my-0 content-section-title">
-                    @if(order.status === OrderStatus.AwaitingPayment){
-                    <i class="fa-solid fa-hourglass-end" style="color: #ffffff;"></i> Awaiting Payment
-                    }
-                    @if(order.status === OrderStatus.Paid){
-                    <i class="fa-solid fa-coins" style="color: #ffffff;"></i> Order Paid
-                    }
-                    @if(order.status === OrderStatus.Canceled){
-                    <i class="fa-solid fa-ban" style="color: #ffffff;"></i> Order Canceled by user
-                    }
-                    @if(order.status === OrderStatus.Shipped){
-                    <i class="fa-solid fa-truck" style="color: #ffffff;"></i> Order in shipment
-                    }
-                    @if(order.status === OrderStatus.Returned){
-                    <i class="fa-solid fa-arrow-rotate-left" style="color: #ffffff;"></i> Order returned
-                    }
-                    @if(order.status === OrderStatus.Delivered){
-                    <i class="fa-solid fa-truck-ramp-box" style="color: #ffffff;"></i> Order delivered
-                    }
+                    <app-order-status-component [dateDelivered]="null"
+                        [status]="order.status"></app-order-status-component>
                 </p>
                 <p class="my-0 content-section-title">
                     Purchased ({{ order.purchasedDate | date:'dd MMM yyyy, HH:mm' }})
