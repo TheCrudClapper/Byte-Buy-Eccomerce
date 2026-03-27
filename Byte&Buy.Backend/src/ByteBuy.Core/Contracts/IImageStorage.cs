@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using Microsoft.AspNetCore.Http;
 
 namespace ByteBuy.Core.Contracts;

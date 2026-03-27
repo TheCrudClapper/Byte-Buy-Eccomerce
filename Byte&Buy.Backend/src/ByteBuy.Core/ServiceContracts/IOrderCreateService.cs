@@ -1,5 +1,5 @@
-﻿using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Order;
 
 namespace ByteBuy.Core.ServiceContracts;
 

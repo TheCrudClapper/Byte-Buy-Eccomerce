@@ -1,12 +1,13 @@
 ﻿using ByteBuy.Core.Domain.Conditions;
+using ByteBuy.Core.Domain.Conditions.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Condition;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;

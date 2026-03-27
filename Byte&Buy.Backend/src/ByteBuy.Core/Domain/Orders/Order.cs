@@ -1,10 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Orders.Entities;
 using ByteBuy.Core.Domain.Orders.Enums;
+using ByteBuy.Core.Domain.Orders.Errors;
 using ByteBuy.Core.Domain.Shared.Exceptions;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
-using ByteBuy.Core.ResultTypes;
 namespace ByteBuy.Core.Domain.Orders;
 
 //Class that holds allowed transitions between order states

@@ -1,10 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Payments;
 using ByteBuy.Core.Domain.Payments.Entities;
 using ByteBuy.Core.Domain.Payments.Enums;
+using ByteBuy.Core.Domain.Payments.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Payment;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;

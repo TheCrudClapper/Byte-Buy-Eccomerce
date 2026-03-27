@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Offers.Base;
+using ByteBuy.Core.Domain.Offers.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Offers;
 

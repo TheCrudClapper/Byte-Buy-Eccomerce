@@ -2,9 +2,10 @@
 using ByteBuy.Core.Domain.Categories;
 using ByteBuy.Core.Domain.Conditions;
 using ByteBuy.Core.Domain.Items.Entities;
+using ByteBuy.Core.Domain.Items.Errors;
 using ByteBuy.Core.Domain.Offers.Base;
 using ByteBuy.Core.Domain.Shared.DomainModels;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Items;
 

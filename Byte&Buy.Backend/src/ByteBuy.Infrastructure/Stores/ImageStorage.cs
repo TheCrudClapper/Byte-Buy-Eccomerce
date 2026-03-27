@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Contracts;
 using ByteBuy.Core.Contracts.Enums;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Items.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 

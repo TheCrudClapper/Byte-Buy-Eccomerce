@@ -1,6 +1,10 @@
-﻿using ByteBuy.Core.Domain.Offers;
+﻿using ByteBuy.Core.Domain.Companies.Errors;
+using ByteBuy.Core.Domain.Items.Errors;
+using ByteBuy.Core.Domain.Offers;
+using ByteBuy.Core.Domain.Offers.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
@@ -8,7 +12,6 @@ using ByteBuy.Core.Filtration.RentOffer;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
 using static ByteBuy.Core.Specification.RentOfferSpecifications;
@@ -55,7 +58,7 @@ public class RentOfferService : IRentOfferService
         var spec = new CompanyAddressWithIdSpec();
         var companyData = await _companyInfoRepository.GetBySpecAsync(spec);
         if (companyData is null)
-            return Result.Failure<CreatedResponse>(CompanyInfoErrors.NotFound);
+            return Result.Failure<CreatedResponse>(CompanyErrors.NotFound);
 
         var seller = Seller.CreateCompanySeller(companyData.Id);
 

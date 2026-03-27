@@ -3,9 +3,10 @@ using ByteBuy.Core.Domain.Carts.Entities;
 using ByteBuy.Core.Domain.Items;
 using ByteBuy.Core.Domain.Offers.Entities;
 using ByteBuy.Core.Domain.Offers.Enums;
+using ByteBuy.Core.Domain.Offers.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users.Base;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Offers.Base;
 

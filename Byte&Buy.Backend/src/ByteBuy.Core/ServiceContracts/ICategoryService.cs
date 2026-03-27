@@ -1,7 +1,7 @@
-﻿using ByteBuy.Core.DTO.Public.Category;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.Filtration.Category;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;

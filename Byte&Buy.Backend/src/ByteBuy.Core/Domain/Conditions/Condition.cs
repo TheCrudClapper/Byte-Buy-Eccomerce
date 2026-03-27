@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.Conditions.Errors;
 using ByteBuy.Core.Domain.Items;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Conditions;
 

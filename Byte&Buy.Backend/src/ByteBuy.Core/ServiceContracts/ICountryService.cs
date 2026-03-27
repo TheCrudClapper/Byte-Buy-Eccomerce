@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.DTO.Public.Country;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 using ByteBuy.Services.Filtration;
 

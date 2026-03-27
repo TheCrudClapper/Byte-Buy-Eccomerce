@@ -1,12 +1,14 @@
 ﻿using ByteBuy.Core.Domain.Items;
 using ByteBuy.Core.Domain.Offers;
+using ByteBuy.Core.Domain.Offers.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
+using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
 using static ByteBuy.Core.Specification.RentOfferSpecifications;

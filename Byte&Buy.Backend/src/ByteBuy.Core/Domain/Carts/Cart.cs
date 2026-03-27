@@ -1,10 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Carts.Entities;
+using ByteBuy.Core.Domain.Carts.Errors;
 using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Offers.Enums;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Carts;
 

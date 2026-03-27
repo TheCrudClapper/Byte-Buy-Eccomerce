@@ -1,8 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Offers.Base;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users.Entities;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Users.Errors;
 using Microsoft.AspNetCore.Identity;
 namespace ByteBuy.Core.Domain.Users.Base;
 

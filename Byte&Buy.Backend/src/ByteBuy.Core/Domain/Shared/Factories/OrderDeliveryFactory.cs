@@ -1,9 +1,10 @@
 ﻿using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Orders.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Shared.Factories;
 

@@ -1,4 +1,4 @@
-﻿using ByteBuy.Core.ResultTypes;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Carts.Entities;
 

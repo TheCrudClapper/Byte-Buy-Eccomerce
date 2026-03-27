@@ -1,13 +1,15 @@
-﻿using ByteBuy.Core.Domain.Deliveries.Enums;
+﻿using ByteBuy.Core.Domain.Companies.Errors;
+using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.Enums;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Internal.Checkout;
 using ByteBuy.Core.DTO.Public.Checkout;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.Helpers;
 using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CompanyInfoSpecifications;
 using static ByteBuy.Core.Specification.DeliverySpecifications;
@@ -39,7 +41,7 @@ public class CheckoutService : ICheckoutService
         var userData = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         if (userData is null)
-            return Result.Failure<CheckoutResponse>(CheckoutErrors.UserDataNotFound);
+            return Result.Failure<CheckoutResponse>(CommonUserErrors.NotFound);
 
         var checkoutItemsQuery = await _cartRepository.GetCartOffersAsCheckoutItemQuery(userId, ct);
 
@@ -55,7 +57,7 @@ public class CheckoutService : ICheckoutService
             companyData = await _companyRepository.GetBySpecAsync(companySellerSpec, ct);
 
             if (companyData is null)
-                return Result.Failure<CheckoutResponse>(CompanyInfoErrors.NotFound);
+                return Result.Failure<CheckoutResponse>(CompanyErrors.NotFound);
         }
 
         var privateSellersSpec = new UserSellerCheckoutSpec(sellerIds

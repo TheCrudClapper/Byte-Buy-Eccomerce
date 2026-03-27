@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Payments.Enums;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Payments.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Payments.Entities;
 

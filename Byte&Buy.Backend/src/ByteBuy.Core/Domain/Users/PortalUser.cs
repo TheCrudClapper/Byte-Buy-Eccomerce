@@ -2,10 +2,11 @@
 using ByteBuy.Core.Domain.Orders;
 using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.Domain.Users.Entities;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Users.Errors;
 
 namespace ByteBuy.Core.Domain.Users;
 

@@ -1,8 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.Companies.Errors;
 using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Companies;
 
@@ -48,19 +49,19 @@ public class Company : AggregateRoot
        string slogan)
     {
         if (string.IsNullOrWhiteSpace(companyName) || companyName.Length > 50)
-            return Result.Failure(CompanyInfoErrors.CompanyNameInvalid);
+            return Result.Failure(CompanyErrors.CompanyNameInvalid);
 
         if (string.IsNullOrWhiteSpace(tin) || tin.Length > 20)
-            return Result.Failure(CompanyInfoErrors.TinInvalid);
+            return Result.Failure(CompanyErrors.TinInvalid);
 
         if (string.IsNullOrWhiteSpace(email) || email.Length > 50)
-            return Result.Failure(CompanyInfoErrors.EmailInvalid);
+            return Result.Failure(CompanyErrors.EmailInvalid);
 
         if (string.IsNullOrWhiteSpace(phone) || phone.Length > 16)
-            return Result.Failure(CompanyInfoErrors.PhoneInvalid);
+            return Result.Failure(CompanyErrors.PhoneInvalid);
 
         if (!string.IsNullOrWhiteSpace(slogan) && slogan.Length > 30)
-            return Result.Failure(CompanyInfoErrors.SloganInvalid);
+            return Result.Failure(CompanyErrors.SloganInvalid);
 
         return Result.Success();
     }

@@ -1,11 +1,12 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.Rentals.Errors;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Rental;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.RentalSpecification;
 namespace ByteBuy.Core.Services;

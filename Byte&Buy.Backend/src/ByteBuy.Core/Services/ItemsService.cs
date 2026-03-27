@@ -1,11 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Items;
+using ByteBuy.Core.Domain.Items.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Item;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Services.Filtration;
 using static ByteBuy.Core.Specification.ItemsSpecifications;

@@ -1,8 +1,8 @@
-﻿using ByteBuy.Core.DTO.Public.Delivery;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.Delivery;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;

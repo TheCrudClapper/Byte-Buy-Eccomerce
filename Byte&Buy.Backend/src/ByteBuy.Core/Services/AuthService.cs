@@ -1,11 +1,12 @@
 ﻿using ByteBuy.Core.Domain.Carts;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.Domain.Users.Base;
+using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.Auth;
 using ByteBuy.Core.Extensions;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Identity;
 

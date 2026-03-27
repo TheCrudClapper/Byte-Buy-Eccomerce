@@ -1,8 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Rentals.Enums;
+using ByteBuy.Core.Domain.Rentals.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Rentals;
 

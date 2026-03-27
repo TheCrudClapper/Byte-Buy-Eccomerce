@@ -1,7 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Roles.Entities;
+using ByteBuy.Core.Domain.Roles.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users.Entities;
-using ByteBuy.Core.ResultTypes;
 using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Domain.Roles;

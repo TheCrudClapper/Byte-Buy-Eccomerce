@@ -1,8 +1,8 @@
-﻿using ByteBuy.Core.DTO.Public.Offer.RentOffer;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.RentOffer;
 using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
 

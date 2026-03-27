@@ -1,11 +1,14 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.DeliveryCarriers.Errors;
+using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+using ByteBuy.Core.Domain.Shared.Errors;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;

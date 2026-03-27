@@ -1,6 +1,6 @@
-﻿using ByteBuy.Core.DTO.Public.CompanyInfo;
+﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.CompanyInfo;
 using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.ResultTypes;
 
 namespace ByteBuy.Core.ServiceContracts;
 

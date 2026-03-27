@@ -1,5 +1,5 @@
 ﻿using ByteBuy.API.Extensions;
-using ByteBuy.Core.ResultTypes;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 namespace ByteBuy.API.Controllers.Base;

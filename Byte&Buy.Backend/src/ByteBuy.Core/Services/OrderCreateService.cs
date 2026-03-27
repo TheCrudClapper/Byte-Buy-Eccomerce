@@ -1,17 +1,21 @@
-﻿using ByteBuy.Core.Domain.Deliveries.Enums;
+﻿using ByteBuy.Core.Domain.Carts.Errors;
+using ByteBuy.Core.Domain.Companies.Errors;
+using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.Domain.Orders;
 using ByteBuy.Core.Domain.Orders.Entities;
+using ByteBuy.Core.Domain.Orders.Errors;
 using ByteBuy.Core.Domain.Payments;
 using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.Domain.Shared.Factories;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
+using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.ResultTypes;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.AddressSpecifications;
 using static ByteBuy.Core.Specification.CartSpecifications;
@@ -93,7 +97,7 @@ public class OrderCreateService : IOrderCreateService
                 companySnapshot = await _companyRepository.GetBySpecAsync(companySpec);
 
                 if (companySnapshot is null)
-                    return Result.Failure<OrderCreatedReponse>(CompanyInfoErrors.NotFound);
+                    return Result.Failure<OrderCreatedReponse>(CompanyErrors.NotFound);
             }
 
             var privateSellerSpec = new PrivateSellersSnapshotSpec(sellerIds
