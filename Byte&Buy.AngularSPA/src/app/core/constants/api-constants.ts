@@ -99,4 +99,8 @@ export const API_ENDPOINTS = {
     documents: {
         orderDetails: (id: string | Guid) => `/company/documents/order-details/${id}`
     },
+
+    google: {
+        googleMapsApi: "https://www.google.com/maps/search/?api=1&query="
+    }
 }

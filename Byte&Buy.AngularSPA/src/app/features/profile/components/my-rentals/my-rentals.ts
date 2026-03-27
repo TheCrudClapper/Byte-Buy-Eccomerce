@@ -37,7 +37,7 @@ export class MyRentals {
     buttonArray: [
       {
         buttonIconClass: "fa-solid fa-hand-holding-heart me-1",
-        buttonLink: `/profile/my-offers`,
+        buttonLink: `/offers`,
         buttonText: "Let't rent something",
       }
     ]

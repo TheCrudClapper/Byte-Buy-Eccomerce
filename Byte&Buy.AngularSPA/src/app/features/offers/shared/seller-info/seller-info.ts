@@ -2,6 +2,7 @@ import { Component, computed, input } from '@angular/core';
 import { PrivateSeller } from '../../models/private-seller';
 import { CompanySeller } from '../../models/company-seller';
 import { CommonModule } from '@angular/common';
+import { API_ENDPOINTS } from '../../../../core/constants/api-constants';
 
 @Component({
   selector: 'app-seller-info',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class SellerInfo {
-  googleApiBase = "https://www.google.com/maps/search/?api=1&query=";
+  googleApiBase = API_ENDPOINTS.google.googleMapsApi;
 
   seller = input<PrivateSeller | CompanySeller | undefined>();
 
