@@ -13,6 +13,7 @@ import { CreatedResponse } from '../../dto/common/created-response';
 import { environment } from '../../../../environments/environment';
 import { API_ENDPOINTS } from '../../constants/api-constants';
 import { ShippingAddressCheckout } from '../../dto/shipping-address/shipping-address-checkout';
+import { OfferAddressResponse } from '../../dto/offers/common/offer-address-response';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,10 @@ export class AddressApiService {
 
   getHomeAddress(): Observable<HomeAddressDto> {
     return this.httpClient.get<HomeAddressDto>(`${this.baseUrl}${API_ENDPOINTS.homeAdresses.base}`);
+  }
+
+  getOfferHomeAddress(): Observable<OfferAddressResponse>{
+    return this.httpClient.get<OfferAddressResponse>(`${this.baseUrl}${API_ENDPOINTS.homeAdresses.offer}`);
   }
 
   putHomeAddress(request: HomeAddressDto): Observable<UpdatedResponse> {

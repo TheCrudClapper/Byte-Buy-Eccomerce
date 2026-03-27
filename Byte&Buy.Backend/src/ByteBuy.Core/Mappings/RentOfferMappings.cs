@@ -45,6 +45,9 @@ public static class RentOfferMappings
             ro.Item.Name,
             ro.Item.Description,
             ro.QuantityAvailable,
+            new OfferAddressResponse(ro.OfferAddressSnapshot.City,
+                ro.OfferAddressSnapshot.PostalCode,
+                ro.OfferAddressSnapshot.PostalCity),
             new MoneyDto(ro.PricePerDay.Amount, ro.PricePerDay.Currency),
             ro.MaxRentalDays,
             ro.Item.Images

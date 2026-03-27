@@ -12,12 +12,13 @@ import { OfferMode, OfferType } from '../shared/components/base-offer-form/base-
 import { ImageItem } from '../models/image-item';
 import { Guid } from 'guid-typescript';
 import { ProblemDetails } from '../../../core/dto/problem-details';
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserSaleOfferResponse } from '../../../core/dto/offers/sale/user-sale-offer-response';
 import { UserRentOfferResponse } from '../../../core/dto/offers/rent/user-rent-offer-response';
 import { RentOfferApiService } from '../../../core/clients/offers/rent/rent-offer-api-serivce';
 import { DeliveryGroup } from '../../../shared/models/delivery-group';
 import { groupByCarrier } from '../mappers/offer-mapper';
+import { OfferAddressResponse } from '../../../core/dto/offers/common/offer-address-response';
 
 export type EditOffer =
   | { type: 'sale'; data: UserSaleOfferResponse }
@@ -50,12 +51,9 @@ export class OffersFacade {
     pickup: []
   });
 
-  readonly homeAddress = signal<HomeAddressDto | null>(null);
+  readonly offerHomeAddress = signal<OfferAddressResponse | null>(null);
 
   init(): void {
-    this.addressApi.getHomeAddress()
-      .subscribe(a => this.homeAddress.set(a));
-
     this.deliveryApi.getAvaliableDeliveries()
       .subscribe(r => this.deliveries.set({
         parcel: groupByCarrier(
@@ -81,6 +79,11 @@ export class OffersFacade {
     }
   }
 
+  getHomeAddressForOffer() {
+    this.addressApi.getOfferHomeAddress()
+      .subscribe(a => this.offerHomeAddress.set(a));
+  }
+
   submit(type: OfferType, mode: OfferMode,
     payload: FormData, images: ImageItem[],
     offerId?: Guid) {
@@ -90,7 +93,7 @@ export class OffersFacade {
       return;
     }
 
-    if (!this.homeAddress()) {
+    if (!this.offerHomeAddress()) {
       this.toast.error("You need to set your home address to proceed.");
       return;
     }
@@ -108,7 +111,7 @@ export class OffersFacade {
           ? this.saleApi.post(payload)
           : this.saleApi.put(offerId!, payload);
     }
-    
+
     request$.subscribe({
       next: () =>
         this.toast.success(

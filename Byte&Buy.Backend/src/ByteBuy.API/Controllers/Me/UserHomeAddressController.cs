@@ -1,6 +1,7 @@
 ﻿using ByteBuy.API.Attributes;
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
+using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
@@ -25,4 +26,8 @@ public class UserHomeAddressController : BaseApiController
     [HasPermission("user-home-address:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutHomeAddresAsync(HomeAddressDto request)
        => HandleResult(await _addressService.SetHomeAddressAsync(CurrentUserId, request));
+
+    [HttpGet("offer")]
+    public async Task<ActionResult<OfferAddressResponse?>> GetHomeAddresForOffer(CancellationToken ct)
+        => HandleResult(await _addressService.GetHomeAddressForOfferAsync(CurrentUserId, ct));
 }

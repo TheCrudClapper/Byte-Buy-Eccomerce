@@ -7,9 +7,11 @@ using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
+using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ServiceContracts;
+using System.Net;
 using static ByteBuy.Core.Specification.AddressSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 
@@ -132,7 +134,7 @@ public class AddressService : IAddressService
     public async Task<Result<HomeAddressDto>> GetHomeAddressAsync(Guid userId, CancellationToken ct)
     {
         var spec = new UserHomeAddressSpec(userId);
-        var address = await _portalUserRepository.GetBySpecAsync(spec);
+        var address = await _portalUserRepository.GetBySpecAsync(spec, ct);
 
         return address is null
             ? Result.Failure<HomeAddressDto>(PortalUserErrors.HomeAddressNotSet)
@@ -195,5 +197,15 @@ public class AddressService : IAddressService
         return address is null
             ? Result.Failure<ShippingAddressCheckout>(AddressErrors.NoDefaultAddress)
             : address;
+    }
+
+    public async Task<Result<OfferAddressResponse?>> GetHomeAddressForOfferAsync(Guid userId, CancellationToken ct = default)
+    {
+        var spec = new HomeAddressForOfferSpec(userId);
+        var addressDto = await _portalUserRepository.GetBySpecAsync(spec, ct);
+
+        return addressDto is null
+           ? Result.Failure<OfferAddressResponse?>(PortalUserErrors.HomeAddressNotSet)
+           : addressDto;
     }
 }

@@ -213,8 +213,8 @@
                     <div class="col-12">
                         <div class="inner-container text-center">
                             <i class="fa-solid fa-map-location-dot fa-2x align-middle me-2"></i>
-                            @if(facade.homeAddress(); as homeAddress){
-                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
+                            @if(facade.offerHomeAddress(); as homeAddress){
+                            <p class="d-inline align-middle">{{ homeAddress.city}}, {{
                                 homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
                             <p class="d-inline align-middle">Home address is required to be set, before publishing.</p>
@@ -222,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                @if(!facade.homeAddress()){
+                @if(!facade.offerHomeAddress()){
                 <div class="row mt-2">
                     <div class="col-12 fs-14-px">
                         <a class="link" [routerLink]="['/profile/addresses']">Set address</a>

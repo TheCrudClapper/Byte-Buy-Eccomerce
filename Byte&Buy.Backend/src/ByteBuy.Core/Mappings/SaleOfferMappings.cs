@@ -42,6 +42,9 @@ public static class SaleOfferMappings
             so.Item.Name,
             so.Item.Description,
             so.QuantityAvailable,
+            new OfferAddressResponse(so.OfferAddressSnapshot.City,
+                so.OfferAddressSnapshot.PostalCode,
+                so.OfferAddressSnapshot.PostalCity),
             new MoneyDto(so.PricePerItem.Amount, so.PricePerItem.Currency),
             so.Item.Images
                 .AsQueryable()

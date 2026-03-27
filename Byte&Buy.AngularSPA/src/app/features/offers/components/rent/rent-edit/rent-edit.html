@@ -234,17 +234,16 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="content-section-title">Location*</p>
-                        <p class="content-section-description">Location is determined on your home address, others will
-                            see it.</p>
+                        <p class="content-section-description">Location is set first time you create an offer. You cannot change it.</p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="inner-container text-center">
+                        <div class="inner-container text-center muted">
                             <i class="fa-solid fa-map-location-dot fa-2x align-middle me-2"></i>
-                            @if(facade.homeAddress(); as homeAddress){
-                            <p class="d-inline align-middle">{{ homeAddress.city}} {{homeAddress.houseNumber}}, {{
+                            @if(facade.currentOffer()?.data?.offerAddress; as homeAddress){
+                            <p class="d-inline align-middle">{{ homeAddress.city}}, {{
                                 homeAddress.postalCode}} {{ homeAddress.postalCity }}</p>
                             } @else{
                             <p class="d-inline align-middle">Home address is required to be set, before publishing.</p>

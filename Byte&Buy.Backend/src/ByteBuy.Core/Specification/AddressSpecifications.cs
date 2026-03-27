@@ -4,6 +4,7 @@ using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.Domain.Users.Entities;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Public.Address;
+using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 
@@ -80,6 +81,22 @@ public static class AddressSpecifications
             Query.AsNoTracking()
                 .Where(a => a.Id == addressId && a.UserId == userId)
                 .Select(AddressMappings.UserShippingAddressQueryModelProjection);
+        }
+    }
+
+    public sealed class HomeAddressForOfferSpec : Specification<PortalUser, OfferAddressResponse?>
+    {
+        public HomeAddressForOfferSpec(Guid userId)
+        {
+            Query.AsNoTracking()
+                 .Where(u => u.Id == userId)
+                 .Select(u => u.HomeAddress == null
+                    ? null
+                    : new OfferAddressResponse(
+                        u.HomeAddress.City,
+                        u.HomeAddress.Street,
+                        u.HomeAddress.PostalCode
+                    ));
         }
     }
 }

@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
     //Home Address
     homeAdresses: {
         base: '/me/home-address',
+        offer: '/me/home-address/offer'
     },
 
     categories: {
