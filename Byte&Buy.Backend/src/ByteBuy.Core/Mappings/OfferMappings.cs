@@ -2,6 +2,7 @@
 using ByteBuy.Core.Domain.Offers.Base;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Offer;
+using ByteBuy.Core.DTO.Public.Money;
 using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
@@ -93,11 +94,11 @@ public static class OfferMappings
             Title = o.Item.Name,
 
             PricePerItem = o is SaleOffer
-                ? ((SaleOffer)o).PricePerItem.ToMoneyDto()
+                ? new MoneyDto(((SaleOffer)o).PricePerItem.Amount, ((SaleOffer)o).PricePerItem.Currency)
                 : null,
 
             PricePerDay = o is RentOffer
-                ? ((RentOffer)o).PricePerDay.ToMoneyDto()
+                ? new MoneyDto(((RentOffer)o).PricePerDay.Amount, ((RentOffer)o).PricePerDay.Currency)
                 : null,
 
             MaxRentalDays = o is RentOffer

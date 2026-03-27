@@ -75,18 +75,18 @@ public static class RentOfferMappings
                 ? new CompanySellerResponse(
                     ((Employee)ro.CreatedBy).Company.CompanyName,
                     ((Employee)ro.CreatedBy).Company.Email,
-                    ((Employee)ro.CreatedBy).Company.CompanyAddress.City,
-                    ((Employee)ro.CreatedBy).Company.CompanyAddress.PostalCity,
-                    ((Employee)ro.CreatedBy).Company.CompanyAddress.PostalCode,
+                    ro.OfferAddressSnapshot.City,
+                    ro.OfferAddressSnapshot.PostalCity,
+                    ro.OfferAddressSnapshot.PostalCode,
                     ((Employee)ro.CreatedBy).Company.Phone,
                     ((Employee)ro.CreatedBy).Company.TIN
                     )
                 : new PrivateSellerResponse(
                     ro.CreatedBy.FirstName,
                     ro.CreatedBy.Email!,
-                    ro.CreatedBy.HomeAddress!.City,
-                    ro.CreatedBy.HomeAddress.PostalCity,
-                    ro.CreatedBy.HomeAddress.PostalCode,
+                    ro.OfferAddressSnapshot.City,
+                    ro.OfferAddressSnapshot.PostalCity,
+                    ro.OfferAddressSnapshot.PostalCode,
                     ro.CreatedBy.PhoneNumber,
                     ro.CreatedBy.DateCreated
                     ),

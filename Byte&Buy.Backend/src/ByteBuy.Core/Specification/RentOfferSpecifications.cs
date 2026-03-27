@@ -42,7 +42,8 @@ public static class RentOfferSpecifications
     {
         public UserRentOfferResponseSpec(Guid userId, Guid id)
         {
-            Query.Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
+            Query.AsNoTracking()
+                .Where(ro => ro.Id == id && ro.CreatedByUserId == userId)
                 .Select(RentOfferMappings.UserRentOfferResponseProjection);
         }
     }

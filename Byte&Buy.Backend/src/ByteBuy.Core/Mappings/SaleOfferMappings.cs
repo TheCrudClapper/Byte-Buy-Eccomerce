@@ -70,18 +70,18 @@ public static class SaleOfferMappings
                 ? new CompanySellerResponse(
                     ((Employee)so.CreatedBy).Company.CompanyName,
                     ((Employee)so.CreatedBy).Company.Email,
-                    ((Employee)so.CreatedBy).Company.CompanyAddress.City,
-                    ((Employee)so.CreatedBy).Company.CompanyAddress.PostalCity,
-                    ((Employee)so.CreatedBy).Company.CompanyAddress.PostalCode,
+                    so.OfferAddressSnapshot.City,
+                    so.OfferAddressSnapshot.PostalCity,
+                    so.OfferAddressSnapshot.PostalCode,
                     ((Employee)so.CreatedBy).Company.Phone,
                     ((Employee)so.CreatedBy).Company.TIN
                     )
                 : new PrivateSellerResponse(
                     so.CreatedBy.FirstName,
                     so.CreatedBy.Email!,
-                    so.CreatedBy.HomeAddress!.City,
-                    so.CreatedBy.HomeAddress.PostalCity,
-                    so.CreatedBy.HomeAddress.PostalCode,
+                    so.OfferAddressSnapshot.City,
+                    so.OfferAddressSnapshot.PostalCity,
+                    so.OfferAddressSnapshot.PostalCode,
                     so.CreatedBy.PhoneNumber,
                     so.CreatedBy.DateCreated),
             so.Item.Images
