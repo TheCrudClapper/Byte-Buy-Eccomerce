@@ -61,4 +61,9 @@ public class UserOrdersController : BaseApiController
     [HasPermission("user-orders:update:deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
        => HandleResult(await _orderService.DeliverOrderAsPrivateSellerAsync(CurrentUserId, orderId));
+
+    [HttpDelete("{orderId:guid}")]
+    [HasPermission("user-orders:delete:one")]
+    public async Task<ActionResult> DeleteOrderAsync(Guid orderId)
+        => HandleResult(await _orderService.DeleteAsync(CurrentUserId, orderId));
 }

@@ -11,6 +11,7 @@ public interface IOrderRepository : IRepositoryBase<Order>
 {
     Task<IReadOnlyCollection<Order>> GetOrdersByPaymentIdAsync(Guid userId, Guid paymentId, CancellationToken ct = default);
     Task<Order?> GetUserOrderAsync(Guid userId, Guid orderId, CancellationToken ct = default);
+    Task<Order?> GetUserOrderAggregateAsync(Guid userId, Guid orderId, CancellationToken ct = default);
     Task<Order?> GetSellerOrderAsync(Guid sellerId, Guid orderId, CancellationToken ct = default);
     Task<PagedList<CompanyOrderListResponse>> GetCompanyOrdersListAsync(OrderCompanyListQuery queryParams, Guid companyId, CancellationToken ct = default);
     Task<PagedList<UserOrderListQueryModel>> GetUserOrdersListAsync(UserOrderListQuery queryParams, Guid userId, CancellationToken ct = default);

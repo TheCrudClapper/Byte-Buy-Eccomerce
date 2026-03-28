@@ -188,4 +188,13 @@ public class OrderDelivery : Entity, ISoftDeletable
 
         return delivery;
     }
+
+    public void Deactivate()
+    {
+        if (!IsActive)
+            return;
+
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+    }
 }

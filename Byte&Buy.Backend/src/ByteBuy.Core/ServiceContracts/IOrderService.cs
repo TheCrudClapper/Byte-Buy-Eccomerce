@@ -71,4 +71,13 @@ public interface IOrderService
     /// </summary>
     /// <returns></returns>
     Task<Result<IReadOnlyCollection<OrderDashboardListResponse>>> GetDashboardOrdersAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Method that deactivate order when is not longer needed to be displayed
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    Task<Result> DeleteAsync(Guid userId, Guid orderId);
+    
 }

@@ -10,6 +10,12 @@ public static class OrderErrors
     public static readonly Error NotSuitableForReturn = new(
         ErrorType.Validation, "Order.Return", "Cannot return order that doesnt contain any offers for sale");
 
+    public static readonly Error DeactivationImpossible = new(
+        ErrorType.Validation, "Order.Delete", "Cannot delete and order that is not delivered yet !");
+
+    public static readonly Error OrderStillHasReturnPeriod = new(
+        ErrorType.Validation, "Order.Delete", "Order still can be returned, thus it can't be deleted!");
+
     public static readonly Error FailedToCreateOrder = new(
         ErrorType.Unexpected, "Order", "Failed to create order, try again later");
 

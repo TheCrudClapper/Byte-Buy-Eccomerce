@@ -112,9 +112,7 @@ public class Order : AggregateRoot, ISoftDeletable
             throw new DomainInvariantException($"{nameof(DateDelivered)} " +
                 $"cannot be null when order is delivered");
 
-        var startingDate = DateDelivered.Value.Date;
-        var lastReturnDay = startingDate.AddDays(14);
-        if (DateTime.UtcNow.Date > lastReturnDay)
+        if (!IsReturnPeriodActive())
             return Result.Failure(OrderErrors.ReturnPeriodExpired);
 
         return ChangeStatus(OrderStatus.Returned);
@@ -140,6 +138,33 @@ public class Order : AggregateRoot, ISoftDeletable
         DateEdited = DateTime.UtcNow;
 
         return Result.Success();
+    }
+
+    public Result Deactivate()
+    {
+        if (Status != OrderStatus.Delivered)
+            return Result.Failure(OrderErrors.DeactivationImpossible);
+
+        if (Lines.Any(line => line is SaleOrderLine) && IsReturnPeriodActive())
+            return Result.Failure(OrderErrors.OrderStillHasReturnPeriod);
+
+        IsActive = false;
+        DateDeleted = DateTime.UtcNow;
+
+        foreach (var line in Lines)
+            line.Deactivate();
+
+        Delivery.Deactivate();
+        return Result.Success();
+    }
+
+    public bool IsReturnPeriodActive()
+    {
+        if (!DateDelivered.HasValue)
+            return false;
+
+        var returnDeadline = DateDelivered.Value.AddDays(14);
+        return DateTime.UtcNow <= returnDeadline;
     }
 }
 

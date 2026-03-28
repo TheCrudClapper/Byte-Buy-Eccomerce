@@ -119,4 +119,13 @@ public class OrderRepository : EfBaseRepository<Order>, IOrderRepository
 
         return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
+
+    public async Task<Order?> GetUserOrderAggregateAsync(Guid userId, Guid orderId, CancellationToken ct = default)
+    {
+        return await _context.Orders
+            .Where(o => o.BuyerId == userId && o.Id == orderId)
+            .Include(o => o.Lines)
+            .Include(o => o.Delivery)
+            .FirstOrDefaultAsync(ct);
+    }
 }
