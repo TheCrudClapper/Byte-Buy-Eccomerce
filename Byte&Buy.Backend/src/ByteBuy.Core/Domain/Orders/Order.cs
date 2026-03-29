@@ -38,6 +38,14 @@ public class Order : AggregateRoot, ISoftDeletable
     public bool IsActive { get; private set; }
     public DateTime? DateDeleted { get; private set; }
 
+    private static readonly OrderStatus[] DeactivationAllowedStatuses =
+    [
+        OrderStatus.Canceled,
+        OrderStatus.Delivered,
+        OrderStatus.SystemCanceled,
+        OrderStatus.Returned,
+    ];
+
     //Navigation EF
     public PortalUser Buyer { get; set; } = null!;
     public PaymentOrder Payment { get; set; } = null!;
@@ -130,9 +138,7 @@ public class Order : AggregateRoot, ISoftDeletable
     public Result ChangeStatus(OrderStatus newStatus)
     {
         if (!CanChangeStatus(newStatus))
-        {
             return Result.Failure(Error.Validation("Order.OrderStatus", $"Cannot change status from {Status} to {newStatus}"));
-        }
 
         Status = newStatus;
         DateEdited = DateTime.UtcNow;
@@ -142,10 +148,10 @@ public class Order : AggregateRoot, ISoftDeletable
 
     public Result Deactivate()
     {
-        if (Status != OrderStatus.Delivered)
+        if (!CanBeDeactivatedByStatus())
             return Result.Failure(OrderErrors.DeactivationImpossible);
 
-        if (Lines.Any(line => line is SaleOrderLine) && IsReturnPeriodActive())
+       if (!CanBeDeactivatedByLines())
             return Result.Failure(OrderErrors.OrderStillHasReturnPeriod);
 
         IsActive = false;
@@ -158,13 +164,30 @@ public class Order : AggregateRoot, ISoftDeletable
         return Result.Success();
     }
 
+    public bool CanBeDeactivatedByStatus()
+        => DeactivationAllowedStatuses.Contains(Status);
+
+    public bool CanBeDeactivatedByLines() 
+    {
+        if (Lines.All(l => l is RentOrderLine))
+            return true;
+
+        if (Lines.OfType<SaleOrderLine>().Any())
+            return !IsReturnPeriodActive();
+
+        return true;
+    }
+
     public bool IsReturnPeriodActive()
     {
-        if (!DateDelivered.HasValue)
+        if (Status != OrderStatus.Delivered)
             return false;
 
-        var returnDeadline = DateDelivered.Value.AddDays(14);
-        return DateTime.UtcNow <= returnDeadline;
+        if (!DateDelivered.HasValue)
+            throw new DomainInvariantException(
+                "Delivered order must have DateDelivered");
+
+        return DateTime.UtcNow <= DateDelivered.Value.AddDays(14);
     }
 }
 

@@ -21,6 +21,10 @@ export class OrderApiService {
   private readonly httpClient = inject(HttpClient);
   private readonly baseApiUrl = environment.apiBaseUrl;
 
+  deleteOrder(id: Guid){
+    return this.httpClient.delete(`${this.baseApiUrl}${API_ENDPOINTS.orders.delete(id)}`)
+  }
+
   postOrder(request: OrderAddRequest): Observable<OrderCreatedResponse> {
     return this.httpClient.post<OrderCreatedResponse>(`${this.baseApiUrl + API_ENDPOINTS.orders.base}`, request);
   }

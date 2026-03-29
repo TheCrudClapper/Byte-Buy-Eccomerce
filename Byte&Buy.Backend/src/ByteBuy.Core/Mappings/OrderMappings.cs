@@ -13,8 +13,8 @@ using ByteBuy.Core.DTO.Public.Order.OrderLine;
 using ByteBuy.Core.DTO.Public.OrderDelivery;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Pagination;
+using System.Collections;
 using System.Linq.Expressions;
-
 namespace ByteBuy.Core.Mappings;
 
 public static class OrderMappings
@@ -27,6 +27,14 @@ public static class OrderMappings
               o.SellerSnapshot.DisplayName,
               o.BuyerSnapshot.FullName,
               o.Lines.Count,
+              (o.Status == OrderStatus.Delivered
+              || o.Status == OrderStatus.SystemCanceled
+              || o.Status == OrderStatus.Canceled
+              || o.Status == OrderStatus.Returned)
+              && (o.Lines.All(l => l is RentOrderLine)
+              || o.Lines.Any(l => l is SaleOrderLine
+                                && o.DateDelivered.HasValue
+                                && DateTime.UtcNow <= o.DateDelivered.Value.AddDays(14))),
               new MoneyDto(o.LinesTotal.Amount, o.LinesTotal.Currency),
               new MoneyDto(o.Delivery.Price.Amount, o.Delivery.Price.Currency),
               new MoneyDto(o.Total.Amount, o.Total.Currency),
@@ -44,10 +52,10 @@ public static class OrderMappings
 
                   line is RentOrderLine
                     ? null
-                    : ((SaleOrderLine)line).PricePerItem.ToMoneyDto(),
+                    : new MoneyDto(((SaleOrderLine)line).PricePerItem.Amount, ((SaleOrderLine)line).PricePerItem.Currency),
 
                   line is RentOrderLine
-                    ? ((RentOrderLine)line).PricePerDay.ToMoneyDto()
+                    ? new MoneyDto(((RentOrderLine)line).PricePerDay.Amount, ((RentOrderLine)line).PricePerDay.Currency)
                     : null,
 
                   line is RentOrderLine
@@ -65,6 +73,7 @@ public static class OrderMappings
             query.SellerDisplayName,
             query.BuyerDisplayName,
             query.LinesCount,
+            query.IsDeletable,
             query.TotalLinesCost,
             query.DeliveryCost,
             query.TotalCost,

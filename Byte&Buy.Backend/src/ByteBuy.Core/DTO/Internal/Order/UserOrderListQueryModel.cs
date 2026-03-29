@@ -9,6 +9,7 @@ public sealed record UserOrderListQueryModel(
     string SellerDisplayName,
     string BuyerDisplayName,
     int LinesCount,
+    bool IsDeletable,
     MoneyDto TotalLinesCost,
     MoneyDto DeliveryCost,
     MoneyDto TotalCost,

@@ -80,8 +80,21 @@
             </span>
         </div>
         <hr>
-        <div class="col-12 text-center">
-            <span class="link" [routerLink]="['/order', 'details', `${order.orderId}`]">ORDER DETAILS</span>
+        <div class="row">
+            <div class="col-4">
+
+            </div>
+            <div class="col-4 text-center">
+                <span class="link" [routerLink]="['/order', 'details', `${order.orderId}`]">ORDER DETAILS</span>
+            </div>
+            <div class="col-4 text-end">
+                @if(order.isDeletable){
+                    <button class="icon-btn" (click)="deleteOrder(order.orderId)">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </button>
+                }
+
+            </div>
         </div>
     </div>
 </div>

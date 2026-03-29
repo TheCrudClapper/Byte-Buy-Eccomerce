@@ -15,6 +15,7 @@ export interface UserOrderListResponse {
     buyerDisplayName: string;
     purchasedDate: Date;
     linesCount: number;
+    isDeletable: boolean;
     totalItemsCost: MoneyDto;
     deliveryCost: MoneyDto;
     totalCost: MoneyDto;

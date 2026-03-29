@@ -11,7 +11,7 @@ public static class OrderErrors
         ErrorType.Validation, "Order.Return", "Cannot return order that doesnt contain any offers for sale");
 
     public static readonly Error DeactivationImpossible = new(
-        ErrorType.Validation, "Order.Delete", "Cannot delete and order that is not delivered yet !");
+        ErrorType.Validation, "Order.Delete", "This order is not suitable for deletion");
 
     public static readonly Error OrderStillHasReturnPeriod = new(
         ErrorType.Validation, "Order.Delete", "Order still can be returned, thus it can't be deleted!");

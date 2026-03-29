@@ -256,6 +256,8 @@ public class OrderService : IOrderService
         if (result.IsFailure)
             return result;
 
+        await _unitOfWork.SaveChangesAsync();
+
         return Result.Success();
     }
 }

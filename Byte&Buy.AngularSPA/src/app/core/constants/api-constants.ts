@@ -83,6 +83,7 @@ export const API_ENDPOINTS = {
         return: (id: string | Guid) => `/me/orders/${id}/return`,
         ship: (id: string | Guid) => `/me/orders/${id}/ship`,
         deliver: (id: string | Guid) => `/me/orders/${id}/deliver`,
+        delete: (id: string | Guid) => `/me/orders/${id}`
     },
 
     payments: {

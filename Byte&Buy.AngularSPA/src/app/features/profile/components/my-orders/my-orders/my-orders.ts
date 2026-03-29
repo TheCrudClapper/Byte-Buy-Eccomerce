@@ -13,6 +13,8 @@ import { EmptyStateModel } from '../../../../../shared/models/empty-state-model'
 import { EmptyState } from "../../../../../shared/components/empty-state/empty-state";
 import { Pagination } from "../../../../../shared/components/pagination/pagination";
 import { OrderStatusComponent } from "../../../../../shared/components/order-status-component/order-status-component";
+import { Guid } from 'guid-typescript';
+import { DialogService } from '../../../../../shared/services/dialog-service/dialog-service';
 
 @Component({
   selector: 'app-my-orders',
@@ -27,6 +29,7 @@ export class MyOrders {
   private readonly orderApiService = inject(OrderApiService);
   protected readonly imageBaseUrl = environment.staticImagesBaseUrl;
   private readonly toastService = inject(ToastService);
+  private readonly dialogService = inject(DialogService);
 
   readonly emptyStateModel: EmptyStateModel = {
     description: ` You haven't purchased anything yet,
@@ -57,6 +60,29 @@ export class MyOrders {
 
   //declaring it so its visible in template
   readonly OrderStatus = OrderStatus;
+
+  deleteOrder(id: Guid) {
+    this.dialogService.confirm({ title: "Are you sure you want to delete this offer ?" })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.orderApiService.deleteOrder(id).subscribe({
+            next: _ => {
+              this.dialogService.success("Successfully deleted order !")
+              this.pagedList.update(current => {
+                if (!current) return current;
+d
+                const newItems = current.items.filter(order => order.orderId !== id);
+                const newMetadata = { ...current.metadata, totalItems: current.metadata.totalCount - 1 };
+
+
+                return { ...current, items: newItems, metadata: newMetadata };
+              });
+            },
+            error: (err: ProblemDetails) => this.dialogService.error(err?.detail ?? "Failed to delete this order")
+          });
+        }
+      });
+  }
 
   fetch(query: UserOrderListQuery) {
     this.orderApiService.getUserOrders(query).subscribe({

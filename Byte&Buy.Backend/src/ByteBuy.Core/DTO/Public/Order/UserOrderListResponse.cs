@@ -11,6 +11,7 @@ public record UserOrderListResponse(
     string SellerDisplayName,
     string BuyerDisplayName,
     int LinesCount,
+    bool IsDeletable,
     MoneyDto TotalItemsCost,
     MoneyDto DeliveryCost,
     MoneyDto TotalCost,
