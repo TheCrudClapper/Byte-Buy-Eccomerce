@@ -97,6 +97,16 @@
 						</Button>
 
 						<Button
+						Command="{Binding GoToPermissionsCommand}"
+						Classes="sidebarMenuButton">
+							<StackPanel Orientation="Horizontal">
+								<Image Source="{SvgImage /Assets/Images/regular/unlock-solid-full.svg}"
+									   Margin="0,0,5,0" />
+								<Label Content="Permissions" />
+							</StackPanel>
+						</Button>
+						
+						<Button
 						Command="{Binding GoToOrdersCommand}"
 						Classes="sidebarMenuButton">
 							<StackPanel Orientation="Horizontal">

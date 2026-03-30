@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="using:ByteBuy.UI.Views.Shared"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.SingleViewModels"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:DataType="vm:PermissionPageViewModel"
+			 x:Class="ByteBuy.UI.Views.SingleViews.PermissionPageView">
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+		<Style Selector="TextBlock">
+			<Setter Property="FontFamily" Value="{DynamicResource OpenSansMedium}"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Grid>
+		<Grid RowDefinitions="50, 20, *," Margin="0,0,30,0">
+
+			<!--Page Title-->
+			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Permission"/>
+
+			<!-- Form-->
+			<Border Grid.Row="2"
+					Padding="20"
+					VerticalAlignment="Top"
+					Classes="sectionBorder">
+
+				<Grid ColumnDefinitions="*,20,*"
+					  RowDefinitions="40,70,70">
+
+					<StackPanel Grid.Row="0"
+								Grid.ColumnSpan="2"
+								Orientation="Horizontal">
+						<Image
+						Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
+						Classes="sectionMarker" />
+						<TextBlock Text="General Information" Classes="sectionLabel" VerticalAlignment="Center"/>
+					</StackPanel>
+
+					<StackPanel Grid.Row="1" Grid.Column="0">
+						<TextBlock Text="Name" Classes="textBoxLabel"  />
+						<TextBox Text="{Binding Name}" />
+					</StackPanel>
+
+					<StackPanel Grid.Row="1" Grid.Column="2">
+						<TextBlock Text="Description" Classes="textBoxLabel"  />
+						<TextBox Text="{Binding Description}" />
+					</StackPanel>
+
+					<StackPanel HorizontalAlignment="Right"
+								Orientation="Horizontal"
+								Grid.Row="2"
+								Grid.ColumnSpan="3">
+
+						<Button Command="{Binding ClearCommand}"
+								Content="Clear"
+								Margin="0,0,5,0" />
+
+						<Button Command="{Binding SaveCommand}"
+								Content="Save" />
+
+					</StackPanel>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<!-- ALERT -->
+		<views:AlertView
+		DataContext="{Binding Alert}"
+		IsVisible="{Binding IsVisible}"
+		HorizontalAlignment="Right"
+		VerticalAlignment="Bottom"
+		Height="70"
+		Width="400"
+		Margin="0,20,20,40"
+		ZIndex="10" />
+
+	</Grid>
+</UserControl>

@@ -29,5 +29,7 @@ public enum ApplicationPageNames
     Orders,
     OrderDetails,
     Rentals,
-    RentalDetails
+    RentalDetails,
+    Permission,
+    Permissions
 }

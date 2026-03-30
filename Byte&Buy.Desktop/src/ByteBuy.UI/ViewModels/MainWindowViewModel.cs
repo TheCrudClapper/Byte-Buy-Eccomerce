@@ -1,6 +1,7 @@
 ﻿using ByteBuy.UI.Data;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.ManyViewModels;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
@@ -67,6 +68,13 @@ public partial class MainWindowViewModel : WindowViewModel
     {
         if (vm is RolesPageViewModel rolesVm)
             await rolesVm.LoadDataAsync();
+    });
+
+    [RelayCommand]
+    private async Task GoToPermissions() => await _navigation.NavigateToAsync(ApplicationPageNames.Permissions, async vm =>
+    {
+        if (vm is PermissionsPageViewModel permVm)
+            await permVm.LoadDataAsync();
     });
 
     [RelayCommand]

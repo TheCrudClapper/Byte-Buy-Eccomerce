@@ -23,6 +23,7 @@ using System.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 using Microsoft.Extensions.Options;
 using ByteBuy.Infrastructure.Options;
+using ByteBuy.UI.ViewModels.ManyViewModels;
 
 
 namespace ByteBuy.UI
@@ -79,6 +80,8 @@ namespace ByteBuy.UI
                 ApplicationPageNames.OrderDetails => x.GetRequiredService<OrderDetailsPageViewModel>(),
                 ApplicationPageNames.Rentals => x.GetRequiredService<RentalsPageViewModel>(),
                 ApplicationPageNames.RentalDetails => x.GetRequiredService<RentalDetailsPageViewModel>(),
+                ApplicationPageNames.Permission => x.GetRequiredService<PermissionPageViewModel>(),
+                ApplicationPageNames.Permissions => x.GetRequiredService<PermissionsPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

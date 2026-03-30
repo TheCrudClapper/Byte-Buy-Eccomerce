@@ -1,5 +1,6 @@
 ﻿using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Dialogs;
+using ByteBuy.UI.ViewModels.ManyViewModels;
 using ByteBuy.UI.ViewModels.Shared;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views.Dialogs;
@@ -69,6 +70,8 @@ public static class DependencyInjection
         services.AddTransient<OrderDetailsPageViewModel>();
         services.AddTransient<RentalsPageViewModel>();
         services.AddTransient<RentalDetailsPageViewModel>();
+        services.AddTransient<PermissionPageViewModel>();
+        services.AddTransient<PermissionsPageViewModel>();
 
 
         //Dialgos View Models
