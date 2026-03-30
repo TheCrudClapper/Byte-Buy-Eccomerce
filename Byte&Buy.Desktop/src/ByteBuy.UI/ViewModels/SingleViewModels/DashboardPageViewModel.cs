@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Charts;
 using ByteBuy.UI.ViewModels.Dashboard;
@@ -37,6 +38,7 @@ public partial class DashboardPageViewModel : PageViewModel
     public DashboardPageViewModel(AlertViewModel alert, IOrderService orderService,
         IStatisticsService statisticsService) : base(alert)
     {
+        PageName = ApplicationPageNames.Dashboard;
         _orderService = orderService;
         _statisticsService = statisticsService;
     }

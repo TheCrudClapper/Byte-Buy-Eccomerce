@@ -13,11 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class PortalUsersPageViewModel(
-    AlertViewModel alert,
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IPortalUserService userService) : ViewModelMany<PortalUserListItemViewModel, IPortalUserService>(alert, navigation, dialogNavigation, userService)
+public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItemViewModel, IPortalUserService>
 {
     #region Filtration fields
 
@@ -29,6 +25,15 @@ public partial class PortalUsersPageViewModel(
 
     [ObservableProperty]
     private string? _email;
+
+    public PortalUsersPageViewModel(
+        AlertViewModel alert,
+        INavigationService navigation,
+        IDialogService dialogNavigation,
+        IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
+    {
+        PageName = ApplicationPageNames.PortalUsers;
+    }
     #endregion
 
     protected override async Task EditAsync(PortalUserListItemViewModel item)

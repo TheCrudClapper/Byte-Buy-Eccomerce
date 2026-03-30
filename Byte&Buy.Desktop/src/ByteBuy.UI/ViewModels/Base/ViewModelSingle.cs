@@ -11,9 +11,7 @@ public abstract partial class ViewModelSingle(AlertViewModel alert)
 {
     [ObservableProperty]
     protected bool _isEditMode = false;
-
     protected Guid? EditingItemId = Guid.Empty;
-
     protected abstract Task UpdateAsync();
     protected abstract Task AddAsync();
     protected virtual Task InitializeAsync() => Task.CompletedTask;

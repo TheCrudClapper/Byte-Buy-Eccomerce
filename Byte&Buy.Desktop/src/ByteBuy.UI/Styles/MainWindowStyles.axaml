@@ -37,9 +37,9 @@
 
 	<!-- On Page Active -->
 	<Style Selector="Button.active /template/ ContentPresenter">
-		<Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource BackgroundLightBrush}"/>
-		<Setter Property="BorderThickness" Value="{DynamicResource 1}"/>
+		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 	</Style>
 
 	<!-- Hover on Button -->

@@ -13,17 +13,22 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class RolesPageViewModel(
-    AlertViewModel alert,
-    INavigationService navigationService,
-    IDialogService dialogNavigation,
-    IRoleService roleService) : ViewModelMany<RoleListItemViewModel, IRoleService>(alert, navigationService, dialogNavigation, roleService)
+public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, IRoleService>
 {
     #region Filtration fields
 
     [ObservableProperty]
     private string? _roleName;
     #endregion
+
+    public RolesPageViewModel(
+       AlertViewModel alert,
+       INavigationService navigationService,
+       IDialogService dialogNavigation,
+       IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
+    {
+        PageName = ApplicationPageNames.Roles;
+    }
 
     protected override async Task EditAsync(RoleListItemViewModel item)
     {

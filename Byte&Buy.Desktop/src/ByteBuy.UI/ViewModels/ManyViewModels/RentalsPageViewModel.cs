@@ -15,11 +15,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class RentalsPageViewModel(
-    AlertViewModel alert,
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IRentalService service) : ViewModelMany<RentalListItemViewModel, IRentalService>(alert, navigation, dialogNavigation, service)
+public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewModel, IRentalService>
 {
     #region Filtration fields
 
@@ -41,6 +37,15 @@ public partial class RentalsPageViewModel(
     [ObservableProperty]
     private DateTime? _rentalEndPeriod;
     #endregion
+
+    public RentalsPageViewModel(
+        AlertViewModel alert,
+        INavigationService navigation,
+        IDialogService dialogNavigation,
+        IRentalService service) : base(alert, navigation, dialogNavigation, service)
+    {
+        PageName = ApplicationPageNames.Rentals;
+    }
 
     public async override Task LoadDataAsync()
     {

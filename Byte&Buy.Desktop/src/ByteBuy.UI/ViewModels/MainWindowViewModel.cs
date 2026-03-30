@@ -2,6 +2,7 @@
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.ManyViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
@@ -10,9 +11,55 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class MainWindowViewModel : WindowViewModel
 {
+    #region MVVM Fields
+    [ObservableProperty]
+    private bool _isDashboardPageActive;
+
+    [ObservableProperty]
+    private bool _isEmployeesPageActive;
+
+    [ObservableProperty]
+    private bool _isRolesPageActive;
+
+    [ObservableProperty]
+    private bool _isPermissionsPageActive;
+
+    [ObservableProperty]
+    private bool _isAdministrationPageActive;
+
+    [ObservableProperty]
+    private bool _isPortalUsersPageActive;
+
+    [ObservableProperty]
+    private bool _isCompanyPageActive;
+
+    [ObservableProperty]
+    private bool _isOrdersPageActive;
+
+    [ObservableProperty]
+    private bool _isRentalsPageActive;
+
+    [ObservableProperty]
+    private bool _isProfilePageActive;
+    #endregion
+
     public PageViewModel? CurrentPage => _navigation.CurrentPage;
 
     private readonly INavigationService _navigation;
+
+    private void SetActive(ApplicationPageNames page)
+    {
+        IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
+        IsEmployeesPageActive = page  == ApplicationPageNames.Employees;
+        IsRolesPageActive = page == ApplicationPageNames.Roles;
+        IsPermissionsPageActive = page == ApplicationPageNames.Permissions;
+        IsAdministrationPageActive = page == ApplicationPageNames.Administration;
+        IsPortalUsersPageActive = page == ApplicationPageNames.PortalUsers;
+        IsRentalsPageActive = page == ApplicationPageNames.Rentals;
+        IsCompanyPageActive = page == ApplicationPageNames.CompanyInfo;
+        IsOrdersPageActive = page == ApplicationPageNames.Orders;
+        IsProfilePageActive = page == ApplicationPageNames.Profile;
+    }
 
     public Action? Logout { get; set; }
 
@@ -22,7 +69,10 @@ public partial class MainWindowViewModel : WindowViewModel
         _navigation.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
+            {
                 OnPropertyChanged(nameof(CurrentPage));
+                SetActive(_navigation.CurrentPage!.PageName);
+            }
         };
         _ = GoToDashboard();
     }
@@ -54,7 +104,6 @@ public partial class MainWindowViewModel : WindowViewModel
         if (vm is EmployeesPageViewModel empVm)
             await empVm.LoadDataAsync();
     });
-
 
     [RelayCommand]
     private async Task GoToProfile() => await _navigation.NavigateToAsync(ApplicationPageNames.Profile, async vm =>

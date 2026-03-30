@@ -15,8 +15,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class OrdersPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IOrderService service)
-        : ViewModelMany<OrderListItemViewModel, IOrderService>(alert, navigation, dialogNavigation, service)
+public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel, IOrderService>
 {
     #region Filtration fields
 
@@ -38,6 +37,15 @@ public partial class OrdersPageViewModel(AlertViewModel alert, INavigationServic
     [ObservableProperty]
     private decimal? _totalTo;
     #endregion
+
+    public OrdersPageViewModel(
+        AlertViewModel alert,
+        INavigationService navigation,
+        IDialogService dialogNavigation,
+        IOrderService service) : base(alert, navigation, dialogNavigation, service)
+    {
+        PageName = ApplicationPageNames.Orders;
+    }
 
     public override async Task LoadDataAsync()
     {

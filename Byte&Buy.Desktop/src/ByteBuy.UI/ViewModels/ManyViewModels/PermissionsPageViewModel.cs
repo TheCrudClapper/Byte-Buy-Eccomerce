@@ -14,6 +14,7 @@ public class PermissionsPageViewModel : ViewModelMany<PermissionManyListItem, IP
     public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service) 
         : base(alert, navigation, dialogNavigation, service)
     {
+        PageName = ApplicationPageNames.Permissions;
     }
 
     public override Task LoadDataAsync()

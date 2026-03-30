@@ -1,4 +1,5 @@
-﻿using ByteBuy.UI.ViewModels.Base;
+﻿using ByteBuy.UI.Data;
+using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     public PermissionPageViewModel(AlertViewModel alert) 
         : base(alert)
     {
-        
+       
     }
 
     protected override Task AddAsync()

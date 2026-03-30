@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -90,6 +91,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
     public CompanyInfoPageViewModel(AlertViewModel alert,
         ICompanyInfoService companyInfoService) : base(alert)
     {
+        PageName = ApplicationPageNames.CompanyInfo;
         _companyInfoService = companyInfoService;
     }
 

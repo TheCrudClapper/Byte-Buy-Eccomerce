@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ public partial class AdministrationPageViewModel : PageViewModel
         SaleOffersViewModel saleOffersViewModel,
         DeliveryCarriersViewModel carriersViewModel) : base(alert)
     {
+        PageName = ApplicationPageNames.Administration;
         DeliveriesPageViewModel = deliveriesViewModel;
         CountriesPageViewModel = countriesViewModel;
         ConditionsPageViewModel = conditionsViewModel;

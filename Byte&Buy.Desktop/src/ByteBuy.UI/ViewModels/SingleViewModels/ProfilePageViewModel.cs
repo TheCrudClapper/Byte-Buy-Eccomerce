@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
@@ -13,7 +14,7 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class ProfilePageViewModel : PageViewModel
 {
-    #region Fields
+    #region MVVM Fields
 
     [ObservableProperty]
     private string _firstName = string.Empty;
@@ -81,6 +82,7 @@ public partial class ProfilePageViewModel : PageViewModel
         PasswordChangeViewModel passwordComponent,
         AlertViewModel alert) : base(alert)
     {
+        PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
         PasswordComponent = passwordComponent;
     }
