@@ -8,10 +8,9 @@
 		Height="800" Width="1500"
 		x:Class="ByteBuy.UI.Views.MainWindow"
 		x:DataType="viewModels:MainWindowViewModel"
-		FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
 		Icon="/Assets/logo.ico"
 		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-		Title="ByteBuy MP v.0.1">
+		Title="ByteBuy v.1.0">
 
 	<dialogHost:DialogHost Identifier="MainDialogHost" CloseOnClickAway="True">
 		<Grid RowDefinitions="50, *">
@@ -48,10 +47,10 @@
 						<Button
 						Command="{Binding GoToDashboardCommand}"
 						Classes="sidebarMenuButton">
-							<StackPanel Orientation="Horizontal" >
+							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"
 									   Margin="0,0,5,0"/>
-								<TextBlock Text="Dashboard" VerticalAlignment="Bottom"/>
+								<TextBlock Text="Dashboard"/>
 							</StackPanel>
 						</Button>
 
@@ -62,7 +61,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
 									   Margin="0,0,5,0" />
-								<TextBlock Text="Shop Administration" VerticalAlignment="Bottom"/>
+								<TextBlock Text="Shop Administration"/>
 							</StackPanel>
 						</Button>
 
@@ -72,7 +71,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
 									   Margin="0,0,5,0"/>
-								<Label Content="Employees" />
+								<TextBlock Text="Employees" />
 							</StackPanel>
 						</Button>
 
@@ -82,7 +81,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Users" />
+								<TextBlock Text="Users" />
 							</StackPanel>
 						</Button>
 
@@ -92,7 +91,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Roles" />
+								<TextBlock Text="Roles" />
 							</StackPanel>
 						</Button>
 
@@ -102,7 +101,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/unlock-solid-full.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Permissions" />
+								<TextBlock Text="Permissions" />
 							</StackPanel>
 						</Button>
 						
@@ -112,7 +111,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Orders" />
+								<TextBlock Text="Orders" />
 							</StackPanel>
 						</Button>
 
@@ -122,7 +121,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/calendar-days-regular-full.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Rentals" />
+								<TextBlock Text="Rentals" />
 							</StackPanel>
 						</Button>
 
@@ -132,7 +131,7 @@
 							<StackPanel Orientation="Horizontal">
 								<Image Source="{SvgImage /Assets/Images/regular/company.svg}"
 									   Margin="0,0,5,0" />
-								<Label Content="Company Details" />
+								<TextBlock Text="Company Details" />
 							</StackPanel>
 						</Button>
 					</StackPanel>

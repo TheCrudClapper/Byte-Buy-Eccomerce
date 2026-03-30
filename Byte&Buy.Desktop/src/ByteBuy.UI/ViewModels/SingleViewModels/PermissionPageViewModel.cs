@@ -20,6 +20,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     public PermissionPageViewModel(AlertViewModel alert) 
         : base(alert)
     {
+        
     }
 
     protected override Task AddAsync()

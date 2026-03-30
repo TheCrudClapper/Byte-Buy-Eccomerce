@@ -9,19 +9,24 @@
 
 	<!-- Sidebar Menu Buttons -->
 	<Style Selector="Button.sidebarMenuButton">
-		<Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
 		<Setter Property="FontWeight" Value="400"/>
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
 		<Setter Property="Margin" Value="0,5" />
+		<Setter Property="Padding" Value="10"/>
 		<Setter Property="HorizontalContentAlignment" Value="Left" />
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="CornerRadius" Value="5" />
 		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
 	</Style>
 
+	<Style Selector="Button.sidebarMenuButton TextBlock">
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
 	<!-- Simple Menu Button -->
 	<Style Selector="Button.menuButton">
-		<Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
 		<Setter Property="FontWeight" Value="600"/>
 		<Setter Property="FontFamily" Value="Raleway"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -41,7 +46,7 @@
 	<Style Selector="Button.sidebarMenuButton:pointerover /template/ ContentPresenter,
 		Button.menuButton:pointerover /template/ ContentPresenter">
 		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}" />
-		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccent}"/>
-		<Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}"/>
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 	</Style>
 </Styles>
