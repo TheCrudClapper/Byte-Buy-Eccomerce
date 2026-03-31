@@ -1,5 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
-using ByteBuy.Core.Domain.Roles.Entities;
+using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.Users.Base;
 
 namespace ByteBuy.Core.Domain.Users.Entities;

@@ -37,7 +37,13 @@ public class Item : AggregateRoot, ISoftDeletable
     public ICollection<Offer> Offers { get; set; } = new List<Offer>();
     private Item() { }
 
-    private Item(string name, string description, Guid categoryId, Guid conditionId, bool isCompanyItem, int stockQuantity = 0)
+    private Item(
+        string name,
+        string description,
+        Guid categoryId,
+        Guid conditionId,
+        bool isCompanyItem,
+        int stockQuantity = 0)
     {
         Id = Guid.NewGuid();
         Name = name;

@@ -16,6 +16,7 @@ using ByteBuy.Core.Domain.Orders.Entities;
 using ByteBuy.Core.Domain.Payments;
 using ByteBuy.Core.Domain.Payments.Entities;
 using ByteBuy.Core.Domain.Payments.Enums;
+using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.Domain.Roles.Entities;

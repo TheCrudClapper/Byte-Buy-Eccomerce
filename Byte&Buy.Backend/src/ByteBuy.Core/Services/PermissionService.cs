@@ -1,9 +1,9 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.ResultTypes;
+using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.PermissionSpecifications;
-
 namespace ByteBuy.Core.Services;
 
 public class PermissionService : IPermissionService
@@ -30,4 +30,24 @@ public class PermissionService : IPermissionService
             .HasUserOrRolePermissionAsync(userId, permission.Id);
     }
 
+    public Task<Result<CreatedResponse>> AddAsync(PermissionAddRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result> DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result<PermissionResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request)
+    {
+        throw new NotImplementedException();
+    }
 }

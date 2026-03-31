@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
+using ByteBuy.Core.Domain.Permissions;
 
 namespace ByteBuy.Core.Domain.Roles.Entities;
 
