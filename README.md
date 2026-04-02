@@ -51,9 +51,16 @@
    - `git clone https://github.com/TheCrudClapper/Byte-Buy-Eccomerce.git`
    - Then `cd ByteBuy`
 3. Setup the backend
-   - Configure PostgreSQL connection
-   - Run migrations
-   - Start API Project
+   - Create an empty PostgreSQL Database `ByteBuy`
+   - Run database restoration using `db_backup.backup` or execute `db.sql`
+   - Update connection string `appsettings.json` to match your setup
+   ```csharp
+   "ConnectionStrings": {
+    "Default": "Server=localhost;Port=5432;Database=ByteBuy;User Id=postgres;Password=admin;"
+     }
+   ```
+   - Set `ByteBuy.API` as startup project
+   - Build and run
 5. Launch web application
    - Navigate to Angular project `Byte&Buy.AngularSPA`
    - Open project and install depedencies via `npm install`
@@ -64,14 +71,14 @@
    - Set `ByteBuy.Desktop` as startup project
    - Build and run
 
-## Plans for future
+## 🗺️ Roadmap / Future Improvements
 1. Favourites system
 2. Rating of sellers, offers
 3. Messaging system
 4. Stripe integration
 5. Third-party delivery API's integration
 
-## Useful Links
+## 🔗 Useful Links
 - [ASP.NET Core](https://learn.microsoft.com/aspnet/core)
 - [Entity Framework Core](https://learn.microsoft.com/ef/core)
 - [PostgreSQL](https://www.postgresql.org)
