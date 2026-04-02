@@ -1,0 +1,31 @@
+SYSTEM COMES WITH PREDEFINED ROLES AND CONTENT SO ANYONE CAN EASILY TEST ALL SYSTEM'S FEATURES
+
+Desktop APP: 
+EMPLOYEE ACCOUNTS:
+OWNER -> can do anything :wojciechmucha12@gmail.com password: Test123#
+
+storage worker: 
+email: zbygniewn@gmail.com
+password: Test123#
+
+store keeper:
+email: jolantab@gmail.com
+password: Test123#
+
+admin: 
+email: jannowak12@gmail.com 
+password: Test123#
+
+
+
+WEB APP
+PRIVATE SELLERS:
+
+private seller1:
+email: joanna12@gmail.com
+password: Test123#
+
+private seller2:
+email: adamp123@gmail.com
+password: Test123#
+
