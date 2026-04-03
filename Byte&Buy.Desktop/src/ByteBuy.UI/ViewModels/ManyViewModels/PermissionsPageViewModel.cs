@@ -1,10 +1,13 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
+using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Permission;
 using ByteBuy.UI.ViewModels.Shared;
 using ByteBuy.UI.ViewModels.SingleViewModels;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.ManyViewModels;
@@ -17,10 +20,14 @@ public class PermissionsPageViewModel : ViewModelMany<PermissionManyListItem, IP
         PageName = ApplicationPageNames.Permissions;
     }
 
-    public override Task LoadDataAsync()
+    public override async Task LoadDataAsync()
     {
-        Items = [];
-        return Task.CompletedTask;
+        var result = await Service.GetListAsync();
+        var (ok, value) = HandleResult(result);
+        if (!ok || value is null)
+            return;
+
+        Items = new ObservableCollection<PermissionManyListItem>(value.Select((p, i) => p.ToListItem(i)));
     }
 
     protected override async Task AddAsync()
@@ -32,8 +39,12 @@ public class PermissionsPageViewModel : ViewModelMany<PermissionManyListItem, IP
         });
     }
 
-    protected override Task EditAsync(PermissionManyListItem item)
+    protected override async Task EditAsync(PermissionManyListItem item)
     {
-        throw new System.NotImplementedException();
+        await Navigation.NavigateToAsync(ApplicationPageNames.Permission, async vm =>
+        {
+            if (vm is PermissionPageViewModel permVm)
+                await permVm.InitializeForEditAsync(item.Id);
+        });
     }
 }

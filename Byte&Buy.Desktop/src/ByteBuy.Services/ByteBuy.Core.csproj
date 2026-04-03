@@ -9,11 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DTO\Permission\**" />
     <Compile Remove="Helpers\**" />
-    <EmbeddedResource Remove="DTO\Permission\**" />
     <EmbeddedResource Remove="Helpers\**" />
-    <None Remove="DTO\Permission\**" />
     <None Remove="Helpers\**" />
   </ItemGroup>
 

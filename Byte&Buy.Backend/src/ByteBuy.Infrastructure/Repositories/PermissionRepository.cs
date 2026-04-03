@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Mappings;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -51,5 +53,12 @@ public class PermissionRepository : EfBaseRepository<Permission>, IPermissionRep
             .AnyAsync(p => p.RolePermissions
                 .Any(rp => rp.PermissionId == permissionId) 
                 || p.UserPermissions.Any(up => up.PermissionId == permissionId));
+    }
+
+    public async Task<IReadOnlyCollection<PermissionResponse>> GetPermissionListAsync(CancellationToken ct = default)
+    {
+        return await _context.Permissions
+            .Select(PermissionMappings.PermisionResponseProjection)
+            .ToListAsync(ct);
     }
 }

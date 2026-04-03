@@ -8,7 +8,6 @@ using ByteBuy.UI.ViewModels.Category;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,9 +64,8 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
         TotalPages = value.Metadata.TotalPages;
         CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
-
-      
     }
+
     public override async Task ClearFiltersAsync()
     {
         CategoryName = null;

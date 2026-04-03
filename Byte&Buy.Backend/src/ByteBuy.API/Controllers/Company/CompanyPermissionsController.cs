@@ -22,4 +22,10 @@ public class CompanyPermissionsController
     [HasPermission("company-permissions:read:options")]
     public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _permissionService.GetSelectListAsync(ct));
+
+    [HttpGet]
+    [HasPermission("company-permissions:read:many")]
+    public async Task<ActionResult<IReadOnlyCollection<PermissionResponse>>> GetPermissionListAsync(CancellationToken ct)
+        => HandleResult(await _permissionService.GetPermissionListAsync(ct));
+
 }

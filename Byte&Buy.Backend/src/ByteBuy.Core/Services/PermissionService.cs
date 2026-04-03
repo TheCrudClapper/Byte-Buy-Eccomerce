@@ -77,7 +77,6 @@ public class PermissionService : IPermissionService
             : dto;
     }
 
-
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request)
     {
         var exists = await _permissionRepository.ExistsWithNameAsync(request.Name, id);
@@ -97,4 +96,8 @@ public class PermissionService : IPermissionService
 
         return permission.ToUpdatedResponse();
     }
+
+    public async Task<Result<IReadOnlyCollection<PermissionResponse>>> GetPermissionListAsync(CancellationToken ct = default)
+        => Result.Success(await _permissionRepository.GetPermissionListAsync(ct));
+    
 }
