@@ -1,11 +1,11 @@
-# Byte&Buy
+# 🖥️ Byte&Buy
 
 **Byte&Buy** is a modern C2C (Client-to-Client) marketplace for IT-related items, combining a web platform for users and a desktop application for company operations. Users can buy, sell, and rent items, while employees manage the marketplace through a dedicated admin panel.
 
 
 ##  Features
 
-### Web Application (User-Facing)
+### 🌐 Web Application (User-Facing)
 - Register & login
 - Create & manage sales/rental offers
 - Cart, checkout, and order management
@@ -14,7 +14,7 @@
 - PDF order confirmations
 - Browse, filter, and paginate offers
 
-### Desktop Application (Admin/Employees)
+### 🧑‍💼 Desktop Application (Admin/Employees)
 - Employee login & role management
 - Dashboard with KPI & GMV indicators
 - Company & user administration
@@ -24,7 +24,7 @@
 - PDF confirmations & shipment handling
 - Filtering & pagination for large datasets
 
-### API / Backend
+### ⚙️ API / Backend
 - Built with **ASP.NET Core** & **Clean Architecture**
 - Built using Domain-Driven-Design Principles
 - PostgreSQL + Entity Framework Core
@@ -34,39 +34,51 @@
 - PDF generation (QuestPDF)
 
 
-##  Technologies
+## 🧰 Technologies
 
 - **Backend:** ASP.NET Core, Entity Framework Core, PostgreSQL  
 - **Web:** Angular, Bootstrap, SweetAlert2, ngx-toastr, Font Awesome  
 - **Desktop:** Avalonia, MVVM, CommunityToolkit.MVVM, LiveChartsCore  
 - **Utilities:** QuestPDF, Hangfire  
 
-## Architecture
+## 🏗️ Architecture
 - Clean Architecture with Domain-Driven Design (DDD)
 - Testable and scalable
 - Independent development of components
 
-## Quick Start
+## 🚀 Quick Start
 1. Clone the repository
-2. Setup the backend
-   - Configure PostgreSQL connection
-   - Run migrations
-   - Start API Project
-3. Launch web application
-   - Open Angular project and install depedencies via `npm install`
+   - `git clone https://github.com/TheCrudClapper/Byte-Buy-Eccomerce.git`
+   - Then `cd ByteBuy`
+3. Setup the backend
+   - Create an empty PostgreSQL Database `ByteBuy`
+   - Run database restoration using `db_backup.backup` or execute `db.sql`
+   - Update connection string `appsettings.json` to match your setup
+   ```csharp
+   "ConnectionStrings": {
+    "Default": "Server=localhost;Port=5432;Database=ByteBuy;User Id=postgres;Password=admin;"
+     }
+   ```
+   - Set `ByteBuy.API` as startup project
+   - Build and run
+5. Launch web application
+   - Navigate to Angular project `Byte&Buy.AngularSPA`
+   - Open project and install depedencies via `npm install`
    - Run `ng serve` in the console
-4. Launch the desktop application
+   - App will be avaliable at `http://localhost:4200`
+6. Launch desktop application
    - Open in Avalonia-supported IDE such [VisualStudio](https://visualstudio.microsoft.com/pl/) or [JetBrains Rider](https://www.jetbrains.com/rider/)
+   - Set `ByteBuy.Desktop` as startup project
    - Build and run
 
-## Plans for future
+## 🗺️ Roadmap / Future Improvements
 1. Favourites system
 2. Rating of sellers, offers
 3. Messaging system
 4. Stripe integration
 5. Third-party delivery API's integration
 
-## Useful Links
+## 🔗 Useful Links
 - [ASP.NET Core](https://learn.microsoft.com/aspnet/core)
 - [Entity Framework Core](https://learn.microsoft.com/ef/core)
 - [PostgreSQL](https://www.postgresql.org)
