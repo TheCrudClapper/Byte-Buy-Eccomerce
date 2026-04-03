@@ -1,7 +1,11 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
+﻿using ByteBuy.Core.Domain.Permissions;
+using ByteBuy.Core.Domain.Permissions.Errors;
+using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.PermissionSpecifications;
 namespace ByteBuy.Core.Services;
@@ -9,9 +13,11 @@ namespace ByteBuy.Core.Services;
 public class PermissionService : IPermissionService
 {
     private readonly IPermissionRepository _permissionRepository;
-    public PermissionService(IPermissionRepository permissionRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    public PermissionService(IPermissionRepository permissionRepository, IUnitOfWork unitOfWork)
     {
         _permissionRepository = permissionRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct = default)
@@ -30,24 +36,65 @@ public class PermissionService : IPermissionService
             .HasUserOrRolePermissionAsync(userId, permission.Id);
     }
 
-    public Task<Result<CreatedResponse>> AddAsync(PermissionAddRequest request)
+    public async Task<Result<CreatedResponse>> AddAsync(PermissionAddRequest request)
     {
-        throw new NotImplementedException();
+        var exists = await _permissionRepository.ExistsWithNameAsync(request.Name);
+        if (exists)
+            return Result.Failure<CreatedResponse>(PermissionErrors.AlreadyExists);
+
+        var result = Permission.Create(request.Name, request.Description);
+        if (result.IsFailure)
+            return Result.Failure<CreatedResponse>(result.Error);
+
+        await _permissionRepository.AddAsync(result.Value);
+        await _unitOfWork.SaveChangesAsync();
+
+        return result.Value.ToCreatedResponse();
     }
 
-    public Task<Result> DeleteAsync(Guid id)
+    public async Task<Result> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var hasActiveRelations = await _permissionRepository.HasActiveRelations(id);
+        if (hasActiveRelations)
+            return Result.Failure(PermissionErrors.HasActiveRelations);
+
+        var permission = await _permissionRepository.GetByIdAsync(id);
+        if (permission is null)
+            return Result.Failure(PermissionErrors.NotFound);
+
+        permission.Deactivate();
+        await _unitOfWork.SaveChangesAsync();
+
+        return Result.Success();
     }
 
-    public Task<Result<PermissionResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<Result<PermissionResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var spec = new PermissionResponseSpec(id);
+        var dto = await _permissionRepository.GetBySpecAsync(spec, ct);
+        return dto is null
+            ? Result.Failure<PermissionResponse>(PermissionErrors.NotFound)
+            : dto;
     }
 
 
-    public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request)
+    public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request)
     {
-        throw new NotImplementedException();
+        var exists = await _permissionRepository.ExistsWithNameAsync(request.Name, id);
+        if(exists)
+            return Result.Failure<UpdatedResponse>(PermissionErrors.AlreadyExists);
+
+        var permission = await _permissionRepository.GetByIdAsync(id);
+        if (permission is null)
+            return Result.Failure<UpdatedResponse>(PermissionErrors.NotFound);
+
+        var result = permission.Update(request.Name, request.Description);
+
+        if (result.IsFailure)
+            return Result.Failure<UpdatedResponse>(result.Error);
+
+        await _unitOfWork.SaveChangesAsync();
+
+        return permission.ToUpdatedResponse();
     }
 }

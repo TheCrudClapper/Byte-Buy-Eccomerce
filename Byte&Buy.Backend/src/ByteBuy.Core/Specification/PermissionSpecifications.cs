@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Permissions;
+using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 
@@ -14,6 +15,17 @@ public static class PermissionSpecifications
             Query
                 .AsNoTracking()
                 .Select(PermissionMappings.SelectListItemResponseProjection);
+        }
+    }
+
+    public sealed class PermissionResponseSpec : Specification<Permission, PermissionResponse>
+    {
+        public PermissionResponseSpec(Guid id)
+        {
+            Query
+                .AsNoTracking()
+                .Where(p => p.Id == id)
+                .Select(PermissionMappings.PermisionResponseProjection);
         }
     }
 }

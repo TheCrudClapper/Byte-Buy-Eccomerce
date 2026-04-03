@@ -38,4 +38,18 @@ public class PermissionRepository : EfBaseRepository<Permission>, IPermissionRep
         return await _context.Permissions
             .FirstOrDefaultAsync(p => p.Name == name, ct);
     }
+
+    public async Task<bool> ExistsWithNameAsync(string name, Guid? excludedId)
+    {
+        return await _context.Permissions
+            .AnyAsync(p => p.Name == name && excludedId != p.Id);
+    }
+
+    public async Task<bool> HasActiveRelations(Guid permissionId)
+    {
+        return await _context.Permissions
+            .AnyAsync(p => p.RolePermissions
+                .Any(rp => rp.PermissionId == permissionId) 
+                || p.UserPermissions.Any(up => up.PermissionId == permissionId));
+    }
 }
