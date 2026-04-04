@@ -75,8 +75,8 @@
 			</Border>
 
 			<!-- Fetched items count -->
-			<StackPanel Grid.Row="2">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Grid Grid.Row="2" RowDefinitions="auto, *">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
 					<Label Content="Records fetched:"
 						   FontFamily="{DynamicResource RalewayMedium}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
@@ -89,6 +89,7 @@
 
 				<!-- Data Grid Containing All Items -->
 				<DataGrid
+				Grid.Row="1"
 				x:Name="ItemsGrid"
 				ItemsSource="{Binding Items}"
 				AutoGenerateColumns="False"
@@ -128,7 +129,7 @@
 
 				</DataGrid>
 
-			</StackPanel>
+			</Grid>
 
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">

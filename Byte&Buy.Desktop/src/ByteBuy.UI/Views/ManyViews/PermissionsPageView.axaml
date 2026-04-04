@@ -2,7 +2,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="using:ByteBuy.UI.Views.Shared"
+			 xmlns:views="using:ByteBuy.UI.Views.Shared"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.ManyViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:DataType="vm:PermissionsPageViewModel"
@@ -59,8 +59,8 @@
 			</Border>
 
 
-			<StackPanel Grid.Row="2">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Grid Grid.Row="2" Grid.RowDefinitions="auto, *">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
 					<Label Content="Records fetched:"
 						   FontFamily="{DynamicResource RalewayMedium}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
@@ -71,6 +71,7 @@
 						   HorizontalAlignment="Right" />
 				</StackPanel>
 				<DataGrid
+				Grid.Row="1"
 				ItemsSource="{Binding Items}"
 				AutoGenerateColumns="False"
 				GridLinesVisibility="All"
@@ -109,10 +110,8 @@
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>
 					</DataGrid.Columns>
-
 				</DataGrid>
-			</StackPanel>
-
+			</Grid>
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
 				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">

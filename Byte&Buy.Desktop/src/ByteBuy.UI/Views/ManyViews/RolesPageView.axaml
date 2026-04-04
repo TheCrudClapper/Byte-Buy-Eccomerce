@@ -56,8 +56,8 @@
 			</Border>
 
 
-			<StackPanel Grid.Row="2">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+			<Grid Grid.Row="2" RowDefinitions="auto, *">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
 					<Label Content="Records fetched:"
 						   FontFamily="{DynamicResource RalewayMedium}"
 						   Foreground="{DynamicResource TextPrimaryBrush}"
@@ -68,6 +68,7 @@
 						   HorizontalAlignment="Right" />
 				</StackPanel>
 				<DataGrid
+				Grid.Row="1"
 				ItemsSource="{Binding Items}"
 				AutoGenerateColumns="False"
 				GridLinesVisibility="All"
@@ -107,7 +108,7 @@
 					</DataGrid.Columns>
 
 				</DataGrid>
-			</StackPanel>
+			</Grid>
 
 
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
