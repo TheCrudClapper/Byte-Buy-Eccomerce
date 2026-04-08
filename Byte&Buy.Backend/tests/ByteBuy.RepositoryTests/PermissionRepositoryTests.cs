@@ -1,10 +1,12 @@
 ﻿using AutoFixture;
 using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace ByteBuy.RepositoryTests;
 
@@ -26,34 +28,18 @@ public class PermissionRepositoryTests
 
 
     #region  HasUserOrRolePermissionAsync Method Tests
-    [Fact]
-    public async Task HasUserOrRolePermissionAsync_ExplicitGrant_ReturnsTrue()
-    {
-        ////Arrange
-        //var userResult = PortalUser.Create("Jan", "Kowalski", "test123@gmail.com");
-        //var user = userResult.Value;
-
-        //await _context.Users.AddShippingAddressAsync(user);
-        //await _context.SaveChangesAsync();
-
-    }
     #endregion
     #region GetByNameAsync Method Tests
     [Fact]
     public async Task GetPermissionByName_PermissionExists_ReturnsPermission()
     {
         //Arrange
-        Permission expected = _fixture.Build<Permission>()
-            .With(p => p.IsActive, true)
-            .Without(p => p.UserPermissions)
-            .Without(p => p.RolePermissions)
-            .Create();
-
+        Permission expected = Permission.Create("test", "test").Value;
         await _context.Permissions.AddAsync(expected);
         await _context.SaveChangesAsync();
 
         //Act
-        var actualPermission = await _permissionRepository.GetByNameAsync(expected.Name, CancellationToken.None);
+        var actualPermission = await _permissionRepository.GetByNameAsync(expected.Name, It.IsAny<CancellationToken>());
 
         //Assert
         actualPermission.Should().Be(expected);
@@ -62,15 +48,8 @@ public class PermissionRepositoryTests
     [Fact]
     public async Task GetPermissionByName_PermissionDoesntExist_ReturnsNull()
     {
-        //Arrange
-        Permission expected = _fixture.Build<Permission>()
-            .With(p => p.IsActive, true)
-            .Without(p => p.UserPermissions)
-            .Without(p => p.RolePermissions)
-            .Create();
-
         //Act
-        var actualPermission = await _permissionRepository.GetByNameAsync(expected.Name, CancellationToken.None);
+        var actualPermission = await _permissionRepository.GetByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>());
 
         //Assert
         actualPermission.Should().Be(null);
