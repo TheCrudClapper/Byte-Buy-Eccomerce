@@ -1,13 +1,16 @@
 ﻿using Ardalis.Specification;
 using AutoFixture;
 using ByteBuy.Core.Domain.Permissions;
+using ByteBuy.Core.Domain.Permissions.Errors;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using FluentAssertions;
 using Moq;
+using static ByteBuy.Core.Specification.PermissionSpecifications;
 namespace ByteBuy.ServiceTests;
 
 public class PermissionServiceTests
@@ -87,7 +90,6 @@ public class PermissionServiceTests
         result.Should().BeTrue();
     }
     #endregion
-
     #region GetSelectListAsync Method Tests
     [Fact]
     public async Task GetSelectListAsync_DBNotEmpty_ReturnsCollection()
@@ -129,6 +131,95 @@ public class PermissionServiceTests
         //Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeEmpty();
+    }
+    #endregion
+    #region DeleteAsync Method Tests
+    [Fact]
+    public async Task DeleteAsync_HasActiveRelationsReturnsTrue_ReturnsFailure()
+    {
+        //Arrange
+        var permissionId = Guid.NewGuid();
+        _permissionRepositoryMock.Setup(p => p.HasActiveRelations(permissionId)).ReturnsAsync(true);
+
+        //Act
+        var result = await _service.DeleteAsync(permissionId);
+
+        //Assert
+        result.IsSuccess.Should().BeFalse();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.HasActiveRelations);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_GetByIdReturnsNull_ReturnsResultFailure()
+    {
+        //Arrange
+        Permission? permission = null;
+        var permissionId = Guid.NewGuid();
+        _permissionRepositoryMock.Setup(p => p.HasActiveRelations(permissionId)).ReturnsAsync(false);
+        _permissionRepositoryMock.Setup(p => p.GetByIdAsync(permissionId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(permission);
+
+        //Act
+        var result = await _service.DeleteAsync(permissionId);
+
+        //Assert
+        result.IsSuccess.Should().BeFalse();
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.NotFound);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_PermissionExistsAndHasNoActiveRelations_ReturnsResultTrue()
+    {
+        //Arrange
+        Permission permission = Permission.Create("test", "test").Value;
+        _permissionRepositoryMock.Setup(p => p.HasActiveRelations(permission.Id)).ReturnsAsync(false);
+        _permissionRepositoryMock.Setup(p => p.GetByIdAsync(permission.Id, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(permission);
+
+        //Act
+        var result = await _service.DeleteAsync(permission.Id);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        permission.IsActive.Should().BeFalse();
+        permission.DateDeleted.Should().NotBeNull();
+    }
+    #endregion
+    #region GetByIdAsync Methods Test
+    [Fact]
+    public async Task GetByIdAsync_PermissionNotFound_ReturnsResultFailure()
+    {
+        //Arrange
+        var permissionId = Guid.NewGuid();
+        PermissionResponse? expected = null;
+        _permissionRepositoryMock.Setup(p => p.GetBySpecAsync(It.IsAny<PermissionResponseSpec>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expected);
+
+        //Act
+        var result = await _service.GetByIdAsync(permissionId, CancellationToken.None);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.NotFound);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_PermissionFound_ReturnsResultSuccess()
+    {
+        //Arrange
+        var permissionId = Guid.NewGuid();
+        PermissionResponse expected = new PermissionResponse(permissionId, "test", "test");
+        _permissionRepositoryMock.Setup(p => p.GetBySpecAsync(It.IsAny<PermissionResponseSpec>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(expected);
+
+        //Act
+        var result = await _service.GetByIdAsync(permissionId, CancellationToken.None);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(expected);
     }
     #endregion
 }

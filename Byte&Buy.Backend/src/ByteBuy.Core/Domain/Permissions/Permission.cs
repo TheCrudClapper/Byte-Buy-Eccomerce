@@ -21,6 +21,7 @@ public class Permission : AggregateRoot, ISoftDeletable
 
     private Permission(string name, string description)
     {
+        Id = Guid.NewGuid();
         Name = name;
         Description = description;
         IsActive = true;
