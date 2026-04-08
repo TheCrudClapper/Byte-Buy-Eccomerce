@@ -12,12 +12,12 @@ public abstract class Entity : IEntity, IEquatable<Entity>
     public static bool operator ==(Entity? left, Entity? right)
         => Equals(left, right);
 
-    public static bool operator !=(Entity? left, Entity? right) 
+    public static bool operator !=(Entity? left, Entity? right)
         => !Equals(left, right);
 
     public bool Equals(Entity? other)
         => Equals((object?)other);
 
-    public override int GetHashCode() 
+    public override int GetHashCode()
         => Id.GetHashCode();
 }

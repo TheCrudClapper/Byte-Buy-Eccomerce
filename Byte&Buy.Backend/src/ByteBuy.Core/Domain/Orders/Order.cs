@@ -151,7 +151,7 @@ public class Order : AggregateRoot, ISoftDeletable
         if (!CanBeDeactivatedByStatus())
             return Result.Failure(OrderErrors.DeactivationImpossible);
 
-       if (!CanBeDeactivatedByLines())
+        if (!CanBeDeactivatedByLines())
             return Result.Failure(OrderErrors.OrderStillHasReturnPeriod);
 
         IsActive = false;
@@ -167,7 +167,7 @@ public class Order : AggregateRoot, ISoftDeletable
     public bool CanBeDeactivatedByStatus()
         => DeactivationAllowedStatuses.Contains(Status);
 
-    public bool CanBeDeactivatedByLines() 
+    public bool CanBeDeactivatedByLines()
     {
         if (Lines.All(l => l is RentOrderLine))
             return true;

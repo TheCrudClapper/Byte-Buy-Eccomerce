@@ -39,7 +39,7 @@ public class Permission : AggregateRoot, ISoftDeletable
     public Result Update(string name, string description)
     {
         var validation = Validate(name, description);
-        if(validation.IsFailure)
+        if (validation.IsFailure)
             return Result.Failure(validation.Error);
 
         Name = name;

@@ -79,5 +79,5 @@ public interface IOrderService
     /// <param name="orderId"></param>
     /// <returns></returns>
     Task<Result> DeleteAsync(Guid userId, Guid orderId);
-    
+
 }

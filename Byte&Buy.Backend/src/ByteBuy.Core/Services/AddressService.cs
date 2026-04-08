@@ -11,7 +11,6 @@ using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Mappings;
 using ByteBuy.Core.ServiceContracts;
-using System.Net;
 using static ByteBuy.Core.Specification.AddressSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 

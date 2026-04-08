@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Offers.Base;
-using ByteBuy.Core.Domain.Orders.Enums;
+﻿using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.ServiceContracts;
 using Microsoft.EntityFrameworkCore;

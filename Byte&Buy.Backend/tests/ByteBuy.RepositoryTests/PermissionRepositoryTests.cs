@@ -1,12 +1,9 @@
 ﻿using AutoFixture;
 using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Roles;
-using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.RepositoryTests;
@@ -25,7 +22,6 @@ public class PermissionRepositoryTests
         _context = new ApplicationDbContext(options);
         _permissionRepository = new PermissionRepository(_context);
         _fixture = new Fixture();
-
     }
 
 
@@ -81,4 +77,5 @@ public class PermissionRepositoryTests
     }
 
     #endregion
+
 }

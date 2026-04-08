@@ -18,7 +18,7 @@ public abstract class ValueObject : IEquatable<ValueObject>
     public static bool operator ==(ValueObject? left, ValueObject? right)
         => Equals(left, right);
 
-    public static bool operator !=(ValueObject? left, ValueObject? right) 
+    public static bool operator !=(ValueObject? left, ValueObject? right)
         => !Equals(left, right);
 
     public override int GetHashCode()

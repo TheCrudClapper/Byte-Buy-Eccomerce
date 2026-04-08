@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ByteBuy.Core\ByteBuy.Core.csproj" />
+    <ProjectReference Include="..\..\src\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

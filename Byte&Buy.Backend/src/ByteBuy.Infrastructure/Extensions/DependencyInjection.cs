@@ -9,7 +9,6 @@ using ByteBuy.Infrastructure.Repositories;
 using ByteBuy.Infrastructure.Repositories.UnitOfWork;
 using ByteBuy.Infrastructure.ServiceContracts;
 using ByteBuy.Infrastructure.Services;
-using Hangfire;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

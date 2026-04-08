@@ -80,7 +80,7 @@ public class PermissionService : IPermissionService
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request)
     {
         var exists = await _permissionRepository.ExistsWithNameAsync(request.Name, id);
-        if(exists)
+        if (exists)
             return Result.Failure<UpdatedResponse>(PermissionErrors.AlreadyExists);
 
         var permission = await _permissionRepository.GetByIdAsync(id);
@@ -99,5 +99,5 @@ public class PermissionService : IPermissionService
 
     public async Task<Result<IReadOnlyCollection<PermissionResponse>>> GetPermissionListAsync(CancellationToken ct = default)
         => Result.Success(await _permissionRepository.GetPermissionListAsync(ct));
-    
+
 }

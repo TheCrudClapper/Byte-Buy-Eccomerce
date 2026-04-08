@@ -51,7 +51,7 @@ public class PermissionRepository : EfBaseRepository<Permission>, IPermissionRep
     {
         return await _context.Permissions
             .AnyAsync(p => p.RolePermissions
-                .Any(rp => rp.PermissionId == permissionId) 
+                .Any(rp => rp.PermissionId == permissionId)
                 || p.UserPermissions.Any(up => up.PermissionId == permissionId));
     }
 

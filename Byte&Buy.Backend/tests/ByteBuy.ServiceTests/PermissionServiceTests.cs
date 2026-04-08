@@ -1,6 +1,9 @@
-﻿using AutoFixture;
+﻿using Ardalis.Specification;
+using AutoFixture;
 using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
+using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using FluentAssertions;
@@ -9,15 +12,21 @@ namespace ByteBuy.ServiceTests;
 
 public class PermissionServiceTests
 {
-    private readonly IPermissionService _permissionService;
+    private readonly IPermissionService _service;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly IPermissionRepository _permissionRepository;
     private readonly Mock<IPermissionRepository> _permissionRepositoryMock;
     private readonly IFixture _fixture;
     public PermissionServiceTests()
     {
         _permissionRepositoryMock = new Mock<IPermissionRepository>();
+        _unitOfWorkMock = new Mock<IUnitOfWork>();
+
         _permissionRepository = _permissionRepositoryMock.Object;
-        _permissionService = new PermissionService(_permissionRepository);
+        _unitOfWork = _unitOfWorkMock.Object;
+
+        _service = new PermissionService(_permissionRepository, _unitOfWork);
         _fixture = new Fixture();
     }
 
@@ -31,7 +40,7 @@ public class PermissionServiceTests
             .ReturnsAsync(returnedPermission);
 
         //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), "TestPermission");
+        bool result = await _service.HasPermissionAsync(Guid.NewGuid(), "TestPermission");
 
         //Assert
         result.Should().BeFalse();
@@ -53,7 +62,7 @@ public class PermissionServiceTests
             .ReturnsAsync(false);
 
         //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
+        bool result = await _service.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
 
         //Assert
         result.Should().BeFalse();
@@ -75,10 +84,54 @@ public class PermissionServiceTests
             .ReturnsAsync(true);
 
         //Act
-        bool result = await _permissionService.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
+        bool result = await _service.HasPermissionAsync(Guid.NewGuid(), returnedPermission.Name);
 
         //Assert
         result.Should().BeTrue();
+    }
+    #endregion
+
+    #region GetSelectListAsync Method Tests
+    [Fact]
+    public async Task GetSelectListAsync_DBNotEmpty_ReturnsCollection()
+    {
+        //Arrange
+        var collection = _fixture
+          .CreateMany<SelectListItemResponse<Guid>>()
+          .ToList();
+
+        _permissionRepositoryMock
+            .Setup(p => p.GetListBySpecAsync(
+                It.IsAny<ISpecification<Permission, SelectListItemResponse<Guid>>>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(collection);
+
+        //Act
+        var result = await _service.GetSelectListAsync();
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(collection);
+    }
+
+    [Fact]
+    public async Task GetSelectListAsync_DBEmpty_ReturnsEmptyCollection()
+    {
+        //Arrange
+        List<SelectListItemResponse<Guid>> collection = [];
+
+        _permissionRepositoryMock
+            .Setup(p => p.GetListBySpecAsync(
+                It.IsAny<ISpecification<Permission, SelectListItemResponse<Guid>>>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(collection);
+
+        //Act
+        var result = await _service.GetSelectListAsync();
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEmpty();
     }
     #endregion
 }
