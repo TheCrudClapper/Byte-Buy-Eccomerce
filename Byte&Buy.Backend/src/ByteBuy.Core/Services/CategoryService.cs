@@ -22,8 +22,6 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
     }
-
-
     public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)
     {
         var exist = await _categoryRepository.ExistWithNameAsync(request.Name);
@@ -84,9 +82,8 @@ public class CategoryService : ICategoryService
     }
 
     public async Task<Result<PagedList<CategoryListResponse>>> GetCategoriesListAsync(CategoryListQuery queryParams, CancellationToken ct)
-    {
-        return await _categoryRepository.GetCategoryListAsync(queryParams);
-    }
+        => await _categoryRepository.GetCategoryListAsync(queryParams);
+    
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {

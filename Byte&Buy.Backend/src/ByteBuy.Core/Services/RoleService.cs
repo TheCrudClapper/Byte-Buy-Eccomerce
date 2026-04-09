@@ -87,9 +87,8 @@ public class RoleService : IRoleService
     }
 
     public async Task<Result<PagedList<RoleListResponse>>> GetRolesListAsync(RoleListQuery queryParams, CancellationToken ct = default)
-    {
-        return await _roleRepository.GetPagedRoleListAsync(queryParams, ct);
-    }
+        => await _roleRepository.GetPagedRoleListAsync(queryParams, ct);
+
 
     public async Task<Result<RoleResponse>> GetByIdAsync(Guid id, CancellationToken ct = default)
     {

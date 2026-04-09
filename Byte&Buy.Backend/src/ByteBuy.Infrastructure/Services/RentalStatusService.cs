@@ -1,47 +1,25 @@
-﻿using ByteBuy.Core.Domain.Rentals.Enums;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+﻿using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.ServiceContracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Services;
 
-public class RentalStatusService : IRentalStatusService
+public class RentalStatusService(ApplicationDbContext context) 
+    : IRentalStatusService
 {
-    private readonly IRentalRepository _rentalRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public RentalStatusService(IRentalRepository rentalRepository,
-        IUnitOfWork unitOfWork)
-    {
-        _rentalRepository = rentalRepository;
-        _unitOfWork = unitOfWork;
-
-    }
-
     public async Task UpdateRentalStatusesAsync()
     {
-        var statuses = await _rentalRepository
-            .GetAllByConditionAsync(r => r.Status == RentalStatus.Created || r.Status == RentalStatus.Active);
-
-        var now = DateTime.UtcNow;
-
-        foreach (var rental in statuses)
-        {
-            if (now < rental.RentalStartDate)
-                continue;
-
-            if (now > rental.RentalEndDate)
-            {
-                if (rental.Status != RentalStatus.Overdue)
-                    rental.MarkAsOverdue();
-
-                continue;
-            }
-
-            if (rental.Status != RentalStatus.Active)
-                rental.ActivateRental();
-        }
-
-        await _unitOfWork.SaveChangesAsync();
+        await context.Database.ExecuteSqlRawAsync(@"
+            UPDATE ""Rentals""
+            SET ""Status"" =
+                CASE
+                    WHEN (CURRENT_TIMESTAMP AT TIME ZONE 'UTC') > ""RentalEndDate"" THEN 2
+                    WHEN (CURRENT_TIMESTAMP AT TIME ZONE 'UTC') >= ""RentalStartDate""
+                         AND (CURRENT_TIMESTAMP AT TIME ZONE 'UTC') <= ""RentalEndDate""
+                    THEN 1
+                    ELSE ""Status""
+                END
+            WHERE ""Status"" IN (0, 1)
+        ");
     }
 }
