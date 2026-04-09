@@ -49,7 +49,8 @@ public class PermissionRepositoryTests
     public async Task GetPermissionByName_PermissionDoesntExist_ReturnsNull()
     {
         //Act
-        var actualPermission = await _permissionRepository.GetByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>());
+        var actualPermission = await _permissionRepository
+            .GetByNameAsync(It.IsAny<string>(), It.IsAny<CancellationToken>());
 
         //Assert
         actualPermission.Should().Be(null);

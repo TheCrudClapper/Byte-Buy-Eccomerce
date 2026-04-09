@@ -156,7 +156,6 @@ public class Cart : AggregateRoot, ISoftDeletable
             .Where(co => co.OfferId == rentOffer.Id)
             .Sum(co => co.Quantity);
 
-
         //var currentExistingQuantity = existingCartOffer?.Quantity ?? 0;
         var requestedQuantity = totalReservedQuantity + quantity;
 

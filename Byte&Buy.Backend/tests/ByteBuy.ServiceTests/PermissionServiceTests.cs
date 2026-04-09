@@ -10,15 +10,15 @@ using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using FluentAssertions;
 using Moq;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 using static ByteBuy.Core.Specification.PermissionSpecifications;
 namespace ByteBuy.ServiceTests;
 
 public class PermissionServiceTests
 {
     private readonly IPermissionService _service;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
-    private readonly IPermissionRepository _permissionRepository;
     private readonly Mock<IPermissionRepository> _permissionRepositoryMock;
     private readonly IFixture _fixture;
     public PermissionServiceTests()
@@ -26,10 +26,7 @@ public class PermissionServiceTests
         _permissionRepositoryMock = new Mock<IPermissionRepository>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        _permissionRepository = _permissionRepositoryMock.Object;
-        _unitOfWork = _unitOfWorkMock.Object;
-
-        _service = new PermissionService(_permissionRepository, _unitOfWork);
+        _service = new PermissionService(_permissionRepositoryMock.Object, _unitOfWorkMock.Object);
         _fixture = new Fixture();
     }
 
@@ -185,11 +182,12 @@ public class PermissionServiceTests
         result.IsSuccess.Should().BeTrue();
         permission.IsActive.Should().BeFalse();
         permission.DateDeleted.Should().NotBeNull();
+        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
     #endregion
     #region GetByIdAsync Methods Test
     [Fact]
-    public async Task GetByIdAsync_PermissionNotFound_ReturnsResultFailure()
+    public async Task GetByIdAsync_PermissionNotFound_ReturnsFailureResult()
     {
         //Arrange
         var permissionId = Guid.NewGuid();
@@ -206,7 +204,7 @@ public class PermissionServiceTests
     }
 
     [Fact]
-    public async Task GetByIdAsync_PermissionFound_ReturnsResultSuccess()
+    public async Task GetByIdAsync_PermissionFound_ReturnsSuccessResult()
     {
         //Arrange
         var permissionId = Guid.NewGuid();
@@ -220,6 +218,170 @@ public class PermissionServiceTests
         //Assert
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().BeEquivalentTo(expected);
+    }
+    #endregion
+    #region AddASync Method Tests
+    [Fact]
+    public async Task AddAsync_ExistsWithGivenName_ReturnsFailureResult()
+    {
+        //Arrange
+        PermissionAddRequest request = _fixture.Create<PermissionAddRequest>();
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), null))
+            .ReturnsAsync(true);
+
+        //Act
+        var result = await _service.AddAsync(request);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.AlreadyExists);
+    }
+
+    [Fact]
+    public async Task AddAsync_CreateReturnsFailure_ReturnsFailureResult()
+    {
+        //Arrange
+        PermissionAddRequest request = new("", "test");
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), null))
+            .ReturnsAsync(false);
+
+        //Act
+        var result = await _service.AddAsync(request);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.InvalidName);
+    }
+
+    [Fact]
+    public async Task AddAsync_ValidInput_ReturnsSuccessResult()
+    {
+        //Arrange
+        PermissionAddRequest request = new("test", "test");
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), null))
+            .ReturnsAsync(false);
+
+        //Act
+        var result = await _service.AddAsync(request);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeOfType<CreatedResponse>();
+        result.Value.DateCreated.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
+        _permissionRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Permission>()), Times.Once);
+        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+    #endregion
+    #region UpdateAsync Method Tests
+    [Fact]
+    public async Task UpdateAsync_ExistsWithGivenName_ReturnsFailureResult()
+    {
+        //Arrange
+        PermissionUpdateRequest request = new("test", "test");
+        Guid permissionId = Guid.NewGuid();
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), It.IsAny<Guid>()))
+            .ReturnsAsync(true);
+
+        //Act
+        var result = await _service.UpdateAsync(permissionId, request);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.AlreadyExists);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_NotFound_ReturnsFailureResult()
+    {
+        //Arrange
+        PermissionUpdateRequest request = new("test", "test");
+        Permission? permission = null;
+        Guid permissionId = Guid.NewGuid();
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), It.IsAny<Guid>()))
+            .ReturnsAsync(false);
+        _permissionRepositoryMock.Setup(p => p.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(permission);
+
+        //Act
+        var result = await _service.UpdateAsync(permissionId, request);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.NotFound);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_UpdateReturnsFailure_ReturnsFailure()
+    {
+        //Arrange
+        PermissionUpdateRequest request = new("", "test");
+        Permission permission = Permission.Create("test", "test").Value;
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), It.IsAny<Guid>()))
+            .ReturnsAsync(false);
+        _permissionRepositoryMock.Setup(p => p.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(permission);
+
+        //Act
+        var result = await _service.UpdateAsync(permission.Id, request);
+
+        //Assert
+        result.IsFailure.Should().BeTrue();
+        result.Error.Should().BeEquivalentTo(PermissionErrors.InvalidName);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_ValidInput_ReturnsSuccessResult()
+    {
+        //Arrange
+        PermissionUpdateRequest request = new("updated", "updated");
+        Permission permission = Permission.Create("test", "test").Value;
+        _permissionRepositoryMock.Setup(p => p.ExistsWithNameAsync(It.IsAny<string>(), It.IsAny<Guid>()))
+            .ReturnsAsync(false);
+        _permissionRepositoryMock.Setup(p => p.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(permission);
+
+        //Act
+        var result = await _service.UpdateAsync(permission.Id, request);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeOfType<UpdatedResponse>();
+        result.Value.Id.Should().Be(permission.Id);
+        result.Value.DateEdited.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
+        _unitOfWorkMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+    #endregion
+    #region GetPermissionListAsync Methods Test
+    [Fact]
+    public async Task GetPermissionListAsync_DBEmpty_ReturnsEmptyCollection()
+    {
+        //Arrange
+        IReadOnlyCollection<PermissionResponse> collection = [];
+        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(collection);
+
+        //Act
+        var result = await _service.GetPermissionListAsync();
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEmpty();
+    }
+    [Fact]
+    public async Task GetPermissionListAsync_DBNotEmpty_ReturnsCollection()
+    {
+        //Arrange
+        IReadOnlyCollection<PermissionResponse> collection = _fixture.CreateMany<PermissionResponse>()
+            .ToList();
+        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(collection);
+
+        //Act
+        var result = await _service.GetPermissionListAsync();
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEquivalentTo(collection);
     }
     #endregion
 }

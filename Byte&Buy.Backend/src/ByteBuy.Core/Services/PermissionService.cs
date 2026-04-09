@@ -93,7 +93,6 @@ public class PermissionService : IPermissionService
             return Result.Failure<UpdatedResponse>(result.Error);
 
         await _unitOfWork.SaveChangesAsync();
-
         return permission.ToUpdatedResponse();
     }
 
