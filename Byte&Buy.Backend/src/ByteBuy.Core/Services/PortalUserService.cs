@@ -164,9 +164,7 @@ public class PortalUserService : IPortalUserService
             if (roleChange.IsFailure)
                 return Result.Failure<UpdatedResponse>(roleChange.Error);
 
-            await _portalUserRepository.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync();
-
             await _unitOfWork.CommitAsync();
 
             return user.ToUpdatedResponse();
@@ -204,12 +202,9 @@ public class PortalUserService : IPortalUserService
                 await _offerRepository.UpdateAsync(offer);
             }
 
-            await _portalUserRepository.UpdateAsync(portalUser);
-            await _cartRepository.UpdateAsync(userCart);
-
             await _unitOfWork.SaveChangesAsync();
-
             await _unitOfWork.CommitAsync();
+
             return Result.Success();
         }
         catch

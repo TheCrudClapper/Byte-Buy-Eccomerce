@@ -90,7 +90,6 @@ public class DeliveryService : IDeliveryService
         if (deliveryResult.IsFailure)
             return Result.Failure<UpdatedResponse>(deliveryResult.Error);
 
-        await _deliveryRepository.UpdateAsync(delivery);
         await _unitOfWork.SaveChangesAsync();
 
         return delivery.ToUpdatedResponse();

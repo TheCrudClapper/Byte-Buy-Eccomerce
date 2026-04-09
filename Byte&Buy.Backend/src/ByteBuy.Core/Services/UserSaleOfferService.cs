@@ -113,8 +113,6 @@ public class UserSaleOfferService : IUserSaleOfferService
         offer.Deactivate();
         item.Deactivate();
 
-        await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.UpdateAsync(offer);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
@@ -180,8 +178,6 @@ public class UserSaleOfferService : IUserSaleOfferService
         if (offerUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(offerUpdateResult.Error);
 
-        await _itemRepository.UpdateAsync(item);
-        await _saleOfferRepository.UpdateAsync(saleOffer);
         await _unitOfWork.SaveChangesAsync();
 
         return saleOffer.ToUpdatedResponse();

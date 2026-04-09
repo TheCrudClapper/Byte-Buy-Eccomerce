@@ -54,9 +54,7 @@ public class CountryService : ICountryService
             request.Name,
             request.Code);
 
-        await _countryRepository.UpdateAsync(country);
         await _unitOfWork.SaveChangesAsync();
-
         return country.ToUpdatedResponse();
     }
 
@@ -70,9 +68,8 @@ public class CountryService : ICountryService
             return Result.Failure(CountryErrors.NotFound);
 
         country.Deactivate();
-
-        await _countryRepository.UpdateAsync(country);
         await _unitOfWork.SaveChangesAsync();
+
         return Result.Success();
     }
 
@@ -85,9 +82,7 @@ public class CountryService : ICountryService
     }
 
     public async Task<Result<PagedList<CountryResponse>>> GetCountriesListAsync(CountryListQuery queryParams, CancellationToken ct = default)
-    {
-        return await _countryRepository.GetListAsync(queryParams, ct);
-    }
+        => await _countryRepository.GetListAsync(queryParams, ct);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
     {

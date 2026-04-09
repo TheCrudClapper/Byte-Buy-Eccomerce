@@ -204,7 +204,6 @@ public class OrderCreateService : IOrderCreateService
                 return Result.Failure<OrderCreatedReponse>(cartResult.Error);
 
             await _paymentRepository.AddAsync(paymentResult.Value);
-
             await _unitOfWork.SaveChangesAsync();
             await _unitOfWork.CommitAsync();
 

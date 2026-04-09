@@ -57,18 +57,14 @@ public class AddressService : IAddressService
             request.FlatNumber,
             country.Id,
             request.IsDefault,
-            _addressValidator
-            );
+            _addressValidator);
 
         if (addressResult.IsFailure)
             return Result.Failure<CreatedResponse>(addressResult.Error);
 
-        var address = addressResult.Value;
-
-        await _portalUserRepository.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();
 
-        return address.ToCreatedResponse();
+        return addressResult.Value.ToCreatedResponse();
     }
 
     public async Task<Result<UpdatedResponse>> UpdateShippingAddressAsync(Guid addressId, Guid userId, ShippingAddressUpdateRequest request)
@@ -99,7 +95,6 @@ public class AddressService : IAddressService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _portalUserRepository.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();
 
         var updated = user.ShippingAddresses.Single(a => a.Id == addressId);
@@ -125,7 +120,6 @@ public class AddressService : IAddressService
         if (homeAddressResult.IsFailure)
             return Result.Failure<UpdatedResponse>(homeAddressResult.Error);
 
-        await _portalUserRepository.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();
         return user.ToUpdatedResponse();
     }
@@ -142,7 +136,9 @@ public class AddressService : IAddressService
 
     public async Task<Result<ShippingAddressResponse>> GetShippingAddressAsync(Guid userId, Guid addressId, CancellationToken ct)
     {
-        var addressDto = await _addressReadRepository.GetBySpecAsync(new UserAndShippingAddressResponseSpec(userId, addressId), ct);
+        var addressDto = await _addressReadRepository
+            .GetBySpecAsync(new UserAndShippingAddressResponseSpec(userId, addressId), ct);
+
         if (addressDto is null)
             return Result.Failure<ShippingAddressResponse>(Error.NotFound);
 
@@ -161,7 +157,8 @@ public class AddressService : IAddressService
 
     public async Task<Result<ShippingAddressResponse>> GetShippingAddressByIdAsync(Guid addressId, CancellationToken ct)
     {
-        var addressDto = await _addressReadRepository.GetBySpecAsync(new ShippingAddressResponseSpec(addressId), ct);
+        var addressDto = await _addressReadRepository
+            .GetBySpecAsync(new ShippingAddressResponseSpec(addressId), ct);
         if (addressDto is null)
             return Result.Failure<ShippingAddressResponse>(Error.NotFound);
 
@@ -183,7 +180,6 @@ public class AddressService : IAddressService
         if (result.IsFailure)
             return result;
 
-        await _portalUserRepository.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }

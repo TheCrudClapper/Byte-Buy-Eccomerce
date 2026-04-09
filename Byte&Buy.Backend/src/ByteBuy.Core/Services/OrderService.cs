@@ -56,14 +56,10 @@ public class OrderService : IOrderService
         foreach (var line in order.Lines)
         {
             if (offerLookup.TryGetValue(line.OfferId, out var offer))
-            {
                 offer.RestoreQuantity(line.Quantity);
-            }
         }
 
-        await _orderRepository.UpdateAsync(order);
         await _unitOfWork.SaveChangesAsync();
-
         return order.ToUpdatedResponse();
     }
 
@@ -123,7 +119,6 @@ public class OrderService : IOrderService
         if (returnResult.IsFailure)
             return Result.Failure<UpdatedResponse>(returnResult.Error);
 
-        await _orderRepository.UpdateAsync(order);
         await _unitOfWork.SaveChangesAsync();
 
         return order.ToUpdatedResponse();
@@ -188,9 +183,7 @@ public class OrderService : IOrderService
         if (shippedResult.IsFailure)
             return Result.Failure<UpdatedResponse>(shippedResult.Error);
 
-        await _orderRepository.UpdateAsync(order);
         await _unitOfWork.SaveChangesAsync();
-
         return order.ToUpdatedResponse();
     }
 
@@ -218,9 +211,7 @@ public class OrderService : IOrderService
         if (rentOrderLines.Count > 0)
             await CreateRentals(order, rentOrderLines);
 
-        await _orderRepository.UpdateAsync(order);
         await _unitOfWork.SaveChangesAsync();
-
         return order.ToUpdatedResponse();
     }
 

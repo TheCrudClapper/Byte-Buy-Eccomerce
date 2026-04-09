@@ -55,7 +55,6 @@ public class CategoryService : ICategoryService
         if (result.IsFailure)
             return Result.Failure<UpdatedResponse>(result.Error);
 
-        await _categoryRepository.UpdateAsync(category);
         await _unitOfWork.SaveChangesAsync();
 
         return category.ToUpdatedResponse();
@@ -71,8 +70,6 @@ public class CategoryService : ICategoryService
             return Result.Failure(Error.NotFound);
 
         category.Deactivate();
-
-        await _categoryRepository.UpdateAsync(category);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();

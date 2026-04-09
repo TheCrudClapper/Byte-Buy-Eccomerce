@@ -47,9 +47,7 @@ public class CartService : ICartService
         if (result.IsFailure)
             return Result.Failure(result.Error);
 
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
-
         return Result.Success();
     }
 
@@ -71,9 +69,7 @@ public class CartService : ICartService
         if (result.IsFailure)
             return Result.Failure(result.Error);
 
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
-
         return Result.Success();
     }
 
@@ -88,7 +84,6 @@ public class CartService : ICartService
         if (deleteResult.IsFailure)
             return Result.Failure<CartSummaryResponse>(deleteResult.Error);
 
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
@@ -166,7 +161,6 @@ public class CartService : ICartService
         if (updateResult.IsFailure)
             return Result.Failure<CartSummaryResponse>(updateResult.Error);
 
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
@@ -187,7 +181,6 @@ public class CartService : ICartService
         if (updateResult.IsFailure)
             return Result.Failure<CartSummaryResponse>(updateResult.Error);
 
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
 
         var cartSummaryResult = await CalculateCartSummary(cart);
@@ -206,8 +199,6 @@ public class CartService : ICartService
             return Result.Failure(CartErrors.NotFound);
 
         cart.ClearCart();
-
-        await _cartRepository.UpdateAsync(cart);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();

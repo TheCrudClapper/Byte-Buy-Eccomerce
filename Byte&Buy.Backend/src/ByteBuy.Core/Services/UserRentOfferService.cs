@@ -115,9 +115,6 @@ public class UserRentOfferService : IUserRentOfferService
         offer.Deactivate();
         item.Deactivate();
 
-        await _itemRepository.UpdateAsync(item);
-        await _rentOfferRepository.UpdateAsync(offer);
-
         await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
@@ -183,9 +180,6 @@ public class UserRentOfferService : IUserRentOfferService
 
         if (offerUpdateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(offerUpdateResult.Error);
-
-        await _itemRepository.UpdateAsync(item);
-        await _rentOfferRepository.UpdateAsync(rentOffer);
 
         await _unitOfWork.SaveChangesAsync();
         return rentOffer.ToUpdatedResponse();

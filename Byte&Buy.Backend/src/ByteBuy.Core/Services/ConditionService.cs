@@ -51,7 +51,6 @@ public class ConditionService : IConditionService
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
         condition.Update(request.Name, request.Description);
-        await _conditionRepository.UpdateAsync(condition);
         await _unitOfWork.SaveChangesAsync();
 
         return condition.ToUpdatedResponse();
@@ -67,7 +66,6 @@ public class ConditionService : IConditionService
             return Result.Failure(Error.NotFound);
 
         condition.Deactivate();
-        await _conditionRepository.UpdateAsync(condition);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();

@@ -162,7 +162,6 @@ public class EmployeeService : IEmployeeService
             if (roleChange.IsFailure)
                 return Result.Failure<UpdatedResponse>(roleChange.Error);
 
-            await _employeeRepository.UpdateAsync(employee);
             await _unitOfWork.SaveChangesAsync();
 
             await _unitOfWork.CommitAsync();

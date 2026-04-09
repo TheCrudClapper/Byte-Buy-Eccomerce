@@ -54,7 +54,6 @@ public class PaymentService : IPaymentService
         if (finalizeResult.IsFailure)
             return finalizeResult;
 
-        await _paymentRepository.UpdateAsync(payment);
         await _unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
@@ -81,9 +80,7 @@ public class PaymentService : IPaymentService
         if (finalizeResult.IsFailure)
             return finalizeResult;
 
-        await _paymentRepository.UpdateAsync(payment);
         await _unitOfWork.SaveChangesAsync();
-
         return Result.Success();
     }
 

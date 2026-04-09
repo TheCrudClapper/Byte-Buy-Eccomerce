@@ -60,12 +60,7 @@ public class DeliveryCarrierService : IDeliveryCarrierService
         if (carrier is null)
             return Result.Failure<UpdatedResponse>(Error.NotFound);
 
-        carrier.Update(
-            request.Name,
-            request.Code
-        );
-
-        await _deliveryCarrierRepository.UpdateAsync(carrier);
+        carrier.Update(request.Name, request.Code);
         await _unitOfWork.SaveChangesAsync();
 
         return carrier.ToUpdatedResponse();
@@ -81,8 +76,6 @@ public class DeliveryCarrierService : IDeliveryCarrierService
             return Result.Failure(DeliveryCarrierErrors.NotFound);
 
         carrier.Deactivate();
-
-        await _deliveryCarrierRepository.UpdateAsync(carrier);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
@@ -106,8 +99,9 @@ public class DeliveryCarrierService : IDeliveryCarrierService
             .ToList();
     }
 
-    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersListAsync(DeliveryCarriersListQuery queryParams, CancellationToken ct = default)
-    {
-        return await _deliveryCarrierRepository.GetDeliveryCarrierListAsync(queryParams, ct);
-    }
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetDeliveryCarriersListAsync(
+        DeliveryCarriersListQuery queryParams,
+        CancellationToken ct = default)
+       => await _deliveryCarrierRepository.GetDeliveryCarrierListAsync(queryParams, ct);
+    
 }

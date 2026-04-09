@@ -70,7 +70,7 @@ export class MyOrders {
               this.dialogService.success("Successfully deleted order !")
               this.pagedList.update(current => {
                 if (!current) return current;
-d
+
                 const newItems = current.items.filter(order => order.orderId !== id);
                 const newMetadata = { ...current.metadata, totalItems: current.metadata.totalCount - 1 };
 

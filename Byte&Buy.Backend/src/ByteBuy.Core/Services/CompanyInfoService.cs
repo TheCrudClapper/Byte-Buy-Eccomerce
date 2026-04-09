@@ -87,7 +87,6 @@ public class CompanyInfoService : ICompanyInfoService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _companyInfoRepository.UpdateAsync(companyInfo);
         await _unitOfWork.SaveChangesAsync();
 
         return companyInfo.ToUpdatedResponse();

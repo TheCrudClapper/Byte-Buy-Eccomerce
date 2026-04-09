@@ -45,15 +45,19 @@ public class RentalService : IRentalService
         return await _rentalRepository.GetCompanyRentalsListAsync(companyId, queryParams, ct);
     }
 
-    public async Task<Result<PagedList<RentalLenderResponse>>> GetUserLenderRentalsAsync(UserRentalLenderQuery queryParams, Guid lenderId, CancellationToken ct = default)
-    {
-        return await _rentalRepository.GetUserLenderRentalsAsync(queryParams, lenderId, ct);
-    }
+    public async Task<Result<PagedList<RentalLenderResponse>>> GetUserLenderRentalsAsync(
+        UserRentalLenderQuery queryParams,
+        Guid lenderId,
+        CancellationToken ct = default)
+        => await _rentalRepository.GetUserLenderRentalsAsync(queryParams, lenderId, ct);
 
-    public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserBorrowerRentalsAsync(UserRentalBorrowerQuery queryParams, Guid borrowerId, CancellationToken ct = default)
-    {
-        return await _rentalRepository.GetUserBorrowerRentalsAsync(queryParams, borrowerId, ct);
-    }
+
+    public async Task<Result<PagedList<UserRentalBorrowerResponse>>> GetUserBorrowerRentalsAsync(
+        UserRentalBorrowerQuery queryParams,
+        Guid borrowerId,
+        CancellationToken ct = default)
+        => await _rentalRepository.GetUserBorrowerRentalsAsync(queryParams, borrowerId, ct);
+    
 
     public async Task<Result<UpdatedResponse>> ReturnItemToLenderAsync(Guid borrowerId, Guid rentalId)
     {
@@ -65,7 +69,6 @@ public class RentalService : IRentalService
         if (returnResult.IsFailure)
             return Result.Failure<UpdatedResponse>(returnResult.Error);
 
-        await _rentalRepository.UpdateAsync(rental);
         await _unitOfWork.SaveChangesAsync();
 
         return rental.ToUpdatedResponse();

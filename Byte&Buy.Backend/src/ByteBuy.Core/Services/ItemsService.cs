@@ -100,10 +100,7 @@ public class ItemsService : IItemsService
         //var imageDeletionResult = _imageService.DeleteImages(drafts.Select(i => i.ImagePath).ToList(), ImageTypeEnum.Items);
         //if (imageDeletionResult.IsFailure)
         //    return Result.Failure<UpdatedResponse>(imageDeletionResult.Error);
-
-        await _itemRepository.UpdateAsync(aggregate);
         await _unitOfWork.SaveChangesAsync();
-
         return aggregate.ToUpdatedResponse();
     }
 
@@ -117,8 +114,6 @@ public class ItemsService : IItemsService
             return Result.Failure(ItemErrors.NotFound);
 
         aggregate.Deactivate();
-
-        await _itemRepository.UpdateAsync(aggregate);
         await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();

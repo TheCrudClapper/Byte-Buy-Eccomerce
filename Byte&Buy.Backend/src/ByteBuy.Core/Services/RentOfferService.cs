@@ -104,11 +104,8 @@ public class RentOfferService : IRentOfferService
         }
 
         rentOffer.Deactivate();
-
-        await _rentOfferRepository.UpdateAsync(rentOffer);
-        await _itemRepository.UpdateAsync(item);
-
         await _unitOfWork.SaveChangesAsync();
+
         return Result.Success();
     }
 
@@ -163,9 +160,6 @@ public class RentOfferService : IRentOfferService
 
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
-
-        await _rentOfferRepository.UpdateAsync(rentOffer);
-        await _itemRepository.UpdateAsync(item);
 
         await _unitOfWork.SaveChangesAsync();
 
