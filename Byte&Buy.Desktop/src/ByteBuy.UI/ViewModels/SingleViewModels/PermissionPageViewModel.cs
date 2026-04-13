@@ -4,6 +4,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.SingleViewModels;
@@ -13,19 +14,23 @@ public partial class PermissionPageViewModel : ViewModelSingle
     #region MVVM Properties
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Name of permission is required")]
+    [MaxLength(100, ErrorMessage = "Name can be at most 100 characters")]
     private string _name = string.Empty;
 
     [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Description is required")]
+    [MaxLength(100, ErrorMessage = "Description can be at most 100 characters")]
     private string _description = string.Empty;
 
     #endregion
 
     private readonly IPermissionService _permissionService;
-    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert) 
+    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert)
         : base(alert)
-    {
-        _permissionService = permissionService;
-    }
+        => _permissionService = permissionService;
 
     protected override async Task AddAsync()
     {
@@ -33,7 +38,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
         if (HasErrors)
             return;
 
-        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name,Description));
+        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name, Description));
         HandleResult(result, "Permission added successfully !");
     }
 
@@ -55,6 +60,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     {
         Name = string.Empty;
         Description = string.Empty;
+        ValidateAllProperties();
     }
 
     protected override async Task UpdateAsync()

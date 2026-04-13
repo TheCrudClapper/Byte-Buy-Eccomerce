@@ -7,13 +7,11 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Employee;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel 
+public partial class EmployeesPageViewModel
     : ViewModelMany<EmployeeListItemViewModel, IEmployeeService>
 {
     #region Filtration fields
@@ -53,16 +51,7 @@ public partial class EmployeesPageViewModel
         if (!ok || value is null)
             return;
 
-        PageNumber = value.Metadata.PageNumber;
-
-        Items = new ObservableCollection<EmployeeListItemViewModel>(
-            value.Items.Select((e, index) =>
-                e.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
-
-        TotalCount = value.Metadata.TotalCount;
-        HasNextPage = value.Metadata.HasNext;
-        TotalPages = value.Metadata.TotalPages;
-        HasPreviousPage = value.Metadata.HasPrevious;
+        ApplyPagination(value, (e, index) => e.ToListItem(index));
     }
 
     protected override async Task EditAsync(EmployeeListItemViewModel employee)

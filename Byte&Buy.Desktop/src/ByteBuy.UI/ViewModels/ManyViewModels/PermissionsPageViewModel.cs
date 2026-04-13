@@ -8,8 +8,6 @@ using ByteBuy.UI.ViewModels.Permission;
 using ByteBuy.UI.ViewModels.Shared;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.ManyViewModels;
@@ -25,7 +23,7 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
     private string? _description = null;
 
     #endregion
-    public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service) 
+    public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service)
         : base(alert, navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Permissions;
@@ -46,16 +44,7 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
         if (!ok || value is null)
             return;
 
-        PageNumber = value.Metadata.PageNumber;
-
-        Items = new ObservableCollection<PermissionManyListItem>(
-            value.Items.Select((p, i) =>
-                p.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
-
-        TotalCount = value.Metadata.TotalCount;
-        HasNextPage = value.Metadata.HasNext;
-        TotalPages = value.Metadata.TotalPages;
-        HasPreviousPage = value.Metadata.HasPrevious;
+        ApplyPagination(value, (p, index) => p.ToListItem(index));
     }
 
     public override async Task ClearFiltersAsync()

@@ -8,8 +8,6 @@ using ByteBuy.UI.ViewModels.Delivery;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -64,16 +62,7 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
-        PageNumber = value.Metadata.PageNumber;
-
-        Items = new ObservableCollection<DeliveryListItemViewModel>(
-            value.Items.Select((u, i) =>
-                u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
-
-        TotalCount = value.Metadata.TotalCount;
-        HasNextPage = value.Metadata.HasNext;
-        TotalPages = value.Metadata.TotalPages;
-        HasPreviousPage = value.Metadata.HasPrevious;
+        ApplyPagination(value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()

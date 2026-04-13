@@ -1,11 +1,14 @@
-﻿using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.Pagination;
+using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
+using ByteBuy.UI.Helpers;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
@@ -82,7 +85,6 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             Items.Remove(item);
             Alert.ShowSuccessAlert("Successfully deleted item !");
         }
-
         return;
     }
 
@@ -96,6 +98,20 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     public virtual Task ClearFiltersAsync()
     {
         throw new NotImplementedException();
+    }
+
+    protected void ApplyPagination<T>(PagedList<T> value, Func<T, int, TDataGridItem> map)
+    {
+        PageNumber = value.Metadata.PageNumber;
+
+        Items = new ObservableCollection<TDataGridItem>(
+            value.Items.Select((item, i) =>
+                map(item, PaginationHelper.CalculateItemIndex(i, PageSize, PageNumber))));
+
+        TotalCount = value.Metadata.TotalCount;
+        HasNextPage = value.Metadata.HasNext;
+        TotalPages = value.Metadata.TotalPages;
+        HasPreviousPage = value.Metadata.HasPrevious;
     }
 
     [RelayCommand]

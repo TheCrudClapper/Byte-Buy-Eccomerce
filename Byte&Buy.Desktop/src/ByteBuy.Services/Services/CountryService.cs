@@ -6,11 +6,10 @@ using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
-using System.Collections.ObjectModel;
 
 namespace ByteBuy.Services.Services;
 
-public class CountryService(ICompanyCountryHttpClient httpClient, IPublicCountriesHttpClient publicClient) 
+public class CountryService(ICompanyCountryHttpClient httpClient, IPublicCountriesHttpClient publicClient)
     : ICountryService
 {
     public async Task<Result<CreatedResponse>> AddAsync(CountryAddRequest request)

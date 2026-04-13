@@ -9,8 +9,6 @@ using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -66,16 +64,7 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         if (!ok || value is null)
             return;
 
-        PageNumber = value.Metadata.PageNumber;
-
-        Items = new ObservableCollection<OrderListItemViewModel>(
-            value.Items.Select((u, index) =>
-                u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
-
-        TotalCount = value.Metadata.TotalCount;
-        HasNextPage = value.Metadata.HasNext;
-        TotalPages = value.Metadata.TotalPages;
-        HasPreviousPage = value.Metadata.HasPrevious;
+        ApplyPagination(value, (u, index) => u.ToListItem(index));
     }
 
     [RelayCommand]

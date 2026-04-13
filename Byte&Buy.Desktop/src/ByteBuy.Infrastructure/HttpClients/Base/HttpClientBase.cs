@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Json;

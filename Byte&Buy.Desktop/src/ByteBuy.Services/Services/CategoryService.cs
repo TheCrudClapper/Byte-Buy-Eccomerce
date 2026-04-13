@@ -8,7 +8,7 @@ using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 namespace ByteBuy.Services.Services;
 
-public class CategoryService(ICompanyCategoryHttpClient httpClient, IPublicCategoriesHttpClient publicClient) 
+public class CategoryService(ICompanyCategoryHttpClient httpClient, IPublicCategoriesHttpClient publicClient)
     : ICategoryService
 {
     public async Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request)

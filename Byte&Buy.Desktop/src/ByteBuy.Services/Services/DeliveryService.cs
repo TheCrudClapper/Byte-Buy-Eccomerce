@@ -10,7 +10,7 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class DeliveryService(ICompanyDeliveryHttpClient httpClient, IPublicDeliveriesHttpClient publicClient) 
+public class DeliveryService(ICompanyDeliveryHttpClient httpClient, IPublicDeliveriesHttpClient publicClient)
     : IDeliveryService
 {
     public async Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request)

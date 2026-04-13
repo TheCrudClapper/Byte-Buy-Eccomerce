@@ -50,7 +50,7 @@ public partial class MainWindowViewModel : WindowViewModel
     private void SetActive(ApplicationPageNames page)
     {
         IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
-        IsEmployeesPageActive = page  == ApplicationPageNames.Employees;
+        IsEmployeesPageActive = page == ApplicationPageNames.Employees;
         IsRolesPageActive = page == ApplicationPageNames.Roles;
         IsPermissionsPageActive = page == ApplicationPageNames.Permissions;
         IsAdministrationPageActive = page == ApplicationPageNames.Administration;
