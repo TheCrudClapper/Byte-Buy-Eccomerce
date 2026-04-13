@@ -7,11 +7,13 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Employee;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class EmployeesPageViewModel
+public partial class EmployeesPageViewModel 
     : ViewModelMany<EmployeeListItemViewModel, IEmployeeService>
 {
     #region Filtration fields

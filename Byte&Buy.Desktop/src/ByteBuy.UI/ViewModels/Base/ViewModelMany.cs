@@ -99,7 +99,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     {
         throw new NotImplementedException();
     }
-
+    
     protected void ApplyPagination<T>(PagedList<T> value, Func<T, int, TDataGridItem> map)
     {
         PageNumber = value.Metadata.PageNumber;

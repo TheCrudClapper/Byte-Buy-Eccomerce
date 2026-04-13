@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
+using ByteBuy.UI.Helpers;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
@@ -8,6 +9,8 @@ using ByteBuy.UI.ViewModels.Permission;
 using ByteBuy.UI.ViewModels.Shared;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.ManyViewModels;
@@ -23,7 +26,7 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
     private string? _description = null;
 
     #endregion
-    public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service)
+    public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service) 
         : base(alert, navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Permissions;

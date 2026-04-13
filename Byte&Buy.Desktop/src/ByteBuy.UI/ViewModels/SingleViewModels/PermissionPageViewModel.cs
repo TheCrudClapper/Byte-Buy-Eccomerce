@@ -28,17 +28,17 @@ public partial class PermissionPageViewModel : ViewModelSingle
     #endregion
 
     private readonly IPermissionService _permissionService;
-    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert)
+    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert) 
         : base(alert)
         => _permissionService = permissionService;
-
+    
     protected override async Task AddAsync()
     {
         ValidateAllProperties();
         if (HasErrors)
             return;
 
-        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name, Description));
+        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name,Description));
         HandleResult(result, "Permission added successfully !");
     }
 
@@ -60,7 +60,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     {
         Name = string.Empty;
         Description = string.Empty;
-        ValidateAllProperties();
+        ValidateAllProperties(); 
     }
 
     protected override async Task UpdateAsync()

@@ -8,7 +8,7 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class DeliveryCarrierService(ICompanyDeliveryCarrierHttpClient httpClient)
+public class DeliveryCarrierService(ICompanyDeliveryCarrierHttpClient httpClient) 
     : IDeliveryCarrierService
 {
     public async Task<Result<CreatedResponse>> AddAsync(DeliveryCarrierAddRequest request)

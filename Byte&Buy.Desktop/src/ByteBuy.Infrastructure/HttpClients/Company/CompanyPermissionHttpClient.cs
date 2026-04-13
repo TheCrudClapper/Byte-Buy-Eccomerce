@@ -7,6 +7,7 @@ using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
@@ -26,7 +27,7 @@ public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndp
     {
         var url = QueryStringHelper.ToQueryString(resource, queryParams);
         return await GetAsync<PagedList<PermissionResponse>>(url);
-    }
+    } 
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");

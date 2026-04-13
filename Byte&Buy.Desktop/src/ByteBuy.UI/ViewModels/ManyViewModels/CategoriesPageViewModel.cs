@@ -8,6 +8,8 @@ using ByteBuy.UI.ViewModels.Category;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;

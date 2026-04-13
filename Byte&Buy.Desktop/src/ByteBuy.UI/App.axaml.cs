@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.Extensions;
 using ByteBuy.Services.Handlers;
 using ByteBuy.UI.Data;
@@ -14,15 +13,17 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
-using ByteBuy.UI.ViewModels.ManyViewModels;
+using Microsoft.Extensions.Configuration;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views;
 using ByteBuy.UI.Views.Dialogs;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
+using Microsoft.Extensions.Options;
+using ByteBuy.Infrastructure.Options;
+using ByteBuy.UI.ViewModels.ManyViewModels;
 
 
 namespace ByteBuy.UI

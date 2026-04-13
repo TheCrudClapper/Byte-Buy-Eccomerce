@@ -35,9 +35,23 @@ public partial class NavigationService : ObservableObject, INavigationService
         var pageVm = _pageFactory.GetPageViewModel(page);
         if (init != null)
             await init(pageVm);
+
         CurrentPage = pageVm;
     }
 
+    //public async Task NavigateToAsync<TVm>(ApplicationPageNames page, Func<TVm, Task>? init = null)
+    //    where TVm : PageViewModel
+    //{
+    //    var pageVm = _pageFactory.GetPageViewModel(page);
+
+    //    if (pageVm is not TVm typedVm)
+    //        throw new InvalidOperationException($"Expected {typeof(TVm).Name}, Recieved: {pageVm.GetType()}");
+
+    //    if (init != null)
+    //        await init(typedVm);
+
+    //    CurrentPage = pageVm;
+    //}
 
     public void OpenWindow(ApplicationWindowNames window, Action<WindowViewModel>? init = null)
     {
