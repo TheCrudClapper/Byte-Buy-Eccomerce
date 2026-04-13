@@ -2,6 +2,8 @@
 using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Permission;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +26,9 @@ public class CompanyPermissionsController
 
     [HttpGet]
     [HasPermission("company-permissions:read:many")]
-    public async Task<ActionResult<IReadOnlyCollection<PermissionResponse>>> GetPermissionListAsync(CancellationToken ct)
-        => HandleResult(await _permissionService.GetPermissionListAsync(ct));
+    public async Task<ActionResult<PagedList<PermissionResponse>>> GetPermissionListAsync(
+        [FromQuery] PermissionListQuery queryParams,
+        CancellationToken ct)
+        => HandleResult(await _permissionService.GetPermissionListAsync(queryParams, ct));
 
 }

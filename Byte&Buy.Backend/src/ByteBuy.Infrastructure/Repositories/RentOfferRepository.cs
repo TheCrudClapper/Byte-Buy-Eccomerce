@@ -45,8 +45,10 @@ public class RentOfferRepository : EfBaseRepository<RentOffer>, IRentOfferReposi
         if (queryParams.QuantityTo.HasValue)
             query = query.Where(ro => ro.QuantityAvailable <= queryParams.QuantityTo.Value);
 
-        var projection = query.Select(RentOfferMappings.RentOfferListResponseProjection);
+        var projection = query
+            .Select(RentOfferMappings.RentOfferListResponseProjection);
 
-        return await projection.ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
+        return await projection
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

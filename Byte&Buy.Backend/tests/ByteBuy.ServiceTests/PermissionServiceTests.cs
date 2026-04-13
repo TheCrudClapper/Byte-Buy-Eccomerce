@@ -6,12 +6,12 @@ using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Permission;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using ByteBuy.Core.Services;
 using FluentAssertions;
 using Moq;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 using static ByteBuy.Core.Specification.PermissionSpecifications;
 namespace ByteBuy.ServiceTests;
 
@@ -356,32 +356,44 @@ public class PermissionServiceTests
     public async Task GetPermissionListAsync_DBEmpty_ReturnsEmptyCollection()
     {
         //Arrange
-        IReadOnlyCollection<PermissionResponse> collection = [];
-        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(collection);
+        PermissionListQuery queryParams = new();
+        PagedList<PermissionResponse> pagedList = new()
+        {
+            Items = [],
+            Metadata = new()
+        };
+
+        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<PermissionListQuery>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(pagedList);
 
         //Act
-        var result = await _service.GetPermissionListAsync();
+        var result = await _service.GetPermissionListAsync(queryParams);
 
         //Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeEmpty();
+        result.Value.Items.Should().BeEmpty();
     }
+
     [Fact]
     public async Task GetPermissionListAsync_DBNotEmpty_ReturnsCollection()
     {
         //Arrange
-        IReadOnlyCollection<PermissionResponse> collection = _fixture.CreateMany<PermissionResponse>()
-            .ToList();
-        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(collection);
+        PermissionListQuery queryParams = new();
+        PagedList<PermissionResponse> pagedList = new()
+        {
+            Items = [.._fixture.CreateMany<PermissionResponse>()],
+            Metadata = new()
+        };
+
+        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<PermissionListQuery>() ,It.IsAny<CancellationToken>()))
+            .ReturnsAsync(pagedList);
 
         //Act
-        var result = await _service.GetPermissionListAsync();
+        var result = await _service.GetPermissionListAsync(queryParams);
 
         //Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeEquivalentTo(collection);
+        result.Value.Items.Should().BeEquivalentTo(pagedList.Items);
     }
     #endregion
 }

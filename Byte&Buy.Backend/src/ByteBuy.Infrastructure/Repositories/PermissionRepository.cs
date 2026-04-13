@@ -1,8 +1,11 @@
 ﻿using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Infrastructure.DbContexts;
+using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,10 +58,22 @@ public class PermissionRepository : EfBaseRepository<Permission>, IPermissionRep
                 || p.UserPermissions.Any(up => up.PermissionId == permissionId));
     }
 
-    public async Task<IReadOnlyCollection<PermissionResponse>> GetPermissionListAsync(CancellationToken ct = default)
+    public async Task<PagedList<PermissionResponse>> GetPermissionListAsync(PermissionListQuery queryParams, CancellationToken ct = default)
     {
-        return await _context.Permissions
-            .Select(PermissionMappings.PermisionResponseProjection)
-            .ToListAsync(ct);
+        var query = _context.Permissions
+            .AsNoTracking()
+            .OrderByDescending(o => o.DateCreated)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(queryParams.Name))
+            query = query.Where(p => EF.Functions.ILike(p.Name, $"%{queryParams.Name}%"));
+
+        if (!string.IsNullOrWhiteSpace(queryParams.Description))
+            query = query.Where(p => EF.Functions.ILike(p.Description, $"%{queryParams.Description}%"));
+
+        var projection = query.Select(PermissionMappings.PermisionResponseProjection);
+
+        return await projection
+            .ToPagedListAsync(queryParams.PageNumber, queryParams.PageSize, ct);
     }
 }

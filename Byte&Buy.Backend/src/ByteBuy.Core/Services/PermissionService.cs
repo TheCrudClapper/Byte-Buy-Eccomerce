@@ -5,7 +5,9 @@ using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.DTO.Public.Shared;
+using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Core.Mappings;
+using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.PermissionSpecifications;
 namespace ByteBuy.Core.Services;
@@ -96,7 +98,6 @@ public class PermissionService : IPermissionService
         return permission.ToUpdatedResponse();
     }
 
-    public async Task<Result<IReadOnlyCollection<PermissionResponse>>> GetPermissionListAsync(CancellationToken ct = default)
-        => Result.Success(await _permissionRepository.GetPermissionListAsync(ct));
-
+    public async Task<Result<PagedList<PermissionResponse>>> GetPermissionListAsync(PermissionListQuery queryParams, CancellationToken ct = default)
+        => await _permissionRepository.GetPermissionListAsync(queryParams, ct);
 }

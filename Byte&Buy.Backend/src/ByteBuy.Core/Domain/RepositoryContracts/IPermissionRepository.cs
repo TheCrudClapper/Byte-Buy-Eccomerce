@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Filtration.Permission;
+using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 
@@ -17,5 +19,7 @@ public interface IPermissionRepository : IRepositoryBase<Permission>
     Task<Permission?> GetByNameAsync(string name, CancellationToken ct = default);
     Task<bool> ExistsWithNameAsync(string name, Guid? excludedId = null);
     Task<bool> HasActiveRelations(Guid permissionId);
-    Task<IReadOnlyCollection<PermissionResponse>> GetPermissionListAsync(CancellationToken ct = default);
+    Task<PagedList<PermissionResponse>> GetPermissionListAsync(
+        PermissionListQuery queryParams,
+        CancellationToken ct = default);
 }
