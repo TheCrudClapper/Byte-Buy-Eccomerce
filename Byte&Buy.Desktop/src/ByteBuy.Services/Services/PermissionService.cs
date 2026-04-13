@@ -1,6 +1,8 @@
 ﻿using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 using ByteBuy.Services.ServiceContracts;
 
@@ -20,8 +22,8 @@ public class PermissionService(ICompanyPermissionHttpClient permissionHttpClient
     public async Task<Result<PermissionResponse>> GetByIdAsync(Guid id)
         => await permissionHttpClient.GetByIdAsync(id);
 
-    public async Task<Result<IReadOnlyCollection<PermissionResponse>>> GetListAsync()
-        => await permissionHttpClient.GetListAsync();
+    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams)
+        => await permissionHttpClient.GetListAsync(queryParams);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await permissionHttpClient.GetSelectListAsync();

@@ -1,5 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Services.DTO.Shared;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
 
 namespace ByteBuy.Services.ServiceContracts;
@@ -10,5 +12,5 @@ public interface IPermissionService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(PermissionAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request);
     Task<Result<PermissionResponse>> GetByIdAsync(Guid id);
-    Task<Result<IReadOnlyCollection<PermissionResponse>>> GetListAsync();
+    Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams);
 }

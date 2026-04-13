@@ -30,5 +30,4 @@ public class CompanyPermissionsController
         [FromQuery] PermissionListQuery queryParams,
         CancellationToken ct)
         => HandleResult(await _permissionService.GetPermissionListAsync(queryParams, ct));
-
 }

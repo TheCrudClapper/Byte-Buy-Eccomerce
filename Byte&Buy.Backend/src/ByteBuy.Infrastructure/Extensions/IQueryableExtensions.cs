@@ -9,12 +9,12 @@ public static class IQueryableExtensions
         this IQueryable<T> source, int pageNumber, int pageSize, CancellationToken ct = default)
     {
         var totalCount = await source.CountAsync(ct);
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
         var items = await source
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync(ct);
-
-        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
         var metadata = new PaginationMetadata
         {

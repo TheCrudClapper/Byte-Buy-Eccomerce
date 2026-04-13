@@ -22,7 +22,6 @@
 							   Width="15" Height="15" />
 						<Label Content="Add" />
 					</StackPanel>
-
 				</Button>
 			</Grid>
 
@@ -31,11 +30,11 @@
 				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" LineSpacing="10">
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Name" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150"/>
+						<TextBox Text="{Binding Name}" Width="150"/>
 					</StackPanel>
 					<StackPanel VerticalAlignment="Center">
 						<TextBlock Text="Description" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150"/>
+						<TextBox Text="{Binding Description}" Width="150"/>
 					</StackPanel>
 
 					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">

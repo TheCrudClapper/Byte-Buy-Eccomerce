@@ -85,6 +85,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             Items.Remove(item);
             Alert.ShowSuccessAlert("Successfully deleted item !");
         }
+
         return;
     }
 

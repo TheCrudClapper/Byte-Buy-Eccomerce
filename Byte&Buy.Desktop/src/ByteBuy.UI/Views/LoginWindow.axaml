@@ -10,7 +10,7 @@
 		FontFamily="{DynamicResource SegoeUiThisBoldReqular}"
 		x:Class="ByteBuy.UI.Views.LoginWindow"
 		x:DataType="viewModels:LoginWindowViewModel"
-		Title="ByteBuy MP v.0.1">
+		Title="ByteBuy MP v.1.0">
 
 
 	<Grid ColumnDefinitions="*">

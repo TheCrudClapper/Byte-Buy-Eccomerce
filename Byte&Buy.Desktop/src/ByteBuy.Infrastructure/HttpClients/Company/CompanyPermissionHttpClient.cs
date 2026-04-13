@@ -1,9 +1,13 @@
 ﻿using ByteBuy.Core.DTO.Public.Permission;
+using ByteBuy.Core.Filtration.Permission;
+using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
+using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
@@ -19,8 +23,11 @@ public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndp
     public async Task<Result<PermissionResponse>> GetByIdAsync(Guid id)
         => await GetAsync<PermissionResponse>($"{resource}/{id}");
 
-    public async Task<Result<IReadOnlyCollection<PermissionResponse>>> GetListAsync()
-        => await GetAsync<IReadOnlyCollection<PermissionResponse>>($"{resource}");
+    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams)
+    {
+        var url = QueryStringHelper.ToQueryString(resource, queryParams);
+        return await GetAsync<PagedList<PermissionResponse>>(url);
+    } 
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");

@@ -12,7 +12,7 @@ public static class PermissionMappings
             Description = response.Description,
             Name = response.Name,
             Id = response.Id,
-            RowNumber = index + 1
+            RowNumber = index
         };
     }
 }
