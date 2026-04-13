@@ -82,6 +82,8 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<ItemListItemViewModel>(
             value.Items.Select((i, index) =>
                 i.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
@@ -89,7 +91,6 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         TotalCount = value.Metadata.TotalCount;
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
-        CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 

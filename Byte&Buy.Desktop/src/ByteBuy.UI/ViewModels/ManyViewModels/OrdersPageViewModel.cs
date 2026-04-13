@@ -66,6 +66,8 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<OrderListItemViewModel>(
             value.Items.Select((u, index) =>
                 u.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
@@ -73,7 +75,6 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         TotalCount = value.Metadata.TotalCount;
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
-        CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 

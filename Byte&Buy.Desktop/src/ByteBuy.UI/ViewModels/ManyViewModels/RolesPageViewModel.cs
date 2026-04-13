@@ -53,6 +53,8 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<RoleListItemViewModel>(
             value.Items.Select((r, index) =>
                 r.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
@@ -60,7 +62,6 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
         TotalCount = value.Metadata.TotalCount;
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
-        CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 

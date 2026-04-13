@@ -46,6 +46,8 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<PermissionManyListItem>(
             value.Items.Select((p, i) =>
                 p.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
@@ -53,7 +55,6 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
         TotalCount = value.Metadata.TotalCount;
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
-        CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 

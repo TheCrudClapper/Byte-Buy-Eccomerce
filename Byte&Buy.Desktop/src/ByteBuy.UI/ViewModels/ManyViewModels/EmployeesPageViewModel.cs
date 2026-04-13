@@ -53,6 +53,8 @@ public partial class EmployeesPageViewModel
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<EmployeeListItemViewModel>(
             value.Items.Select((e, index) =>
                 e.ToListItem(index + 1 + (PageNumber - 1) * PageSize)));
@@ -60,7 +62,6 @@ public partial class EmployeesPageViewModel
         TotalCount = value.Metadata.TotalCount;
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
-        CurrentPage = value.Metadata.CurrentPage;
         HasPreviousPage = value.Metadata.HasPrevious;
     }
 

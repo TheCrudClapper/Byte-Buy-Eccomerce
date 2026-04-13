@@ -11,6 +11,11 @@ public static class IQueryableExtensions
         var totalCount = await source.CountAsync(ct);
         var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
+        if (totalCount == 0)
+            pageNumber = 1;
+        else if(pageNumber > totalPages)
+            pageNumber = totalPages;
+
         var items = await source
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
@@ -18,7 +23,7 @@ public static class IQueryableExtensions
 
         var metadata = new PaginationMetadata
         {
-            CurrentPage = pageNumber,
+            PageNumber = pageNumber,
             PageSize = pageSize,
             TotalCount = totalCount,
             TotalPages = totalPages,

@@ -64,6 +64,8 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
         if (!ok || value is null)
             return;
 
+        PageNumber = value.Metadata.PageNumber;
+
         Items = new ObservableCollection<DeliveryListItemViewModel>(
             value.Items.Select((u, i) =>
                 u.ToListItem(i + 1 + (PageNumber - 1) * PageSize)));
@@ -72,7 +74,6 @@ public partial class DeliveriesPageViewModel(AlertViewModel alert,
         HasNextPage = value.Metadata.HasNext;
         TotalPages = value.Metadata.TotalPages;
         HasPreviousPage = value.Metadata.HasPrevious;
-        CurrentPage = value.Metadata.CurrentPage;
     }
 
     public override async Task ClearFiltersAsync()
