@@ -15,7 +15,8 @@
 		<Setter Property="Margin" Value="0,5" />
 		<Setter Property="Padding" Value="10"/>
 		<Setter Property="HorizontalContentAlignment" Value="Left" />
-		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="BorderBrush" Value="{DynamicResource CardBackgroundBrush}"/>
 		<Setter Property="CornerRadius" Value="5" />
 		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
 	</Style>
@@ -31,7 +32,8 @@
 		<Setter Property="FontFamily" Value="Raleway"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center" />
 		<Setter Property="CornerRadius" Value="5" />
-		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="BorderThickness" Value="1" />
+		<Setter Property="BorderBrush" Value="{DynamicResource CardBackgroundBrush}"/>
 		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
 	</Style>
 
@@ -39,6 +41,7 @@
 	<Style Selector="Button.active /template/ ContentPresenter">
 		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}" />
 		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 	</Style>
 
@@ -48,5 +51,6 @@
 		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}" />
 		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}"/>
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+		<Setter Property="BorderThickness" Value="1" />
 	</Style>
 </Styles>

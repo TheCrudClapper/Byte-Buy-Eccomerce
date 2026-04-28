@@ -13,9 +13,7 @@ namespace ByteBuy.Infrastructure.Repositories;
 
 public class ItemRepository : EfBaseRepository<Item>, IItemRepository
 {
-    public ItemRepository(ApplicationDbContext context) : base(context)
-    {
-    }
+    public ItemRepository(ApplicationDbContext context) : base(context) { }
 
     public async Task<Item?> GetAggregateAsync(Guid itemId, CancellationToken ct = default)
     {

@@ -14,7 +14,7 @@ public interface INavigationService : INotifyPropertyChanged
     /// </summary>
     Task NavigateToAsync(ApplicationPageNames page, Func<PageViewModel, Task>? init = null);
 
-    Task NavigateToAsync<TVm>(ApplicationPageNames page, Func<TVm, Task>? init = null);
+    //Task NavigateToAsync<TVm>(ApplicationPageNames page, Func<TVm, Task>? init = null);
 
     /// <summary>
     /// Navigate to a page synchronously with optional initialization
