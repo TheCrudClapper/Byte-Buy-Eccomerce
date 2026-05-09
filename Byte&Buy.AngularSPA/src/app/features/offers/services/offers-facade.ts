@@ -93,7 +93,7 @@ export class OffersFacade {
       return;
     }
 
-    if (!this.offerHomeAddress()) {
+    if (!this.offerHomeAddress() && mode == 'add') {
       this.toast.error("You need to set your home address to proceed.");
       return;
     }
