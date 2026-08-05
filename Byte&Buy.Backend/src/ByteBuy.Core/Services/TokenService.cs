@@ -36,7 +36,7 @@ public class TokenService : ITokenService
         {
             claims.Add(new Claim("Roles", claim));
         }
-
+       
         //Creating token payload
         var tokenDescriptior = new SecurityTokenDescriptor
         {

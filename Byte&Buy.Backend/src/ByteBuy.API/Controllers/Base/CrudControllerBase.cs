@@ -15,7 +15,7 @@ namespace ByteBuy.API.Controllers.Base;
 /// <typeparam name="TResponse"></typeparam>
 [Route("api/[controller]")]
 [ApiController]
-public class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : BaseApiController
+public abstract class CrudControllerBase<TId, TAddRequest, TUpdateRequest, TResponse> : BaseApiController
 {
     private readonly IBaseCrudService<TId, TAddRequest, TUpdateRequest, TResponse> _service;
 
