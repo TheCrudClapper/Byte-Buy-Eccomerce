@@ -19,27 +19,27 @@ public class CompanyOrdersController : BaseApiController
         => _orderService = orderService;
 
     [HttpGet]
-    [HasPermission("company-orders:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync([FromQuery] OrderCompanyListQuery queryParams, CancellationToken ct)
        => HandleResult(await _orderService.GetCompanyOrdersListAsync(queryParams, ct));
 
     [HttpGet("details/{orderId:guid}")]
-    [HasPermission("company-orders:read:details")]
+    [HasPermission("{resource}:read:details")]
     public async Task<ActionResult<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId, CancellationToken ct)
     => HandleResult(await _orderService.GetCompanyOrderDetailsAsync(orderId, ct));
 
     [HttpPut("{orderId:guid}/ship")]
-    [HasPermission("company-orders:update:ship")]
+    [HasPermission("{resource}:update:ship")]
     public async Task<ActionResult<UpdatedResponse>> ShipCompanyOrderAsync(Guid orderId)
         => HandleResult(await _orderService.ShipOrderAsCompanyAsync(orderId));
 
     [HttpPut("{orderId:guid}/deliver")]
-    [HasPermission("company-orders:update:deliver")]
+    [HasPermission("{resource}:update:deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
        => HandleResult(await _orderService.DeliverOrderAsCompanyAsync(orderId));
 
     [HttpGet("dashboard")]
-    [HasPermission("company-orders:read:dashboard")]
+    [HasPermission("{resource}:read:dashboard")]
     public async Task<ActionResult<UpdatedResponse>> GetDashboardOrdersAsync(CancellationToken ct)
         => HandleResult(await _orderService.GetDashboardOrdersAsync(ct));
 }

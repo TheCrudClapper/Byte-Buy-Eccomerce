@@ -18,7 +18,7 @@ public class UserOffersController : BaseApiController
         => _offerReadService = offerReadService;
 
     [HttpGet]
-    [HasPermission("user-offers:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<UserPanelOfferResponse>>> GetUserOffersAsync([FromQuery] UserOffersQuery queryParams, CancellationToken ct)
        => HandleResult(await _offerReadService.GetUserPanelOffersAsync(queryParams, CurrentUserId, ct));
 }

@@ -23,12 +23,12 @@ public class CompanyController : BaseApiController
         => HandleResult(await _companyInfoService.GetCompanyInfoAsync());
 
     [HttpPost]
-    [HasPermission("company-info:create:one")]
+    [HasPermission("{resource}:create:one")]
     public async Task<ActionResult<CreatedResponse>> PostCompanyInfoAsync(CompanyInfoAddRequest request)
         => HandleResult(await _companyInfoService.AddAsync(request));
 
     [HttpPut]
-    [HasPermission("company-info:update:one")]
+    [HasPermission("{resource}:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutCompanyInfoAsync(CompanyInfoUpdateRequest request)
         => HandleResult(await _companyInfoService.UpdateAsync(request));
 }

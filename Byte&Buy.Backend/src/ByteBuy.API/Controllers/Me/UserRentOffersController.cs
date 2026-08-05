@@ -19,22 +19,22 @@ public class UserRentOffersController : BaseApiController
     }
 
     [HttpPost]
-    [HasPermission("user-rent-offers:create:one")]
+    [HasPermission("{resource}:create:one")]
     public async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] UserRentOfferAddRequest request)
         => HandleResult(await _rentOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id:guid}")]
-    [HasPermission("user-rent-offers:update:one")]
+    [HasPermission("{resource}:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] UserRentOfferUpdateRequest request)
        => HandleResult(await _rentOfferService.UpdateAsync(CurrentUserId, id, request));
 
     [HttpGet("{id:guid}")]
-    [HasPermission("user-rent-offers:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<UserRentOfferResponse>> GetByIdAsync(Guid id)
         => HandleResult(await _rentOfferService.GetByIdAsync(CurrentUserId, id));
 
     [HttpDelete("{id:guid}")]
-    [HasPermission("user-rent-offers:delete:one")]
+    [HasPermission("{resource}:delete:one")]
     public async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _rentOfferService.DeleteAsync(CurrentUserId, id));
 

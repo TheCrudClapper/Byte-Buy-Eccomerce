@@ -21,17 +21,17 @@ public class CompanyDeliveriesController
 
 
     [HttpGet("list")]
-    [HasPermission("company-deliveries:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<DeliveryListResponse>>> GetDeliveriesListAsync([FromQuery] DeliveryListQuery query, CancellationToken ct)
         => HandleResult(await _deliveryService.GetDeliveriesListAsync(query, ct));
 
     [HttpGet("sizes/list")]
-    [HasPermission("company-deliveries:read:sizes")]
+    [HasPermission("{resource}:read:sizes")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectListAsync()
        => HandleResult(_deliveryService.GetParcelLockerSizes());
 
     [HttpGet("channels/list")]
-    [HasPermission("company-deliveries:read:channels")]
+    [HasPermission("{resource}:read:channels")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectListAsync()
         => HandleResult(_deliveryService.GetDeliveryChannels());
 }

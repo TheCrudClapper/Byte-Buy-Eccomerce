@@ -8,7 +8,7 @@ namespace ByteBuy.API.Controllers.Public;
 
 [ApiController]
 [Route("api/auth")]
-[AllowAnonymous]
+
 public class AuthController : BaseApiController
 {
 

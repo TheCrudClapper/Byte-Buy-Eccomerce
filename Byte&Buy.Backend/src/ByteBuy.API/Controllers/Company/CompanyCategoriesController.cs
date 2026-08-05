@@ -20,7 +20,7 @@ public class CompanyCategoriesController
         => _categoryService = categoryService;
 
     [HttpGet("list")]
-    [HasPermission("company-categories:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<CategoryListResponse>>> GetCategoriesList([FromQuery] CategoryListQuery queryParams, CancellationToken ct)
         => HandleResult(await _categoryService.GetCategoriesListAsync(queryParams, ct));
 }

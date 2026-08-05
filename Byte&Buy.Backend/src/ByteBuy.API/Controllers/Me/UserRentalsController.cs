@@ -21,17 +21,17 @@ public class UserRentalsController : BaseApiController
     }
 
     [HttpGet("borrower")]
-    [HasPermission("user-rentals:read:borrower")]
+    [HasPermission("{resource}:read:borrower")]
     public async Task<ActionResult<PagedList<UserRentalBorrowerResponse>>> GetBorrowerRentalsAsync([FromQuery] UserRentalBorrowerQuery queryParams, CancellationToken ct = default)
         => HandleResult(await _rentalService.GetUserBorrowerRentalsAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("lender")]
-    [HasPermission("user-rentals:read:lender")]
+    [HasPermission("{resource}:read:lender")]
     public async Task<ActionResult<IReadOnlyCollection<RentalLenderResponse>>> GetLenderRentalsAsync([FromQuery] UserRentalLenderQuery queryParams, CancellationToken ct = default)
         => HandleResult(await _rentalService.GetUserLenderRentalsAsync(queryParams, CurrentUserId, ct));
 
     [HttpPut("{rentalId:guid}/return")]
-    [HasPermission("user-rentals:update:return")]
+    [HasPermission("{resource}:update:return")]
     public async Task<ActionResult<UpdatedResponse>> ReturnRentedItemAsync(Guid rentalId)
         => HandleResult(await _rentalService.ReturnItemToLenderAsync(CurrentUserId, rentalId));
 

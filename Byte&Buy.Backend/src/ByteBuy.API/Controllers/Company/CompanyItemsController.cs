@@ -19,27 +19,27 @@ public class CompanyItemsController : BaseApiController
         => _itemsService = itemsService;
 
     [HttpPost]
-    [HasPermission("company-items:create:one")]
+    [HasPermission("{resource}:create:one")]
     public virtual async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] ItemAddRequest request)
         => HandleResult(await _itemsService.AddAsync(request));
 
     [HttpPut("{id:guid}")]
-    [HasPermission("company-items:update:one")]
+    [HasPermission("{resource}:update:one")]
     public virtual async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] ItemUpdateRequest request)
         => HandleResult(await _itemsService.UpdateAsync(id, request));
 
     [HttpDelete("{id:guid}")]
-    [HasPermission("company-items:delete:one")]
+    [HasPermission("{resource}:delete:one")]
     public virtual async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _itemsService.DeleteAsync(id));
 
     [HttpGet("{id:guid}")]
-    [HasPermission("company-items:read:one")]
+    [HasPermission("{resource}:read:one")]
     public virtual async Task<ActionResult<ItemResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         => HandleResult(await _itemsService.GetByIdAsync(id, cancellationToken));
 
     [HttpGet("list")]
-    [HasPermission("company-items:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<ItemListResponse>>> GetItemsList([FromQuery] ItemListQuery queryParams, CancellationToken ct)
       => HandleResult(await _itemsService.GetListAsync(queryParams, ct));
 }

@@ -16,7 +16,7 @@ public class UserCheckoutController : BaseApiController
       => _checkoutService = checkoutService;
 
     [HttpGet]
-    [HasPermission("user-checkout:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<CheckoutResponse>> GetCheckoutAsync(CancellationToken ct)
         => HandleResult(await _checkoutService.GetCheckoutAsync(CurrentUserId, ct));
 }

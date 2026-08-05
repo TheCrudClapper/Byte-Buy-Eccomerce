@@ -23,47 +23,47 @@ public class UserOrdersController : BaseApiController
     }
 
     [HttpPost]
-    [HasPermission("user-orders:create:one")]
+    [HasPermission("{resource}:create:one")]
     public async Task<ActionResult<OrderCreatedReponse>> PostOrderAsync(OrderAddRequest request)
         => HandleResult(await _orderCreationService.AddAsync(CurrentUserId, request));
 
     [HttpGet]
-    [HasPermission("user-orders:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<UserOrderListResponse>>> GetOrdersAsync([FromQuery] UserOrderListQuery queryParams, CancellationToken ct)
         => HandleResult(await _orderService.GetUserOrdersAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("seller")]
-    [HasPermission("user-orders:read:seller")]
+    [HasPermission("{resource}:read:seller")]
     public async Task<ActionResult<PagedList<UserOrderListResponse>>> GetSellerOrdersAsync([FromQuery] UserOrderSellerListQuery queryParams, CancellationToken ct)
         => HandleResult(await _orderService.GetSellerOrdersAsync(queryParams, CurrentUserId, ct));
 
     [HttpGet("details/{orderId:guid}")]
-    [HasPermission("user-orders:read:details")]
+    [HasPermission("{resource}:read:details")]
     public async Task<ActionResult<OrderDetailsResponse>> GetOrderDetailsAsync(Guid orderId, CancellationToken ct)
         => HandleResult(await _orderService.GetOrderDetailsAsync(CurrentUserId, orderId, ct));
 
     [HttpPut("{orderId:guid}/cancel")]
-    [HasPermission("user-orders:update:cancel")]
+    [HasPermission("{resource}:update:cancel")]
     public async Task<ActionResult<UpdatedResponse>> CancelOrderAsync(Guid orderId)
         => HandleResult(await _orderService.CancelOrderAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/return")]
-    [HasPermission("user-orders:update:return")]
+    [HasPermission("{resource}:update:return")]
     public async Task<ActionResult<UpdatedResponse>> ReturnOrderAsync(Guid orderId)
         => HandleResult(await _orderService.ReturnOrderAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/ship")]
-    [HasPermission("user-orders:update:ship")]
+    [HasPermission("{resource}:update:ship")]
     public async Task<ActionResult<UpdatedResponse>> ShipOrderAsync(Guid orderId)
         => HandleResult(await _orderService.ShipOrderAsPrivateSellerAsync(CurrentUserId, orderId));
 
     [HttpPut("{orderId:guid}/deliver")]
-    [HasPermission("user-orders:update:deliver")]
+    [HasPermission("{resource}:update:deliver")]
     public async Task<ActionResult<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
        => HandleResult(await _orderService.DeliverOrderAsPrivateSellerAsync(CurrentUserId, orderId));
 
     [HttpDelete("{orderId:guid}")]
-    [HasPermission("user-orders:delete:one")]
+    [HasPermission("{resource}:delete:one")]
     public async Task<ActionResult> DeleteOrderAsync(Guid orderId)
         => HandleResult(await _orderService.DeleteAsync(CurrentUserId, orderId));
 }

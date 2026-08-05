@@ -17,32 +17,32 @@ public class UserShippingAddressesController : BaseApiController
        => _addressService = addressService;
 
     [HttpPost]
-    [HasPermission("user-shipping-addresses:create:one")]
+    [HasPermission("{resource}:create:one")]
     public async Task<ActionResult<CreatedResponse>> PostShippingAddressAsync(ShippingAddressAddRequest request)
         => HandleResult(await _addressService.AddShippingAddressAsync(CurrentUserId, request));
 
     [HttpPut("{addressId:guid}")]
-    [HasPermission("user-shipping-addresses:update:one")]
+    [HasPermission("{resource}:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutShippingAddressAsync(Guid addressId, ShippingAddressUpdateRequest request)
         => HandleResult(await _addressService.UpdateShippingAddressAsync(addressId, CurrentUserId, request));
 
     [HttpGet("list")]
-    [HasPermission("user-shipping-addresses:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<ShippingAddressListResponse>> GetShippingAddressesListAsync(CancellationToken ct)
         => HandleResult(await _addressService.GetShippingAddressesListAsync(CurrentUserId, ct));
 
     [HttpGet("{addressId:guid}")]
-    [HasPermission("user-shipping-addresses:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<ShippingAddressResponse>> GetUserShippingAddressAsync(Guid addressId, CancellationToken ct)
         => HandleResult(await _addressService.GetShippingAddressAsync(CurrentUserId, addressId, ct));
 
     [HttpDelete("{addressId:guid}")]
-    [HasPermission("user-shipping-addresses:delete:one")]
+    [HasPermission("{resource}:delete:one")]
     public async Task<ActionResult> DeleteUserShippingAddress(Guid addressId)
         => HandleResult(await _addressService.DeleteShippingAddressAsync(addressId, CurrentUserId));
 
     [HttpGet("checkout/{addressId?}")]
-    [HasPermission("user-shipping-addresses:read:checkout")]
+    [HasPermission("{resource}:read:checkout")]
     public async Task<ActionResult<ShippingAddressCheckout>> GetCheckoutAddressAsync(CancellationToken ct, Guid? addressId = null)
         => HandleResult(await _addressService.GetCheckoutAddressAsync(addressId, CurrentUserId, ct));
 }

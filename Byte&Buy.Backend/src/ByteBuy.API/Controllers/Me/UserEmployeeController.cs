@@ -16,7 +16,7 @@ public class UserEmployeeController : BaseApiController
         => _employeeService = employeeService;
 
     [HttpGet]
-    [HasPermission("user-employee:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<EmployeeProfileResponse>> GetEmployeeProfileDataAsync(CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployeeProfileInfoAsync(CurrentUserId, ct));
 }

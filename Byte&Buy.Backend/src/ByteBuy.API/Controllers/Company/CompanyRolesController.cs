@@ -20,12 +20,12 @@ public class CompanyRolesController
         => _roleService = roleService;
 
     [HttpGet("options")]
-    [HasPermission("company-roles:read:options")]
+    [HasPermission("{resource}:read:options")]
     public async Task<ActionResult<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _roleService.GetSelectListAsync(ct));
 
     [HttpGet("list")]
-    [HasPermission("company-roles:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<RoleListResponse>>> GetRolesListAsync([FromQuery] RoleListQuery queryParams, CancellationToken ct)
         => HandleResult(await _roleService.GetRolesListAsync(queryParams, ct));
 }

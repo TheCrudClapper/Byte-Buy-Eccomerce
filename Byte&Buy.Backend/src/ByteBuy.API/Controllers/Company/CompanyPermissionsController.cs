@@ -20,12 +20,12 @@ public class CompanyPermissionsController
         => _permissionService = permissionService;
 
     [HttpGet("options")]
-    [HasPermission("company-permissions:read:options")]
+    [HasPermission("{resource}:read:options")]
     public async Task<ActionResult<SelectListItemResponse<Guid>>> GetSelectListAsync(CancellationToken ct)
         => HandleResult(await _permissionService.GetSelectListAsync(ct));
 
     [HttpGet]
-    [HasPermission("company-permissions:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<PermissionResponse>>> GetPermissionListAsync(
         [FromQuery] PermissionListQuery queryParams,
         CancellationToken ct)

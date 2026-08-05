@@ -18,22 +18,22 @@ public class UserSaleOffersController : BaseApiController
 
 
     [HttpPost]
-    [HasPermission("user-sale-offers:create:one")]
+    [HasPermission("{resource}:create:one")]
     public async Task<ActionResult<CreatedResponse>> PostAsync([FromForm] UserSaleOfferAddRequest request)
         => HandleResult(await _saleOfferService.AddAsync(CurrentUserId, request));
 
     [HttpPut("{id:guid}")]
-    [HasPermission("user-sale-offers:update:one")]
+    [HasPermission("{resource}:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutAsync(Guid id, [FromForm] UserSaleOfferUpdateRequest request)
        => HandleResult(await _saleOfferService.UpdateAsync(CurrentUserId, id, request));
 
     [HttpGet("{id:guid}")]
-    [HasPermission("user-sale-offers:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<UserSaleOfferResponse>> GetByIdAsync(Guid id)
         => HandleResult(await _saleOfferService.GetByIdAsync(CurrentUserId, id));
 
     [HttpDelete("{id:guid}")]
-    [HasPermission("user-sale-offers:delete:one")]
+    [HasPermission("{resource}:delete:one")]
     public async Task<IActionResult> DeleteAsync(Guid id)
         => HandleResult(await _saleOfferService.DeleteAsync(CurrentUserId, id));
 }

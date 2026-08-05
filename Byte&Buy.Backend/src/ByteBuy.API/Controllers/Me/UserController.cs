@@ -18,12 +18,12 @@ public class UserController : BaseApiController
        => _portalUserService = portalUserService;
 
     [HttpGet]
-    [HasPermission("user:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<UserBasicInfoResponse>> GetUserBasicInfoAsync()
         => HandleResult(await _portalUserService.GetBasicInfoAsync(CurrentUserId));
 
     [HttpPut]
-    [HasPermission("user:update:one")]
+    [HasPermission("{resource}:update:one")]
     public async Task<ActionResult<UpdatedResponse>> PutUserBasicInfoAsync(UserBasicInfoUpdateRequest request)
         => HandleResult(await _portalUserService.UpdateBasicInfoAsync(CurrentUserId, request));
 }

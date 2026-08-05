@@ -20,13 +20,13 @@ public class CompanyEmployeesController
         => _employeeService = employeeService;
 
     [HttpPut("address")]
-    [HasPermission("company-employees:update:address")]
+    [HasPermission("{resource}:update:address")]
     public async Task<ActionResult<UpdatedResponse>> PutEmployeeAddressAsync(
         EmployeeAddressUpdateRequest request)
         => HandleResult(await _employeeService.UpdateEmployeeAddressAsync(CurrentUserId, request));
 
     [HttpGet("list")]
-    [HasPermission("company-employees:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<EmployeeListResponse>>> GetEmployeesListAsync(
         [FromQuery] EmployeeListQuery queryParams, CancellationToken ct)
         => HandleResult(await _employeeService.GetEmployeesListAsync(CurrentUserId, queryParams, ct));

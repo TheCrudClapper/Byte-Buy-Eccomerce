@@ -16,17 +16,17 @@ public class UserPaymentController : BaseApiController
 
 
     [HttpGet("{paymentId:guid}")]
-    [HasPermission("user-payments:read:one")]
+    [HasPermission("{resource}:read:one")]
     public async Task<ActionResult<PaymentResponse>> GetPaymentAsync(Guid paymentId, CancellationToken ct)
         => HandleResult(await _paymentService.GetUnpaidPaymentAsync(CurrentUserId, paymentId, ct));
 
     [HttpPut("{paymentId:guid}/blik")]
-    [HasPermission("user-payments:update:blik")]
+    [HasPermission("{resource}:update:blik")]
     public async Task<ActionResult> PayUsingBlikAsync(Guid paymentId, BlikPaymentRequest request)
         => HandleResult(await _paymentService.PayViaBlikAsync(CurrentUserId, paymentId, request));
 
     [HttpPut("{paymentId:guid}/card")]
-    [HasPermission("user-payments:update:card")]
+    [HasPermission("{resource}:update:card")]
     public async Task<ActionResult> PayUsingCardAsync(Guid paymentId, CardPaymentRequest request)
         => HandleResult(await _paymentService.PayViaCardAsync(CurrentUserId, paymentId, request));
 }

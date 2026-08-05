@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Public;
 
-[AllowAnonymous]
 [Route("api/offers")]
 [ApiController]
 public class PublicOffersReadController : BaseApiController

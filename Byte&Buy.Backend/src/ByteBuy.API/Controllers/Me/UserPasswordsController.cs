@@ -16,7 +16,7 @@ public class UserPasswordsController : BaseApiController
         => _userService = userService;
 
     [HttpPut("password")]
-    [HasPermission("users:update:password")]
+    [HasPermission("{resource}:update:password")]
     public async Task<IActionResult> ChangePasswordAsync(PasswordChangeRequest request)
         => HandleResult(await _userService.ChangePasswordAsync(CurrentUserId, request));
 }

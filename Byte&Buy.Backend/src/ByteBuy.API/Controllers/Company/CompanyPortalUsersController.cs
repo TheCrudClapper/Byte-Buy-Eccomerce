@@ -19,7 +19,7 @@ public class CompanyPortalUsersController
        => _portalUserService = portalUserService;
 
     [HttpGet("list")]
-    [HasPermission("company-portalusers:read:many")]
+    [HasPermission("{resource}:read:many")]
     public async Task<ActionResult<PagedList<PortalUserListResponse>>> GetPortalUsersListAsync(
         [FromQuery] PortalUserListQuery queryParams, CancellationToken ct)
         => HandleResult(await _portalUserService.GetPortalUsersListAsync(queryParams, ct));
