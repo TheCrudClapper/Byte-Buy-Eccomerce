@@ -1,7 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.AddressValueObj;
+﻿using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.Offer.Common;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Me;
 

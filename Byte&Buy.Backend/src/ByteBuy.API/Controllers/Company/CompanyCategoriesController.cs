@@ -1,8 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Category;
+﻿using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.Filtration.Category;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Company;
 

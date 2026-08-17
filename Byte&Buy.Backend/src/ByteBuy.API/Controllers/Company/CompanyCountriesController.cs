@@ -1,7 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Country;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.DTO.Public.Country;
 using ByteBuy.Services.Filtration;
 
 namespace ByteBuy.API.Controllers.Company;

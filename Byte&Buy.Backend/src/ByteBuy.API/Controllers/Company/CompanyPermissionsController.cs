@@ -1,8 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Permission;
+﻿using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.Filtration.Permission;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Company;
 

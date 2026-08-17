@@ -1,6 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Payment;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.DTO.Public.Payment;
 namespace ByteBuy.API.Controllers.Me;
 
 [Resource("user-payments")]

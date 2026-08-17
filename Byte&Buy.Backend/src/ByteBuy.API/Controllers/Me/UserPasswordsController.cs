@@ -1,6 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.ApplicationUser;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.DTO.Public.ApplicationUser;
 
 namespace ByteBuy.API.Controllers.Me;
 

@@ -1,8 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.PortalUser;
+﻿using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Filtration.PortalUser;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Company;
 

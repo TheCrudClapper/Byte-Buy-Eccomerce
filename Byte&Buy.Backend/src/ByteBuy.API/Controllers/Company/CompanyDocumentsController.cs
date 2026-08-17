@@ -1,7 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.ServiceContracts;
-
-namespace ByteBuy.API.Controllers.Company;
+﻿namespace ByteBuy.API.Controllers.Company;
 
 [Resource("company-documents")]
 [Route("api/company/documents")]

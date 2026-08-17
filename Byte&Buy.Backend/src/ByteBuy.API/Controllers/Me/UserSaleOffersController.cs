@@ -1,6 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 
 namespace ByteBuy.API.Controllers.Me;
 

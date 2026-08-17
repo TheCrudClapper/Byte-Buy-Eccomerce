@@ -1,6 +1,5 @@
-﻿using ByteBuy.API.Controllers.Base;
+﻿
 using ByteBuy.Core.DTO.Public.Checkout;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Me;
 

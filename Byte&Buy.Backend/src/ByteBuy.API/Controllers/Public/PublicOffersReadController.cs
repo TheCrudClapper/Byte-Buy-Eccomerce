@@ -1,10 +1,7 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.DTO.Public.Offer.Common;
+﻿using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Filtration.Offer;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.API.Controllers.Public;
 

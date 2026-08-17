@@ -1,7 +1,4 @@
-﻿using ByteBuy.API.Controllers.Base;
-using ByteBuy.Core.ServiceContracts;
-
-namespace ByteBuy.API.Controllers.Public;
+﻿namespace ByteBuy.API.Controllers.Public;
 
 [Route("api/categories")]
 [ApiController]
