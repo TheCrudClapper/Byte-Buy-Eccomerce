@@ -1,16 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Orders;
 using ByteBuy.Core.Domain.Orders.Enums;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Filtration.Order;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

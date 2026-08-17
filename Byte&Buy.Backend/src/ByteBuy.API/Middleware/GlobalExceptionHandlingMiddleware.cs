@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace ByteBuy.API.Middleware;
 

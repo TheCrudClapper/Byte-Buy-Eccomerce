@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Carts.Entities;
+﻿namespace ByteBuy.Core.Domain.Carts.Entities;
 
 public class SaleCartOffer : CartOffer
 {

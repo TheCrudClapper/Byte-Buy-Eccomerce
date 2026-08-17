@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Statistics;
+﻿using ByteBuy.Core.DTO.Public.Statistics;
 
 namespace ByteBuy.Core.ServiceContracts;
 

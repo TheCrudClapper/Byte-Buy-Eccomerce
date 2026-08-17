@@ -1,8 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Shared;
-
-
-namespace ByteBuy.Core.ServiceContracts.Base;
+﻿namespace ByteBuy.Core.ServiceContracts.Base;
 
 /// <summary>
 /// Defines basic contract for crud services for standarized API

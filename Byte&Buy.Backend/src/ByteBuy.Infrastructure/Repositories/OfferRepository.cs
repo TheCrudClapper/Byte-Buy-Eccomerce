@@ -1,16 +1,9 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
 using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Offers.Base;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Offer;
 using ByteBuy.Core.Filtration.Offer;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

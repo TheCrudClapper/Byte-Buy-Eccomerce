@@ -1,7 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Countries;
-using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users.Errors;
 
 namespace ByteBuy.Core.Domain.Users.Entities;

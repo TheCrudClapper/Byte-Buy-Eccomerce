@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.Pagination;
-using Microsoft.EntityFrameworkCore;
-
-namespace ByteBuy.Infrastructure.Extensions;
+﻿namespace ByteBuy.Infrastructure.Extensions;
 
 public static class IQueryableExtensions
 {
@@ -13,7 +10,7 @@ public static class IQueryableExtensions
 
         if (totalCount == 0)
             pageNumber = 1;
-        else if(pageNumber > totalPages)
+        else if (pageNumber > totalPages)
             pageNumber = totalPages;
 
         var items = await source

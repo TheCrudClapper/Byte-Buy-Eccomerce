@@ -1,14 +1,7 @@
 ﻿using ByteBuy.Core.Domain.DeliveryCarriers;
 using ByteBuy.Core.Domain.DeliveryCarriers.Errors;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.DeliveryCarrier;
-using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.DeliveryCarrier;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;
 
@@ -103,5 +96,5 @@ public class DeliveryCarrierService : IDeliveryCarrierService
         DeliveryCarriersListQuery queryParams,
         CancellationToken ct = default)
        => await _deliveryCarrierRepository.GetDeliveryCarrierListAsync(queryParams, ct);
-    
+
 }

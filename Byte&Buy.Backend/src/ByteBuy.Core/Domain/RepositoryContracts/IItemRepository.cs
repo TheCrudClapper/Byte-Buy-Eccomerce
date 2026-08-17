@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Items;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Item;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Services.Filtration;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

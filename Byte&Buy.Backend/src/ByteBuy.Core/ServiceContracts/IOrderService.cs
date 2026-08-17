@@ -1,8 +1,5 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.DTO.Public.Shared;
+﻿using ByteBuy.Core.DTO.Public.Order;
 using ByteBuy.Core.Filtration.Order;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.ServiceContracts;
 

@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Items.Errors;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Items.Entities;
 

@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Deliveries.Errors;
+﻿namespace ByteBuy.Core.Domain.Deliveries.Errors;
 
 /// <summary>
 /// Class describes errors that might occur while working with deliveries aggregtate

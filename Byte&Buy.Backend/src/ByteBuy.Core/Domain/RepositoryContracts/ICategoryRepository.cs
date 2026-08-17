@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Category;
 using ByteBuy.Core.Filtration.Category;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

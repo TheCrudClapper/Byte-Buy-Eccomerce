@@ -1,12 +1,9 @@
 ﻿using ByteBuy.Core.Domain.Orders.Enums;
 using ByteBuy.Core.Domain.Payments.Enums;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Statistics;
 using ByteBuy.Core.DTO.Public.Statistics;
-using ByteBuy.Infrastructure.DbContexts;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Payment;
+﻿using ByteBuy.Core.DTO.Public.Payment;
 
 namespace ByteBuy.Core.ServiceContracts;
 

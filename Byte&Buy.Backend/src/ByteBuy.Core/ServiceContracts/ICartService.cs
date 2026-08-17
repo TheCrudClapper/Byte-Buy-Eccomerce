@@ -1,5 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Cart;
+﻿using ByteBuy.Core.DTO.Public.Cart;
 
 namespace ByteBuy.Core.ServiceContracts;
 

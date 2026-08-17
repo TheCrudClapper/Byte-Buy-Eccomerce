@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.Filtration.RentOffer;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

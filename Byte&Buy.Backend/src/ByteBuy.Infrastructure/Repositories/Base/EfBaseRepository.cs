@@ -1,8 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using ByteBuy.Core.Domain.Base;
-using ByteBuy.Infrastructure.DbContexts;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Infrastructure.Repositories.Base;

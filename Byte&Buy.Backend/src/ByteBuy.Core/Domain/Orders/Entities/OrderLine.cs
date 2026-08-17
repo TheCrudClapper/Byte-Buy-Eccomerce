@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Base;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Orders.Entities;
 

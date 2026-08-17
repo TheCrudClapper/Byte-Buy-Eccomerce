@@ -1,12 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Conditions;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Condition;
 using ByteBuy.Core.Filtration.Condition;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

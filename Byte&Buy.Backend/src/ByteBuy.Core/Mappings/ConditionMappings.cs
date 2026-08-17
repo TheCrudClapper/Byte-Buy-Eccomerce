@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Conditions;
 using ByteBuy.Core.DTO.Public.Condition;
-using ByteBuy.Core.DTO.Public.Shared;
 
 namespace ByteBuy.Core.Mappings;
 

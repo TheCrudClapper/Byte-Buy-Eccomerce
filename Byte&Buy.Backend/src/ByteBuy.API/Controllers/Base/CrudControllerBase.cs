@@ -1,9 +1,4 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.ServiceContracts.Base;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ByteBuy.API.Controllers.Base;
+﻿namespace ByteBuy.API.Controllers.Base;
 
 /// <summary>
 /// Base crud controller that provides standarized action methods for crud,

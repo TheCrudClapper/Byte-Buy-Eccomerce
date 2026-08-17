@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
-using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

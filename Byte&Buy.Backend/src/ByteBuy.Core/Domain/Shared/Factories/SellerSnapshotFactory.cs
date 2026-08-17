@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Shared.Enums;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Internal.Seller;
 
 namespace ByteBuy.Core.Domain.Shared.Factories;

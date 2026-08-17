@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Permissions.Errors;
 using ByteBuy.Core.Domain.Roles.Entities;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users.Entities;
 
 namespace ByteBuy.Core.Domain.Permissions;

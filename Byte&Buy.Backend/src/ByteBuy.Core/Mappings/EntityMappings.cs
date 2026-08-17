@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Base;
-using ByteBuy.Core.DTO.Public.Shared;
 
 namespace ByteBuy.Core.Mappings;
 

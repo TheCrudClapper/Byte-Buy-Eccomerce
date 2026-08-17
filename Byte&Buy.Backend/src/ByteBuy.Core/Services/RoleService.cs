@@ -1,15 +1,7 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Roles;
+﻿using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.Domain.Roles.Errors;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Role;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Filtration.Role;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Identity;
 using static ByteBuy.Core.Specification.RoleSpecifications;
 
 namespace ByteBuy.Core.Services;

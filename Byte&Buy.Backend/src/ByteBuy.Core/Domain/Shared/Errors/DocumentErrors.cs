@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Shared.Errors;
+﻿namespace ByteBuy.Core.Domain.Shared.Errors;
 
 public static class DocumentErrors
 {

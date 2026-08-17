@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Public.Employee;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

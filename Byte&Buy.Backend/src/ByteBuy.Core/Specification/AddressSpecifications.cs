@@ -1,11 +1,10 @@
 ﻿using Ardalis.Specification;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
+
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.Domain.Users.Entities;
 using ByteBuy.Core.DTO.Internal.Address;
 using ByteBuy.Core.DTO.Public.Address;
 using ByteBuy.Core.DTO.Public.Offer.Common;
-using ByteBuy.Core.Mappings;
 namespace ByteBuy.Core.Specification;
 
 public static class AddressSpecifications

@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.Repositories;
 using FluentAssertions;

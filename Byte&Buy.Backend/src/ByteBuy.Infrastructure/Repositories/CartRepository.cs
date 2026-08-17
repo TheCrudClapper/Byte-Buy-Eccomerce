@@ -1,10 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Carts;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Internal.Checkout;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

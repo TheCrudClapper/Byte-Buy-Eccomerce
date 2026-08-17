@@ -2,8 +2,6 @@
 using ByteBuy.Core.Domain.Deliveries;
 using ByteBuy.Core.DTO.Internal.Delivery;
 using ByteBuy.Core.DTO.Public.Delivery;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Public.Employee;
 using ByteBuy.Core.Filtration.Employee;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Public.AddressValueObj;
 using ByteBuy.Core.DTO.Public.Employee;
-using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

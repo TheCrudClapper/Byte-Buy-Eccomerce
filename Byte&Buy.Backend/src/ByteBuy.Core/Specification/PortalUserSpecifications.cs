@@ -6,7 +6,6 @@ using ByteBuy.Core.DTO.Internal.PortalUser;
 using ByteBuy.Core.DTO.Internal.Seller;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

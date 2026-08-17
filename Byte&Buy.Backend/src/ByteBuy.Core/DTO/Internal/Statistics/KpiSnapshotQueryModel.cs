@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ValueObjects;
-
-namespace ByteBuy.Core.DTO.Internal.Statistics;
+﻿namespace ByteBuy.Core.DTO.Internal.Statistics;
 
 public sealed record KpiSnapshotQueryModel
 {

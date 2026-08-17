@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Permissions.Errors;
+﻿namespace ByteBuy.Core.Domain.Permissions.Errors;
 
 public static class PermissionErrors
 {

@@ -1,5 +1,4 @@
 using ByteBuy.API.Authorization;
-using ByteBuy.API.Extensions;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure.Extensions;

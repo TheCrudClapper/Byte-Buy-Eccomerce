@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Orders.Errors;
+﻿namespace ByteBuy.Core.Domain.Orders.Errors;
 
 public static class OrderErrors
 {

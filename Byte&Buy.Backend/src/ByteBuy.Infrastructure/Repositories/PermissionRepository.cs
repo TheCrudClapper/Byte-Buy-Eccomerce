@@ -1,13 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Permissions;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.Filtration.Permission;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

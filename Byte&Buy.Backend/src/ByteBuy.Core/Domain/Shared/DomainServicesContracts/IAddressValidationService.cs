@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+﻿namespace ByteBuy.Core.Domain.Shared.DomainServicesContracts;
 
 public interface IAddressValidationService
 {

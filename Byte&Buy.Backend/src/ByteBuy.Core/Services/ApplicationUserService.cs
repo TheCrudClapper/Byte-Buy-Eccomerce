@@ -1,10 +1,6 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Users.Base;
+﻿using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
-using ByteBuy.Core.Extensions;
-using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Services;
 

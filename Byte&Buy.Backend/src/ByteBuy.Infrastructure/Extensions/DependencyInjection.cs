@@ -1,15 +1,12 @@
 ﻿using ByteBuy.Core.Contracts;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.DTO.Internal.DocumentModels;
 using ByteBuy.Core.ServiceContracts;
-using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.HangfireJobs;
 using ByteBuy.Infrastructure.Repositories;
 using ByteBuy.Infrastructure.Repositories.UnitOfWork;
 using ByteBuy.Infrastructure.ServiceContracts;
 using ByteBuy.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

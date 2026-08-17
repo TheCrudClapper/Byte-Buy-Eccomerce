@@ -1,13 +1,9 @@
 ﻿using ByteBuy.Core.Contracts.Enums;
 using ByteBuy.Core.Domain.Categories.Errors;
 using ByteBuy.Core.Domain.Conditions.Errors;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.DomainModels;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Image;
 using ByteBuy.Core.Helpers;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;
 

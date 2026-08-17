@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.Domain.Orders.Errors;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Orders.Entities;
 

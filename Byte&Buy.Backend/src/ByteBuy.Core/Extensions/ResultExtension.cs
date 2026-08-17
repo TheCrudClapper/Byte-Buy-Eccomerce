@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Extensions;
+﻿namespace ByteBuy.Core.Extensions;
 
 public static class ResultExtension
 {

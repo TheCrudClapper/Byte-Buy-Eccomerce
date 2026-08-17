@@ -1,8 +1,4 @@
-﻿using ByteBuy.API.Extensions;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-namespace ByteBuy.API.Controllers.Base;
+﻿namespace ByteBuy.API.Controllers.Base;
 
 /// <summary>
 /// Helper Class to reduce boilerplate in controllers.

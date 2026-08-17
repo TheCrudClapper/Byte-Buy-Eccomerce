@@ -1,14 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Deliveries;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Delivery;
 using ByteBuy.Core.Filtration.Delivery;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 namespace ByteBuy.Infrastructure.Repositories;
 
 public class DeliveryRepository : EfBaseRepository<Delivery>, IDeliveryRepository

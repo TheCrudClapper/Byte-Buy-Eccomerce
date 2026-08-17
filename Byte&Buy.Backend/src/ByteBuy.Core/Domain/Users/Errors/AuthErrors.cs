@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Users.Errors;
+﻿namespace ByteBuy.Core.Domain.Users.Errors;
 
 /// <summary>
 /// Defines errors that occur while working with accounts, authentication.

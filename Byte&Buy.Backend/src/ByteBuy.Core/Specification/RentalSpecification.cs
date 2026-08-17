@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Rentals;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Public.Rental;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

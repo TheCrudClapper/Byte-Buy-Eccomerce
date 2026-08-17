@@ -1,14 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Rentals;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.Filtration.Rental;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

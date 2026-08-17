@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Countries.Errors;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users.Entities;
 
 namespace ByteBuy.Core.Domain.Countries;

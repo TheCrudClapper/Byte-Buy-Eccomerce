@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Shared;
-
-namespace ByteBuy.Core.ServiceContracts.Base;
+﻿namespace ByteBuy.Core.ServiceContracts.Base;
 
 /// <summary>
 /// Represents a contract that allows a service return data in select list format

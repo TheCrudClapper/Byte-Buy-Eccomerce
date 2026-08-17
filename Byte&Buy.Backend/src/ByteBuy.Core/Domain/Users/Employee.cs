@@ -1,7 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Companies;
-using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users.Base;
 
 namespace ByteBuy.Core.Domain.Users;

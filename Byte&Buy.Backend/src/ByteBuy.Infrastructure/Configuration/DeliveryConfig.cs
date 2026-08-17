@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Deliveries;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ByteBuy.Infrastructure.Configuration;

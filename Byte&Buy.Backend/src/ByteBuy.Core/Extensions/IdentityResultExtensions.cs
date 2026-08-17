@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using Microsoft.AspNetCore.Identity;
-
-namespace ByteBuy.Core.Extensions;
+﻿namespace ByteBuy.Core.Extensions;
 
 /// <summary>
 /// Extension class that helps map identity errors to domain errors.

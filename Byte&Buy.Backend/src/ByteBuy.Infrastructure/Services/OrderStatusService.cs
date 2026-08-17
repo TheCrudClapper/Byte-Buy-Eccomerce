@@ -1,7 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Orders.Enums;
-using ByteBuy.Infrastructure.DbContexts;
 using ByteBuy.Infrastructure.ServiceContracts;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Services;
 

@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Extensions;
-
-namespace ByteBuy.Core.Helpers;
+﻿namespace ByteBuy.Core.Helpers;
 
 public static class EnumToSelectListMapper
 {

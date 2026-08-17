@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Payments.Errors;
+﻿namespace ByteBuy.Core.Domain.Payments.Errors;
 
 public static class PaymentErrors
 {

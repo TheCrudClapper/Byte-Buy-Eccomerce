@@ -23,9 +23,7 @@ using ByteBuy.Core.Domain.Roles.Entities;
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.Domain.Users.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+
 namespace ByteBuy.Infrastructure.DbContexts;
 
 public class ApplicationDbContext : IdentityDbContext<

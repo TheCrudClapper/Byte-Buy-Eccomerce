@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.DTO.Public.Role;
 using ByteBuy.Core.Filtration.Role;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

@@ -1,13 +1,6 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Users;
+﻿using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.DTO.Public.PortalUser;
 using ByteBuy.Core.Filtration.PortalUser;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Extensions;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

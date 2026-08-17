@@ -2,7 +2,6 @@
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.DeliveryCarrier;
 using ByteBuy.Core.Filtration.DeliveryCarrier;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

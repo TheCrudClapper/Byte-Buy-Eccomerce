@@ -1,0 +1,10 @@
+﻿global using ByteBuy.Core.Domain.RepositoryContracts;
+global using ByteBuy.Core.Mappings;
+global using ByteBuy.Core.Pagination;
+global using ByteBuy.Infrastructure.DbContexts;
+global using ByteBuy.Infrastructure.Extensions;
+global using ByteBuy.Infrastructure.Repositories.Base;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Migrations;

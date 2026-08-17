@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Deliveries;
 using ByteBuy.Core.Domain.Deliveries.Enums;
 using ByteBuy.Core.Domain.Offers.Errors;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Helpers;
 

@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Carts.Errors;
+﻿namespace ByteBuy.Core.Domain.Carts.Errors;
 
 /// <summary>
 /// Class describes errors that might occur while working with cart aggregate

@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.DTO.Public.Money;
-using ByteBuy.Core.DTO.Public.Shared;
 
 namespace ByteBuy.Core.DTO.Public.Checkout;
 

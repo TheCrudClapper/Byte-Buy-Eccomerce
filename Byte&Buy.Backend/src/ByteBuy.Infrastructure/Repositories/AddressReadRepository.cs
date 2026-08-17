@@ -1,7 +1,4 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Users.Entities;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Repositories.Base;
+﻿using ByteBuy.Core.Domain.Users.Entities;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

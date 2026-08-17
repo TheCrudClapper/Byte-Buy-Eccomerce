@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Users.Base;
-using ByteBuy.Core.ServiceContracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +35,7 @@ public class TokenService : ITokenService
         {
             claims.Add(new Claim("Roles", claim));
         }
-       
+
         //Creating token payload
         var tokenDescriptior = new SecurityTokenDescriptor
         {

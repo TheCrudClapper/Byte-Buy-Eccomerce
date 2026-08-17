@@ -1,13 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Companies;
 using ByteBuy.Core.Domain.Companies.Errors;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.CompanyInfo;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ServiceContracts;
 
 namespace ByteBuy.Core.Services;
 

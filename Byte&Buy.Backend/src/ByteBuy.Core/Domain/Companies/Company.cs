@@ -1,8 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Companies.Errors;
-using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.Domain.Users;
 
 namespace ByteBuy.Core.Domain.Companies;

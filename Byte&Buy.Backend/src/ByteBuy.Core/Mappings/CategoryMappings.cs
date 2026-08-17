@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Categories;
 using ByteBuy.Core.DTO.Public.Category;
-using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

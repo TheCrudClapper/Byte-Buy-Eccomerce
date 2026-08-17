@@ -7,7 +7,6 @@ using ByteBuy.Core.DTO.Public.Offer.Common;
 using ByteBuy.Core.DTO.Public.Offer.Enum;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
-using ByteBuy.Core.Pagination;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

@@ -1,8 +1,5 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Rental;
-using ByteBuy.Core.DTO.Public.Shared;
+﻿using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Core.Filtration.Rental;
-using ByteBuy.Core.Pagination;
 
 namespace ByteBuy.Core.ServiceContracts;
 

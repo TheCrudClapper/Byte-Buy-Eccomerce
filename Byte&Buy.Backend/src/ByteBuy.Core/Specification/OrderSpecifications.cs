@@ -3,7 +3,6 @@ using ByteBuy.Core.Domain.Orders;
 using ByteBuy.Core.Domain.Shared.Enums;
 using ByteBuy.Core.DTO.Internal.Order;
 using ByteBuy.Core.DTO.Public.Order;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

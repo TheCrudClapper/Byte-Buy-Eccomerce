@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Shared.DomainModels;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.DTO.Public.Image;
 
 namespace ByteBuy.Core.ServiceContracts;

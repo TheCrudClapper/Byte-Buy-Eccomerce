@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Rentals;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class RentalConfiguration : IEntityTypeConfiguration<Rental>

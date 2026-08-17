@@ -1,23 +1,13 @@
 ﻿using ByteBuy.Core.Domain.Carts;
 using ByteBuy.Core.Domain.Carts.Errors;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.Domain.Roles.Errors;
-using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 using ByteBuy.Core.Domain.Users;
 using ByteBuy.Core.Domain.Users.Base;
 using ByteBuy.Core.Domain.Users.Errors;
 using ByteBuy.Core.DTO.Public.ApplicationUser;
 using ByteBuy.Core.DTO.Public.PortalUser;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Extensions;
 using ByteBuy.Core.Filtration.PortalUser;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Identity;
 using static ByteBuy.Core.Specification.CartSpecifications;
 using static ByteBuy.Core.Specification.PortalUserSpecifications;
 

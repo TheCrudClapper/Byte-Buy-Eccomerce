@@ -1,7 +1,5 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Permission;
+﻿using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Core.Filtration.Permission;
-using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts.Base;
 
 namespace ByteBuy.Core.ServiceContracts;

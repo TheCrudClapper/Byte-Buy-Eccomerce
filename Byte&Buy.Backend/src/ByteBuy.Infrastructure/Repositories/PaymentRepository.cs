@@ -1,11 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Payments;
 using ByteBuy.Core.Domain.Payments.Enums;
-using ByteBuy.Core.Domain.RepositoryContracts;
 using ByteBuy.Core.DTO.Public.Payment;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace ByteBuy.Infrastructure.Repositories;
 

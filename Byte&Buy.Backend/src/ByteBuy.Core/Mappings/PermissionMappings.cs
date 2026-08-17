@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.DTO.Public.Permission;
-using ByteBuy.Core.DTO.Public.Shared;
 using System.Linq.Expressions;
 
 namespace ByteBuy.Core.Mappings;

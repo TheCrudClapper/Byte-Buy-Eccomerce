@@ -1,10 +1,8 @@
-﻿using ByteBuy.Infrastructure.DbContexts;
-using ByteBuy.Infrastructure.ServiceContracts;
-using Microsoft.EntityFrameworkCore;
+﻿using ByteBuy.Infrastructure.ServiceContracts;
 
 namespace ByteBuy.Infrastructure.Services;
 
-public class RentalStatusService(ApplicationDbContext context) 
+public class RentalStatusService(ApplicationDbContext context)
     : IRentalStatusService
 {
     public async Task UpdateRentalStatusesAsync()

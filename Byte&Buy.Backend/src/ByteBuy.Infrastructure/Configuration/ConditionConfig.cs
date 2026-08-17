@@ -1,5 +1,4 @@
 ﻿using ByteBuy.Core.Domain.Conditions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ByteBuy.Infrastructure.Configuration;

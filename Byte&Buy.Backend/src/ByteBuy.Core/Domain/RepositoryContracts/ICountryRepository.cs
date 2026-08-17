@@ -1,8 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Countries;
 using ByteBuy.Core.Domain.RepositoryContracts.Base;
 using ByteBuy.Core.DTO.Public.Country;
-using ByteBuy.Core.Pagination;
-using ByteBuy.Services.Filtration;
+
 
 namespace ByteBuy.Core.Domain.RepositoryContracts;
 

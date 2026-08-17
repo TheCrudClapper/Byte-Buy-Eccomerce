@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ValueObjects;
-
-namespace ByteBuy.Core.DTO.Internal.PortalUser;
+﻿namespace ByteBuy.Core.DTO.Internal.PortalUser;
 
 /// <summary>
 /// Internal dto used to get user data while creating order

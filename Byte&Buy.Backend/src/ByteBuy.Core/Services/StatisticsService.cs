@@ -1,8 +1,4 @@
-﻿using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.DTO.Public.Statistics;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.DTO.Public.Statistics;
 
 namespace ByteBuy.Core.Services;
 

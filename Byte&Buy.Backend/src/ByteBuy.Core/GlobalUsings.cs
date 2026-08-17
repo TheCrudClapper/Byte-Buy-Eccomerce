@@ -1,0 +1,12 @@
+﻿global using ByteBuy.Core.Domain.RepositoryContracts;
+global using ByteBuy.Core.Domain.RepositoryContracts.UoW;
+global using ByteBuy.Core.Domain.Shared.DomainServicesContracts;
+global using ByteBuy.Core.Domain.Shared.ResultTypes;
+global using ByteBuy.Core.Domain.Shared.ValueObjects;
+global using ByteBuy.Core.DTO.Public.Shared;
+global using ByteBuy.Core.Extensions;
+global using ByteBuy.Core.Mappings;
+global using ByteBuy.Core.Pagination;
+global using ByteBuy.Core.ServiceContracts;
+global using ByteBuy.Services.Filtration;
+global using Microsoft.AspNetCore.Identity;

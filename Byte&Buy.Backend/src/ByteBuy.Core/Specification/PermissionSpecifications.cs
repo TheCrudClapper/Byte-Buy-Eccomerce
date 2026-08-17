@@ -1,8 +1,6 @@
 ﻿using Ardalis.Specification;
 using ByteBuy.Core.Domain.Permissions;
 using ByteBuy.Core.DTO.Public.Permission;
-using ByteBuy.Core.DTO.Public.Shared;
-using ByteBuy.Core.Mappings;
 
 namespace ByteBuy.Core.Specification;
 

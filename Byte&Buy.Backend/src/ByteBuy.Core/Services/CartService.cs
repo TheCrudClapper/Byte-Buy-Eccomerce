@@ -1,13 +1,7 @@
 ﻿using ByteBuy.Core.Domain.Carts;
 using ByteBuy.Core.Domain.Carts.Errors;
 using ByteBuy.Core.Domain.Offers;
-using ByteBuy.Core.Domain.RepositoryContracts;
-using ByteBuy.Core.Domain.RepositoryContracts.UoW;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 using ByteBuy.Core.DTO.Public.Cart;
-using ByteBuy.Core.Mappings;
-using ByteBuy.Core.ServiceContracts;
 using static ByteBuy.Core.Specification.CartSpecifications;
 
 namespace ByteBuy.Core.Services;

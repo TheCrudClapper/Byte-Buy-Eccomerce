@@ -381,11 +381,11 @@ public class PermissionServiceTests
         PermissionListQuery queryParams = new();
         PagedList<PermissionResponse> pagedList = new()
         {
-            Items = [.._fixture.CreateMany<PermissionResponse>()],
+            Items = [.. _fixture.CreateMany<PermissionResponse>()],
             Metadata = new()
         };
 
-        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<PermissionListQuery>() ,It.IsAny<CancellationToken>()))
+        _permissionRepositoryMock.Setup(p => p.GetPermissionListAsync(It.IsAny<PermissionListQuery>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(pagedList);
 
         //Act

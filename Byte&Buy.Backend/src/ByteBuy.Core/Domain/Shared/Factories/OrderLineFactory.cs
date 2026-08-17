@@ -1,8 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Carts.Entities;
 using ByteBuy.Core.Domain.Offers;
 using ByteBuy.Core.Domain.Orders.Entities;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Extensions;
 
 namespace ByteBuy.Core.Domain.Shared.Factories;
 

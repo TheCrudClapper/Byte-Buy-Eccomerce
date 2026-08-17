@@ -3,8 +3,6 @@ using ByteBuy.Core.Domain.Orders.Entities;
 using ByteBuy.Core.Domain.Payments.Entities;
 using ByteBuy.Core.Domain.Payments.Enums;
 using ByteBuy.Core.Domain.Payments.Errors;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
-using ByteBuy.Core.Domain.Shared.ValueObjects;
 
 namespace ByteBuy.Core.Domain.Payments;
 

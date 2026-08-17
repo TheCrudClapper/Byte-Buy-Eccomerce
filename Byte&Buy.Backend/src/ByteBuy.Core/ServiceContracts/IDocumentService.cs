@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.ServiceContracts;
+﻿namespace ByteBuy.Core.ServiceContracts;
 
 public interface IDocumentService
 {

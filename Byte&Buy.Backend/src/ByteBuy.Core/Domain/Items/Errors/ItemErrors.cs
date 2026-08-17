@@ -1,6 +1,4 @@
-﻿using ByteBuy.Core.Domain.Shared.ResultTypes;
-
-namespace ByteBuy.Core.Domain.Items.Errors;
+﻿namespace ByteBuy.Core.Domain.Items.Errors;
 
 /// <summary>
 /// Class describes errors that might occur while working with item aggregate

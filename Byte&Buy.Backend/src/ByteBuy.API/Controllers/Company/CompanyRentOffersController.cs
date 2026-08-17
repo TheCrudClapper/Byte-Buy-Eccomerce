@@ -1,11 +1,8 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.API.Controllers.Base;
+﻿using ByteBuy.API.Controllers.Base;
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
-using ByteBuy.Core.DTO.Public.Shared;
 using ByteBuy.Core.Filtration.RentOffer;
 using ByteBuy.Core.Pagination;
 using ByteBuy.Core.ServiceContracts;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ByteBuy.API.Controllers.Company;
 

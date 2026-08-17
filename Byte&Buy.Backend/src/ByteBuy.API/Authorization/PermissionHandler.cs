@@ -1,5 +1,4 @@
-﻿using ByteBuy.API.Attributes;
-using ByteBuy.Core.ServiceContracts;
+﻿using ByteBuy.Core.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 

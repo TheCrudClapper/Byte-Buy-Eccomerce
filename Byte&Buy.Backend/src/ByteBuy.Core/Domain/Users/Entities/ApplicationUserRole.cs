@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.Roles;
 using ByteBuy.Core.Domain.Users.Base;
-using Microsoft.AspNetCore.Identity;
 
 namespace ByteBuy.Core.Domain.Users.Entities;
 

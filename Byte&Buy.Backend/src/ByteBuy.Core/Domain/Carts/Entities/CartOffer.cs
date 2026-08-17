@@ -1,7 +1,6 @@
 ﻿using ByteBuy.Core.Domain.Base;
 using ByteBuy.Core.Domain.Carts.Errors;
 using ByteBuy.Core.Domain.Offers.Base;
-using ByteBuy.Core.Domain.Shared.ResultTypes;
 
 namespace ByteBuy.Core.Domain.Carts.Entities;
 
