@@ -5,7 +5,6 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using ByteBuy.Infrastructure.Extensions;
 using ByteBuy.Services.Extensions;
-using ByteBuy.Services.Handlers;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Extensions;
 using ByteBuy.UI.Factories;
@@ -24,6 +23,7 @@ using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
 using Microsoft.Extensions.Options;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.UI.ViewModels.ManyViewModels;
+using ByteBuy.Infrastructure.Handlers;
 
 
 namespace ByteBuy.UI
@@ -38,7 +38,7 @@ namespace ByteBuy.UI
 
         public override void OnFrameworkInitializationCompleted()
         {
-            //AddAsync Configuration
+            //Add Configuration
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false)
@@ -46,7 +46,6 @@ namespace ByteBuy.UI
 
             //Registering Services
             var services = new ServiceCollection();
-            services.AddAuthHeaderHandler();
             services.AddUserInterfaceLayer();
             services.AddServiceLayer();
             services.AddInfrastructureLayer();

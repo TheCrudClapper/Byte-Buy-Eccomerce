@@ -1,7 +1,7 @@
 ﻿using ByteBuy.Services.InfraContracts.Stores;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ByteBuy.Services.Handlers;
+namespace ByteBuy.Infrastructure.Handlers;
 
 /// <summary>
 /// Attaches authentication token to http requests

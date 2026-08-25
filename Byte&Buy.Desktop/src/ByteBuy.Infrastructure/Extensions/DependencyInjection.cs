@@ -1,8 +1,8 @@
-﻿using ByteBuy.Infrastructure.HttpClients.Company;
+﻿using ByteBuy.Infrastructure.Handlers;
+using ByteBuy.Infrastructure.HttpClients.Company;
 using ByteBuy.Infrastructure.HttpClients.Me;
 using ByteBuy.Infrastructure.HttpClients.Public;
 using ByteBuy.Infrastructure.Stores;
-using ByteBuy.Services.Handlers;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.InfraContracts.HttpClients.Me;
 using ByteBuy.Services.InfraContracts.HttpClients.Public;
@@ -15,6 +15,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
     {
+        
+        services.AddAuthHeaderHandler();
+
         //AddAsync Http Clients
         services.AddHttpClient<IAuthHttpClient, AuthHttpClient>();
 
