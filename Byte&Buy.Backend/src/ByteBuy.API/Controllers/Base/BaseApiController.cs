@@ -1,7 +1,7 @@
 ﻿namespace ByteBuy.API.Controllers.Base;
 
 /// <summary>
-/// Helper Class to reduce boilerplate in controllers.
+/// Base Controller class that contains shared logic
 /// </summary>
 public class BaseApiController : ControllerBase
 {
