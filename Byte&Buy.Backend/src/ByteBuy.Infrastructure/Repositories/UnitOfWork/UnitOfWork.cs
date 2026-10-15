@@ -1,6 +1,5 @@
 ﻿using ByteBuy.Core.Domain.RepositoryContracts.UoW;
 using Microsoft.EntityFrameworkCore.Storage;
-
 namespace ByteBuy.Infrastructure.Repositories.UnitOfWork;
 
 public sealed class UnitOfWork : IUnitOfWork
@@ -17,6 +16,9 @@ public sealed class UnitOfWork : IUnitOfWork
 
     public async Task BeginTransactionAsync(CancellationToken ct)
     {
+        if (_transaction is not null)
+            throw new InvalidOperationException("The transaction already started.");
+
         _transaction = await _context.Database.BeginTransactionAsync(ct);
     }
 
@@ -25,18 +27,30 @@ public sealed class UnitOfWork : IUnitOfWork
         if (_transaction is null)
             throw new InvalidOperationException("No transaction started yet.");
 
-        await _transaction.CommitAsync(ct);
-        await _transaction.DisposeAsync();
-        _transaction = null;
+        try
+        {
+            await _transaction.CommitAsync(ct);
+        }
+        finally
+        {
+            await _transaction.DisposeAsync();
+            _transaction = null;
+        }   
     }
 
     public async Task RollbackAsync(CancellationToken ct)
     {
-        if (_transaction is null)
-            throw new InvalidOperationException("No transaction started yet.");
+        if (_transaction is null) 
+            return;
 
-        await _transaction.RollbackAsync(ct);
-        await _transaction.DisposeAsync();
-        _transaction = null;
+        try
+        {
+            await _transaction.RollbackAsync(ct);
+        }
+        finally
+        {
+            await _transaction.DisposeAsync();
+            _transaction = null;
+        }    
     }
 }
