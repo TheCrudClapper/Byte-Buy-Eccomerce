@@ -69,11 +69,11 @@ public class AuthService : IAuthService
 
         userResult.Value.AttachCart(cartResult.Value.Id);
 
-        //begin transaction
-        await _unitOfWork.BeginTransactionAsync();
-
         try
         {
+            //begin transaction
+            await _unitOfWork.BeginTransactionAsync();
+
             var identityResult = await _userManager
             .CreateAsync(userResult.Value, request.Password);
 

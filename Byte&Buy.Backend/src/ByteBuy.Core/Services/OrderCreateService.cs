@@ -52,10 +52,11 @@ public class OrderCreateService : IOrderCreateService
 
     public async Task<Result<OrderCreatedReponse>> AddAsync(Guid userId, OrderAddRequest request)
     {
-        await _unitOfWork.BeginTransactionAsync();
 
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             var buyerSnapshotResult = await CreateUserSnapshot(userId);
             if (buyerSnapshotResult.IsFailure)
                 return Result.Failure<OrderCreatedReponse>(buyerSnapshotResult.Error);

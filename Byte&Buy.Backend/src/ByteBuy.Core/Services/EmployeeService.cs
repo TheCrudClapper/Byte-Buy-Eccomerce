@@ -76,10 +76,10 @@ public class EmployeeService : IEmployeeService
 
         var employee = employeeResult.Value;
 
-        await _unitOfWork.BeginTransactionAsync();
-
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             var identityResult = await _userManager.CreateAsync(employee, request.Password);
 
             if (!identityResult.Succeeded)
@@ -133,10 +133,10 @@ public class EmployeeService : IEmployeeService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _unitOfWork.BeginTransactionAsync();
-
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             if (!string.IsNullOrWhiteSpace(request.Password))
             {
                 var validation = await _passwordService.ValidateAsync(employee, request.Password);
