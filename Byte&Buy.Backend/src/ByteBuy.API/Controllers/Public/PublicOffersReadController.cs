@@ -2,11 +2,13 @@
 using ByteBuy.Core.DTO.Public.Offer.RentOffer;
 using ByteBuy.Core.DTO.Public.Offer.SaleOffer;
 using ByteBuy.Core.Filtration.Offer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ByteBuy.API.Controllers.Public;
 
 [Route("api/offers")]
 [ApiController]
+[AllowAnonymous]
 public class PublicOffersReadController : BaseApiController
 {
     private readonly IOfferReadService _offerReadService;

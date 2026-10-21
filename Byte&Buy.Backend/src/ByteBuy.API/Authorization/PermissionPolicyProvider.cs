@@ -10,7 +10,9 @@ namespace ByteBuy.API.Authorization
             .Build());
 
         public Task<AuthorizationPolicy?> GetFallbackPolicyAsync()
-          => Task.FromResult<AuthorizationPolicy?>(null);
+          => Task.FromResult<AuthorizationPolicy?>(new AuthorizationPolicyBuilder()
+              .RequireAuthenticatedUser()
+              .Build());
 
         public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
         {

@@ -1,7 +1,10 @@
-﻿namespace ByteBuy.API.Controllers.Public;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ByteBuy.API.Controllers.Public;
 
 [Route("api/countries")]
 [ApiController]
+[AllowAnonymous]
 public class PublicCountriesController : BaseApiController
 {
     private readonly ICountryService _countryService;

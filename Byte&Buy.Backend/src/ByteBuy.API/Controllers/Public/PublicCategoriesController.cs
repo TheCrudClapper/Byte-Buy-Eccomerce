@@ -1,7 +1,10 @@
-﻿namespace ByteBuy.API.Controllers.Public;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ByteBuy.API.Controllers.Public;
 
 [Route("api/categories")]
 [ApiController]
+[AllowAnonymous]
 public class PublicCategoriesController : BaseApiController
 {
     private readonly ICategoryService _categoryService;
