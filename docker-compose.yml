@@ -1,0 +1,41 @@
+services:
+# Backend
+  byte-buy-backend:
+    build:
+      context: ./Byte&Buy.Backend
+      dockerfile: src/ByteBuy.API/Dockerfile
+    ports:
+      - "${HTTPS_PORT}:8081"
+      - "${HTTP_PORT}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - COMPOSE=${COMPOSE}
+      - ConnectionStrings__Default=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - bb-internal-network
+
+# Database
+  postgres:
+    image: postgres:18
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    networks:
+      - bb-internal-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+# WebApp
+
+# Networks
+networks:
+  bb-internal-network:
+    driver: bridge
