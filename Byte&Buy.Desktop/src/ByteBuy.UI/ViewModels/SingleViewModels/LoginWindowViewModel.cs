@@ -17,13 +17,13 @@ public partial class LoginWindowViewModel : WindowViewModel
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email format")]
-    private string _email = "wojciechmucha12@gmail.com";
+    private string _email = string.Empty;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Password is required")]
     [MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
-    private string _password = "Test123#";
+    private string _password = string.Empty;
 
     [ObservableProperty]
     private string _error = string.Empty;
