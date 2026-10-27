@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { OffersFacade } from '../../../services/offers-facade';
 import { ImageItem } from '../../../models/image-item';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
@@ -18,6 +18,7 @@ export type OfferType = 'sale' | 'rent';
   selector: 'app-base-offer-form',
   imports: [],
   template: ``,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './base-offer-form.scss',
 })
 export abstract class BaseOfferForm implements OnInit {

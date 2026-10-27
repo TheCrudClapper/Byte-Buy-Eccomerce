@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { OrderStatus } from '../../../core/dto/order/enum/order-status';
 import { DatePipe } from '@angular/common';
 import { OrderStatusModel } from '../../models/order-status-model';
@@ -7,6 +7,7 @@ import { OrderStatusModel } from '../../models/order-status-model';
   selector: 'app-order-status-component',
   imports: [DatePipe],
   templateUrl: './order-status-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './order-status-component.scss',
 })
 

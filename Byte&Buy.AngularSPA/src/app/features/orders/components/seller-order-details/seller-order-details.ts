@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { environment } from '../../../../../environments/environment';
@@ -18,6 +18,7 @@ import { OrderStatusComponent } from '../../../../shared/components/order-status
   standalone: true,
   imports: [CommonModule, OrderStatusComponent],
   templateUrl: './seller-order-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './seller-order-details.scss',
 })
 

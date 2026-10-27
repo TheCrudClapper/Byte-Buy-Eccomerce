@@ -1,4 +1,4 @@
-import { Component, inject, signal, Signal } from '@angular/core';
+import { Component, inject, signal, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { RegisterRequest } from '../../../../core/dto/auth/register-request';
 import { AuthService } from '../../../../core/clients/auth/auth-service';
@@ -13,6 +13,7 @@ import { ToastService } from '../../../../shared/services/snackbar/toast-service
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './register-page.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './register-page.scss',
 })
 export class RegisterPage {

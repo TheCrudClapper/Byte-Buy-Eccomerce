@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, effect, EventEmitter, inject, Input, Output, signal, ChangeDetectionStrategy } from '@angular/core';
 import { getErrorMessage } from '../../../../../shared/helpers/form-helper';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { ProblemDetails } from '../../../../../core/dto/problem-details';
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   standalone: true,
   templateUrl: './shipping-address-dialog.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './shipping-address-dialog.scss',
 })
 export class ShippingAddressDialog {

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { OfferApiService } from '../../../../core/clients/offers/common/offer-api-service';
 import { CommonModule } from '@angular/common';
 import { RentBrowserItem } from '../rent/rent-browser-item/rent-browser-item/rent-browser-item';
@@ -22,6 +22,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   imports: [CommonModule, RentBrowserItem, SaleBrowserItem, EmptyState, Pagination, ReactiveFormsModule],
   templateUrl: './offer-browser.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: [
     './offer-browser.scss',
     '../../shared/styles/offers-shared-styles.scss'

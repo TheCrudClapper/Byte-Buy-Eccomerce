@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { OrderApiService } from '../../../../core/clients/orders/order-api-service';
 import { UserOrderListResponse } from '../../../../core/dto/order/common/user-order-list-response';
@@ -20,6 +20,7 @@ import { OrderStatusComponent } from '../../../../shared/components/order-status
   imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, ReactiveFormsModule, OrderStatusComponent],
   standalone: true,
   templateUrl: './client-orders.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './client-orders.scss',
 })
 export class ClientOrders implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SaleOfferDetails } from '../../../models/sale-offer-details';
@@ -17,6 +17,7 @@ import { OfferStatus } from '../../../../../core/dto/offers/enum/offer-status';
   styleUrls: [
     './sale-details.scss',
     '../../../shared/styles/offers-shared-styles.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 

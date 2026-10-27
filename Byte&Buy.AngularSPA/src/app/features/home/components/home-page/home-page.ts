@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/clients/auth/auth-service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
@@ -8,6 +8,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
   imports: [RouterLink, CommonModule, NgOptimizedImage],
   standalone: true,
   templateUrl: './home-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home-page.scss',
 })
 export class HomePage {

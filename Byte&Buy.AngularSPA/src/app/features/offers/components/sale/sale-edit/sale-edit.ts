@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { BaseOfferForm, OfferMode, OfferType } from '../../../shared/components/base-offer-form/base-offer-form';
@@ -9,6 +9,7 @@ import { UserSaleOfferResponse } from '../../../../../core/dto/offers/sale/user-
   selector: 'app-sale-edit',
   imports: [ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './sale-edit.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sale-edit.scss',
     '../../../shared/styles/offers-shared-styles.scss']
 })

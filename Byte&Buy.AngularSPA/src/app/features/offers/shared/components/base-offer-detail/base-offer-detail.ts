@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferApiService } from '../../../../../core/clients/offers/common/offer-api-service';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
@@ -15,6 +15,7 @@ import { AuthService } from '../../../../../core/clients/auth/auth-service';
   selector: 'app-base-offer-detail',
   imports: [],
   template: ``,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: ``,
 })
 

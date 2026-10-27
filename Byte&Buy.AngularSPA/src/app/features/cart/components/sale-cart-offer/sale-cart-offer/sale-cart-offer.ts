@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { SaleCartOfferModel } from '../../../models/cart-offers/sale-cart-offer-model';
 import { DecimalPipe } from '@angular/common';
@@ -20,6 +20,7 @@ import { environment } from '../../../../../../environments/environment';
   styleUrls: ['./sale-cart-offer.scss',
     '../../../shared/styles/card-shared-styles.scss'
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class SaleCartOffer implements OnInit {

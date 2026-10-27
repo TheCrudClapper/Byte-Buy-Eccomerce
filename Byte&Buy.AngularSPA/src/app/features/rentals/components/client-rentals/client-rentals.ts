@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RentalApiService } from '../../../../core/clients/rental/rental-api-service';
 import { RentalLenderResponse } from '../../../../core/dto/rental/rental-lender-response';
 import { environment } from '../../../../../environments/environment';
@@ -19,6 +19,7 @@ import { Guid } from 'guid-typescript';
   imports: [DecimalPipe, DatePipe, EmptyState, Pagination, ɵInternalFormsSharedModule, ReactiveFormsModule],
   standalone: true,
   templateUrl: './client-rentals.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './client-rentals.scss',
 })
 

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { AuthService } from '../../../../core/clients/auth/auth-service';
 import { LoginRequest } from '../../../../core/dto/auth/login-request';
@@ -13,6 +13,7 @@ import { getErrorMessage } from '../../../../shared/helpers/form-helper';
   imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, RouterLink],
   standalone: true,
   templateUrl: './login-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login-page.scss',
 })
 

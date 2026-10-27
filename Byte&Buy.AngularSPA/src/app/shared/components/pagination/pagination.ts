@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { PaginationMetadata } from '../../../core/pagination/pagination-metadata';
 
 @Component({
@@ -6,6 +6,7 @@ import { PaginationMetadata } from '../../../core/pagination/pagination-metadata
   imports: [],
   standalone: true,
   templateUrl: './pagination.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './pagination.scss',
 })
 export class Pagination {

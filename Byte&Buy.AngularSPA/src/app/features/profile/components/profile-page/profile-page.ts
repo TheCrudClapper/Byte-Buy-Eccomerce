@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, RouterLinkActive, RouterLinkWithHref, Router } from '@angular/router';
 import { AuthService } from '../../../../core/clients/auth/auth-service';
 @Component({
@@ -6,6 +6,7 @@ import { AuthService } from '../../../../core/clients/auth/auth-service';
   imports: [RouterOutlet, RouterLinkActive, RouterLinkWithHref],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class ProfilePage {

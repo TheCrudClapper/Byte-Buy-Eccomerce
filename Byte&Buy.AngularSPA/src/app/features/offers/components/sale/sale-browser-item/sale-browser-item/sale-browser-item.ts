@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SaleBrowserItemResponse } from '../../../../../../core/dto/offers/sale/sale-browser-item-response';
 import { RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
@@ -10,6 +10,7 @@ import { environment } from '../../../../../../../environments/environment';
   imports: [RouterLink, DecimalPipe],
   templateUrl: './sale-browser-item.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./sale-browser-item.scss',
     '../../../../shared/styles/offers-shared-styles.scss',
     '../../../../shared/styles/browser-item-style.scss',

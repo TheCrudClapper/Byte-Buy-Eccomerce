@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RentalApiService } from '../../../../core/clients/rental/rental-api-service';
 import { environment } from '../../../../../environments/environment';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
@@ -20,6 +20,7 @@ import { Pagination } from "../../../../shared/components/pagination/pagination"
   imports: [DecimalPipe, DatePipe, EmptyState, Pagination],
   standalone: true,
   templateUrl: './my-rentals.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-rentals.scss',
 })
 export class MyRentals {

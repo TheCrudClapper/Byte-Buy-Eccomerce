@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CartApiService } from '../../../../../core/clients/cart/cart-api-service';
 import { Cart } from '../../../models/cart';
 import { toCartModel } from '../../../mappers/cart-mapper';
@@ -9,7 +9,7 @@ import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-o
 import { CartSummary } from '../../../models/cart-summary';
 import { Guid } from 'guid-typescript';
 import { Router, RouterLink } from '@angular/router';
-import { Toast } from 'ngx-toastr';
+import { Toast } from '@openng/ngx-toastr';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 
 @Component({
@@ -17,6 +17,7 @@ import { ToastService } from '../../../../../shared/services/snackbar/toast-serv
   imports: [DecimalPipe, SaleCartOffer, RentCartOffer, RouterLink],
   templateUrl: './cart-page.html',
   styleUrl: './cart-page.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { RouterLink } from "@angular/router";
   selector: 'app-sale-create',
   imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './sale-create.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: [
     './sale-create.scss',
     '../../../shared/styles/offers-shared-styles.scss']

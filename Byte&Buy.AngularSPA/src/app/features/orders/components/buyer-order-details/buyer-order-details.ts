@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { OrderApiService } from '../../../../core/clients/orders/order-api-service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
@@ -17,6 +17,7 @@ import { OrderStatusComponent } from '../../../../shared/components/order-status
   imports: [CommonModule, RouterLink, OrderStatusComponent],
   standalone: true,
   templateUrl: './buyer-order-details.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './buyer-order-details.scss',
 })
 export class BuyerOrderDetails implements OnInit {

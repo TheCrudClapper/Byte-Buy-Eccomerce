@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CompanyInfoApiService } from '../../../core/clients/company-info/company-info-api-service';
 import { CompanyInfoResponse } from '../../../core/dto/company/company-info-response';
 
@@ -8,6 +8,7 @@ import { CompanyInfoResponse } from '../../../core/dto/company/company-info-resp
   standalone: true,
   templateUrl: './footer.html',
   styleUrls: ['./footer.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: []
 })
 
