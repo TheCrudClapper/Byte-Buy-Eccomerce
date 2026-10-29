@@ -5,14 +5,41 @@ services:
       context: ./Byte&Buy.Backend
       dockerfile: src/ByteBuy.API/Dockerfile
     ports:
-      - "${HTTPS_PORT}:8081"
-      - "${HTTP_PORT}:8080"
+      - "${HTTPS_PORT_EXTERNAL}:${HTTPS_PORT_INTERNAL}"
+      - "${HTTP_PORT_EXTERNAL}:${HTTP_PORT_INTERNAL}"
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - COMPOSE=${COMPOSE}
       - ConnectionStrings__Default=Host=postgres;Port=${DB_PORT};Database=${DB_NAME};Username=${DB_USER};Password=${DB_PASSWORD}
+      - Jwt__Audience=http://localhost:${FRONTEND_PORT_INTERNAL}
+      - Jwt__ExpirationInMinutes=60
+      - Jwt__Issuer=http://localhost:${HTTP_PORT_INTERNAL}
+      - Jwt__SecretKey=some-failry-long-secret-key-i-want-to-use
+      - Cors__AngularFrontend=http://localhost:${FRONTEND_PORT_INTERNAL}
     depends_on:
       postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail --silent http://localhost:${HTTP_PORT_INTERNAL}/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - bb-internal-network
+
+# Web-frontend
+  byte-buy-frontend:
+    build:
+      context: ./Byte&Buy.AngularSPA
+      dockerfile: Dockerfile
+    ports:
+      - "${FRONTEND_PORT_EXTERNAL}:${FRONTEND_PORT_INTERNAL}"
+    environment:
+      - API_BASE_URL=${API_BASE_URL}
+      - STATIC_IMAGES_BASE_URL=${STATIC_IMAGES_BASE_URL}
+    depends_on:
+      byte-buy-backend:
         condition: service_healthy
     networks:
       - bb-internal-network

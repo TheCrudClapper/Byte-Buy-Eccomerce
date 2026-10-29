@@ -2,7 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.env
 /Byte&Buy.Backend/src/ByteBuy.API/appsettings*.json
 /.dockerignore
 /Byte&Buy.Backend/src/ByteBuy.API/wwwroot/Images/Items
