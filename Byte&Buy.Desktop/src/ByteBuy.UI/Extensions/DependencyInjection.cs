@@ -24,11 +24,11 @@ public static class DependencyInjection
     public static IServiceCollection AddUserInterfaceLayer(this IServiceCollection services)
     {
         //Singletons
-        services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<MainWindowViewModel>();
 
         //Windows
         services.AddTransient<LoginWindow>();
-        services.AddSingleton<MainWindow>();
+        services.AddTransient<MainWindow>();
 
         //Dialog Views
         services.AddTransient<CategoryDialogView>();
@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddTransient<ConfirmDialogView>();
         services.AddTransient<OfferDialogView>();
         services.AddTransient<DeliveryCarrierDialogView>();
+        //services.AddTransient<SettingsDialogView>();
 
         //Alert
         services.AddTransient<AlertViewModel>();
@@ -82,6 +83,7 @@ public static class DependencyInjection
         services.AddTransient<CountryDialogViewModel>();
         services.AddTransient<ConfirmationDialogViewModel>();
         services.AddTransient<DeliveryCarrierDialogViewModel>();
+        //services.AddTransient<SettingsDialogViewModel>();
         return services;
     }
 }
