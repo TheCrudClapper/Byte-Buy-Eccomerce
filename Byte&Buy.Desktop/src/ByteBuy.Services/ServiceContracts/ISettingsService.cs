@@ -4,7 +4,7 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface ISettingsService
 {
-    Task<Result<AppSettings?>> LoadSettings();
-
-    Task<Result> SaveSettings(AppSettings settings);
+    AppSettings Settings { get; set; }
+    Task<Result<AppSettings?>> LoadSettingsAsync();
+    Task<Result> SaveSettingsAsync(AppSettings settings);
 }

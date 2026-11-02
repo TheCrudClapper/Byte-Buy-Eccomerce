@@ -4,12 +4,13 @@ using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyUserHomeAddressHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyUserHomeAddressHttpClient
+public class CompanyUserHomeAddressHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+    : HttpClientBase(httpClient, options, settingsService), ICompanyUserHomeAddressHttpClient
 {
     private readonly string resource = options.Value.Users;
 

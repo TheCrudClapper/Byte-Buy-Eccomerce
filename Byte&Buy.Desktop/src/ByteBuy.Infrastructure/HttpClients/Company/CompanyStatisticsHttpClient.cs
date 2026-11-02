@@ -3,12 +3,13 @@ using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Statistics;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyStatisticsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyStatisticsHttpClient
+public class CompanyStatisticsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+    : HttpClientBase(httpClient, options, settingsService), ICompanyStatisticsHttpClient
 {
     private readonly string resource = options.Value.CompanyStatistics;
 

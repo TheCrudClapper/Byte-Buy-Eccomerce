@@ -7,12 +7,13 @@ using ByteBuy.Services.Filtration;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanySaleOfferHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanySaleOfferHttpClient
+public class CompanySaleOfferHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+    : HttpClientBase(httpClient, options, settingsService), ICompanySaleOfferHttpClient
 {
     private readonly string resource = options.Value.CompanySalesOffers;
 

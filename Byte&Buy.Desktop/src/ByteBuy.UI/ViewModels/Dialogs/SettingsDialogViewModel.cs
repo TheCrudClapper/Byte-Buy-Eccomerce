@@ -29,7 +29,7 @@ public partial class SettingsDialogViewModel : DialogViewModel
 
     public async Task Initialize()
     {
-        var result = await _settingsService.LoadSettings();
+        var result = await _settingsService.LoadSettingsAsync();
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -51,7 +51,7 @@ public partial class SettingsDialogViewModel : DialogViewModel
         }
 
         _appSettings.BackendUrl = BackendUrl;
-        var result = await _settingsService.SaveSettings(_appSettings);
+        var result = await _settingsService.SaveSettingsAsync(_appSettings);
         if(!result.Success)
             Error = result.Error!.Description;
     }

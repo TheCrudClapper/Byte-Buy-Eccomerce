@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -13,10 +14,17 @@ namespace ByteBuy.Infrastructure.HttpClients.Base;
 public abstract class HttpClientBase
 {
     protected readonly HttpClient Client;
+    private readonly ISettingsService _settingsService;
+    private readonly IOptions<ApiEndpointsOptions> _options;
     private readonly JsonSerializerOptions _jsonOptions;
 
-    protected HttpClientBase(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
+    protected HttpClientBase(
+        HttpClient httpClient,
+        IOptions<ApiEndpointsOptions> options,
+        ISettingsService settingsService)
     {
+        _settingsService = settingsService;
+        _options = options;
         Client = httpClient;
         Client.BaseAddress = new(options.Value.DefaultApiUrl);
 
@@ -27,10 +35,21 @@ public abstract class HttpClientBase
         };
     }
 
+    private void EnsureBaseAddress()
+    {
+        var currentUrl = _settingsService.Settings.BackendUrl;
+        if (string.IsNullOrWhiteSpace(currentUrl))
+            //Default = address from appsettings
+            Client.BaseAddress = new Uri(_options.Value.DefaultApiUrl);
+        else
+            Client.BaseAddress = new Uri(currentUrl);
+    }
+
     protected async Task<Result> GetAsync(string resource)
     {
         try
         {
+            EnsureBaseAddress();
             var response = await Client.GetAsync(resource);
             return await HandleResponseAsync(response);
         }
@@ -44,6 +63,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var response = await Client.GetAsync(resource);
             return await HandleResponseAsync<T>(response);
         }
@@ -57,6 +77,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var response = await Client.PostAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
@@ -70,6 +91,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var serialized = CreateJsonContent(payload);
             var response = await Client.PostAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
@@ -84,6 +106,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var response = await Client.PutAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
@@ -97,6 +120,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var serialized = CreateJsonContent(payload);
             var response = await Client.PutAsync(resource, serialized);
             return await HandleResponseAsync(response);
@@ -111,6 +135,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var serialized = CreateJsonContent(payload);
             var response = await Client.PutAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
@@ -125,6 +150,7 @@ public abstract class HttpClientBase
     {
         try
         {
+            EnsureBaseAddress();
             var response = await Client.DeleteAsync(resource);
             return await HandleResponseAsync(response);
         }

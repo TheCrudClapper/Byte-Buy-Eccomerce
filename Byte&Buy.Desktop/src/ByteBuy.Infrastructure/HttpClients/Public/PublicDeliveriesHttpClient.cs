@@ -4,12 +4,13 @@ using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.ResultTypes;
+using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;
 
-public class PublicDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), IPublicDeliveriesHttpClient
+public class PublicDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+    : HttpClientBase(httpClient, options, settingsService), IPublicDeliveriesHttpClient
 {
     private readonly string optionsResource = options.Value.DeliveriesOptions;
     private readonly string availableResource = options.Value.DeliveriesAvailable;
