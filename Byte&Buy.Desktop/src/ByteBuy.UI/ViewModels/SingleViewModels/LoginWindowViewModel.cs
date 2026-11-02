@@ -1,6 +1,9 @@
 ﻿using ByteBuy.Services.DTO;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
+using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -30,10 +33,26 @@ public partial class LoginWindowViewModel : WindowViewModel
 
     #endregion
     private readonly IAuthService _authService;
-    public LoginWindowViewModel(IAuthService authService)
-        => _authService = authService;
+    private readonly IDialogService _dialogService;
+    public LoginWindowViewModel(IAuthService authService, IDialogService dialogService)
+    {
+        _authService = authService;
+        _dialogService = dialogService;
+    }
 
     public event Action? LoginSuccess;
+
+    [RelayCommand]
+    private async Task OpenSettingsDialog()
+    {
+        await _dialogService.OpenDialogAsync(
+            ApplicationDialogNames.Settings,
+            hostIdentifier: "LoginDialogHost",  init: async vm =>
+            {
+                if (vm is SettingsDialogViewModel settings)
+                    await settings.Initialize();
+            });
+    }
 
     [RelayCommand]
     private async Task LoginAsync()

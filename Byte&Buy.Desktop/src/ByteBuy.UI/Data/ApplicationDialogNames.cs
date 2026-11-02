@@ -8,5 +8,6 @@ public enum ApplicationDialogNames
     Country,
     Confirm,
     Offer,
-    DeliveryCarrier
+    DeliveryCarrier,
+    Settings
 }

@@ -83,14 +83,15 @@ public static class DependencyInjection
         services.AddHttpClient<ICompanyDocumentsHttpClient, CompanyDocumentsHttpClient>()
            .AddHttpMessageHandler<BearerTokenHandler>();
 
-        //AddAsync Public Http Clients
+        //Add Public Http Clients
         services.AddHttpClient<IPublicCategoriesHttpClient, PublicCategoriesHttpClient>();
         services.AddHttpClient<IPublicConditionsHttpClients, PublicConditionsHttpClient>();
         services.AddHttpClient<IPublicCountriesHttpClient, PublicCountriesHttpClient>();
         services.AddHttpClient<IPublicDeliveriesHttpClient, PublicDeliveriesHttpClient>();
 
-        //AddAsync Token Store
+        //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
+        services.AddSingleton<ISettingsStore, SettingsStore>();
         return services;
     }
 }

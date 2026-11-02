@@ -10,7 +10,8 @@ namespace ByteBuy.UI.Navigation;
 public interface IDialogService
 {
     Task<object?> OpenDialogAsync(ApplicationDialogNames dialog,
-        Func<DialogViewModel, Task>? init = null);
+        Func<DialogViewModel, Task>? init = null,
+        string hostIdentifier = "MainDialogHost");
 
     Task<List<ImageViewModel>> SelectImages(bool allowMultiple = false);
 }

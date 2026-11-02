@@ -109,6 +109,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmationDialogViewModel>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogViewModel>(),
                 ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogViewModel>(),
+                ApplicationDialogNames.Settings => x.GetRequiredService<SettingsDialogViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -121,6 +122,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmDialogView>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogView>(),
                 ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogView>(),
+                ApplicationDialogNames.Settings => x.GetRequiredService<SettingsDialogView>(),
                 _ => throw new InvalidOperationException(),
             });
 

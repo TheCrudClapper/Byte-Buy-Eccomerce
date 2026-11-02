@@ -15,7 +15,10 @@ namespace ByteBuy.UI.Navigation;
 
 public class DialogService(DialogFactory dialogFactory, Func<TopLevel?> topLevelAccessor) : IDialogService
 {
-    public async Task<object?> OpenDialogAsync(ApplicationDialogNames dialog, Func<DialogViewModel, Task>? init = null)
+    public async Task<object?> OpenDialogAsync(
+        ApplicationDialogNames dialog,
+        Func<DialogViewModel, Task>? init = null,
+        string hostIdentifier = "MainDialogHost")
     {
         var viewModel = dialogFactory.GetDialogViewModel(dialog);
         var view = dialogFactory.GetView(dialog);
@@ -25,7 +28,7 @@ public class DialogService(DialogFactory dialogFactory, Func<TopLevel?> topLevel
 
         view.DataContext = viewModel;
 
-        var result = await DialogHost.Show(view, "MainDialogHost");
+        var result = await DialogHost.Show(view, hostIdentifier);
         return result;
     }
 
