@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(httpClient, options, settingsService), ICompanyRoleHttpClient
 {
     private readonly string resource = options.Value.CompanyRoles;

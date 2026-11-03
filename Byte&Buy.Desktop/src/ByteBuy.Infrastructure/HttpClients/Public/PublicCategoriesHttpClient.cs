@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;
 
-public class PublicCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class PublicCategoriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(httpClient, options, settingsService), IPublicCategoriesHttpClient
 {
     private readonly string resource = options.Value.CategoriesOptions;

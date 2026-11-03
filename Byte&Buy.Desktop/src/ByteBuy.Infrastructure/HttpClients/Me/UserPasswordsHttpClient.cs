@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Me;
 
-public class UserPasswordsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class UserPasswordsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(httpClient, options, settingsService), IUserPasswordHttpClient
 {
     private readonly string resource = options.Value.UserMe;

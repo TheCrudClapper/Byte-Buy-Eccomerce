@@ -1,5 +1,5 @@
 ﻿namespace ByteBuy.Services.Models;
-public class AppSettings
+public class UserSettings
 {
     public string? BackendUrl { get; set; }
 }

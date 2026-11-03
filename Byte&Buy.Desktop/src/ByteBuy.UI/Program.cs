@@ -16,7 +16,7 @@ internal sealed class Program
             BuildAvaloniaApp()
                 .StartWithClassicDesktopLifetime(args);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //ignore
         }

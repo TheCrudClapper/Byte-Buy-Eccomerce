@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;
 
-public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(client, options, settingsService), IAuthHttpClient
 {
     private readonly string resource = options.Value.Auth;

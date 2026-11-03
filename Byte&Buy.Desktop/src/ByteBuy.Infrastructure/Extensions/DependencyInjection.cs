@@ -91,7 +91,7 @@ public static class DependencyInjection
 
         //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
-        services.AddSingleton<ISettingsStore, SettingsStore>();
+        services.AddSingleton<IUserSettingsStore, UserSettingsStore>();
         return services;
     }
 }

@@ -37,7 +37,7 @@
 				<TextBox Text="{Binding BackendUrl}"
 						 Watermark="https://localhost/api" />
 
-				<TextBlock Text="{Binding Error}"
+				<TextBlock Text="{Binding Message}"
 						   Classes="textBoxLabel"
 						   Foreground="{DynamicResource ErrorBrush}"
 						   TextWrapping="Wrap" />
@@ -47,7 +47,7 @@
 							HorizontalAlignment="Right"
 							Spacing="8">
 
-					<Button Content="Cancel"
+					<Button Content="Close"
 							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
 							Path=CloseDialogCommand}"
 							CommandParameter="False" />

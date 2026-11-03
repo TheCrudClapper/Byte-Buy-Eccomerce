@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyDocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class CompanyDocumentsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(httpClient, options, settingsService), ICompanyDocumentsHttpClient
 {
     private readonly string resource = options.Value.CompanyDocuments;

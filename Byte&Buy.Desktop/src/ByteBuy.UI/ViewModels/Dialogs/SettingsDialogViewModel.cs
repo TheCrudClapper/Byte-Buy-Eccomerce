@@ -13,47 +13,34 @@ namespace ByteBuy.UI.ViewModels.Dialogs;
 public partial class SettingsDialogViewModel : DialogViewModel
 {
     [ObservableProperty]
-    [Required]
     [StringLength(maximumLength: 50)]
-    [UrlValidator]
+    [UrlValidator(OmitNullOrEmpty = true)]
     [NotifyDataErrorInfo]
     private string? _backendUrl;
-    private AppSettings? _appSettings;
     [ObservableProperty]
-    private string? _error;
-    private readonly ISettingsService _settingsService;
-    public SettingsDialogViewModel(ISettingsService settingsService) : base(ApplicationDialogNames.Settings.ToString())
+    private string? _message;
+    private readonly IUserSettingsService _settingsService;
+    public SettingsDialogViewModel(IUserSettingsService settingsService) : base(ApplicationDialogNames.Settings.ToString())
     {
         _settingsService = settingsService;
     }
 
     public async Task Initialize()
     {
-        var result = await _settingsService.LoadSettingsAsync();
-        if (!result.Success)
-        {
-            Error = result.Error!.Description;
-            return;
-        }
-
-        //when returned null it means that we have no settings
-        _appSettings = result.Value ?? new AppSettings();
-        BackendUrl = _appSettings?.BackendUrl ?? string.Empty;
+        BackendUrl = _settingsService.Settings?.BackendUrl ?? string.Empty;
     }
 
     [RelayCommand]
     public async Task Save()
     {
-        if (_appSettings is null || HasErrors)
-        {
-            Error = "Something went wrong, try using valid url.";
-            return;
-        }
+        if (HasErrors) return;
 
-        _appSettings.BackendUrl = BackendUrl;
-        var result = await _settingsService.SaveSettingsAsync(_appSettings);
-        if(!result.Success)
-            Error = result.Error!.Description;
+        var settings = _settingsService.Settings;
+        settings.BackendUrl = BackendUrl;
+        var result = await _settingsService.SaveSettingsAsync(settings);
+
+        if (!result.Success)
+            Message = result.Error!.Description;
     }
 
     [RelayCommand]

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, ISettingsService settingsService)
+public class CompanyDeliveryCarriersHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
     : HttpClientBase(httpClient, options, settingsService), ICompanyDeliveryCarrierHttpClient
 {
     private readonly string resource = options.Value.CompanyDeliveryCarriers;

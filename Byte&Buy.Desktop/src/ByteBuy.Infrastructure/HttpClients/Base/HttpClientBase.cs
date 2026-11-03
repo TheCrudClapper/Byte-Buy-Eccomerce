@@ -14,14 +14,14 @@ namespace ByteBuy.Infrastructure.HttpClients.Base;
 public abstract class HttpClientBase
 {
     protected readonly HttpClient Client;
-    private readonly ISettingsService _settingsService;
+    private readonly IUserSettingsService _settingsService;
     private readonly IOptions<ApiEndpointsOptions> _options;
     private readonly JsonSerializerOptions _jsonOptions;
 
     protected HttpClientBase(
         HttpClient httpClient,
         IOptions<ApiEndpointsOptions> options,
-        ISettingsService settingsService)
+        IUserSettingsService settingsService)
     {
         _settingsService = settingsService;
         _options = options;

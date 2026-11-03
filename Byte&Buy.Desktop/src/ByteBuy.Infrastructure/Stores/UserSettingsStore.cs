@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace ByteBuy.Infrastructure.Stores;
 
-public class SettingsStore : ISettingsStore
+public class UserSettingsStore : IUserSettingsStore
 {
     private readonly IConfiguration _configuration;
     private readonly JsonSerializerOptions _serializerOptions;
-    public SettingsStore(IConfiguration configuration)
+    public UserSettingsStore(IConfiguration configuration)
     {
         _configuration = configuration;
         _serializerOptions = new JsonSerializerOptions()
@@ -20,27 +20,46 @@ public class SettingsStore : ISettingsStore
         };
     }
 
-    public async Task<Result<AppSettings?>> GetSettings()
+    public Result<UserSettings?> GetSettings()
+    {
+        try
+        {
+            var path = GetOrCreateFilePath();
+            if (new FileInfo(path).Length == 0)
+                return Result<UserSettings?>.Ok(null);
+
+            var json = File.ReadAllText(path);
+            var appSettings = JsonSerializer.Deserialize<UserSettings>(json, _serializerOptions);
+            return Result<UserSettings?>.Ok(appSettings);
+        }
+        catch (Exception)
+        {
+            return Result<UserSettings?>
+                .Fail(new Error("Something went wrong with deserialization."));
+        }
+    }
+
+    public async Task<Result<UserSettings?>> GetSettingsAsync()
     {
         try
         {
             var path = GetOrCreateFilePath();
             if(new FileInfo(path).Length == 0)
-                return Result<AppSettings?>.Ok(null);
+                return Result<UserSettings?>.Ok(null);
             
             var json = await File.ReadAllTextAsync(path);
-            var appSettings = JsonSerializer.Deserialize<AppSettings>(json, _serializerOptions);
-            return Result<AppSettings?>.Ok(appSettings);
+            var appSettings = JsonSerializer.Deserialize<UserSettings>(json, _serializerOptions);
+            return Result<UserSettings?>.Ok(appSettings);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //you can smth log here
-            return Result<AppSettings?>
+            return Result<UserSettings?>
                 .Fail(new Error("Something went wrong with deserialization."));
         }
     }
 
-    public async Task<Result> SaveSettings(AppSettings settings)
+    public async Task<Result> SaveSettingsAsync(UserSettings settings)
     {
         try
         {
@@ -49,7 +68,7 @@ public class SettingsStore : ISettingsStore
             await File.WriteAllTextAsync(path, json);
             return Result.Ok();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //you can smth log here
             return Result
