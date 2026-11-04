@@ -10,16 +10,8 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        try
-        {
-
-            BuildAvaloniaApp()
-                .StartWithClassicDesktopLifetime(args);
-        }
-        catch (Exception)
-        {
-            //ignore
-        }
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.

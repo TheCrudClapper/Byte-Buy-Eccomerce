@@ -1,9 +1,6 @@
-﻿using ByteBuy.Infrastructure.Options;
+﻿using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
@@ -13,27 +10,14 @@ namespace ByteBuy.Infrastructure.HttpClients.Base;
 
 public abstract class HttpClientBase
 {
-    protected readonly HttpClient Client;
-    private readonly IUserSettingsService _settingsService;
-    private readonly IOptions<ApiEndpointsOptions> _options;
+    protected readonly IBackendHttpClientFactory _clientFactory;
+    protected bool RequiresAuthentication { get; set; }
     private readonly JsonSerializerOptions _jsonOptions;
 
-    protected HttpClientBase(
-        HttpClient httpClient,
-        IOptions<ApiEndpointsOptions> options,
-        IUserSettingsService settingsService)
+    protected HttpClientBase(IBackendHttpClientFactory clientFactory, bool requireAuth = true)
     {
-        _settingsService = settingsService;
-        _options = options;
-        Client = httpClient;
-
-        string? userAddress = _settingsService.Settings.BackendUrl;
-        string baseAddress = string.IsNullOrWhiteSpace(userAddress) 
-            ? _options.Value.DefaultApiUrl 
-            : userAddress;
-
-        Client.BaseAddress = new Uri(baseAddress);
-
+        _clientFactory = clientFactory;
+        RequiresAuthentication = requireAuth;
         _jsonOptions = new JsonSerializerOptions()
         {
             PropertyNameCaseInsensitive = true,
@@ -45,7 +29,8 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await Client.GetAsync(resource);
+            using var client = CreateClient();
+            using var response = await client.GetAsync(resource);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -58,7 +43,8 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await Client.GetAsync(resource);
+            using var client = CreateClient();
+            using var response = await client.GetAsync(resource);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -71,7 +57,8 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await Client.PostAsync(resource, content);
+            using var client = CreateClient();
+            using var response = await client.PostAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -84,8 +71,9 @@ public abstract class HttpClientBase
     {
         try
         {
+            using var client = CreateClient();
             var serialized = CreateJsonContent(payload);
-            var response = await Client.PostAsync(resource, serialized);
+            using var response = await client.PostAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -98,7 +86,8 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await Client.PutAsync(resource, content);
+            using var client = CreateClient();
+            using var response = await client.PutAsync(resource, content);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -111,8 +100,9 @@ public abstract class HttpClientBase
     {
         try
         {
+            using var client = CreateClient();
             var serialized = CreateJsonContent(payload);
-            var response = await Client.PutAsync(resource, serialized);
+            using var response = await client.PutAsync(resource, serialized);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -125,8 +115,9 @@ public abstract class HttpClientBase
     {
         try
         {
+            using var client = CreateClient();
             var serialized = CreateJsonContent(payload);
-            var response = await Client.PutAsync(resource, serialized);
+            using var response = await client.PutAsync(resource, serialized);
             return await HandleResponseAsync<T>(response);
         }
         catch (Exception)
@@ -139,7 +130,8 @@ public abstract class HttpClientBase
     {
         try
         {
-            var response = await Client.DeleteAsync(resource);
+            using var client = CreateClient();
+            using var response = await client.DeleteAsync(resource);
             return await HandleResponseAsync(response);
         }
         catch (Exception)
@@ -194,6 +186,12 @@ public abstract class HttpClientBase
             if (response.StatusCode == HttpStatusCode.Forbidden)
                 return new Error("Access to this resource is forbidden");
 
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                var body = await response.Content.ReadAsStringAsync();
+                return new Error($"401 Unauthorized: {body}");
+            }
+
             var details = await response.Content.ReadFromJsonAsync<ProblemDetails>();
             if (details is null)
                 return ApiErrors.UnknownError;
@@ -206,4 +204,6 @@ public abstract class HttpClientBase
         }
     }
 
+    protected HttpClient CreateClient()
+        => _clientFactory.CreateClient(RequiresAuthentication);
 }

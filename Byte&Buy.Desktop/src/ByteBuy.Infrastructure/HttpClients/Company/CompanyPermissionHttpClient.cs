@@ -2,19 +2,18 @@
 using ByteBuy.Core.Filtration.Permission;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.Pagination;
 using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
-    : HttpClientBase(httpClient, options, settingsService), ICompanyPermissionHttpClient
+public class CompanyPermissionHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyPermissionHttpClient
 {
     private readonly string resource = options.Value.CompanyPermissions;
 
@@ -28,7 +27,7 @@ public class CompanyPermissionHttpClient(HttpClient httpClient, IOptions<ApiEndp
     {
         var url = QueryStringHelper.ToQueryString(resource, queryParams);
         return await GetAsync<PagedList<PermissionResponse>>(url);
-    } 
+    }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");

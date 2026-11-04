@@ -1,15 +1,15 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.InfraContracts.HttpClients.Me;
 using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Me;
 
-public class UserPasswordsHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
-    : HttpClientBase(httpClient, options, settingsService), IUserPasswordHttpClient
+public class UserPasswordsHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), IUserPasswordHttpClient
 {
     private readonly string resource = options.Value.UserMe;
 

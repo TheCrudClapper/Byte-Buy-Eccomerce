@@ -1,15 +1,15 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO;
 using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;
 
-public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
-    : HttpClientBase(client, options, settingsService), IAuthHttpClient
+public class AuthHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory, requireAuth: false), IAuthHttpClient
 {
     private readonly string resource = options.Value.Auth;
 

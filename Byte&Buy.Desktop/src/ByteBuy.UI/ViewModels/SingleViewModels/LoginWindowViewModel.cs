@@ -47,7 +47,7 @@ public partial class LoginWindowViewModel : WindowViewModel
     {
         await _dialogService.OpenDialogAsync(
             ApplicationDialogNames.Settings,
-            hostIdentifier: "LoginDialogHost",  init: async vm =>
+            hostIdentifier: "LoginDialogHost", init: async vm =>
             {
                 if (vm is SettingsDialogViewModel settings)
                     await settings.Initialize();

@@ -37,9 +37,9 @@
 				<TextBox Text="{Binding BackendUrl}"
 						 Watermark="https://localhost/api" />
 
-				<TextBlock Text="{Binding Message}"
+				<TextBlock Text="{Binding Result.Message}"
 						   Classes="textBoxLabel"
-						   Foreground="{DynamicResource ErrorBrush}"
+						   Foreground="{DynamicResource {Binding Result.StatusBrush}}"
 						   TextWrapping="Wrap" />
 
 				<StackPanel Grid.Row="3"

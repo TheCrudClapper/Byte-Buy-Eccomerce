@@ -1,16 +1,16 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.CompanyInfo;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.InfraContracts.HttpClients.Company;
 using ByteBuy.Services.ResultTypes;
-using ByteBuy.Services.ServiceContracts;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options, IUserSettingsService settingsService)
-    : HttpClientBase(httpClient, options, settingsService), ICompanyInfoHttpClient
+public class CompanyHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyInfoHttpClient
 {
     private readonly string resource = options.Value.Company;
     public Task<Result<CompanyInfoResponse>> GetCompanyInfoAsync()

@@ -58,6 +58,7 @@ public class ImageStorage : IImageStorage
         if (validationResult.IsFailure)
             return Result.Failure<List<string>>(validationResult.Error);
 
+        //check if file path exisits
         var basePath = GetCombinedPath(type);
         var paths = new List<string>();
 

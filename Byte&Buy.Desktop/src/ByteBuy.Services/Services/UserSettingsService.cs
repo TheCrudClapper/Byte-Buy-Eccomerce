@@ -9,8 +9,8 @@ public class UserSettingsService : IUserSettingsService
 {
     private readonly IUserSettingsStore _store;
     private UserSettings _settings;
-    public UserSettings Settings 
-    { 
+    public UserSettings Settings
+    {
         get => _settings;
     }
 

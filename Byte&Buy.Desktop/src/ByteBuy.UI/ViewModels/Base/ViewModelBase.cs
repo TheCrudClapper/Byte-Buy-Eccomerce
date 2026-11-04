@@ -14,7 +14,7 @@ public class ViewModelBase : ObservableValidator
     }
 
     //For results that doesnt have any return value
-    protected bool HandleResult(Result result, string? successMessage = null)
+    protected bool HandleResult(ByteBuy.Services.ResultTypes.Result result, string? successMessage = null)
     {
         if (!result.Success)
         {

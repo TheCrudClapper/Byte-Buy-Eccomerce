@@ -86,6 +86,7 @@
 		<SolidColorBrush x:Key="TextDarkBrush" Color="{StaticResource TextDark}" />
 		<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
 		<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
+		<SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}" />
 
 
 		<!--New Brushes-->

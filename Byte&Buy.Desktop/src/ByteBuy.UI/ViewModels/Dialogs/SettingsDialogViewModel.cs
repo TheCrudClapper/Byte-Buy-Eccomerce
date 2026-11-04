@@ -1,11 +1,10 @@
-﻿using ByteBuy.Services.Models;
-using ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Attributes;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Result;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels.Dialogs;
@@ -19,6 +18,8 @@ public partial class SettingsDialogViewModel : DialogViewModel
     private string? _backendUrl;
     [ObservableProperty]
     private string? _message;
+    [ObservableProperty]
+    private ResultViewModel _result = null!;
     private readonly IUserSettingsService _settingsService;
     public SettingsDialogViewModel(IUserSettingsService settingsService) : base(ApplicationDialogNames.Settings.ToString())
     {
@@ -40,12 +41,15 @@ public partial class SettingsDialogViewModel : DialogViewModel
         var result = await _settingsService.SaveSettingsAsync(settings);
 
         if (!result.Success)
-            Message = result.Error!.Description;
+        {
+            Result = ResultViewModel.CreateSuccess(result?.Error?.Description ?? "Something went wrong");
+            return;
+        }
+
+        Result = ResultViewModel.CreateSuccess("Successfully saved changes.");
     }
 
     [RelayCommand]
     public void ClearFields()
-    {
-        BackendUrl = null;
-    }
+        => BackendUrl = null;
 }

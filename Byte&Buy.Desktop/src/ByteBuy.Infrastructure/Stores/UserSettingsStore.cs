@@ -14,9 +14,9 @@ public class UserSettingsStore : IUserSettingsStore
     {
         _configuration = configuration;
         _serializerOptions = new JsonSerializerOptions()
-        { 
-            WriteIndented = true, 
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
+        {
+            WriteIndented = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
     }
 
@@ -44,9 +44,9 @@ public class UserSettingsStore : IUserSettingsStore
         try
         {
             var path = GetOrCreateFilePath();
-            if(new FileInfo(path).Length == 0)
+            if (new FileInfo(path).Length == 0)
                 return Result<UserSettings?>.Ok(null);
-            
+
             var json = await File.ReadAllTextAsync(path);
             var appSettings = JsonSerializer.Deserialize<UserSettings>(json, _serializerOptions);
             return Result<UserSettings?>.Ok(appSettings);
@@ -87,7 +87,7 @@ public class UserSettingsStore : IUserSettingsStore
         string filePath = Path.Combine(byteBuyAppData, _configuration.GetValue<string>("SettingsFileName") ?? "settings.json");
         if (!File.Exists(filePath))
             File.Create(filePath).Close();
-                
+
         return filePath;
     }
 }
