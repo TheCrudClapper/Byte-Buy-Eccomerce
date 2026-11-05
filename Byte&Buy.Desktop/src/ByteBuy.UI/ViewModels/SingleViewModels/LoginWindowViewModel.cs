@@ -6,6 +6,7 @@ using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Hosting.Internal;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -71,6 +72,9 @@ public partial class LoginWindowViewModel : WindowViewModel
         }
 
         _windowService.ShowWindow(ApplicationWindowNames.Main);
-        //_windowService.ShowMainPage();
     }
+
+    [RelayCommand]
+    private void Shutdown() =>
+        _windowService.ShutdownApplication();
 }

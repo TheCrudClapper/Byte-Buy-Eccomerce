@@ -152,4 +152,8 @@ public partial class MainWindowViewModel : WindowViewModel
         _authService.Logout();
         _windowService.ShowWindow(ApplicationWindowNames.Login);
     }
+
+    [RelayCommand]
+    private void Shutdown() =>
+       _windowService.ShutdownApplication();
 }

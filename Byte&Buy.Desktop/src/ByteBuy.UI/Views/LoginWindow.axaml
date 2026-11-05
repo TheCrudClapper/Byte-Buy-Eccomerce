@@ -106,7 +106,18 @@
 				Width="40" 
 				Margin="5">
 				<Image Source="{SvgImage /Assets/Images/regular/gear-solid-full.svg}"/>
-				</Button>
+			</Button>
+
+			<Button
+				Command="{Binding ShutdownCommand}"
+				Grid.Column="0"
+				VerticalAlignment="Bottom"
+				HorizontalAlignment="Center" 
+				Height="40" 
+				Width="40" 
+				Margin="5">
+				<Image Source="{SvgImage /Assets/Images/regular/power-off-solid-full.svg}"/>
+			</Button>
 		</Grid>
 	</Grid>
 	</dialogHost:DialogHost>

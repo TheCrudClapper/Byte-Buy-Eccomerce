@@ -26,7 +26,6 @@ public class WindowService : IWindowService
         var window = _windowFactory.GetWindow(name);
 
         window.Show();
-
         if(lifetime.MainWindow is Window windowToClose)
         {
             if (hideOldOne)
@@ -35,5 +34,14 @@ public class WindowService : IWindowService
                 windowToClose.Close();
         }
         lifetime.MainWindow = window;
+    }
+
+    public void ShutdownApplication()
+    {
+        if (Application.Current?.ApplicationLifetime
+           is not IClassicDesktopStyleApplicationLifetime lifetime)
+            return;
+
+        lifetime.Shutdown();
     }
 }
