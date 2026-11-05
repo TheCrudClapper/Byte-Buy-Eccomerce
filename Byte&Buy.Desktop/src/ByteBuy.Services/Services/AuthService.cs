@@ -16,8 +16,13 @@ public class AuthService(IAuthHttpClient authHttpClient, ITokenStore tokenStore)
         if (!result.Success)
             return Result.Fail(result.Error!);
 
-        tokenStore.AccessToken = result.Value!.Token;
+        tokenStore.SetToken(result.Value!.Token);
 
         return Result.Ok();
+    }
+
+    public void Logout()
+    {
+        tokenStore.ClearToken();
     }
 }

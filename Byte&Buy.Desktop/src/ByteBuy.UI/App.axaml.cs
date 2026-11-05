@@ -129,6 +129,9 @@ namespace ByteBuy.UI
             services.AddSingleton<WindowFactory>();
             services.AddSingleton<DialogFactory>();
 
+            //Window Service
+            services.AddSingleton<IWindowService, WindowService>();
+
             //Register Navigation
             services.AddSingleton<INavigationService>(sp => new NavigationService(
                 sp.GetRequiredService<PageFactory>(),

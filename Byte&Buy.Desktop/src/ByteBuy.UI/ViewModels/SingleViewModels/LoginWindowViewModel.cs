@@ -34,13 +34,13 @@ public partial class LoginWindowViewModel : WindowViewModel
     #endregion
     private readonly IAuthService _authService;
     private readonly IDialogService _dialogService;
-    public LoginWindowViewModel(IAuthService authService, IDialogService dialogService)
+    private readonly IWindowService _windowService;
+    public LoginWindowViewModel(IAuthService authService, IDialogService dialogService, IWindowService windowService)
     {
         _authService = authService;
         _dialogService = dialogService;
+        _windowService = windowService;
     }
-
-    public event Action? LoginSuccess;
 
     [RelayCommand]
     private async Task OpenSettingsDialog()
@@ -70,6 +70,7 @@ public partial class LoginWindowViewModel : WindowViewModel
             return;
         }
 
-        LoginSuccess?.Invoke();
+        _windowService.ShowWindow(ApplicationWindowNames.Main);
+        //_windowService.ShowMainPage();
     }
 }
