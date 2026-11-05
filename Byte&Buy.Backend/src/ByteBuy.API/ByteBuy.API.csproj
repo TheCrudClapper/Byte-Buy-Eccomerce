@@ -9,28 +9,6 @@
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\Images\Employees\**" />
-    <Compile Remove="wwwroot\Images\Items\**" />
-    <Compile Remove="wwwroot\NewFolder2\**" />
-    <Compile Remove="wwwroot\NewFolder3\**" />
-    <Compile Remove="wwwroot\NewFolder4\**" />
-    <Content Remove="wwwroot\Images\Employees\**" />
-    <Content Remove="wwwroot\Images\Items\**" />
-    <Content Remove="wwwroot\NewFolder2\**" />
-    <Content Remove="wwwroot\NewFolder3\**" />
-    <Content Remove="wwwroot\NewFolder4\**" />
-    <EmbeddedResource Remove="wwwroot\Images\Employees\**" />
-    <EmbeddedResource Remove="wwwroot\Images\Items\**" />
-    <EmbeddedResource Remove="wwwroot\NewFolder2\**" />
-    <EmbeddedResource Remove="wwwroot\NewFolder3\**" />
-    <EmbeddedResource Remove="wwwroot\NewFolder4\**" />
-    <None Remove="wwwroot\Images\Employees\**" />
-    <None Remove="wwwroot\Images\Items\**" />
-    <None Remove="wwwroot\NewFolder2\**" />
-    <None Remove="wwwroot\NewFolder3\**" />
-    <None Remove="wwwroot\NewFolder4\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Hangfire" />
     <PackageReference Include="Hangfire.AspNetCore" />
     <PackageReference Include="Hangfire.PostgreSql" />
@@ -49,8 +27,5 @@
   <ItemGroup>
     <ProjectReference Include="..\ByteBuy.Core\ByteBuy.Core.csproj" />
     <ProjectReference Include="..\ByteBuy.Infrastructure\ByteBuy.Infrastructure.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\Images\Items\" />
   </ItemGroup>
 </Project>
