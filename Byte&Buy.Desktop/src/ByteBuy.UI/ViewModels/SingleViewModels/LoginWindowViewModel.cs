@@ -32,15 +32,24 @@ public partial class LoginWindowViewModel : WindowViewModel
     [ObservableProperty]
     private string _error = string.Empty;
 
+    [ObservableProperty]
+    private bool _rememeberMe;
+
     #endregion
     private readonly IAuthService _authService;
     private readonly IDialogService _dialogService;
     private readonly IWindowService _windowService;
-    public LoginWindowViewModel(IAuthService authService, IDialogService dialogService, IWindowService windowService)
+    private readonly IUserSettingsService _settingsService;
+    public LoginWindowViewModel(IAuthService authService,
+        IDialogService dialogService,
+        IWindowService windowService,
+        IUserSettingsService settingsService)
     {
         _authService = authService;
         _dialogService = dialogService;
         _windowService = windowService;
+        _settingsService = settingsService;
+        LoadRememberedEmail();
     }
 
     [RelayCommand]
@@ -71,10 +80,36 @@ public partial class LoginWindowViewModel : WindowViewModel
             return;
         }
 
+        await SaveLoginCredentials();
+
         _windowService.ShowWindow(ApplicationWindowNames.Main);
     }
 
     [RelayCommand]
     private void Shutdown() =>
         _windowService.ShutdownApplication();
+
+    private async Task SaveLoginCredentials()
+    {
+        var settings = _settingsService.Settings;
+
+        if (!RememeberMe)
+            settings.LastLoggedUserEmail = null;
+        else
+            settings.LastLoggedUserEmail = Email;
+
+        await _settingsService.SaveSettingsAsync(settings);
+    }
+
+    private void LoadRememberedEmail()
+    {
+        var email = _settingsService.Settings.LastLoggedUserEmail;
+        if (string.IsNullOrWhiteSpace(email))
+            RememeberMe = false;
+        else
+        {
+            Email = email;
+            RememeberMe = true;
+        }
+    }
 }
