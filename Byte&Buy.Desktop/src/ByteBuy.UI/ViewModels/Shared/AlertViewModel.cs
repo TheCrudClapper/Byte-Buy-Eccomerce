@@ -13,51 +13,33 @@ public enum AlertType
     Success = 3
 };
 
-public partial class AlertViewModel : ObservableValidator
+public partial class AlertViewModel : ObservableObject
 {
     [ObservableProperty] private string _title = string.Empty;
-
     [ObservableProperty] private string _message = string.Empty;
-
-    [ObservableProperty] private string _imagePath = string.Empty;
-
-    [ObservableProperty] private string _backgroundColor = string.Empty;
-
     [ObservableProperty] private bool _isVisible;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsInfo), nameof(IsWarning), nameof(IsError), nameof(IsSuccess))]
+    private AlertType _type;
+
+    public bool IsInfo => Type == AlertType.Info;
+    public bool IsWarning => Type == AlertType.Warning;
+    public bool IsError => Type == AlertType.Error;
+    public bool IsSuccess => Type == AlertType.Success;
+
     private CancellationTokenSource? _autoHideCts;
+
     public void Show(AlertType alertType, string message, int durationMs = 2000)
     {
         _autoHideCts?.Cancel();
         _autoHideCts = new CancellationTokenSource();
 
-        Message = message;
+        Type = alertType;
         Title = alertType.ToString();
-
-        switch (alertType)
-        {
-            case AlertType.Info:
-                BackgroundColor = "#5394fc";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/circle-info-solid-full.svg";
-                break;
-
-            case AlertType.Error:
-                BackgroundColor = "#EF4444";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/triangle-exclamation-solid-full.svg";
-                break;
-
-            case AlertType.Success:
-                BackgroundColor = "#22C55E";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/check-solid-full.svg";
-                break;
-
-            case AlertType.Warning:
-                BackgroundColor = "#f7e963";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/exclamation-solid-full.svg";
-                break;
-        }
-
+        Message = message;
         IsVisible = true;
+
         _ = AutoHideAsync(durationMs, _autoHideCts.Token);
     }
 

@@ -15,7 +15,7 @@
 
 	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
 			MinHeight="200" MinWidth="400">
-		<Grid RowDefinitions="30,30,*,*" ShowGridLines="True">
+		<Grid RowDefinitions="30,30,*,*">
 			<Border
 				Grid.Row="0"
 				Background="{DynamicResource PrimaryBrush}"
