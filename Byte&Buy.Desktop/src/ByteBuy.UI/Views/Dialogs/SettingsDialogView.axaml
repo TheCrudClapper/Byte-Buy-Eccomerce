@@ -10,11 +10,12 @@
 
 	<UserControl.Styles>
 		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/AppDefaultStyles.axaml"/>
 	</UserControl.Styles>
 
 	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
 			MinHeight="200" MinWidth="400">
-		<Grid RowDefinitions="30,30,*,*">
+		<Grid RowDefinitions="30,30,*,*" ShowGridLines="True">
 			<Border
 				Grid.Row="0"
 				Background="{DynamicResource PrimaryBrush}"
@@ -39,26 +40,22 @@
 
 				<TextBlock Text="{Binding Result.Message}"
 						   Classes="textBoxLabel"
-						   Foreground="{DynamicResource {Binding Result.StatusBrush}}"
+						   Classes.success="{Binding Result.IsSuccess}"
+						   Classes.error="{Binding !Result.IsSuccess}"
 						   TextWrapping="Wrap" />
 
-				<StackPanel Grid.Row="3"
-							Orientation="Horizontal"
-							HorizontalAlignment="Right"
-							Spacing="8">
-
+				<Grid Grid.Row="3" ColumnDefinitions="*,*">
 					<Button Content="Close"
+							Grid.Column="0"
 							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
 							Path=CloseDialogCommand}"
 							CommandParameter="False" />
 
-					<Button Content="Clear fields"
-							Command="{Binding ClearFieldsCommand}"
-							HorizontalAlignment="Right"/>
-
 					<Button Content="Save"
+							HorizontalAlignment="Right"
+							Grid.Column="1"
 							Command="{Binding SaveCommand}" />
-				</StackPanel>
+				</Grid>
 			</StackPanel>
 		</Grid>
 	</Border>

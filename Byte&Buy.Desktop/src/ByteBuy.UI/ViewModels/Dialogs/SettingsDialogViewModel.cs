@@ -42,14 +42,11 @@ public partial class SettingsDialogViewModel : DialogViewModel
 
         if (!result.Success)
         {
-            Result = ResultViewModel.CreateSuccess(result?.Error?.Description ?? "Something went wrong");
+            Result = ResultViewModel.CreateError(result?.Error?.Description ?? "Something went wrong");
             return;
         }
 
         Result = ResultViewModel.CreateSuccess("Successfully saved changes.");
     }
 
-    [RelayCommand]
-    public void ClearFields()
-        => BackendUrl = null;
 }
