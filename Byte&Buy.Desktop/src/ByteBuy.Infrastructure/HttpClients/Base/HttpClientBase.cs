@@ -189,7 +189,7 @@ public abstract class HttpClientBase
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 var body = await response.Content.ReadAsStringAsync();
-                return new Error($"401 Unauthorized: {body}");
+                return new Error($"Wrong credentials, try again.");
             }
 
             var details = await response.Content.ReadFromJsonAsync<ProblemDetails>();
