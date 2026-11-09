@@ -27,29 +27,29 @@ public class AuthService : IAuthService
         _userRepository = userRepository;
     }
 
-    public Task<Result<TokenResponse>> LoginPortalUser(LoginRequest request)
+    public Task<Result<LoginResponse>> LoginPortalUser(LoginRequest request)
       => LoginInternal<PortalUser>(request);
 
-    public Task<Result<TokenResponse>> LoginEmployee(LoginRequest request)
+    public Task<Result<LoginResponse>> LoginEmployee(LoginRequest request)
         => LoginInternal<Employee>(request);
 
-    private async Task<Result<TokenResponse>> LoginInternal<TUser>(LoginRequest request)
+    private async Task<Result<LoginResponse>> LoginInternal<TUser>(LoginRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
-            return Result.Failure<TokenResponse>(AuthErrors.NotFound);
+            return Result.Failure<LoginResponse>(AuthErrors.NotFound);
 
         if (user is not TUser)
-            return Result.Failure<TokenResponse>(AuthErrors.AccessDenied);
+            return Result.Failure<LoginResponse>(AuthErrors.AccessDenied);
 
         if (!await _userManager.CheckPasswordAsync(user, request.Password))
-            return Result.Failure<TokenResponse>(AuthErrors.LoginFailed);
+            return Result.Failure<LoginResponse>(AuthErrors.LoginFailed);
 
         IList<string> roles = await _userManager.GetRolesAsync(user);
 
         var token = _tokenService.GenerateJwtToken(user, roles);
-        return new TokenResponse(token);
+        return new LoginResponse(user.FirstName, user.LastName, token);
     }
 
     public async Task<Result> RegisterPortalUser(RegisterRequest request)

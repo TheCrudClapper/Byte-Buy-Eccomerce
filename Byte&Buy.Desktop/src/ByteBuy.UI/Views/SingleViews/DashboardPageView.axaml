@@ -28,7 +28,12 @@
 						   Height="34" Width="34"/>
 				</Border>
 				<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-					<TextBlock Classes="dbHeading" Text="Hello there!"/>
+					<TextBlock Classes="dbHeading">
+						<Run Text="Hello"/>
+						<Run Text="{Binding UserFirstName}"/>
+						<Run Text="{Binding UserLastName}"/>
+						<Run Text="!"/>
+					</TextBlock>
 					<TextBlock Classes="dbSub" Text="Here is a portion of stats just for you."/>
 				</StackPanel>
 			</Grid>

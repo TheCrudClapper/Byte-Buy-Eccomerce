@@ -69,6 +69,8 @@ public partial class MainWindowViewModel : WindowViewModel
         _navigation = navigation;
         _windowService = windowService;
         _authService = authService;
+
+
         _navigation.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
@@ -154,6 +156,9 @@ public partial class MainWindowViewModel : WindowViewModel
     }
 
     [RelayCommand]
-    private void Shutdown() =>
-       _windowService.ShutdownApplication();
+    private void Shutdown()
+    {
+        _authService.Logout();
+        _windowService.ShutdownApplication();
+    }
 }

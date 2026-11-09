@@ -31,16 +31,24 @@ public partial class DashboardPageViewModel : PageViewModel
     [ObservableProperty]
     private double[] _gmvValues = [];
 
+    [ObservableProperty]
+    private string? _userFirstName;
+
+    [ObservableProperty]
+    private string? _userLastName;
+
     #endregion
 
     private readonly IOrderService _orderService;
     private readonly IStatisticsService _statisticsService;
     public DashboardPageViewModel(AlertViewModel alert, IOrderService orderService,
-        IStatisticsService statisticsService) : base(alert)
+        IStatisticsService statisticsService, ISessionService sessionService) : base(alert)
     {
         PageName = ApplicationPageNames.Dashboard;
         _orderService = orderService;
         _statisticsService = statisticsService;
+        UserFirstName = sessionService.UserFirstName;
+        UserLastName = sessionService.UserLastName;
     }
 
     public async Task LoadDataAsync()

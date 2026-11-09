@@ -15,12 +15,12 @@ public class AuthController : BaseApiController
 
     [HttpPost]
     [Route("login-employee")]
-    public async Task<ActionResult<TokenResponse>> LoginEmployee(LoginRequest request)
+    public async Task<ActionResult<LoginResponse>> LoginEmployee(LoginRequest request)
         => HandleResult(await _authService.LoginEmployee(request));
 
     [HttpPost]
     [Route("login")]
-    public async Task<ActionResult<TokenResponse>> LoginPortalUser(LoginRequest request)
+    public async Task<ActionResult<LoginResponse>> LoginPortalUser(LoginRequest request)
         => HandleResult(await _authService.LoginPortalUser(request));
 
     [HttpPost]
