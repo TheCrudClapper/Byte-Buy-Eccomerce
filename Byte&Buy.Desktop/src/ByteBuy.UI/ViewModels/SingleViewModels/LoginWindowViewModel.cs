@@ -71,7 +71,7 @@ public partial class LoginWindowViewModel : WindowViewModel
         if (HasErrors)
             return;
 
-        LoginRequest request = new(Email, Password);
+        LoginRequest request = new(Email.Trim(), Password.Trim());
         var result = await _authService.LoginAsync(request);
 
         if (!result.Success)

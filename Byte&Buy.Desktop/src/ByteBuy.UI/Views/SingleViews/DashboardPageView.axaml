@@ -29,7 +29,7 @@
 				</Border>
 				<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
 					<TextBlock Classes="dbHeading">
-						<Run Text="Hello"/>
+						<Run Text="Welcome"/>
 						<Run Text="{Binding UserFirstName}"/>
 						<Run Text="{Binding UserLastName}"/>
 						<Run Text="!"/>

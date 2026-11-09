@@ -100,18 +100,21 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private readonly ICountryService _countryService;
     private readonly IPortalUserService _portalUserService;
     private readonly IHomeAddressService _addressService;
+    private readonly ISessionService _sessionService;
     public PortalUserPageViewModel(AlertViewModel alert,
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
         IPortalUserService userService,
         IHomeAddressService addressService,
-        ICountryService countryService) : base(alert)
+        ICountryService countryService,
+        ISessionService sessionService) : base(alert)
     {
         PermissionListBox = listBox;
         _roleService = roleService;
         _addressService = addressService;
         _countryService = countryService;
         _portalUserService = userService;
+        _sessionService = sessionService;
     }
 
     protected override async Task UpdateAsync()
@@ -121,7 +124,18 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 
         var request = PortalUserMappings.MapToUpdateRequest(this);
         var result = await _portalUserService.UpdateAsync(EditingItemId.Value, request);
-        HandleResult(result, "Successfully updated user!");
+
+        if (!result.Success)
+        {
+            Alert.ShowErrorAlert(result.Error!.Description);
+            return;
+        }
+
+        Alert.ShowSuccessAlert("Successfully updated user!");
+
+        //Update user data in session
+        _sessionService.UserFirstName = request.FirstName;
+        _sessionService.UserLastName = request.LastName;
     }
 
     protected override async Task InitializeAsync()
