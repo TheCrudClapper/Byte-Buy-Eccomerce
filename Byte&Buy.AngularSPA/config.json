@@ -1,0 +1,4 @@
+{
+	apiBaseUrl: "{API_BASE_URL}",
+    staticImagesBaseUrl: "{STATIC_IMAGES_BASE_URL}"
+}

@@ -164,14 +164,5 @@
 			</StackPanel>
 
 		</Grid>
-		<views:AlertView
-		DataContext="{Binding Alert}"
-		IsVisible="{Binding IsVisible}"
-		HorizontalAlignment="Right"
-		VerticalAlignment="Bottom"
-		Height="70"
-		Width="400"
-		Margin="0,20,20,40"
-		ZIndex="10" />
 	</Grid>
 </UserControl>

@@ -1,10 +1,13 @@
-﻿using ByteBuy.UI.Data;
+﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.ManyViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -46,11 +49,23 @@ public partial class MainWindowViewModel : WindowViewModel
     public PageViewModel? CurrentPage => _navigation.CurrentPage;
 
     private readonly INavigationService _navigation;
+    private readonly IWindowService _windowService;
+    private readonly IAuthService _authService;
+    private readonly INotificationService _notificationService;
+    public NotificationService NotificationService
+    {
+        get
+        {
+            if (_notificationService is not NotificationService a)
+                return new();
 
+            return a;
+        }
+    }
     private void SetActive(ApplicationPageNames page)
     {
         IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
-        IsEmployeesPageActive = page  == ApplicationPageNames.Employees;
+        IsEmployeesPageActive = page == ApplicationPageNames.Employees;
         IsRolesPageActive = page == ApplicationPageNames.Roles;
         IsPermissionsPageActive = page == ApplicationPageNames.Permissions;
         IsAdministrationPageActive = page == ApplicationPageNames.Administration;
@@ -61,11 +76,13 @@ public partial class MainWindowViewModel : WindowViewModel
         IsProfilePageActive = page == ApplicationPageNames.Profile;
     }
 
-    public Action? Logout { get; set; }
-
-    public MainWindowViewModel(INavigationService navigation)
+    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService)
     {
         _navigation = navigation;
+        _windowService = windowService;
+        _authService = authService;
+        _notificationService = notificationService;
+
         _navigation.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
@@ -83,7 +100,6 @@ public partial class MainWindowViewModel : WindowViewModel
         if (vm is DashboardPageViewModel dashVm)
             await dashVm.LoadDataAsync();
     });
-
     [RelayCommand]
     private async Task GoToCompanyDetails() => await _navigation.NavigateToAsync(ApplicationPageNames.CompanyInfo, async vm =>
     {
@@ -145,5 +161,16 @@ public partial class MainWindowViewModel : WindowViewModel
     private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.Administration);
 
     [RelayCommand]
-    private void LogOut() => Logout?.Invoke();
+    private void LogOut()
+    {
+        _authService.Logout();
+        _windowService.ShowWindow(ApplicationWindowNames.Login);
+    }
+
+    [RelayCommand]
+    private void Shutdown()
+    {
+        _authService.Logout();
+        _windowService.ShutdownApplication();
+    }
 }

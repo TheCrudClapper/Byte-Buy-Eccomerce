@@ -1,0 +1,62 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+			 x:Class="ByteBuy.UI.Views.Dialogs.SettingsDialogView"
+			 x:DataType="vm:SettingsDialogViewModel">
+
+	<UserControl.Styles>
+		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+		<StyleInclude Source="../../Styles/AppDefaultStyles.axaml"/>
+	</UserControl.Styles>
+
+	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
+			MinHeight="200" MinWidth="400">
+		<Grid RowDefinitions="30,30,*,*">
+			<Border
+				Grid.Row="0"
+				Background="{DynamicResource PrimaryBrush}"
+				Height="30"
+				VerticalAlignment="Top">
+				<TextBlock Text="{Binding DialogTitle}"
+						   Classes="dialogTitle"/>
+			</Border>
+
+			<TextBlock Text="Connection settings to access services."
+					   Grid.Row="1"
+					   Classes="textBoxLabel"
+					   Margin="20"
+					   TextWrapping="Wrap"/>
+
+			<StackPanel Margin="20" Spacing="10" Grid.Row="2">
+				<TextBlock Text="Backend API Url"
+						   Classes="textBoxLabel" />
+
+				<TextBox Text="{Binding BackendUrl}"
+						 Watermark="https://localhost/api" />
+
+				<TextBlock Text="{Binding Result.Message}"
+						   Classes="textBoxLabel"
+						   Classes.success="{Binding Result.IsSuccess}"
+						   Classes.error="{Binding !Result.IsSuccess}"
+						   TextWrapping="Wrap" />
+
+				<Grid Grid.Row="3" ColumnDefinitions="*,*">
+					<Button Content="Close"
+							Grid.Column="0"
+							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
+							Path=CloseDialogCommand}"
+							CommandParameter="False" />
+
+					<Button Content="Save"
+							HorizontalAlignment="Right"
+							Grid.Column="1"
+							Command="{Binding SaveCommand}" />
+				</Grid>
+			</StackPanel>
+		</Grid>
+	</Border>
+</UserControl>

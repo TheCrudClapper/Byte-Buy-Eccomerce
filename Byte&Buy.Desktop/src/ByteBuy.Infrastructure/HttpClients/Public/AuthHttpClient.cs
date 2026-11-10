@@ -1,18 +1,20 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO;
+using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.InfraContracts.HttpClients.Public;
 using ByteBuy.Services.ResultTypes;
 using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Public;
 
-public class AuthHttpClient(HttpClient client, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(client, options), IAuthHttpClient
+public class AuthHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory, requireAuth: false), IAuthHttpClient
 {
     private readonly string resource = options.Value.Auth;
 
-    public async Task<Result<TokenResponse>> LoginAsync(LoginRequest request)
-        => await PostAsync<TokenResponse>($"{resource}/login-employee", request);
+    public async Task<Result<LoginResponse>> LoginAsync(LoginRequest request)
+        => await PostAsync<LoginResponse>($"{resource}/login-employee", request);
 
 }

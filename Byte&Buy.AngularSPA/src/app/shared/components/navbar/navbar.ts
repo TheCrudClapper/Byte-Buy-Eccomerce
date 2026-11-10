@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from "@angular/router";
 import { AuthService } from '../../../core/clients/auth/auth-service';
 
@@ -7,6 +7,7 @@ import { AuthService } from '../../../core/clients/auth/auth-service';
   imports: [RouterModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class Navbar implements OnInit {

@@ -28,4 +28,5 @@ public class ApiEndpointsOptions
     public string CompanyEmployees { get; set; } = default!;
     public string CompanyPermissions { get; set; } = default!;
     public string UserMe { get; set; } = default!;
+    public string Images { get; set; } = default!;
 }

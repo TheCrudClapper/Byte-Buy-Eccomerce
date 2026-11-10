@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { AddressApiService } from '../../../../core/clients/address/address-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getErrorMessage } from '../../../../shared/helpers/form-helper';
@@ -21,6 +21,7 @@ import { DialogService } from '../../../../shared/services/dialog-service/dialog
   imports: [CommonModule, ReactiveFormsModule, ShippingAddressDialog, EmptyState],
   templateUrl: './addresses.html',
   styleUrl: './addresses.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true
 })
 export class Addresses implements OnInit {

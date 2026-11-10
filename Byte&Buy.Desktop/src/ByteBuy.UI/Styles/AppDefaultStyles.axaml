@@ -11,9 +11,19 @@
 		</Border>
 	</Design.PreviewWith>
 
+
+
 	<Style Selector="TextBlock">
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
 		<Setter Property="FontWeight" Value="500"/>
+	</Style>
+
+	<!--Error / Success Messages-->
+	<Style Selector="TextBlock.success">
+			<Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
+		</Style>
+		<Style Selector="TextBlock.error">
+			<Setter Property="Foreground" Value="{DynamicResource ErrorBrush}"/>
 	</Style>
 
 	<!--Tab Control Styles-->

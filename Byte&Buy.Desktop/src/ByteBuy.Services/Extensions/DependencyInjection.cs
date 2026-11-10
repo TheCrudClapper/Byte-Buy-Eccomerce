@@ -31,6 +31,8 @@ public static class DependencyInjection
         services.AddSingleton<IRentalService, RentalService>();
         services.AddSingleton<IStatisticsService, StatisticsService>();
         services.AddSingleton<IDocumentService, DocumentService>();
+        services.AddSingleton<IUserSettingsService, UserSettingsService>();
+        services.AddSingleton<ISessionService, SessionService>();
 
         return services;
     }

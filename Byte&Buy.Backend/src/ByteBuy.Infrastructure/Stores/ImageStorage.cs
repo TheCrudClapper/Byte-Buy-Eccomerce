@@ -30,6 +30,8 @@ public class ImageStorage : IImageStorage
 
     public Result DeleteFromDirectory(IEnumerable<string> imagePaths, ImageTypeEnum type)
     {
+        CreateWebRootPathIfNotCreated();
+
         try
         {
             foreach (var imagePath in imagePaths)
@@ -54,10 +56,13 @@ public class ImageStorage : IImageStorage
 
     public async Task<Result<List<string>>> SaveToDirectoryAsync(IReadOnlyList<IFormFile> files, ImageTypeEnum type)
     {
+        CreateWebRootPathIfNotCreated();
+
         var validationResult = ValidateExtensions(files);
         if (validationResult.IsFailure)
             return Result.Failure<List<string>>(validationResult.Error);
 
+        //check if file path exisits
         var basePath = GetCombinedPath(type);
         var paths = new List<string>();
 
@@ -128,6 +133,12 @@ public class ImageStorage : IImageStorage
         }
 
         return Result.Success();
+    }
+
+    private void CreateWebRootPathIfNotCreated()
+    {
+        if (!Directory.Exists(_env.WebRootPath))
+            Directory.CreateDirectory(_env.WebRootPath);
     }
 
 }

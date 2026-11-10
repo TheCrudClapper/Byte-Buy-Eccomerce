@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Role;
 using ByteBuy.Services.DTO.Shared;
@@ -11,8 +12,8 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyRolesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyRoleHttpClient
+public class CompanyRolesHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyRoleHttpClient
 {
     private readonly string resource = options.Value.CompanyRoles;
     public async Task<Result<UpdatedResponse>> PutAsync(Guid roleId, RoleUpdateRequest request)

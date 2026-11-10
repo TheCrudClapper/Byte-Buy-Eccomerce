@@ -2,6 +2,7 @@ using ByteBuy.API.Authorization;
 using ByteBuy.API.Middleware;
 using ByteBuy.Core.Extensions;
 using ByteBuy.Infrastructure.Extensions;
+using ByteBuy.Infrastructure.HealthChecks;
 using EquipmentService.API.Extensions;
 using Hangfire;
 using Hangfire.PostgreSql;
@@ -14,6 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Api Controllers
 // -----------------------------
 builder.Services.AddControllers();
+
+// -----------------------------
+// Add Healthchecks
+// -----------------------------
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("Database_Check");
 
 // -----------------------------
 // Custom Services & Handlers
@@ -43,7 +50,7 @@ builder.Services.AddIdentity();
 // -----------------------------
 // Configure Cors Policies
 // -----------------------------
-builder.Services.ConfigureCors();
+builder.Services.ConfigureCors(builder.Configuration);
 
 // -----------------------------
 // Swagger & OpenApi
@@ -111,6 +118,12 @@ app.UseAuthorization();
 // Map Controllers
 // --------------------------------
 app.MapControllers();
+
+// --------------------------------
+// Map Controllers
+// --------------------------------
+app.MapHealthChecks("/health")
+    .AllowAnonymous();
 
 app.Run();
 #endregion

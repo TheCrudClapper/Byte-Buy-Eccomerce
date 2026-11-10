@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Core.DTO.Public.Permission;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -28,18 +29,27 @@ public partial class PermissionPageViewModel : ViewModelSingle
     #endregion
 
     private readonly IPermissionService _permissionService;
-    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert) 
-        : base(alert)
-        => _permissionService = permissionService;
-    
+    private readonly INotificationService _notificationService;
+    public PermissionPageViewModel(IPermissionService permissionService, INotificationService notificationService)
+    {
+        _permissionService = permissionService;
+        _notificationService = notificationService;
+    }
+
     protected override async Task AddAsync()
     {
         ValidateAllProperties();
         if (HasErrors)
             return;
 
-        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name,Description));
-        HandleResult(result, "Permission added successfully !");
+        var result = await _permissionService.AddAsync(new PermissionAddRequest(Name, Description));
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while adding the permission.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Permission added successfully !");
     }
 
     public async Task InitializeForEditAsync(Guid permissionId)
@@ -48,19 +58,21 @@ public partial class PermissionPageViewModel : ViewModelSingle
         IsEditMode = true;
 
         var result = await _permissionService.GetByIdAsync(permissionId);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the permission.");
             return;
+        }
 
-        Name = value.Name;
-        Description = value.Description;
+        Name = result.Value.Name;
+        Description = result.Value.Description;
     }
 
     protected override void Clear()
     {
         Name = string.Empty;
         Description = string.Empty;
-        ValidateAllProperties(); 
+        ValidateAllProperties();
     }
 
     protected override async Task UpdateAsync()
@@ -72,6 +84,12 @@ public partial class PermissionPageViewModel : ViewModelSingle
         var result = await _permissionService.UpdateAsync(EditingItemId.Value,
             new PermissionUpdateRequest(Name, Description));
 
-        HandleResult(result, "Successfully updated permission");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the permission.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully updated permission");
     }
 }

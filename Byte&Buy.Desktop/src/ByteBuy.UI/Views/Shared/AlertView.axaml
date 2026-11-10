@@ -2,54 +2,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:shared="using:ByteBuy.UI.ViewModels.Shared"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Shared"
              mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="60"
              x:Class="ByteBuy.UI.Views.Shared.AlertView"
-             x:DataType="vm:AlertViewModel">
+             x:DataType="vm:NotificationViewModel">
 
     <UserControl.Styles>
         <Style Selector="Button.alertHideButton">
             <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
+        </Style>
+         <!-- Backgrounds -->
+        <Style Selector="Border.alert.info">
+            <Setter Property="Background" Value="#5394fc" />
+        </Style>
+        <Style Selector="Border.alert.error">
+            <Setter Property="Background" Value="#EF4444" />
+        </Style>
+        <Style Selector="Border.alert.success">
+            <Setter Property="Background" Value="#22C55E" />
+        </Style>
+        <Style Selector="Border.alert.warning">
+            <Setter Property="Background" Value="#f7e963" />
+        </Style>
+
+        <!-- Icons -->
+        <Style Selector="Border.info Image.alertIcon">
+            <Setter Property="Source" Value="{SvgImage avares://ByteBuy.UI/Assets/Images/regular/circle-info-solid-full.svg}" />
+        </Style>
+        <Style Selector="Border.error Image.alertIcon">
+            <Setter Property="Source" Value="{SvgImage avares://ByteBuy.UI/Assets/Images/regular/triangle-exclamation-solid-full.svg}" />
+        </Style>
+        <Style Selector="Border.success Image.alertIcon">
+            <Setter Property="Source" Value="{SvgImage avares://ByteBuy.UI/Assets/Images/regular/check-solid-full.svg}" />
+        </Style>
+        <Style Selector="Border.warning Image.alertIcon">
+            <Setter Property="Source" Value="{SvgImage avares://ByteBuy.UI/Assets/Images/regular/exclamation-solid-full.svg}" />
+        </Style>
+
+        <!-- Dark text -->
+        <Style Selector="Border.warning TextBlock">
+            <Setter Property="Foreground" Value="#1F2937" />
         </Style>
     </UserControl.Styles>
     
     <Grid>
         
     
-    <Border CornerRadius="10"
-            Background="{Binding BackgroundColor}"
+    <Border Classes="alert"
+            Classes.info="{Binding IsInfo}"
+            Classes.error="{Binding IsError}"
+            Classes.success="{Binding IsSuccess}"
+            Classes.warning="{Binding IsWarning}"
+            CornerRadius="10"
             BorderThickness="1"
             Padding="10"
             BorderBrush="Black">
+
         <Grid RowDefinitions="20,20" ColumnDefinitions="40,*,30">
             <Button Grid.Column="2"
                     HorizontalAlignment="Right"
                     Command="{Binding HideCommand}"
                     Classes="alertHideButton">
                 <Image Source="{SvgImage /Assets/Images/regular/xmark-solid-full.svg}"
-                       Height="15"
-                       Width="15" />
-
+                       Height="15" Width="15" />
             </Button>
-            <Image Grid.Column="0"
-                   Grid.Row="0"
-                   Grid.RowSpan="2"
-                   Height="30"
-                   Width="30">
-                <Image.Source>
-                    <SvgImage Source="{Binding ImagePath}" />
-                </Image.Source>
-            </Image>
+
+            <Image Classes="alertIcon"
+                   Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                   Height="30" Width="30" />
+                    
             <TextBlock Grid.Row="0" Grid.Column="1"
-                       FontSize="15"
+                       FontSize="15" FontWeight="700"
                        Foreground="{DynamicResource TextLightBrush}"
-                       FontWeight="700"
                        Text="{Binding Title}" />
             <TextBlock Grid.Row="1" Grid.Column="1"
-                       Foreground="{DynamicResource TextLightBrush}"
                        FontSize="15"
+                       Foreground="{DynamicResource TextLightBrush}"
                        Text="{Binding Message}" />
         </Grid>
     </Border>
+
     </Grid>
 </UserControl>

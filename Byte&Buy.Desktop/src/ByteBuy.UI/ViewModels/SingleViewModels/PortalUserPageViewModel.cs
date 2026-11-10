@@ -2,6 +2,7 @@
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -100,18 +101,24 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private readonly ICountryService _countryService;
     private readonly IPortalUserService _portalUserService;
     private readonly IHomeAddressService _addressService;
-    public PortalUserPageViewModel(AlertViewModel alert,
+    private readonly ISessionService _sessionService;
+    private readonly INotificationService _notificationService;
+    public PortalUserPageViewModel(
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
         IPortalUserService userService,
         IHomeAddressService addressService,
-        ICountryService countryService) : base(alert)
+        ICountryService countryService,
+        ISessionService sessionService,
+        INotificationService notificationService)
     {
         PermissionListBox = listBox;
         _roleService = roleService;
         _addressService = addressService;
         _countryService = countryService;
         _portalUserService = userService;
+        _sessionService = sessionService;
+        _notificationService = notificationService;
     }
 
     protected override async Task UpdateAsync()
@@ -121,7 +128,18 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 
         var request = PortalUserMappings.MapToUpdateRequest(this);
         var result = await _portalUserService.UpdateAsync(EditingItemId.Value, request);
-        HandleResult(result, "Successfully updated user!");
+
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the user.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully updated user!");
+
+        //Update user data in session
+        _sessionService.UserFirstName = request.FirstName;
+        _sessionService.UserLastName = request.LastName;
     }
 
     protected override async Task InitializeAsync()
@@ -144,13 +162,19 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
-            Alert.ShowErrorAlert("For new user password is required !");
+            _notificationService.ShowError("For new user password is required !");
             return;
         }
 
         var request = PortalUserMappings.MapToAddRequest(this);
         var result = await _portalUserService.AddAsync(request);
-        HandleResult(result, "Successfullt added new user!");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while adding the user.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully added new user!");
     }
 
     protected override void Clear()
@@ -176,7 +200,13 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         ValidateAllProperties();
         var address = PortalUserMappings.MapToHomeAddress(this);
         var result = await _addressService.SetHomeAddressAsync(EditingItemId.GetValueOrDefault(), address);
-        HandleResult(result, "Successfully assigned address for user");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while assigning the address.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully assigned address for user");
     }
 
     public async Task InitializeForEdit(Guid itemId)
@@ -186,12 +216,14 @@ public partial class PortalUserPageViewModel : ViewModelSingle
         await InitializeAsync();
 
         var result = await _portalUserService.GetByIdAsync(itemId);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the user.");
             return;
+        }
 
-        IsAddressIncluded = value.HomeAddress is not null;
-        PortalUserMappings.MapFromResponse(this, value);
+        IsAddressIncluded = result.Value.HomeAddress is not null;
+        PortalUserMappings.MapFromResponse(this, result.Value);
     }
 
     partial void OnIsAddressIncludedChanged(bool value)

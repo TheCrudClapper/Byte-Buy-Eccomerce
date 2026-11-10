@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Infrastructure.Handlers;
 using ByteBuy.Infrastructure.HttpClients.Company;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.HttpClients.Me;
 using ByteBuy.Infrastructure.HttpClients.Public;
 using ByteBuy.Infrastructure.Stores;
@@ -15,82 +16,49 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
     {
-        
         services.AddAuthHeaderHandler();
 
-        //AddAsync Http Clients
-        services.AddHttpClient<IAuthHttpClient, AuthHttpClient>();
+        services.AddHttpClient("Backend");
 
-        services.AddHttpClient<ICompanyEmployeeHttpClient, CompanyEmployeeHttpClient>()
+        services.AddHttpClient("BackendAuthorized")
             .AddHttpMessageHandler<BearerTokenHandler>();
 
-        services.AddHttpClient<ICompanyPermissionHttpClient, CompanyPermissionHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
+        //Factory for HTTP Clients
+        services.AddSingleton<IBackendHttpClientFactory, BackendHttpClientFactory>();
 
-        services.AddHttpClient<IUserPasswordHttpClient, UserPasswordsHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
+        services.AddSingleton<IAuthHttpClient, AuthHttpClient>();
+        services.AddSingleton<ICompanyEmployeeHttpClient, CompanyEmployeeHttpClient>();
+        services.AddSingleton<ICompanyPermissionHttpClient, CompanyPermissionHttpClient>();
+        services.AddSingleton<IUserPasswordHttpClient, UserPasswordsHttpClient>();
+        services.AddSingleton<ICompanyRoleHttpClient, CompanyRolesHttpClient>();
+        services.AddSingleton<ICompanyInfoHttpClient, CompanyHttpClient>();
+        services.AddSingleton<ICompanyPortalUserHttpClient, CompanyPortalUserHttpClient>();
+        services.AddSingleton<ICompanyCountryHttpClient, CompanyCountryHttpClient>();
+        services.AddSingleton<ICompanyDeliveryHttpClient, CompanyDeliveriesHttpClient>();
+        services.AddSingleton<ICompanyConditionHttpClient, CompanyConditionHttpClient>();
+        services.AddSingleton<ICompanyCategoryHttpClient, CompanyCategoriesHttpClient>();
+        services.AddSingleton<ICompanyItemHttpClient, CompanyItemsHttpClient>();
+        services.AddSingleton<ICompanyDeliveryCarrierHttpClient, CompanyDeliveryCarriersHttpClient>();
+        services.AddSingleton<ICompanySaleOfferHttpClient, CompanySaleOfferHttpClient>();
+        services.AddSingleton<ICompanyRentOfferHttpClient, CompanyRentOffersHttpClient>();
+        services.AddSingleton<ICompanyUserHomeAddressHttpClient, CompanyUserHomeAddressHttpClient>();
+        services.AddSingleton<ICompanyOrderHttpClient, CompanyOrdersHttpClient>();
+        services.AddSingleton<ICompanyRentalHttpClient, CompanyRentalHttpClient>();
+        services.AddSingleton<ICompanyStatisticsHttpClient, CompanyStatisticsHttpClient>();
+        services.AddSingleton<ICompanyDocumentsHttpClient, CompanyDocumentsHttpClient>();
 
-        services.AddHttpClient<ICompanyRoleHttpClient, CompanyRolesHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
+        //Static Resource
+        services.AddSingleton<IImagePreviewHttpClient, ImagePreviewHttpClient>();
 
-        services.AddHttpClient<ICompanyInfoHttpClient, CompanyHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
+        //Add Public Http Clients
+        services.AddSingleton<IPublicCategoriesHttpClient, PublicCategoriesHttpClient>();
+        services.AddSingleton<IPublicConditionsHttpClients, PublicConditionsHttpClient>();
+        services.AddSingleton<IPublicCountriesHttpClient, PublicCountriesHttpClient>();
+        services.AddSingleton<IPublicDeliveriesHttpClient, PublicDeliveriesHttpClient>();
 
-        services.AddHttpClient<ICompanyPortalUserHttpClient, CompanyPortalUserHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyCountryHttpClient, CompanyCountryHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyDeliveryHttpClient, CompanyDeliveriesHttpClient>()
-           .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyConditionHttpClient, CompanyConditionHttpClient>()
-           .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyCategoryHttpClient, CompanyCategoriesHttpClient>()
-          .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyItemHttpClient, CompanyItemsHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<IImagePreviewHttpClient, ImagePreviewHttpClient>(options =>
-        {
-            options.BaseAddress = new Uri("http://localhost:5099/Images/");
-        }).AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyDeliveryCarrierHttpClient, CompanyDeliveryCarriersHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanySaleOfferHttpClient, CompanySaleOfferHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyRentOfferHttpClient, CompanyRentOffersHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyUserHomeAddressHttpClient, CompanyUserHomeAddressHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyOrderHttpClient, CompanyOrdersHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyRentalHttpClient, CompanyRentalHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyStatisticsHttpClient, CompanyStatisticsHttpClient>()
-            .AddHttpMessageHandler<BearerTokenHandler>();
-
-        services.AddHttpClient<ICompanyDocumentsHttpClient, CompanyDocumentsHttpClient>()
-           .AddHttpMessageHandler<BearerTokenHandler>();
-
-        //AddAsync Public Http Clients
-        services.AddHttpClient<IPublicCategoriesHttpClient, PublicCategoriesHttpClient>();
-        services.AddHttpClient<IPublicConditionsHttpClients, PublicConditionsHttpClient>();
-        services.AddHttpClient<IPublicCountriesHttpClient, PublicCountriesHttpClient>();
-        services.AddHttpClient<IPublicDeliveriesHttpClient, PublicDeliveriesHttpClient>();
-
-        //AddAsync Token Store
+        //Add Token Store
         services.AddSingleton<ITokenStore, TokenStore>();
+        services.AddSingleton<IUserSettingsStore, UserSettingsStore>();
         return services;
     }
 }

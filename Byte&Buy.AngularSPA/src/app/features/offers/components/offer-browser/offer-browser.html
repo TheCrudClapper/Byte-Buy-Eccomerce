@@ -13,7 +13,7 @@
                     @for (category of categories(); track category.id) {
                     <label class="filter-checkbox">
                         <input type="checkbox" class="form-check-input checkbox"
-                            [checked]="filterForm.value.categoryIds?.includes(category.id)"
+                            [checked]="$safeNavigationMigration(filterForm.value.categoryIds?.includes(category.id))"
                             (change)="toggleCategory(category.id, $event.target.checked)">
                         <span>{{ category.title }}</span>
                     </label>
@@ -26,7 +26,7 @@
                     @for (condition of conditions(); track condition.id) {
                     <label class="filter-checkbox">
                         <input type="checkbox" class="form-check-input checkbox"
-                            [checked]="filterForm.value.conditionIds?.includes(condition.id)"
+                            [checked]="$safeNavigationMigration(filterForm.value.conditionIds?.includes(condition.id))"
                             (change)="toggleCondition(condition.id, $event.target.checked)">
                         <span>{{ condition.title }}</span>
                     </label>
