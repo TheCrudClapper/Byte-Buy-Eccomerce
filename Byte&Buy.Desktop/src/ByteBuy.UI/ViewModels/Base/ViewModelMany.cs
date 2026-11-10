@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Helpers;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -50,15 +51,18 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     protected INavigationService Navigation;
     protected IDialogService DialogNavigation;
     protected readonly ServiceType Service;
+    protected readonly INotificationService NotificationService;
 
-    protected ViewModelMany(AlertViewModel alert,
+    protected ViewModelMany(
         INavigationService navigation,
         IDialogService dialogNavigation,
-        ServiceType service) : base(alert)
+        ServiceType service,
+        INotificationService notificationService)
     {
         Navigation = navigation;
         DialogNavigation = dialogNavigation;
         Service = service;
+        NotificationService = notificationService;
     }
 
     // Delete after all pages gets pagination
@@ -78,12 +82,12 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             var result = await Service.DeleteByIdAsync(item.Id);
             if (!result.Success)
             {
-                Alert.ShowErrorAlert(result.Error!.Description);
+                NotificationService.ShowError(result.Error?.Description ?? "An error occurred while deleting the item.");
                 return;
             }
 
             Items.Remove(item);
-            Alert.ShowSuccessAlert("Successfully deleted item !");
+            NotificationService.ShowSuccess("Successfully deleted item !");
         }
         return;
     }

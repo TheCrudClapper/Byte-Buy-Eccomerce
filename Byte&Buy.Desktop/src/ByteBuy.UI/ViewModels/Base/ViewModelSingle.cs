@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Base;
 
-public abstract partial class ViewModelSingle(AlertViewModel alert)
-    : PageViewModel(alert)
+public abstract partial class ViewModelSingle() : PageViewModel
 {
     [ObservableProperty]
     protected bool _isEditMode = false;

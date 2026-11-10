@@ -3,19 +3,20 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Items;
-using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
+public partial class ItemsPageViewModel(INavigationService navigation,
     IDialogService dialogNavigation,
-    IItemService service) : ViewModelMany<ItemListItemViewModel, IItemService>(alert, navigation, dialogNavigation, service)
+    IItemService service,
+    INotificationService notificationService) : ViewModelMany<ItemListItemViewModel, IItemService>(navigation, dialogNavigation, service, notificationService)
 {
     #region Filtration fields
 
@@ -59,7 +60,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated published offer!");
+            NotificationService.ShowSuccess("Successfully updated published offer!");
             await LoadDataAsync();
         }
     }
@@ -76,11 +77,13 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading items.");
             return;
+        }
 
-        ApplyPagination(value, (i, index) => i.ToListItem(index));
+        ApplyPagination(result.Value, (i, index) => i.ToListItem(index));
     }
 
     public override async Task ClearFiltersAsync()

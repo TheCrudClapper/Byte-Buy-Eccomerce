@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Country;
 using ByteBuy.UI.ViewModels.Dialogs;
@@ -12,11 +13,12 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CountriesPageViewModel(AlertViewModel alert,
+public partial class CountriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
-    ICountryService countryService)
-    : ViewModelMany<CountryListItemViewModel, ICountryService>(alert, navigation, dialogNavigation, countryService)
+    ICountryService countryService,
+    INotificationService notificationService)
+    : ViewModelMany<CountryListItemViewModel, ICountryService>(navigation, dialogNavigation, countryService, notificationService)
 {
     #region Filtraion fields
 
@@ -38,7 +40,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
     }
@@ -54,11 +56,13 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading countries.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
@@ -75,7 +79,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
     }
