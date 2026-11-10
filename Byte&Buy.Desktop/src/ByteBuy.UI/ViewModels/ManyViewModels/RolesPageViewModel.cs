@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Role;
 using ByteBuy.UI.ViewModels.Shared;
@@ -22,7 +23,8 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
     public RolesPageViewModel(
        INavigationService navigationService,
        IDialogService dialogNavigation,
-       IRoleService roleService) : base(navigationService, dialogNavigation, roleService)
+       IRoleService roleService,
+       INotificationService notificationService) : base(navigationService, dialogNavigation, roleService, notificationService)
     {
         PageName = ApplicationPageNames.Roles;
     }
@@ -46,11 +48,13 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading roles.");
             return;
+        }
 
-        ApplyPagination(value, (r, index) => r.ToListItem(index));
+        ApplyPagination(result.Value, (r, index) => r.ToListItem(index));
     }
 
     protected override async Task AddAsync()

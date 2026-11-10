@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Delivery;
 using ByteBuy.UI.ViewModels.Dialogs;
@@ -15,8 +16,9 @@ namespace ByteBuy.UI.ViewModels;
 public partial class DeliveriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IDeliveryService deliveryService)
-    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(navigation, dialogNavigation, deliveryService)
+    IDeliveryService deliveryService,
+    INotificationService notificationService)
+    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(navigation, dialogNavigation, deliveryService, notificationService)
 {
     #region Filtration Fields
 
@@ -42,7 +44,7 @@ public partial class DeliveriesPageViewModel(
         if (result is bool ok && ok)
         {
             await LoadDataAsync();
-            //Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
         }
     }
 
@@ -58,11 +60,13 @@ public partial class DeliveriesPageViewModel(
         };
 
         var result = await Service.GetListAsync(queryParams);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading deliveries.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
@@ -85,7 +89,7 @@ public partial class DeliveriesPageViewModel(
         if (result is bool ok && ok)
         {
             await LoadDataAsync();
-            //Alert.ShowSuccessAlert("Successfully added new item!");
+            NotificationService.ShowSuccess("Successfully added new item!");
         }
     }
 }

@@ -4,6 +4,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -71,18 +72,21 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly ICategoryService _categoryService;
     private readonly IImageService _imageService;
     private readonly IDialogService _dialogService;
+    private readonly INotificationService _notificationService;
     public ItemPageViewModel(
         IItemService itemService,
         IConditionService conditionService,
         ICategoryService categoryService,
         IDialogService dialogService,
-        IImageService imageService)
+        IImageService imageService,
+        INotificationService notificationService)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
         _itemService = itemService;
         _dialogService = dialogService;
         _imageService = imageService;
+        _notificationService = notificationService;
         Images.CollectionChanged += OnImagesCollectionChanged;
     }
 
@@ -109,15 +113,17 @@ public partial class ItemPageViewModel : ViewModelSingle
         await InitializeAsync();
 
         var result = await _itemService.GetByIdAsync(id);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the item.");
             return;
+        }
 
-        ItemMappings.MapFromResponse(this, value);
+        ItemMappings.MapFromResponse(this, result.Value);
 
         Images.Clear();
 
-        var tasks = value.Images.Select(async img =>
+        var tasks = result.Value.Images.Select(async img =>
         {
             var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
             if (bytes is null) return;
@@ -135,7 +141,13 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         var request = ItemMappings.MapAddToRequest(this);
         var result = await _itemService.AddAsync(request);
-        HandleResult(result, "Successfully added new item !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while adding the item.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully added new item !");
     }
 
     protected override void Clear()
@@ -157,13 +169,19 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         if (Images.Count - deletedCount == 0 && newCount == 0)
         {
-            //Alert.ShowErrorAlert("You need to add at least one new image.");
+            _notificationService.ShowError("You need to add at least one new image.");
             return;
         }
 
         var request = ItemMappings.MapToUpdateRequest(this);
         var result = await _itemService.UpdateAsync(EditingItemId.Value, request);
-        HandleResult(result, "Successfully updated item !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the item.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully updated item !");
     }
 
 

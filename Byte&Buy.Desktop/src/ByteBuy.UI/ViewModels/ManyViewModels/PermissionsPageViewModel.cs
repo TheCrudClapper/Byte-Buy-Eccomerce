@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Permission;
 using ByteBuy.UI.ViewModels.Shared;
@@ -23,8 +24,9 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
     private string? _description = null;
 
     #endregion
-    public PermissionsPageViewModel(INavigationService navigation, IDialogService dialogNavigation, IPermissionService service)
-        : base(navigation, dialogNavigation, service)
+    public PermissionsPageViewModel(INavigationService navigation, IDialogService dialogNavigation, IPermissionService service,
+        INotificationService notificationService)
+        : base(navigation, dialogNavigation, service, notificationService)
     {
         PageName = ApplicationPageNames.Permissions;
     }
@@ -40,11 +42,13 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading permissions.");
             return;
+        }
 
-        ApplyPagination(value, (p, index) => p.ToListItem(index));
+        ApplyPagination(result.Value, (p, index) => p.ToListItem(index));
     }
 
     public override async Task ClearFiltersAsync()

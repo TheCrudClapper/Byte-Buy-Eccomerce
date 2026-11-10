@@ -2,6 +2,7 @@
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,21 +55,26 @@ public partial class RentalDetailsPageViewModel : PageViewModel
 
     private readonly IRentalService _rentalService;
     private readonly IImageService _imageService;
+    private readonly INotificationService _notificationService;
     public RentalDetailsPageViewModel(IRentalService rentalService,
-        IImageService imageService)
+        IImageService imageService,
+        INotificationService notificationService)
     {
         _rentalService = rentalService;
         _imageService = imageService;
+        _notificationService = notificationService;
     }
 
     public async Task InitializeAsync(Guid rentalId)
     {
         var detailsResult = await _rentalService.GetCompanyRentalAsync(rentalId);
-        var (ok, value) = HandleResult(detailsResult);
-        if (!ok || value is null)
+        if (!detailsResult.Success)
+        {
+            _notificationService.ShowError(detailsResult.Error?.Description ?? "An error occurred while loading the rental.");
             return;
+        }
 
-        BuildViewModel(value);
+        BuildViewModel(detailsResult.Value);
 
         await FetchImagePreviewAsync();
     }

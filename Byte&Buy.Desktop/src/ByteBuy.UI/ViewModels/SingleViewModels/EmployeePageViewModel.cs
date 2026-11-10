@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -96,6 +97,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     private readonly IEmployeeService _employeeService;
     private readonly IRoleService _roleService;
     private readonly ICountryService _countryService;
+    private readonly INotificationService _notificationService;
 
     public PermissionGrantRevokeViewModel PermissionListBox { get; }
 
@@ -103,12 +105,14 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         IRoleService roleService,
         IEmployeeService employeeService,
         PermissionGrantRevokeViewModel permissionListBox,
-        ICountryService countryService)
+        ICountryService countryService,
+        INotificationService notificationService)
     {
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
         _roleService = roleService;
         _countryService = countryService;
+        _notificationService = notificationService;
     }
 
     protected override async Task InitializeAsync()
@@ -148,24 +152,32 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         EditingItemId = itemId;
 
         var result = await _employeeService.GetByIdAsync(itemId);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the employee.");
             return;
+        }
 
         await InitializeAsync();
-        EmployeeMappings.MapFromResponse(this, value);
+        EmployeeMappings.MapFromResponse(this, result.Value);
     }
 
     protected override async Task AddAsync()
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
-            //Alert.Show(NotificationType.Error, "Password is required for new employees.");
+            _notificationService.ShowError("Password is required for new employees.");
             return;
         }
         var request = EmployeeMappings.MapToAddRequest(this);
         var result = await _employeeService.AddAsync(request);
-        HandleResult(result, "Successfully added employee!");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while adding the employee.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully added employee!");
     }
 
     protected override async Task UpdateAsync()
@@ -175,7 +187,13 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
 
         var request = EmployeeMappings.MapToUpdateRequest(this);
         var result = await _employeeService.UpdateAsync(EditingItemId.Value, request);
-        HandleResult(result, "Employee updated successfully");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the employee.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Employee updated successfully");
     }
 
 }

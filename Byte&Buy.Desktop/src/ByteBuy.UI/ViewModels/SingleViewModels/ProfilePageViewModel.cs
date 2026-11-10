@@ -3,6 +3,7 @@ using ByteBuy.Services.DTO.Employee;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -77,13 +78,16 @@ public partial class ProfilePageViewModel : PageViewModel
     #endregion
 
     private readonly IEmployeeService _employeeService;
+    private readonly INotificationService _notificationService;
     public PasswordChangeViewModel PasswordComponent { get; }
     public ProfilePageViewModel(IEmployeeService employeeService,
-        PasswordChangeViewModel passwordComponent)
+        PasswordChangeViewModel passwordComponent,
+        INotificationService notificationService)
     {
         PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;
         PasswordComponent = passwordComponent;
+        _notificationService = notificationService;
     }
 
     [RelayCommand]
@@ -108,7 +112,13 @@ public partial class ProfilePageViewModel : PageViewModel
         );
 
         var result = await _employeeService.UpdateCurrentEmployeeAddressAsync(request);
-        HandleResult(result, "Address updated successfully !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the address.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Address updated successfully !");
     }
 
     [RelayCommand]
@@ -127,10 +137,12 @@ public partial class ProfilePageViewModel : PageViewModel
     public async Task LoadDataAsync()
     {
         var result = await _employeeService.GetCurrentEmployeeDetailsAsync();
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the profile.");
             return;
+        }
 
-        ProfilePageMappings.MapFromResponse(this, value);
+        ProfilePageMappings.MapFromResponse(this, result.Value);
     }
 }

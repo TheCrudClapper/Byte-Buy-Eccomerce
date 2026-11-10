@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.DeliveryCarriers;
 using ByteBuy.UI.ViewModels.Dialogs;
@@ -15,8 +16,9 @@ namespace ByteBuy.UI.ViewModels;
 public partial class DeliveryCarriersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IDeliveryCarrierService service)
-    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(navigation, dialogNavigation, service)
+    IDeliveryCarrierService service,
+    INotificationService notificationService)
+    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(navigation, dialogNavigation, service, notificationService)
 {
     #region Filtration Fields
 
@@ -37,11 +39,13 @@ public partial class DeliveryCarriersViewModel(
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading delivery carriers.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
@@ -58,7 +62,7 @@ public partial class DeliveryCarriersViewModel(
 
         if (result is bool ok && ok)
         {
-            //Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
     }
@@ -73,7 +77,7 @@ public partial class DeliveryCarriersViewModel(
 
         if (result is bool ok && ok)
         {
-            //Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
     }

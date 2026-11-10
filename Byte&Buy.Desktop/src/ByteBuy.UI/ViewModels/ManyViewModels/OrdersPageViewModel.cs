@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Order;
 using ByteBuy.UI.ViewModels.Shared;
@@ -39,7 +40,8 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
     public OrdersPageViewModel(
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IOrderService service) : base(navigation, dialogNavigation, service)
+        IOrderService service,
+        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
     {
         PageName = ApplicationPageNames.Orders;
     }
@@ -59,11 +61,13 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         };
 
         var result = await Service.GetCompanyOrderListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading orders.");
             return;
+        }
 
-        ApplyPagination(value, (u, index) => u.ToListItem(index));
+        ApplyPagination(result.Value, (u, index) => u.ToListItem(index));
     }
 
     [RelayCommand]

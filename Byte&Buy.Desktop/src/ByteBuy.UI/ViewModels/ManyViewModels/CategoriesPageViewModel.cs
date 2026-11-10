@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Category;
 using ByteBuy.UI.ViewModels.Dialogs;
@@ -15,8 +16,9 @@ namespace ByteBuy.UI.ViewModels;
 public partial class CategoriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
-    ICategoryService categoryService)
-    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService)
+    ICategoryService categoryService,
+    INotificationService notificationService)
+    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService, notificationService)
 {
     #region Filtration fields
 
@@ -34,7 +36,7 @@ public partial class CategoriesPageViewModel(
 
         if (result is bool ok && ok)
         {
-            //Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
     }
@@ -49,11 +51,13 @@ public partial class CategoriesPageViewModel(
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading categories.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
@@ -68,7 +72,7 @@ public partial class CategoriesPageViewModel(
 
         if (result is bool ok && ok)
         {
-            //Alert.ShowSuccessAlert("Successfully added new item!");
+            NotificationService.ShowSuccess("Successfully added new item!");
             await LoadDataAsync();
         }
 

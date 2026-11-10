@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.PortalUser;
 using ByteBuy.UI.ViewModels.Shared;
@@ -27,7 +28,8 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
     public PortalUsersPageViewModel(
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IPortalUserService userService) : base(navigation, dialogNavigation, userService)
+        IPortalUserService userService,
+        INotificationService notificationService) : base(navigation, dialogNavigation, userService, notificationService)
     {
         PageName = ApplicationPageNames.PortalUsers;
     }
@@ -54,11 +56,13 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading users.");
             return;
+        }
 
-        ApplyPagination(value, (u, index) => u.ToListItem(index));
+        ApplyPagination(result.Value, (u, index) => u.ToListItem(index));
     }
 
     protected override async Task AddAsync()

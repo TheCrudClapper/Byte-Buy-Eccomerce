@@ -117,11 +117,13 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
     public async Task LoadData()
     {
         var response = await _companyInfoService.GetCompanyInfoAsync();
-        var (ok, value) = HandleResult(response);
-        if (!ok || value is null)
+        if (!response.Success)
+        {
+            _notificationService.ShowError(response.Error?.Description ?? "An error occurred while loading company details.");
             return;
+        }
 
-        CompanyInfoMappings.MapFromResponse(this, value);
+        CompanyInfoMappings.MapFromResponse(this, response.Value);
     }
 
     [RelayCommand]

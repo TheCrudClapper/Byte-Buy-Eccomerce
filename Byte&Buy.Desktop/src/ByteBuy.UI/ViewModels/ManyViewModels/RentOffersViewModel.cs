@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.RentOffer;
@@ -16,8 +17,9 @@ namespace ByteBuy.UI.ViewModels;
 public partial class RentOffersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IRentOfferService service)
-    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service)
+    IRentOfferService service,
+    INotificationService notificationService)
+    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service, notificationService)
 {
     #region Filtration fields
 
@@ -54,7 +56,7 @@ public partial class RentOffersViewModel(
 
         if (result is bool ok && ok)
         {
-            //Alert.ShowSuccessAlert("Successfully updated offer!");
+            NotificationService.ShowSuccess("Successfully updated offer!");
             await LoadDataAsync();
         }
     }
@@ -75,11 +77,13 @@ public partial class RentOffersViewModel(
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading rental offers.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
