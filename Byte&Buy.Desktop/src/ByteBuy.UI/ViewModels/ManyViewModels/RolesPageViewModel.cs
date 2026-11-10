@@ -20,10 +20,9 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
     #endregion
 
     public RolesPageViewModel(
-       AlertViewModel alert,
        INavigationService navigationService,
        IDialogService dialogNavigation,
-       IRoleService roleService) : base(alert, navigationService, dialogNavigation, roleService)
+       IRoleService roleService) : base(navigationService, dialogNavigation, roleService)
     {
         PageName = ApplicationPageNames.Roles;
     }

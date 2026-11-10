@@ -37,10 +37,9 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
     #endregion
 
     public OrdersPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IOrderService service) : base(alert, navigation, dialogNavigation, service)
+        IOrderService service) : base(navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Orders;
     }

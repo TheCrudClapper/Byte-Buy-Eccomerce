@@ -51,10 +51,10 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     protected IDialogService DialogNavigation;
     protected readonly ServiceType Service;
 
-    protected ViewModelMany(AlertViewModel alert,
+    protected ViewModelMany(
         INavigationService navigation,
         IDialogService dialogNavigation,
-        ServiceType service) : base(alert)
+        ServiceType service)
     {
         Navigation = navigation;
         DialogNavigation = dialogNavigation;
@@ -78,12 +78,12 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             var result = await Service.DeleteByIdAsync(item.Id);
             if (!result.Success)
             {
-                Alert.ShowErrorAlert(result.Error!.Description);
+                //Alert.ShowErrorAlert(result.Error!.Description);
                 return;
             }
 
             Items.Remove(item);
-            Alert.ShowSuccessAlert("Successfully deleted item !");
+            //Alert.ShowSuccessAlert("Successfully deleted item !");
         }
         return;
     }

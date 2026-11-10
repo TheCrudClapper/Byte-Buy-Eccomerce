@@ -25,10 +25,9 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
     private string? _email;
 
     public PortalUsersPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IPortalUserService userService) : base(alert, navigation, dialogNavigation, userService)
+        IPortalUserService userService) : base(navigation, dialogNavigation, userService)
     {
         PageName = ApplicationPageNames.PortalUsers;
     }

@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CategoriesPageViewModel(AlertViewModel alert,
+public partial class CategoriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICategoryService categoryService)
-    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(alert, navigation, dialogNavigation, categoryService)
+    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService)
 {
     #region Filtration fields
 
@@ -34,7 +34,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            //Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadDataAsync();
         }
     }
@@ -68,7 +68,7 @@ public partial class CategoriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully added new item!");
+            //Alert.ShowSuccessAlert("Successfully added new item!");
             await LoadDataAsync();
         }
 

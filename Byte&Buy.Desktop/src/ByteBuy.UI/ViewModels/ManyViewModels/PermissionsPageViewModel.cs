@@ -23,8 +23,8 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
     private string? _description = null;
 
     #endregion
-    public PermissionsPageViewModel(AlertViewModel alert, INavigationService navigation, IDialogService dialogNavigation, IPermissionService service)
-        : base(alert, navigation, dialogNavigation, service)
+    public PermissionsPageViewModel(INavigationService navigation, IDialogService dialogNavigation, IPermissionService service)
+        : base(navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Permissions;
     }

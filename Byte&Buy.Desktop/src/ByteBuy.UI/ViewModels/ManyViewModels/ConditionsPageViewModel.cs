@@ -13,11 +13,10 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels;
 
 public partial class ConditionsPageViewModel(
-    AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IConditionService conditionService)
-    : ViewModelMany<ConditionListItemViewModel, IConditionService>(alert, navigation, dialogNavigation, conditionService)
+    : ViewModelMany<ConditionListItemViewModel, IConditionService>(navigation, dialogNavigation, conditionService)
 {
     #region Filtration Fields
 
@@ -37,7 +36,7 @@ public partial class ConditionsPageViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            //Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadDataAsync();
         }
 
@@ -74,7 +73,7 @@ public partial class ConditionsPageViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully added new item!");
+            //Alert.ShowSuccessAlert("Successfully added new item!");
             await LoadDataAsync();
         }
     }

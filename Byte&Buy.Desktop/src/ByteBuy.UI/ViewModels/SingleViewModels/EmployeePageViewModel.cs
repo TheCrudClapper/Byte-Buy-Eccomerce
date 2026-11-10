@@ -103,8 +103,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
         IRoleService roleService,
         IEmployeeService employeeService,
         PermissionGrantRevokeViewModel permissionListBox,
-        ICountryService countryService,
-        AlertViewModel alert) : base(alert)
+        ICountryService countryService)
     {
         _employeeService = employeeService;
         PermissionListBox = permissionListBox;
@@ -161,7 +160,7 @@ public sealed partial class EmployeePageViewModel : ViewModelSingle
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
-            Alert.Show(AlertType.Error, "Password is required for new employees.");
+            //Alert.Show(NotificationType.Error, "Password is required for new employees.");
             return;
         }
         var request = EmployeeMappings.MapToAddRequest(this);

@@ -70,10 +70,10 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     private readonly IOrderService _orderService;
     private readonly IImageService _imageService;
     private readonly IDocumentService _documentService;
-    public OrderDetailsPageViewModel(AlertViewModel alert,
+    public OrderDetailsPageViewModel(
         IOrderService orderService,
         IImageService imageService,
-        IDocumentService documentService) : base(alert)
+        IDocumentService documentService)
     {
         _orderService = orderService;
         _imageService = imageService;

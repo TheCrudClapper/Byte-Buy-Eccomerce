@@ -6,11 +6,9 @@ namespace ByteBuy.UI.ViewModels.Base;
 
 public class ViewModelBase : ObservableValidator
 {
-    public AlertViewModel Alert { get; }
-
-    protected ViewModelBase(AlertViewModel alert)
+    protected ViewModelBase()
     {
-        Alert = alert;
+
     }
 
     //For results that doesnt have any return value
@@ -18,12 +16,11 @@ public class ViewModelBase : ObservableValidator
     {
         if (!result.Success)
         {
-            Alert.ShowErrorAlert(result.Error!.Description);
             return false;
         }
 
         if (!string.IsNullOrWhiteSpace(successMessage))
-            Alert.ShowSuccessAlert(successMessage);
+            return false;
 
         return true;
     }
@@ -33,12 +30,11 @@ public class ViewModelBase : ObservableValidator
     {
         if (!result.Success)
         {
-            Alert.ShowErrorAlert(result.Error!.Description);
-            return (false, default);
+            return (true, default);
         }
 
         if (!string.IsNullOrWhiteSpace(successMessage))
-            Alert.ShowSuccessAlert(successMessage);
+           return (false, default);
 
         return (true, result.Value);
     }

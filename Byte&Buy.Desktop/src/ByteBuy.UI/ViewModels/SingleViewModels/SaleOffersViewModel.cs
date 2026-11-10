@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class SaleOffersViewModel(AlertViewModel alert,
+public partial class SaleOffersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ISaleOfferService service)
-    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(alert, navigation, dialogNavigation, service)
+    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -47,7 +47,7 @@ public partial class SaleOffersViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated offer!");
+            //Alert.ShowSuccessAlert("Successfully updated offer!");
             await LoadDataAsync();
         }
     }

@@ -27,9 +27,9 @@ public partial class RolePageViewModel : ViewModelSingle
     public PermissionListBoxViewModel PermissionListBox { get; }
     private readonly IRoleService _roleService;
 
-    public RolePageViewModel(AlertViewModel alert,
+    public RolePageViewModel(
         PermissionListBoxViewModel permissionListBox,
-        IRoleService roleService) : base(alert)
+        IRoleService roleService)
     {
         _roleService = roleService;
         PermissionListBox = permissionListBox;

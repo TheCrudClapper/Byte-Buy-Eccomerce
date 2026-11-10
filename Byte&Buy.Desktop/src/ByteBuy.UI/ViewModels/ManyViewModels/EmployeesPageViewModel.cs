@@ -27,10 +27,9 @@ public partial class EmployeesPageViewModel
     #endregion
 
     public EmployeesPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
+        IEmployeeService service) : base(navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Employees;
     }

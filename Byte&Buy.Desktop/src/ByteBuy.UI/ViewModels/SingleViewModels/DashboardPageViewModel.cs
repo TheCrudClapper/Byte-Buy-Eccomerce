@@ -41,8 +41,8 @@ public partial class DashboardPageViewModel : PageViewModel
 
     private readonly IOrderService _orderService;
     private readonly IStatisticsService _statisticsService;
-    public DashboardPageViewModel(AlertViewModel alert, IOrderService orderService,
-        IStatisticsService statisticsService, ISessionService sessionService) : base(alert)
+    public DashboardPageViewModel(IOrderService orderService,
+        IStatisticsService statisticsService, ISessionService sessionService)
     {
         PageName = ApplicationPageNames.Dashboard;
         _orderService = orderService;

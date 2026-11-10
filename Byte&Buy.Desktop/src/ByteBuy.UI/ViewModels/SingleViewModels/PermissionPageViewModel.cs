@@ -28,8 +28,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     #endregion
 
     private readonly IPermissionService _permissionService;
-    public PermissionPageViewModel(IPermissionService permissionService, AlertViewModel alert)
-        : base(alert)
+    public PermissionPageViewModel(IPermissionService permissionService)
         => _permissionService = permissionService;
 
     protected override async Task AddAsync()

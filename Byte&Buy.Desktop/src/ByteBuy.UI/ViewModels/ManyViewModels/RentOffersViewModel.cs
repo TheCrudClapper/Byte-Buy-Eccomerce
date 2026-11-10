@@ -14,11 +14,10 @@ using System.Threading.Tasks;
 namespace ByteBuy.UI.ViewModels;
 
 public partial class RentOffersViewModel(
-    AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
     IRentOfferService service)
-    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(alert, navigation, dialogNavigation, service)
+    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service)
 {
     #region Filtration fields
 
@@ -55,7 +54,7 @@ public partial class RentOffersViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated offer!");
+            //Alert.ShowSuccessAlert("Successfully updated offer!");
             await LoadDataAsync();
         }
     }

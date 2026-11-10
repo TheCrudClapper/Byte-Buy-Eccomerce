@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -87,12 +88,13 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
     #endregion
 
     private readonly ICompanyInfoService _companyInfoService;
+    private readonly INotificationService _notificationService;
 
-    public CompanyInfoPageViewModel(AlertViewModel alert,
-        ICompanyInfoService companyInfoService) : base(alert)
+    public CompanyInfoPageViewModel(ICompanyInfoService companyInfoService, INotificationService notificationService)
     {
         PageName = ApplicationPageNames.CompanyInfo;
         _companyInfoService = companyInfoService;
+        _notificationService = notificationService;
     }
 
     [RelayCommand]
@@ -123,7 +125,7 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
     }
 
     [RelayCommand]
-    private async Task Save()
+    private async Task SaveAsync()
     {
         ValidateAllProperties();
 
@@ -132,6 +134,12 @@ public sealed partial class CompanyInfoPageViewModel : PageViewModel
 
         var request = CompanyInfoMappings.MapToUpdateRequest(this);
         var result = await _companyInfoService.UpdateAsync(request);
-        HandleResult(result, "Successfully updated company details !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occured during update.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully updated company details !");
     }
 }

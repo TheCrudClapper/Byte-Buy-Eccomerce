@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.ManyViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -50,6 +51,17 @@ public partial class MainWindowViewModel : WindowViewModel
     private readonly INavigationService _navigation;
     private readonly IWindowService _windowService;
     private readonly IAuthService _authService;
+    private readonly INotificationService _notificationService;
+    public NotificationService NotificationService
+    {
+        get
+        {
+            if (_notificationService is not NotificationService a)
+                return new();
+
+            return a;
+        }
+    }
     private void SetActive(ApplicationPageNames page)
     {
         IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
@@ -64,12 +76,12 @@ public partial class MainWindowViewModel : WindowViewModel
         IsProfilePageActive = page == ApplicationPageNames.Profile;
     }
 
-    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService)
+    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService)
     {
         _navigation = navigation;
         _windowService = windowService;
         _authService = authService;
-
+        _notificationService = notificationService;
 
         _navigation.PropertyChanged += (s, e) =>
         {

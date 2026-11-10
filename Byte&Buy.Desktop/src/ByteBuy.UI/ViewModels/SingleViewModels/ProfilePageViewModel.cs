@@ -79,8 +79,7 @@ public partial class ProfilePageViewModel : PageViewModel
     private readonly IEmployeeService _employeeService;
     public PasswordChangeViewModel PasswordComponent { get; }
     public ProfilePageViewModel(IEmployeeService employeeService,
-        PasswordChangeViewModel passwordComponent,
-        AlertViewModel alert) : base(alert)
+        PasswordChangeViewModel passwordComponent)
     {
         PageName = ApplicationPageNames.Profile;
         _employeeService = employeeService;

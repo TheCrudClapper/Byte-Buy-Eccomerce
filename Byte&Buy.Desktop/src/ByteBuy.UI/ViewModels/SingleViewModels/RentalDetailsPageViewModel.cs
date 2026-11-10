@@ -54,8 +54,8 @@ public partial class RentalDetailsPageViewModel : PageViewModel
 
     private readonly IRentalService _rentalService;
     private readonly IImageService _imageService;
-    public RentalDetailsPageViewModel(AlertViewModel alert, IRentalService rentalService,
-        IImageService imageService) : base(alert)
+    public RentalDetailsPageViewModel(IRentalService rentalService,
+        IImageService imageService)
     {
         _rentalService = rentalService;
         _imageService = imageService;

@@ -71,12 +71,12 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly ICategoryService _categoryService;
     private readonly IImageService _imageService;
     private readonly IDialogService _dialogService;
-    public ItemPageViewModel(AlertViewModel alert,
+    public ItemPageViewModel(
         IItemService itemService,
         IConditionService conditionService,
         ICategoryService categoryService,
         IDialogService dialogService,
-        IImageService imageService) : base(alert)
+        IImageService imageService)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
@@ -157,7 +157,7 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         if (Images.Count - deletedCount == 0 && newCount == 0)
         {
-            Alert.ShowErrorAlert("You need to add at least one new image.");
+            //Alert.ShowErrorAlert("You need to add at least one new image.");
             return;
         }
 

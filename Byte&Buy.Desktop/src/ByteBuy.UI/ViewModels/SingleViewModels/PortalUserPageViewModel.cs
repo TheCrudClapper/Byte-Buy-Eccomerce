@@ -101,13 +101,13 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     private readonly IPortalUserService _portalUserService;
     private readonly IHomeAddressService _addressService;
     private readonly ISessionService _sessionService;
-    public PortalUserPageViewModel(AlertViewModel alert,
+    public PortalUserPageViewModel(
         PermissionGrantRevokeViewModel listBox,
         IRoleService roleService,
         IPortalUserService userService,
         IHomeAddressService addressService,
         ICountryService countryService,
-        ISessionService sessionService) : base(alert)
+        ISessionService sessionService)
     {
         PermissionListBox = listBox;
         _roleService = roleService;
@@ -127,11 +127,11 @@ public partial class PortalUserPageViewModel : ViewModelSingle
 
         if (!result.Success)
         {
-            Alert.ShowErrorAlert(result.Error!.Description);
+            //Alert.ShowErrorAlert(result.Error!.Description);
             return;
         }
 
-        Alert.ShowSuccessAlert("Successfully updated user!");
+        //Alert.ShowSuccessAlert("Successfully updated user!");
 
         //Update user data in session
         _sessionService.UserFirstName = request.FirstName;
@@ -158,7 +158,7 @@ public partial class PortalUserPageViewModel : ViewModelSingle
     {
         if (string.IsNullOrWhiteSpace(Password) || Password.Length < 8)
         {
-            Alert.ShowErrorAlert("For new user password is required !");
+            //Alert.ShowErrorAlert("For new user password is required !");
             return;
         }
 

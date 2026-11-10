@@ -37,10 +37,9 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
     #endregion
 
     public RentalsPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IRentalService service) : base(alert, navigation, dialogNavigation, service)
+        IRentalService service) : base(navigation, dialogNavigation, service)
     {
         PageName = ApplicationPageNames.Rentals;
     }

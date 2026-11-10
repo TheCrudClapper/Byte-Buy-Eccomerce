@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CountriesPageViewModel(AlertViewModel alert,
+public partial class CountriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICountryService countryService)
-    : ViewModelMany<CountryListItemViewModel, ICountryService>(alert, navigation, dialogNavigation, countryService)
+    : ViewModelMany<CountryListItemViewModel, ICountryService>(navigation, dialogNavigation, countryService)
 {
     #region Filtraion fields
 
@@ -38,7 +38,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            //Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadDataAsync();
         }
     }
@@ -75,7 +75,7 @@ public partial class CountriesPageViewModel(AlertViewModel alert,
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            //Alert.ShowSuccessAlert("Successfully updated item!");
             await LoadDataAsync();
         }
     }
