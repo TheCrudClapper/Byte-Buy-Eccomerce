@@ -9,6 +9,7 @@
 		x:Class="ByteBuy.UI.Views.MainWindow"
 		x:DataType="viewModels:MainWindowViewModel"
 		Icon="/Assets/logo.ico"
+		xmlns:li="using:LoadingIndicators.Avalonia"
 		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
 		Title="ByteBuy v.1.0">
 
@@ -161,10 +162,35 @@
 					</Button>
 				</Grid>
 
-				<!-- Area for pages -->
-				<ContentControl Grid.Column="1" Padding="30" Background="#17182a"
-								Content="{Binding CurrentPage}" />
+
+
+					</Grid>
+
+					<!-- Area for pages -->
+					<ContentControl Grid.Column="1" Padding="30" Background="#17182a"
+									Content="{Binding CurrentPage}" />
+
+					<views:Loader Grid.Column="1" 
+								  IsVisible="{Binding LoadingService.IsLoading}" 
+								  Message="{Binding LoadingService.Message}"/>
+
+				</Grid>
 			</Grid>
+			<ItemsControl ItemsSource="{Binding NotificationService.Notifications}"
+						  HorizontalAlignment="Right"
+						  Margin="0,0,20,20"
+						  VerticalAlignment="Bottom">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<views:AlertView
+							DataContext="{Binding}"
+							Height="70"
+							Width="400"
+							Margin="0,5,0,0"
+							ZIndex="10" />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</Grid>
 	</dialogHost:DialogHost>
 

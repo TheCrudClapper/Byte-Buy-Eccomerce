@@ -17,7 +17,9 @@ namespace ByteBuy.UI.ViewModels;
 
 public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
     IDialogService dialogNavigation,
-    IItemService service) : ViewModelMany<ItemListItemViewModel, IItemService>(alert, navigation, dialogNavigation, service)
+    IItemService service,
+    INotificationService notificationService,
+    ILoadingService loadingService) : ViewModelMany<ItemListItemViewModel, IItemService>(navigation, dialogNavigation, service, notificationService)
 {
     #region Filtration fields
 
@@ -68,21 +70,31 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
 
     public override async Task LoadDataAsync()
     {
-        var query = new ItemListQuery
+        try
         {
-            PageNumber = PageNumber,
-            PageSize = PageSize,
-            Name = Name,
-            StockQuantityFrom = StockQuantityFrom,
-            StockQuantityTo = StockQuantityTo,
-        };
+            loadingService.Show("Loading warehouse items...");
+            var query = new ItemListQuery
+            {
+                PageNumber = PageNumber,
+                PageSize = PageSize,
+                Name = Name,
+                StockQuantityFrom = StockQuantityFrom,
+                StockQuantityTo = StockQuantityTo,
+            };
 
-        var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
-            return;
+            var result = await Service.GetListAsync(query);
+            if (!result.Success)
+            {
+                NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading items.");
+                return;
+            }
 
-        ApplyPagination(value, (i, index) => i.ToListItem(index));
+            ApplyPagination(result.Value, (i, index) => i.ToListItem(index));
+        }
+        finally
+        {
+            loadingService.Hide();
+        }
     }
 
     public override async Task ClearFiltersAsync()

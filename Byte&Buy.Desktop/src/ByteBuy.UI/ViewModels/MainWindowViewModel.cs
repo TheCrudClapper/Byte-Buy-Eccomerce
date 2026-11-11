@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class MainWindowViewModel : WindowViewModel
+public partial class MainWindowViewModel : WindowViewModel, IDisposable
 {
     #region MVVM Fields
     [ObservableProperty]
@@ -46,6 +46,32 @@ public partial class MainWindowViewModel : WindowViewModel
     public PageViewModel? CurrentPage => _navigation.CurrentPage;
 
     private readonly INavigationService _navigation;
+    private readonly IWindowService _windowService;
+    private readonly IAuthService _authService;
+    private readonly INotificationService _notificationService;
+    private readonly ILoadingService _loadingService;
+
+    //Properties that allows using services in view
+    public NotificationService NotificationService
+    {
+        get
+        {
+            if (_notificationService is not NotificationService service)
+                return new();
+
+            return service;
+        }
+    }
+    public LoadingService LoadingService
+    {
+        get
+        {
+            if (_loadingService is not LoadingService service)
+                return new();
+
+            return service;
+        }
+    }
 
     private void SetActive(ApplicationPageNames page)
     {
@@ -61,11 +87,13 @@ public partial class MainWindowViewModel : WindowViewModel
         IsProfilePageActive = page == ApplicationPageNames.Profile;
     }
 
-    public Action? Logout { get; set; }
-
-    public MainWindowViewModel(INavigationService navigation)
+    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService, ILoadingService loadingService)
     {
         _navigation = navigation;
+        _windowService = windowService;
+        _authService = authService;
+        _notificationService = notificationService;
+        _loadingService = loadingService;
         _navigation.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
@@ -145,5 +173,28 @@ public partial class MainWindowViewModel : WindowViewModel
     private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.Administration);
 
     [RelayCommand]
-    private void LogOut() => Logout?.Invoke();
+    private void LogOut()
+    {
+        _authService.Logout();
+        _windowService.ShowWindow(ApplicationWindowNames.Login);
+    }
+
+    [RelayCommand]
+    private void Shutdown()
+    {
+        _authService.Logout();
+        _windowService.ShutdownApplication();
+    }
+
+    public void Dispose()
+    {
+       _navigation.PropertyChanged -= (s, e) =>
+       {   
+           if (e.PropertyName == nameof(INavigationService.CurrentPage))
+           {
+               OnPropertyChanged(nameof(CurrentPage));
+               SetActive(_navigation.CurrentPage!.PageName);
+           }
+       };
+    }
 }

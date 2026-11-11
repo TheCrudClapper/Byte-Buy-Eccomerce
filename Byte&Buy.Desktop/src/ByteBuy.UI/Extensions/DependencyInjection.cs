@@ -82,6 +82,13 @@ public static class DependencyInjection
         services.AddTransient<CountryDialogViewModel>();
         services.AddTransient<ConfirmationDialogViewModel>();
         services.AddTransient<DeliveryCarrierDialogViewModel>();
+        services.AddTransient<SettingsDialogViewModel>();
+
+        //Notifications
+        services.AddSingleton<INotificationService, NotificationService>();
+
+        //Loader
+        services.AddSingleton<ILoadingService, LoadingService>();
         return services;
     }
 }
