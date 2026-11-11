@@ -29,7 +29,8 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
         INavigationService navigation,
         IDialogService dialogNavigation,
         IPortalUserService userService,
-        INotificationService notificationService) : base(navigation, dialogNavigation, userService, notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, userService, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.PortalUsers;
     }
@@ -44,7 +45,7 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
         });
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new PortalUserListQuery
         {

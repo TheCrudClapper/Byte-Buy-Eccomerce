@@ -17,8 +17,9 @@ public partial class CountriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICountryService countryService,
-    INotificationService notificationService)
-    : ViewModelMany<CountryListItemViewModel, ICountryService>(navigation, dialogNavigation, countryService, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<CountryListItemViewModel, ICountryService>(navigation, dialogNavigation, countryService, notificationService, loadingService)
 {
     #region Filtraion fields
 
@@ -45,7 +46,7 @@ public partial class CountriesPageViewModel(
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new CountryListQuery
         {

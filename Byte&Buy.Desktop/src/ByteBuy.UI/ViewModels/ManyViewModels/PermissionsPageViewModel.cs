@@ -25,13 +25,13 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
 
     #endregion
     public PermissionsPageViewModel(INavigationService navigation, IDialogService dialogNavigation, IPermissionService service,
-        INotificationService notificationService)
-        : base(navigation, dialogNavigation, service, notificationService)
+        INotificationService notificationService, ILoadingService loadingService)
+        : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Permissions;
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new PermissionListQuery
         {

@@ -17,7 +17,7 @@ public partial class ItemsPageViewModel(INavigationService navigation,
     IDialogService dialogNavigation,
     IItemService service,
     INotificationService notificationService,
-    ILoadingService loadingService) : ViewModelMany<ItemListItemViewModel, IItemService>(navigation, dialogNavigation, service, notificationService)
+    ILoadingService loadingService) : ViewModelMany<ItemListItemViewModel, IItemService>(navigation, dialogNavigation, service, notificationService, loadingService)
 {
     #region Filtration fields
 
@@ -66,33 +66,25 @@ public partial class ItemsPageViewModel(INavigationService navigation,
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
-        try
+        var query = new ItemListQuery
         {
-            await loadingService.ShowAsync("Loading warehouse items...");
-            var query = new ItemListQuery
-            {
-                PageNumber = PageNumber,
-                PageSize = PageSize,
-                Name = Name,
-                StockQuantityFrom = StockQuantityFrom,
-                StockQuantityTo = StockQuantityTo,
-            };
+            PageNumber = PageNumber,
+            PageSize = PageSize,
+            Name = Name,
+            StockQuantityFrom = StockQuantityFrom,
+            StockQuantityTo = StockQuantityTo,
+        };
 
-            var result = await Service.GetListAsync(query);
-            if (!result.Success)
-            {
-                NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading items.");
-                return;
-            }
-
-            ApplyPagination(result.Value, (i, index) => i.ToListItem(index));
-        }
-        finally
+        var result = await Service.GetListAsync(query);
+        if (!result.Success)
         {
-            await loadingService.HideAsync();
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading items.");
+            return;
         }
+
+        ApplyPagination(result.Value, (i, index) => i.ToListItem(index));
     }
 
     public override async Task ClearFiltersAsync()

@@ -18,8 +18,9 @@ public partial class RentOffersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IRentOfferService service,
-    INotificationService notificationService)
-    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service, notificationService, loadingService)
 {
     #region Filtration fields
 
@@ -61,7 +62,7 @@ public partial class RentOffersViewModel(
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new RentOfferListQuery
         {

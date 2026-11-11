@@ -24,7 +24,8 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
        INavigationService navigationService,
        IDialogService dialogNavigation,
        IRoleService roleService,
-       INotificationService notificationService) : base(navigationService, dialogNavigation, roleService, notificationService)
+       INotificationService notificationService,
+       ILoadingService loadingService) : base(navigationService, dialogNavigation, roleService, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Roles;
     }
@@ -38,7 +39,7 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
         });
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new RoleListQuery
         {

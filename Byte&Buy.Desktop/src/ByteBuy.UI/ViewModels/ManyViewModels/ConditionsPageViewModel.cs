@@ -17,8 +17,9 @@ public partial class ConditionsPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IConditionService conditionService,
-    INotificationService notificationService)
-    : ViewModelMany<ConditionListItemViewModel, IConditionService>(navigation, dialogNavigation, conditionService, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<ConditionListItemViewModel, IConditionService>(navigation, dialogNavigation, conditionService, notificationService, loadingService)
 {
     #region Filtration Fields
 
@@ -44,7 +45,7 @@ public partial class ConditionsPageViewModel(
 
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new ConditionListQuery
         {
