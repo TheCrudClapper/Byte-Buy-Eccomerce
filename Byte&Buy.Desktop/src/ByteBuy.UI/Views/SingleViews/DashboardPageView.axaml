@@ -11,10 +11,6 @@
 			 Background="{DynamicResource Background}"
 			 x:Class="ByteBuy.UI.Views.DashboardPageView">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/DashboardStyles.axaml" />
-	</UserControl.Styles>
-
 	<ScrollViewer>
 		<Grid RowDefinitions="auto,24,auto,20,340,20,340" Margin="0,10,30,30">
 
@@ -28,13 +24,13 @@
 						   Height="34" Width="34"/>
 				</Border>
 				<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
-					<TextBlock Classes="dbHeading">
+					<TextBlock Classes="dashHeading">
 						<Run Text="Welcome"/>
 						<Run Text="{Binding UserFirstName}"/>
 						<Run Text="{Binding UserLastName}"/>
 						<Run Text="!"/>
 					</TextBlock>
-					<TextBlock Classes="dbSub" Text="Here is a portion of stats just for you."/>
+					<TextBlock Classes="sectionHelperText" Text="Here is a portion of stats just for you."/>
 				</StackPanel>
 			</Grid>
 
@@ -48,13 +44,13 @@
 
 				<ItemsControl.ItemTemplate>
 					<DataTemplate x:DataType="dashboard:KpiViewModel">
-						<Border Classes="dbCard" Padding="20" Height="112">
+						<Border Classes="card" Padding="20" Height="112">
 							<Grid ColumnDefinitions="*,auto" ColumnSpacing="12">
 								<StackPanel VerticalAlignment="Center" Spacing="4">
-									<TextBlock Classes="dbKpiLabel" Text="{Binding Label}" TextWrapping="Wrap"/>
-									<TextBlock Classes="dbKpiValue" Text="{Binding DisplayValue}"/>
+									<TextBlock Classes="kpiLabel" Text="{Binding Label}" TextWrapping="Wrap"/>
+									<TextBlock Classes="kpiValue" Text="{Binding DisplayValue}"/>
 								</StackPanel>
-								<Border Grid.Column="1" Classes="dbIconTile">
+								<Border Grid.Column="1" Classes="kpiIcon">
 									<Image>
 										<Image.Source>
 											<SvgImage Source="{Binding IconPath}"/>
@@ -69,7 +65,7 @@
 
 			<!-- Charts row -->
 			<Grid Grid.Row="4" ColumnDefinitions="60*,40*" ColumnSpacing="16">
-				<Border Grid.Column="0" Classes="dbCard">
+				<Border Grid.Column="0" Classes="card">
 					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
 						<lvc:CartesianChart.Title>
 							<lvc:XamlDrawnLabelVisual
@@ -87,7 +83,7 @@
 					</lvc:CartesianChart>
 				</Border>
 
-				<Border Grid.Column="1" Classes="dbCard">
+				<Border Grid.Column="1" Classes="card">
 					<lvc:PieChart SeriesSource="{Binding GmvBySellerData}"
 								  InitialRotation="-90"
 								  Background="{DynamicResource CardBackground}">
@@ -113,34 +109,34 @@
 			<!-- Orders + chart row -->
 			<Grid Grid.Row="6" ColumnDefinitions="60*,40*" ColumnSpacing="16">
 
-				<Border Grid.Column="0" Classes="dbCard" Padding="20">
+				<Border Grid.Column="0" Classes="card" Padding="20">
 					<Grid RowDefinitions="auto,auto,*">
-						<TextBlock Grid.Row="0" Classes="dbCardTitle" Text="Recent Orders"/>
+						<TextBlock Grid.Row="0" Classes="cardTitle" Text="Recent Orders"/>
 
 						<!-- Header -->
 						<Grid Grid.Row="1" ColumnDefinitions="35*,22*,23*,20*" Margin="10,16,10,6">
-							<TextBlock Grid.Column="0" Classes="dbTh" Text="BUYER"/>
-							<TextBlock Grid.Column="1" Classes="dbTh" Text="PURCHASED" HorizontalAlignment="Center"/>
-							<TextBlock Grid.Column="2" Classes="dbTh" Text="PRICE" HorizontalAlignment="Center"/>
-							<TextBlock Grid.Column="3" Classes="dbTh" Text="STATUS" HorizontalAlignment="Center"/>
+							<TextBlock Grid.Column="0" Classes="tableHeader" Text="BUYER"/>
+							<TextBlock Grid.Column="1" Classes="tableHeader" Text="PURCHASED" HorizontalAlignment="Center"/>
+							<TextBlock Grid.Column="2" Classes="tableHeader" Text="PRICE" HorizontalAlignment="Center"/>
+							<TextBlock Grid.Column="3" Classes="tableHeader" Text="STATUS" HorizontalAlignment="Center"/>
 						</Grid>
 
 						<ScrollViewer Grid.Row="2" ScrollViewer.AllowAutoHide="False">
 							<ItemsControl ItemsSource="{Binding Orders}">
 								<ItemsControl.ItemTemplate>
 									<DataTemplate x:DataType="dashboard:OrderDashboardViewModel">
-										<Border Classes="dbRow">
+										<Border Classes="tableRow">
 											<Grid ColumnDefinitions="35*,22*,23*,20*">
-												<TextBlock Grid.Column="0" Classes="dbTd"
+												<TextBlock Grid.Column="0" Classes="tableCell"
 														   Text="{Binding BuyerEmail}"
 														   TextTrimming="CharacterEllipsis"/>
-												<TextBlock Grid.Column="1" Classes="dbTd"
+												<TextBlock Grid.Column="1" Classes="tableCell"
 														   Text="{Binding PurchaseDate}"
 														   HorizontalAlignment="Center"/>
-												<TextBlock Grid.Column="2" Classes="dbTd"
+												<TextBlock Grid.Column="2" Classes="tableCell"
 														   Text="{Binding Price.Display}"
 														   HorizontalAlignment="Center"/>
-												<Border Grid.Column="3" Classes="dbPill">
+												<Border Grid.Column="3" Classes="statusPill">
 													<TextBlock Text="{Binding Status}"/>
 												</Border>
 											</Grid>
@@ -152,7 +148,7 @@
 					</Grid>
 				</Border>
 
-				<Border Grid.Column="1" Classes="dbCard">
+				<Border Grid.Column="1" Classes="card">
 					<lvc:CartesianChart Background="{DynamicResource CardBackground}">
 						<lvc:CartesianChart.Title>
 							<lvc:XamlDrawnLabelVisual

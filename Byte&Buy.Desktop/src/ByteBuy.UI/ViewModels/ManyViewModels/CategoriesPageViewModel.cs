@@ -17,8 +17,9 @@ public partial class CategoriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ICategoryService categoryService,
-    INotificationService notificationService)
-    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService, notificationService, loadingService)
 {
     #region Filtration fields
 
@@ -41,7 +42,7 @@ public partial class CategoriesPageViewModel(
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new CategoryListQuery
         {

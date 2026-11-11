@@ -8,9 +8,6 @@
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:Class="ByteBuy.UI.Views.CountriesPageView"
 			 x:DataType="vm:CountriesPageViewModel">
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
 
 	<Grid>
 		<Grid RowDefinitions="50, auto, *, 50">

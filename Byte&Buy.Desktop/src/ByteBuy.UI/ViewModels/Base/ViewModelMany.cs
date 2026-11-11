@@ -52,17 +52,20 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     protected IDialogService DialogNavigation;
     protected readonly ServiceType Service;
     protected readonly INotificationService NotificationService;
+    protected readonly ILoadingService LoadingService;
 
     protected ViewModelMany(
         INavigationService navigation,
         IDialogService dialogNavigation,
         ServiceType service,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService)
     {
         Navigation = navigation;
         DialogNavigation = dialogNavigation;
         Service = service;
         NotificationService = notificationService;
+        LoadingService = loadingService;
     }
 
     // Delete after all pages gets pagination
@@ -96,7 +99,20 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
     protected abstract Task EditAsync(TDataGridItem item);
 
     [RelayCommand]
-    public abstract Task LoadDataAsync();
+    public async Task LoadDataAsync()
+    {
+        try
+        {
+            await LoadingService.ShowAsync("Loading data...");
+            await LoadDataCoreAsync();
+        }
+        finally
+        {
+            await LoadingService.HideAsync();
+        }
+    }
+
+    protected abstract Task LoadDataCoreAsync();
 
     [RelayCommand]
     public virtual Task ClearFiltersAsync()

@@ -23,8 +23,12 @@ public partial class NavigationService : ObservableObject, INavigationService
         _currentPage = _pageFactory.GetPageViewModel(ApplicationPageNames.Dashboard);
     }
 
+    //Used when no asnychronous method is invoked at initialization
     public void NavigateTo(ApplicationPageNames page, Action<PageViewModel>? init = null)
     {
+        //Sends cancelation request to async methods
+        CurrentPage?.OnNavigatedFrom();
+
         var pageVm = _pageFactory.GetPageViewModel(page);
         init?.Invoke(pageVm);
         CurrentPage = pageVm;
@@ -32,6 +36,9 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     public async Task NavigateToAsync(ApplicationPageNames page, Func<PageViewModel, Task>? init = null)
     {
+        //Sends cancelation request to async methods
+        CurrentPage?.OnNavigatedFrom();
+
         var pageVm = _pageFactory.GetPageViewModel(page);
         if (init != null)
             await init(pageVm);

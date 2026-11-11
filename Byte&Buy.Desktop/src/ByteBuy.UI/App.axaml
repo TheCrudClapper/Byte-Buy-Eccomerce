@@ -16,13 +16,9 @@
         <ColorPaletteResources x:Key="Dark" ErrorText="Red" />
       </FluentTheme.Palettes>
     </FluentTheme>
-		<StyleInclude Source="Styles/AppDefaultStyles.axaml" />
-		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 		<dialogHostAvalonia:DialogHostStyles />
-		<StyleInclude Source="Styles/MainWindowStyles.axaml"/>
-		<StyleInclude Source="Styles/DialogHostStyleOverride.axaml"/>
-		<StyleInclude Source="Styles/OrderRentalStyles.axaml"/>
-		<StyleInclude Source="Styles/DashboardStyles.axaml"/>
+		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+		<StyleInclude Source="Styles/AppStyles.axaml"/>
 	</Application.Styles>
 
 	<Application.Resources>

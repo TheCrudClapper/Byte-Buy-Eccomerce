@@ -17,8 +17,9 @@ public partial class DeliveryCarriersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IDeliveryCarrierService service,
-    INotificationService notificationService)
-    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(navigation, dialogNavigation, service, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(navigation, dialogNavigation, service, notificationService, loadingService)
 {
     #region Filtration Fields
 
@@ -28,7 +29,7 @@ public partial class DeliveryCarriersViewModel(
     [ObservableProperty]
     public string? code;
     #endregion
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new DeliveryCarriersListQuery
         {

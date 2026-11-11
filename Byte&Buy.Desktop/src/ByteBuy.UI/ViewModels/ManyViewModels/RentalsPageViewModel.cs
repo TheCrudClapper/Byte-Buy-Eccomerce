@@ -41,12 +41,13 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
         INavigationService navigation,
         IDialogService dialogNavigation,
         IRentalService service,
-        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Rentals;
     }
 
-    public async override Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new RentalListQuery
         {

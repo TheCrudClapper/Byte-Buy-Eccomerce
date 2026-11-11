@@ -8,10 +8,6 @@
 			 x:Class="ByteBuy.UI.Views.Dialogs.CategoryDialogView"
 			 x:DataType="vm:CategoryDialogViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
 			MinHeight="200" MinWidth="400">
 		<Grid RowDefinitions="30,*,*">

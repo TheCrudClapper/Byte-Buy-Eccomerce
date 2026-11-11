@@ -17,8 +17,9 @@ public partial class SaleOffersViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     ISaleOfferService service,
-    INotificationService notificationService)
-    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(navigation, dialogNavigation, service, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(navigation, dialogNavigation, service, notificationService, loadingService)
 {
     #region Filtration fields
 
@@ -54,7 +55,7 @@ public partial class SaleOffersViewModel(
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new SaleOfferListQuery
         {

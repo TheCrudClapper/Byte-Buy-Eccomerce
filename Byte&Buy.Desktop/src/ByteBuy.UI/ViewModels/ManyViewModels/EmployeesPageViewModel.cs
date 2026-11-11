@@ -31,12 +31,13 @@ public partial class EmployeesPageViewModel
         INavigationService navigation,
         IDialogService dialogNavigation,
         IEmployeeService service,
-        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Employees;
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new EmployeeListQuery
         {

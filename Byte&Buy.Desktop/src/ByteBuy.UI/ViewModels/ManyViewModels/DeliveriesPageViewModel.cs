@@ -17,8 +17,9 @@ public partial class DeliveriesPageViewModel(
     INavigationService navigation,
     IDialogService dialogNavigation,
     IDeliveryService deliveryService,
-    INotificationService notificationService)
-    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(navigation, dialogNavigation, deliveryService, notificationService)
+    INotificationService notificationService,
+    ILoadingService loadingService)
+    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(navigation, dialogNavigation, deliveryService, notificationService, loadingService)
 {
     #region Filtration Fields
 
@@ -48,7 +49,7 @@ public partial class DeliveriesPageViewModel(
         }
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var queryParams = new DeliveryListQuery
         {

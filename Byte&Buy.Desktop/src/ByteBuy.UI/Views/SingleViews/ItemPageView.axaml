@@ -9,11 +9,6 @@
 			 x:Class="ByteBuy.UI.Views.ItemPageView"
 			 x:DataType="vm:ItemPageViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/VerticalFormStyles.axaml" />
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Grid>
 		<ScrollViewer>
 			<Grid RowDefinitions="auto, auto" Margin="0,0,30,30">

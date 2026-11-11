@@ -6,11 +6,7 @@
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:Class="ByteBuy.UI.Views.Dialogs.ConditionDialogView"
-			 x:DataType="vm:ConditionDialogViewModel"
-			 >
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
+			 x:DataType="vm:ConditionDialogViewModel">
 
 	<Border CornerRadius="2"
 			BorderThickness="2"

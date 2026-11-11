@@ -7,11 +7,6 @@
 			 x:Class="ByteBuy.UI.Views.Shared.PermissionGrantRevokeView"
 			 x:DataType="vm:PermissionListBoxViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
-
 	<Grid RowDefinitions="20,*">
 		<Grid Grid.Row="0" ColumnDefinitions="10*, 50*, 20*, 20*">
 			<TextBlock FontFamily="RalewayBold" Grid.Column="0" HorizontalAlignment="Left" Text="Nr."/>

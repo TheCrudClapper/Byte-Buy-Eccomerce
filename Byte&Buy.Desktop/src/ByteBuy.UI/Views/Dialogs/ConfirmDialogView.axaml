@@ -7,9 +7,6 @@
 			 mc:Ignorable="d"
 			 x:Class="ByteBuy.UI.Views.Dialogs.ConfirmDialogView"
 			 x:DataType="vm:ConfirmationDialogViewModel">
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
 
 	<Border CornerRadius="2"
 			BorderThickness="2"

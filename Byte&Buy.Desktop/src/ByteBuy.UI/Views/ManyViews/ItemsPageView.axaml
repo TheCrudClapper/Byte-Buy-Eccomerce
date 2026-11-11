@@ -9,11 +9,6 @@
 			 x:Class="ByteBuy.UI.Views.ItemsPageView"
 			 x:DataType="vm:ItemsPageViewModel">
 
-
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Grid>
 		<Grid RowDefinitions="50, auto, *,50">
 

@@ -41,12 +41,13 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         INavigationService navigation,
         IDialogService dialogNavigation,
         IOrderService service,
-        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Orders;
     }
 
-    public override async Task LoadDataAsync()
+    protected override async Task LoadDataCoreAsync()
     {
         var query = new OrderListQuery
         {
