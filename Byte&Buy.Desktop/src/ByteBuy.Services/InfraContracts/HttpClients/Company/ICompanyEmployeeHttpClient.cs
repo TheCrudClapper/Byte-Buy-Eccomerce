@@ -15,5 +15,5 @@ public interface ICompanyEmployeeHttpClient
     Task<Result<EmployeeResponse>> GetByIdAsync(Guid id);
     Task<Result<UpdatedResponse>> PutEmployeeAsync(Guid id, EmployeeUpdateRequest request);
     Task<Result> DeleteByIdAsync(Guid id);
-    Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query);
+    Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query, CancellationToken cancellationToken = default);
 }

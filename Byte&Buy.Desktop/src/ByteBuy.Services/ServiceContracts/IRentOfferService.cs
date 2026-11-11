@@ -11,5 +11,5 @@ public interface IRentOfferService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(RentOfferAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request);
     Task<Result<RentOfferResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query);
+    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query, CancellationToken cancellationToken = default);
 }

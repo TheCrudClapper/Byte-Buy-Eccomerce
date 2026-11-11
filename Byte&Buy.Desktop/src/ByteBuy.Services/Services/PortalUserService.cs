@@ -20,8 +20,8 @@ public class PortalUserService(ICompanyPortalUserHttpClient portalUserHttpClient
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId)
         => await portalUserHttpClient.GetByIdAsync(userId);
 
-    public async Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query)
-        => await portalUserHttpClient.GetListAsync(query);
+    public async Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query, CancellationToken cancellationToken = default)
+        => await portalUserHttpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid userId, PortalUserUpdateRequest request)
         => await portalUserHttpClient.PutPortalUserAsync(userId, request);

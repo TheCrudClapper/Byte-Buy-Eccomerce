@@ -17,8 +17,8 @@ public class DeliveryCarrierService(ICompanyDeliveryCarrierHttpClient httpClient
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await httpClient.DeleteAsync(id);
 
-    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);

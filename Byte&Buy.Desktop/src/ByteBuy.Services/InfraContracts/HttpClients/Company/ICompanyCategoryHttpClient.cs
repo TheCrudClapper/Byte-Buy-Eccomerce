@@ -8,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyCategoryHttpClient
 {
-    Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query);
+    Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query, CancellationToken cancellationToken = default);
     Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId);
     Task<Result<CreatedResponse>> PostCategoryAsync(CategoryAddRequest request);
     Task<Result<UpdatedResponse>> PutCategoryAsync(Guid categoryId, CategoryUpdateRequest request);

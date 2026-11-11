@@ -23,10 +23,10 @@ public class CompanyRentOffersHttpClient(IBackendHttpClientFactory factory, IOpt
     public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id)
         => await GetAsync<RentOfferResponse>($"{resource}/{id}");
 
-    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query)
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<RentOfferListResponse>>(url);
+        return await GetAsync<PagedList<RentOfferListResponse>>(url, cancellationToken);
     }
 
     public async Task<Result<CreatedResponse>> PostRentOfferAsync(RentOfferAddRequest request)

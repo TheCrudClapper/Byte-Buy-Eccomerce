@@ -12,5 +12,5 @@ public interface IPermissionService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(PermissionAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PermissionUpdateRequest request);
     Task<Result<PermissionResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams);
+    Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams, CancellationToken cancellationToken = default);
 }

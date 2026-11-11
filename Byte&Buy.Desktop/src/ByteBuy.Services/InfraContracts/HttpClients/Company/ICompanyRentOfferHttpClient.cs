@@ -12,5 +12,5 @@ public interface ICompanyRentOfferHttpClient
     Task<Result<CreatedResponse>> PostRentOfferAsync(RentOfferAddRequest request);
     Task<Result> DeleteByIdAsync(Guid id);
     Task<Result<UpdatedResponse>> PutRentOfferAsync(Guid id, RentOfferUpdateRequest request);
-    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query);
+    Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query, CancellationToken cancellationToken = default);
 }

@@ -11,5 +11,5 @@ public interface ISaleOfferService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(SaleOfferAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request);
     Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query);
+    Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query, CancellationToken cancellationToken = default);
 }

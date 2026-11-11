@@ -10,7 +10,7 @@ public interface ICompanyItemHttpClient
 {
     Task<Result<CreatedResponse>> PostCompanyItemAsync(MultipartContent request);
     Task<Result<UpdatedResponse>> PutCompanyItemAsync(Guid id, MultipartContent request);
-    Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query);
+    Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query, CancellationToken cancellationToken = default);
     Task<Result> DeleteCompanyItemAsync(Guid id);
     Task<Result<ItemResponse>> GetByIdAsync(Guid id);
 }

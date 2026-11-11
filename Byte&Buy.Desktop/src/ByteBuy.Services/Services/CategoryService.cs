@@ -20,8 +20,8 @@ public class CategoryService(ICompanyCategoryHttpClient httpClient, IPublicCateg
     public async Task<Result<CategoryResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await publicClient.GetSelectListAsync();

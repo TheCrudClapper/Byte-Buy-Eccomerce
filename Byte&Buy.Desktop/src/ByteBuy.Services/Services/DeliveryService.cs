@@ -28,8 +28,8 @@ public class DeliveryService(ICompanyDeliveryHttpClient httpClient, IPublicDeliv
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetDeliveryChannelsSelectListAsync()
         => await httpClient.GetDeliveryChannelsListAsync();
 
-    public async Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<int>>>> GetParcelLockerSizesSelectListAsync()
         => await httpClient.GetParcelLockerSizeListAsync();

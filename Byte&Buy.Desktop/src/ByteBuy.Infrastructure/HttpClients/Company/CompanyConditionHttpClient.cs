@@ -28,9 +28,9 @@ public class CompanyConditionHttpClient(IBackendHttpClientFactory factory, IOpti
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<ConditionResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query)
+    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<ConditionListResponse>>(url);
+        return await GetAsync<PagedList<ConditionListResponse>>(url, cancellationToken);
     }
 }

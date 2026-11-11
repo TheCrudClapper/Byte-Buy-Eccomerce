@@ -38,9 +38,9 @@ public class CompanyEmployeeHttpClient(IBackendHttpClientFactory factory, IOptio
     public Task<Result> DeleteByIdAsync(Guid employeeId)
         => DeleteAsync($"{resource}/{employeeId}");
 
-    public Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query)
+    public Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return GetAsync<PagedList<EmployeeListResponse>>(url);
+        return GetAsync<PagedList<EmployeeListResponse>>(url, cancellationToken);
     }
 }

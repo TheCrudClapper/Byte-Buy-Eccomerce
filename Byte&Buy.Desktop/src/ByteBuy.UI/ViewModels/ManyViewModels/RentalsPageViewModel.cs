@@ -61,7 +61,7 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
             RentalEndPeriod = RentalEndPeriod,
         };
 
-        var result = await Service.GetCompanyRentalsListAsync(query);
+        var result = await Service.GetCompanyRentalsListAsync(query, Token);
         if (!result.Success)
         {
             NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading rentals.");

@@ -19,8 +19,8 @@ public class SaleOfferService(ICompanySaleOfferHttpClient httpClient) : ISaleOff
     public async Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, SaleOfferUpdateRequest request)
         => await httpClient.PutRentOfferAsync(id, request);

@@ -23,10 +23,10 @@ public class CompanySaleOfferHttpClient(IBackendHttpClientFactory factory, IOpti
     public async Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id)
         => await GetAsync<SaleOfferResponse>($"{resource}/{id}");
 
-    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query)
+    public async Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<SaleOfferListResponse>>(url);
+        return await GetAsync<PagedList<SaleOfferListResponse>>(url, cancellationToken);
     }
 
     public async Task<Result<CreatedResponse>> PostSaleOfferAsync(SaleOfferAddRequest request)

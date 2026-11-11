@@ -9,7 +9,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 public interface ICompanyDeliveryCarrierHttpClient
 {
     Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
-    Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query);
+    Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query, CancellationToken cancellationToken = default);
     Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid carrierId);
     Task<Result<CreatedResponse>> PostCarrierAsync(DeliveryCarrierAddRequest request);
     Task<Result<UpdatedResponse>> PutCarrierAsync(Guid carrierId, DeliveryCarrierUpdateRequest request);

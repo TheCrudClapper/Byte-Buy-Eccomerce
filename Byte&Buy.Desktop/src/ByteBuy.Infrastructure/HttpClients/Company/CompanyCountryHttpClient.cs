@@ -29,9 +29,9 @@ public class CompanyCountryHttpClient(IBackendHttpClientFactory factory, IOption
     public async Task<Result> DeleteAsync(Guid countryId)
        => await DeleteAsync($"{resource}/{countryId}");
 
-    public async Task<Result<PagedList<CountryResponse>>> GetCountryListAsync(CountryListQuery query)
+    public async Task<Result<PagedList<CountryResponse>>> GetCountryListAsync(CountryListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<CountryResponse>>(url);
+        return await GetAsync<PagedList<CountryResponse>>(url, cancellationToken);
     }
 }

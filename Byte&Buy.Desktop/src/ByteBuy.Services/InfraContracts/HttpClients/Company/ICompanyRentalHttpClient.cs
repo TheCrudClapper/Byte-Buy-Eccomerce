@@ -8,6 +8,6 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyRentalHttpClient
 {
-    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query);
+    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query, CancellationToken cancellationToken = default);
     Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId);
 }

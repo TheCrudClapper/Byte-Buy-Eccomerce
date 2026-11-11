@@ -11,6 +11,6 @@ public interface ICountryService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(CountryAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, CountryUpdateRequest request);
     Task<Result<CountryResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<CountryResponse>>> GetListAsync(CountryListQuery query);
+    Task<Result<PagedList<CountryResponse>>> GetListAsync(CountryListQuery query, CancellationToken cancellationToken = default);
     Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync();
 }

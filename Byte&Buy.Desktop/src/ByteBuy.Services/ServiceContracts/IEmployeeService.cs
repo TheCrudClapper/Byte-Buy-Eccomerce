@@ -9,7 +9,7 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IEmployeeService : IBaseService
 {
-    Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query);
+    Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query, CancellationToken cancellationToken = default);
     Task<Result<EmployeeProfileResponse>> GetCurrentEmployeeDetailsAsync();
     Task<Result> ChangePasswordAsync(PasswordChangeRequest request);
     Task<Result<UpdatedResponse>> UpdateCurrentEmployeeAddressAsync(EmployeeAddressUpdateRequest request);

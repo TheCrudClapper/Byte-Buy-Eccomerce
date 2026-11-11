@@ -60,7 +60,7 @@ public partial class DeliveriesPageViewModel(
             PriceTo = PriceTo,
         };
 
-        var result = await Service.GetListAsync(queryParams);
+        var result = await Service.GetListAsync(queryParams, Token);
         if (!result.Success)
         {
             NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading deliveries.");

@@ -21,8 +21,8 @@ public class ConditionService(ICompanyConditionHttpClient httpClient, IPublicCon
     public async Task<Result<ConditionResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await publicClient.GetSelectListAsync();

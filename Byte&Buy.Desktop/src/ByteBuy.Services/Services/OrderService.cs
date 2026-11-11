@@ -18,8 +18,8 @@ public class OrderService(ICompanyOrderHttpClient httpClient) : IOrderService
     public async Task<Result<UpdatedResponse>> DeliverOrderAsync(Guid orderId)
         => await httpClient.DeliverOrderAsync(orderId);
 
-    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrderListAsync(OrderListQuery query, CancellationToken ct = default)
-        => await httpClient.GetCompanyOrdersListAsync(query);
+    public async Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrderListAsync(OrderListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetCompanyOrdersListAsync(query, cancellationToken);
 
     public async Task<Result<OrderDetailsResponse>> GetOrderDetailsAsync(Guid orderId)
         => await httpClient.GetCompanyOrderDetailsAsync(orderId);

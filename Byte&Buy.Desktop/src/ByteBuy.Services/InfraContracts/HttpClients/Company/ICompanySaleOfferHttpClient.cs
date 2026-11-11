@@ -12,5 +12,5 @@ public interface ICompanySaleOfferHttpClient
     Task<Result<SaleOfferResponse>> GetByIdAsync(Guid id);
     Task<Result> DeleteByIdAsync(Guid id);
     Task<Result<UpdatedResponse>> PutRentOfferAsync(Guid id, SaleOfferUpdateRequest request);
-    Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query);
+    Task<Result<PagedList<SaleOfferListResponse>>> GetListAsync(SaleOfferListQuery query, CancellationToken cancellationToken = default);
 }

@@ -23,10 +23,10 @@ public class CompanyPermissionHttpClient(IBackendHttpClientFactory factory, IOpt
     public async Task<Result<PermissionResponse>> GetByIdAsync(Guid id)
         => await GetAsync<PermissionResponse>($"{resource}/{id}");
 
-    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams)
+    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString(resource, queryParams);
-        return await GetAsync<PagedList<PermissionResponse>>(url);
+        return await GetAsync<PagedList<PermissionResponse>>(url, cancellationToken);
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()

@@ -25,13 +25,17 @@ public abstract class HttpClientBase
         };
     }
 
-    protected async Task<Result> GetAsync(string resource)
+    protected async Task<Result> GetAsync(string resource, CancellationToken cancellationToken = default)
     {
         try
         {
             using var client = CreateClient();
-            using var response = await client.GetAsync(resource);
-            return await HandleResponseAsync(response);
+            using var response = await client.GetAsync(resource, cancellationToken);
+            return await HandleResponseAsync(response, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return Result.Fail(ApiErrors.OperationCanceled);
         }
         catch (Exception)
         {
@@ -39,13 +43,17 @@ public abstract class HttpClientBase
         }
     }
 
-    protected async Task<Result<T>> GetAsync<T>(string resource)
+    protected async Task<Result<T>> GetAsync<T>(string resource, CancellationToken cancellationToken = default)
     {
         try
         {
             using var client = CreateClient();
-            using var response = await client.GetAsync(resource);
-            return await HandleResponseAsync<T>(response);
+            using var response = await client.GetAsync(resource, cancellationToken);
+            return await HandleResponseAsync<T>(response, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch (Exception)
         {
@@ -140,19 +148,23 @@ public abstract class HttpClientBase
         }
     }
 
-    private async Task<Result<T>> HandleResponseAsync<T>(HttpResponseMessage response)
+    private async Task<Result<T>> HandleResponseAsync<T>(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
 
         if (response.IsSuccessStatusCode)
         {
             try
             {
-                var payload = await response.Content.ReadFromJsonAsync<T>(_jsonOptions);
+                var payload = await response.Content.ReadFromJsonAsync<T>(_jsonOptions, cancellationToken);
 
                 if (payload is null)
                     return Result<T>.Fail(ApiErrors.FetchedResourceIsNull);
 
                 return Result<T>.Ok(payload);
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -160,16 +172,16 @@ public abstract class HttpClientBase
             }
         }
 
-        var error = await ExtractErrorAsync(response);
+        var error = await ExtractErrorAsync(response, cancellationToken);
         return Result<T>.Fail(error);
     }
 
-    private async Task<Result> HandleResponseAsync(HttpResponseMessage response)
+    private async Task<Result> HandleResponseAsync(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
         if (response.IsSuccessStatusCode)
             return Result.Ok();
 
-        Error error = await ExtractErrorAsync(response);
+        Error error = await ExtractErrorAsync(response, cancellationToken);
         return Result.Fail(error);
     }
 
@@ -179,7 +191,7 @@ public abstract class HttpClientBase
         return new StringContent(json, Encoding.UTF8, "application/json");
     }
 
-    private async Task<Error> ExtractErrorAsync(HttpResponseMessage response)
+    private async Task<Error> ExtractErrorAsync(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -188,15 +200,19 @@ public abstract class HttpClientBase
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                var body = await response.Content.ReadAsStringAsync();
+                var body = await response.Content.ReadAsStringAsync(cancellationToken);
                 return new Error($"Wrong credentials, try again.");
             }
 
-            var details = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+            var details = await response.Content.ReadFromJsonAsync<ProblemDetails>(_jsonOptions, cancellationToken);
             if (details is null)
                 return ApiErrors.UnknownError;
 
             return new Error(details.Detail);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
         }
         catch
         {

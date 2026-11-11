@@ -8,6 +8,6 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IRentalService : IBaseService
 {
-    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query);
+    Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query, CancellationToken cancellationToken = default);
     Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId);
 }

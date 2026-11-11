@@ -106,6 +106,9 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             await LoadingService.ShowAsync("Loading data...");
             await LoadDataCoreAsync();
         }
+        catch (OperationCanceledException) when (Token.IsCancellationRequested)
+        {
+        }
         finally
         {
             await LoadingService.HideAsync();
