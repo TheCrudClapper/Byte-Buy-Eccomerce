@@ -33,6 +33,7 @@
 						Grid.Column="1"
 						HorizontalAlignment="Right">
 						<Button
+							IsEnabled="{Binding !LoadingService.IsLoading}"
 							Classes.menuButton="true"
 							Classes.active = "{Binding IsProfilePageActive}"
 							Command="{Binding GoToProfileCommand}">
@@ -49,6 +50,7 @@
 						<StackPanel Margin="5,0" Grid.Row="0" x:Name="SidebarStackPanel">
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToDashboardCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active="{Binding IsDashboardPageActive}">
@@ -61,6 +63,7 @@
 
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToAdministrationCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsAdministrationPageActive}">
@@ -72,6 +75,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToEmployeesCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsEmployeesPageActive}">
@@ -83,6 +87,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToPortalUsersCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsPortalUsersPageActive}">
@@ -94,6 +99,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToRolesCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsRolesPageActive}">
@@ -105,6 +111,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToPermissionsCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsPermissionsPageActive}">
@@ -116,6 +123,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToOrdersCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsOrdersPageActive}">
@@ -127,6 +135,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToRentalsCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsRentalsPageActive}">
@@ -138,6 +147,7 @@
 							</Button>
 
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Command="{Binding GoToCompanyDetailsCommand}"
 								Classes.sidebarMenuButton="true"
 								Classes.active = "{Binding IsCompanyPageActive}">
@@ -151,6 +161,7 @@
 
 						<Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="*,*">
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Margin="5"
 								Grid.Column="0"
 								Classes="menuButton"
@@ -161,6 +172,7 @@
 									Height="20" Width="20" />
 							</Button>
 							<Button
+								IsEnabled="{Binding !LoadingService.IsLoading}"
 								Margin="5"
 								Grid.Column="1"
 								Classes="menuButton"
