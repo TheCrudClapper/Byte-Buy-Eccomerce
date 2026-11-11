@@ -198,5 +198,6 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
                SetActive(_navigation.CurrentPage!.PageName);
            }
        };
+       GC.SuppressFinalize(this);
     }
 }

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemPageViewModel : ViewModelSingle
+public partial class ItemPageViewModel : ViewModelSingle, IDisposable
 {
     #region MVVM Fields
     [ObservableProperty]
@@ -73,13 +73,15 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly IImageService _imageService;
     private readonly IDialogService _dialogService;
     private readonly INotificationService _notificationService;
+    private readonly ILoadingService _loadingService;
     public ItemPageViewModel(
         IItemService itemService,
         IConditionService conditionService,
         ICategoryService categoryService,
         IDialogService dialogService,
         IImageService imageService,
-        INotificationService notificationService)
+        INotificationService notificationService,
+        ILoadingService loadingService)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
@@ -87,6 +89,7 @@ public partial class ItemPageViewModel : ViewModelSingle
         _dialogService = dialogService;
         _imageService = imageService;
         _notificationService = notificationService;
+        _loadingService = loadingService;
         Images.CollectionChanged += OnImagesCollectionChanged;
     }
 
@@ -110,31 +113,40 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         EditingItemId = id;
         IsEditMode = true;
-        await InitializeAsync();
 
-        var result = await _itemService.GetByIdAsync(id);
-        if (!result.Success)
+        try
         {
-            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the item.");
-            return;
+            await _loadingService.ShowAsync("Loading item data...");
+            await InitializeAsync();
+
+            var result = await _itemService.GetByIdAsync(id);
+            if (!result.Success)
+            {
+                _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the item.");
+                return;
+            }
+
+            ItemMappings.MapFromResponse(this, result.Value);
+
+            Images.Clear();
+
+            var tasks = result.Value.Images.Select(async img =>
+            {
+                var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
+                if (bytes is null) return;
+
+                using var ms = new MemoryStream(bytes);
+                var bmp = new Bitmap(ms);
+
+                Images.Add(new ImageViewModel(img.Id, img.ImagePath, img.AltText, bmp));
+            });
+
+            await Task.WhenAll(tasks);
         }
-
-        ItemMappings.MapFromResponse(this, result.Value);
-
-        Images.Clear();
-
-        var tasks = result.Value.Images.Select(async img =>
+        finally
         {
-            var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
-            if (bytes is null) return;
-
-            using var ms = new MemoryStream(bytes);
-            var bmp = new Bitmap(ms);
-
-            Images.Add(new ImageViewModel(img.Id, img.ImagePath, img.AltText, bmp));
-        });
-
-        await Task.WhenAll(tasks);
+            await _loadingService.HideAsync();
+        }
     }
 
     protected override async Task AddAsync()
@@ -249,5 +261,11 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         DescriptionCharCount = value.Length;
         ValidateProperty(value, nameof(Description));
+    }
+
+    public void Dispose()
+    {
+        Images.CollectionChanged -= OnImagesCollectionChanged;
+        GC.SuppressFinalize(this);
     }
 }

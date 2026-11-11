@@ -70,7 +70,7 @@ public partial class ItemsPageViewModel(INavigationService navigation,
     {
         try
         {
-            loadingService.Show("Loading warehouse items...");
+            await loadingService.ShowAsync("Loading warehouse items...");
             var query = new ItemListQuery
             {
                 PageNumber = PageNumber,
@@ -91,7 +91,7 @@ public partial class ItemsPageViewModel(INavigationService navigation,
         }
         finally
         {
-            loadingService.Hide();
+            await loadingService.HideAsync();
         }
     }
 
