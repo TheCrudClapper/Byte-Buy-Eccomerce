@@ -6,4 +6,5 @@ namespace ByteBuy.Services.ServiceContracts;
 public interface IAuthService
 {
     Task<Result> LoginAsync(LoginRequest request);
+    void Logout();
 }

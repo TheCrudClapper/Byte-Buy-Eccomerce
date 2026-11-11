@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { UserOrderListResponse } from '../../../../../core/dto/order/common/user-order-list-response';
 import { OrderApiService } from '../../../../../core/clients/orders/order-api-service';
 import { ProblemDetails } from '../../../../../core/dto/problem-details';
@@ -21,6 +21,7 @@ import { DialogService } from '../../../../../shared/services/dialog-service/dia
   imports: [DecimalPipe, DatePipe, RouterLink, EmptyState, Pagination, OrderStatusComponent],
   templateUrl: './my-orders.html',
   styleUrl: './my-orders.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 

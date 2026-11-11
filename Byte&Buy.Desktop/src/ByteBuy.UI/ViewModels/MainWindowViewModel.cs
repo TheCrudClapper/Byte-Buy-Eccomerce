@@ -1,10 +1,13 @@
-﻿using ByteBuy.UI.Data;
+﻿using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Data;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.ManyViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -76,7 +79,7 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
     private void SetActive(ApplicationPageNames page)
     {
         IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
-        IsEmployeesPageActive = page  == ApplicationPageNames.Employees;
+        IsEmployeesPageActive = page == ApplicationPageNames.Employees;
         IsRolesPageActive = page == ApplicationPageNames.Roles;
         IsPermissionsPageActive = page == ApplicationPageNames.Permissions;
         IsAdministrationPageActive = page == ApplicationPageNames.Administration;
@@ -111,7 +114,6 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
         if (vm is DashboardPageViewModel dashVm)
             await dashVm.LoadDataAsync();
     });
-
     [RelayCommand]
     private async Task GoToCompanyDetails() => await _navigation.NavigateToAsync(ApplicationPageNames.CompanyInfo, async vm =>
     {

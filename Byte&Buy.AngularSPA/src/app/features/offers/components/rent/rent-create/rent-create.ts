@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { ReactiveFormsModule, FormGroup, Validators, FormControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
   imports: [ReactiveFormsModule, CommonModule, FormsModule, RouterLink],
   templateUrl: './rent-create.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: [
     './rent-create.scss',
     '../../../shared/styles/offers-shared-styles.scss']

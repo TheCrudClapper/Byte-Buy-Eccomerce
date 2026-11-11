@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { UsersApiService } from '../../../../core/clients/portal-user/users-api-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PortalUserApiService } from '../../../../core/clients/portal-user/portal-user-api-service';
@@ -14,6 +14,7 @@ import { ProblemDetails } from '../../../../core/dto/problem-details';
   imports: [ReactiveFormsModule],
   templateUrl: './personal-info.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './personal-info.scss',
 })
 export class PersonalInfo implements OnInit {

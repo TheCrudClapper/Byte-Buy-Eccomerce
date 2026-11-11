@@ -1,4 +1,6 @@
-﻿using ByteBuy.UI.ViewModels;
+﻿using Avalonia.Controls.Notifications;
+using ByteBuy.UI.Services;
+using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.ManyViewModels;
 using ByteBuy.UI.ViewModels.Shared;
@@ -24,11 +26,11 @@ public static class DependencyInjection
     public static IServiceCollection AddUserInterfaceLayer(this IServiceCollection services)
     {
         //Singletons
-        services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<MainWindowViewModel>();
 
         //Windows
         services.AddTransient<LoginWindow>();
-        services.AddSingleton<MainWindow>();
+        services.AddTransient<MainWindow>();
 
         //Dialog Views
         services.AddTransient<CategoryDialogView>();
@@ -38,9 +40,7 @@ public static class DependencyInjection
         services.AddTransient<ConfirmDialogView>();
         services.AddTransient<OfferDialogView>();
         services.AddTransient<DeliveryCarrierDialogView>();
-
-        //Alert
-        services.AddTransient<AlertViewModel>();
+        services.AddTransient<SettingsDialogView>();
 
         //Pages View Models
         services.AddTransient<LoginWindowViewModel>();

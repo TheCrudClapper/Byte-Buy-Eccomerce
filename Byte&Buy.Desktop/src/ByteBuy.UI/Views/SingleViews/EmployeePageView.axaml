@@ -1,215 +1,250 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
-			 mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="1000"
-			 x:Class="ByteBuy.UI.Views.EmployeePageView"
-			 x:DataType="vm:EmployeePageViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
+             xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
+             mc:Ignorable="d" d:DesignWidth="1600" d:DesignHeight="1000"
+             x:Class="ByteBuy.UI.Views.EmployeePageView"
+             x:DataType="vm:EmployeePageViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
+    <UserControl.Styles>
+        <StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
+    </UserControl.Styles>
 
-	<Grid>
-		<Grid RowDefinitions="50,200,*"
-			  ColumnDefinitions="35*, 5*, 60*">
+    <Grid>
+        <Grid RowDefinitions="auto,*" ColumnDefinitions="380,24,*" Margin="0,10,30,30">
 
-			<!--Page Title-->
-			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Employee"/>
+            <!--Page Title-->
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                       Classes="pageTitle" Text="Employee" Margin="0,0,0,20"/>
 
-			<!-- Profile Picture Section -->
-			<Border Grid.Row="1"
-					Classes="sectionBorder"
-					VerticalAlignment="Top"
-					Padding="20"
-					Grid.Column="0">
-				<StackPanel>
-					<Border Background="{DynamicResource ButtonGradient}"
-							CornerRadius="10"
-							BorderBrush="{DynamicResource PrimaryAccentBrush}"
-							BorderThickness="1">
-						<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
-							   Height="150"
-							   Width="150" />
-					</Border>
-				</StackPanel>
-			</Border>
+            <!-- LEFT: profile + permissions -->
+            <Grid Grid.Row="1" Grid.Column="0" RowDefinitions="auto,20,*">
 
-			<!-- Permissions Section -->
-			<Border Grid.Row="2"
-					Classes="sectionBorder"
-					Padding="20"
-					Grid.Column="0">
-				<Grid RowDefinitions="50, *" ColumnDefinitions="5*, 1*, 94*">
-					<Image Grid.Row="0" Grid.Column="0"
-						   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-						   Height="10"
-						   Width="10" />
-					<TextBlock Grid.Row="0"
-							   Grid.Column="2"
-							   Text="Permissions"
-							   VerticalAlignment="Center"
-							   Classes="sectionLabel" />
-					<views:PermissionGrantRevokeView
-					Grid.Column="0"
-					Grid.Row="1"
-					Grid.ColumnSpan="3"
-					DataContext="{Binding PermissionListBox}" />
-				</Grid>
-			</Border>
+                <!-- Profile card -->
+                <Border Classes="sectionBorder" Padding="24">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="20">
+                        <Border Background="{DynamicResource ButtonGradient}"
+                                CornerRadius="16"
+                                BorderBrush="{DynamicResource PrimaryAccentBrush}"
+                                BorderThickness="1"
+                                Width="104" Height="104">
+                            <Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
+                                   Height="64" Width="64" />
+                        </Border>
 
-			<!-- Form Section -->
-			<Border Grid.Row="1"
-					Grid.RowSpan="2"
-					Classes="sectionBorder"
-					Padding="20"
-					Grid.Column="2">
-				<ScrollViewer Padding="0,0,20,0">
-					<StackPanel>
-						<Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70">
-							<StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
-								<Image VerticalAlignment="Center"
-									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-									   Classes="sectionMarker"/>
-								<TextBlock Text="Personal Information" Classes="sectionLabel" VerticalAlignment="Center"/>
-							</StackPanel>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Classes="sectionLabel" Text="{Binding FirstName}"/>
+                                <TextBlock Classes="sectionLabel" Text="{Binding LastName}"/>
+                            </StackPanel>
+                            <TextBlock Classes="textBoxLabel"
+                                       Foreground="{DynamicResource TextMutedBrush}"
+                                       TextTrimming="CharacterEllipsis"
+                                       Text="{Binding Email}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
 
-							<StackPanel Grid.Row="1" Grid.Column="0">
-								<TextBlock Text="First Name" Classes="textBoxLabel"  />
-								<TextBox Text="{Binding FirstName}" />
-							</StackPanel>
+                <!-- Permissions card -->
+                <Border Grid.Row="2" Classes="sectionBorder" Padding="24">
+                    <Grid RowDefinitions="auto,16,*">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Classes="sectionMarker" VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+                            <TextBlock Classes="sectionLabel" Text="Permissions" VerticalAlignment="Center"/>
+                        </StackPanel>
 
-							<StackPanel Grid.Row="1" Grid.Column="2">
-								<TextBlock Text="Last Name" Classes="textBoxLabel"  />
-								<TextBox Text="{Binding LastName}" />
-							</StackPanel>
+                        <views:PermissionGrantRevokeView
+                            Grid.Row="2"
+                            DataContext="{Binding PermissionListBox}" />
+                    </Grid>
+                </Border>
+            </Grid>
 
-							<StackPanel Grid.Row="2" Grid.Column="0">
-								<TextBlock Text="Email" Classes="textBoxLabel"  />
-								<TextBox Text="{Binding Email}" />
-							</StackPanel>
+            <!-- RIGHT: form -->
+            
+                <Grid Grid.Row="1" Grid.Column="2"
+                      RowDefinitions="*,auto"
+                      RowSpacing="20">
 
-							<Grid Grid.Row="2" Grid.Column="2" RowDefinitions="Auto,*">
-								<TextBlock Text="Role" Classes="textBoxLabel"  />
-								<ComboBox Grid.Row="1"
-										  ItemsSource="{Binding Roles}"
-										  SelectedItem="{Binding SelectedRole, Mode=TwoWay}">
-									<ComboBox.ItemTemplate>
-										<DataTemplate>
-											<TextBlock Text="{Binding Title}" />
-										</DataTemplate>
-									</ComboBox.ItemTemplate>
-								</ComboBox>
-							</Grid>
+                    <ScrollViewer Grid.Row="0"
+                                  Padding="0,0,12,0"
+                                  Background="Transparent"
+                                  ScrollViewer.AllowAutoHide="False">
 
-						</Grid>
+                        <StackPanel Spacing="20">
 
-						<!-- Address Section -->
-						<Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
-							<StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
-								<Image VerticalAlignment="Center"
-									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-									   Classes="sectionMarker" />
-								<TextBlock Text="Address"
-										   Classes="sectionLabel"
-										   VerticalAlignment="Center" />
-							</StackPanel>
+                            <!-- Personal Information + Password -->
+                            <Border Classes="sectionBorder" Padding="28,24">
+                                <StackPanel Spacing="28">
 
-							<StackPanel Grid.Row="1" Grid.Column="0">
-								<TextBlock Text="City" Classes="textBoxLabel" />
-								<TextBox Text="{Binding City}" />
-							</StackPanel>
+                                    <!-- Personal Information -->
+                                    <StackPanel Spacing="14">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Image Classes="sectionMarker"
+                                                   VerticalAlignment="Center"
+                                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+                                            <TextBlock Text="Personal Information"
+                                                       Classes="sectionLabel"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
 
-							<StackPanel Grid.Row="1" Grid.Column="2">
-								<TextBlock Text="Street" Classes="textBoxLabel" />
-								<TextBox Text="{Binding Street}" />
-							</StackPanel>
+                                        <Grid ColumnDefinitions="*,*"
+                                              ColumnSpacing="20"
+                                              RowDefinitions="auto,auto"
+                                              RowSpacing="14">
 
-							<StackPanel Grid.Row="2" Grid.Column="0">
-								<TextBlock Text="House Number" Classes="textBoxLabel" />
-								<TextBox Text="{Binding HouseNumber}" />
-							</StackPanel>
+                                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="6">
+                                                <TextBlock Text="First Name" Classes="textBoxLabel"/>
+                                                <TextBox Text="{Binding FirstName}"/>
+                                            </StackPanel>
 
-							<StackPanel Grid.Row="2" Grid.Column="2">
-								<TextBlock Text="Flat Number" Classes="textBoxLabel" />
-								<TextBox Text="{Binding FlatNumber}" />
-							</StackPanel>
+                                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="6">
+                                                <TextBlock Text="Last Name" Classes="textBoxLabel"/>
+                                                <TextBox Text="{Binding LastName}"/>
+                                            </StackPanel>
 
-							<StackPanel Grid.Row="3" Grid.Column="0">
-								<TextBlock Text="Postal Code" Classes="textBoxLabel" />
-								<TextBox Text="{Binding PostalCode}" />
-							</StackPanel>
+                                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="6">
+                                                <TextBlock Text="Email" Classes="textBoxLabel"/>
+                                                <TextBox Text="{Binding Email}"/>
+                                            </StackPanel>
 
-							<StackPanel Grid.Row="3" Grid.Column="2">
-								<TextBlock Text="Postal City" Classes="textBoxLabel" />
-								<TextBox Text="{Binding PostalCity}" />
-							</StackPanel>
+                                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="6">
+                                                <TextBlock Text="Role" Classes="textBoxLabel"/>
+                                                <ComboBox HorizontalAlignment="Stretch"
+                                                          ItemsSource="{Binding Roles}"
+                                                          SelectedItem="{Binding SelectedRole, Mode=TwoWay}">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Title}"/>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
 
-							<StackPanel Grid.Row="4" Grid.Column="0">
-								<TextBlock Text="Country"
-										   Classes="textBoxLabel" />
-								<ComboBox
-								ItemsSource="{Binding Countries}"
-								SelectedItem="{Binding SelectedCountry, Mode=TwoWay}">
-									<ComboBox.ItemTemplate>
-										<DataTemplate>
-											<TextBlock Text="{Binding Title}" />
-										</DataTemplate>
-									</ComboBox.ItemTemplate>
-								</ComboBox>
-							</StackPanel>
+                                    <!-- Password -->
+                                    <StackPanel Spacing="14">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <Image Classes="sectionMarker"
+                                                   VerticalAlignment="Center"
+                                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+                                            <TextBlock Text="Password"
+                                                       Classes="sectionLabel"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
 
-							<StackPanel Grid.Row="4" Grid.Column="2">
-								<TextBlock Text="Phone Number" Classes="textBoxLabel" />
-								<TextBox Text="{Binding PhoneNumber}" />
-							</StackPanel>
-						</Grid>
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                                            <StackPanel Grid.Column="0" Spacing="6">
+                                                <TextBlock Text="Password" Classes="textBoxLabel"/>
+                                                <TextBox Text="{Binding Password}" PasswordChar="*"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
 
-						<Grid ColumnDefinitions="*,20,*" RowDefinitions="40,70,70,70,70">
-							<StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
-								<Image VerticalAlignment="Center"
-									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-									   Classes="sectionMarker" />
-								<TextBlock Text="Password"
-										   Classes="sectionLabel" VerticalAlignment="Center" />
-							</StackPanel>
+                                </StackPanel>
+                            </Border>
 
-							<StackPanel Grid.Row="1" Grid.Column="0">
-								<TextBlock Text="Password" Classes="textBoxLabel" />
-								<TextBox Text="{Binding Password}" PasswordChar="*" />
-							</StackPanel>
+                            <!-- Address -->
+                            <Border Classes="sectionBorder" Padding="28,24">
+                                <StackPanel Spacing="14">
 
-							<StackPanel Grid.Row="1"
-										Grid.Column="2"
-										HorizontalAlignment="Right"
-										Orientation="Horizontal"
-										VerticalAlignment="Center">
-								<Button
-								Command="{Binding ClearCommand}"
-								VerticalAlignment="Bottom"
-								Margin="5,0"
-								Content="Clear" />
-								<Button
-								Command="{Binding SaveCommand}"
-								VerticalAlignment="Bottom"
-								Content="Save" />
-							</StackPanel>
-						</Grid>
-					</StackPanel>
-				</ScrollViewer>
-			</Border>
-		</Grid>
-		<views:AlertView
-		DataContext="{Binding Alert}"
-		IsVisible="{Binding IsVisible}"
-		HorizontalAlignment="Right"
-		VerticalAlignment="Bottom"
-		Height="70"
-		Width="400"
-		Margin="0,
-		20,20,40"
-		ZIndex="10" />
-	</Grid>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Image Classes="sectionMarker"
+                                               VerticalAlignment="Center"
+                                               Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+                                        <TextBlock Text="Address"
+                                                   Classes="sectionLabel"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <Grid ColumnDefinitions="*,*"
+                                          ColumnSpacing="20"
+                                          RowDefinitions="auto,auto,auto,auto"
+                                          RowSpacing="14">
+
+                                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="6">
+                                            <TextBlock Text="City" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding City}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="0" Grid.Column="1" Spacing="6">
+                                            <TextBlock Text="Street" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding Street}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="6">
+                                            <TextBlock Text="House Number" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding HouseNumber}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="1" Grid.Column="1" Spacing="6">
+                                            <TextBlock Text="Flat Number" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding FlatNumber}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="0" Spacing="6">
+                                            <TextBlock Text="Postal Code" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding PostalCode}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="2" Grid.Column="1" Spacing="6">
+                                            <TextBlock Text="Postal City" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding PostalCity}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="3" Grid.Column="0" Spacing="6">
+                                            <TextBlock Text="Country" Classes="textBoxLabel"/>
+                                            <ComboBox HorizontalAlignment="Stretch"
+                                                      ItemsSource="{Binding Countries}"
+                                                      SelectedItem="{Binding SelectedCountry, Mode=TwoWay}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Title}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Row="3" Grid.Column="1" Spacing="6">
+                                            <TextBlock Text="Phone Number" Classes="textBoxLabel"/>
+                                            <TextBox Text="{Binding PhoneNumber}"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- Action bar (always visible) -->
+                    <Border Grid.Row="1"
+                            Classes="sectionBorder"
+                            Padding="20">
+
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Spacing="12">
+
+                            <Button Content="Clear"
+                                    MinWidth="100"
+                                    HorizontalContentAlignment="Center"
+                                    Command="{Binding ClearCommand}"/>
+
+                            <Button Content="Save"
+                                    Classes="accent"
+                                    MinWidth="100"
+                                    HorizontalContentAlignment="Center"
+                                    Command="{Binding SaveCommand}"/>
+
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

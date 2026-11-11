@@ -2,10 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public enum AlertType
+public enum NotificationType
 {
     Info = 0,
     Warning = 1,
@@ -13,79 +14,26 @@ public enum AlertType
     Success = 3
 };
 
-public partial class AlertViewModel : ObservableValidator
+public partial class NotificationViewModel : ObservableObject
 {
     [ObservableProperty] private string _title = string.Empty;
-
     [ObservableProperty] private string _message = string.Empty;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsInfo), nameof(IsWarning), nameof(IsError), nameof(IsSuccess))]
+    private NotificationType _type;
 
-    [ObservableProperty] private string _imagePath = string.Empty;
+    //Command that disposed the alert
+    public ICommand HideCommand { get; }
+    public bool IsInfo => Type == NotificationType.Info;
+    public bool IsWarning => Type == NotificationType.Warning;
+    public bool IsError => Type == NotificationType.Error;
+    public bool IsSuccess => Type == NotificationType.Success;
 
-    [ObservableProperty] private string _backgroundColor = string.Empty;
-
-    [ObservableProperty] private bool _isVisible;
-
-    private CancellationTokenSource? _autoHideCts;
-    public void Show(AlertType alertType, string message, int durationMs = 2000)
+    public NotificationViewModel(string title, string message, NotificationType type, ICommand hideCommand)
     {
-        _autoHideCts?.Cancel();
-        _autoHideCts = new CancellationTokenSource();
-
+        Title = title;
         Message = message;
-        Title = alertType.ToString();
-
-        switch (alertType)
-        {
-            case AlertType.Info:
-                BackgroundColor = "#5394fc";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/circle-info-solid-full.svg";
-                break;
-
-            case AlertType.Error:
-                BackgroundColor = "#EF4444";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/triangle-exclamation-solid-full.svg";
-                break;
-
-            case AlertType.Success:
-                BackgroundColor = "#22C55E";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/check-solid-full.svg";
-                break;
-
-            case AlertType.Warning:
-                BackgroundColor = "#f7e963";
-                ImagePath = "avares://ByteBuy.UI/Assets/Images/regular/exclamation-solid-full.svg";
-                break;
-        }
-
-        IsVisible = true;
-        _ = AutoHideAsync(durationMs, _autoHideCts.Token);
+        HideCommand = hideCommand;
+        Type = type;
     }
-
-    public void ShowErrorAlert(string message)
-        => Show(AlertType.Error, message);
-
-    public void ShowSuccessAlert(string message)
-        => Show(AlertType.Success, message);
-
-    [RelayCommand]
-    private void Hide()
-    {
-        _autoHideCts?.Cancel();
-        IsVisible = false;
-    }
-
-    private async Task AutoHideAsync(int durationMs, CancellationToken token)
-    {
-        try
-        {
-            await Task.Delay(durationMs, token);
-            if (!token.IsCancellationRequested)
-                IsVisible = false;
-        }
-        catch (TaskCanceledException)
-        {
-            //ignore
-        }
-    }
-
 }

@@ -1,18 +1,13 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using ByteBuy.UI.Data;
 using ByteBuy.UI.Factories;
 using ByteBuy.UI.ViewModels;
 using System.Linq;
-
 
 namespace ByteBuy.UI.Views;
 
 public partial class MainWindow : Window
 {
-    private readonly WindowFactory _windowFactory = null!;
-
-    //For designer
     public MainWindow()
     {
         InitializeComponent();
@@ -27,18 +22,9 @@ public partial class MainWindow : Window
             clicked.Classes.Add("active");
     }
 
-    public MainWindow(MainWindowViewModel vm, WindowFactory factory)
+    public MainWindow(MainWindowViewModel vm)
     {
         InitializeComponent();
-        _windowFactory = factory;
         DataContext = vm;
-        vm.Logout += OnLogout;
-    }
-
-    private void OnLogout()
-    {
-        var loginWindow = _windowFactory.GetWindow(ApplicationWindowNames.Login);
-        loginWindow.Show();
-        Hide();
     }
 }

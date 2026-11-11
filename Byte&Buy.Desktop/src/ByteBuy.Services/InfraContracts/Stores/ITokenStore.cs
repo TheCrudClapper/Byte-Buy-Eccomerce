@@ -3,5 +3,7 @@
 //runtime service that stores user auth token
 public interface ITokenStore
 {
-    string? AccessToken { get; set; }
+    string? AccessToken { get; }
+    void SetToken(string token);
+    void ClearToken();
 }

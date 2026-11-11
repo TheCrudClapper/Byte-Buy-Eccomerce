@@ -3,14 +3,13 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Order;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
@@ -39,10 +38,10 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
     #endregion
 
     public OrdersPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IOrderService service) : base(alert, navigation, dialogNavigation, service)
+        IOrderService service,
+        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
     {
         PageName = ApplicationPageNames.Orders;
     }
@@ -62,11 +61,13 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
         };
 
         var result = await Service.GetCompanyOrderListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading orders.");
             return;
+        }
 
-        ApplyPagination(value, (u, index) => u.ToListItem(index));
+        ApplyPagination(result.Value, (u, index) => u.ToListItem(index));
     }
 
     [RelayCommand]

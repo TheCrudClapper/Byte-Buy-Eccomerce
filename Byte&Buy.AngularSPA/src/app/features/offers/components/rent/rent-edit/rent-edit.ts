@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { UserRentOfferResponse } from '../../../../../core/dto/offers/rent/user-
   selector: 'app-rent-edit',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './rent-edit.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./rent-edit.scss',
     '../../../shared/styles/offers-shared-styles.scss'],
 })

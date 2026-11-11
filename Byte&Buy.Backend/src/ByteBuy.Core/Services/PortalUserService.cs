@@ -83,10 +83,10 @@ public class PortalUserService : IPortalUserService
 
         user.AttachCart(cartResult.Value.Id);
 
-        await _unitOfWork.BeginTransactionAsync();
-
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             var identityResult = await _userManager.CreateAsync(user, request.Password);
             if (!identityResult.Succeeded)
                 return identityResult.ToResult<CreatedResponse>();
@@ -135,10 +135,11 @@ public class PortalUserService : IPortalUserService
         if (updateResult.IsFailure)
             return Result.Failure<UpdatedResponse>(updateResult.Error);
 
-        await _unitOfWork.BeginTransactionAsync();
 
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             if (!string.IsNullOrWhiteSpace(request.Password))
             {
                 var validation = await _passwordService.ValidateAsync(user, request.Password);
@@ -178,10 +179,10 @@ public class PortalUserService : IPortalUserService
         if (userCart is null)
             return Result.Failure(CartErrors.NotFound);
 
-        await _unitOfWork.BeginTransactionAsync();
-
         try
         {
+            await _unitOfWork.BeginTransactionAsync();
+
             portalUser.Deactivate();
             userCart.Deactivate();
 

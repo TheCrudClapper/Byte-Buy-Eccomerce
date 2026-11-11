@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, ChangeDetectionStrategy } from '@angular/core';
 import { PrivateSeller } from '../../models/private-seller';
 import { CompanySeller } from '../../models/company-seller';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { API_ENDPOINTS } from '../../../../core/constants/api-constants';
   imports: [CommonModule],
   standalone: true,
   templateUrl: './seller-info.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./seller-info.scss',
     '../../shared/styles/offers-shared-styles.scss'
   ],

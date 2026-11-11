@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { OfferApiService } from '../../../../core/clients/offers/common/offer-api-service';
 import { UserPanelOfferUnion } from '../../../../core/dto/offers/common/user-panel-union';
 import { ToastService } from '../../../../shared/services/snackbar/toast-service';
@@ -21,6 +21,7 @@ import { Pagination } from "../../../../shared/components/pagination/pagination"
   imports: [DatePipe, DecimalPipe, RouterLink, EmptyState, Pagination],
   templateUrl: './my-offers.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './my-offers.scss',
 })
 export class MyOffers {

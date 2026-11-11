@@ -3,19 +3,17 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Items;
-using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService navigation,
+public partial class ItemsPageViewModel(INavigationService navigation,
     IDialogService dialogNavigation,
     IItemService service,
     INotificationService notificationService,
@@ -63,7 +61,7 @@ public partial class ItemsPageViewModel(AlertViewModel alert, INavigationService
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated published offer!");
+            NotificationService.ShowSuccess("Successfully updated published offer!");
             await LoadDataAsync();
         }
     }

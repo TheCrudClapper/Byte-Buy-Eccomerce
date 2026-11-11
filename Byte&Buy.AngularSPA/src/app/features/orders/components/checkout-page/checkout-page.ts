@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { AddressApiService } from '../../../../core/clients/address/address-api-service';
 import { ShippingAddressCheckout } from '../../../../core/dto/shipping-address/shipping-address-checkout';
@@ -23,6 +23,7 @@ import { PaymentMethod } from '../../../payment-gateway/models/payment-method';
   imports: [DecimalPipe, RouterLink],
   templateUrl: './checkout-page.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './checkout-page.scss',
 })
 export class CheckoutPage implements OnInit {

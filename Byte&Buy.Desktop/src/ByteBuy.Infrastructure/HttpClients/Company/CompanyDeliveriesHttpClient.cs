@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Delivery;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
@@ -12,8 +13,8 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyDeliveriesHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyDeliveryHttpClient
+public class CompanyDeliveriesHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyDeliveryHttpClient
 {
     private readonly string resource = options.Value.CompanyDeliveries;
 

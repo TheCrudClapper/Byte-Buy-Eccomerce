@@ -1,9 +1,11 @@
 ﻿using ByteBuy.Core.DTO.Public.Delivery;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ByteBuy.API.Controllers.Public;
 
 [Route("api/deliveries")]
 [ApiController]
+[AllowAnonymous]
 public class PublicDeliveryController : BaseApiController
 {
     private readonly IDeliveryService _deliveryService;

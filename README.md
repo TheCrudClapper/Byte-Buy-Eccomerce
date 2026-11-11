@@ -53,11 +53,16 @@
 3. Setup the backend
    - Create an empty PostgreSQL Database `ByteBuy`
    - Run database restoration using `db_backup.backup` or execute `db.sql`
-   - Update connection string `appsettings.json` to match your setup
+   - Update connection string and JWT settings in `appsettings.json` to match your setup
    ```csharp
    "ConnectionStrings": {
     "Default": "Server=localhost;Port=5432;Database=ByteBuy;User Id=postgres;Password=admin;"
      }
+   "Jwt": {
+    "Audience": "http://localhost:5099",
+    "ExpirationInMinutes": 60,
+    "Issuer": "http://localhost:5099",
+    "SecretKey": "some-failry-long-secret-key-i-want-to-use"},
    ```
    - Set `ByteBuy.API` as startup project
    - Build and run

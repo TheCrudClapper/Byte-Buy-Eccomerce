@@ -6,7 +6,7 @@ using ByteBuy.Services.ServiceContracts;
 
 namespace ByteBuy.Services.Services;
 
-public class AuthService(IAuthHttpClient authHttpClient, ITokenStore tokenStore)
+public class AuthService(IAuthHttpClient authHttpClient, ITokenStore tokenStore, ISessionService session)
     : IAuthService
 {
     public async Task<Result> LoginAsync(LoginRequest request)
@@ -16,8 +16,16 @@ public class AuthService(IAuthHttpClient authHttpClient, ITokenStore tokenStore)
         if (!result.Success)
             return Result.Fail(result.Error!);
 
-        tokenStore.AccessToken = result.Value!.Token;
+        tokenStore.SetToken(result.Value!.Token);
+        session.UserFirstName = result.Value!.FirstName;
+        session.UserLastName = result.Value!.LastName;
 
         return Result.Ok();
+    }
+
+    public void Logout()
+    {
+        tokenStore.ClearToken();
+        session.ClearSessionData();
     }
 }

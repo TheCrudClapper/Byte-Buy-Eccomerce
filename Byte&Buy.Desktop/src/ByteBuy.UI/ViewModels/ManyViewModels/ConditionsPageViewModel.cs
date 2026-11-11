@@ -3,23 +3,22 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Condition;
 using ByteBuy.UI.ViewModels.Dialogs;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
 public partial class ConditionsPageViewModel(
-    AlertViewModel alert,
     INavigationService navigation,
     IDialogService dialogNavigation,
-    IConditionService conditionService)
-    : ViewModelMany<ConditionListItemViewModel, IConditionService>(alert, navigation, dialogNavigation, conditionService)
+    IConditionService conditionService,
+    INotificationService notificationService)
+    : ViewModelMany<ConditionListItemViewModel, IConditionService>(navigation, dialogNavigation, conditionService, notificationService)
 {
     #region Filtration Fields
 
@@ -39,7 +38,7 @@ public partial class ConditionsPageViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully updated item!");
+            NotificationService.ShowSuccess("Successfully updated item!");
             await LoadDataAsync();
         }
 
@@ -55,11 +54,13 @@ public partial class ConditionsPageViewModel(
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading conditions.");
             return;
+        }
 
-        ApplyPagination(value, (u, i) => u.ToListItem(i));
+        ApplyPagination(result.Value, (u, i) => u.ToListItem(i));
     }
 
     public override async Task ClearFiltersAsync()
@@ -76,7 +77,7 @@ public partial class ConditionsPageViewModel(
 
         if (result is bool ok && ok)
         {
-            Alert.ShowSuccessAlert("Successfully added new item!");
+            NotificationService.ShowSuccess("Successfully added new item!");
             await LoadDataAsync();
         }
     }

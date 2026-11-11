@@ -1,4 +1,5 @@
 ﻿using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Address;
 using ByteBuy.Services.DTO.Shared;
@@ -8,8 +9,8 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-public class CompanyUserHomeAddressHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyUserHomeAddressHttpClient
+public class CompanyUserHomeAddressHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyUserHomeAddressHttpClient
 {
     private readonly string resource = options.Value.Users;
 

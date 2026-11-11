@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { PaymentApiService } from '../../../../core/clients/payment/payment-api-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
@@ -19,6 +19,7 @@ import { DialogService } from '../../../../shared/services/dialog-service/dialog
   imports: [DecimalPipe, ɵInternalFormsSharedModule, ReactiveFormsModule],
   templateUrl: './payment-gateway.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './payment-gateway.scss',
 })
 export class PaymentGateway implements OnInit {

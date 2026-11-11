@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using ByteBuy.Infrastructure.Extensions;
+using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.Extensions;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Extensions;
@@ -12,18 +13,15 @@ using ByteBuy.UI.Navigation;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Dialogs;
-using Microsoft.Extensions.Configuration;
+using ByteBuy.UI.ViewModels.ManyViewModels;
 using ByteBuy.UI.ViewModels.SingleViewModels;
 using ByteBuy.UI.Views;
 using ByteBuy.UI.Views.Dialogs;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using PageViewModel = ByteBuy.UI.ViewModels.Base.PageViewModel;
-using Microsoft.Extensions.Options;
-using ByteBuy.Infrastructure.Options;
-using ByteBuy.UI.ViewModels.ManyViewModels;
-using ByteBuy.Infrastructure.Handlers;
 
 
 namespace ByteBuy.UI
@@ -33,7 +31,11 @@ namespace ByteBuy.UI
 
         public override void Initialize()
         {
+
             AvaloniaXamlLoader.Load(this);
+#if DEBUG
+            this.AttachDeveloperTools();
+#endif
         }
 
         public override void OnFrameworkInitializationCompleted()
@@ -109,6 +111,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmationDialogViewModel>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogViewModel>(),
                 ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogViewModel>(),
+                ApplicationDialogNames.Settings => x.GetRequiredService<SettingsDialogViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -121,6 +124,7 @@ namespace ByteBuy.UI
                 ApplicationDialogNames.Confirm => x.GetRequiredService<ConfirmDialogView>(),
                 ApplicationDialogNames.Offer => x.GetRequiredService<OfferDialogView>(),
                 ApplicationDialogNames.DeliveryCarrier => x.GetRequiredService<DeliveryCarrierDialogView>(),
+                ApplicationDialogNames.Settings => x.GetRequiredService<SettingsDialogView>(),
                 _ => throw new InvalidOperationException(),
             });
 
@@ -128,6 +132,9 @@ namespace ByteBuy.UI
             services.AddSingleton<PageFactory>();
             services.AddSingleton<WindowFactory>();
             services.AddSingleton<DialogFactory>();
+
+            //Window Service
+            services.AddSingleton<IWindowService, WindowService>();
 
             //Register Navigation
             services.AddSingleton<INavigationService>(sp => new NavigationService(

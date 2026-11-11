@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Core.DTO.Public.Rental;
 using ByteBuy.Infrastructure.Helpers;
 using ByteBuy.Infrastructure.HttpClients.Base;
+using ByteBuy.Infrastructure.HttpClients.Factories;
 using ByteBuy.Infrastructure.Options;
 using ByteBuy.Services.DTO.Rental;
 using ByteBuy.Services.Filtration;
@@ -11,8 +12,8 @@ using Microsoft.Extensions.Options;
 
 namespace ByteBuy.Infrastructure.HttpClients.Company;
 
-internal class CompanyRentalHttpClient(HttpClient httpClient, IOptions<ApiEndpointsOptions> options)
-    : HttpClientBase(httpClient, options), ICompanyRentalHttpClient
+internal class CompanyRentalHttpClient(IBackendHttpClientFactory factory, IOptions<ApiEndpointsOptions> options)
+    : HttpClientBase(factory), ICompanyRentalHttpClient
 {
     private readonly string resource = options.Value.CompanyRentals;
 

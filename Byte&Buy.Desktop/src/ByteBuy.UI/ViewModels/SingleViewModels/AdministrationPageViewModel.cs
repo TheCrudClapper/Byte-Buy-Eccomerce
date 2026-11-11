@@ -27,7 +27,7 @@ public partial class AdministrationPageViewModel : PageViewModel
         }
     }
 
-    public AdministrationPageViewModel(AlertViewModel alert,
+    public AdministrationPageViewModel(
         DeliveriesPageViewModel deliveriesViewModel,
         CountriesPageViewModel countriesViewModel,
         ConditionsPageViewModel conditionsViewModel,
@@ -35,7 +35,7 @@ public partial class AdministrationPageViewModel : PageViewModel
         ItemsPageViewModel itemsPageViewModel,
         RentOffersViewModel rentOffersViewModel,
         SaleOffersViewModel saleOffersViewModel,
-        DeliveryCarriersViewModel carriersViewModel) : base(alert)
+        DeliveryCarriersViewModel carriersViewModel)
     {
         PageName = ApplicationPageNames.Administration;
         DeliveriesPageViewModel = deliveriesViewModel;
