@@ -9,10 +9,6 @@
 			 x:DataType="vm:RentOffersViewModel"
 			 x:Class="ByteBuy.UI.Views.RentOffersView">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Grid>
 		<Grid RowDefinitions="50, auto, *,50">
 

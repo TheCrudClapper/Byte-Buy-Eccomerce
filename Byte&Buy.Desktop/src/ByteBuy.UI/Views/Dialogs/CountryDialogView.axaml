@@ -8,9 +8,6 @@
 			 x:Class="ByteBuy.UI.Views.Dialogs.CountryDialogView"
 			 x:DataType="vm:CountryDialogViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
 
 	<Border CornerRadius="2" BorderThickness="2"
 			Background="{DynamicResource CardBackgroundBrush}"

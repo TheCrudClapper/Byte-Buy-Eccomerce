@@ -8,10 +8,6 @@
 			 x:Class="ByteBuy.UI.Views.Dialogs.DeliveryDialogView"
 			 x:DataType="vm:DeliveryDialogViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Border CornerRadius="2"
 			BorderThickness="2"
 			Background="{DynamicResource CardBackgroundBrush}"

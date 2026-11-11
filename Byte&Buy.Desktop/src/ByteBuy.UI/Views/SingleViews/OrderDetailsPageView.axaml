@@ -10,12 +10,6 @@
 			 x:Class="ByteBuy.UI.Views.OrderDetailsPageView">
 
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-		<StyleInclude Source="../../Styles/OrderRentalStyles.axaml" />
-	</UserControl.Styles>
-
-
 	<ScrollViewer>
 		<Grid RowDefinitions="70,*" Margin="0,0,20,0">
 			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Order Details"/>

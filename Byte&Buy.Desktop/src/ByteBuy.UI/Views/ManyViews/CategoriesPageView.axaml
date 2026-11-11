@@ -8,10 +8,6 @@
 			 Background="Transparent"
 			 x:Class="ByteBuy.UI.Views.CategoriesPageView"
 			 x:DataType="vm:CategoriesPageViewModel">
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 
 	<Grid>
 		<Grid RowDefinitions="50, auto, *,50">

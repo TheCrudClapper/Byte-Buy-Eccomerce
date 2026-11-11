@@ -7,11 +7,6 @@
 			 x:Class="ByteBuy.UI.Views.RentalDetailsPageView"
 			 x:DataType="vm:RentalDetailsPageViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-		<StyleInclude Source="../../Styles/OrderRentalStyles.axaml" />
-	</UserControl.Styles>
-
 	<ScrollViewer>
 		<Grid RowDefinitions="70,350">
 			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Rental Details"/>

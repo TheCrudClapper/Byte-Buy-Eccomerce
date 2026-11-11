@@ -7,13 +7,6 @@
 			 x:Class="ByteBuy.UI.Views.Shared.PermissionListBoxView"
 			 x:DataType="vm:PermissionListBoxViewModel">
 
-
-
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
-
 	<Grid RowDefinitions="20,*" ColumnDefinitions="10*, 70*, 20*">
 		<TextBlock Grid.Column="0"  Text="Nr."/>
 		<TextBlock Grid.Column="1" Text="Permission"/>

@@ -8,10 +8,6 @@
 			 x:Class="ByteBuy.UI.Views.RentalsPageView"
 			 x:DataType="vm:RentalsPageViewModel">
 
-	<UserControl.Styles>
-		<StyleInclude Source="../../Styles/EmployeeStyles.axaml" />
-	</UserControl.Styles>
-
 	<Grid>
 		<Grid x:Name="Root" RowDefinitions="50,auto,*,50">
 			<Grid Grid.Row="0" ColumnDefinitions="*,*,*">
