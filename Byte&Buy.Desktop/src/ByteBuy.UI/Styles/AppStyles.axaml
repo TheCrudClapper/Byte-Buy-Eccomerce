@@ -3,18 +3,18 @@
 		xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
 
 	<!--
-		AppStyles.axaml – jedyny plik ze stylami aplikacji.
-		Kolejnosc ma znaczenie (pozniejsze nadpisuja wczesniejsze):
-		  1. Globalne domyslne
-		  2. Typografia
-		  3. Przyciski
-		  4. Pola formularzy (TextBox, ComboBox, CheckBox, RadioButton, NumericUpDown)
-		  5. Karty i obramowania
-		  6. Listy i tabele
-		  7. Formularze (strona produktu)
+		AppStyles.axaml – the sole application styles file.
+		Order matters (later entries override earlier ones):
+		  1. Global defaults
+		  2. Typography
+		  3. Buttons
+		  4. Form fields (TextBox, ComboBox, CheckBox, RadioButton, NumericUpDown)
+		  5. Cards and borders
+		  6. Table-based lists
+		  7. Form (product page)
 		  8. Dashboard
-		  9. Nawigacja (sidebar)
-		 10. Dialogi i walidacja
+		  9. Navigation (sidebar)
+		 10. Dialogs and validation
 	-->
 
 	<!-- ============================================================ -->
@@ -25,9 +25,7 @@
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
 		<Setter Property="FontWeight" Value="500"/>
 	</Style>
-
-	<!-- Ikony w przyciskach (dawniej globalne "Image" 20x20, co zmniejszalo
-	     kazde zdjecie bez wlasnego rozmiaru, np. miniatury produktow) -->
+	
 	<Style Selector="Button Image">
 		<Setter Property="Height" Value="20"/>
 		<Setter Property="Width" Value="20"/>
@@ -156,7 +154,7 @@
 		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
 	</Style>
 
-	<!-- Okragly przycisk usuwania na miniaturach -->
+	<!-- Rounded button for deletion in miniatures -->
 	<Style Selector="Button.deleteBadge">
 		<Setter Property="Width" Value="28"/>
 		<Setter Property="Height" Value="28"/>
@@ -247,7 +245,7 @@
 		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
 	</Style>
 
-	<!-- CheckBox (stany unchecked/pointerover mialy identyczne ustawienia jak baza) -->
+	<!-- CheckBox  -->
 	<Style Selector="CheckBox /template/ Border#NormalRectangle">
 		<Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
@@ -300,7 +298,7 @@
 	<!-- 5. CARDS & BORDERS                                           -->
 	<!-- ============================================================ -->
 
-	<!-- Karta sekcji formularza -->
+	<!-- Section and form card -->
 	<Style Selector="Border.sectionBorder">
 		<Setter Property="Padding" Value="10"/>
 		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
@@ -318,7 +316,7 @@
 		<Setter Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
 	</Style>
 
-	<!-- Karta dashboardu -->
+	<!-- Dashboard Card -->
 	<Style Selector="Border.card">
 		<Setter Property="Background" Value="{DynamicResource CardBackground}"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource GrayAccentBrush}"/>
@@ -413,7 +411,7 @@
 
 
 	<!-- ============================================================ -->
-	<!-- 7. FORMS (strona produktu / upload zdjec)                    -->
+	<!-- 7. FORMS (product site / image upload)                        -->
 	<!-- ============================================================ -->
 
 	<Style Selector="Border.highlightable">
@@ -496,7 +494,7 @@
 		<Setter Property="Height" Value="24"/>
 	</Style>
 
-	<!-- Starsze karty z okraglymi ikonami (jesli uzywane na innych stronach) -->
+	<!-- Old type of cards with rounded image -->
 	<Style Selector="Image.cardImage">
 		<Setter Property="Height" Value="35"/>
 		<Setter Property="Width" Value="35"/>
@@ -583,7 +581,7 @@
 		<Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
 	</Style>
 
-	<!-- Aktywna strona + hover -->
+	<!-- Active page + hover -->
 	<Style Selector="Button.active /template/ ContentPresenter,
 					 Button.sidebarMenuButton:pointerover /template/ ContentPresenter,
 					 Button.menuButton:pointerover /template/ ContentPresenter">
@@ -614,7 +612,7 @@
 		</Setter>
 	</Style>
 
-	<!-- Domyslne style bledow walidacji z dokumentacji Avalonia:
+	<!-- Default Avalonia validation error styles:
 	     https://docs.avaloniaui.net/docs/guides/development-guides/data-validation -->
 	<Style Selector="DataValidationErrors">
 		<Setter Property="Template">
