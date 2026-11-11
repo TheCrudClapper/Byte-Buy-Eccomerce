@@ -29,6 +29,7 @@
 
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
+				 <ResourceInclude Source="avares://LoadingIndicators.Avalonia/LoadingIndicators.axaml"/>
 				<MergeResourceInclude Source="/Controls/TabControl.axaml"></MergeResourceInclude>
 				<MergeResourceInclude Source="/Controls/TabItem.axaml"></MergeResourceInclude>
 			</ResourceDictionary.MergedDictionaries>

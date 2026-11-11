@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Rental;
 using ByteBuy.UI.ViewModels.Shared;
@@ -37,10 +38,10 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
     #endregion
 
     public RentalsPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IRentalService service) : base(alert, navigation, dialogNavigation, service)
+        IRentalService service,
+        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
     {
         PageName = ApplicationPageNames.Rentals;
     }
@@ -60,11 +61,13 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
         };
 
         var result = await Service.GetCompanyRentalsListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading rentals.");
             return;
+        }
 
-        ApplyPagination(value, (u, index) => u.ToListItem(index));
+        ApplyPagination(result.Value, (u, index) => u.ToListItem(index));
     }
 
 

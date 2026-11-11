@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.ManyViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class MainWindowViewModel : WindowViewModel
+public partial class MainWindowViewModel : WindowViewModel, IDisposable
 {
     #region MVVM Fields
     [ObservableProperty]
@@ -50,6 +51,31 @@ public partial class MainWindowViewModel : WindowViewModel
     private readonly INavigationService _navigation;
     private readonly IWindowService _windowService;
     private readonly IAuthService _authService;
+    private readonly INotificationService _notificationService;
+    private readonly ILoadingService _loadingService;
+
+    //Properties that allows using services in view
+    public NotificationService NotificationService
+    {
+        get
+        {
+            if (_notificationService is not NotificationService service)
+                return new();
+
+            return service;
+        }
+    }
+    public LoadingService LoadingService
+    {
+        get
+        {
+            if (_loadingService is not LoadingService service)
+                return new();
+
+            return service;
+        }
+    }
+
     private void SetActive(ApplicationPageNames page)
     {
         IsDashboardPageActive = page == ApplicationPageNames.Dashboard;
@@ -64,13 +90,13 @@ public partial class MainWindowViewModel : WindowViewModel
         IsProfilePageActive = page == ApplicationPageNames.Profile;
     }
 
-    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService)
+    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService, ILoadingService loadingService)
     {
         _navigation = navigation;
         _windowService = windowService;
         _authService = authService;
-
-
+        _notificationService = notificationService;
+        _loadingService = loadingService;
         _navigation.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(INavigationService.CurrentPage))
@@ -160,5 +186,18 @@ public partial class MainWindowViewModel : WindowViewModel
     {
         _authService.Logout();
         _windowService.ShutdownApplication();
+    }
+
+    public void Dispose()
+    {
+       _navigation.PropertyChanged -= (s, e) =>
+       {   
+           if (e.PropertyName == nameof(INavigationService.CurrentPage))
+           {
+               OnPropertyChanged(nameof(CurrentPage));
+               SetActive(_navigation.CurrentPage!.PageName);
+           }
+       };
+       GC.SuppressFinalize(this);
     }
 }

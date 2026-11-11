@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Charts;
 using ByteBuy.UI.ViewModels.Dashboard;
@@ -41,12 +42,15 @@ public partial class DashboardPageViewModel : PageViewModel
 
     private readonly IOrderService _orderService;
     private readonly IStatisticsService _statisticsService;
-    public DashboardPageViewModel(AlertViewModel alert, IOrderService orderService,
-        IStatisticsService statisticsService, ISessionService sessionService) : base(alert)
+    private readonly INotificationService _notificationService;
+    public DashboardPageViewModel(IOrderService orderService,
+        IStatisticsService statisticsService, ISessionService sessionService,
+        INotificationService notificationService)
     {
         PageName = ApplicationPageNames.Dashboard;
         _orderService = orderService;
         _statisticsService = statisticsService;
+        _notificationService = notificationService;
         UserFirstName = sessionService.UserFirstName;
         UserLastName = sessionService.UserLastName;
     }
@@ -64,47 +68,55 @@ public partial class DashboardPageViewModel : PageViewModel
     private async Task LoadKpisAsync()
     {
         var kpisResult = await _statisticsService.GetKpisAsync();
-        var (ok, value) = HandleResult(kpisResult);
-        if (!ok || value is null)
+        if (!kpisResult.Success)
+        {
+            _notificationService.ShowError(kpisResult.Error?.Description ?? "An error occurred while loading dashboard KPIs.");
             return;
+        }
 
-        Kpis = new ObservableCollection<KpiViewModel>(value.Select(k => new KpiViewModel(k)));
+        Kpis = new ObservableCollection<KpiViewModel>(kpisResult.Value.Select(k => new KpiViewModel(k)));
     }
 
     private async Task LoadGmvBySellerTypeAsync()
     {
         var gmvResult = await _statisticsService.GetGmvBySellerTypeAsync();
-        var (ok, value) = HandleResult(gmvResult);
-        if (!ok || value is null)
+        if (!gmvResult.Success)
+        {
+            _notificationService.ShowError(gmvResult.Error?.Description ?? "An error occurred while loading GMV data.");
             return;
+        }
 
-        GmvBySellerData = new ObservableCollection<PieChartViewModel>(value.Select(g => new PieChartViewModel(g.Display, [g.GMVAmount.Amount])));
+        GmvBySellerData = new ObservableCollection<PieChartViewModel>(gmvResult.Value.Select(g => new PieChartViewModel(g.Display, [g.GMVAmount.Amount])));
     }
 
     private async Task LoadOrdersAsync()
     {
         var ordersResult = await _orderService.GetDashboardOrdersAsync();
-        var (ok, value) = HandleResult(ordersResult);
-        if (!ok || value is null)
+        if (!ordersResult.Success)
+        {
+            _notificationService.ShowError(ordersResult.Error?.Description ?? "An error occurred while loading dashboard orders.");
             return;
+        }
 
-        Orders = new ObservableCollection<OrderDashboardViewModel>(value.Select(o => new OrderDashboardViewModel(o)));
+        Orders = new ObservableCollection<OrderDashboardViewModel>(ordersResult.Value.Select(o => new OrderDashboardViewModel(o)));
     }
 
     private async Task LoadOrdersAndGmvChartAsync()
     {
         var result = await _statisticsService.GetOrdersGmvByMonthsAsync();
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the orders and GMV chart.");
             return;
+        }
 
-        ColumnValues = value.Select(v => new DateTimePoint
+        ColumnValues = result.Value.Select(v => new DateTimePoint
         {
             DateTime = new DateTime(v.Year, v.Month, 1),
             Value = v.OrdersCount
         }).ToArray();
 
-        GmvValues = value.Select(v => (double)v.Gmv).ToArray();
+        GmvValues = result.Value.Select(v => (double)v.Gmv).ToArray();
     }
 
 

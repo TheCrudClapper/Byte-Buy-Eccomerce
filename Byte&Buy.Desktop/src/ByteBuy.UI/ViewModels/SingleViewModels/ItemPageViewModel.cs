@@ -4,6 +4,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.DataAdnotations;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemPageViewModel : ViewModelSingle
+public partial class ItemPageViewModel : ViewModelSingle, IDisposable
 {
     #region MVVM Fields
     [ObservableProperty]
@@ -71,18 +72,24 @@ public partial class ItemPageViewModel : ViewModelSingle
     private readonly ICategoryService _categoryService;
     private readonly IImageService _imageService;
     private readonly IDialogService _dialogService;
-    public ItemPageViewModel(AlertViewModel alert,
+    private readonly INotificationService _notificationService;
+    private readonly ILoadingService _loadingService;
+    public ItemPageViewModel(
         IItemService itemService,
         IConditionService conditionService,
         ICategoryService categoryService,
         IDialogService dialogService,
-        IImageService imageService) : base(alert)
+        IImageService imageService,
+        INotificationService notificationService,
+        ILoadingService loadingService)
     {
         _conditionService = conditionService;
         _categoryService = categoryService;
         _itemService = itemService;
         _dialogService = dialogService;
         _imageService = imageService;
+        _notificationService = notificationService;
+        _loadingService = loadingService;
         Images.CollectionChanged += OnImagesCollectionChanged;
     }
 
@@ -106,36 +113,53 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         EditingItemId = id;
         IsEditMode = true;
-        await InitializeAsync();
 
-        var result = await _itemService.GetByIdAsync(id);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
-            return;
-
-        ItemMappings.MapFromResponse(this, value);
-
-        Images.Clear();
-
-        var tasks = value.Images.Select(async img =>
+        try
         {
-            var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
-            if (bytes is null) return;
+            await _loadingService.ShowAsync("Loading item data...");
+            await InitializeAsync();
 
-            using var ms = new MemoryStream(bytes);
-            var bmp = new Bitmap(ms);
+            var result = await _itemService.GetByIdAsync(id);
+            if (!result.Success)
+            {
+                _notificationService.ShowError(result.Error?.Description ?? "An error occurred while loading the item.");
+                return;
+            }
 
-            Images.Add(new ImageViewModel(img.Id, img.ImagePath, img.AltText, bmp));
-        });
+            ItemMappings.MapFromResponse(this, result.Value);
 
-        await Task.WhenAll(tasks);
+            Images.Clear();
+
+            var tasks = result.Value.Images.Select(async img =>
+            {
+                var bytes = await _imageService.GetImageBytesAsync(img.ImagePath);
+                if (bytes is null) return;
+
+                using var ms = new MemoryStream(bytes);
+                var bmp = new Bitmap(ms);
+
+                Images.Add(new ImageViewModel(img.Id, img.ImagePath, img.AltText, bmp));
+            });
+
+            await Task.WhenAll(tasks);
+        }
+        finally
+        {
+            await _loadingService.HideAsync();
+        }
     }
 
     protected override async Task AddAsync()
     {
         var request = ItemMappings.MapAddToRequest(this);
         var result = await _itemService.AddAsync(request);
-        HandleResult(result, "Successfully added new item !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while adding the item.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully added new item !");
     }
 
     protected override void Clear()
@@ -157,13 +181,19 @@ public partial class ItemPageViewModel : ViewModelSingle
 
         if (Images.Count - deletedCount == 0 && newCount == 0)
         {
-            Alert.ShowErrorAlert("You need to add at least one new image.");
+            _notificationService.ShowError("You need to add at least one new image.");
             return;
         }
 
         var request = ItemMappings.MapToUpdateRequest(this);
         var result = await _itemService.UpdateAsync(EditingItemId.Value, request);
-        HandleResult(result, "Successfully updated item !");
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while updating the item.");
+            return;
+        }
+
+        _notificationService.ShowSuccess("Successfully updated item !");
     }
 
 
@@ -231,5 +261,11 @@ public partial class ItemPageViewModel : ViewModelSingle
     {
         DescriptionCharCount = value.Length;
         ValidateProperty(value, nameof(Description));
+    }
+
+    public void Dispose()
+    {
+        Images.CollectionChanged -= OnImagesCollectionChanged;
+        GC.SuppressFinalize(this);
     }
 }

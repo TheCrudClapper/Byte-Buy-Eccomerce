@@ -9,7 +9,7 @@ public partial class PageViewModel : ViewModelBase
     [ObservableProperty]
     private ApplicationPageNames _pageName;
 
-    protected PageViewModel(AlertViewModel alert) : base(alert)
+    protected PageViewModel()
     {
     }
 }

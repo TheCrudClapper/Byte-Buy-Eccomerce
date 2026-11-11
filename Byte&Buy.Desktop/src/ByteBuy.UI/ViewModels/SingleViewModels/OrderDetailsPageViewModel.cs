@@ -3,6 +3,7 @@ using ByteBuy.Services.DTO.Order;
 using ByteBuy.Services.DTO.Order.Enums;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Mappings;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Order.Buyer;
 using ByteBuy.UI.ViewModels.Order.OrderDelivery;
@@ -70,24 +71,29 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     private readonly IOrderService _orderService;
     private readonly IImageService _imageService;
     private readonly IDocumentService _documentService;
-    public OrderDetailsPageViewModel(AlertViewModel alert,
+    private readonly INotificationService _notificationService;
+    public OrderDetailsPageViewModel(
         IOrderService orderService,
         IImageService imageService,
-        IDocumentService documentService) : base(alert)
+        IDocumentService documentService,
+        INotificationService notificationService)
     {
         _orderService = orderService;
         _imageService = imageService;
         _documentService = documentService;
+        _notificationService = notificationService;
     }
 
     public async Task InitializeAsync(Guid orderId)
     {
         var detailsResult = await _orderService.GetOrderDetailsAsync(orderId);
-        var (ok, value) = HandleResult(detailsResult);
-        if (!ok || value is null)
+        if (!detailsResult.Success)
+        {
+            _notificationService.ShowError(detailsResult.Error?.Description ?? "An error occurred while loading the order.");
             return;
+        }
 
-        BuildViewModel(value);
+        BuildViewModel(detailsResult.Value);
         await FetchImagePreviewAsync();
     }
 
@@ -132,11 +138,14 @@ public partial class OrderDetailsPageViewModel : PageViewModel
             return;
 
         var result = await _orderService.ShipOrderAsync(OrderId);
-        var (ok, value) = HandleResult(result, "Successfully shipped order.");
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while shipping the order.");
             return;
+        }
 
         Status = OrderStatus.Shipped;
+        _notificationService.ShowSuccess("Successfully shipped order.");
     }
 
     [RelayCommand]
@@ -146,10 +155,14 @@ public partial class OrderDetailsPageViewModel : PageViewModel
             return;
 
         var result = await _orderService.DeliverOrderAsync(OrderId);
-        var (ok, value) = HandleResult(result, "Successfully shipped order.");
-        if (!ok || value is null) return;
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while delivering the order.");
+            return;
+        }
 
         Status = OrderStatus.Delivered;
+        _notificationService.ShowSuccess("Successfully delivered order.");
     }
 
     // Fetching images from static resource -> saving to mem -> bitmap -> assign to line

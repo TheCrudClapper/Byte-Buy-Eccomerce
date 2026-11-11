@@ -3,6 +3,7 @@ using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.Data;
 using ByteBuy.UI.Mappings;
 using ByteBuy.UI.Navigation;
+using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels.Base;
 using ByteBuy.UI.ViewModels.Employee;
 using ByteBuy.UI.ViewModels.Shared;
@@ -27,10 +28,10 @@ public partial class EmployeesPageViewModel
     #endregion
 
     public EmployeesPageViewModel(
-        AlertViewModel alert,
         INavigationService navigation,
         IDialogService dialogNavigation,
-        IEmployeeService service) : base(alert, navigation, dialogNavigation, service)
+        IEmployeeService service,
+        INotificationService notificationService) : base(navigation, dialogNavigation, service, notificationService)
     {
         PageName = ApplicationPageNames.Employees;
     }
@@ -47,11 +48,13 @@ public partial class EmployeesPageViewModel
         };
 
         var result = await Service.GetListAsync(query);
-        var (ok, value) = HandleResult(result);
-        if (!ok || value is null)
+        if (!result.Success)
+        {
+            NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading employees.");
             return;
+        }
 
-        ApplyPagination(value, (e, index) => e.ToListItem(index));
+        ApplyPagination(result.Value, (e, index) => e.ToListItem(index));
     }
 
     protected override async Task EditAsync(EmployeeListItemViewModel employee)
