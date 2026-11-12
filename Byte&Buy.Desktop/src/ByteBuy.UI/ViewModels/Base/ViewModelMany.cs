@@ -90,6 +90,7 @@ public abstract partial class ViewModelMany<TDataGridItem, ServiceType> : PageVi
             }
 
             Items.Remove(item);
+            ItemsCount--;
             NotificationService.ShowSuccess("Successfully deleted item !");
         }
         return;
