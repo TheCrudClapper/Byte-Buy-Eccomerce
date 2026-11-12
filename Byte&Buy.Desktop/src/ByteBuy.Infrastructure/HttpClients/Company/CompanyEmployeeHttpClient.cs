@@ -18,7 +18,7 @@ public class CompanyEmployeeHttpClient(IBackendHttpClientFactory factory, IOptio
     private readonly string resource = options.Value.CompanyEmployees;
 
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileDataAsync()
-        => await GetAsync<EmployeeProfileResponse>($"me/employee");
+        => await GetAsync<EmployeeProfileResponse>($"{options.Value.UserMe}/employee");
 
     public async Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/address", request);
