@@ -4,164 +4,131 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="1000"
+			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="900"
 			 x:Class="ByteBuy.UI.Views.RolePageView"
 			 x:DataType="vm:RolePageViewModel">
 
-	<Grid>
-		
-			<Grid RowDefinitions="50, Auto, 20, *,"
-				  ColumnDefinitions="47*, 6*, 47*" Margin="0,0,30,0">
+	<Grid RowDefinitions="auto,auto,*" RowSpacing="20" Margin="0,10,30,30">
 
-				<!--Page Title-->
-				<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Role"/>
+		<!-- Page Title -->
+		<TextBlock Grid.Row="0" Classes="pageTitle" Text="Role"/>
 
-				<!-- Role System Tutorial -->
-				<Border Grid.Row="1"
-						Grid.ColumnSpan="3"
-						Padding="20"
-						Classes="sectionBorder">
+		<!-- Role System Guide (collapsible) -->
+		<Border Grid.Row="1" Classes="sectionBorder" Padding="28,24">
+			<StackPanel Spacing="16">
 
-					<Grid RowDefinitions="Auto, Auto">
-
-						<!-- Header -->
-						<Grid ColumnDefinitions="*,Auto,*">
-							<TextBlock Text="Role System Guide" Grid.Column="0" Classes="sectionLabel"/>
-							<Button Grid.Column="2"
-									Command="{Binding ToggleTutorialCommand}"
-									HorizontalAlignment="Right">
-								<Image Source="{SvgImage /Assets/Images/regular/up-down-solid-full.svg}"
-									   Width="15" Height="15" />
-							</Button>
-						</Grid>
-
-
-
-						<!-- Collapsible content -->
-						<StackPanel Grid.Row="1"
-									IsVisible="{Binding IsTutorialExpanded}">
-
-							<TextBlock TextWrapping="Wrap">
-								In order to efficiently and securely use our system, you need to familiarize yourself
-								with roles and permissions.
-							</TextBlock>
-
-							<TextBlock TextWrapping="Wrap">
-								Each role is composed of a unique set of permissions. Permissions define which resources
-								in our system a specific role has access to and what actions can be taken.
-							</TextBlock>
-
-							<TextBlock TextAlignment="Center" Margin="0,8,0,0" FontFamily="{DynamicResource OpenSansMedium}" >
-								In the ByteBuy system, permissions follow this structure:
-							</TextBlock>
-
-							<TextBlock TextAlignment="Center" FontFamily="{DynamicResource OpenSansBold}">
-								<Bold>[resource]:[action]:[scope?]</Bold>
-							</TextBlock>
-
-							<StackPanel Spacing="6" Margin="0,8,0,0">
-
-								<TextBlock TextWrapping="Wrap">
-									• <Bold FontFamily="{DynamicResource OpenSansBold}">[resource]</Bold> – defines the global resource, such as roles, users, orders, etc.
-								</TextBlock>
-
-								<TextBlock TextWrapping="Wrap">
-									• <Bold FontFamily="{DynamicResource OpenSansBold}">[action]</Bold> – defines what the permission owner can do with the resource,
-									such as read, write, update, delete.
-								</TextBlock>
-
-								<TextBlock TextWrapping="Wrap">
-									• <Bold FontFamily="{DynamicResource OpenSansBold}">[scope]</Bold> – refines the action, e.g.:
-									<LineBreak />
-									<Italic>many</Italic> – refers to collections
-									<LineBreak />
-									<Italic>self</Italic> – e.g. “users can read info only about themselves”
-								</TextBlock>
-
-							</StackPanel>
-						</StackPanel>
-
-					</Grid>
-
-				</Border>
-
-				<!-- Permission List -->
-				<Border Grid.Row="3"
-						Padding="20"
-						Grid.Column="0"
-						Classes="sectionBorder">
-
-					<ScrollViewer>
-						<Grid RowDefinitions="50, *"
-							  ColumnDefinitions="5*, 1*, 94*">
-
-							<Image Grid.Row="0" Grid.Column="0"
-								   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-								   Classes="sectionMarker"/>
-
-							<TextBlock Grid.Row="0"
-									   Grid.Column="2"
-									   Text="Permissions"
-									   VerticalAlignment="Center"
-									   Classes="sectionLabel"/>
-
-							<views:PermissionListBoxView
-							Grid.Column="0"
-							Grid.Row="1"
-							Grid.ColumnSpan="3"
-							DataContext="{Binding PermissionListBox}" />
-
-						</Grid>
-					</ScrollViewer>
-
-
-				</Border>
-
-				<!-- Form-->
-				<Border Grid.Row="3"
-						Grid.Column="2"
-						Padding="20"
-						Grid.RowSpan="2"
-						VerticalAlignment="Top"
-						Height="200"
-						Classes="sectionBorder">
-
-					<StackPanel>
-						<Grid ColumnDefinitions="*,20,*"
-							  RowDefinitions="40,70,70">
-
-							<StackPanel Grid.Row="0"
-										Grid.ColumnSpan="2"
-										Orientation="Horizontal">
-								<Image
-								Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
-								Classes="sectionMarker" />
-								<TextBlock Text="General Information" Classes="sectionLabel" VerticalAlignment="Center"/>
-							</StackPanel>
-
-							<StackPanel Grid.Row="1" Grid.ColumnSpan="3">
-								<TextBlock Text="Role" Classes="textBoxLabel"  />
-								<TextBox Text="{Binding RoleName}" />
-							</StackPanel>
-
-							<StackPanel HorizontalAlignment="Right"
-										Orientation="Horizontal"
-										Grid.Row="2"
-										Grid.ColumnSpan="3">
-
-								<Button Command="{Binding ClearCommand}"
-										Content="Clear"
-										Margin="0,0,5,0" />
-
-								<Button Command="{Binding SaveCommand}"
-										Content="Save" />
-
-							</StackPanel>
-
-						</Grid>
+				<Grid ColumnDefinitions="*,auto">
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<Image Classes="sectionMarker" VerticalAlignment="Center"
+							   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+						<TextBlock Text="Role System Guide" Classes="sectionLabel" VerticalAlignment="Center"/>
 					</StackPanel>
 
-				</Border>
-			</Grid>
+					<Button Grid.Column="1" Command="{Binding ToggleTutorialCommand}">
+						<Image Source="{SvgImage /Assets/Images/regular/up-down-solid-full.svg}"
+							   Width="15" Height="15"/>
+					</Button>
+				</Grid>
+
+				<!-- Collapsible content -->
+				<StackPanel Spacing="14" IsVisible="{Binding IsTutorialExpanded}">
+
+					<StackPanel Spacing="6">
+						<TextBlock Classes="standardText" TextWrapping="Wrap"
+								   Text="To use the system efficiently and securely, you need to understand roles and permissions."/>
+						<TextBlock Classes="standardText" TextWrapping="Wrap"
+								   Text="Each role is composed of a unique set of permissions. Permissions define which resources a role has access to and what actions can be taken on them."/>
+					</StackPanel>
+
+					<!-- Permission format -->
+					<Border Background="{DynamicResource GrayAccentBrush}"
+							CornerRadius="10"
+							Padding="16,12">
+						<StackPanel Spacing="4" HorizontalAlignment="Center">
+							<TextBlock Classes="fieldLabel" HorizontalAlignment="Center"
+									   Text="Permission format"/>
+							<TextBlock Classes="headerText" HorizontalAlignment="Center"
+									   Text="[resource]:[action]:[scope?]"/>
+						</StackPanel>
+					</Border>
+
+					<!-- Parts -->
+					<Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+						<StackPanel Grid.Column="0" Spacing="4">
+							<TextBlock Classes="standardText bold" Text="[resource]"/>
+							<TextBlock Classes="sectionHelperText" TextWrapping="Wrap"
+									   Text="The global resource, such as roles, users, orders, etc."/>
+						</StackPanel>
+
+						<StackPanel Grid.Column="1" Spacing="4">
+							<TextBlock Classes="standardText bold" Text="[action]"/>
+							<TextBlock Classes="sectionHelperText" TextWrapping="Wrap"
+									   Text="What the permission owner can do with the resource: read, write, update, delete."/>
+						</StackPanel>
+
+						<StackPanel Grid.Column="2" Spacing="4">
+							<TextBlock Classes="standardText bold" Text="[scope]"/>
+							<TextBlock Classes="sectionHelperText" TextWrapping="Wrap">
+								<Run Text="Refines the action."/>
+								<LineBreak/>
+								<Run Text="many" FontStyle="Italic"/>
+								<Run Text="– refers to collections."/>
+								<LineBreak/>
+								<Run Text="self" FontStyle="Italic"/>
+								<Run Text="– e.g. users can read info only about themselves."/>
+							</TextBlock>
+						</StackPanel>
+					</Grid>
+				</StackPanel>
+			</StackPanel>
+		</Border>
+
+		<!-- Body -->
+		<Grid Grid.Row="2" ColumnDefinitions="380,24,*">
+
+			<!-- LEFT: role form -->
+			<Border Grid.Column="0" Classes="sectionBorder" Padding="24" VerticalAlignment="Top">
+				<StackPanel Spacing="14">
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<Image Classes="sectionMarker" VerticalAlignment="Center"
+							   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+						<TextBlock Text="General Information" Classes="sectionLabel" VerticalAlignment="Center"/>
+					</StackPanel>
+
+					<StackPanel Spacing="6">
+						<TextBlock Text="Role" Classes="textBoxLabel"/>
+						<TextBox Text="{Binding RoleName}"/>
+					</StackPanel>
+
+					<Border Padding="0,20,0,0"
+							BorderThickness="0,1,0,0"
+							BorderBrush="{DynamicResource GrayAccentBrush}">
+						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+							<Button Content="Clear" MinWidth="100"
+									HorizontalContentAlignment="Center"
+									Command="{Binding ClearCommand}"/>
+							<Button Content="Save" Classes="accent" MinWidth="100"
+									HorizontalContentAlignment="Center"
+									Command="{Binding SaveCommand}"/>
+						</StackPanel>
+					</Border>
+				</StackPanel>
+			</Border>
+
+			<!-- RIGHT: permissions -->
+			<Border Grid.Column="2" Classes="sectionBorder" Padding="28,24">
+				<Grid RowDefinitions="auto,16,*">
+					<StackPanel Orientation="Horizontal" Spacing="8">
+						<Image Classes="sectionMarker" VerticalAlignment="Center"
+							   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+						<TextBlock Text="Permissions" Classes="sectionLabel" VerticalAlignment="Center"/>
+					</StackPanel>
+
+					<ScrollViewer Grid.Row="2" ScrollViewer.AllowAutoHide="False">
+						<views:PermissionListBoxView DataContext="{Binding PermissionListBox}"/>
+					</ScrollViewer>
+				</Grid>
+			</Border>
+		</Grid>
 	</Grid>
 </UserControl>

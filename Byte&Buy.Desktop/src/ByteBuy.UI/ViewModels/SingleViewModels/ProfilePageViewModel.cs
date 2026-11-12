@@ -118,7 +118,7 @@ public partial class ProfilePageViewModel : PageViewModel
             return;
         }
 
-        _notificationService.ShowSuccess("Address updated successfully !");
+        _notificationService.ShowSuccess("User profile updated successfully !");
     }
 
     [RelayCommand]
