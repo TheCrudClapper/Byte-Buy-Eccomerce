@@ -3,119 +3,143 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="600"
 			 x:Class="ByteBuy.UI.Views.RentalDetailsPageView"
 			 x:DataType="vm:RentalDetailsPageViewModel">
 
 	<ScrollViewer>
-		<Grid RowDefinitions="70,350">
-			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Rental Details"/>
+		<Grid RowDefinitions="auto,*" Margin="0,10,30,30">
 
-			<Border Grid.Row="1" Classes="sectionBorder" Padding="20" MaxHeight="360">
-				<Grid RowDefinitions="30, 1, 20, 20, 170, 1, 20, 1"  ColumnDefinitions="*, *" >
+			<!-- Header: title + status + created date -->
+			<StackPanel Grid.Row="0" Spacing="6" Margin="0,0,0,20">
+				<TextBlock Classes="pageTitle" Text="Rental Details"/>
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<Image Width="20" Height="20" VerticalAlignment="Center">
+						<Image.Source>
+							<SvgImage Source="{Binding RentalIcon}"/>
+						</Image.Source>
+					</Image>
+					<TextBlock Classes="headerText" Text="{Binding RentalStatusText}" VerticalAlignment="Center"/>
+					<TextBlock Classes="sectionHelperText" Text="•" VerticalAlignment="Center"/>
+					<TextBlock Classes="sectionHelperText" VerticalAlignment="Center">
+						<Run Text="Created"/>
+						<Run Text="{Binding DateCreated}"/>
+					</TextBlock>
+				</StackPanel>
+			</StackPanel>
 
-					<!--Order Status-->
-					<StackPanel Orientation="Horizontal" Grid.Column="0">
-						<Image Margin="0,0,5,0"
-							   Height="25"
-							   Width="25">
-							<Image.Source>
-								<SvgImage Source="{Binding RentalIcon}" />
-							</Image.Source>
-						</Image>
-						<TextBlock Text="{Binding RentalStatusText}" Classes="status" />
-					</StackPanel>
+			<!-- Body -->
+			<Grid Grid.Row="1" ColumnDefinitions="*,24,380">
 
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
-						<TextBlock Classes="status"  Text="Created"/>
-						<TextBlock Classes="status">
-							<Run Text=" ("/>
-							<Run Text="{Binding DateCreated}"/>
-							<Run Text=" )"/>
-						</TextBlock>
-					</StackPanel>
+				<!-- LEFT: item + period -->
+				<StackPanel Grid.Column="0" Spacing="20" VerticalAlignment="Top">
 
-					<!--spacer-->
-					<Border Grid.Row="1"
-							Margin="0,10,0,10"
-							Opacity="0.2"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+					<!-- Rented item -->
+					<Border Classes="sectionBorder" Padding="28,24">
+						<StackPanel Spacing="16">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Classes="sectionMarker" VerticalAlignment="Center"
+									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+								<TextBlock Text="Rented Item" Classes="sectionLabel" VerticalAlignment="Center"/>
+							</StackPanel>
 
-					<Grid Grid.Row="2" Grid.ColumnSpan="2" RowDefinitions="20, 20" ColumnDefinitions="*,*">
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Classes="standardText" Text="Lended for "/>
-							<TextBlock Classes="standardText bold" Text="{Binding BorrowerName}"/>
-							<TextBlock Classes="standardText bold">
-								<Run Text=" ( "/>
-								<Run Text="{Binding BorrowerEmail}"/>
-								<Run Text=" )"/>
-							</TextBlock>
+							<Border Classes="lineBorder"
+									BorderBrush="{DynamicResource GrayAccentBrush}"
+									CornerRadius="10"
+									Padding="12">
+								<Grid ColumnDefinitions="72,*" ColumnSpacing="16">
+									<Border Classes="imageTile" Width="72" Height="72">
+										<Image Stretch="UniformToFill" Source="{Binding ImageThumbnail.Preview}"/>
+									</Border>
+
+									<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+										<TextBlock Classes="standardText bold"
+												   Text="{Binding ItemName}"
+												   TextTrimming="CharacterEllipsis"/>
+										<TextBlock Classes="sectionHelperText">
+											<Run Text="Quantity:"/>
+											<Run Text="{Binding Quantity}" FontWeight="Bold"/>
+											<Run Text="unit/s"/>
+										</TextBlock>
+									</StackPanel>
+								</Grid>
+							</Border>
 						</StackPanel>
-
-						<StackPanel Orientation="Horizontal" Grid.Row="1">
-							<TextBlock Classes="standardText" Text="Lended from "/>
-							<TextBlock Classes="standardText bold" Text="{Binding StartingRentalDate}"/>
-							<TextBlock Classes="standardText" Text=" to "/>
-							<TextBlock Classes="standardText bold" Text="{Binding EndingRentalDate}"/>
-						</StackPanel>
-
-						<TextBlock HorizontalAlignment="Right" Classes="standardText bold" Grid.Column="1" Grid.Row="1">
-							<Run Text="("/>
-							<Run Text="{Binding RentalDays}"/>
-							<Run Text=" days/s period)"/>
-						</TextBlock>
-					</Grid>
-
-					<Border Grid.Row="4" Height="140" Classes="lineBorder" Grid.ColumnSpan="2"  Padding="15" >
-						<Grid RowDefinitions="50*, 50*" ColumnDefinitions="120, *">
-
-							<Image
-							Grid.RowSpan="2"
-							Width="100"
-							Height="100"
-							Stretch="UniformToFill"
-							Source="{Binding ImageThumbnail.Preview}" />
-
-							<TextBlock
-							Grid.Column="1"
-							Grid.Row="0"
-							Classes="standardText bold"
-							VerticalAlignment="Bottom"
-							Text="{Binding ItemName}" />
-
-							<StackPanel Grid.Column="1"
-										Grid.Row="1"
-										Orientation="Horizontal">
-
-								<TextBlock Classes="standardText" Text="Lended "/>
-								<TextBlock Classes="standardText bold" Text="{Binding Quantity}"/>
-								<TextBlock Classes="standardText" Text=" unit/s"/>
-							</StackPanel >
-
-						</Grid>
 					</Border>
 
-					<Border Grid.Row="5"
-							Margin="0,10,0,10"
-							Opacity="0.2"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+					<!-- Rental period -->
+					<Border Classes="sectionBorder" Padding="28,24">
+						<StackPanel Spacing="14">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Classes="sectionMarker" VerticalAlignment="Center"
+									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+								<TextBlock Text="Rental Period" Classes="sectionLabel" VerticalAlignment="Center"/>
+							</StackPanel>
 
-					<TextBlock Text="Total Paid" Grid.Row="6" Classes="standardText bold"/>
-					<TextBlock HorizontalAlignment="Right"
-							   Text="{Binding TotalPricePaid.Display}"
-							   Grid.Column="1"
-							   Grid.Row="6"
-							   Classes="standardText bold"/>
+							<Grid ColumnDefinitions="*,*,*" ColumnSpacing="20">
+								<StackPanel Spacing="2">
+									<TextBlock Classes="fieldLabel" Text="From"/>
+									<TextBlock Classes="standardText bold" Text="{Binding StartingRentalDate}"/>
+								</StackPanel>
+								<StackPanel Grid.Column="1" Spacing="2">
+									<TextBlock Classes="fieldLabel" Text="To"/>
+									<TextBlock Classes="standardText bold" Text="{Binding EndingRentalDate}"/>
+								</StackPanel>
+								<StackPanel Grid.Column="2" Spacing="2">
+									<TextBlock Classes="fieldLabel" Text="Duration"/>
+									<TextBlock Classes="standardText bold">
+										<Run Text="{Binding RentalDays}"/>
+										<Run Text="day/s"/>
+									</TextBlock>
+								</StackPanel>
+							</Grid>
+						</StackPanel>
+					</Border>
+				</StackPanel>
 
-					<Border Grid.Row="7"
-							Margin="0,10,0,10"
-							Opacity="0.2"
-							Grid.ColumnSpan="3"
-							Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
-				</Grid>
-			</Border>
+				<!-- RIGHT: borrower + payment -->
+				<StackPanel Grid.Column="2" Spacing="20">
+
+					<!-- Borrower -->
+					<Border Classes="sectionBorder" Padding="24">
+						<StackPanel Spacing="14">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Classes="sectionMarker" VerticalAlignment="Center"
+									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+								<TextBlock Text="Borrower" Classes="sectionLabel" VerticalAlignment="Center"/>
+							</StackPanel>
+
+							<StackPanel Spacing="3">
+								<TextBlock Classes="standardText bold" Text="{Binding BorrowerName}"/>
+								<TextBlock Classes="standardText"
+										   Text="{Binding BorrowerEmail}"
+										   TextTrimming="CharacterEllipsis"/>
+							</StackPanel>
+						</StackPanel>
+					</Border>
+
+					<!-- Payment -->
+					<Border Classes="sectionBorder" Padding="24">
+						<StackPanel Spacing="14">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Classes="sectionMarker" VerticalAlignment="Center"
+									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+								<TextBlock Text="Payment" Classes="sectionLabel" VerticalAlignment="Center"/>
+							</StackPanel>
+
+							<Border Height="1" Opacity="0.2"
+									Background="{DynamicResource PrimaryAccentBrush}"/>
+
+							<Grid ColumnDefinitions="*,auto">
+								<TextBlock Classes="headerText bold" Text="Total Paid" VerticalAlignment="Center"/>
+								<TextBlock Grid.Column="1" Classes="cardStat"
+										   Text="{Binding TotalPricePaid.Display}"/>
+							</Grid>
+						</StackPanel>
+					</Border>
+
+				</StackPanel>
+			</Grid>
 		</Grid>
 	</ScrollViewer>
 </UserControl>
