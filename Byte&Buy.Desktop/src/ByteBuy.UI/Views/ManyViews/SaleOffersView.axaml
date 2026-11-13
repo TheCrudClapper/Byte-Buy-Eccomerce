@@ -36,7 +36,7 @@
 						<TextBlock Text="Quantity To" FontFamily="OpenSansBold" FontWeight="600"/>
 						<NumericUpDown Width="150" Value="{Binding QuantityTo}"/>
 					</StackPanel>
-					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+					<Button Classes="filterButton" Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
 						<StackPanel Orientation="Horizontal">
 							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
 								   Height="15"
@@ -45,7 +45,7 @@
 						</StackPanel>
 					</Button>
 
-					<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+					<Button Classes="filterButton" Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
 						<StackPanel Orientation="Horizontal">
 							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
 								   Height="15"

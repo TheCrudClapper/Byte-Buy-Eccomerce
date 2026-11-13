@@ -44,11 +44,15 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
 
     [ObservableProperty]
     private bool _isProfilePageActive;
+
+    [ObservableProperty]
+    private string _profileName;
     #endregion
 
     public PageViewModel? CurrentPage => _navigation.CurrentPage;
 
     private readonly INavigationService _navigation;
+    private readonly ISessionService _sessionService;
     private readonly IWindowService _windowService;
     private readonly IAuthService _authService;
     private readonly INotificationService _notificationService;
@@ -90,7 +94,7 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
         IsProfilePageActive = page == ApplicationPageNames.Profile;
     }
 
-    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService, ILoadingService loadingService)
+    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService, ILoadingService loadingService, ISessionService sessionService)
     {
         _navigation = navigation;
         _windowService = windowService;
@@ -106,6 +110,8 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
             }
         };
         _ = GoToDashboard();
+        _sessionService = sessionService;
+        ProfileName = string.Join(' ', sessionService.UserFirstName, sessionService.UserLastName);
     }
 
     [RelayCommand]

@@ -5,7 +5,6 @@
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:views="clr-namespace:ByteBuy.UI.Views.Shared"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 Background="Transparent"
 			 x:Class="ByteBuy.UI.Views.CategoriesPageView"
 			 x:DataType="vm:CategoriesPageViewModel">
 
@@ -31,7 +30,7 @@
 					<TextBox Width="150" Text="{Binding CategoryName}" Watermark="Search by name"/>
 				</StackPanel>
 
-				<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
+				<Button Classes="filterButton" Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
 					<StackPanel Orientation="Horizontal">
 						<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
 							   Height="15"
@@ -40,7 +39,7 @@
 					</StackPanel>
 				</Button>
 
-				<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
+				<Button Classes="filterButton" Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
 					<StackPanel Orientation="Horizontal">
 						<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
 							   Height="15"

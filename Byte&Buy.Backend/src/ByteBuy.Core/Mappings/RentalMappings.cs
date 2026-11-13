@@ -15,6 +15,7 @@ public static class RentalMappings
             r.ItemName,
             r.Quantity,
             new MoneyDto(r.PricePerDay.Amount * r.RentalDays * r.Quantity, r.PricePerDay.Currency),
+            new MoneyDto(r.PricePerDay.Amount, r.PricePerDay.Currency),
             new ImageThumbnailDto(r.Thumbnail.ImagePath, r.Thumbnail.AltText),
             r.DateCreated,
             r.RentalDays,

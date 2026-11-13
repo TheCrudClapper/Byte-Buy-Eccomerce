@@ -14,20 +14,20 @@
 		Title="ByteBuy MP v.1.0">
 
 	<dialogHost:DialogHost Identifier="LoginDialogHost">
-		<Grid ColumnDefinitions="*">
-
-			<Grid.Background>
-
-				<LinearGradientBrush StartPoint="0%, 90%" EndPoint="30%, 0%">
-					<GradientStop Offset="0" Color="{DynamicResource PrimaryAccent}"/>
-					<GradientStop Offset="1" Color="{DynamicResource CardBackground}"/>
-				</LinearGradientBrush>
-			</Grid.Background>
+		<Grid ColumnDefinitions="*" Background="{DynamicResource SidebarGradientBrush}">
 
 			<Grid ColumnDefinitions="50,*,50">
+
+				<Ellipse Width="440" Height="440"
+						 Fill="#1F6D4AE0"
+						 HorizontalAlignment="Left"
+						 VerticalAlignment="Bottom"
+						 Margin="-190,0,0,-170"
+						 IsHitTestVisible="False"/>
+
 				<StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
 
-					<Border BorderBrush="{DynamicResource PrimaryAccent}"
+					<Border Classes="sectionBorder"
 							BorderThickness="1"
 							Background="{DynamicResource CardBackground}"
 							CornerRadius="5"
@@ -36,13 +36,13 @@
 						<Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="20">
 
 							<!-- Header -->
-							<StackPanel Grid.Row="0">
-								<TextBlock
-									Text="Byte&amp;Buy Desktop"
-									FontWeight="Bold"
-									FontSize="30"
-									FontFamily="RalewayBold"
-									Foreground="{DynamicResource TextPrimary}" />
+							<StackPanel Grid.Row="0" Spacing="5">
+								<TextBlock Grid.Row="0"
+										   FontSize="30"
+										   FontFamily="{DynamicResource RalewayBold}"
+										   Foreground="White"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"><Run Text="Byte"/><Run Text="&amp;" Foreground="{DynamicResource PrimaryAccentBrush}"/><Run Text="Buy"/></TextBlock>
 								<TextBlock
 									Text="Enter your credentials to access your account." FontSize="15"
 									Foreground="{DynamicResource TextPrimary}"
@@ -80,12 +80,21 @@
 								<StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
 									<CheckBox IsChecked="{Binding RememeberMe}"/>
 									<TextBlock Text="Remember Me" FontWeight="600" Margin="0,6"
-										   FontSize="15" FontFamily="OpenSansBold"/>
+											   FontSize="15" FontFamily="OpenSansBold"/>
 								</StackPanel>
 
-								<TextBlock Text="{Binding Error}"
-										   FontWeight="800"
-										   Foreground="{DynamicResource ErrorBrush}" />
+								<Border Background="#25FF4444"
+										BorderBrush="#60FF4444"
+										BorderThickness="1"
+										CornerRadius="8"
+										Padding="10,8"
+										IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+									<TextBlock Text="{Binding Error}"
+											   FontSize="13"
+											   FontWeight="600"
+											   TextWrapping="Wrap"
+											   Foreground="{DynamicResource ErrorBrush}" />
+								</Border>
 
 							</StackPanel>
 
