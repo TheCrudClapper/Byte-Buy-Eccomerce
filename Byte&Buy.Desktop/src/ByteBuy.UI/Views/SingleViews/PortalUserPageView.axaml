@@ -130,7 +130,7 @@
 										<Button Content="Clear" MinWidth="100"
 												HorizontalContentAlignment="Center"
 												Command="{Binding ClearCommand}"/>
-										<Button Content="Save" Classes="accent" MinWidth="100"
+										<Button Content="Save" MinWidth="100"
 												HorizontalContentAlignment="Center"
 												Command="{Binding SaveCommand}"/>
 									</StackPanel>
@@ -215,7 +215,7 @@
 											<Button Content="Clear" MinWidth="100"
 													HorizontalContentAlignment="Center"
 													Command="{Binding ClearCommand}"/>
-											<Button Content="Save Address" Classes="accent" MinWidth="130"
+											<Button Content="Save Address" MinWidth="130"
 													HorizontalContentAlignment="Center"
 													Command="{Binding SaveAddressCommand}"/>
 										</StackPanel>

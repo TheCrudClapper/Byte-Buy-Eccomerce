@@ -143,7 +143,7 @@
 					<Button Content="Clear" MinWidth="100"
 							HorizontalContentAlignment="Center"
 							Command="{Binding ClearCommand}"/>
-					<Button Content="Save Changes" Classes="accent" MinWidth="130"
+					<Button Content="Save Changes" MinWidth="130"
 							HorizontalContentAlignment="Center"
 							Command="{Binding SaveCommand}"/>
 				</StackPanel>

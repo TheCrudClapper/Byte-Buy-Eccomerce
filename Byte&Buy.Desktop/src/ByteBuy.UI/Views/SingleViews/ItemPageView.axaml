@@ -223,7 +223,7 @@
 										Command="{Binding ClearCommand}"
 										HorizontalAlignment="Stretch"
 										HorizontalContentAlignment="Center"/>
-								<Button Grid.Column="1" Content="Save" Classes="accent"
+								<Button Grid.Column="1" Content="Save"
 										Command="{Binding SaveCommand}"
 										HorizontalAlignment="Stretch"
 										HorizontalContentAlignment="Center"/>

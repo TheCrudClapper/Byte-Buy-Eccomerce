@@ -232,7 +232,6 @@
                                     Command="{Binding ClearCommand}"/>
 
                             <Button Content="Save"
-                                    Classes="accent"
                                     MinWidth="100"
                                     HorizontalContentAlignment="Center"
                                     Command="{Binding SaveCommand}"/>
