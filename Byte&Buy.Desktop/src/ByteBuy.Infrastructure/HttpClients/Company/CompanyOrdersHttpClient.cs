@@ -17,10 +17,10 @@ public class CompanyOrdersHttpClient(IBackendHttpClientFactory factory, IOptions
 {
     private readonly string resource = options.Value.CompanyOrders;
 
-    public Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query)
+    public Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}", query);
-        return GetAsync<PagedList<CompanyOrderListResponse>>(url);
+        return GetAsync<PagedList<CompanyOrderListResponse>>(url, cancellationToken);
     }
     public async Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId)
         => await GetAsync<OrderDetailsResponse>($"{resource}/details/{orderId}");

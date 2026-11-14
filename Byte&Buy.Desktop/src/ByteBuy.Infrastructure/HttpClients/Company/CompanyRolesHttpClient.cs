@@ -25,10 +25,10 @@ public class CompanyRolesHttpClient(IBackendHttpClientFactory factory, IOptions<
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await GetAsync<IReadOnlyCollection<SelectListItemResponse<Guid>>>($"{resource}/options");
 
-    public Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query)
+    public Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return GetAsync<PagedList<RoleListResponse>>(url);
+        return GetAsync<PagedList<RoleListResponse>>(url, cancellationToken);
     }
 
     public async Task<Result> DeleteByIdAsync(Guid roleId)

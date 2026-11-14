@@ -48,7 +48,7 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
             RoleName = RoleName,
         };
 
-        var result = await Service.GetListAsync(query);
+        var result = await Service.GetListAsync(query, Token);
         if (!result.Success)
         {
             NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading roles.");

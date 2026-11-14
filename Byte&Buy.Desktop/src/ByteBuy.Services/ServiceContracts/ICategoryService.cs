@@ -12,5 +12,5 @@ public interface ICategoryService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(CategoryAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, CategoryUpdateRequest request);
     Task<Result<CategoryResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query);
+    Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query, CancellationToken cancellationToken = default);
 }

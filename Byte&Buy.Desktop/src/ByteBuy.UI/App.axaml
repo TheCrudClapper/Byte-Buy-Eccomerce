@@ -32,7 +32,6 @@
 		</ResourceDictionary>
 
 
-
 		<!--New Theme-->
 		<Color x:Key="HoverAccent">#3b255a</Color>
 
@@ -89,7 +88,6 @@
 		<SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}" />
 		<SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}" />
 		<SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}" />
-
 
 		<!--New Brushes-->
 		<SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource Background}"/>

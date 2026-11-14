@@ -12,5 +12,5 @@ public interface IDeliveryCarrierService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(DeliveryCarrierAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryCarrierUpdateRequest request);
     Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query);
+    Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query, CancellationToken cancellationToken = default);
 }

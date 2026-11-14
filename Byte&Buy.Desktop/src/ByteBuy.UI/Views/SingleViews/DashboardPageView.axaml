@@ -8,7 +8,6 @@
 			 xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 			 mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="900"
 			 x:DataType="vm:DashboardPageViewModel"
-			 Background="{DynamicResource Background}"
 			 x:Class="ByteBuy.UI.Views.DashboardPageView">
 
 	<ScrollViewer>

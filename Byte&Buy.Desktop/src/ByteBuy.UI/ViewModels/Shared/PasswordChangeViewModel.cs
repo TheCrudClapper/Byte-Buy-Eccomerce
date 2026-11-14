@@ -1,5 +1,6 @@
 ﻿using ByteBuy.Services.DTO.Auth;
 using ByteBuy.Services.ServiceContracts;
+using ByteBuy.UI.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Shared;
 
-public partial class PasswordChangeViewModel(IEmployeeService employeeService)
+public partial class PasswordChangeViewModel(IEmployeeService employeeService, INotificationService notificationService)
     : ObservableValidator
 {
     [ObservableProperty]
@@ -44,7 +45,9 @@ public partial class PasswordChangeViewModel(IEmployeeService employeeService)
         var request = new PasswordChangeRequest(NewPassword, CurrentPassword, ConfirmPassword);
         var response = await employeeService.ChangePasswordAsync(request);
         if (!response.Success)
-            Error = response?.Error?.Description ?? "Error occured";
+            notificationService.ShowError(response?.Error?.Description ?? "Password cannot be changed right now, try again.");
+
+        notificationService.ShowSuccess("Password was successfully changed.");
     }
 
     [RelayCommand]

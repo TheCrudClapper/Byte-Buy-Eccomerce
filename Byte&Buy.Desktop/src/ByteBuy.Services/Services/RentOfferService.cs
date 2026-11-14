@@ -19,8 +19,8 @@ public class RentOfferService(ICompanyRentOfferHttpClient httpClient) : IRentOff
     public async Task<Result<RentOfferResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<RentOfferListResponse>>> GetListAsync(RentOfferListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public Task<Result<UpdatedResponse>> UpdateAsync(Guid id, RentOfferUpdateRequest request)
         => httpClient.PutRentOfferAsync(id, request);

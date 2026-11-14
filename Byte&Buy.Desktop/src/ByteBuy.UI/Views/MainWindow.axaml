@@ -15,205 +15,241 @@
 
 	<dialogHost:DialogHost Identifier="MainDialogHost" CloseOnClickAway="True">
 		<Grid>
-			<Grid RowDefinitions="50, *">
-				<!-- Top Bar -->
-				<Grid Grid.Row="0" ColumnDefinitions="220, *" Background="{DynamicResource CardBackgroundBrush}">
+			<Grid ColumnDefinitions="250,*">
 
-					<!-- Branding -->
-					<TextBlock Text="Byte&amp;Buy"
-							   FontSize="30"
-							   FontFamily="{DynamicResource RalewayBold}"
-							   Foreground="White"
-							   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<!-- SIDEBAR -->
+				<Border Grid.Column="0"
+						Background="{DynamicResource SidebarGradientBrush}"
+						BorderThickness="0,0,1,0"
+						BorderBrush="{DynamicResource GrayAccentBrush}"
+						ClipToBounds="True">
+					<Grid>
+						<!-- Decorative glow in the bottom-left corner -->
+						<Ellipse Width="440" Height="440"
+								 Fill="#1F6D4AE0"
+								 HorizontalAlignment="Left"
+								 VerticalAlignment="Bottom"
+								 Margin="-190,0,0,-170"
+								 IsHitTestVisible="False"/>
 
-					<!-- Quick Actions -->
-					<StackPanel
-						Margin="0,0,5,0"
-						Orientation="Horizontal"
-						Grid.Column="1"
-						HorizontalAlignment="Right">
-						<Button
-							IsEnabled="{Binding !LoadingService.IsLoading}"
-							Classes.menuButton="true"
-							Classes.active = "{Binding IsProfilePageActive}"
-							Command="{Binding GoToProfileCommand}">
-							<Image Source="{SvgImage /Assets/Images/regular/user-solid-full-white.svg}"/>
-						</Button>
-					</StackPanel>
+						<Grid RowDefinitions="90,*,auto">
 
-				</Grid>
+							<!-- Branding -->
+							<TextBlock Grid.Row="0"
+									   FontSize="34"
+									   FontFamily="{DynamicResource RalewayBold}"
+									   Foreground="White"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center"><Run Text="Byte"/><Run Text="&amp;" Foreground="{DynamicResource PrimaryAccentBrush}"/><Run Text="Buy"/></TextBlock>
 
-				<Grid ColumnDefinitions="220, *" Grid.Row="1">
-					<Grid Grid.Column="0" RowDefinitions="*, 50" Background="{DynamicResource CardBackgroundBrush}">
+							<!-- Menu -->
+							<ScrollViewer Grid.Row="1" Margin="16,0">
+								<StackPanel x:Name="SidebarStackPanel">
 
-						<!-- Stack Panel With Menu Buttons -->
-						<StackPanel Margin="5,0" Grid.Row="0" x:Name="SidebarStackPanel">
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToDashboardCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsDashboardPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"/>
+											<TextBlock Text="Dashboard"/>
+										</StackPanel>
+									</Button>
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToDashboardCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active="{Binding IsDashboardPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/gauge-solid-full.svg}"
-										   Margin="0,0,5,0"/>
-									<TextBlock Text="Dashboard"/>
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToAdministrationCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsAdministrationPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"/>
+											<TextBlock Text="Shop Administration"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToEmployeesCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsEmployeesPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"/>
+											<TextBlock Text="Employees"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToPortalUsersCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsPortalUsersPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"/>
+											<TextBlock Text="Users"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToRolesCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsRolesPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"/>
+											<TextBlock Text="Roles"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToPermissionsCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsPermissionsPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/unlock-solid-full.svg}"/>
+											<TextBlock Text="Permissions"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToOrdersCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsOrdersPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"/>
+											<TextBlock Text="Orders"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToRentalsCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsRentalsPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/calendar-days-regular-full.svg}"/>
+											<TextBlock Text="Rentals"/>
+										</StackPanel>
+									</Button>
+
+									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+											Command="{Binding GoToCompanyDetailsCommand}"
+											Classes.sidebarMenuButton="true"
+											Classes.active="{Binding IsCompanyPageActive}">
+										<StackPanel Orientation="Horizontal" Spacing="16">
+											<Image Source="{SvgImage /Assets/Images/regular/company.svg}"/>
+											<TextBlock Text="Company Details"/>
+										</StackPanel>
+									</Button>
 								</StackPanel>
-							</Button>
+							</ScrollViewer>
 
+							<!-- Footer: version + shutdown / logout -->
+							<Border Grid.Row="2"
+									Margin="16,0"
+									Padding="0,14"
+									BorderThickness="0,1,0,0"
+									BorderBrush="{DynamicResource GrayAccentBrush}">
+								<Grid ColumnDefinitions="auto,*,auto,auto" ColumnSpacing="10">
+									<PathIcon Grid.Column="0"
+											  Width="20" Height="20"
+											  VerticalAlignment="Center"
+											  Foreground="{DynamicResource TextMutedBrush}"
+											  Data="{DynamicResource IconInfo}"/>
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToAdministrationCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsAdministrationPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Shop Administration"/>
-								</StackPanel>
-							</Button>
+									<TextBlock Grid.Column="1"
+											   Classes="sectionHelperText"
+											   VerticalAlignment="Center"
+											   Text="Byte&amp;Buy v1.0.0"/>
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToEmployeesCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsEmployeesPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/user-tie-solid-full.svg}"
-										   Margin="0,0,5,0"/>
-									<TextBlock Text="Employees" />
-								</StackPanel>
-							</Button>
+									<Button Grid.Column="2"
+											IsEnabled="{Binding !LoadingService.IsLoading}"
+											Classes="menuButton"
+											Command="{Binding ShutdownCommand}">
+										<Image Source="{SvgImage /Assets/Images/regular/power-off-solid-full.svg}"
+											   Height="20" Width="20"/>
+									</Button>
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToPortalUsersCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsPortalUsersPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Users" />
-								</StackPanel>
-							</Button>
+									<Button Grid.Column="3"
+											IsEnabled="{Binding !LoadingService.IsLoading}"
+											Classes="menuButton"
+											Command="{Binding LogOutCommand}">
+										<Image Source="{SvgImage /Assets/Images/regular/right-from-bracket-solid-full-white.svg}"
+											   Height="20" Width="20"/>
+									</Button>
+								</Grid>
+							</Border>
+						</Grid>
+					</Grid>
+				</Border>
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToRolesCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsRolesPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Roles" />
-								</StackPanel>
-							</Button>
+				<Grid Grid.Column="1" RowDefinitions="66,*" Background="{DynamicResource PageBackgroundBrush}">
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToPermissionsCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsPermissionsPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/unlock-solid-full.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Permissions" />
-								</StackPanel>
-							</Button>
+					<!-- Top bar -->
+					<Border Grid.Row="0"
+							Background="{DynamicResource TopBarGradientBrush}"
+							BorderThickness="0,0,0,1"
+							BorderBrush="{DynamicResource GrayAccentBrush}">
+						<StackPanel Orientation="Horizontal"
+									HorizontalAlignment="Right"
+									VerticalAlignment="Center"
+									Margin="0,0,24,0"
+									Spacing="18">
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToOrdersCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsOrdersPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/boxes-packing-solid-full-white.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Orders" />
-								</StackPanel>
-							</Button>
+							<!-- Bell (visual only) --><!--
+							<Grid Width="40" Height="40" VerticalAlignment="Center">
+								<PathIcon Width="22" Height="22"
+										  Foreground="{DynamicResource TextPrimaryBrush}"
+										  Data="{DynamicResource IconBell}"/>
+								<Ellipse Width="10" Height="10"
+										 Fill="#EF4444"
+										 HorizontalAlignment="Right"
+										 VerticalAlignment="Top"
+										 Margin="0,5,7,0"/>
+							</Grid>-->
 
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToRentalsCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsRentalsPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/calendar-days-regular-full.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Rentals" />
-								</StackPanel>
-							</Button>
-
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Command="{Binding GoToCompanyDetailsCommand}"
-								Classes.sidebarMenuButton="true"
-								Classes.active = "{Binding IsCompanyPageActive}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/company.svg}"
-										   Margin="0,0,5,0" />
-									<TextBlock Text="Company Details" />
+							<!-- Profile chip -->
+							<Button IsEnabled="{Binding !LoadingService.IsLoading}"
+									Classes.menuButton="true"
+									Classes.active="{Binding IsProfilePageActive}"
+									Padding="6,4,12,4"
+									Command="{Binding GoToProfileCommand}">
+								<StackPanel Orientation="Horizontal" Spacing="12">
+									<Border Width="38" Height="38" CornerRadius="19"
+											Background="{DynamicResource ButtonGradient}"
+											BorderBrush="{DynamicResource PrimaryAccentBrush}"
+											BorderThickness="1">
+										<PathIcon Width="18" Height="18"
+												  Foreground="White"
+												  Data="{DynamicResource IconPerson}"/>
+									</Border>
+									<TextBlock Text="{Binding ProfileName}"
+											   VerticalAlignment="Center"
+											   FontWeight="700"/>
 								</StackPanel>
 							</Button>
 						</StackPanel>
+					</Border>
 
-						<Grid Grid.Column="1" Grid.Row="1" ColumnDefinitions="*,*">
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Margin="5"
-								Grid.Column="0"
-								Classes="menuButton"
-								HorizontalAlignment="Left"
-								Command="{Binding ShutdownCommand}">
-								<Image
-									Source="{SvgImage /Assets/Images/regular/power-off-solid-full.svg}"
-									Height="20" Width="20" />
-							</Button>
-							<Button
-								IsEnabled="{Binding !LoadingService.IsLoading}"
-								Margin="5"
-								Grid.Column="1"
-								Classes="menuButton"
-								HorizontalAlignment="Right"
-								Command="{Binding LogOutCommand}">
-								<Image
-									Source="{SvgImage /Assets/Images/regular/right-from-bracket-solid-full-white.svg}"
-									Height="20" Width="20" />
-							</Button>
-						</Grid>
+					<!-- Pages -->
+					<Grid Grid.Row="1">
+						<ContentControl Padding="40,0,0,0" Content="{Binding CurrentPage}"/>
 
-
-
+						<views:Loader IsVisible="{Binding LoadingService.IsLoading}"
+									  Message="{Binding LoadingService.Message}"/>
 					</Grid>
-
-					<!-- Area for pages -->
-					<ContentControl Grid.Column="1" Padding="30" Background="#17182a"
-									Content="{Binding CurrentPage}" />
-
-					<views:Loader Grid.Column="1" 
-								  IsVisible="{Binding LoadingService.IsLoading}" 
-								  Message="{Binding LoadingService.Message}"/>
-
 				</Grid>
 			</Grid>
+
+			<!-- Notifications -->
 			<ItemsControl ItemsSource="{Binding NotificationService.Notifications}"
 						  HorizontalAlignment="Right"
 						  Margin="0,0,20,20"
 						  VerticalAlignment="Bottom">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<views:AlertView
-							DataContext="{Binding}"
-							Height="70"
-							Width="400"
-							Margin="0,5,0,0"
-							ZIndex="10" />
+						<views:AlertView DataContext="{Binding}"
+										 MinHeight="70"
+										 Width="400"
+										 Margin="0,5,0,0"
+										 ZIndex="10"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
 		</Grid>
 	</dialogHost:DialogHost>
-
 </Window>

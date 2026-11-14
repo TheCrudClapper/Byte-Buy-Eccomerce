@@ -29,10 +29,10 @@ public class CompanyCategoriesHttpClient(IBackendHttpClientFactory factory, IOpt
     public async Task<Result<CategoryResponse>> GetByIdAsync(Guid categoryId)
         => await GetAsync<CategoryResponse>($"{resource}/{categoryId}");
 
-    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query)
+    public async Task<Result<PagedList<CategoryListResponse>>> GetListAsync(CategoryListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<CategoryListResponse>>(url);
+        return await GetAsync<PagedList<CategoryListResponse>>(url, cancellationToken);
     }
 
 }

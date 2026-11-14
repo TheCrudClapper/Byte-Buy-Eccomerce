@@ -4,244 +4,306 @@
 			 xmlns:dialogHost="using:DialogHostAvalonia"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1000"
+			 mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="900"
 			 x:Class="ByteBuy.UI.OfferDialogView"
 			 x:DataType="vm:OfferDialogViewModel">
 
-	<Border CornerRadius="2"
-			BorderThickness="2"
-			Background="{DynamicResource CardBackgroundBrush}"
-			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="300"
-			MinWidth="500">
-		<ScrollViewer>
-			<Grid RowDefinitions="30,*,*">
+	<Border Width="580"
+			MaxHeight="740"
+			Classes="sectionBorder">
 
-				<!-- Title bar -->
-				<Border Grid.Row="0"
-						Background="{DynamicResource ButtonGradient}"
-						Height="30"
-						VerticalAlignment="Top">
-					<TextBlock Text="{Binding DialogTitle}"
-							   Classes="dialogTitle" />
-				</Border>
+		<Grid RowDefinitions="auto,*,auto">
 
-				<!-- Form Fields -->
-				<StackPanel Margin="20"
-							Spacing="10"
-							Grid.Row="1">
-
-					<!-- Offer type -->
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsVisible="{Binding !IsEditMode}">
-						<TextBlock Classes="textBoxLabel"
-								   Text="Sale Offer"
-								   VerticalAlignment="Center"
-								   Margin="0,0,5,0"/>
-						<CheckBox  HorizontalAlignment="Right"
-								   Command="{Binding ChangeOfferTypeCommand}" />
-					</StackPanel>
-
-
-					<!-- Selected item -->
-					<TextBlock Text="Selected Stock Item"
-							   IsVisible="{Binding !IsEditMode}"
-							   Classes="textBoxLabel"
-							   HorizontalAlignment="Stretch" />
-					<TextBox IsEnabled="False"
-							 IsVisible="{Binding !IsEditMode}"
-							 Text="{Binding SelectedItem.Name}"
-							 TextWrapping="Wrap" />
-
-					<!-- Units -->
-					<StackPanel IsVisible="{Binding !IsEditMode}" Spacing="10">
-						<TextBlock Text="Quantity"
-								   Classes="textBoxLabel" />
-						<NumericUpDown Value="{Binding Quantity}"
-									   Watermark="Enter avaliable quantity for rental"
-									   FormatString="0"
-									   Minimum="1" />
-					</StackPanel>
-
-
-					<Grid ColumnDefinitions="31*, 2*, 69*" IsVisible="{Binding IsEditMode}">
-						<StackPanel Grid.Column="0" Spacing="10">
-							<TextBlock Text="Current quantity"
-									   Classes="textBoxLabel"
-									   HorizontalAlignment="Stretch" />
-							<TextBox IsEnabled="False"
-									 Text="{Binding CurrentAvaliableQuantity}"
-									 TextWrapping="Wrap" />
-						</StackPanel>
-						<StackPanel Grid.Column="2" Spacing="10">
-							<TextBlock Text="Additional quantity"
-									   Classes="textBoxLabel"
-									   HorizontalAlignment="Stretch" />
-							<NumericUpDown Value="{Binding Quantity}"
-										   Watermark="Enter additional quantity"
-										   FormatString="0"
-										   Minimum="0" />
-						</StackPanel>
-					</Grid>
-
-
-					<!-- Rent Offer Fields -->
-					<StackPanel Spacing="10" IsVisible="{Binding !IsSaleOffer}">
-						<TextBlock Text="Rental price per day"
-								   Classes="textBoxLabel" />
-						<NumericUpDown Value="{Binding PricePerDay}"
-									   FormatString="0.00"
-									   Minimum="1"
-									   Watermark="Enter price per one day of rental period" />
-
-						<StackPanel IsVisible="{Binding !IsEditMode}" Spacing="10">
-							<TextBlock Text="Max Rental Days"
-									   Classes="textBoxLabel" />
-							<NumericUpDown Value="{Binding RentalDays}"
-										   FormatString="0"
-										   Watermark="Enter desired maximum days of rental period (360 max)"
-										   Minimum="1" />
-
-						</StackPanel>
-
-						<Grid ColumnDefinitions="31*, 2*, 69*" IsVisible="{Binding IsEditMode}">
-							<StackPanel Grid.Column="0" Spacing="10">
-								<TextBlock Text="Current days"
-										   Classes="textBoxLabel"
-										   HorizontalAlignment="Stretch" />
-								<TextBox IsEnabled="False"
-										 Text="{Binding MaxRentalDays}"
-										 TextWrapping="Wrap" />
-							</StackPanel>
-
-							<StackPanel Grid.Column="2" Spacing="10">
-								<TextBlock Text="Additional rental days"
-										   Classes="textBoxLabel"
-										   HorizontalAlignment="Stretch" />
-								<NumericUpDown Value="{Binding RentalDays}"
-											   Watermark="Enter additional quantity"
-											   FormatString="0"
-											   Minimum="0" />
-							</StackPanel>
-						</Grid>
-
-
-					</StackPanel>
-
-					<!-- Sale Offer Fields -->
-					<StackPanel Spacing="10"
-								IsVisible="{Binding IsSaleOffer}">
-						<TextBlock Text="Unit price"
-								   Classes="textBoxLabel" />
-						<NumericUpDown Value="{Binding PricePerItem}"
-									   FormatString="0.00"
-									   Minimum="1"
-									   Watermark="Enter price per one item" />
-					</StackPanel>
-
-					<!-- Deliveries -->
-					<StackPanel Spacing="10">
-
-						<!-- Parcel lockers -->
-						<TextBlock Text="Parcel Lockers:"
-								   FontWeight="700" />
-						<ItemsControl ItemsSource="{Binding ParcelLockerGroups}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<StackPanel>
-										<TextBlock Text="{Binding Carrier}" />
-										<ItemsControl ItemsSource="{Binding Options}">
-											<ItemsControl.ItemTemplate>
-												<DataTemplate x:CompileBindings="false">
-													<Grid ColumnDefinitions="auto,*,auto">
-														<StackPanel Orientation="Horizontal">
-															<RadioButton IsThreeState="True"
-																		 GroupName="{Binding Carrier}"
-																		 IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-															<TextBlock Text="{Binding Name}"
-																	   VerticalAlignment="Center" />
-														</StackPanel>
-														<TextBlock Grid.Column="2"
-																   VerticalAlignment="Center"
-																   Text="{Binding PriceAndCurrency}" />
-													</Grid>
-												</DataTemplate>
-											</ItemsControl.ItemTemplate>
-										</ItemsControl>
-									</StackPanel>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
-
-						<!-- Courier -->
-						<TextBlock Text="Courier:"
-								   FontWeight="700" />
-						<ItemsControl ItemsSource="{Binding CourierDeliveries}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<StackPanel Spacing="10">
-										<Grid ColumnDefinitions="auto,*,auto">
-											<StackPanel Orientation="Horizontal">
-												<CheckBox x:CompileBindings="false"
-														  IsThreeState="False"
-														  IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-												<TextBlock Text="{Binding Name}"
-														   VerticalAlignment="Center" />
-											</StackPanel>
-											<TextBlock Grid.Column="2"
-													   Text="{Binding PriceAndCurrency}"
-													   VerticalAlignment="Center" />
-										</Grid>
-									</StackPanel>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
-
-						<!-- Pickup point -->
-						<TextBlock Text="Pickup Point:"
-								   FontWeight="700" />
-						<ItemsControl ItemsSource="{Binding PickupPointDeliveries}">
-							<ItemsControl.ItemTemplate>
-								<DataTemplate>
-									<StackPanel>
-										<Grid ColumnDefinitions="auto,*,auto">
-											<StackPanel Orientation="Horizontal">
-												<CheckBox x:CompileBindings="false"
-														  IsThreeState="False"
-														  IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-												<TextBlock Text="{Binding Name}"
-														   VerticalAlignment="Center" />
-											</StackPanel>
-											<TextBlock Grid.Column="2"
-													   Text="{Binding PriceAndCurrency}"
-													   VerticalAlignment="Center" />
-										</Grid>
-									</StackPanel>
-								</DataTemplate>
-							</ItemsControl.ItemTemplate>
-						</ItemsControl>
-					</StackPanel>
-
-					<!-- Error -->
-					<TextBlock
-					Text="{Binding Error}"
-					FontFamily="{DynamicResource RalewayBold}"
-					Foreground="{DynamicResource ErrorBrush}"
-					TextWrapping="Wrap" />
-
-					<!-- Action Buttons -->
-					<StackPanel Grid.Row="2"
-								Orientation="Horizontal"
-								HorizontalAlignment="Right"
-								Spacing="8">
-						<Button Content="Cancel"
-								Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-								Path=CloseDialogCommand}"
-								CommandParameter="False" />
-						<Button Content="Save"
-								Command="{Binding SaveCommand}" />
+			<!-- Header -->
+			<Border Grid.Row="0"
+					Padding="24,22,24,16"
+					BorderThickness="0,0,0,1"
+					BorderBrush="{DynamicResource GrayAccentBrush}">
+				<StackPanel Orientation="Horizontal" Spacing="14">
+					<Border Classes="sectionIcon">
+						<PathIcon Data="{DynamicResource IconUpload}"/>
+					</Border>
+					<StackPanel VerticalAlignment="Center" Spacing="2">
+						<TextBlock Classes="sectionLabel" Text="{Binding DialogTitle}"/>
+						<TextBlock Classes="sectionHelperText"
+								   Text="Set quantity, price and available delivery methods."/>
 					</StackPanel>
 				</StackPanel>
-			</Grid>
-		</ScrollViewer>
+			</Border>
+
+			<!-- Body-->
+			<ScrollViewer Grid.Row="1" ScrollViewer.AllowAutoHide="False">
+				<StackPanel Margin="24,20,24,20" Spacing="22">
+
+					<!-- Offer type (create mode only) -->
+					<Border Classes="itemRow" IsVisible="{Binding !IsEditMode}">
+						<Grid ColumnDefinitions="*,auto,auto" ColumnSpacing="14">
+							<StackPanel VerticalAlignment="Center" Spacing="2">
+								<TextBlock Classes="textBoxLabel" Text="Offer type"/>
+								<TextBlock Classes="sectionHelperText" FontSize="13"
+										   Text="Leave unchecked to create a rental offer."/>
+							</StackPanel>
+
+							<Border Grid.Column="1" Classes="statusPill"
+									VerticalAlignment="Center"
+									IsVisible="{Binding IsSaleOffer}">
+								<TextBlock Text="Sale"/>
+							</Border>
+							<Border Grid.Column="1" Classes="statusPill"
+									VerticalAlignment="Center"
+									IsVisible="{Binding !IsSaleOffer}">
+								<TextBlock Text="Rental"/>
+							</Border>
+
+							<CheckBox Grid.Column="2"
+									  VerticalAlignment="Center"
+									  Command="{Binding ChangeOfferTypeCommand}"/>
+						</Grid>
+					</Border>
+
+					<!-- Stock item + quantity -->
+					<StackPanel Spacing="12">
+						<StackPanel Orientation="Horizontal" Spacing="3">
+							<Image Classes="sectionMarker" VerticalAlignment="Center"
+								   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+							<TextBlock Classes="cardTitle" Text="Stock item"/>
+						</StackPanel>
+
+						<!-- Create mode -->
+						<StackPanel Spacing="12" IsVisible="{Binding !IsEditMode}">
+							<StackPanel Spacing="6">
+								<TextBlock Classes="textBoxLabel" Text="Selected stock item"/>
+								<TextBox IsEnabled="False"
+										 Text="{Binding SelectedItem.Name}"
+										 TextWrapping="Wrap"/>
+							</StackPanel>
+
+							<StackPanel Spacing="6">
+								<TextBlock Classes="textBoxLabel" Text="Quantity"/>
+								<NumericUpDown Value="{Binding Quantity}"
+											   Watermark="Enter available quantity"
+											   FormatString="0"
+											   Minimum="1"/>
+							</StackPanel>
+						</StackPanel>
+
+						<!-- Edit mode -->
+						<Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="{Binding IsEditMode}">
+							<StackPanel Spacing="6">
+								<TextBlock Classes="textBoxLabel" Text="Current quantity"/>
+								<TextBox IsEnabled="False"
+										 Text="{Binding CurrentAvaliableQuantity}"
+										 TextWrapping="Wrap"/>
+							</StackPanel>
+							<StackPanel Grid.Column="1" Spacing="6">
+								<TextBlock Classes="textBoxLabel" Text="Additional quantity"/>
+								<NumericUpDown Value="{Binding Quantity}"
+											   Watermark="Enter additional quantity"
+											   FormatString="0"
+											   Minimum="0"/>
+							</StackPanel>
+						</Grid>
+					</StackPanel>
+
+					<Border Classes="divider"/>
+
+					<!-- Pricing -->
+					<StackPanel Spacing="12">
+						<StackPanel Orientation="Horizontal" Spacing="3">
+							<Image Classes="sectionMarker" VerticalAlignment="Center"
+								   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+							<TextBlock Classes="cardTitle" Text="Pricing"/>
+						</StackPanel>
+
+						<!-- Rent offer fields -->
+						<StackPanel Spacing="12" IsVisible="{Binding !IsSaleOffer}">
+							<Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+								<StackPanel Spacing="6">
+									<TextBlock Classes="textBoxLabel" Text="Rental price per day"/>
+									<NumericUpDown Value="{Binding PricePerDay}"
+												   FormatString="0.00"
+												   Minimum="1"
+												   Watermark="Price per day"/>
+								</StackPanel>
+
+								<StackPanel Grid.Column="1" Spacing="6" IsVisible="{Binding !IsEditMode}">
+									<TextBlock Classes="textBoxLabel" Text="Max rental days"/>
+									<NumericUpDown Value="{Binding RentalDays}"
+												   FormatString="0"
+												   Minimum="1"
+												   Watermark="360 max"/>
+								</StackPanel>
+							</Grid>
+
+							<Grid ColumnDefinitions="*,*" ColumnSpacing="16" IsVisible="{Binding IsEditMode}">
+								<StackPanel Spacing="6">
+									<TextBlock Classes="textBoxLabel" Text="Current days"/>
+									<TextBox IsEnabled="False"
+											 Text="{Binding MaxRentalDays}"
+											 TextWrapping="Wrap"/>
+								</StackPanel>
+
+								<StackPanel Grid.Column="1" Spacing="6">
+									<TextBlock Classes="textBoxLabel" Text="Additional rental days"/>
+									<NumericUpDown Value="{Binding RentalDays}"
+												   Watermark="Enter additional days"
+												   FormatString="0"
+												   Minimum="0"/>
+								</StackPanel>
+							</Grid>
+						</StackPanel>
+
+						<!-- Sale offer fields -->
+						<StackPanel Spacing="6" IsVisible="{Binding IsSaleOffer}">
+							<TextBlock Classes="textBoxLabel" Text="Unit price"/>
+							<NumericUpDown Value="{Binding PricePerItem}"
+										   FormatString="0.00"
+										   Minimum="1"
+										   Watermark="Enter price per one item"/>
+						</StackPanel>
+					</StackPanel>
+
+					<Border Classes="divider"/>
+
+					<!-- Delivery options -->
+					<StackPanel Spacing="14">
+						<StackPanel Spacing="4">
+							<StackPanel Orientation="Horizontal" Spacing="3">
+								<Image Classes="sectionMarker" VerticalAlignment="Center"
+									   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+								<TextBlock Classes="cardTitle" Text="Delivery options"/>
+							</StackPanel>
+							<TextBlock Classes="sectionHelperText" FontSize="13"
+									   Text="Choose which delivery methods are available for this offer."/>
+						</StackPanel>
+
+						<!-- Parcel lockers -->
+						<StackPanel Spacing="8">
+							<TextBlock Classes="fieldLabel" Text="PARCEL LOCKERS"/>
+							<ItemsControl ItemsSource="{Binding ParcelLockerGroups}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:CompileBindings="false">
+										<StackPanel Spacing="6" Margin="0,0,0,8">
+											<TextBlock Classes="standardText bold" Text="{Binding Carrier}"/>
+											<ItemsControl ItemsSource="{Binding Options}">
+												<ItemsControl.ItemTemplate>
+													<DataTemplate x:CompileBindings="false">
+														<Border Classes="itemRow" Padding="12,8" CornerRadius="12" Margin="0,0,0,6">
+															<Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="10">
+																<RadioButton IsThreeState="True"
+																			 GroupName="{Binding Carrier}"
+																			 IsChecked="{Binding IsSelected, Mode=TwoWay}"
+																			 VerticalAlignment="Center"/>
+																<TextBlock Grid.Column="1"
+																		   Classes="standardText"
+																		   Text="{Binding Name}"
+																		   TextTrimming="CharacterEllipsis"
+																		   VerticalAlignment="Center"/>
+																<TextBlock Grid.Column="2"
+																		   Classes="standardText bold"
+																		   Text="{Binding PriceAndCurrency}"
+																		   VerticalAlignment="Center"/>
+															</Grid>
+														</Border>
+													</DataTemplate>
+												</ItemsControl.ItemTemplate>
+											</ItemsControl>
+										</StackPanel>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+
+						<!-- Courier -->
+						<StackPanel Spacing="8">
+							<TextBlock Classes="fieldLabel" Text="COURIER"/>
+							<ItemsControl ItemsSource="{Binding CourierDeliveries}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:CompileBindings="false">
+										<Border Classes="itemRow" Padding="12,8" CornerRadius="12" Margin="0,0,0,6">
+											<Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="10">
+												<CheckBox IsThreeState="False"
+														  IsChecked="{Binding IsSelected, Mode=TwoWay}"
+														  VerticalAlignment="Center"/>
+												<TextBlock Grid.Column="1"
+														   Classes="standardText"
+														   Text="{Binding Name}"
+														   TextTrimming="CharacterEllipsis"
+														   VerticalAlignment="Center"/>
+												<TextBlock Grid.Column="2"
+														   Classes="standardText bold"
+														   Text="{Binding PriceAndCurrency}"
+														   VerticalAlignment="Center"/>
+											</Grid>
+										</Border>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+
+						<!-- Pickup point -->
+						<StackPanel Spacing="8">
+							<TextBlock Classes="fieldLabel" Text="PICKUP POINT"/>
+							<ItemsControl ItemsSource="{Binding PickupPointDeliveries}">
+								<ItemsControl.ItemTemplate>
+									<DataTemplate x:CompileBindings="false">
+										<Border Classes="itemRow" Padding="12,8" CornerRadius="12" Margin="0,0,0,6">
+											<Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="10">
+												<CheckBox IsThreeState="False"
+														  IsChecked="{Binding IsSelected, Mode=TwoWay}"
+														  VerticalAlignment="Center"/>
+												<TextBlock Grid.Column="1"
+														   Classes="standardText"
+														   Text="{Binding Name}"
+														   TextTrimming="CharacterEllipsis"
+														   VerticalAlignment="Center"/>
+												<TextBlock Grid.Column="2"
+														   Classes="standardText bold"
+														   Text="{Binding PriceAndCurrency}"
+														   VerticalAlignment="Center"/>
+											</Grid>
+										</Border>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</StackPanel>
+					</StackPanel>
+
+					<!-- Error (visible only when there is a message) -->
+					<Border Background="{DynamicResource ErrorSoftBrush}"
+							BorderBrush="{DynamicResource ErrorBrush}"
+							BorderThickness="1"
+							CornerRadius="12"
+							Padding="14,10"
+							IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+						<TextBlock Text="{Binding Error}"
+								   FontFamily="{DynamicResource RalewayBold}"
+								   Foreground="{DynamicResource ErrorBrush}"
+								   TextWrapping="Wrap"/>
+					</Border>
+				</StackPanel>
+			</ScrollViewer>
+
+			<!-- Footer -->
+			<Border Grid.Row="2"
+					Padding="24,16"
+					BorderThickness="0,1,0,0"
+					BorderBrush="{DynamicResource GrayAccentBrush}">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+					<Button Content="Cancel"
+							MinWidth="110"
+							Background="Transparent"
+							BorderBrush="{DynamicResource GrayAccentBrush}"
+							BorderThickness="1"
+							HorizontalContentAlignment="Center"
+							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+							CommandParameter="False"/>
+					<Button Content="Save"
+							MinWidth="110"
+							HorizontalContentAlignment="Center"
+							Command="{Binding SaveCommand}"/>
+				</StackPanel>
+			</Border>
+		</Grid>
 	</Border>
 </UserControl>

@@ -8,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyCountryHttpClient
 {
-    Task<Result<PagedList<CountryResponse>>> GetCountryListAsync(CountryListQuery query);
+    Task<Result<PagedList<CountryResponse>>> GetCountryListAsync(CountryListQuery query, CancellationToken cancellationToken = default);
     Task<Result<CountryResponse>> GetByIdAsync(Guid countryId);
     Task<Result<CreatedResponse>> PostCountryAsync(CountryAddRequest request);
     Task<Result<UpdatedResponse>> PutCountryAsync(Guid countryId, CountryUpdateRequest request);

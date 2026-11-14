@@ -18,7 +18,7 @@ public class CompanyEmployeeHttpClient(IBackendHttpClientFactory factory, IOptio
     private readonly string resource = options.Value.CompanyEmployees;
 
     public async Task<Result<EmployeeProfileResponse>> GetEmployeeProfileDataAsync()
-        => await GetAsync<EmployeeProfileResponse>($"me/employee");
+        => await GetAsync<EmployeeProfileResponse>($"{options.Value.UserMe}/employee");
 
     public async Task<Result<UpdatedResponse>> PutEmployeeAddressAsync(EmployeeAddressUpdateRequest request)
         => await PutAsync<UpdatedResponse>($"{resource}/address", request);
@@ -38,9 +38,9 @@ public class CompanyEmployeeHttpClient(IBackendHttpClientFactory factory, IOptio
     public Task<Result> DeleteByIdAsync(Guid employeeId)
         => DeleteAsync($"{resource}/{employeeId}");
 
-    public Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query)
+    public Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return GetAsync<PagedList<EmployeeListResponse>>(url);
+        return GetAsync<PagedList<EmployeeListResponse>>(url, cancellationToken);
     }
 }

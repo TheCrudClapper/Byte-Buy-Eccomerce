@@ -5,19 +5,31 @@
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.SingleViewModels"
              xmlns:tabitems="clr-namespace:ByteBuy.UI.Views"
              Background="Transparent"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="1300"
+             d:DesignHeight="800"
              x:Class="ByteBuy.UI.Views.SingleViews.AdministrationPageView"
              x:DataType="vm:AdministrationPageViewModel">
 
+    <Grid RowDefinitions="auto,*" RowSpacing="18" Margin="0,10,30,30">
 
-    <TabControl SelectedItem="{Binding SelectedTab}">
-        <TabItem Header="Deliveries" Content="{Binding DeliveriesPageViewModel}"/>
-        <TabItem Header="Carriers" Content="{Binding DeliveryCarriersPageViewModel}"/>
-        <TabItem Header="Categories" Content="{Binding CategoriesPageViewModel}"/>
-        <TabItem Header="Condition" Content="{Binding ConditionsPageViewModel}"/>
-        <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>
-        <TabItem Header="Warehouse Items" Content="{Binding ItemsPageViewModel}"/>
-        <TabItem Header="Sale" Content="{Binding SaleOffersViewModel}"/>
-        <TabItem Header="Rent" Content="{Binding RentOffersViewModel}"/>
-    </TabControl>
+        <!-- Page header -->
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Classes="pageTitle" Text="Administration"/>
+            <TextBlock Classes="sectionHelperText"
+                       Text="Manage deliveries, warehouse, categories and marketplace settings."/>
+        </StackPanel>
+
+        <!-- Pill tabs; each tab hosts a single-card sub page -->
+        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTab}">
+            <TabItem Header="Deliveries" Content="{Binding DeliveriesPageViewModel}"/>
+            <TabItem Header="Carriers" Content="{Binding DeliveryCarriersPageViewModel}"/>
+            <TabItem Header="Categories" Content="{Binding CategoriesPageViewModel}"/>
+            <TabItem Header="Conditions" Content="{Binding ConditionsPageViewModel}"/>
+            <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>
+            <TabItem Header="Warehouse Items" Content="{Binding ItemsPageViewModel}"/>
+            <TabItem Header="Sale Offers" Content="{Binding SaleOffersViewModel}"/>
+            <TabItem Header="Rental Offers" Content="{Binding RentOffersViewModel}"/>
+        </TabControl>
+    </Grid>
 </UserControl>

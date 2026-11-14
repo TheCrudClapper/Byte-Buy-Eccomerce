@@ -8,6 +8,15 @@
 			 x:Class="ByteBuy.UI.Views.Dialogs.SettingsDialogView"
 			 x:DataType="vm:SettingsDialogViewModel">
 
+	<UserControl.Styles>
+		<Style Selector="TextBlock.success">
+			<Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
+		</Style>
+		<Style Selector="TextBlock.error">
+			<Setter Property="Foreground" Value="{DynamicResource ErrorBrush}"/>
+		</Style>
+	</UserControl.Styles>
+
 	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
 			MinHeight="200" MinWidth="400">
 		<Grid RowDefinitions="30,30,*,*">
@@ -30,8 +39,7 @@
 				<TextBlock Text="Backend API Url"
 						   Classes="textBoxLabel" />
 
-				<TextBox Text="{Binding BackendUrl}"
-						 Watermark="https://localhost/api" />
+				<TextBox Text="{Binding BackendUrl}"/>
 
 				<TextBlock Text="{Binding Result.Message}"
 						   Classes="textBoxLabel"

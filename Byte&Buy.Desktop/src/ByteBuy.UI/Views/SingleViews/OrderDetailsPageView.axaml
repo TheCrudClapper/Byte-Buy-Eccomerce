@@ -5,320 +5,273 @@
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 xmlns:ordeline="clr-namespace:ByteBuy.UI.ViewModels.Order.OrderLine"
 			 xmlns:delivery="clr-namespace:ByteBuy.UI.ViewModels.Order.OrderDelivery"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="800"
 			 x:DataType="vm:OrderDetailsPageViewModel"
 			 x:Class="ByteBuy.UI.Views.OrderDetailsPageView">
 
-
 	<ScrollViewer>
-		<Grid RowDefinitions="70,*" Margin="0,0,20,0">
-			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle" Text="Order Details"/>
+		<Grid ColumnDefinitions="*,24,400" Margin="0,20,30,30">
 
+			<!-- ========== LEFT: header + items ========== -->
+			<StackPanel Grid.Column="0" Spacing="22">
 
-			<!-- First Container -->
-			<StackPanel Grid.Row="1">
-				<Border Grid.Row="1" Classes="sectionBorder" Padding="20" MaxHeight="250" Margin="0,0,0,10">
-					<Grid RowDefinitions="30,1,*"  ColumnDefinitions="33*, 33*, 33*">
+				<!-- Header: title + status + actions -->
+				<Grid ColumnDefinitions="*,auto">
+					<StackPanel Spacing="10">
+						<TextBlock Classes="pageTitle" Text="Order Details"/>
 
-						<!--Order Status-->
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="0,0,5,0"
-								   Height="25"
-								   Width="25">
+						<StackPanel Orientation="Horizontal" Spacing="12">
+							<Image Width="24" Height="24" VerticalAlignment="Center">
 								<Image.Source>
-									<SvgImage Source="{Binding StatusIcon}" />
+									<SvgImage Source="{Binding StatusIcon}"/>
 								</Image.Source>
 							</Image>
-							<TextBlock Text="{Binding StatusText}" Classes="status" />
-						</StackPanel>
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2">
-							<Button
-							IsEnabled="{Binding CanShip}"
-							Margin="0,0,5,0"
-							Command="{Binding ShipOrderCommand}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/truck-solid-full.svg}"
-										   Width="16" Height="16"/>
-									<TextBlock Text="Ship Order" Margin="5,0"/>
-								</StackPanel>
-							</Button>
-							<Button
-							IsEnabled="{Binding CanDeliver}"
-							Command="{Binding DeliverOrderCommand}">
-								<StackPanel Orientation="Horizontal">
-									<Image Source="{SvgImage /Assets/Images/regular/truck-ramp-box-solid-full.svg}"
-										   Width="16" Height="16"/>
-									<TextBlock Text="Deliver Order" Margin="5,0"/>
-								</StackPanel>
-							</Button>
-						</StackPanel>
 
-						<!--spacer-->
-						<Border Grid.Row="1"
-								Margin="0,10,0,10"
-								Opacity="0.2"
-								Grid.ColumnSpan="3"
-								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
+							<Border Classes="statusPill"
+									Classes.success="{Binding StatusText, Converter={x:Static ObjectConverters.Equal}, ConverterParameter=Delivered}"
+									VerticalAlignment="Center">
+								<TextBlock Text="{Binding StatusText}"/>
+							</Border>
 
-						<!--Delivery Method-->
-						<StackPanel Grid.Row="3" Grid.Column="0">
-							<TextBlock Text="Delivery Method" Classes="headerText" Margin="0,0,0,5"/>
-							<TextBlock Text="{Binding OrderDelivery.DeliveryName}" Classes="standardText" />
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="Carrier Code: " Classes="standardText"/>
-								<TextBlock Text="{Binding OrderDelivery.CarrierCode}" Classes="standardText"/>
+							<TextBlock Classes="sectionHelperText" VerticalAlignment="Center" Text="|"/>
+
+							<TextBlock Classes="sectionHelperText"
+									   VerticalAlignment="Center"
+									   Text="{Binding PurchasedDate}"/>
+						</StackPanel>
+					</StackPanel>
+
+					<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Top">
+						<Button IsEnabled="{Binding CanShip}" Command="{Binding ShipOrderCommand}">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Source="{SvgImage /Assets/Images/regular/truck-solid-full.svg}" Width="16" Height="16"/>
+								<TextBlock Text="Ship Order"/>
 							</StackPanel>
+						</Button>
+						<Button IsEnabled="{Binding CanDeliver}" Command="{Binding DeliverOrderCommand}">
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<Image Source="{SvgImage /Assets/Images/regular/truck-ramp-box-solid-full.svg}" Width="16" Height="16"/>
+								<TextBlock Text="Deliver Order"/>
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Grid>
+
+				<!-- Items card -->
+				<Border Classes="sectionBorder" Padding="24">
+					<StackPanel Spacing="18">
+
+						<Grid ColumnDefinitions="*,auto">
+							<StackPanel Orientation="Horizontal" Spacing="14">
+								<Border Classes="sectionIcon">
+									<PathIcon Data="{DynamicResource IconBox}"/>
+								</Border>
+								<TextBlock Text="Items" Classes="sectionLabel" VerticalAlignment="Center"/>
+							</StackPanel>
+
+							<TextBlock Grid.Column="1" Classes="sectionHelperText" VerticalAlignment="Center"><Run Text="{Binding LinesCount}"/><Run Text=" item/s | from "/><Run Text="{Binding SellerDisplayName}" FontWeight="Bold"/></TextBlock>
+						</Grid>
+
+						<ItemsControl ItemsSource="{Binding Lines}">
+							<ItemsControl.DataTemplates>
+
+								<!-- Sale order line -->
+								<DataTemplate DataType="{x:Type ordeline:SaleOrderLineViewModel}">
+									<Border Classes="itemRow" Margin="0,0,0,12">
+										<Grid ColumnDefinitions="88,*,auto" ColumnSpacing="18">
+											<Border Classes="imageTile" Width="88" Height="88">
+												<Image Stretch="UniformToFill" Source="{Binding Thumbnail.Preview}"/>
+											</Border>
+
+											<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="6">
+												<TextBlock Classes="headerText"
+														   FontSize="18"
+														   Text="{Binding ItemTitle}"
+														   TextTrimming="CharacterEllipsis"/>
+												<TextBlock Classes="sectionHelperText"><Run Text="{Binding Quantity}"/><Run Text=" x "/><Run Text="{Binding PricePerItem.Display}"/></TextBlock>
+											</StackPanel>
+
+											<TextBlock Grid.Column="2"
+													   Classes="headerText"
+													   FontSize="18"
+													   Margin="0,0,12,0"
+													   VerticalAlignment="Center"
+													   Text="{Binding Total.Display}"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+
+								<!-- Rent order line -->
+								<DataTemplate DataType="{x:Type ordeline:RentOrderLineViewModel}">
+									<Border Classes="itemRow" Margin="0,0,0,12">
+										<Grid ColumnDefinitions="88,*,auto" ColumnSpacing="18">
+											<Border Classes="imageTile" Width="88" Height="88">
+												<Image Stretch="UniformToFill" Source="{Binding Thumbnail.Preview}"/>
+											</Border>
+
+											<StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="6">
+												<TextBlock Classes="headerText"
+														   FontSize="18"
+														   Text="{Binding ItemTitle}"
+														   TextTrimming="CharacterEllipsis"/>
+												<TextBlock Classes="sectionHelperText"><Run Text="{Binding Quantity}"/><Run Text=" x "/><Run Text="{Binding RentalDays}"/><Run Text=" days x "/><Run Text="{Binding PricePerDay.Display}"/></TextBlock>
+											</StackPanel>
+
+											<TextBlock Grid.Column="2"
+													   Classes="headerText"
+													   FontSize="18"
+													   Margin="0,0,12,0"
+													   VerticalAlignment="Center"
+													   Text="{Binding Total.Display}"/>
+										</Grid>
+									</Border>
+								</DataTemplate>
+
+							</ItemsControl.DataTemplates>
+						</ItemsControl>
+					</StackPanel>
+				</Border>
+			</StackPanel>
+
+			<!-- ========== RIGHT: summary, recipient, delivery ========== -->
+			<StackPanel Grid.Column="2" Spacing="16" Margin="0,8,0,0">
+
+				<!-- Summary -->
+				<Border Classes="sectionBorder" Padding="24">
+					<StackPanel Spacing="16">
+						<StackPanel Orientation="Horizontal" Spacing="14">
+							<Border Classes="sectionIcon">
+								<PathIcon Data="{DynamicResource IconDocument}"/>
+							</Border>
+							<TextBlock Text="Summary" Classes="sectionLabel" VerticalAlignment="Center"/>
 						</StackPanel>
 
-						<!--Recipient Data-->
-						<StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
-							<TextBlock Text="Recipient Data" Classes="headerText" Margin="0,0,0,5"/>
-							<TextBlock Text="{Binding Buyer.FullName}" Classes="standardText"/>
-							<TextBlock Text="{Binding Buyer.PhoneNumber}" Classes="standardText"/>
-							<TextBlock Text="{Binding Buyer.Email}" Classes="standardText"/>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Buyer.HomeAddress.City}" Classes="standardText"/>
-								<TextBlock Text=", "/>
-								<TextBlock Text="{Binding Buyer.HomeAddress.Street}" Classes="standardText"/>
-								<TextBlock Text=" "/>
-								<TextBlock Text="{Binding Buyer.HomeAddress.HouseNumber}" Classes="standardText"/>
-								<TextBlock Text=" "/>
-								<TextBlock Text="{Binding Buyer.HomeAddress.FlatNumber}" Classes="standardText"/>
+						<Grid ColumnDefinitions="*,auto" RowDefinitions="auto,auto" RowSpacing="12">
+							<TextBlock Grid.Row="0" Classes="standardText" Text="Items"/>
+							<TextBlock Grid.Row="0" Grid.Column="1" Classes="standardText"
+									   Text="{Binding TotalItemsCost.Display}"/>
+
+							<StackPanel Grid.Row="1" Spacing="2">
+								<TextBlock Classes="standardText" Text="Shipment"/>
+								<TextBlock Classes="sectionHelperText" Text="{Binding OrderDelivery.DeliveryName}"/>
 							</StackPanel>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Buyer.HomeAddress.PostalCity}" Classes="standardText"/>
-								<TextBlock Text=" "/>
-								<TextBlock Text="{Binding Buyer.HomeAddress.PostalCode}" Classes="standardText"/>
-								<TextBlock Text=" "/>
-								<TextBlock Text="{Binding Buyer.HomeAddress.Country}" Classes="standardText"/>
+							<TextBlock Grid.Row="1" Grid.Column="1" Classes="standardText"
+									   VerticalAlignment="Top"
+									   Text="{Binding OrderDelivery.Price.Display}"/>
+						</Grid>
+
+						<Border Classes="divider"/>
+
+						<Grid ColumnDefinitions="*,auto">
+							<TextBlock Classes="headerText" Text="Total" VerticalAlignment="Center"/>
+							<TextBlock Grid.Column="1" Classes="cardStat"
+									   Text="{Binding TotalCost.Display}"/>
+						</Grid>
+
+						<Button Classes="accent"
+								Command="{Binding DownloadPdfCommand}"
+								IsVisible="{Binding CanGeneratePdf}"
+								HorizontalAlignment="Stretch">
+							<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+								<PathIcon Width="16" Height="16" Foreground="White"
+										  Data="{DynamicResource IconUpload}"/>
+								<TextBlock Text="Export to PDF" Foreground="White"/>
 							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Border>
+
+				<!-- Recipient -->
+				<Border Classes="sectionBorder" Padding="24">
+					<StackPanel Spacing="16">
+						<StackPanel Orientation="Horizontal" Spacing="14">
+							<Border Classes="sectionIcon">
+								<PathIcon Data="{DynamicResource IconPerson}"/>
+							</Border>
+							<TextBlock Text="Recipient" Classes="sectionLabel" VerticalAlignment="Center"/>
 						</StackPanel>
 
-						<!--Package Destination-->
-						<StackPanel Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right">
-							<TextBlock Text="Package Destination" Classes="headerText" Margin="0,0,0,5"/>
+						<StackPanel Spacing="4">
+							<TextBlock Classes="headerText" Text="{Binding Buyer.FullName}"/>
+							<TextBlock Classes="standardText" Text="{Binding Buyer.PhoneNumber}"/>
+							<TextBlock Classes="standardText"
+									   Text="{Binding Buyer.Email}"
+									   TextTrimming="CharacterEllipsis"/>
+						</StackPanel>
+
+						<Border Classes="divider"/>
+
+						<Grid ColumnDefinitions="auto,*" ColumnSpacing="12">
+							<PathIcon Width="18" Height="18"
+									  VerticalAlignment="Top"
+									  Margin="0,2,0,0"
+									  Foreground="{DynamicResource PrimaryAccentBrush}"
+									  Data="{DynamicResource IconPin}"/>
+
+							<StackPanel Grid.Column="1" Spacing="3">
+								<TextBlock Classes="sectionHelperText"><Run Text="{Binding Buyer.HomeAddress.Street}"/><Run Text=" "/><Run Text="{Binding Buyer.HomeAddress.HouseNumber}"/><Run Text=" "/><Run Text="{Binding Buyer.HomeAddress.FlatNumber}"/></TextBlock>
+								<TextBlock Classes="sectionHelperText"><Run Text="{Binding Buyer.HomeAddress.PostalCode}"/><Run Text=" "/><Run Text="{Binding Buyer.HomeAddress.PostalCity}"/></TextBlock>
+								<TextBlock Classes="sectionHelperText"><Run Text="{Binding Buyer.HomeAddress.City}"/><Run Text=", "/><Run Text="{Binding Buyer.HomeAddress.Country}"/></TextBlock>
+							</StackPanel>
+						</Grid>
+					</StackPanel>
+				</Border>
+
+				<!-- Delivery -->
+				<Border Classes="sectionBorder" Padding="24">
+					<StackPanel Spacing="16">
+						<StackPanel Orientation="Horizontal" Spacing="14">
+							<Border Classes="sectionIcon">
+								<PathIcon Data="{DynamicResource IconTruck}"/>
+							</Border>
+							<TextBlock Text="Delivery" Classes="sectionLabel" VerticalAlignment="Center"/>
+						</StackPanel>
+
+						<Grid ColumnDefinitions="*,auto" ColumnSpacing="16">
+							<StackPanel Spacing="3">
+								<TextBlock Classes="sectionHelperText" Text="Method"/>
+								<TextBlock Classes="standardText" Text="{Binding OrderDelivery.DeliveryName}"/>
+							</StackPanel>
+							<StackPanel Grid.Column="1" Spacing="3">
+								<TextBlock Classes="sectionHelperText" Text="Carrier code"/>
+								<TextBlock Classes="standardText" Text="{Binding OrderDelivery.CarrierCode}"/>
+							</StackPanel>
+						</Grid>
+
+						<StackPanel Spacing="3">
+							<TextBlock Classes="sectionHelperText" Text="Destination"/>
+
 							<ContentControl Content="{Binding OrderDelivery}">
 								<ContentControl.DataTemplates>
 
-									<!--Courier Template-->
+									<!-- Courier -->
 									<DataTemplate DataType="{x:Type delivery:CourierDeliveryViewModel}">
-										<Grid Grid.RowDefinitions="*,*">
-											<StackPanel Orientation="Horizontal" Grid.Row="0">
-												<TextBlock Classes="standardText" Text="{Binding City}" />
-												<TextBlock Text=", "/>
-												<TextBlock Classes="standardText" Text="{Binding Street}"/>
-												<TextBlock Text=" "/>
-												<TextBlock Classes="standardText" Text="{Binding HouseNumber}"/>
-												<TextBlock Text=" "/>
-												<TextBlock Classes="standardText" Text="{Binding FlatNumber}" />
-											</StackPanel>
-											<StackPanel Orientation="Horizontal" Grid.Row="1">
-												<TextBlock Classes="standardText" Text="{Binding PostalCity}" />
-												<TextBlock Text=", "/>
-												<TextBlock Classes="standardText" Text="{Binding PostalCode}"/>
-											</StackPanel>
-										</Grid>
+										<StackPanel Spacing="2">
+											<TextBlock Classes="standardText"><Run Text="{Binding Street}"/><Run Text=" "/><Run Text="{Binding HouseNumber}"/><Run Text=" "/><Run Text="{Binding FlatNumber}"/></TextBlock>
+											<TextBlock Classes="standardText"><Run Text="{Binding PostalCode}"/><Run Text=" "/><Run Text="{Binding PostalCity}"/></TextBlock>
+											<TextBlock Classes="standardText" Text="{Binding City}"/>
+										</StackPanel>
 									</DataTemplate>
 
-
-									<!--Parcel Locker Template-->
+									<!-- Parcel locker -->
 									<DataTemplate DataType="{x:Type delivery:ParcelLockerDeliveryViewModel}">
-										<TextBlock Classes="standardText" Text="{Binding ParcelLockerId}" />
+										<TextBlock Classes="standardText" Text="{Binding ParcelLockerId}"/>
 									</DataTemplate>
 
-									<!--Pickup Point Tempalte-->
+									<!-- Pickup point -->
 									<DataTemplate DataType="{x:Type delivery:PickupPointDeliveryViewModel}">
-										<Grid Grid.RowDefinitions="*, *">
-											<StackPanel Orientation="Horizontal" Grid.Row="0">
-												<TextBlock Classes="standardText" Text="{Binding PickupPointName}" />
-												<TextBlock Text=", "/>
-												<TextBlock Classes="standardText" Text="{Binding PickupPointId}" />
-											</StackPanel>
-											<StackPanel Orientation="Horizontal" Grid.Row="1">
-												<TextBlock Classes="standardText" Text="{Binding PickupCity}" />
-												<TextBlock Text=", "/>
-												<TextBlock Classes="standardText" Text="{Binding PickupStreet}" />
-												<TextBlock Text=" "/>
-												<TextBlock Classes="standardText" Text="{Binding PickupLocalNumber}"/>
-											</StackPanel>
-										</Grid>
-
+										<StackPanel Spacing="2">
+											<TextBlock Classes="standardText"><Run Text="{Binding PickupPointName}" FontWeight="Bold"/><Run Text=" · "/><Run Text="{Binding PickupPointId}"/></TextBlock>
+											<TextBlock Classes="standardText"><Run Text="{Binding PickupStreet}"/><Run Text=" "/><Run Text="{Binding PickupLocalNumber}"/><Run Text=", "/><Run Text="{Binding PickupCity}"/></TextBlock>
+										</StackPanel>
 									</DataTemplate>
+
 								</ContentControl.DataTemplates>
 							</ContentControl>
 						</StackPanel>
-					</Grid>
+					</StackPanel>
 				</Border>
 
-				<!-- Second Container -->
-				<Border Grid.Row="3" Classes="sectionBorder" Padding="20">
-					<Grid RowDefinitions="40,*,1,70,1,60,1,*"  ColumnDefinitions="*,*">
-
-						<!--First Row and Items Price-->
-						<StackPanel>
-							<TextBlock Text="{Binding PurchasedDate}" Classes="smallText"/>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding LinesCount}" Classes="standardText"/>
-								<TextBlock Text=" item/s from " Classes="standardText"/>
-								<TextBlock Text="{Binding SellerDisplayName}" Classes="standardText, bold"/>
-							</StackPanel>
-						</StackPanel>
-						<TextBlock Grid.Column="2"
-								   Text="{Binding TotalItemsCost.Display}"
-								   HorizontalAlignment="Right"
-								   Classes="headerText, bold"/>
-
-						<!--Second Row and Line Items List-->
-
-						<ItemsControl ItemsSource="{Binding Lines}" Grid.Row="1" Grid.ColumnSpan="2">
-							<ItemsControl.DataTemplates>
-								<!--Sale ORder Line-->
-								<DataTemplate DataType="{x:Type ordeline:SaleOrderLineViewModel}">
-									<Border Height="140" Classes="lineBorder" Grid.ColumnSpan="2"  Padding="15" Margin="0,10">
-										<Grid RowDefinitions="*,*" ColumnDefinitions="120,*,Auto">
-
-											<!-- Thumbnail -->
-											<Image
-											Grid.RowSpan="2"
-											Width="100"
-											Height="100"
-											Stretch="UniformToFill"
-											Source="{Binding Thumbnail.Preview}" />
-
-											<!-- Title -->
-											<TextBlock
-											Grid.Column="1"
-											Grid.Row="0"
-											Classes="standardText bold"
-											VerticalAlignment="Bottom"
-											Text="Test" />
-
-											<!-- Quantity and Price -->
-											<StackPanel
-											Grid.Column="1"
-											Grid.Row="1"
-											Orientation="Horizontal">
-
-												<TextBlock Classes="standardText" Text="{Binding Quantity}" />
-												<TextBlock Classes="standardText" Text=" x " />
-												<TextBlock Classes="standardText" Text="{Binding PricePerItem.Display}" />
-											</StackPanel>
-
-											<!-- Total -->
-											<TextBlock
-											Grid.Column="2"
-											Grid.Row="1"
-											HorizontalAlignment="Right"
-											Classes="standardText"
-											Text="{Binding Total.Display}" />
-										</Grid>
-									</Border>
-								</DataTemplate>
-
-								<!--Rent Order Line-->
-								<DataTemplate DataType="{x:Type ordeline:RentOrderLineViewModel}">
-									<Border Height="140" Classes="lineBorder" Grid.ColumnSpan="2"  Padding="15" Margin="0,10">
-										<Grid RowDefinitions="*,*" ColumnDefinitions="120,*,Auto">
-
-											<Image
-											Grid.RowSpan="2"
-											Width="100"
-											Height="100"
-											Stretch="UniformToFill"
-											Source="{Binding Thumbnail.Preview}" />
-
-											<TextBlock
-											Grid.Column="1"
-											Grid.Row="0"
-											Classes="standardText bold"
-											VerticalAlignment="Bottom"
-											Text="{Binding ItemTitle}" />
-
-											<StackPanel
-											Grid.Column="1"
-											Grid.Row="1"
-											Orientation="Horizontal">
-
-												<TextBlock Classes="standardText" Text="{Binding Quantity}" />
-												<TextBlock Classes="standardText" Text=" x " />
-												<TextBlock Classes="standardText" Text="{Binding RentalDays}" />
-												<TextBlock Classes="standardText" Text=" days x " />
-												<TextBlock Classes="standardText" Text="{Binding PricePerDay.Display}" />
-											</StackPanel>
-
-											<TextBlock
-											Grid.Column="2"
-											Grid.Row="1"
-											HorizontalAlignment="Right"
-											Classes="standardText"
-											Text="{Binding Total.Display}" />
-										</Grid>
-									</Border>
-								</DataTemplate>
-							</ItemsControl.DataTemplates>
-
-						</ItemsControl>
-
-
-
-						<!--Spacer-->
-						<Border Grid.Row="2"
-								Opacity="0.2"
-								Margin="0,0,0,1"
-								Grid.ColumnSpan="3"
-								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
-
-						<!--Shipment-->
-						<StackPanel Grid.Row="3" VerticalAlignment="Center">
-							<TextBlock Text="Shipment" Classes="headerText, bold"/>
-							<TextBlock Text="{Binding OrderDelivery.DeliveryName}" Classes="standardText"/>
-						</StackPanel>
-						<TextBlock Grid.Row="3"
-								   VerticalAlignment="Center"
-								   Grid.Column="2"
-								   Text="{Binding OrderDelivery.Price.Display}"
-								   HorizontalAlignment="Right"
-								   Classes="headerText, bold"/>
-
-						<!--Spacer-->
-						<Border Grid.Row="4"
-								Opacity="0.2"
-								Grid.ColumnSpan="3"
-								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
-
-
-						<!--Total-->
-						<TextBlock
-						VerticalAlignment="Center"
-						Grid.Row="5"
-						Text="Total"
-						Classes="standardText, bold"/>
-
-						<TextBlock
-						Grid.Row="5"
-						Grid.Column="2"
-						VerticalAlignment="Center"
-						HorizontalAlignment="Right"
-						Text="{Binding TotalCost.Display}"
-						Classes="standardText, bold"/>
-
-						<!--Spacer-->
-						<Border Grid.Row="6"
-								Opacity="0.2"
-								Grid.ColumnSpan="3"
-								Background="{DynamicResource PrimaryAccentBrush}" Height="1"/>
-
-						<!--Export to pdf-->
-						<Button Command="{Binding DownloadPdfCommand}" Grid.Row="7" Margin="0,10" IsVisible="{Binding CanGeneratePdf}">
-							<StackPanel Orientation="Horizontal">
-								<Image
-								Source="{SvgImage /Assets/Images/regular/file-pdf-regular-full.svg}"
-								Width="16" Height="16" />
-								<TextBlock Margin="5,0"  Text="Export to PDF" Classes="standardText, bold"/>
-							</StackPanel>
-						</Button>
-					</Grid>
-				</Border>
 			</StackPanel>
 		</Grid>
 	</ScrollViewer>

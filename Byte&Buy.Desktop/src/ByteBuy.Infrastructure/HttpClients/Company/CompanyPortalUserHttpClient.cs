@@ -28,9 +28,9 @@ public class CompanyPortalUserHttpClient(IBackendHttpClientFactory factory, IOpt
     public async Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId)
         => await GetAsync<PortalUserResponse>($"{resource}/{userId}");
 
-    public Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query)
+    public Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return GetAsync<PagedList<PortalUserListResponse>>(url);
+        return GetAsync<PagedList<PortalUserListResponse>>(url, cancellationToken);
     }
 }

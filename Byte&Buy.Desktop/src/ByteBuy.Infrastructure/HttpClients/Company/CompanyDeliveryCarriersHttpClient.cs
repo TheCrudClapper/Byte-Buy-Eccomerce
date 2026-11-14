@@ -23,10 +23,10 @@ public class CompanyDeliveryCarriersHttpClient(IBackendHttpClientFactory factory
     public async Task<Result<DeliveryCarrierResponse>> GetByIdAsync(Guid carrierId)
         => await GetAsync<DeliveryCarrierResponse>($"{resource}/{carrierId}");
 
-    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query)
+    public async Task<Result<PagedList<DeliveryCarrierResponse>>> GetListAsync(DeliveryCarriersListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<DeliveryCarrierResponse>>(url);
+        return await GetAsync<PagedList<DeliveryCarrierResponse>>(url, cancellationToken);
     }
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()

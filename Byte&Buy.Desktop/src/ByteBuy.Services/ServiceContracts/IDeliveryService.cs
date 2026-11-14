@@ -16,5 +16,5 @@ public interface IDeliveryService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(DeliveryAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, DeliveryUpdateRequest request);
     Task<Result<DeliveryResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query);
+    Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query, CancellationToken cancellationToken = default);
 }

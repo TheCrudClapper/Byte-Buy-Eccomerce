@@ -10,6 +10,7 @@ public sealed record RentalLenderResponse(
     string ItemName,
     int Quantity,
     MoneyDto TotalPricePaid,
+    MoneyDto PricePerDay,
     ImageThumbnailDto Thumbnail,
     DateTime DateCreated,
     int RentalDays,

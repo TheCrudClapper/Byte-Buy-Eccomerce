@@ -12,7 +12,7 @@
         <Style Selector="Button.alertHideButton">
             <Setter Property="Background" Value="{DynamicResource BackgroundLightBrush}" />
         </Style>
-         <!-- Backgrounds -->
+        <!-- Backgrounds -->
         <Style Selector="Border.alert.info">
             <Setter Property="Background" Value="#5394fc" />
         </Style>
@@ -45,43 +45,52 @@
             <Setter Property="Foreground" Value="#1F2937" />
         </Style>
     </UserControl.Styles>
-    
+
     <Grid>
-        
-    
-    <Border Classes="alert"
-            Classes.info="{Binding IsInfo}"
-            Classes.error="{Binding IsError}"
-            Classes.success="{Binding IsSuccess}"
-            Classes.warning="{Binding IsWarning}"
-            CornerRadius="10"
-            BorderThickness="1"
-            Padding="10"
-            BorderBrush="Black">
 
-        <Grid RowDefinitions="20,20" ColumnDefinitions="40,*,30">
-            <Button Grid.Column="2"
-                    HorizontalAlignment="Right"
-                    Command="{Binding HideCommand}"
-                    Classes="alertHideButton">
-                <Image Source="{SvgImage /Assets/Images/regular/xmark-solid-full.svg}"
-                       Height="15" Width="15" />
-            </Button>
 
-            <Image Classes="alertIcon"
-                   Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
-                   Height="30" Width="30" />
-                    
-            <TextBlock Grid.Row="0" Grid.Column="1"
-                       FontSize="15" FontWeight="700"
-                       Foreground="{DynamicResource TextLightBrush}"
-                       Text="{Binding Title}" />
-            <TextBlock Grid.Row="1" Grid.Column="1"
-                       FontSize="15"
-                       Foreground="{DynamicResource TextLightBrush}"
-                       Text="{Binding Message}" />
-        </Grid>
-    </Border>
+        <Border Classes="alert"
+                Width="400"
+                Classes.info="{Binding IsInfo}"
+                Classes.error="{Binding IsError}"
+                Classes.success="{Binding IsSuccess}"
+                Classes.warning="{Binding IsWarning}"
+                CornerRadius="10"
+                BorderThickness="1"
+                Padding="10"
+                BorderBrush="Black">
+
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="40,*,30" ColumnSpacing="8">
+                <Button Grid.Column="2"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Command="{Binding HideCommand}"
+                        Classes="alertHideButton">
+                    <Image Source="{SvgImage /Assets/Images/regular/xmark-solid-full.svg}"
+                           Height="15" Width="15" />
+                </Button>
+
+                <Image Classes="alertIcon"
+                       Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                       Height="30" Width="30" />
+
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           FontSize="15" FontWeight="700"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Bottom"
+                           Foreground="{DynamicResource TextLightBrush}"
+                           Text="{Binding Title}" />
+
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           FontSize="15"
+                           VerticalAlignment="Top"
+                           Foreground="{DynamicResource TextLightBrush}"
+                           TextWrapping="Wrap"
+                           Padding="0,0,0,10"
+                           Text="{Binding Message}" />
+            </Grid>
+        </Border>
 
     </Grid>
 </UserControl>

@@ -8,7 +8,7 @@ namespace ByteBuy.Services.ServiceContracts;
 
 public interface IPortalUserService : IBaseService
 {
-    Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query);
+    Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query, CancellationToken cancellationToken = default);
     Task<Result<PortalUserResponse>> GetByIdAsync(Guid id);
     Task<Result<CreatedResponse>> AddAsync(PortalUserAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, PortalUserUpdateRequest request);

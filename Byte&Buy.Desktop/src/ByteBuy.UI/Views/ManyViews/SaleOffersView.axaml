@@ -5,145 +5,131 @@
 			 xmlns:views="using:ByteBuy.UI.Views.Shared"
 			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels"
 			 Background="Transparent"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="600"
 			 x:Class="ByteBuy.UI.Views.SaleOffersView"
 			 x:DataType="vm:SaleOffersViewModel">
 
-	<Grid>
-		<Grid RowDefinitions="50, auto, *,50">
+	<Border Padding="24,20">
+		<Grid RowDefinitions="auto,auto,auto,*,auto" RowSpacing="16">
 
-			<!--Filters-->
+			<!-- Header -->
+			<Grid Grid.Row="0" ColumnDefinitions="*,auto" ColumnSpacing="20">
+				<StackPanel Orientation="Horizontal" Spacing="14">
+					<Border Classes="sectionIcon">
+						<PathIcon Data="{DynamicResource IconUpload}"/>
+					</Border>
+					<StackPanel VerticalAlignment="Center" Spacing="2">
+						<TextBlock Text="Sale Offers" Classes="sectionLabel"/>
+						<TextBlock Text="Published offers for buying items." Classes="sectionHelperText"/>
+					</StackPanel>
+				</StackPanel>
 
-				<WrapPanel  Orientation="Horizontal" Grid.Row="1" ItemSpacing="10" Margin="0,15" LineSpacing="10">
+				<TextBlock Grid.Column="1" Classes="sectionHelperText" VerticalAlignment="Center"><Run Text="Records fetched: "/><Run Text="{Binding ItemsCount}" FontWeight="Bold"/></TextBlock>
+			</Grid>
 
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Item" FontFamily="OpenSansBold" FontWeight="600"/>
-						<TextBox Width="150" Text="{Binding Name}"/>
+			<!-- Filters -->
+			<WrapPanel Grid.Row="1" Orientation="Horizontal" ItemSpacing="24" LineSpacing="12">
+				<StackPanel Spacing="6">
+					<TextBlock Text="Item" Classes="textBoxLabel"/>
+					<TextBox Width="220" Text="{Binding Name}">
+						<TextBox.KeyBindings>
+							<KeyBinding Gesture="Enter" Command="{Binding LoadDataCommand}"/>
+						</TextBox.KeyBindings>
+					</TextBox>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" Spacing="12">
+					<StackPanel Spacing="6">
+						<TextBlock Text="Price From" Classes="textBoxLabel"/>
+						<NumericUpDown Width="150" Minimum="0" FormatString="N2" Value="{Binding PriceFrom}"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Price From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding PriceFrom}"/>
+					<StackPanel Spacing="6">
+						<TextBlock Text="Price To" Classes="textBoxLabel"/>
+						<NumericUpDown Width="150" Minimum="0" FormatString="N2" Value="{Binding PriceTo}"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Price To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding PriceTo}"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" Spacing="12">
+					<StackPanel Spacing="6">
+						<TextBlock Text="Quantity From" Classes="textBoxLabel"/>
+						<NumericUpDown Width="150" Minimum="0" FormatString="N0" Value="{Binding QuantityFrom}"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Quantity From" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding QuantityFrom}"/>
+					<StackPanel Spacing="6">
+						<TextBlock Text="Quantity To" Classes="textBoxLabel"/>
+						<NumericUpDown Width="150" Minimum="0" FormatString="N0" Value="{Binding QuantityTo}"/>
 					</StackPanel>
-					<StackPanel VerticalAlignment="Center">
-						<TextBlock Text="Quantity To" FontFamily="OpenSansBold" FontWeight="600"/>
-						<NumericUpDown Width="150" Value="{Binding QuantityTo}"/>
-					</StackPanel>
-					<Button Command="{Binding LoadDataCommand}" VerticalAlignment="Bottom">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0"  Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
-							<TextBlock Text="Filter"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
+					<Button Classes="accent filterButton" Padding="16,0" Command="{Binding LoadDataCommand}">
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Image Source="{SvgImage /Assets/Images/regular/filter-solid-full.svg}" Width="15" Height="15"/>
+							<TextBlock Text="Filter" Foreground="White"/>
 						</StackPanel>
 					</Button>
 
-					<Button Command="{Binding ClearFiltersCommand}" VerticalAlignment="Bottom">
-						<StackPanel Orientation="Horizontal">
-							<Image Margin="5,0" Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}"
-								   Height="15"
-								   Width="15" />
+					<Button Classes="filterButton" Padding="16,0" Command="{Binding ClearFiltersCommand}">
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Image Source="{SvgImage /Assets/Images/regular/filter-circle-xmark-solid-full.svg}" Width="15" Height="15"/>
 							<TextBlock Text="Clear"/>
 						</StackPanel>
 					</Button>
-				</WrapPanel>
-			
-
-			<!-- Fetched items count -->
-			<Grid Grid.Row="2" RowDefinitions="auto, *">
-				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
-					<Label Content="Records fetched:"
-						   FontFamily="{DynamicResource RalewayMedium}"
-						   Foreground="{DynamicResource TextPrimaryBrush}"
-						   HorizontalAlignment="Right" />
-					<Label Content="{Binding ItemsCount}"
-						   FontFamily="{DynamicResource RalewayBold}"
-						   Foreground="{DynamicResource TextPrimaryBrush}"
-						   HorizontalAlignment="Right" />
 				</StackPanel>
+			</WrapPanel>
 
-				<!-- Data Grid Containing All Items -->
-				<DataGrid
-				Grid.Row="1"
-				x:Name="ItemsGrid"
-				ItemsSource="{Binding Items}"
-				AutoGenerateColumns="False"
-				SelectedItem="{Binding SelectedItem}"
-				GridLinesVisibility="All"
-				IsReadOnly="True"
-				HeadersVisibility="All"
-				CanUserSortColumns="True"
-				CanUserResizeColumns="True"
-				RowHeight="36">
+			<Border Grid.Row="2" Classes="divider"/>
 
-					<DataGrid.Columns>
-						<DataGridTextColumn Header="Nr." Binding="{Binding RowNumber}" Width="70" />
-						<DataGridTextColumn Header="Item" Binding="{Binding ItemName}" Width="*" />
-						<DataGridTextColumn Header="Quantity" Binding="{Binding QuantityAvailable}" Width="*" />
-						<DataGridTextColumn Header="Unit Price" Binding="{Binding PriceAndCurrencyPerItem}" Width="*" />
-						<DataGridTextColumn Header="Created By" Binding="{Binding CreatorEmail}" Width="*" />
-						<DataGridTemplateColumn Header="Actions">
-							<DataGridTemplateColumn.CellTemplate>
-								<DataTemplate>
-									<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:CompileBindings="false">
-										<Button
-										Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										Margin="0,0,5,0">
+			<!-- Table -->
+			<DataGrid Grid.Row="3"
+					  x:Name="ItemsGrid"
+					  ItemsSource="{Binding Items}"
+					  SelectedItem="{Binding SelectedItem}"
+					  AutoGenerateColumns="False"
+					  GridLinesVisibility="Horizontal"
+					  IsReadOnly="True"
+					  HeadersVisibility="Column"
+					  CanUserSortColumns="True"
+					  CanUserResizeColumns="True"
+					  RowHeight="52">
 
-											<Image Source="{SvgImage /Assets/Images/regular/edit.svg}"
-												   Width="16" Height="16"/>
-										</Button>
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="NR." Binding="{Binding RowNumber}" Width="70"/>
+					<DataGridTextColumn Header="ITEM" Binding="{Binding ItemName}" Width="1.5*"/>
+					<DataGridTextColumn Header="QUANTITY" Binding="{Binding QuantityAvailable}" Width="110"/>
+					<DataGridTextColumn Header="UNIT PRICE" Binding="{Binding PriceAndCurrencyPerItem}" Width="*"/>
+					<DataGridTextColumn Header="CREATED BY" Binding="{Binding CreatorEmail}" Width="1.3*"/>
+					<DataGridTemplateColumn Header="ACTIONS" Width="110">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
+											Spacing="6" x:CompileBindings="false">
+									<Button Classes="iconButton" ToolTip.Tip="Edit"
+											Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+											CommandParameter="{Binding}">
+										<Image Source="{SvgImage /Assets/Images/regular/edit.svg}" Width="16" Height="16"/>
+									</Button>
+									<Button Classes="iconButton danger" ToolTip.Tip="Delete"
+											Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+											CommandParameter="{Binding}">
+										<Image Source="{SvgImage /Assets/Images/regular/delete.svg}" Width="16" Height="16"/>
+									</Button>
+								</StackPanel>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+			</DataGrid>
 
-										<Button
-										Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-										CommandParameter="{Binding}"
-										FontSize="10">
-
-											<Image Source="{SvgImage /Assets/Images/regular/delete.svg}"
-												   Width="16" Height="16"/>
-										</Button>
-									</StackPanel>
-								</DataTemplate>
-							</DataGridTemplateColumn.CellTemplate>
-						</DataGridTemplateColumn>
-					</DataGrid.Columns>
-
-				</DataGrid>
-
-			</Grid>
-
-			<StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+			<!-- Pagination -->
+			<StackPanel Grid.Row="4" HorizontalAlignment="Center" Orientation="Horizontal" Spacing="14">
 				<Button Command="{Binding PreviousPageCommand}" IsEnabled="{Binding HasPreviousPage}">
-					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-left-solid-full.svg}" Width="15" Height="15"/>
 				</Button>
-				<TextBlock
-				Margin="5,0,5,0"
-				FontSize="15"
-				FontWeight="600"
-				FontFamily="{DynamicResource RalewayMedium}"
-				VerticalAlignment="Center"
-				Foreground="{DynamicResource TextPrimaryBrush}">
-					<Run Text="{Binding PageNumber}"/>
-					<Run Text="of"/>
-					<Run Text="{Binding TotalPages}"/>
-				</TextBlock>
+				<TextBlock Classes="headerText" VerticalAlignment="Center"><Run Text="{Binding PageNumber}"/><Run Text=" of "/><Run Text="{Binding TotalPages}"/></TextBlock>
 				<Button Command="{Binding NextPageCommand}" IsEnabled="{Binding HasNextPage}">
-					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}"
-						   Height="15"
-						   Width="15" />
+					<Image Source="{SvgImage /Assets/Images/regular/arrow-right-solid-full.svg}" Width="15" Height="15"/>
 				</Button>
 			</StackPanel>
-
 		</Grid>
-	</Grid>
+	</Border>
 </UserControl>

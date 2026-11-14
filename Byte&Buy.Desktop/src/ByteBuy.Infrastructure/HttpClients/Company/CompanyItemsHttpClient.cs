@@ -23,10 +23,10 @@ public class CompanyItemsHttpClient(IBackendHttpClientFactory factory, IOptions<
     public async Task<Result<ItemResponse>> GetByIdAsync(Guid id)
         => await GetAsync<ItemResponse>($"{resource}/{id}");
 
-    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query)
+    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}/list", query);
-        return await GetAsync<PagedList<ItemListResponse>>(url);
+        return await GetAsync<PagedList<ItemListResponse>>(url, cancellationToken);
     }
 
     public async Task<Result<CreatedResponse>> PostCompanyItemAsync(MultipartContent request)

@@ -1,6 +1,8 @@
-﻿namespace ByteBuy.Services.ServiceContracts;
+﻿using ByteBuy.Services.ResultTypes;
+
+namespace ByteBuy.Services.ServiceContracts;
 
 public interface IDocumentService
 {
-    Task<byte[]> DownloadOrderDetailsRaportAsync(Guid orderId);
+    Task<Result<byte[]>> DownloadOrderDetailsRaportAsync(Guid orderId);
 }

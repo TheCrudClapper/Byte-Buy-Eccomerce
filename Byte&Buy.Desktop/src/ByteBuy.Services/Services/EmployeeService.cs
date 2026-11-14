@@ -28,8 +28,8 @@ public class EmployeeService(ICompanyEmployeeHttpClient employeeHttpClient, IUse
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await employeeHttpClient.DeleteByIdAsync(id);
 
-    public async Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query)
-        => await employeeHttpClient.GetListAsync(query);
+    public async Task<Result<PagedList<EmployeeListResponse>>> GetListAsync(EmployeeListQuery query, CancellationToken cancellationToken = default)
+        => await employeeHttpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<EmployeeProfileResponse>> GetCurrentEmployeeDetailsAsync()
         => await employeeHttpClient.GetEmployeeProfileDataAsync();

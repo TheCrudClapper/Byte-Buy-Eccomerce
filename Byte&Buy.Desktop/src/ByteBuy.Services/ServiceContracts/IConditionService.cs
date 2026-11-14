@@ -12,5 +12,5 @@ public interface IConditionService : IBaseService
     Task<Result<CreatedResponse>> AddAsync(ConditionAddRequest request);
     Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ConditionUpdateRequest request);
     Task<Result<ConditionResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query);
+    Task<Result<PagedList<ConditionListResponse>>> GetListAsync(ConditionListQuery query, CancellationToken cancellationToken = default);
 }

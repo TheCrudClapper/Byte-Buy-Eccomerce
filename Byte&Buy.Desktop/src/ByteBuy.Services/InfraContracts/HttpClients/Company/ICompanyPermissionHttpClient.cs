@@ -12,6 +12,6 @@ public interface ICompanyPermissionHttpClient
     Task<Result<CreatedResponse>> PostAsync(PermissionAddRequest request);
     Task<Result<UpdatedResponse>> PutAsync(Guid id, PermissionUpdateRequest request);
     Task<Result<PermissionResponse>> GetByIdAsync(Guid id);
-    Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams);
+    Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams, CancellationToken cancellationToken = default);
     Task<Result> DeleteAsync(Guid id);
 }

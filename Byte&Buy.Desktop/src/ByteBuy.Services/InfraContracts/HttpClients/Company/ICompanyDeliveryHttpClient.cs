@@ -9,7 +9,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyDeliveryHttpClient
 {
-    Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query);
+    Task<Result<PagedList<DeliveryListResponse>>> GetListAsync(DeliveryListQuery query, CancellationToken cancellationToken = default);
     Task<Result<DeliveryResponse>> GetByIdAsync(Guid countryId);
     Task<Result<CreatedResponse>> PostDeliveryAsync(DeliveryAddRequest request);
     Task<Result<UpdatedResponse>> PutDeliveryAsync(Guid deliveryId, DeliveryUpdateRequest request);

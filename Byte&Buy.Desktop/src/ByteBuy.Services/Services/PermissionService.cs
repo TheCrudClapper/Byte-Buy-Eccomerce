@@ -22,8 +22,8 @@ public class PermissionService(ICompanyPermissionHttpClient permissionHttpClient
     public async Task<Result<PermissionResponse>> GetByIdAsync(Guid id)
         => await permissionHttpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams)
-        => await permissionHttpClient.GetListAsync(queryParams);
+    public async Task<Result<PagedList<PermissionResponse>>> GetListAsync(PermissionListQuery queryParams, CancellationToken cancellationToken = default)
+        => await permissionHttpClient.GetListAsync(queryParams, cancellationToken);
 
     public async Task<Result<IReadOnlyCollection<SelectListItemResponse<Guid>>>> GetSelectListAsync()
         => await permissionHttpClient.GetSelectListAsync();

@@ -17,10 +17,10 @@ internal class CompanyRentalHttpClient(IBackendHttpClientFactory factory, IOptio
 {
     private readonly string resource = options.Value.CompanyRentals;
 
-    public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query)
+    public Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query, CancellationToken cancellationToken = default)
     {
         var url = QueryStringHelper.ToQueryString($"{resource}", query);
-        return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url);
+        return GetAsync<PagedList<CompanyRentalLenderListResponse>>(url, cancellationToken);
     }
 
     public Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId)

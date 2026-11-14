@@ -8,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyOrderHttpClient
 {
-    Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query);
+    Task<Result<PagedList<CompanyOrderListResponse>>> GetCompanyOrdersListAsync(OrderListQuery query, CancellationToken cancellationToken = default);
     Task<Result<OrderDetailsResponse>> GetCompanyOrderDetailsAsync(Guid orderId);
     Task<Result<UpdatedResponse>> DeliverOrderAsync(Guid orderId);
     Task<Result<UpdatedResponse>> ShipOrderAsync(Guid orderId);

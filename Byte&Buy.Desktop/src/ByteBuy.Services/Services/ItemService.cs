@@ -42,8 +42,8 @@ public class ItemService(ICompanyItemHttpClient httpClient) : IItemService
     public async Task<Result<ItemResponse>> GetByIdAsync(Guid id)
         => await httpClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query)
-        => await httpClient.GetListAsync(query);
+    public async Task<Result<PagedList<ItemListResponse>>> GetListAsync(ItemListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid id, ItemUpdateRequest request)
     {

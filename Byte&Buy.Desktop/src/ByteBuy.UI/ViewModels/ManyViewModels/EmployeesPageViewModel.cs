@@ -48,7 +48,7 @@ public partial class EmployeesPageViewModel
             Email = Email,
         };
 
-        var result = await Service.GetListAsync(query);
+        var result = await Service.GetListAsync(query, Token);
         if (!result.Success)
         {
             NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading employees.");

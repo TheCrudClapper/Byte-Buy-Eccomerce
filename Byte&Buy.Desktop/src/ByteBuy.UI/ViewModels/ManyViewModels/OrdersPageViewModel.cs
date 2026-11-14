@@ -61,7 +61,7 @@ public partial class OrdersPageViewModel : ViewModelMany<OrderListItemViewModel,
             TotalTo = TotalTo,
         };
 
-        var result = await Service.GetCompanyOrderListAsync(query);
+        var result = await Service.GetCompanyOrderListAsync(query, Token);
         if (!result.Success)
         {
             NotificationService.ShowError(result.Error?.Description ?? "An error occurred while loading orders.");

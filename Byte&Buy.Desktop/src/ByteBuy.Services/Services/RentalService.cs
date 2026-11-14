@@ -15,8 +15,8 @@ public class RentalService(ICompanyRentalHttpClient httpClient) : IRentalService
         throw new NotImplementedException();
     }
 
-    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query)
-        => await httpClient.GetCompanyRentalsListAsync(query);
+    public async Task<Result<PagedList<CompanyRentalLenderListResponse>>> GetCompanyRentalsListAsync(RentalListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetCompanyRentalsListAsync(query, cancellationToken);
 
     public async Task<Result<RentalLenderResponse>> GetCompanyRentalAsync(Guid rentalId)
         => await httpClient.GetCompanyRentalAsync(rentalId);

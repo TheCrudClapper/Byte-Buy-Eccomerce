@@ -25,6 +25,9 @@ public partial class RentalDetailsPageViewModel : PageViewModel
     MoneyViewModel _totalPricePaid = null!;
 
     [ObservableProperty]
+    MoneyViewModel _pricePerDay = null!;
+
+    [ObservableProperty]
     ImageThumbnailViewModel _imageThumbnail = null!;
 
     [ObservableProperty]
@@ -50,6 +53,7 @@ public partial class RentalDetailsPageViewModel : PageViewModel
 
     [ObservableProperty]
     public string _dateCreated = null!;
+
 
     #endregion
 
@@ -84,6 +88,7 @@ public partial class RentalDetailsPageViewModel : PageViewModel
         RentalIcon = RentalMappings.MapRentalStatusIcon(dto.Status);
         RentalStatusText = dto.Status.ToString();
         TotalPricePaid = new MoneyViewModel(dto.TotalPricePaid);
+        PricePerDay = new MoneyViewModel(dto.PricePerDay);
         ImageThumbnail = new ImageThumbnailViewModel(dto.Thumbnail.ImagePath);
         ItemName = dto.ItemName;
         Quantity = dto.Quantity;

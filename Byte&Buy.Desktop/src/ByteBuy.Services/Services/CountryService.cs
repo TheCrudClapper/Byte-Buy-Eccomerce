@@ -27,6 +27,6 @@ public class CountryService(ICompanyCountryHttpClient httpClient, IPublicCountri
     public async Task<Result<UpdatedResponse>> UpdateAsync(Guid countryId, CountryUpdateRequest request)
         => await httpClient.PutCountryAsync(countryId, request);
 
-    public async Task<Result<PagedList<CountryResponse>>> GetListAsync(CountryListQuery query)
-        => await httpClient.GetCountryListAsync(query);
+    public async Task<Result<PagedList<CountryResponse>>> GetListAsync(CountryListQuery query, CancellationToken cancellationToken = default)
+        => await httpClient.GetCountryListAsync(query, cancellationToken);
 }

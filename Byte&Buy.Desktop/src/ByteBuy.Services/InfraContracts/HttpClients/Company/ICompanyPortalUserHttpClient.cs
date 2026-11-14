@@ -8,7 +8,7 @@ namespace ByteBuy.Services.InfraContracts.HttpClients.Company;
 
 public interface ICompanyPortalUserHttpClient
 {
-    Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query);
+    Task<Result<PagedList<PortalUserListResponse>>> GetListAsync(PortalUserListQuery query, CancellationToken cancellationToken = default);
     Task<Result<PortalUserResponse>> GetByIdAsync(Guid userId);
     Task<Result<CreatedResponse>> PostPortalUserAsync(PortalUserAddRequest request);
     Task<Result> DeleteByIdAsync(Guid userId);

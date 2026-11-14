@@ -22,8 +22,8 @@ public class RoleService(ICompanyRoleHttpClient roleClient) : IRoleService
     public async Task<Result<RoleResponse>> GetByIdAsync(Guid id)
         => await roleClient.GetByIdAsync(id);
 
-    public async Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query)
-        => await roleClient.GetListAsync(query);
+    public async Task<Result<PagedList<RoleListResponse>>> GetListAsync(RoleListQuery query, CancellationToken cancellationToken = default)
+        => await roleClient.GetListAsync(query, cancellationToken);
 
     public async Task<Result> DeleteByIdAsync(Guid id)
         => await roleClient.DeleteByIdAsync(id);
