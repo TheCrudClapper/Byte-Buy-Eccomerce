@@ -1,4 +1,3 @@
-
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,53 +11,25 @@
              x:Class="ByteBuy.UI.Views.SingleViews.AdministrationPageView"
              x:DataType="vm:AdministrationPageViewModel">
 
-    <Grid RowDefinitions="auto,*"
-          RowSpacing="20"
-          Margin="0,10,30,30">
+    <Grid RowDefinitions="auto,*" RowSpacing="18" Margin="0,10,30,30">
 
-        <!-- Page Header -->
-        <Grid Grid.Row="0"
-              RowDefinitions="auto,auto"
-              RowSpacing="6">
+        <!-- Page header -->
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Classes="pageTitle" Text="Administration"/>
+            <TextBlock Classes="sectionHelperText"
+                       Text="Manage deliveries, warehouse, categories and marketplace settings."/>
+        </StackPanel>
 
-            <TextBlock Grid.Row="0"
-                       Classes="pageTitle"
-                       Text="Administration"/>
-
-            <TextBlock Grid.Row="1"
-                       Text="Manage deliveries, warehouse, categories and marketplace settings."
-                       Classes="sectionHelperText"/>
-
-        </Grid>
-
-        <!-- Administration Tabs -->
-            <TabControl Grid.Row="1" 
-                        SelectedItem="{Binding SelectedTab}">
-
-                <TabItem Header="Deliveries"
-                         Content="{Binding DeliveriesPageViewModel}"/>
-
-                <TabItem Header="Carriers"
-                         Content="{Binding DeliveryCarriersPageViewModel}"/>
-
-                <TabItem Header="Categories"
-                         Content="{Binding CategoriesPageViewModel}"/>
-
-                <TabItem Header="Conditions"
-                         Content="{Binding ConditionsPageViewModel}"/>
-
-                <TabItem Header="Countries"
-                         Content="{Binding CountriesPageViewModel}"/>
-
-                <TabItem Header="Warehouse Items"
-                         Content="{Binding ItemsPageViewModel}"/>
-
-                <TabItem Header="Sale Offers"
-                         Content="{Binding SaleOffersViewModel}"/>
-
-                <TabItem Header="Rental Offers"
-                         Content="{Binding RentOffersViewModel}"/>
-
-            </TabControl>
+        <!-- Pill tabs; each tab hosts a single-card sub page -->
+        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTab}">
+            <TabItem Header="Deliveries" Content="{Binding DeliveriesPageViewModel}"/>
+            <TabItem Header="Carriers" Content="{Binding DeliveryCarriersPageViewModel}"/>
+            <TabItem Header="Categories" Content="{Binding CategoriesPageViewModel}"/>
+            <TabItem Header="Conditions" Content="{Binding ConditionsPageViewModel}"/>
+            <TabItem Header="Countries" Content="{Binding CountriesPageViewModel}"/>
+            <TabItem Header="Warehouse Items" Content="{Binding ItemsPageViewModel}"/>
+            <TabItem Header="Sale Offers" Content="{Binding SaleOffersViewModel}"/>
+            <TabItem Header="Rental Offers" Content="{Binding RentOffersViewModel}"/>
+        </TabControl>
     </Grid>
 </UserControl>

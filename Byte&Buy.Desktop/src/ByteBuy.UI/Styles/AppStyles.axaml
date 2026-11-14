@@ -193,6 +193,16 @@
 		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
 	</Style>
 
+	<Style Selector="Button.iconButton">
+		<Setter Property="Width" Value="34"/>
+		<Setter Property="Height" Value="34"/>
+		<Setter Property="Padding" Value="0"/>
+		<Setter Property="CornerRadius" Value="10"/>
+	</Style>
+	<Style Selector="Button.iconButton.danger:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="#CCB3261E"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+	</Style>
 	<!-- Rounded button for deletion in miniatures -->
 	<Style Selector="Button.deleteBadge">
 		<Setter Property="Width" Value="28"/>
@@ -444,8 +454,51 @@
 	<!-- 6. LISTS & TABLES                                            -->
 	<!-- ============================================================ -->
 
+	<!-- TabControl: pill tabs -->
 	<Style Selector="TabControl">
-		<Setter Property="CornerRadius" Value="10,10,0,0"/>
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Padding" Value="0"/>
+	</Style>
+
+	<Style Selector="TabItem">
+		<Setter Property="Margin" Value="0,0,8,12"/>
+		<Setter Property="Padding" Value="18,9"/>
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="FontFamily" Value="{DynamicResource RalewayBold}"/>
+		<Setter Property="Cursor" Value="Hand"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border Name="PillBorder"
+						Background="#14FFFFFF"
+						BorderBrush="{DynamicResource GrayAccentBrush}"
+						BorderThickness="1"
+						CornerRadius="12"
+						Padding="{TemplateBinding Padding}">
+					<ContentPresenter Name="PART_ContentPresenter"
+									  Opacity="0.7"
+									  Content="{TemplateBinding Header}"
+									  ContentTemplate="{TemplateBinding HeaderTemplate}"
+									  HorizontalAlignment="Center"
+									  VerticalAlignment="Center"/>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<!-- Hover, then selected (selected must come last) -->
+	<Style Selector="TabItem:pointerover /template/ Border#PillBorder">
+		<Setter Property="Background" Value="{DynamicResource HoverAccentBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryAccentBrush}"/>
+	</Style>
+	<Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Opacity" Value="1"/>
+	</Style>
+	<Style Selector="TabItem:selected /template/ Border#PillBorder">
+		<Setter Property="Background" Value="{DynamicResource ButtonGradient}"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+	</Style>
+	<Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Opacity" Value="1"/>
 	</Style>
 
 	<!-- ListBox -->
