@@ -116,7 +116,15 @@ public partial class OrderDetailsPageViewModel : PageViewModel
     [RelayCommand]
     public async Task DownloadPdfAsync()
     {
-        var bytes = await _documentService.DownloadOrderDetailsRaportAsync(OrderId);
+        var result = await _documentService.DownloadOrderDetailsRaportAsync(OrderId);
+        if (!result.Success)
+        {
+            _notificationService.ShowError(result.Error?.Description ?? "An error occurred while downloading document.");
+            return;
+        }
+
+        var bytes = result.Value;
+
         var filePath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
             $"order-details-{OrderId}.pdf");
