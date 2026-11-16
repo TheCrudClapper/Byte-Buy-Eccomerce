@@ -10,6 +10,8 @@ public partial class PageViewModel : ViewModelBase
     [ObservableProperty]
     private ApplicationPageNames _pageName;
 
+    [ObservableProperty]
+    public string? _pageBriefDescription;
     private readonly CancellationTokenSource _pageCts = new();
     protected CancellationToken Token => _pageCts.Token;
 

@@ -45,6 +45,7 @@ public partial class RentalsPageViewModel : ViewModelMany<RentalListItemViewMode
         ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Rentals;
+        PageBriefDescription = "Manage company rentals, send, print documents and more.";
     }
 
     protected override async Task LoadDataCoreAsync()

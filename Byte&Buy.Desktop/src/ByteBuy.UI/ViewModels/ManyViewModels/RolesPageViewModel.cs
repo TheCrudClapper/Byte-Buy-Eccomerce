@@ -28,6 +28,7 @@ public partial class RolesPageViewModel : ViewModelMany<RoleListItemViewModel, I
        ILoadingService loadingService) : base(navigationService, dialogNavigation, roleService, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Roles;
+        PageBriefDescription = "Define application roles, assign permisions, play around.";
     }
 
     protected override async Task EditAsync(RoleListItemViewModel item)

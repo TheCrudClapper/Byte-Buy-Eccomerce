@@ -71,7 +71,7 @@ namespace ByteBuy.UI
                 ApplicationPageNames.Deliveries => x.GetRequiredService<DeliveriesPageViewModel>(),
                 ApplicationPageNames.Conditions => x.GetRequiredService<ConditionsPageViewModel>(),
                 ApplicationPageNames.Countries => x.GetRequiredService<CountriesPageViewModel>(),
-                ApplicationPageNames.Administration => x.GetRequiredService<AdministrationPageViewModel>(),
+                ApplicationPageNames.ShopManagement => x.GetRequiredService<AdministrationPageViewModel>(),
                 ApplicationPageNames.Items => x.GetRequiredService<ItemsPageViewModel>(),
                 ApplicationPageNames.Item => x.GetRequiredService<ItemPageViewModel>(),
                 ApplicationPageNames.RentOffers => x.GetRequiredService<RentOffersViewModel>(),

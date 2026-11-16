@@ -13,18 +13,19 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CategoriesPageViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    ICategoryService categoryService,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<CategoryListItemViewModel, ICategoryService>(navigation, dialogNavigation, categoryService, notificationService, loadingService)
+public partial class CategoriesPageViewModel : ViewModelMany<CategoryListItemViewModel, ICategoryService>
 {
     #region Filtration fields
 
     [ObservableProperty]
     private string? _categoryName;
+
+    public CategoriesPageViewModel(INavigationService navigation, IDialogService dialogNavigation, ICategoryService service, INotificationService notificationService, ILoadingService loadingService) 
+        : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Categories used to group warehouse items.";
+    }
+
     #endregion
     protected override async Task EditAsync(CategoryListItemViewModel item)
     {

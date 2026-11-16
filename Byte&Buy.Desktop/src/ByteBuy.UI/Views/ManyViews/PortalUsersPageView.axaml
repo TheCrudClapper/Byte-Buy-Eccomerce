@@ -22,7 +22,7 @@
                        Text="Portal Users"/>
 
              <TextBlock Grid.Row="1"
-                       Text="Manage users, ban, overwrite permissions."
+                       Text="{Binding PageBriefDescription}"
                        Classes="sectionHelperText"/>
 
             <Button Grid.Column="1"

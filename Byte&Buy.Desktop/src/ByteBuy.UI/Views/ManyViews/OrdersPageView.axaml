@@ -14,7 +14,7 @@
 		<Grid Grid.Row="0" ColumnDefinitions="auto" RowDefinitions="auto, auto" RowSpacing="6">
 			<TextBlock Grid.Row="0" Classes="pageTitle" Text="Orders"/>
 			<TextBlock Grid.Row="1"
-					   Text="Manage company orders, send, print documents and more."
+					   Text="{Binding PageBriefDescription}"
 					   Classes="sectionHelperText"/>
 		</Grid>
 

@@ -13,13 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class SaleOffersViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    ISaleOfferService service,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>(navigation, dialogNavigation, service, notificationService, loadingService)
+public partial class SaleOffersViewModel : ViewModelMany<SaleOfferListItemViewModel, ISaleOfferService>
 {
     #region Filtration fields
 
@@ -37,6 +31,16 @@ public partial class SaleOffersViewModel(
 
     [ObservableProperty]
     private int? _quantityTo;
+
+    public SaleOffersViewModel(
+        INavigationService navigation,
+        IDialogService dialogNavigation,
+        ISaleOfferService service,
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Published offers for buying items.";
+    }
     #endregion
 
     protected override async Task EditAsync(SaleOfferListItemViewModel item)

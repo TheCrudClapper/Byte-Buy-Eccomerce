@@ -13,11 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ItemsPageViewModel(INavigationService navigation,
-    IDialogService dialogNavigation,
-    IItemService service,
-    INotificationService notificationService,
-    ILoadingService loadingService) : ViewModelMany<ItemListItemViewModel, IItemService>(navigation, dialogNavigation, service, notificationService, loadingService)
+public partial class ItemsPageViewModel : ViewModelMany<ItemListItemViewModel, IItemService>
 {
     #region Filtration fields
 
@@ -29,6 +25,15 @@ public partial class ItemsPageViewModel(INavigationService navigation,
 
     [ObservableProperty]
     private int? _stockQuantityTo;
+
+    public ItemsPageViewModel(INavigationService navigation,
+        IDialogService dialogNavigation,
+        IItemService service,
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Items in stock, ready to be published as offers.";
+    }
     #endregion
 
     protected override async Task AddAsync()

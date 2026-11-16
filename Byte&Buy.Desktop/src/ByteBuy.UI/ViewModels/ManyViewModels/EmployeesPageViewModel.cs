@@ -35,6 +35,7 @@ public partial class EmployeesPageViewModel
         ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Employees;
+        PageBriefDescription = "Manage employees, ban, overwrite permissions.";
     }
 
     protected override async Task LoadDataCoreAsync()

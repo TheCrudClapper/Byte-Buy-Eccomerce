@@ -13,13 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class DeliveryCarriersViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IDeliveryCarrierService service,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>(navigation, dialogNavigation, service, notificationService, loadingService)
+public partial class DeliveryCarriersViewModel : ViewModelMany<DeliveryCarrierListItemViewModel, IDeliveryCarrierService>
 {
     #region Filtration Fields
 
@@ -28,6 +22,17 @@ public partial class DeliveryCarriersViewModel(
 
     [ObservableProperty]
     public string? code;
+
+    public DeliveryCarriersViewModel(
+        INavigationService navigation,
+        IDialogService dialogNavigation,
+        IDeliveryCarrierService service,
+        INotificationService notificationService,
+        ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Companies that handle your shipments.";
+    }
+
     #endregion
     protected override async Task LoadDataCoreAsync()
     {

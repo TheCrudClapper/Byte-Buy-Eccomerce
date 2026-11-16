@@ -37,7 +37,7 @@ public partial class AdministrationPageViewModel : PageViewModel
         SaleOffersViewModel saleOffersViewModel,
         DeliveryCarriersViewModel carriersViewModel)
     {
-        PageName = ApplicationPageNames.Administration;
+        PageName = ApplicationPageNames.ShopManagement;
         DeliveriesPageViewModel = deliveriesViewModel;
         CountriesPageViewModel = countriesViewModel;
         ConditionsPageViewModel = conditionsViewModel;

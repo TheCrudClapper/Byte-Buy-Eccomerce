@@ -13,13 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class CountriesPageViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    ICountryService countryService,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<CountryListItemViewModel, ICountryService>(navigation, dialogNavigation, countryService, notificationService, loadingService)
+public partial class CountriesPageViewModel : ViewModelMany<CountryListItemViewModel, ICountryService>
 {
     #region Filtraion fields
 
@@ -28,7 +22,17 @@ public partial class CountriesPageViewModel(
 
     [ObservableProperty]
     private string? _code;
+
     #endregion
+    public CountriesPageViewModel(
+      INavigationService navigation,
+      IDialogService dialogNavigation,
+      ICountryService countryService,
+      INotificationService notificationService,
+      ILoadingService loadingService) : base(navigation, dialogNavigation, countryService, notificationService, loadingService)
+    {
+        PageBriefDescription = "Countries available in addresses and deliveries.";
+    }
 
     protected override async Task EditAsync(CountryListItemViewModel item)
     {

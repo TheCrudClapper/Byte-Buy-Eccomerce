@@ -20,7 +20,7 @@ public enum ApplicationPageNames
     Category,
     Conditions,
     Condition,
-    Administration,
+    ShopManagement,
     Items,
     Item,
     RentOffers,

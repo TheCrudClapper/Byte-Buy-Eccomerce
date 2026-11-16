@@ -22,7 +22,7 @@
                        Classes="pageTitle"
                        Text="Rentals"/>
             <TextBlock Grid.Row="1"
-                       Text="Manage company rentals, send, print documents and more."
+                       Text="{Binding PageBriefDescription}"
                        Classes="sectionHelperText"/>
         </Grid>
         <!-- Filters -->

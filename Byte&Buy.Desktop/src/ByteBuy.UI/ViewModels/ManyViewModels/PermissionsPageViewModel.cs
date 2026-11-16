@@ -29,6 +29,7 @@ public partial class PermissionsPageViewModel : ViewModelMany<PermissionManyList
         : base(navigation, dialogNavigation, service, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.Permissions;
+        PageBriefDescription = "Manage permissions, modify.";
     }
 
     protected override async Task LoadDataCoreAsync()

@@ -20,7 +20,7 @@
 					</Border>
 					<StackPanel VerticalAlignment="Center" Spacing="2">
 						<TextBlock Text="Conditions" Classes="sectionLabel"/>
-						<TextBlock Text="Condition grades used to describe warehouse items." Classes="sectionHelperText"/>
+						<TextBlock Text="{Binding PageBriefDescription}" Classes="sectionHelperText"/>
 					</StackPanel>
 				</StackPanel>
 

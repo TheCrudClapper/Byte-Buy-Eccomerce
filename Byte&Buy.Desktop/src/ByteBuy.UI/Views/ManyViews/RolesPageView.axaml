@@ -22,7 +22,7 @@
                        Text="Roles"/>
 
             <TextBlock Grid.Row="1"
-                       Text="Define application roles, assign permisions, play around."
+                       Text="{Binding PageBriefDescription}"
                        Classes="sectionHelperText"/>
 
             <Button Grid.Column="1"

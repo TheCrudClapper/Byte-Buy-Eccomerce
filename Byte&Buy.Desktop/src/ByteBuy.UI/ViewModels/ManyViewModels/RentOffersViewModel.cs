@@ -14,13 +14,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class RentOffersViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IRentOfferService service,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>(navigation, dialogNavigation, service, notificationService, loadingService)
+public partial class RentOffersViewModel : ViewModelMany<RentOfferListItemViewModel, IRentOfferService>
 {
     #region Filtration fields
 
@@ -46,6 +40,15 @@ public partial class RentOffersViewModel(
     private int? _quantityTo;
     #endregion
 
+    public RentOffersViewModel(
+       INavigationService navigation,
+       IDialogService dialogNavigation,
+       IRentOfferService service,
+       INotificationService notificationService,
+       ILoadingService loadingService) : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Published offers for renting items.";
+    }
     protected override async Task EditAsync(RentOfferListItemViewModel item)
     {
         var result = await DialogNavigation

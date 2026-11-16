@@ -13,13 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class ConditionsPageViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IConditionService conditionService,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<ConditionListItemViewModel, IConditionService>(navigation, dialogNavigation, conditionService, notificationService, loadingService)
+public partial class ConditionsPageViewModel : ViewModelMany<ConditionListItemViewModel, IConditionService>
 {
     #region Filtration Fields
 
@@ -27,6 +21,11 @@ public partial class ConditionsPageViewModel(
     public string? _conditionName;
 
     #endregion
+    public ConditionsPageViewModel(INavigationService navigation, IDialogService dialogNavigation, IConditionService service, INotificationService notificationService, ILoadingService loadingService) 
+        : base(navigation, dialogNavigation, service, notificationService, loadingService)
+    {
+        PageBriefDescription = "Condition grades used to describe warehouse items.";
+    }
 
     protected override async Task EditAsync(ConditionListItemViewModel item)
     {

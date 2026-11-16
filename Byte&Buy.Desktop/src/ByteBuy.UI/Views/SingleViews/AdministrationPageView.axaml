@@ -15,7 +15,7 @@
 
         <!-- Page header -->
         <StackPanel Grid.Row="0" Spacing="6">
-            <TextBlock Classes="pageTitle" Text="Administration"/>
+            <TextBlock Classes="pageTitle" Text="Shop Management"/>
             <TextBlock Classes="sectionHelperText"
                        Text="Manage deliveries, warehouse, categories and marketplace settings."/>
         </StackPanel>

@@ -59,10 +59,10 @@
 									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
 											Command="{Binding GoToAdministrationCommand}"
 											Classes.sidebarMenuButton="true"
-											Classes.active="{Binding IsAdministrationPageActive}">
+											Classes.active="{Binding IsShopManagementPageActive}">
 										<StackPanel Orientation="Horizontal" Spacing="16">
-											<Image Source="{SvgImage /Assets/Images/regular/black-tie-brands-solid-full.svg}"/>
-											<TextBlock Text="Shop Administration"/>
+											<Image Source="{SvgImage /Assets/Images/regular/cart-shopping-solid-full.svg}"/>
+											<TextBlock Text="Shop Management"/>
 										</StackPanel>
 									</Button>
 

@@ -24,7 +24,7 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
 
     [ObservableProperty]
     private string? _email;
-
+    #endregion
     public PortalUsersPageViewModel(
         INavigationService navigation,
         IDialogService dialogNavigation,
@@ -33,8 +33,8 @@ public partial class PortalUsersPageViewModel : ViewModelMany<PortalUserListItem
         ILoadingService loadingService) : base(navigation, dialogNavigation, userService, notificationService, loadingService)
     {
         PageName = ApplicationPageNames.PortalUsers;
+        PageBriefDescription = "Manage users, ban, overwrite permissions.";
     }
-    #endregion
 
     protected override async Task EditAsync(PortalUserListItemViewModel item)
     {

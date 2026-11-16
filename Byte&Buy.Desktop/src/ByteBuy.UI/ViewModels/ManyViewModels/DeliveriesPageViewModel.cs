@@ -13,13 +13,7 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels;
 
-public partial class DeliveriesPageViewModel(
-    INavigationService navigation,
-    IDialogService dialogNavigation,
-    IDeliveryService deliveryService,
-    INotificationService notificationService,
-    ILoadingService loadingService)
-    : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>(navigation, dialogNavigation, deliveryService, notificationService, loadingService)
+public partial class DeliveriesPageViewModel : ViewModelMany<DeliveryListItemViewModel, IDeliveryService>
 {
     #region Filtration Fields
 
@@ -33,6 +27,16 @@ public partial class DeliveriesPageViewModel(
     public decimal? priceTo;
 
     #endregion
+    public DeliveriesPageViewModel(
+      INavigationService navigation,
+      IDialogService dialogNavigation,
+      IDeliveryService deliveryService,
+      INotificationService notificationService,
+      ILoadingService loadingService) : base(navigation, dialogNavigation, deliveryService, notificationService, loadingService)
+    {
+        PageBriefDescription = "Delivery methods offered to buyers and their prices.";
+    }
+
     protected override async Task EditAsync(DeliveryListItemViewModel item)
     {
         var result = await DialogNavigation

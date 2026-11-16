@@ -28,7 +28,7 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
     private bool _isPermissionsPageActive;
 
     [ObservableProperty]
-    private bool _isAdministrationPageActive;
+    private bool _isShopManagementPageActive;
 
     [ObservableProperty]
     private bool _isPortalUsersPageActive;
@@ -86,7 +86,7 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
         IsEmployeesPageActive = page == ApplicationPageNames.Employees;
         IsRolesPageActive = page == ApplicationPageNames.Roles;
         IsPermissionsPageActive = page == ApplicationPageNames.Permissions;
-        IsAdministrationPageActive = page == ApplicationPageNames.Administration;
+        IsShopManagementPageActive = page == ApplicationPageNames.ShopManagement;
         IsPortalUsersPageActive = page == ApplicationPageNames.PortalUsers;
         IsRentalsPageActive = page == ApplicationPageNames.Rentals;
         IsCompanyPageActive = page == ApplicationPageNames.CompanyInfo;
@@ -178,7 +178,7 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
 
 
     [RelayCommand]
-    private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.Administration);
+    private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.ShopManagement);
 
     [RelayCommand]
     private void LogOut()

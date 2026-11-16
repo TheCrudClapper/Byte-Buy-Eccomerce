@@ -20,7 +20,7 @@
 					</Border>
 					<StackPanel VerticalAlignment="Center" Spacing="2">
 						<TextBlock Text="Countries" Classes="sectionLabel"/>
-						<TextBlock Text="Countries available in addresses and deliveries." Classes="sectionHelperText"/>
+						<TextBlock Text="{Binding PageBriefDescription}" Classes="sectionHelperText"/>
 					</StackPanel>
 				</StackPanel>
 
