@@ -1,174 +1,269 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:dialogHost="using:DialogHostAvalonia"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="620"
-			 x:Class="ByteBuy.UI.Views.Dialogs.DeliveryDialogView"
-			 x:DataType="vm:DeliveryDialogViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogHost="using:DialogHostAvalonia"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DesignWidth="750"
+             d:DesignHeight="750"
+             x:Class="ByteBuy.UI.Views.Dialogs.DeliveryDialogView"
+             x:DataType="vm:DeliveryDialogViewModel">
 
-	<Border CornerRadius="2"
-			BorderThickness="2"
-			Background="{DynamicResource CardBackgroundBrush}"
-			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="620"
-			MinWidth="400">
-		<Grid RowDefinitions="30,*,*">
+    <Border Width="580"
+            MaxHeight="800"
+            Classes="sectionBorder">
 
-			<!-- Title bar -->
-			<Border Grid.Row="0"
-					Background="{DynamicResource ButtonGradient}"
-					Height="30"
-					VerticalAlignment="Top">
-				<TextBlock Text="{Binding DialogTitle}"
-						   Classes="dialogTitle"/>
-			</Border>
+        <Grid RowDefinitions="Auto,*,Auto">
 
-			<!-- Content -->
-			<StackPanel Margin="20"
-						Spacing="10"
-						Grid.Row="1">
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Padding="24,22,24,16"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
 
-				<!-- Name -->
-				<TextBlock Text="Delivery Name"
-						   Classes="textBoxLabel" />
-				<TextBox Text="{Binding Name}"
-						 TextWrapping="Wrap"
-						 Watermark="Name" />
+                <StackPanel Orientation="Horizontal" Spacing="14">
+                    <Border Classes="sectionIcon">
+                        <PathIcon Data="{DynamicResource IconTruck}"/>
+                    </Border>
 
-				<!-- Description -->
-				<TextBlock Text="Description"
-						   Classes="textBoxLabel" />
-				<TextBox Text="{Binding Description}"
-						 MinHeight="150"
-						 TextWrapping="Wrap"
-						 Watermark="Description" />
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="sectionLabel"
+                                   Text="Deliveries"/>
 
-				<!-- Combo Boxes -->
-				<Grid RowDefinitions="*,10,*,10,*,10,*"
-					  ColumnDefinitions="*,*">
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Configure delivery details, carrier and pricing."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
 
-					<!-- Delivery Carrier -->
-					<TextBlock Grid.Row="0"
-							   Grid.Column="0"
-							   Text="Delivery Carrier"
-							   Classes="textBoxLabel" />
-					<Grid Grid.Row="2"
-						  Grid.Column="0"
-						  ColumnDefinitions="auto, *"
-						  Margin="0,0,5,0">
-						<Button VerticalAlignment="Stretch"
-								Grid.Column="0"
-								HorizontalAlignment="Stretch"
-								CornerRadius="5,0,0,5"
-								Command="{Binding ClearSelectedCarrierCommand}">
-							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
-								   Height="15"
-								   Width="15"/>
-						</Button>
-						<ComboBox
-						Grid.Column="1"
-						ItemsSource="{Binding DeliveryCarriers}"
-						SelectedItem="{Binding SelectedDeliveryCarrier}">
-							<ComboBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding Title}" />
-								</DataTemplate>
-							</ComboBox.ItemTemplate>
-						</ComboBox>
-					</Grid>
+            <!-- Body -->
+            <ScrollViewer Grid.Row="1"
+                          ScrollViewer.AllowAutoHide="False">
 
-					<!-- Delivery Type -->
-					<TextBlock Grid.Row="0"
-							   Grid.Column="1"
-							   Text="Delivery Type"
-							   Margin="5,0,0,0"
-							   Classes="textBoxLabel" />
-					<Grid Grid.Row="2"
-						  Grid.Column="2"
-						  ColumnDefinitions="auto, *"
-						  Margin="0,0,5,0">
-						<Button VerticalAlignment="Stretch"
-								Grid.Column="0"
-								HorizontalAlignment="Stretch"
-								CornerRadius="5,0,0,5"
-								Command="{Binding ClearSelectedChannelCommand}">
-							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
-								   Height="15"
-								   Width="15"/>
-						</Button>
-						<ComboBox ItemsSource="{Binding DeliveryChannels}"
-								  SelectedItem="{Binding SelectedChannel}"
-								  Grid.Column="1">
-							<ComboBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding Title}" />
-								</DataTemplate>
-							</ComboBox.ItemTemplate>
-						</ComboBox>
-					</Grid>
+                <StackPanel Margin="24,20"
+                            Spacing="22">
 
-					<!-- Parcel Locker Size -->
-					<TextBlock Grid.Row="4"
-							   Grid.Column="0"
-							   Grid.ColumnSpan="2"
-							   Text="Parcel Locker Size"
-							   Classes="textBoxLabel" />
-					<Grid Grid.Row="6"
-								Grid.Column="0"
-								Grid.ColumnSpan="2"
-								Margin="0,0,5,0"
-								ColumnDefinitions="Auto,*">
-						<Button VerticalAlignment="Stretch"
-								HorizontalAlignment="Stretch"
-								Grid.Column="0"
-								CornerRadius="5,0,0,5"
-								Command="{Binding ClearSelectedSizeCommand}">
-							<Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
-								   Height="15"
-								   Width="15"/>
-						</Button>
-						<ComboBox ItemsSource="{Binding ParcelLockerSize}"
-								 Grid.Column="1"
-								  SelectedItem="{Binding SelectedSize}">
-							<ComboBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding Title}" />
-								</DataTemplate>
-							</ComboBox.ItemTemplate>
-						</ComboBox>
-					</Grid>
-				</Grid>
+                    <!-- Delivery information -->
+                    <StackPanel Spacing="12">
 
-				<!-- Price -->
-				<TextBlock Text="Price"
-						   Classes="textBoxLabel" />
-				<NumericUpDown Value="{Binding Price}"
-							   FormatString="0.000"
-							   Minimum="1"
-							   Watermark="Enter price per one item" />
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+                            <Image Classes="sectionMarker"
+                                   VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
 
-				<!-- Error -->
-				<TextBlock
-				Text="{Binding Error}"
-				FontFamily="{DynamicResource RalewayBold}"
-				Foreground="{DynamicResource ErrorBrush}"
-				TextWrapping="Wrap" />
+                            <TextBlock Classes="cardTitle"
+                                       Text="Delivery information"/>
+                        </StackPanel>
 
-				<!-- Buttons -->
-				<StackPanel Grid.Row="2"
-							Orientation="Horizontal"
-							HorizontalAlignment="Right"
-							Spacing="8">
-					<Button Content="Cancel"
-							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-							Path=CloseDialogCommand}"
-							CommandParameter="False" />
-					<Button Content="Save"
-							Command="{Binding SaveCommand}" />
-				</StackPanel>
-			</StackPanel>
-		</Grid>
-	</Border>
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Delivery name"/>
+
+                            <TextBox Text="{Binding Name}"
+                                     Watermark="Enter delivery name"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Description"/>
+
+                            <TextBox Text="{Binding Description}"
+                                     MinHeight="110"
+                                     Watermark="Enter delivery description"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <Border Classes="divider"/>
+
+                    <!-- Delivery configuration -->
+                    <StackPanel Spacing="14">
+
+                        <StackPanel Spacing="4">
+                            <StackPanel Orientation="Horizontal" Spacing="3">
+                                <Image Classes="sectionMarker"
+                                       VerticalAlignment="Center"
+                                       Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+
+                                <TextBlock Classes="cardTitle"
+                                           Text="Delivery configuration"/>
+                            </StackPanel>
+
+                            <TextBlock Classes="sectionHelperText"
+                                       FontSize="13"
+                                       Text="Select the carrier, delivery type and parcel locker size."/>
+                        </StackPanel>
+
+                        <!-- Carrier -->
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Delivery carrier"/>
+
+                            <Grid ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="8">
+
+                                <Button Grid.Column="0"
+                                        Classes="iconButton danger"
+                                        ToolTip.Tip="Clear selected carrier"
+                                        Command="{Binding ClearSelectedCarrierCommand}">
+                                    <Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+                                           Width="16"
+                                           Height="16"/>
+                                </Button>
+
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding DeliveryCarriers}"
+                                          SelectedItem="{Binding SelectedDeliveryCarrier}"
+                                          HorizontalAlignment="Stretch">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Delivery type -->
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Delivery type"/>
+
+                            <Grid ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="8">
+
+                                <Button Grid.Column="0"
+                                        Classes="iconButton danger"
+                                        ToolTip.Tip="Clear selected delivery type"
+                                        Command="{Binding ClearSelectedChannelCommand}">
+                                    <Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+                                           Width="16"
+                                           Height="16"/>
+                                </Button>
+
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding DeliveryChannels}"
+                                          SelectedItem="{Binding SelectedChannel}"
+                                          HorizontalAlignment="Stretch">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+
+                        <!-- Parcel locker size -->
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Parcel locker size"/>
+
+                            <Grid ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="8">
+
+                                <Button Grid.Column="0"
+                                        Classes="iconButton danger"
+                                        ToolTip.Tip="Clear selected size"
+                                        Command="{Binding ClearSelectedSizeCommand}">
+                                    <Image Source="{SvgImage /Assets/Images/regular/trash-can.svg}"
+                                           Width="16"
+                                           Height="16"/>
+                                </Button>
+
+                                <ComboBox Grid.Column="1"
+                                          ItemsSource="{Binding ParcelLockerSize}"
+                                          SelectedItem="{Binding SelectedSize}"
+                                          HorizontalAlignment="Stretch">
+
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <Border Classes="divider"/>
+
+                    <!-- Pricing -->
+                    <StackPanel Spacing="12">
+
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+                            <Image Classes="sectionMarker"
+                                   VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+
+                            <TextBlock Classes="cardTitle"
+                                       Text="Pricing"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Delivery price"/>
+
+                            <NumericUpDown Value="{Binding Price}"
+                                           FormatString="0.000"
+                                           Minimum="1"
+                                           Watermark="Enter delivery price"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Error -->
+                    <Border Background="{DynamicResource ErrorSoftBrush}"
+                            BorderBrush="{DynamicResource ErrorBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="14,10"
+                            IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                        <TextBlock Text="{Binding Error}"
+                                   FontFamily="{DynamicResource RalewayBold}"
+                                   Foreground="{DynamicResource ErrorBrush}"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Padding="24,16"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                    <Button Content="Cancel"
+                            MinWidth="110"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource GrayAccentBrush}"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+                            CommandParameter="False"/>
+
+                    <Button Content="Save"
+                            MinWidth="110"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding SaveCommand}"/>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
 </UserControl>

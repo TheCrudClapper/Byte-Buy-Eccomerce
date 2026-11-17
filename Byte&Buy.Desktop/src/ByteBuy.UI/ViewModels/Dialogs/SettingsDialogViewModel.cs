@@ -19,7 +19,7 @@ public partial class SettingsDialogViewModel : DialogViewModel
     [ObservableProperty]
     private string? _message;
     [ObservableProperty]
-    private ResultViewModel _result = null!;
+    private ResultViewModel? _result;
     private readonly IUserSettingsService _settingsService;
     public SettingsDialogViewModel(IUserSettingsService settingsService) : base(ApplicationDialogNames.Settings.ToString())
     {

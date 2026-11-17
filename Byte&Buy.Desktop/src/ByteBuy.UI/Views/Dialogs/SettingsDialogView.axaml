@@ -1,65 +1,135 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-			 x:Class="ByteBuy.UI.Views.Dialogs.SettingsDialogView"
-			 x:DataType="vm:SettingsDialogViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DesignWidth="650"
+             d:DesignHeight="450"
+             x:Class="ByteBuy.UI.Views.Dialogs.SettingsDialogView"
+             x:DataType="vm:SettingsDialogViewModel">
 
-	<UserControl.Styles>
-		<Style Selector="TextBlock.success">
-			<Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/>
-		</Style>
-		<Style Selector="TextBlock.error">
-			<Setter Property="Foreground" Value="{DynamicResource ErrorBrush}"/>
-		</Style>
-	</UserControl.Styles>
+    <UserControl.Styles>
+        <Style Selector="TextBlock.success">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource SuccessBrush}"/>
+        </Style>
 
-	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
-			MinHeight="200" MinWidth="400">
-		<Grid RowDefinitions="30,30,*,*">
-			<Border
-				Grid.Row="0"
-				Background="{DynamicResource PrimaryBrush}"
-				Height="30"
-				VerticalAlignment="Top">
-				<TextBlock Text="{Binding DialogTitle}"
-						   Classes="dialogTitle"/>
-			</Border>
+        <Style Selector="TextBlock.error">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource ErrorBrush}"/>
+        </Style>
+    </UserControl.Styles>
 
-			<TextBlock Text="Connection settings to access services."
-					   Grid.Row="1"
-					   Classes="textBoxLabel"
-					   Margin="20"
-					   TextWrapping="Wrap"/>
+    <Border Width="400"
+            MaxHeight="550"
+            Classes="sectionBorder">
 
-			<StackPanel Margin="20" Spacing="10" Grid.Row="2">
-				<TextBlock Text="Backend API Url"
-						   Classes="textBoxLabel" />
+        <Grid RowDefinitions="Auto,*,Auto">
 
-				<TextBox Text="{Binding BackendUrl}"/>
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Padding="24,22,24,16"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
 
-				<TextBlock Text="{Binding Result.Message}"
-						   Classes="textBoxLabel"
-						   Classes.success="{Binding Result.IsSuccess}"
-						   Classes.error="{Binding !Result.IsSuccess}"
-						   TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal" Spacing="14">
+                    <Border Classes="sectionIcon">
+                        <Image Source="{SvgImage /Assets/Images/regular/gear-solid-full.svg}" Height="20"/>
+                    </Border>
 
-				<Grid Grid.Row="3" ColumnDefinitions="*,*">
-					<Button Content="Close"
-							Grid.Column="0"
-							Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-							Path=CloseDialogCommand}"
-							CommandParameter="False" />
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="sectionLabel"
+                                   Text="{Binding DialogTitle}"/>
 
-					<Button Content="Save"
-							HorizontalAlignment="Right"
-							Grid.Column="1"
-							Command="{Binding SaveCommand}" />
-				</Grid>
-			</StackPanel>
-		</Grid>
-	</Border>
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Manage application connection settings."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Body -->
+            <ScrollViewer Grid.Row="1"
+                          ScrollViewer.AllowAutoHide="False">
+
+                <StackPanel Margin="24,20"
+                            Spacing="20">
+
+                    <!-- Connection information -->
+                    <StackPanel Spacing="12">
+
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+                            <Image Classes="sectionMarker"
+                                   VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+
+                            <TextBlock Classes="cardTitle"
+                                       Text="Connection settings"/>
+                        </StackPanel>
+
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Configure the backend API endpoint used by the application."
+                                   TextWrapping="Wrap"/>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Backend API URL"/>
+
+                            <TextBox Text="{Binding BackendUrl}"
+                                     Watermark="https://localhost:7000"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Result -->
+                    <Border Classes="itemRow"
+                            Padding="14,12"
+                            IsVisible="{Binding Result, Converter={x:Static ObjectConverters.IsNotNull}}">
+
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="10">
+
+                            <TextBlock Text="{Binding Result.Message}"
+                                       Classes="textBoxLabel"
+                                       Classes.success="{Binding Result.IsSuccess}"
+                                       Classes.error="{Binding !Result.IsSuccess}"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Padding="24,16"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                    <Button Content="Close"
+                            MinWidth="110"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource GrayAccentBrush}"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+                            CommandParameter="False"/>
+
+                    <Button Content="Save"
+                            MinWidth="110"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding SaveCommand}"/>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
 </UserControl>

@@ -1,62 +1,123 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:dialogHost="using:DialogHostAvalonia"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="ByteBuy.UI.Views.Dialogs.CountryDialogView"
-			 x:DataType="vm:CountryDialogViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogHost="using:DialogHostAvalonia"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DesignWidth="600"
+             d:DesignHeight="450"
+             x:Class="ByteBuy.UI.Views.Dialogs.CountryDialogView"
+             x:DataType="vm:CountryDialogViewModel">
 
+    <Border Width="520"
+            MaxHeight="550"
+            Classes="sectionBorder">
 
-	<Border CornerRadius="2" BorderThickness="2"
-			Background="{DynamicResource CardBackgroundBrush}"
-			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="200" MinWidth="400">
-		<Grid RowDefinitions="30,*,*">
-			<Border
-			Grid.Row="0"
-			Background="{DynamicResource ButtonGradient}"
-			Height="30"
-			VerticalAlignment="Top">
-				<TextBlock Text="{Binding DialogTitle}"
-						   Classes="dialogTitle"/>
-			</Border>
+        <Grid RowDefinitions="Auto,*,Auto">
 
-			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
-				<TextBlock Text="Country Name" Classes="textBoxLabel" />
-				<TextBox
-				Foreground="{DynamicResource TextLightBrush}"
-				Text="{Binding Name}"
-				TextWrapping="Wrap"
-				Watermark="Name" />
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Padding="24,22,24,16"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
 
-				<TextBlock Text="Country Code" Classes="textBoxLabel" />
-				<TextBox
-				Text="{Binding Code}"
-				TextWrapping="Wrap"
-				Watermark="Code" />
+                <StackPanel Orientation="Horizontal" Spacing="14">
+                    <Border Classes="sectionIcon">
+                        <PathIcon Data="{DynamicResource IconPin}"/>
+                    </Border>
 
-				<TextBlock
-				Text="{Binding Error}"
-				FontFamily="{DynamicResource RalewayBold}"
-				Foreground="{DynamicResource ErrorBrush}"
-				TextWrapping="Wrap" />
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="sectionLabel"
+                                   Text="{Binding DialogTitle}"/>
 
-				<StackPanel Grid.Row="2"
-							Orientation="Horizontal"
-							HorizontalAlignment="Right"
-							Spacing="8">
-					<Button
-					Content="Cancel"
-					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-					Path=CloseDialogCommand}"
-					CommandParameter="False" />
-					<Button
-					Content="Save"
-					Command="{Binding SaveCommand}" />
-				</StackPanel>
-			</StackPanel>
-		</Grid>
-	</Border>
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Configure country name and identification code."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Body -->
+            <ScrollViewer Grid.Row="1"
+                          ScrollViewer.AllowAutoHide="False">
+
+                <StackPanel Margin="24,20"
+                            Spacing="20">
+
+                    <!-- Country information -->
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+                            <Image Classes="sectionMarker"
+                                   VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+
+                            <TextBlock Classes="cardTitle"
+                                       Text="Country information"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Country name"/>
+
+                            <TextBox Text="{Binding Name}"
+                                     Watermark="Enter country name"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Country code"/>
+
+                            <TextBox Text="{Binding Code}"
+                                     Watermark="Enter country code"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Error -->
+                    <Border Background="{DynamicResource ErrorSoftBrush}"
+                            BorderBrush="{DynamicResource ErrorBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="14,10"
+                            IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                        <TextBlock Text="{Binding Error}"
+                                   FontFamily="{DynamicResource RalewayBold}"
+                                   Foreground="{DynamicResource ErrorBrush}"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Padding="24,16"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                    <Button Content="Cancel"
+                            MinWidth="110"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource GrayAccentBrush}"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+                            CommandParameter="False"/>
+
+                    <Button Content="Save"
+                            MinWidth="110"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding SaveCommand}"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
 </UserControl>

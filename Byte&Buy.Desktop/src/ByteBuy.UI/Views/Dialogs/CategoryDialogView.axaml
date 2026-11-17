@@ -1,55 +1,125 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d"
-			 xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-			 x:Class="ByteBuy.UI.Views.Dialogs.CategoryDialogView"
-			 x:DataType="vm:CategoryDialogViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogHost="using:DialogHostAvalonia"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DesignWidth="600"
+             d:DesignHeight="550"
+             x:Class="ByteBuy.UI.Views.Dialogs.CategoryDialogView"
+             x:DataType="vm:CategoryDialogViewModel">
 
-	<Border CornerRadius="2" BorderThickness="2" BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource CardBackgroundBrush}"
-			MinHeight="200" MinWidth="400">
-		<Grid RowDefinitions="30,*,*">
-			<Border
-			Grid.Row="0"
-			Background="{DynamicResource PrimaryBrush}"
-			Height="30"
-			VerticalAlignment="Top">
-				<TextBlock Text="{Binding DialogTitle}"
-							Classes="dialogTitle"/>
-			</Border>
+    <Border Width="520"
+            MaxHeight="650"
+            Classes="sectionBorder">
 
-			<StackPanel Margin="20" Spacing="10" Grid.Row="1">
-				<TextBlock Text="Category Name" Classes="textBoxLabel" />
-				<TextBox
-				Text="{Binding Name}"
-				TextWrapping="Wrap"
-				Watermark="Name" />
+        <Grid RowDefinitions="Auto,*,Auto">
 
-				<TextBlock Text="Description" Classes="textBoxLabel" />
-				<TextBox
-				Text="{Binding Description}"
-				TextWrapping="Wrap"
-				MinHeight="150"
-				Watermark="Description" />
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Padding="24,22,24,16"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
 
-				<TextBlock Text="{Binding Error}" Foreground="{DynamicResource ErrorBrush}" TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal" Spacing="14">
+                    <Border Classes="sectionIcon">
+                        <PathIcon Data="{DynamicResource IconDocument}"/>
+                    </Border>
 
-				<StackPanel Grid.Row="2"
-							Orientation="Horizontal"
-							HorizontalAlignment="Right"
-							Spacing="8">
-					<Button
-					Content="Cancel"
-					Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost},
-					Path=CloseDialogCommand}"
-					CommandParameter="False" />
-					<Button
-					Content="Save"
-					Command="{Binding SaveCommand}" />
-				</StackPanel>
-			</StackPanel>
-		</Grid>
-	</Border>
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="sectionLabel"
+                                   Text="{Binding DialogTitle}"/>
+
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Enter category information and details."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Body -->
+            <ScrollViewer Grid.Row="1"
+                          ScrollViewer.AllowAutoHide="False">
+
+                <StackPanel Margin="24,20"
+                            Spacing="20">
+
+                    <!-- Category information -->
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+                            <Image Classes="sectionMarker"
+                                   VerticalAlignment="Center"
+                                   Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"/>
+
+                            <TextBlock Classes="cardTitle"
+                                       Text="Category information"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Category name"/>
+
+                            <TextBox Text="{Binding Name}"
+                                     Watermark="Enter category name"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Spacing="6">
+                            <TextBlock Classes="textBoxLabel"
+                                       Text="Description"/>
+
+                            <TextBox Text="{Binding Description}"
+                                     Watermark="Enter category description"
+                                     MinHeight="130"
+                                     TextWrapping="Wrap"
+                                     AcceptsReturn="True"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Error -->
+                    <Border Background="{DynamicResource ErrorSoftBrush}"
+                            BorderBrush="{DynamicResource ErrorBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="14,10"
+                            IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                        <TextBlock Text="{Binding Error}"
+                                   FontFamily="{DynamicResource RalewayBold}"
+                                   Foreground="{DynamicResource ErrorBrush}"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Padding="24,16"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                    <Button Content="Cancel"
+                            MinWidth="110"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource GrayAccentBrush}"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=CloseDialogCommand}"
+                            CommandParameter="False"/>
+
+                    <Button Content="Save"
+                            MinWidth="110"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding SaveCommand}"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
 </UserControl>

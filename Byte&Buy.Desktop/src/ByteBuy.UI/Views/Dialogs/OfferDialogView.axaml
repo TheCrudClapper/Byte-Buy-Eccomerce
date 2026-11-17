@@ -9,7 +9,7 @@
 			 x:DataType="vm:OfferDialogViewModel">
 
 	<Border Width="580"
-			MaxHeight="740"
+			MaxHeight="800"
 			Classes="sectionBorder">
 
 		<Grid RowDefinitions="auto,*,auto">

@@ -1,75 +1,100 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:dialogHost="using:DialogHostAvalonia"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
-			 mc:Ignorable="d"
-			 x:Class="ByteBuy.UI.Views.Dialogs.ConfirmDialogView"
-			 x:DataType="vm:ConfirmationDialogViewModel">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DesignWidth="550"
+             d:DesignHeight="280"
+             x:Class="ByteBuy.UI.Views.Dialogs.ConfirmDialogView"
+             x:DataType="vm:ConfirmationDialogViewModel">
 
-	<Border CornerRadius="2"
-			BorderThickness="2"
-			Background="{DynamicResource CardBackgroundBrush}"
-			BorderBrush="{DynamicResource ButtonGradient}"
-			MinHeight="150"
-			MinWidth="400">
+    <Border Width="480"
+            Classes="sectionBorder">
 
-		<Grid RowDefinitions="Auto,*">
-			<!-- Header -->
-			<Border Grid.Row="0"
-					Background="{DynamicResource ButtonGradient}"
-					Height="30"
-					VerticalAlignment="Top">
-				<TextBlock Text="{Binding DialogTitle}"
-						   Classes="dialogTitle"/>
-			</Border>
+        <Grid RowDefinitions="Auto,*,Auto">
 
-			<Grid Grid.Row="1"
-				  RowDefinitions="*,Auto"
-				  Margin="10">
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Padding="24,22,24,16"
+                    BorderThickness="0,0,0,1"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
 
-				<Grid Grid.Row="0"
-					  ColumnDefinitions="Auto,*"
-					  HorizontalAlignment="Center"
-					  VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="14">
+                    <Border Classes="sectionIcon">
+                        <PathIcon Data="{DynamicResource IconBox}"/>
+                    </Border>
 
-					<!--Icon-->
-					<Image Grid.Column="0"
-						   Height="30"
-						   Width="30"
-						   Margin="0,0,10,0"
-						   VerticalAlignment="Center">
-						<Image.Source>
-							<SvgImage Source="{Binding Icon}" />
-						</Image.Source>
-					</Image>
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Classes="sectionLabel"
+                                   Text="{Binding DialogTitle}"/>
 
-					<!--Dialog Message-->
-					<TextBlock Grid.Column="1"
-							   HorizontalAlignment="Left"
-							   Foreground="{DynamicResource TextPrimaryBrush}"
-							   FontSize="15"
-							   FontFamily="{DynamicResource OpenSansMedium}"
-							   TextWrapping="Wrap"
-							   VerticalAlignment="Center"
-							   Text="{Binding Message}" />
-				</Grid>
+                        <TextBlock Classes="sectionHelperText"
+                                   Text="Please review your action before proceeding."/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
 
-				<!--Cancel and Confirm buttons-->
-				<StackPanel Grid.Row="1"
-							Orientation="Horizontal"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Bottom"
-							Margin="0,10,0,0"
-							Spacing="8">
-					<Button Content="{Binding CancelText}"
-							Command="{Binding CancelCommand}" />
-					<Button Content="{Binding ConfirmText}"
-							IsDefault="True"
-							Command="{Binding ConfirmCommand}" />
-				</StackPanel>
-			</Grid>
-		</Grid>
-	</Border>
+            <!-- Body -->
+            <Grid Grid.Row="1"
+                  Margin="24,24"
+                  ColumnDefinitions="Auto,*"
+                  ColumnSpacing="16"
+                  VerticalAlignment="Center">
+
+                <!-- Icon -->
+                <Border Classes="itemRow"
+                        Width="48"
+                        Height="48"
+                        CornerRadius="12"
+                        VerticalAlignment="Center">
+
+                    <Image Width="24"
+                           Height="24"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                        <Image.Source>
+                            <SvgImage Source="{Binding Icon}"/>
+                        </Image.Source>
+                    </Image>
+                </Border>
+
+                <!-- Message -->
+                <TextBlock Grid.Column="1"
+                           Classes="standardText"
+                           FontSize="14"
+                           Text="{Binding Message}"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Footer -->
+            <Border Grid.Row="2"
+                    Padding="24,16"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="{DynamicResource GrayAccentBrush}">
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Spacing="12">
+
+                    <Button Content="{Binding CancelText}"
+                            MinWidth="110"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource GrayAccentBrush}"
+                            BorderThickness="1"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding CancelCommand}"/>
+
+                    <Button Content="{Binding ConfirmText}"
+                            MinWidth="110"
+                            HorizontalContentAlignment="Center"
+                            IsDefault="True"
+                            Command="{Binding ConfirmCommand}"/>
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
 </UserControl>
