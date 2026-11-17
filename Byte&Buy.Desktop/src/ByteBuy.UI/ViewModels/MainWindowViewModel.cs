@@ -46,13 +46,15 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
     private bool _isProfilePageActive;
 
     [ObservableProperty]
+    private bool _isAccessControlActive;
+
+    [ObservableProperty]
     private string _profileName;
     #endregion
 
     public PageViewModel? CurrentPage => _navigation.CurrentPage;
 
     private readonly INavigationService _navigation;
-    private readonly ISessionService _sessionService;
     private readonly IWindowService _windowService;
     private readonly IAuthService _authService;
     private readonly INotificationService _notificationService;
@@ -92,9 +94,16 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
         IsCompanyPageActive = page == ApplicationPageNames.CompanyInfo;
         IsOrdersPageActive = page == ApplicationPageNames.Orders;
         IsProfilePageActive = page == ApplicationPageNames.Profile;
+        IsAccessControlActive = page == ApplicationPageNames.AccessControl;
     }
 
-    public MainWindowViewModel(INavigationService navigation, IWindowService windowService, IAuthService authService, INotificationService notificationService, ILoadingService loadingService, ISessionService sessionService)
+    public MainWindowViewModel(
+        INavigationService navigation,
+        IWindowService windowService,
+        IAuthService authService,
+        INotificationService notificationService,
+        ILoadingService loadingService,
+        ISessionService sessionService)
     {
         _navigation = navigation;
         _windowService = windowService;
@@ -110,7 +119,6 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
             }
         };
         _ = GoToDashboard();
-        _sessionService = sessionService;
         ProfileName = string.Join(' ', sessionService.UserFirstName, sessionService.UserLastName);
     }
 
@@ -149,20 +157,6 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
     });
 
     [RelayCommand]
-    private async Task GoToRoles() => await _navigation.NavigateToAsync(ApplicationPageNames.Roles, async vm =>
-    {
-        if (vm is RolesPageViewModel rolesVm)
-            await rolesVm.LoadDataAsync();
-    });
-
-    [RelayCommand]
-    private async Task GoToPermissions() => await _navigation.NavigateToAsync(ApplicationPageNames.Permissions, async vm =>
-    {
-        if (vm is PermissionsPageViewModel permVm)
-            await permVm.LoadDataAsync();
-    });
-
-    [RelayCommand]
     private async Task GoToOrders() => await _navigation.NavigateToAsync(ApplicationPageNames.Orders, async vm =>
     {
         if (vm is OrdersPageViewModel ordersVm)
@@ -176,9 +170,12 @@ public partial class MainWindowViewModel : WindowViewModel, IDisposable
             await rentalsVm.LoadDataAsync();
     });
 
+    [RelayCommand]
+    private void GoToAccessControl() => _navigation.NavigateTo(ApplicationPageNames.AccessControl);
+
 
     [RelayCommand]
-    private async Task GoToAdministration() => await _navigation.NavigateToAsync(ApplicationPageNames.ShopManagement);
+    private async Task GoToShopManagement() => await _navigation.NavigateToAsync(ApplicationPageNames.ShopManagement);
 
     [RelayCommand]
     private void LogOut()

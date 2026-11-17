@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.SingleViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ByteBuy.UI.Views.SingleViews.AccessControlPageView"
+             Background="Transparent"
+             x:DataType="vm:AccessControlPageViewModel">
+    <Grid RowDefinitions="auto,*" RowSpacing="18" Margin="0,10,30,30">
+
+        <!-- Page header -->
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Classes="pageTitle" Text="Access Control"/>
+            <TextBlock Classes="sectionHelperText"
+                       Text="{Binding PageBriefDescription}"/>
+        </StackPanel>
+
+        <!-- Pill tabs; each tab hosts a single-card sub page -->
+        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTab}">
+            <TabItem Header="Roles" Content="{Binding RolesPageViewModel}"/>
+            <TabItem Header="Permissions" Content="{Binding PermissionPageViewModel}"/>
+        </TabControl>
+    </Grid>
+</UserControl>

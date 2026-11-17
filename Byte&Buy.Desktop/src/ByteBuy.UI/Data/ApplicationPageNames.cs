@@ -31,5 +31,6 @@ public enum ApplicationPageNames
     Rentals,
     RentalDetails,
     Permission,
-    Permissions
+    Permissions,
+    AccessControl
 }

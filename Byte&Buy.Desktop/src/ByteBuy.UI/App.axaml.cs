@@ -83,6 +83,7 @@ namespace ByteBuy.UI
                 ApplicationPageNames.RentalDetails => x.GetRequiredService<RentalDetailsPageViewModel>(),
                 ApplicationPageNames.Permission => x.GetRequiredService<PermissionPageViewModel>(),
                 ApplicationPageNames.Permissions => x.GetRequiredService<PermissionsPageViewModel>(),
+                ApplicationPageNames.AccessControl => x.GetRequiredService<AccessControlPageViewModel>(),
                 _ => throw new InvalidOperationException(),
             });
 

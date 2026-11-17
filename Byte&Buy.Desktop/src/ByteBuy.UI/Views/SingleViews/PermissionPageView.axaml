@@ -8,55 +8,61 @@
 			 x:DataType="vm:PermissionPageViewModel"
 			 x:Class="ByteBuy.UI.Views.SingleViews.PermissionPageView">
 
-	<Grid>
-		<Grid RowDefinitions="50, 20, *," Margin="0,0,30,0">
+	<Grid RowDefinitions="auto, auto" RowSpacing="20" Margin="0,10,30,30">
 
-			<!--Page Title-->
-			<TextBlock Grid.Row="0" Grid.Column="0" Classes="pageTitle"   Text="Permission"/>
+		<!--Page Title-->
+		<TextBlock Grid.Row="0" Classes="pageTitle" Text="Permission"/>
 
-			<!-- Form-->
-			<Border Grid.Row="2"
-					Padding="20"
-					VerticalAlignment="Top"
-					Classes="sectionBorder">
+		<!-- Form-->
+		<Border Grid.Row="2"
+				Padding="20"
+				VerticalAlignment="Top"
+				Classes="sectionBorder">
 
-				<Grid ColumnDefinitions="*,20,*"
-					  RowDefinitions="40,70,70">
-
-					<StackPanel Grid.Row="0"
-								Grid.ColumnSpan="2"
-								Orientation="Horizontal">
-						<Image
+			<StackPanel Spacing="14">
+				<StackPanel Grid.Row="0"
+							Grid.ColumnSpan="2"
+							Spacing="8"
+							Orientation="Horizontal">
+					<Image
 						Source="{SvgImage /Assets/Images/regular/square-solid-full-primary.svg}"
 						Classes="sectionMarker" />
-						<TextBlock Text="General Information" Classes="sectionLabel" VerticalAlignment="Center"/>
-					</StackPanel>
+					<TextBlock Text="General Information" Classes="sectionLabel" VerticalAlignment="Center"/>
+				</StackPanel>
 
-					<StackPanel Grid.Row="1" Grid.Column="0">
-						<TextBlock Text="Name" Classes="textBoxLabel"  />
+				<Grid ColumnDefinitions="*, *" HorizontalAlignment="Stretch" ColumnSpacing="12">
+					<StackPanel Spacing="6" Grid.Column="0">
+						<TextBlock Text="Name" Classes="textBoxLabel"/>
 						<TextBox Text="{Binding Name}" />
 					</StackPanel>
 
-					<StackPanel Grid.Row="1" Grid.Column="2">
-						<TextBlock Text="Description" Classes="textBoxLabel"  />
-						<TextBox Text="{Binding Description}" />
-					</StackPanel>
-
-					<StackPanel HorizontalAlignment="Right"
-								Orientation="Horizontal"
-								Grid.Row="2"
-								Grid.ColumnSpan="3">
-
-						<Button Command="{Binding ClearCommand}"
-								Content="Clear"
-								Margin="0,0,5,0" />
-
-						<Button Command="{Binding SaveCommand}"
-								Content="Save" />
-
-					</StackPanel>
+					<Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto" RowSpacing="6" Grid.Column="1">
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="Description" Classes="textBoxLabel"/>
+						<TextBlock Grid.Row="0" Grid.Column="1" Classes="textBoxLabel" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right">
+							<Run Text="{Binding DescriptionCharCount}"/>
+							<Run Text=" / "/>
+							<Run Text="100"/>
+						</TextBlock>
+						<TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Description}" TextWrapping="Wrap" MinHeight="100" />
+					</Grid>
 				</Grid>
-			</Border>
-		</Grid>
+
+				<Border Padding="0,20,0,0"
+						Grid.Row="2"
+						Grid.ColumnSpan="3"
+						BorderThickness="0,1,0,0"
+						BorderBrush="{DynamicResource GrayAccentBrush}">
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="12">
+						<Button Content="Clear" MinWidth="100"
+								HorizontalContentAlignment="Center"
+								Command="{Binding ClearCommand}"/>
+						<Button Content="Save" MinWidth="100"
+								HorizontalContentAlignment="Center"
+								Command="{Binding SaveCommand}"/>
+					</StackPanel>
+				</Border>
+
+			</StackPanel>
+		</Border>
 	</Grid>
 </UserControl>

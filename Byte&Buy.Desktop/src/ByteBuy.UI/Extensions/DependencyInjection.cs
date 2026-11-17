@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Notifications;
+using AvaloniaEdit;
 using ByteBuy.UI.Services;
 using ByteBuy.UI.ViewModels;
 using ByteBuy.UI.ViewModels.Dialogs;
@@ -72,6 +73,7 @@ public static class DependencyInjection
         services.AddTransient<RentalDetailsPageViewModel>();
         services.AddTransient<PermissionPageViewModel>();
         services.AddTransient<PermissionsPageViewModel>();
+        services.AddTransient<AccessControlPageViewModel>();
 
 
         //Dialgos View Models

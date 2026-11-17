@@ -13,7 +13,7 @@ namespace ByteBuy.UI.ViewModels.SingleViewModels;
 public partial class PermissionPageViewModel : ViewModelSingle
 {
     #region MVVM Properties
-
+   
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Name of permission is required")]
@@ -25,6 +25,9 @@ public partial class PermissionPageViewModel : ViewModelSingle
     [Required(ErrorMessage = "Description is required")]
     [MaxLength(100, ErrorMessage = "Description can be at most 100 characters")]
     private string _description = string.Empty;
+
+    [ObservableProperty]
+    private int _descriptionCharCount;
 
     #endregion
 
@@ -91,5 +94,11 @@ public partial class PermissionPageViewModel : ViewModelSingle
         }
 
         _notificationService.ShowSuccess("Successfully updated permission");
+    }
+
+    partial void OnDescriptionChanged(string value)
+    {
+        DescriptionCharCount = value.Length; 
+        ValidateProperty(value, nameof(Description));
     }
 }

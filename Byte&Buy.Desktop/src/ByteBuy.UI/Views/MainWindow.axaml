@@ -57,7 +57,7 @@
 									</Button>
 
 									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
-											Command="{Binding GoToAdministrationCommand}"
+											Command="{Binding GoToShopManagementCommand}"
 											Classes.sidebarMenuButton="true"
 											Classes.active="{Binding IsShopManagementPageActive}">
 										<StackPanel Orientation="Horizontal" Spacing="16">
@@ -84,25 +84,15 @@
 											<Image Source="{SvgImage /Assets/Images/regular/users-solid-full-white.svg}"/>
 											<TextBlock Text="Users"/>
 										</StackPanel>
-									</Button>
+									</Button> 
 
 									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
-											Command="{Binding GoToRolesCommand}"
+											Command="{Binding GoToAccessControlCommand}"
 											Classes.sidebarMenuButton="true"
-											Classes.active="{Binding IsRolesPageActive}">
+											Classes.active="{Binding IsAccessControlActive}">
 										<StackPanel Orientation="Horizontal" Spacing="16">
-											<Image Source="{SvgImage /Assets/Images/regular/stairs-solid-full.svg}"/>
-											<TextBlock Text="Roles"/>
-										</StackPanel>
-									</Button>
-
-									<Button IsEnabled="{Binding !LoadingService.IsLoading}"
-											Command="{Binding GoToPermissionsCommand}"
-											Classes.sidebarMenuButton="true"
-											Classes.active="{Binding IsPermissionsPageActive}">
-										<StackPanel Orientation="Horizontal" Spacing="16">
-											<Image Source="{SvgImage /Assets/Images/regular/unlock-solid-full.svg}"/>
-											<TextBlock Text="Permissions"/>
+											<Image Source="{SvgImage /Assets/Images/regular/key-solid-full.svg}"/>
+											<TextBlock Text="Access Control"/>
 										</StackPanel>
 									</Button>
 
