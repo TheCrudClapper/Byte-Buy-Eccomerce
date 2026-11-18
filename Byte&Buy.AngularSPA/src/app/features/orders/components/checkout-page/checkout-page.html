@@ -1,204 +1,233 @@
 @if(checkout(); as checkout){
 <div class="container">
-    <div class="row my-5">
-        <!-- List of cart items -->
-        <div class="col-12 col-lg-8">
-            <div class="content-section text-start">
-                <div class="row">
-                    <div class="col-12">
-                        <p class="my-0 content-section-title mb-2">
-                            Shipping Address
-                        </p>
+    <div class="row my-5 g-4">
 
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="fs-14-px open-sans-bold">{{ checkout.buyerFirstName}} {{
-                                    checkout.buyerLastName }} {{ checkout.buyerPhone ? `+48 ${checkout.buyerPhone}` : ``}}
-                                </span>
-                            </div>
-                            @if(shippingAddress(); as address){
-                            <div class="col-6 col-md-5 col-lg-4">
-                                <div class="card mt-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title fs-14-px open-sans-bold">
-                                            @if(address.isDefault){
-                                            <i class="fa-solid fa-circle" style="color: #8b5cf6;"></i>
-                                            }
-                                            {{ address.label }}
-                                        </h5>
-                                        <p class="card-text open-sans-medium fs-14-px">
+        <!-- Left column -->
+        <div class="col-12 col-lg-8 d-flex flex-column gap-4">
 
-                                            {{ address.city}}, {{address.street}} {{ address.houseNumber }}<br>
-                                            {{ address.postalCity }} {{ address.postalCode }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            }
-                            @else{
-                            <div class="col-12">
-                                <span class="fs-14-px validation-error">No default shipping address is defined, courier
-                                    deliveries are not avaliable.</span>
-                            </div>
-                            }
-                        </div>
-                    </div>
+            <!-- Shipping address -->
+            <section class="content-section text-start">
+                <header class="section-header">
+                    <i class="fa-solid fa-location-dot section-icon"></i>
+                    <h2 class="content-section-title">Shipping address</h2>
+                </header>
+
+                <div class="buyer-line">
+                    <i class="fa-regular fa-user"></i>
+                    <span class="open-sans-bold fs-14-px">
+                        {{ checkout.buyerFirstName }} {{ checkout.buyerLastName }}
+                    </span>
+                    @if(checkout.buyerPhone){
+                    <span class="buyer-phone fs-14-px">+48 {{ checkout.buyerPhone }}</span>
+                    }
                 </div>
-            </div>
-            <div class="content-section text-start">
-                <div class="row">
-                    <div class="col-12">
-                        <p class="my-0 content-section-title">
-                            Payment Methods
-                        </p>
-                        <div class="row mt-3">
-                            @if(checkout.avaliablePaymentMethods){
-                            @for (method of checkout.avaliablePaymentMethods; track method.id)
-                            {
-                            <div class="col-auto">
-                                <div class="card p-2 text-center payment-card"
-                                    [class.card-selected]="selectedPaymentMethod() === method.id" style="width: 56px;"
-                                    (click)="selectPaymentMethod(method.id)">
-                                    @if(method.id === PaymentMethod.Blik ){
-                                    <img height="31"
-                                        src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">
-                                    }
-                                    @if(method.id === PaymentMethod.Card ){
-                                    <i class="fa-regular fa-credit-card fa-2x" style="color: #ffffff;"></i>
-                                    }
-                                </div>
-                            </div>
-                            }
-                            }
-                        </div>
+
+                @if(shippingAddress(); as address){
+                <div class="address-card">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="open-sans-bold fs-14-px">{{ address.label }}</span>
+                        @if(address.isDefault){
+                        <span class="chip chip-accent">Default</span>
+                        }
                     </div>
+                    <p class="address-text open-sans-medium fs-14-px mb-0">
+                        {{ address.city }}, {{ address.street }} {{ address.houseNumber }}<br>
+                        {{ address.postalCode }} {{ address.postalCity }}
+                    </p>
                 </div>
-            </div>
+                }
+                @else{
+                <div class="alert-box">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span class="fs-14-px">No default shipping address is set, so courier delivery is unavailable.</span>
+                </div>
+                }
+            </section>
+
+            <!-- Payment methods -->
+            <section class="content-section text-start">
+                <header class="section-header">
+                    <i class="fa-solid fa-wallet section-icon"></i>
+                    <h2 class="content-section-title">Payment method</h2>
+                </header>
+
+                <div class="d-flex flex-wrap gap-3">
+                    @if(checkout.avaliablePaymentMethods){
+                    @for (method of checkout.avaliablePaymentMethods; track method.id)
+                    {
+                    <button type="button" class="payment-card"
+                        [class.card-selected]="selectedPaymentMethod() === method.id"
+                        [attr.aria-pressed]="selectedPaymentMethod() === method.id"
+                        (click)="selectPaymentMethod(method.id)">
+                        <span class="payment-logo">
+                            @if(method.id === PaymentMethod.Blik ){
+                            <img height="26" alt="BLIK"
+                                src="https://cdn.brandfetch.io/id9mHBGLZz/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1764366859367">
+                            }
+                            @if(method.id === PaymentMethod.Card ){
+                            <i class="fa-regular fa-credit-card fa-lg"></i>
+                            }
+                        </span>
+                        <span class="payment-name fs-14-px">
+                            @if(method.id === PaymentMethod.Blik ){ BLIK }
+                            @if(method.id === PaymentMethod.Card ){ Card }
+                        </span>
+                        @if(selectedPaymentMethod() === method.id){
+                        <i class="fa-solid fa-circle-check payment-check"></i>
+                        }
+                    </button>
+                    }
+                    }
+                </div>
+            </section>
 
             <!-- Packages -->
             @for (sellerGroup of checkout.sellersGroups; track $index)
             {
-
             @let delivery = deliveryBySeller()[sellerGroup.sellerId.toString()];
-            <div class="content-section">
-                <p class="my-0 content-section-title">
-                    <i class="fa-solid fa-box-open" style="color: #ffffff;"></i> Package {{ $index + 1}} of {{
-                    checkout.sellersGroups.length }}
-                </p>
-                <hr>
-                <div class="col-12 d-flex justify-content-between mb-3">
-                    <span class="fs-14-px">{{sellerGroup.checkoutItems.length}} items from
-                        <span class="open-sans-bold"> {{ sellerGroup.sellerDisplayName }}
-                            ({{sellerGroup.sellerEmail}})</span>
-                    </span>
-                    <span class="fs-14-px open-sans-bold">
+
+            <section class="content-section">
+                <header class="section-header justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-box-open section-icon"></i>
+                        <h2 class="content-section-title">
+                            Package {{ $index + 1 }} of {{ checkout.sellersGroups.length }}
+                        </h2>
+                    </div>
+                    <span class="chip">{{ sellerGroup.checkoutItems.length }}
+                        {{ sellerGroup.checkoutItems.length === 1 ? 'item' : 'items' }}</span>
+                </header>
+
+                <div class="seller-row">
+                    <div class="seller-info">
+                        <span class="fs-12-px seller-label">Sold by</span>
+                        <span class="open-sans-bold fs-14-px">{{ sellerGroup.sellerDisplayName }}</span>
+                        <span class="fs-12-px seller-email">{{ sellerGroup.sellerEmail }}</span>
+                    </div>
+                    <span class="open-sans-bold fs-14-px">
                         {{ sellerGroup.itemsWorth.amount | number:'1.2-2' }} {{ sellerGroup.itemsWorth.currency }}
                     </span>
                 </div>
-                <div class="col-12">
 
+                <!-- Items -->
+                <div class="items-list">
                     @for (item of sellerGroup.checkoutItems; track $index)
                     {
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-auto">
-                                    <img [src]="imageBaseUrl + item.thumbnail.imagePath" [alt]="item.thumbnail.altText"
-                                        class="img-fluid rounded" style="width: 80px; height: 80px; object-fit: cover;">
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col d-flex justify-content-between align-items-center">
-                                            <span class="mb-1 fw-bold fs-14-px">
-                                                <a class="link"
-                                                    [routerLink]="['/offers', `${item.type == 'sale' ? 'sale' : 'rent'}`, 'details', `${item.offerId}`]">
-                                                    {{ item.itemName}} </a>
-                                            </span>
-                                            <div class="text-end">
-                                                @if(item.status == OfferStatus.Available){
-                                                <span class="badge fs-12-px">Avaliable</span>
-                                                }
-                                                @if(item.status == OfferStatus.SoldOut){
-                                                <span class="badge text-bg-dark fs-12-px">Sold out !</span>
-                                                }
-                                                <span class="badge fs-12-px ms-2">In stock: {{ item.avaliableQuantity
-                                                    }}</span>
-                                            </div>
+                    <article class="checkout-item" [class.checkout-item-error]="item.status == OfferStatus.SoldOut || !item.canFinalize">
+                        <img [src]="imageBaseUrl + item.thumbnail.imagePath" [alt]="item.thumbnail.altText"
+                            class="item-thumb">
 
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        @if(item.type === 'sale'){
-                                        <div class="col fs-14-px">
-                                            {{ item.quantity}} pc /s × {{item.pricePerItem.amount | number:'1.2-2' }}
-                                            {{item.pricePerItem.currency }}
-                                        </div>
-                                        }
-                                        @else{
-                                        <div class="col fs-14-px">
-                                            {{ item.quantity}} pc /s × {{item.rentalDays}} days x
-                                            {{item.pricePerDay.amount |
-                                            number:'1.2-2' }} {{item.pricePerDay.currency }}
-                                        </div>
-                                        }
-                                        <div class="col-auto fs-14-px">
-                                            {{ item.subtotal.amount | number:'1.2-2' }} {{ item.subtotal.currency }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12 fs-14-px">
+                        <div class="item-body">
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <a class="link fs-14-px"
+                                    [routerLink]="['/offers', `${item.type == 'sale' ? 'sale' : 'rent'}`, 'details', `${item.offerId}`]">
+                                    {{ item.itemName }}
+                                </a>
+                                <div class="d-flex flex-wrap justify-content-end gap-1">
+                                    @if(item.status == OfferStatus.Available){
+                                    <span class="chip chip-success">Available</span>
+                                    }
                                     @if(item.status == OfferStatus.SoldOut){
-                                    <span class="validation-error">
-                                        This offer is sold out and cannot be purchased.
-                                    </span>
+                                    <span class="chip chip-danger">Sold out</span>
                                     }
-                                    @else if(!item.canFinalize){
-                                    <span class="validation-error">
-                                        Requested quantity exceeds current availability. Please update your cart.
-                                    </span>
-                                    }
+                                    <span class="chip">In stock: {{ item.avaliableQuantity }}</span>
                                 </div>
                             </div>
+
+                            <div class="d-flex justify-content-between align-items-end mt-2">
+                                @if(item.type === 'sale'){
+                                <span class="item-calc fs-14-px">
+                                    {{ item.quantity }} pcs × {{ item.pricePerItem.amount | number:'1.2-2' }}
+                                    {{ item.pricePerItem.currency }}
+                                </span>
+                                }
+                                @else{
+                                <span class="item-calc fs-14-px">
+                                    {{ item.quantity }} pcs × {{ item.rentalDays }} days ×
+                                    {{ item.pricePerDay.amount | number:'1.2-2' }} {{ item.pricePerDay.currency }}
+                                </span>
+                                }
+                                <span class="open-sans-bold fs-14-px">
+                                    {{ item.subtotal.amount | number:'1.2-2' }} {{ item.subtotal.currency }}
+                                </span>
+                            </div>
+
+                            @if(item.status == OfferStatus.SoldOut){
+                            <p class="validation-error fs-12-px mt-2 mb-0">
+                                <i class="fa-solid fa-circle-exclamation me-1"></i>
+                                This offer is sold out and cannot be purchased.
+                            </p>
+                            }
+                            @else if(!item.canFinalize){
+                            <p class="validation-error fs-12-px mt-2 mb-0">
+                                <i class="fa-solid fa-circle-exclamation me-1"></i>
+                                The requested quantity exceeds current availability. Update your cart.
+                            </p>
+                            }
                         </div>
-                    </div>
+                    </article>
                     }
                 </div>
-                <hr>
-                <div class="col-12">
+
+                <!-- Delivery -->
+                <div class="delivery-block">
+                    <p class="subsection-title">Delivery</p>
+
+                    @if(sellerGroup.deliveryOptions.parcelLockerDeliveries.length > 0){
+                    <p class="delivery-group-title">Parcel lockers</p>
+                    @for (parcel of sellerGroup.deliveryOptions.parcelLockerDeliveries; track parcel.id) {
+                    <label class="delivery-option">
+                        <input type="radio" class="form-check-input" [name]="sellerGroup.sellerId"
+                            (change)="selectDelivery(sellerGroup.sellerId.toString(), parcel)">
+                        <span class="delivery-name fs-14-px">{{ parcel.name }}</span>
+                        <span class="delivery-price fs-14-px">{{ parcel.amount | number:'1.2-2' }} {{ parcel.currency }}</span>
+                    </label>
+                    }
+                    }
+
+                    @if(sellerGroup.deliveryOptions.courierDeliveries.length > 0){
+                    <p class="delivery-group-title">Courier</p>
+                    @for (courier of sellerGroup.deliveryOptions.courierDeliveries; track courier.id) {
+                    <label class="delivery-option">
+                        <input type="radio" class="form-check-input" [name]="sellerGroup.sellerId"
+                            (change)="selectDelivery(sellerGroup.sellerId.toString(), courier)">
+                        <span class="delivery-name fs-14-px">{{ courier.name }}</span>
+                        <span class="delivery-price fs-14-px">{{ courier.amount | number:'1.2-2' }} {{ courier.currency }}</span>
+                    </label>
+                    }
+                    }
+
+                    @if(sellerGroup.deliveryOptions.pickupPointDeliveries.length > 0){
+                    <p class="delivery-group-title">Pickup point</p>
+                    @for (pickup of sellerGroup.deliveryOptions.pickupPointDeliveries; track pickup.id) {
+                    <label class="delivery-option">
+                        <input type="radio" class="form-check-input" [name]="sellerGroup.sellerId"
+                            (change)="selectDelivery(sellerGroup.sellerId.toString(), pickup)">
+                        <span class="delivery-name fs-14-px">{{ pickup.name }}</span>
+                        <span class="delivery-price fs-14-px">{{ pickup.amount | number:'1.2-2' }} {{ pickup.currency }}</span>
+                    </label>
+                    }
+                    }
 
                     @if (delivery) {
-
                     @if(delivery.channel === 'ParcelLocker') {
-                    <p class="content-section-title mb-1">Delivery Details</p>
-                    <p class="content-section-description mb-3 open-sans-medium">
-                        Additional delivery details are required for the selected delivery method.
-                    </p>
-                    <div class="mb-4">
-                        <div class="row g-3 align-items-end">
-
+                    <div class="delivery-details">
+                        <p class="subsection-title mb-1">Delivery details</p>
+                        <p class="details-description fs-12-px">
+                            This delivery method needs a few more details.
+                        </p>
+                        <div class="row g-3">
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Carrier
-                                </label>
+                                <label class="form-label">Carrier</label>
                                 <input type="text" class="form-control" [value]="delivery.delivery.carrier" disabled>
                             </div>
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Delivery Channel
-                                </label>
+                                <label class="form-label">Delivery channel</label>
                                 <input type="text" class="form-control" [value]="delivery.delivery.deliveryChannel"
                                     disabled>
                             </div>
-
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Parcel Locker ID
-                                </label>
+                                <label class="form-label">Parcel locker ID</label>
                                 <input type="text" class="form-control"
                                     (input)="setParcelLocker(sellerGroup.sellerId.toString(), $any($event.target).value)"
                                     placeholder="e.g. WAW123" autocomplete="off">
@@ -207,172 +236,106 @@
                     </div>
                     }
 
-
                     @if (delivery.channel === 'PickupPoint') {
-                    <p class="content-section-title mb-1">Delivery Details</p>
-                    <p class="content-section-description mb-3 open-sans-medium">
-                        Additional delivery details are required for the selected delivery method.
-                    </p>
-                    <div class="mb-4">
-                        <div class="row g-3 align-items-end">
-
+                    <div class="delivery-details">
+                        <p class="subsection-title mb-1">Delivery details</p>
+                        <p class="details-description fs-12-px">
+                            This delivery method needs a few more details.
+                        </p>
+                        <div class="row g-3">
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Carrier
-                                </label>
+                                <label class="form-label">Carrier</label>
                                 <input type="text" class="form-control" [value]="delivery.delivery.carrier" disabled>
                             </div>
-
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Delivery Channel
-                                </label>
+                                <label class="form-label">Delivery channel</label>
                                 <input type="text" class="form-control" [value]="delivery.delivery.deliveryChannel"
                                     disabled>
                             </div>
-
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Pickup Point Name
-                                </label>
+                                <label class="form-label">Pickup point name</label>
                                 <input type="text" class="form-control" [value]="delivery.delivery.name"
                                     placeholder="Żabka" disabled>
                             </div>
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Pickup Point Id
-                                </label>
+                                <label class="form-label">Pickup point ID</label>
                                 <input type="text" class="form-control" placeholder="e.g. POP-MSD4"
-                                    (input)="setPickupField(sellerGroup.sellerId.toString(), 'pickupPointId' ,$any($event.target).value)"
+                                    (input)="setPickupField(sellerGroup.sellerId.toString(), 'pickupPointId', $any($event.target).value)"
                                     autocomplete="off">
                             </div>
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Street
-                                </label>
-                                <input type="text"
-                                    (input)="setPickupField(sellerGroup.sellerId.toString(),'street',$any($event.target).value)"
-                                    class="form-control" placeholder="e.g. Poniatowskiego" autocomplete="off">
+                                <label class="form-label">Street</label>
+                                <input type="text" class="form-control" placeholder="e.g. Poniatowskiego"
+                                    (input)="setPickupField(sellerGroup.sellerId.toString(), 'street', $any($event.target).value)"
+                                    autocomplete="off">
                             </div>
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    City
-                                </label>
-                                <input type="text" class="form-control"
-                                    (input)="setPickupField(sellerGroup.sellerId.toString(),'city',$any($event.target).value)"
-                                    placeholder="e.g. Warszawa" autocomplete="off">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" placeholder="e.g. Warszawa"
+                                    (input)="setPickupField(sellerGroup.sellerId.toString(), 'city', $any($event.target).value)"
+                                    autocomplete="off">
                             </div>
-
                             <div class="col-12 col-md-4">
-                                <label class="form-label fs-14-px open-sans-bold">
-                                    Local Number
-                                </label>
-                                <input type="text" class="form-control"
-                                    (input)="setPickupField(sellerGroup.sellerId.toString(),'localNumber',$any($event.target).value)"
-                                    placeholder="e.g. 56 / 2" autocomplete="off">
+                                <label class="form-label">Local number</label>
+                                <input type="text" class="form-control" placeholder="e.g. 56 / 2"
+                                    (input)="setPickupField(sellerGroup.sellerId.toString(), 'localNumber', $any($event.target).value)"
+                                    autocomplete="off">
                             </div>
                         </div>
                     </div>
                     }
                     }
-
-
-
-                    @if(sellerGroup.deliveryOptions.parcelLockerDeliveries.length > 0){
-                    <p class="content-section-title">Parcel Lockers</p>
-                    @for (parcel of sellerGroup.deliveryOptions.parcelLockerDeliveries; track parcel.id) {
-                    <div class="d-flex justify-content-between">
-                        <label>
-                            <input type="radio" class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId"
-                                (change)="selectDelivery(sellerGroup.sellerId.toString(), parcel)">
-                            {{ parcel.name }}
-                        </label>
-                        <span class="fs-14-px">{{ parcel.amount | number:'1.2-2' }} {{ parcel.currency }}</span>
-                    </div>
-                    }
-                    }
-                    @if(sellerGroup.deliveryOptions.courierDeliveries.length > 0){
-                    <p class="content-section-title mt-2 ">Courier</p>
-                    @for (courier of sellerGroup.deliveryOptions.courierDeliveries; track courier.id) {
-                    <div class="d-flex justify-content-between">
-                        <label>
-                            <input type="radio" class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId"
-                                (change)="selectDelivery(sellerGroup.sellerId.toString(), courier)">
-                            {{ courier.name }}
-                        </label>
-                        <span class="fs-14-px">{{ courier.amount | number:'1.2-2' }} {{ courier.currency }}</span>
-                    </div>
-                    }
-                    }
-                    @if(sellerGroup.deliveryOptions.pickupPointDeliveries.length > 0){
-                    <p class="content-section-title mt-2">Pickup Point</p>
-                    @for (pickup of sellerGroup.deliveryOptions.pickupPointDeliveries; track pickup.id) {
-                    <div class="d-flex justify-content-between">
-                        <label>
-                            <input type="radio" class="form-check-input checkbox me-2" [name]="sellerGroup.sellerId"
-                                (change)="selectDelivery(sellerGroup.sellerId.toString(), pickup)">
-                            {{ pickup.name }}
-                        </label>
-                        <span class="fs-14-px">{{ pickup.amount | number:'1.2-2' }} {{ pickup.currency }}</span>
-                    </div>
-                    }
-                    }
                 </div>
-            </div>
+            </section>
             }
         </div>
 
-
+        <!-- Right columns -->
         <div class="col-12 col-lg-4">
-            <!-- Summary Container -->
-            <div class="content-section sticky-top" style="top: 1rem; z-index: 999;">
-                <p class="content-section-title mb-3">Checkout</p>
-                <hr>
-                <div class="mb-2 d-flex justify-content-between">
-                    <span class="summary-item">Items Cost</span>
+            <aside class="content-section summary-card sticky-top">
+                <h2 class="content-section-title mb-3">Order summary</h2>
+
+                <div class="summary-row">
+                    <span class="summary-item">Items</span>
                     <span class="summary-value">
-                        {{ checkout.itemsCost.amount | number:'1.2-2'}} {{ checkout.itemsCost.currency }}
+                        {{ checkout.itemsCost.amount | number:'1.2-2' }} {{ checkout.itemsCost.currency }}
                     </span>
                 </div>
-                <div class="mb-2 d-flex justify-content-between">
+                <div class="summary-row">
                     <span class="summary-item">Shipping</span>
                     <span class="summary-value">
                         @if(deliveryCost(); as delivery){
-                        {{ delivery.amount | number:'1.2-2'}} {{ delivery.currency}}
+                        {{ delivery.amount | number:'1.2-2' }} {{ delivery.currency }}
                         }
+                        @else{ <span class="summary-muted">Select delivery</span> }
                     </span>
                 </div>
-                <div class="mb-2 d-flex justify-content-between">
+                <div class="summary-row">
                     <span class="summary-item">Tax</span>
                     <span class="summary-value">
-                        {{ checkout.tax.amount | number:'1.2-2'}} {{ checkout.tax.currency }}
+                        {{ checkout.tax.amount | number:'1.2-2' }} {{ checkout.tax.currency }}
                     </span>
                 </div>
-                <hr>
-                <div class="mb-3 d-flex justify-content-between ">
-                    <p class="content-section-title fw-bold">Total Cost</p>
-                    <p class="total-cost" style="font-size: 16px;">
+
+                <div class="summary-total">
+                    <span class="open-sans-bold">Total</span>
+                    <span class="total-cost">
                         @if(finalTotalCost(); as totalCost){
-                        {{ totalCost.amount | number:'1.2-2'}} {{ totalCost.currency }}
+                        {{ totalCost.amount | number:'1.2-2' }} {{ totalCost.currency }}
                         }
-                    </p>
+                    </span>
                 </div>
-                <button class="btn w-100 mb-2" (click)="submit()" [disabled]="!canPay()">Pay Now</button>
+
+                <button class="btn pay-button w-100" (click)="submit()" [disabled]="!canPay()">
+                    <i class="fa-solid fa-lock me-2"></i>Pay now
+                </button>
                 <p class="pay-description">
-                    By clicking this button, you confirm your purchase. Your card will be charged for the purchase
-                    amount. Your bank may ask you for additional verification.
+                    By clicking this button, you confirm your purchase. Your card will be charged for the
+                    purchase amount. Your bank may ask you for additional verification.
                 </p>
-            </div>
+            </aside>
         </div>
 
     </div>
-
-
-
 </div>
 }

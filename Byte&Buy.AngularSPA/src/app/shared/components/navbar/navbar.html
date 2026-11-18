@@ -1,113 +1,105 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container">
 
-    <!--Brand Logo-->
-    <a class="navbar-brand" [routerLink]="['']">Byte&Buy</a>
+    <!-- Brand -->
+    <a class="navbar-brand" [routerLink]="['']">
+      Byte&Buy
+    </a>
 
-    <!--Toggler-->
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fa-solid fa-bars"></i>
     </button>
 
-    <!--Left Side-->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" routerLink=""><i class="fa-solid fa-house fa-lg"></i>Home</a>
-        </li>
-      </ul>
-      
-      <!--Search Form-->
-      <form class="d-flex search-form" role="search" (submit)="onSearch(); $event.preventDefault()">
-
-        <input #searchInput class="form-control" type="search" [value]="searchPhrase() ?? ''"
-          (input)="searchPhrase.set($any($event.target).value)" placeholder="Search products...">
-
-        <button class="btn btn-outline-primary search-button" type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
-
-      <!--Right Side-->
+      <!-- Left side -->
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="cart">
-            <i class="fa-solid fa-cart-shopping fa-lg"></i>
-            <span class="d-inline d-lg-none">
-              Cart
-            </span>
+          <a class="nav-link" aria-current="page" routerLink="" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-house"></i>Home
+          </a>
+        </li>
+      </ul>
+
+      <!-- Search -->
+      <form class="search-form mx-lg-auto my-2 my-lg-0" role="search" (submit)="onSearch(); $event.preventDefault()">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input #searchInput class="form-control" type="search" [value]="searchPhrase() ?? ''"
+          (input)="searchPhrase.set($any($event.target).value)" placeholder="Search products..."
+          aria-label="Search products">
+        <button class="btn search-button" type="submit">Search</button>
+      </form>
+
+      <!-- Right side -->
+      <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+        <li class="nav-item me-1">
+          <a class="nav-link" routerLink="cart" routerLinkActive="active" aria-label="Cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="d-inline d-lg-none">Cart</span>
           </a>
         </li>
 
-        <!--Account Actions Dropdown-->
+        <!-- Account dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-user fa-lg"></i>
-            Account
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-solid fa-user"></i>Account
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropdown-menu-lg-end">
             @if(!auth.isLoggedIn()){
             <li>
               <a routerLink="login" class="dropdown-item">
-                <i class="fa-solid fa-id-card-clip"></i>
-                Login
+                <i class="fa-solid fa-right-to-bracket"></i>Login
               </a>
             </li>
-
             <li>
               <a routerLink="register" class="dropdown-item">
-                <i class="fa-solid fa-id-card-clip"></i>
-                Register
+                <i class="fa-solid fa-user-plus"></i>Register
               </a>
             </li>
             }
-            @if(auth.isLoggedIn()){
+            @else {
             <li>
               <a routerLink="profile" class="dropdown-item">
-                <i class="fa-solid fa-id-card-clip"></i>
-                Profile
+                <i class="fa-solid fa-id-card-clip"></i>Profile
               </a>
             </li>
+
+            <li><hr class="dropdown-divider"></li>
 
             <li>
               <a routerLink="offers/sale/create" class="dropdown-item">
-                <i class="fa-solid fa-money-bill-wave"></i>
-                Sell
+                <i class="fa-solid fa-money-bill-wave"></i>Sell
+              </a>
+            </li>
+            <li>
+              <a routerLink="offers/rent/create" class="dropdown-item">
+                <i class="fa-solid fa-hand-holding-heart"></i>Rent
               </a>
             </li>
 
-            <li>
-              <a routerLink="offers/rent/create" class="dropdown-item">
-                <i class="fa-solid fa-hand-holding-heart"></i>
-                Rent
-              </a>
-            </li>
+            <li><hr class="dropdown-divider"></li>
 
             <li>
               <a routerLink="/client-rentals" class="dropdown-item">
-                <i class="fa-solid fa-repeat"></i>
-                Client Rentals
+                <i class="fa-solid fa-repeat"></i>Client Rentals
+              </a>
+            </li>
+            <li>
+              <a routerLink="/client-orders" class="dropdown-item">
+                <i class="fa-solid fa-receipt"></i>Client Orders
               </a>
             </li>
 
+            <li><hr class="dropdown-divider"></li>
+
             <li>
-              <a routerLink="/client-orders" class="dropdown-item">
-                <i class="fa-solid fa-receipt"></i>
-                Client Orders
-              </a>
-            </li>
-            }
-            @if(auth.isLoggedIn()){
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li>
-              <a (click)="onLogout()" class="dropdown-item">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Logout
-              </a>
+              <button type="button" (click)="onLogout()" class="dropdown-item dropdown-item-danger">
+                <i class="fa-solid fa-right-from-bracket"></i>Logout
+              </button>
             </li>
             }
           </ul>

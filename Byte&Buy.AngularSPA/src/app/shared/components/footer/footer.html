@@ -1,72 +1,51 @@
 @if(companyInfo(); as info){
-<footer>
+<footer class="site-footer">
+    <div class="container footer-inner">
 
-    <!--Spacer-->
-    <hr class="mt-5 mb-5 spacer">
-
-    <div class="container-fluid text-normal-size">
-        <!--Brand & Slogan-->
-        <div class="row">
-            <div class="col-6 d-flex justify-content-left align-items-center ps-5">
-                <h4 class="fw-bold">{{info.companyName}}</h4>
-            </div>
-            <div class="col-6 d-flex justify-content-end align-items-center pe-5">
-                <span class="fw-bold">{{info.slogan}}</span>
-            </div>
+        <!-- Brand & slogan -->
+        <div class="footer-top">
+            <h4 class="footer-brand">{{ info.companyName }}</h4>
+            <span class="footer-slogan">{{ info.slogan }}</span>
         </div>
 
-        <!--Spacer-->
-        <hr class="mt-5 mb-5 spacer">
+        <!-- Main columns -->
+        <div class="row g-4 footer-main">
+            <div class="col-12 col-md-5 col-lg-4">
+                <address class="footer-address">
+                    <span class="open-sans-bold d-block mb-1">{{ info.companyName }}</span>
+                    {{ info.address.street }} {{ info.address.houseNumber }}{{ info.address.flatNumber ? ` / ${info.address.flatNumber}` : '' }}<br>
+                    {{ info.address.postalCode }} {{ info.address.city }}, {{ info.address.country }}
+                </address>
+                <div class="footer-contact">
+                    <span><i class="fa-regular fa-envelope"></i>{{ info.email }}</span>
+                    <span><i class="fa-solid fa-phone"></i>{{ info.phone }}</span>
+                </div>
+            </div>
 
-        <div class="row mt-2">
-            <div class="col-12 col-md-4 text-center text-md-start pb-5 pb-mb-0 ps-md-5">
-                <div class="row">
-                    <div class="col-12">
-                        {{info.companyName}}<br>
-                        {{info.address.street}} {{info.address.houseNumber}} {{ info.address.flatNumber ? `/ ${info.address.flatNumber}` : '' }} <br>
-                        {{info.address.postalCode}} {{info.address.city}},
-                        {{info.address.country}}<br>
-                        {{info.email}}<br>
-                        {{info.phone}}
-                    </div>
-                </div>
+            <div class="col-6 col-md-3 col-lg-2 offset-lg-2">
+                <p class="footer-section-title">Legal</p>
+                <ul class="footer-list">
+                    <li><span class="footer-item">Privacy Policy</span></li>
+                    <li><span class="footer-item">Terms of Service</span></li>
+                </ul>
             </div>
-            <div class="col-12 col-md-4 pb-5 text-center">
-                <div class="row">
-                    <div class="col-6">
-                        <p class="footer-section-title">Legal</p>
-                        <ul class="footer-list">
-                            <li>
-                                <span>Privacy Policy</span>
-                            </li>
-                            <li>
-                                <span>Terms of service</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <p class="footer-section-title">About</p>
-                        <ul class="footer-list">
-                            <li>
-                                Contact
-                            </li>
-                            <li>
-                                Carrers
-                            </li>
-                            <li>
-                                Our People
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
+            <div class="col-6 col-md-3 col-lg-2">
+                <p class="footer-section-title">About</p>
+                <ul class="footer-list">
+                    <li><span class="footer-item">Contact</span></li>
+                    <li><span class="footer-item">Careers</span></li>
+                    <li><span class="footer-item">Our People</span></li>
+                </ul>
             </div>
-            <div class="col-12 col-md-4 text-center text-md-end pe-md-5">
+
+            <div class="col-12 col-md-1 col-lg-2 d-flex justify-content-md-end align-items-start">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" disabled type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <button class="btn language-btn dropdown-toggle" disabled type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-earth-americas me-1"></i>Language
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#">English</a></li>
                         <li><a class="dropdown-item" href="#">Polish</a></li>
                     </ul>
@@ -74,46 +53,34 @@
             </div>
         </div>
 
-        <!--Spacer-->
-        <hr class="mt-5 mb-5 spacer">
+        <!-- Bottom bar -->
+        <div class="footer-bottom">
+            <span class="footer-copy">© 2026 Wojciech Mucha</span>
 
-        <div class="row pb-4">
-            <div class="col-12 col-lg-4 text-center fw-bold text-lg-start ps-lg-5 pb-5 pb-lg-0 order-3 order-lg-1">
-                © 2026 - Wojciech Mucha
+            <div class="footer-socials">
+                <a class="socials-icon" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a [href]="githubLink" class="socials-icon" aria-label="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a [href]="discordLink" class="socials-icon" aria-label="Discord">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
             </div>
 
-            <div class="col-12 col-lg-4 text-center order-2 pb-3 pb-lg-0 text  order-lg-2 ">
-                <ul class="footer-list">
-                    <li>
-                        <a class="me-2 socials-icon">
-                            <i class="fa-brands fa-instagram fa-lg"></i>
-                        </a>
-                        <a [href]="githubLink" class="me-2 socials-icon">
-                            <i class="fa-brands fa-github fa-lg"></i>
-                        </a>
-                        <a [href]="discordLink" class="me-2 socials-icon">
-                            <i class="fa-brands fa-discord fa-lg"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-12 col-lg-4 text-center pb-3 pb-lg-0 text-lg-end pe-lg-5 order-1 order-lg-3 ">
-                <ul class="footer-list">
-                    <li>
-                        <a href="#" class="footer-link">Terms</a>
-                        <a href="#" class="footer-link">Privacy</a>
-                        <a href="#" class="footer-link">Cookies</a>
-                        <a href="#" class="footer-link">Location</a>
-                    </li>
-                </ul>
-            </div>
+            <nav class="footer-links" aria-label="Legal links">
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Privacy</a>
+                <a href="#" class="footer-link">Cookies</a>
+                <a href="#" class="footer-link">Location</a>
+            </nav>
         </div>
     </div>
 </footer>
 }
 @else {
-<div class="footer-spinner-overlay">
+<div class="footer-spinner-overlay" role="status" aria-label="Loading footer">
     <div class="footer-spinner"></div>
 </div>
 }

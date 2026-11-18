@@ -1,11 +1,47 @@
-.summary-item {
-    font-size: 14px;
-    font-family: 'raleway-medium';
+/* ---------- Local tokens (derived from your global theme) ---------- */
+:host {
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --border-soft: color-mix(in srgb, var(--primary-accent) 28%, transparent);
+    --surface-raised: color-mix(in srgb, var(--text-primary) 5%, var(--card-background));
+    --success: #34d399;
+    --danger: #f87171;
 }
 
-.summary-value {
+/* ---------- Sections ---------- */
+.content-section {
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.1rem;
+}
+
+.section-header .content-section-title {
+    margin: 0;
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--border-soft);
+}
+
+.subsection-title {
     font-family: 'open-sans-bold';
     font-size: 14px;
+    margin-bottom: 0.5rem;
 }
 
 hr {
@@ -13,34 +49,324 @@ hr {
     color: var(--primary-accent);
 }
 
-.total-cost {
-    font-size: 16px;
-    font-family: 'open-sans-bold';
-}
-
-.pay-description {
+/* ---------- Chips ---------- */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
     font-size: 12px;
     font-family: 'open-sans-medium';
-    text-align: justify;
+    color: var(--text-primary);
+    background: var(--surface-raised);
+    border: 1px solid var(--border-soft);
+    white-space: nowrap;
 }
 
-.shipping-add {
-    transition: 0.3s ease;
+.chip-accent {
+    background: var(--primary-accent);
+    border-color: transparent;
 }
 
-.shipping-add:hover {
-    color: var(--primary-accent);
+.chip-success {
+    color: var(--success);
+    border-color: color-mix(in srgb, var(--success) 40%, transparent);
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.chip-danger {
+    color: var(--danger);
+    border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+/* ---------- Shipping address ---------- */
+.buyer-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+}
+
+.buyer-phone {
+    opacity: 0.75;
+}
+
+.address-card {
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--primary-accent);
+    max-width: 380px;
+}
+
+.address-text {
+    line-height: 1.55;
+    opacity: 0.9;
+}
+
+.alert-box {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-md);
+    color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+}
+
+/* ---------- Payment ---------- */
+.payment-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 150px;
+    padding: 0.8rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    border: 1px solid var(--border-soft);
+    transition: 0.2s ease;
     cursor: pointer;
 }
 
-.card{
+.payment-card:hover {
+    border-color: var(--primary-accent);
+    background: color-mix(in srgb, var(--primary-accent) 18%, var(--card-background));
+}
+
+.payment-card:focus-visible {
+    outline: 2px solid var(--primary-accent);
+    outline-offset: 2px;
+}
+
+.payment-card.card-selected {
+    border-color: var(--primary-accent);
+    background: color-mix(in srgb, var(--primary-accent) 35%, var(--card-background));
+}
+
+.payment-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+}
+
+.payment-name {
+    font-family: 'open-sans-bold';
+}
+
+.payment-check {
+    margin-left: auto;
+    color: var(--primary-accent);
+    filter: brightness(1.5);
+}
+
+/* ---------- Package ---------- */
+.seller-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+}
+
+.seller-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.seller-label,
+.seller-email {
+    opacity: 0.65;
+}
+
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkout-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    border: 1px solid transparent;
+}
+
+.checkout-item-error {
+    border-color: color-mix(in srgb, var(--danger) 45%, transparent);
+}
+
+.item-thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.item-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-calc {
+    opacity: 0.75;
+}
+
+.validation-error {
+    color: var(--danger);
+}
+
+/* ---------- Delivery ---------- */
+.delivery-block {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.delivery-group-title {
+    margin: 0.9rem 0 0.4rem;
+    font-size: 12px;
+    font-family: 'open-sans-bold';
+    opacity: 0.65;
+}
+
+.delivery-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-soft);
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.delivery-option:hover {
+    background: var(--surface-raised);
+}
+
+.delivery-option:has(input:checked) {
+    border-color: var(--primary-accent);
+    background: color-mix(in srgb, var(--primary-accent) 22%, var(--card-background));
+}
+
+.delivery-option input {
+    margin: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.delivery-name {
+    flex: 1;
+}
+
+.delivery-price {
+    font-family: 'open-sans-bold';
+    white-space: nowrap;
+}
+
+.delivery-details {
+    margin-top: 1.25rem;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--surface-raised);
+    border: 1px dashed var(--border-soft);
+}
+
+.details-description {
+    opacity: 0.7;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-size: 13px;
+    font-family: 'open-sans-bold';
+    margin-bottom: 0.3rem;
+}
+
+/* ---------- Summary ---------- */
+.summary-card {
+    top: 1rem;
+    z-index: 999;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.4rem 0;
+}
+
+.summary-item {
+    font-size: 14px;
+    font-family: 'raleway-medium';
+    opacity: 0.8;
+}
+
+.summary-value {
+    font-family: 'open-sans-bold';
+    font-size: 14px;
+}
+
+.summary-muted {
+    font-family: 'open-sans-medium';
+    opacity: 0.5;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 0.9rem 0 1.1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.total-cost {
+    font-size: 22px;
+    font-family: 'open-sans-bold';
+}
+
+.pay-button {
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-md);
+    font-family: 'open-sans-bold';
+    font-size: 15px;
+}
+
+.pay-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pay-description {
+    margin: 0.8rem 0 0;
+    font-size: 12px;
+    font-family: 'open-sans-medium';
+    line-height: 1.5;
+    opacity: 0.65;
+}
+
+/* Shared */
+.card {
     background-color: var(--card-background);
     color: var(--text-primary);
     border-color: var(--primary-accent);
-}
-
-.card-selected{
-    background-color: var(--primary-accent);
 }
 
 .link {
@@ -55,8 +381,28 @@ hr {
     color: var(--primary-accent);
 }
 
-.payment-card:hover{
-    transition: 0.3s ease-out;
-    background-color: var(--primary-accent);
-    cursor: pointer;
+/* Responsiveness for mobile */
+@media (max-width: 575.98px) {
+    .content-section {
+        padding: 1.1rem;
+    }
+
+    .checkout-item {
+        flex-direction: column;
+    }
+
+    .item-thumb {
+        width: 100%;
+        height: 160px;
+    }
+
+    .payment-card {
+        flex: 1 1 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
 }
