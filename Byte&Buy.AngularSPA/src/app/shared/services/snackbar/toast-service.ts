@@ -1,27 +1,40 @@
-import { inject, Injectable } from '@angular/core';
-import { ToastrService } from '@openng/ngx-toastr';
+import { Injectable } from '@angular/core';
+import Swal, { SweetAlertIcon, SweetAlertOptions } from 'sweetalert2';
+
 @Injectable({
   providedIn: 'root',
 })
-
 export class ToastService {
-  private readonly toastrService: ToastrService = inject(ToastrService);
   success(message: string) {
-    this.toastrService.success(message, "Success", {
-      progressAnimation: 'decreasing',
-    });
+    return this.show(message, 'success', 'Success');
   }
 
   error(message: string) {
-    this.toastrService.error(message, "Error", {
-      progressAnimation: 'decreasing',
-    });
+    return this.show(message, 'error', 'Something went wrong');
   }
 
   info(message: string) {
-    this.toastrService.info(message, "Info", {
-      progressAnimation: 'decreasing',
-    });
+    return this.show(message, 'info', 'Information');
   }
 
+  private show(message: string, icon: SweetAlertIcon, title: string) {
+    const options: SweetAlertOptions = {
+      title,
+      text: message,
+      icon,
+      toast: true,
+      position: 'bottom-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      iconColor: 'var(--primary-accent)',
+      color: 'var(--text-primary)',
+      background: 'var(--card-background)',
+      customClass: {
+        popup: 'app-toast',
+      },
+    };
+
+    return Swal.fire(options);
+  }
 }

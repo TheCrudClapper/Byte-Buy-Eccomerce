@@ -9,7 +9,6 @@ import { RentCartOffer } from '../../rent-cart-offer/rent-cart-offer/rent-cart-o
 import { CartSummary } from '../../../models/cart-summary';
 import { Guid } from 'guid-typescript';
 import { Router, RouterLink } from '@angular/router';
-import { Toast } from '@openng/ngx-toastr';
 import { ToastService } from '../../../../../shared/services/snackbar/toast-service';
 
 @Component({

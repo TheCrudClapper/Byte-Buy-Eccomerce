@@ -1,10 +1,8 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; //
-import { ToastrModule } from '@openng/ngx-toastr';
 import { problemDetailsInterceptor } from './core/interceptors/problem-details-interceptor';
 
 
@@ -16,15 +14,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withXhr(), 
       withInterceptors([authInterceptor]),
       withInterceptors([problemDetailsInterceptor])
-    ),
-    importProvidersFrom(
-      BrowserAnimationsModule,
-      ToastrModule.forRoot({
-        timeOut: 3000,
-        positionClass: 'toast-bottom-right',
-        preventDuplicates: true,
-        closeButton: true
-      })
     )
   ]
 };

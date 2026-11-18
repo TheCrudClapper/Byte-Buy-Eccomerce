@@ -30,7 +30,6 @@
     "@angular/platform-browser": "^22.2.3",
     "@angular/router": "^22.2.3",
     "@fortawesome/fontawesome-free": "^7.1.0",
-    "@openng/ngx-toastr": "^1.1.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "font-awesome": "^4.7.0",

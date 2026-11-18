@@ -296,10 +296,6 @@ span {
   color: var(--text-primary) !important;
 }
 
-.toast-top-right {
-  margin-top: 65px;
-}
-
 .icon-btn {
   background: none;
   border: 2px solid var(--hover-accent);
@@ -326,33 +322,28 @@ span {
   background-color: var(--hover-accent)
 }
 
-//Toastr Styles
-.ngx-toastr {
-  background-color: var(--card-background) !important;
-  font-family: 'open-sans-medium' !important;
-  font-size: 14px !important;
-  border-radius: 10px !important;
+.app-toast {
+  font-family: 'open-sans-medium';
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  width: min(360px, calc(100vw - 32px));
+  margin: 16px;
 }
 
-.toast-title {
-  font-family: 'raleway-bold' !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-  color: var(--text-primary) !important;
+.app-toast .swal2-title {
+  font-family: 'raleway-bold';
+  font-size: 16px;
+  color: var(--text-primary);
 }
 
-//Mobile toasts
+.app-toast .swal2-html-container {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
 @media (max-width: 768px) {
-  .toast-container.toast-bottom-right {
-    bottom: 20px !important;
-    right: 20px !important;
-    left: 20px !important;
-    width: calc(100% - 40px) !important;
-  }
-
-  .ngx-toastr {
-    width: 100% !important;
-    max-width: none !important;
+  .app-toast {
+    margin: 12px;
   }
 }
 
