@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:shared="using:ByteBuy.UI.Views.Shared"
              xmlns:dialogHost="using:DialogHostAvalonia"
              xmlns:vm="clr-namespace:ByteBuy.UI.ViewModels.Dialogs"
              mc:Ignorable="d"
@@ -66,8 +67,13 @@
                         </StackPanel>
 
                         <StackPanel Spacing="6">
-                            <TextBlock Classes="textBoxLabel"
-                                       Text="Description"/>
+                            <Grid ColumnDefinitions="*,*">
+                                <TextBlock Classes="textBoxLabel"
+                                           Text="Description"/>
+                                <shared:CharCounter Grid.Column="1"
+                                                    DataContext="{Binding CharCounter}"
+                                                    HorizontalAlignment="Right"/>
+                            </Grid>
 
                             <TextBox Text="{Binding Description}"
                                      Watermark="Enter category description"

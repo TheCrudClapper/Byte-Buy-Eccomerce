@@ -116,10 +116,7 @@
 										<TextBlock Classes="sectionHelperText"
 												   Text="Describe the item, its pros and cons to avoid customer questions."/>
 									</StackPanel>
-									<StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-										<TextBlock Classes="sectionHelperText" Text="{Binding DescriptionCharCount}"/>
-										<TextBlock Classes="sectionHelperText" Text=" / 2000"/>
-									</StackPanel>
+									<views:CharCounter DataContext="{Binding CharCounter}" Grid.Column="1"/>
 								</Grid>
 
 								<TextBox Text="{Binding Description}"

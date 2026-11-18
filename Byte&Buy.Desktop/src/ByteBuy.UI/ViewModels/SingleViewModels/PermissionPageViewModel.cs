@@ -13,11 +13,12 @@ namespace ByteBuy.UI.ViewModels.SingleViewModels;
 public partial class PermissionPageViewModel : ViewModelSingle
 {
     #region MVVM Properties
-   
+    private const int _descriptioMaxCharCount = 100;
+
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Name of permission is required")]
-    [MaxLength(100, ErrorMessage = "Name can be at most 100 characters")]
+    [MaxLength(_descriptioMaxCharCount, ErrorMessage = "Name can be at most 100 characters")]
     private string _name = string.Empty;
 
     [ObservableProperty]
@@ -27,8 +28,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     private string _description = string.Empty;
 
     [ObservableProperty]
-    private int _descriptionCharCount;
-
+    public CharCounterViewModel _charCounter;
     #endregion
 
     private readonly IPermissionService _permissionService;
@@ -37,6 +37,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     {
         _permissionService = permissionService;
         _notificationService = notificationService;
+        CharCounter = new (_descriptioMaxCharCount);
     }
 
     protected override async Task AddAsync()
@@ -75,6 +76,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
     {
         Name = string.Empty;
         Description = string.Empty;
+        CharCounter.CurrentCount = 0;
         ValidateAllProperties();
     }
 
@@ -98,7 +100,7 @@ public partial class PermissionPageViewModel : ViewModelSingle
 
     partial void OnDescriptionChanged(string value)
     {
-        DescriptionCharCount = value.Length; 
+        CharCounter.CurrentCount = value.Length; 
         ValidateProperty(value, nameof(Description));
     }
 }

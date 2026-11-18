@@ -22,6 +22,7 @@ namespace ByteBuy.UI.ViewModels;
 public partial class ItemPageViewModel : ViewModelSingle, IDisposable
 {
     #region MVVM Fields
+    private const int _descriptioMaxCharCount = 2000;
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required]
@@ -45,13 +46,10 @@ public partial class ItemPageViewModel : ViewModelSingle, IDisposable
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "You need to select condition")]
     private SelectListItemResponse<Guid>? _selectedCondition;
-
-    [ObservableProperty]
-    private int _descriptionCharCount;
-
+    
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Required, MaxLength(2000)]
+    [Required, MaxLength(_descriptioMaxCharCount)]
     private string _description = string.Empty;
 
     [ObservableProperty]
@@ -63,6 +61,8 @@ public partial class ItemPageViewModel : ViewModelSingle, IDisposable
     [ObservableProperty]
     private ObservableCollection<ImageViewModel> _images = [];
 
+    [ObservableProperty]
+    private CharCounterViewModel _charCounter;
     public bool ImageContainerVisible => !Images.Any(i => !i.IsDeleted);
 
     #endregion
@@ -91,6 +91,7 @@ public partial class ItemPageViewModel : ViewModelSingle, IDisposable
         _notificationService = notificationService;
         _loadingService = loadingService;
         Images.CollectionChanged += OnImagesCollectionChanged;
+        CharCounter = new(_descriptioMaxCharCount);
     }
 
     protected override async Task InitializeAsync()
@@ -259,7 +260,7 @@ public partial class ItemPageViewModel : ViewModelSingle, IDisposable
 
     partial void OnDescriptionChanged(string value)
     {
-        DescriptionCharCount = value.Length;
+        CharCounter.CurrentCount = value.Length;
         ValidateProperty(value, nameof(Description));
     }
 

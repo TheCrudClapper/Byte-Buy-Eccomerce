@@ -38,11 +38,7 @@
 
 					<Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto" RowSpacing="6" Grid.Column="1">
 						<TextBlock Grid.Row="0" Grid.Column="0" Text="Description" Classes="textBoxLabel"/>
-						<TextBlock Grid.Row="0" Grid.Column="1" Classes="textBoxLabel" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Right">
-							<Run Text="{Binding DescriptionCharCount}"/>
-							<Run Text=" / "/>
-							<Run Text="100"/>
-						</TextBlock>
+						<views:CharCounter Grid.Row="0" Grid.Column="1" DataContext="{Binding CharCounter}"/>
 						<TextBox Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Description}" TextWrapping="Wrap" MinHeight="100" />
 					</Grid>
 				</Grid>

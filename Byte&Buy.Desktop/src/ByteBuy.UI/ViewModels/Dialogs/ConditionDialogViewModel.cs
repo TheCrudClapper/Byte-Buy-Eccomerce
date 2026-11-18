@@ -1,6 +1,7 @@
 ﻿using ByteBuy.Services.DTO.Condition;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,8 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
     : DialogSingleViewModel("Condition")
 {
     #region MVVM Fields
+    private const int _maxDescriptionCharCount = 50;
+
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required, MaxLength(20)]
@@ -19,9 +22,19 @@ public partial class ConditionDialogViewModel(IConditionService conditionService
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [MaxLength(50)]
+    [MaxLength(_maxDescriptionCharCount)]
     private string? _description;
+
+    [ObservableProperty]
+    private CharCounterViewModel _charCounter = new(_maxDescriptionCharCount);
     #endregion
+
+    partial void OnDescriptionChanged(string? value)
+    {
+        CharCounter.CurrentCount = value?.Length ?? 0;
+        ValidateProperty(value, nameof(Description));
+    }
+
     public override async Task InitializeForEdit(Guid id)
     {
         IsEditMode = true;

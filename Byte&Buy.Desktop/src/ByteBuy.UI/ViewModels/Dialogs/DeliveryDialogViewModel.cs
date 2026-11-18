@@ -3,6 +3,7 @@ using ByteBuy.Services.DTO.Delivery;
 using ByteBuy.Services.DTO.Shared;
 using ByteBuy.Services.ServiceContracts;
 using ByteBuy.UI.ViewModels.Base;
+using ByteBuy.UI.ViewModels.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -13,12 +14,10 @@ using System.Threading.Tasks;
 
 namespace ByteBuy.UI.ViewModels.Dialogs;
 
-public partial class DeliveryDialogViewModel(
-    IDeliveryService deliveryService,
-    IDeliveryCarrierService carrierService)
-    : DialogSingleViewModel("OrderDelivery")
+public partial class DeliveryDialogViewModel : DialogSingleViewModel
 {
     #region MVVM Properties
+    private const int _maxDescriptionCharCount = 50;
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required, MaxLength(50)]
@@ -26,7 +25,7 @@ public partial class DeliveryDialogViewModel(
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [MaxLength(50)]
+    [MaxLength(_maxDescriptionCharCount)]
     private string? _description;
 
     [ObservableProperty]
@@ -55,14 +54,27 @@ public partial class DeliveryDialogViewModel(
     [NotifyDataErrorInfo]
     [Required]
     private SelectListItemResponse<Guid>? _selectedDeliveryCarrier;
-    #endregion
 
+    [ObservableProperty]
+    private CharCounterViewModel _charCounter;
+
+    #endregion
+    private readonly IDeliveryService _deliveryService;
+    private readonly IDeliveryCarrierService _carrierService;
+    public DeliveryDialogViewModel(
+    IDeliveryService deliveryService,
+    IDeliveryCarrierService carrierService) : base("OrderDelivery")
+    {
+        _deliveryService = deliveryService;
+        _carrierService = carrierService;
+        _charCounter = new(_maxDescriptionCharCount); 
+    }
 
     public async Task InitializeAsync()
     {
-        var parcelLockerSizesTask = deliveryService.GetParcelLockerSizesSelectListAsync();
-        var deliveryChannelsTask = deliveryService.GetDeliveryChannelsSelectListAsync();
-        var deliveryCarriersTask = carrierService.GetSelectListAsync();
+        var parcelLockerSizesTask = _deliveryService.GetParcelLockerSizesSelectListAsync();
+        var deliveryChannelsTask = _deliveryService.GetDeliveryChannelsSelectListAsync();
+        var deliveryCarriersTask = _carrierService.GetSelectListAsync();
 
         await Task.WhenAll(parcelLockerSizesTask, deliveryChannelsTask, deliveryCarriersTask);
 
@@ -79,7 +91,7 @@ public partial class DeliveryDialogViewModel(
     {
         IsEditMode = true;
         EditingItemId = id;
-        var result = await deliveryService.GetByIdAsync(id);
+        var result = await _deliveryService.GetByIdAsync(id);
         if (!result.Success)
         {
             Error = result.Error!.Description;
@@ -107,7 +119,7 @@ public partial class DeliveryDialogViewModel(
             SelectedChannel?.Id ?? default,
             SelectedDeliveryCarrier?.Id ?? Guid.Empty);
 
-        var response = await deliveryService.AddAsync(request);
+        var response = await _deliveryService.AddAsync(request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
@@ -129,13 +141,19 @@ public partial class DeliveryDialogViewModel(
             SelectedChannel?.Id ?? default,
             SelectedDeliveryCarrier?.Id ?? Guid.Empty);
 
-        var response = await deliveryService.UpdateAsync(EditingItemId.Value, request);
+        var response = await _deliveryService.UpdateAsync(EditingItemId.Value, request);
         if (!response.Success)
         {
             Error = response.Error!.Description;
             return false;
         }
         return true;
+    }
+
+    partial void OnDescriptionChanged(string? value)
+    {
+        CharCounter.CurrentCount = value?.Length ?? 0; 
+        ValidateProperty(value, nameof(Description));
     }
 
     [RelayCommand]
