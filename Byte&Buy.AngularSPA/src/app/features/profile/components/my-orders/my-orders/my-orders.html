@@ -1,104 +1,86 @@
 @if(pagedList(); as page){
 <div class="content-section">
-    <span class="page-title">My Orders ({{ page.metadata.totalCount }})</span>
+    <h1 class="page-title">My orders ({{ page.metadata.totalCount }})</h1>
 </div>
 
-@if(pagedList()?.items; as orders){
+@if(page.items; as orders){
 @for (order of orders; track $index)
 {
-<div class="content-section">
-    <div class="d-flex d-align-items-center justify-content-between">
-        <p class="my-0 content-section-title">
-            <app-order-status-component [status]="order.status" [dateDelivered]="null"></app-order-status-component>
-        </p>
-        <p class="my-0 content-section-title">
-            Purchased ({{ order.purchasedDate | date:'dd MMM yyyy, HH:mm' }})
-        </p>
-    </div>
+<section class="content-section order-card">
 
-    <hr>
-    <div class="col-12 d-flex justify-content-between mb-3">
-        <span class="fs-14-px">{{order.linesCount}} item/s from
+    <header class="order-top">
+        <app-order-status-component [status]="order.status" [dateDelivered]="null"></app-order-status-component>
+        <span class="order-date">
+            <i class="fa-regular fa-calendar"></i>
+            {{ order.purchasedDate | date:'dd MMM yyyy, HH:mm' }}
+        </span>
+    </header>
+
+    <div class="order-parties">
+        <span class="fs-14-px">
+            {{ order.linesCount }} {{ order.linesCount === 1 ? 'item' : 'items' }} from
             <span class="open-sans-bold">{{ order.sellerDisplayName }}</span>
             to
             <span class="open-sans-bold">{{ order.buyerDisplayName }}</span>
         </span>
         <span class="fs-14-px open-sans-bold">
-            {{ order.totalItemsCost.amount| number:'1.2-2'}} {{ order.totalItemsCost.currency}}
+            {{ order.totalItemsCost.amount | number:'1.2-2' }} {{ order.totalItemsCost.currency }}
         </span>
     </div>
-    <div class="col-12">
 
+    <div class="items-list">
         @for (line of order.lines; track $index)
         {
-        <!-- for order lines generation -->
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row g-3 align-items-center">
-                    <div class="col-auto">
-                        <img [src]="`${imageBaseUrl}${line.thumbnail.imagePath}`" class="img-fluid rounded"
-                            [alt]="`${line.thumbnail.altText}`" style="width: 80px; height: 80px; object-fit: cover;">
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <h6 class="mb-1 fw-bold fs-14-px">
-                                    {{ line.itemTitle }}
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="row align-items-center">
-                            @if(line.type === 'sale'){
-                            <div class="col  fs-14-px">
-                                {{ line.quantity }} x {{ line.pricePerItem.amount | number:'1.2-2'}} {{
-                                line.pricePerItem.currency }}
-                            </div>
-
-                            }
-                            @else{
-                            <div class="col  fs-14-px">
-                                {{ line.quantity }} x {{ line.rentalDays }} days x {{ line.pricePerDay.amount |
-                                number:'1.2-2'}} {{
-                                line.pricePerDay.currency }}
-                            </div>
-                            }
-
-                            <div class="col-auto fs-14-px">
-                                {{ line.total.amount | number:'1.2-2' }} {{ line.total.currency }}
-                            </div>
-                        </div>
-                    </div>
+        <article class="order-line">
+            <img [src]="`${imageBaseUrl}${line.thumbnail.imagePath}`" [alt]="`${line.thumbnail.altText}`"
+                class="line-thumb">
+            <div class="line-body">
+                <h6 class="line-title fs-14-px">{{ line.itemTitle }}</h6>
+                <div class="d-flex justify-content-between align-items-end gap-3">
+                    @if(line.type === 'sale'){
+                    <span class="line-calc fs-14-px">
+                        {{ line.quantity }} × {{ line.pricePerItem.amount | number:'1.2-2' }}
+                        {{ line.pricePerItem.currency }}
+                    </span>
+                    }
+                    @else{
+                    <span class="line-calc fs-14-px">
+                        {{ line.quantity }} × {{ line.rentalDays }} days ×
+                        {{ line.pricePerDay.amount | number:'1.2-2' }} {{ line.pricePerDay.currency }}
+                    </span>
+                    }
+                    <span class="open-sans-bold fs-14-px">
+                        {{ line.total.amount | number:'1.2-2' }} {{ line.total.currency }}
+                    </span>
                 </div>
             </div>
-        </div>
+        </article>
         }
-        <hr>
-        <div class="col-12 d-flex justify-content-between">
-            <span class="fs-14-px open-sans-bold">Total with shipment</span>
-            <span class="fs-14-px open-sans-bold">
-                {{ order.totalCost.amount| number:'1.2-2'}} {{ order.totalCost.currency}}
+    </div>
+
+    <footer class="order-footer">
+        <div class="order-total">
+            <span class="fs-12-px order-total-label">Total with shipment</span>
+            <span class="total-cost">
+                {{ order.totalCost.amount | number:'1.2-2' }} {{ order.totalCost.currency }}
             </span>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-4">
 
-            </div>
-            <div class="col-4 text-center">
-                <span class="link" [routerLink]="['/order', 'details', `${order.orderId}`]">ORDER DETAILS</span>
-            </div>
-            <div class="col-4 text-end">
-                @if(order.isDeletable){
-                    <button class="icon-btn" (click)="deleteOrder(order.orderId)">
-                        <i class="fa-regular fa-trash-can"></i>
-                    </button>
-                }
-
-            </div>
+        <div class="order-actions">
+            @if(order.isDeletable){
+            <button type="button" class="icon-btn" aria-label="Delete order" title="Delete order"
+                (click)="deleteOrder(order.orderId)">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+            }
+            <a class="btn order-details-btn" [routerLink]="['/order', 'details', `${order.orderId}`]">
+                Order details<i class="fa-solid fa-chevron-right ms-2"></i>
+            </a>
         </div>
-    </div>
-</div>
+    </footer>
+</section>
 }
+
 @if(orders.length === 0){
 <app-empty-state [model]="emptyStateModel"></app-empty-state>
 }

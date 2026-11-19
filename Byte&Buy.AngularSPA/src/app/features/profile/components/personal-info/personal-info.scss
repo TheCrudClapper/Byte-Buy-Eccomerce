@@ -1,0 +1,115 @@
+:host {
+    --border-soft: color-mix(in srgb, var(--primary-accent) 28%, transparent);
+    --surface-raised: color-mix(in srgb, var(--text-primary) 6%, var(--card-background));
+}
+
+.content-section {
+    padding: 1.5rem;
+    border-radius: 16px;
+}
+
+.form-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.form-header .content-section-title,
+.form-header .content-section-description {
+    margin-bottom: 0;
+}
+
+.form-header .content-section-description {
+    margin-top: 0.2rem;
+    opacity: 0.7;
+}
+
+.section-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 15px;
+    background: var(--border-soft);
+}
+
+.form-label {
+    font-size: 13px;
+    font-family: 'open-sans-bold';
+    margin-bottom: 0.3rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.btn-primary-action,
+.btn-secondary-action {
+    padding: 0.6rem 1.3rem;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'open-sans-bold';
+    transition: 0.2s ease;
+}
+
+.btn-primary-action {
+    color: #fff;
+    background: var(--primary-accent);
+    border: 1px solid var(--secondary-accent);
+}
+
+.btn-primary-action:hover:not(:disabled) {
+    background: var(--hover-accent);
+    color: var(--text-primary);
+}
+
+.btn-primary-action:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.btn-secondary-action {
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-soft);
+}
+
+.btn-secondary-action:hover {
+    color: var(--primary-accent);
+    border-color: var(--primary-accent);
+    background: var(--surface-raised);
+}
+
+.btn-primary-action:focus-visible,
+.btn-secondary-action:focus-visible {
+    outline: 2px solid var(--primary-accent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 575.98px) {
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary-action,
+    .btn-secondary-action {
+        transition: none;
+    }
+}

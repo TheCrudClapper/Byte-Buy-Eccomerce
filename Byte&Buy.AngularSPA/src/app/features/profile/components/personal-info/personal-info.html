@@ -1,106 +1,123 @@
 <div class="content-section d-none d-md-block">
-    <span class="page-title">Personal Information</span>
+    <h1 class="page-title">Personal information</h1>
 </div>
 
-<div class="content-section">
-    <p class="content-section-title">Basic Information</p>
-    <p class="content-section-description">
-        Update basic information about your account including email and phone number.
-    </p>
-    <form [formGroup]="userInfoForm" (ngSubmit)="onUserInfoSubmit()">
+<!-- Basic information -->
+<section class="content-section">
+    <header class="form-header">
+        <i class="fa-regular fa-id-card section-icon"></i>
+        <div>
+            <h2 class="content-section-title">Basic information</h2>
+            <p class="content-section-description">
+                Update the basic details of your account, including email and phone number.
+            </p>
+        </div>
+    </header>
 
-        <div class="row mb-3">
-            <div class="col-6 mb-3">
-                <label for="firstName" class="form-label">First Name*</label>
-                <input id="firstName" type="text" class="form-control" formControlName="firstName">
+    <form [formGroup]="userInfoForm" (ngSubmit)="onUserInfoSubmit()">
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <label for="firstName" class="form-label">First name*</label>
+                <input id="firstName" type="text" class="form-control" autocomplete="given-name"
+                    formControlName="firstName">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getUserErrorMessage("firstName") }}</span>
                 </div>
-
             </div>
 
-            <div class="col-6 mb-3">
-                <label for="lastName" class="form-label">Last Name*</label>
-                <input id="lastName" type="text" class="form-control" formControlName="lastName">
+            <div class="col-12 col-md-6">
+                <label for="lastName" class="form-label">Last name*</label>
+                <input id="lastName" type="text" class="form-control" autocomplete="family-name"
+                    formControlName="lastName">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getUserErrorMessage("lastName") }}</span>
                 </div>
-
             </div>
 
-            <div class="col-6  mb-3">
+            <div class="col-12 col-md-6">
                 <label for="email" class="form-label">Email*</label>
-                <input id="email" type="email" class="form-control" autocomplete="address-level1"
-                    formControlName="email">
+                <input id="email" type="email" class="form-control" autocomplete="email" formControlName="email">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getUserErrorMessage("email") }}</span>
                 </div>
             </div>
 
-            <div class="col-6 mb-3">
+            <div class="col-12 col-md-6">
                 <label for="phoneNumber" class="form-label">Phone*</label>
-                <input id="phoneNumber" type="text" class="form-control" formControlName="phoneNumber">
+                <input id="phoneNumber" type="tel" class="form-control" autocomplete="tel"
+                    formControlName="phoneNumber">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getUserErrorMessage("phoneNumber") }}</span>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 text-end">
-                <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit" [disabled]="userInfoForm.invalid || userDataLoading()">
-                    @if (userDataLoading()) {
-                    <span class="spinner-border spinner-border-sm me-2"></span>
-                    }
-                    Save Changes
-                </button>
-            </div>
+        <div class="form-actions">
+            <button class="btn btn-secondary-action" type="reset">Reset</button>
+            <button class="btn btn-primary-action" type="submit"
+                [disabled]="userInfoForm.invalid || userDataLoading()">
+                @if (userDataLoading()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Save changes
+            </button>
         </div>
     </form>
-</div>
+</section>
 
-<div class="content-section">
-    <p class="content-section-title">Password Change</p>
-    <p class="content-section-description">
-        You can update your password by providing old, new and confirmed one.
-    </p>
+<!-- Password -->
+<section class="content-section">
+    <header class="form-header">
+        <i class="fa-solid fa-lock section-icon"></i>
+        <div>
+            <h2 class="content-section-title">Change password</h2>
+            <p class="content-section-description">
+                Enter your current password, then choose a new one and confirm it.
+            </p>
+        </div>
+    </header>
+
     <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
-
-        <div class="row mb-3">
-            <div class="col-6 mb-3">
-                <label for="currentPassword" class="form-label">Current Password*</label>
-                <input id="currentPassword" type="password" class="form-control" formControlName="currentPassword">
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <label for="currentPassword" class="form-label">Current password*</label>
+                <input id="currentPassword" type="password" class="form-control" autocomplete="current-password"
+                    formControlName="currentPassword">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getPasswordErroMessage("currentPassword") }}</span>
                 </div>
-
             </div>
 
-            <div class="col-6 mb-3">
-                <label for="newPassword" class="form-label">New Password*</label>
-                <input id="newPassword" type="password" class="form-control" formControlName="newPassword">
+            <div class="w-100 d-none d-md-block m-0"></div>
+
+            <div class="col-12 col-md-6">
+                <label for="newPassword" class="form-label">New password*</label>
+                <input id="newPassword" type="password" class="form-control" autocomplete="new-password"
+                    formControlName="newPassword">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getPasswordErroMessage("newPassword") }}</span>
                 </div>
             </div>
 
-            <div class="col-6 mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password*</label>
-                <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword">
+            <div class="col-12 col-md-6">
+                <label for="confirmPassword" class="form-label">Confirm password*</label>
+                <input id="confirmPassword" type="password" class="form-control" autocomplete="new-password"
+                    formControlName="confirmPassword">
                 <div class="error-placeholder">
                     <span class="validation-error">{{ getPasswordErroMessage("confirmPassword") }}</span>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 text-end">
-                <button class="btn me-2" type="reset">Reset</button>
-                <button class="btn" type="submit" [disabled]="passwordForm.invalid || passwordDataLoading()">
-                    @if (passwordDataLoading()) {
-                    <span class="spinner-border spinner-border-sm me-2"></span>
-                    }
-                    Change Password
-                </button>
-            </div>
-
+        <div class="form-actions">
+            <button class="btn btn-secondary-action" type="reset">Reset</button>
+            <button class="btn btn-primary-action" type="submit"
+                [disabled]="passwordForm.invalid || passwordDataLoading()">
+                @if (passwordDataLoading()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Change password
+            </button>
         </div>
     </form>
-</div>
+</section>

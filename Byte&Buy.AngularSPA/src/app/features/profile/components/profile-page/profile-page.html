@@ -1,54 +1,49 @@
 <div class="container">
     <div class="row mt-5 mb-5">
-        <!-- Sidebar  -->
-        <div class="col-12 col-md-3">
-            <div class="sticky-top" style="top: 1rem;">
-            <div class="text-center content-section">
-                <div class="mb-3">
-                    <i class="fa-solid fa-user fa-6x" style="color: #ffffff;"></i>
-                </div>
-                <p class="open-sans-bold">Account Management</p>
-            </div>
-            <div class="content-section">
-                <a class="action-link" [routerLink]="['/profile/personal-info']" routerLinkActive="active-link"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="px-3 py-3 action-tile">
-                        Personal Information
-                    </div>
-                </a>
-                <a class="action-link" [routerLink]="['/profile/addresses']" routerLinkActive="active-link"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="px-3 py-3 action-tile">
-                        Addresses
-                    </div>
-                </a>
-                <a class="action-link" [routerLink]="['/profile/my-offers']" routerLinkActive="active-link"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="px-3 py-3 action-tile">
-                        My Offers
-                    </div>
-                </a>
-                <a class="action-link" [routerLink]="['/profile/my-orders']" routerLinkActive="active-link"
-                    [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="px-3 py-3 action-tile">
-                        My Orders
-                    </div>
-                </a>
-                <a class="action-link" [routerLink]="['/profile/my-rentals']" routerLinkActive="active-link"  [routerLinkActiveOptions]="{ exact: true }">
-                    <div class="px-3 py-3 action-tile">
-                        My Rentals
-                    </div>
-                </a>
-                <a class="action-link">
-                    <div class="px-3 py-3 action-tile" (click)="onLogout()">
-                        Logout
-                    </div>
-                </a>
-            </div>
-            </div>
-        </div>
 
-        <!-- Right Side -->
+        <!-- Sidebar -->
+        <aside class="col-12 col-md-3">
+            <div class="sidebar sticky-top">
+
+                <div class="content-section profile-card">
+                    <div class="profile-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <p class="profile-title">Account</p>
+                    <p class="profile-subtitle">Manage your profile, offers and orders</p>
+                </div>
+
+                <nav class="content-section side-nav" aria-label="Account sections">
+                    <a class="nav-tile" [routerLink]="['/profile/personal-info']" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="fa-regular fa-id-card"></i><span>Personal information</span>
+                    </a>
+                    <a class="nav-tile" [routerLink]="['/profile/addresses']" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="fa-solid fa-location-dot"></i><span>Addresses</span>
+                    </a>
+                    <a class="nav-tile" [routerLink]="['/profile/my-offers']" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="fa-solid fa-tags"></i><span>My offers</span>
+                    </a>
+                    <a class="nav-tile" [routerLink]="['/profile/my-orders']" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="fa-solid fa-receipt"></i><span>My orders</span>
+                    </a>
+                    <a class="nav-tile" [routerLink]="['/profile/my-rentals']" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="fa-solid fa-repeat"></i><span>My rentals</span>
+                    </a>
+
+                    <button type="button" class="nav-tile nav-tile-logout" (click)="onLogout()">
+                        <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+                    </button>
+                </nav>
+
+            </div>
+        </aside>
+
+        <!-- Content -->
         <div class="col-12 col-md-9 mt-3 mt-md-0">
             <router-outlet></router-outlet>
         </div>
