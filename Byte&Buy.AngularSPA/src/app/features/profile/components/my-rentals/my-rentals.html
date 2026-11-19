@@ -1,92 +1,86 @@
 @if(pagedList(); as page){
-<div class="content-section ">
-    <span class="page-title">My Rentals ({{ page.metadata.totalCount }})</span>
+<div class="content-section">
+    <span class="page-title">My rentals ({{ page.metadata.totalCount }})</span>
 </div>
+
 @for (rental of page.items; track rental.id)
 {
-<div class="content-section">
-    <div class="d-flex d-align-items-center justify-content-between">
-        <p class="my-0 content-section-title">
-            @if(rental.status === RentalStatus.Created){
-            <i class="fa-solid fa-square-plus" style="color: #ffffff;"></i>
-            Rental Created
-            }
-            @if(rental.status === RentalStatus.Active){
-            <i class="fa-regular fa-calendar-days" style="color: #ffffff;"></i>
-            Rental Active
-            }
-            @if(rental.status === RentalStatus.Overdue){
-            <i class="fa-solid fa-calendar-xmark" style="color: #ffffff;"></i>
-            <span class="overdue">Rental Overdue</span>
-            }
-            @if(rental.status === RentalStatus.Completed){
-            <i class="fa-solid fa-calendar-check" style="color: #ffffff;"></i>
-            Rental Completed
-            }
-        <p class="my-0 content-section-title">
-            Created ( {{ rental.dateCreated | date:'dd MMM yyyy, HH:mm' }} )
-        </p>
-    </div>
-    <hr>
-    <div class="col-12 mb-3">
-        <div class="d-flex flex-column">
-            <span>
-                <span class="fs-14-px">Lended for </span>
-                <span class="open-sans-bold fs-14-px">{{ rental.lenderName }}</span>
-            </span>
-            <span>
-            </span>
-            <div class="d-flex justify-content-between">
-                <span class="fs-14-px">
-                    Lended from
-                    <span class="open-sans-bold">{{ rental.startingRentalDate | date:'dd MMM yyyy'}}</span>
-                    to
-                    <span class="open-sans-bold">{{ rental.endingRentalDate | date:'dd MMM yyyy' }}</span>
-                </span>
-                <span class="fs-14-px open-sans-bold">({{rental.rentalDays}} day/s period)</span>
-            </div>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row g-3 align-items-center">
-                <div class="col-auto">
-                    <img [src]="`${imageBaseUrl}${rental.thumbnail.imagePath}`" class="img-fluid rounded"
-                        [alt]="`${rental.thumbnail.altText}`" style="width: 80px; height: 80px; object-fit: cover;">
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <h6 class="mb-1 fw-bold fs-14-px">
-                                {{ rental.itemName }}
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-auto fs-14-px">
-                            <span>Lended <span class="open-sans-bold">{{ rental.quantity }} </span>units</span>
-                        </div>
-                    </div>
+<section class="content-section rental-card" [class.rental-card-overdue]="rental.status === RentalStatus.Overdue">
 
-                </div>
-            </div>
+    <!-- Header -->
+    <header class="rental-top">
+        @if(rental.status === RentalStatus.Created){
+        <span class="status-chip status-neutral"><i class="fa-solid fa-square-plus"></i>Rental created</span>
+        }
+        @if(rental.status === RentalStatus.Active){
+        <span class="status-chip status-active"><i class="fa-regular fa-calendar-days"></i>Rental active</span>
+        }
+        @if(rental.status === RentalStatus.Overdue){
+        <span class="status-chip status-overdue"><i class="fa-solid fa-calendar-xmark"></i>Rental overdue</span>
+        }
+        @if(rental.status === RentalStatus.Completed){
+        <span class="status-chip status-completed"><i class="fa-solid fa-calendar-check"></i>Rental completed</span>
+        }
+
+        <span class="rental-date">
+            <i class="fa-regular fa-calendar"></i>
+            Created {{ rental.dateCreated | date:'dd MMM yyyy, HH:mm' }}
+        </span>
+    </header>
+
+    <!-- Rental info -->
+    <div class="rental-info">
+        <div class="info-item">
+            <span class="info-label">Rented from</span>
+            <span class="info-value">{{ rental.lenderName }}</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Rental period</span>
+            <span class="info-value">
+                {{ rental.startingRentalDate | date:'dd MMM yyyy' }}
+                <i class="fa-solid fa-arrow-right-long period-arrow"></i>
+                {{ rental.endingRentalDate | date:'dd MMM yyyy' }}
+            </span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Duration</span>
+            <span class="info-value">{{ rental.rentalDays }} {{ rental.rentalDays === 1 ? 'day' : 'days' }}</span>
         </div>
     </div>
-    <hr>
-    <div class="col-12 d-flex justify-content-between">
-        <span class="fs-14-px open-sans-bold">Paid</span>
-        <span class="fs-14-px open-sans-bold">
-            {{ rental.totalPricePaid.amount | number:'1.2-2'}} {{ rental.totalPricePaid.currency }}
-        </span>
-    </div>
-    <hr>
-    @if(rental.status === RentalStatus.Active || rental.status === RentalStatus.Overdue){
-    <div class="col-12 text-center">
-        <span class="link" (click)="returnRental(rental.id)">RETURN ITEM TO LENDER</span>
-    </div>
-    }
-</div>
+
+    <!-- Item -->
+    <article class="rental-line">
+        <img [src]="`${imageBaseUrl}${rental.thumbnail.imagePath}`" [alt]="`${rental.thumbnail.altText}`"
+            class="line-thumb">
+        <div class="line-body">
+            <h6 class="line-title fs-14-px">{{ rental.itemName }}</h6>
+            <span class="line-calc fs-14-px">
+                Quantity: <span class="open-sans-bold">{{ rental.quantity }}</span>
+            </span>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="rental-footer">
+        <div class="rental-total">
+            <span class="fs-12-px rental-total-label">Paid</span>
+            <span class="total-cost">
+                {{ rental.totalPricePaid.amount | number:'1.2-2' }} {{ rental.totalPricePaid.currency }}
+            </span>
+        </div>
+
+        @if(rental.status === RentalStatus.Active || rental.status === RentalStatus.Overdue){
+        <button type="button" class="btn return-btn" [class.return-btn-urgent]="rental.status === RentalStatus.Overdue"
+            (click)="returnRental(rental.id)">
+            <i class="fa-solid fa-arrow-rotate-left me-2"></i>Return item to lender
+        </button>
+        }
+    </footer>
+</section>
 }
+
 @if(page.items.length === 0){
 <app-empty-state [model]="emptyStateModel"></app-empty-state>
 }

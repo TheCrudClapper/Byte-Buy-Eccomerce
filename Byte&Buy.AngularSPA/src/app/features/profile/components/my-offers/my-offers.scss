@@ -1,62 +1,182 @@
+:host {
+    --border-soft: color-mix(in srgb, var(--primary-accent) 28%, transparent);
+    --surface-raised: color-mix(in srgb, var(--text-primary) 6%, var(--card-background));
+    --success: #34d399;
+    --danger: #f87171;
+}
+
+.content-section {
+    padding: 1.5rem;
+    border-radius: 16px;
+}
+
+/* card */
+.offer-card {
+    display: flex;
+    gap: 1.25rem;
+    transition: border-color 0.2s ease;
+}
+
+.offer-card:hover {
+    border-color: var(--primary-accent);
+}
+
 .offer-image {
-    width: 100%;
-    height: 130px;
-    aspect-ratio: 4 / 3;
+    flex-shrink: 0;
+    width: 180px;
+    height: 135px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
-.page-input-narrow {
-    width: 60px;
-    padding-right: 4px;
-    text-align: center;
-    padding-left: 4px;
+.offer-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
 }
 
-.page-button {
-    background-color: transparent;
-    border: unset;
-    color: var(--text-primary);
-}
-
-.page-button:hover {
-    color: var(--primary-accent);
+.offer-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .offer-title {
-    font-size: 16px;
+    font-size: 17px;
     font-family: 'raleway-bold';
     text-decoration: none;
     color: var(--text-primary);
-    transition: 0.3s ease;
+    overflow-wrap: anywhere;
+    transition: color 0.2s ease;
 }
 
-.offer-title:hover{
+.offer-title:hover {
     color: var(--primary-accent);
 }
 
+/* ---------- Chips ---------- */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.15rem 0.65rem;
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: 'open-sans-medium';
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.chip-accent {
+    color: #fff;
+    background: var(--primary-accent);
+}
+
+.chip-success {
+    color: var(--success);
+    border-color: color-mix(in srgb, var(--success) 40%, transparent);
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.chip-danger {
+    color: var(--danger);
+    border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+/* ---------- Meta ---------- */
+.offer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+    margin: 0;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.meta-item dt {
+    font-size: 12px;
+    font-family: 'open-sans-medium';
+    opacity: 0.6;
+}
+
+.meta-item dd {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'open-sans-bold';
+}
+
+.meta-price {
+    color: var(--text-primary);
+}
+
+/* ---------- Actions ---------- */
+.offer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
 .icon-btn {
-    background: none;
-    border: 2px solid var(--hover-accent);
-    transition: 0.3s ease;
-    border-radius: 7px;
-    padding: 4px;
-    width: 32px;
-    height: 32px;
-    background-color: var(--primary-accent);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-soft);
+    text-decoration: none;
+    transition: 0.2s ease;
     cursor: pointer;
 }
 
 .icon-btn i {
-    font-size: 16px;
-    color: var(--text-primary);
-    transition: 0.3s ease;
+    font-size: 15px;
 }
 
 .icon-btn:hover {
-    color: var(--text-primary);
-    background-color: var(--hover-accent)
+    color: #fff;
+    border-color: var(--primary-accent);
+    background: var(--primary-accent);
+}
+
+.icon-btn-danger:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.icon-btn:focus-visible,
+.offer-title:focus-visible {
+    outline: 2px solid var(--primary-accent);
+    outline-offset: 2px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767.98px) {
+    .offer-card {
+        flex-direction: column;
+    }
+
+    .offer-image {
+        width: 100%;
+        height: 180px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .offer-card,
+    .offer-title,
+    .icon-btn {
+        transition: none;
+    }
 }

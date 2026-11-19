@@ -1,6 +1,6 @@
 @if(pagedList(); as page){
 <div class="content-section">
-    <h1 class="page-title">My orders ({{ page.metadata.totalCount }})</h1>
+    <span class="page-title">My orders ({{ page.metadata.totalCount }})</span>
 </div>
 
 @if(page.items; as orders){
@@ -12,7 +12,7 @@
         <app-order-status-component [status]="order.status" [dateDelivered]="null"></app-order-status-component>
         <span class="order-date">
             <i class="fa-regular fa-calendar"></i>
-            {{ order.purchasedDate | date:'dd MMM yyyy, HH:mm' }}
+            Purchased {{ order.purchasedDate | date:'dd MMM yyyy, HH:mm' }}
         </span>
     </header>
 

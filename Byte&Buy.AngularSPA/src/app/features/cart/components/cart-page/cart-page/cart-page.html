@@ -1,54 +1,43 @@
 @if(cartModel(); as cartModel){
 <div class="container">
+
     @if(cartModel.items.length === 0){
-    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="row justify-content-center w-100">
-            <div class="col-12 col-md-8 col-lg-6 text-center">
-
-                <div class="content-section primary-border p-5 shadow-sm  primary-accent-border">
-                    <div class="mb-4">
-                        <i class="fa-solid fa-basket-shopping fa-5x text-primary"></i>
-                    </div>
-
-                    <h2 class="fw-bold mb-2">Your cart is empty</h2>
-
-                    <p class="text-primary muted mb-4">
-                        Looks like you haven’t added anything to your cart yet.
-                        Browse our offers and find something for yourself.
-                    </p>
-
-                    <div class="d-flex justify-content-center gap-3">
-                        <a class="btn btn-primary px-4" routerLink="">
-                            <i class="fa-solid fa-house "></i>
-                            Go to home
-                        </a>
-
-                        <a class="btn btn-outline-secondary px-4" routerLink="/offers">
-                            <i class="fa-solid fa-fire me-2"></i>
-                            View offers
-                        </a>
-                    </div>
+    <!-- Empty state -->
+    <div class="row justify-content-center empty-wrapper">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="content-section empty-cart">
+                <div class="empty-icon">
+                    <i class="fa-solid fa-basket-shopping"></i>
                 </div>
-
+                <h2 class="empty-title">Your cart is empty</h2>
+                <p class="empty-text">
+                    Looks like you haven't added anything to your cart yet.
+                    Browse our offers and find something for yourself.
+                </p>
+                <div class="empty-actions">
+                    <a class="btn btn-primary-action" routerLink="/offers">
+                        <i class="fa-solid fa-fire me-2"></i>View offers
+                    </a>
+                    <a class="btn btn-secondary-action" routerLink="">
+                        <i class="fa-solid fa-house me-2"></i>Go to home
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     }
     @else {
-    <div class="row my-5">
-        <!-- Cart Items List -->
-        <div class="col-12 col-lg-8">
-            <div class="content-section primary-border text-start">
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-between align-items-center">
-                        <p class="my-0 page-title">
-                            Cart (<span class="open-sans-medium">{{ cartModel.summary.itemsQuantity }}</span>)
-                        </p>
-                        <button class="icon-btn" (click)="clearCart()">
-                            <i class="fa-solid fa-broom"></i>
-                        </button>
-                    </div>
-                </div>
+    <div class="row my-5 g-4">
+
+        <!-- Cart items -->
+        <div class="col-12 col-lg-8 d-flex flex-column gap-3">
+            <div class="content-section cart-header">
+                <h1 class="page-title mb-0">
+                    Cart <span class="cart-count">{{ cartModel.summary.itemsQuantity }}</span>
+                </h1>
+                <button type="button" class="btn btn-secondary-action clear-btn" (click)="clearCart()">
+                    <i class="fa-solid fa-broom me-2"></i>Clear cart
+                </button>
             </div>
 
             @for (item of cartModel.items; track item.id)
@@ -66,54 +55,54 @@
             </app-rent-cart-offer>
             }
             }
-
         </div>
 
+        <!-- Summary -->
         <div class="col-12 col-lg-4">
-            <!-- Summary Container -->
-            <div class="content-section primary-border  sticky-top" style="top: 1rem; z-index: 999;">
-                <p class="content-section-title mb-3">Summary</p>
-                <hr>
-                <div class="mb-2 d-flex justify-content-between">
+            <aside class="content-section summary-card sticky-top">
+                <h2 class="content-section-title mb-3">Summary</h2>
+
+                <div class="summary-row">
                     <span class="summary-item">Items</span>
                     <span class="summary-value">{{ cartModel.summary.itemsQuantity }} pcs</span>
                 </div>
-                <div class="mb-2 d-flex justify-content-between">
-                    <span class="summary-item">Items Cost</span>
+                <div class="summary-row">
+                    <span class="summary-item">Items cost</span>
                     <span class="summary-value">
-                        {{ cartModel.summary.totalItemsValue.amount | number:'1.2-2'}}
-                        {{ cartModel.summary.totalItemsValue.currency}}
+                        {{ cartModel.summary.totalItemsValue.amount | number:'1.2-2' }}
+                        {{ cartModel.summary.totalItemsValue.currency }}
                     </span>
                 </div>
-                <div class="mb-2 d-flex justify-content-between">
+                <div class="summary-row">
                     <span class="summary-item">Shipping from</span>
                     <span class="summary-value">
-                        {{ cartModel.summary.estimatedShippingCost.amount | number:'1.2-2'}}
-                        {{ cartModel.summary.estimatedShippingCost.currency}}
+                        {{ cartModel.summary.estimatedShippingCost.amount | number:'1.2-2' }}
+                        {{ cartModel.summary.estimatedShippingCost.currency }}
                     </span>
                 </div>
-                <div class="mb-2 d-flex justify-content-between">
+                <div class="summary-row">
                     <span class="summary-item">Tax</span>
                     <span class="summary-value">
                         {{ cartModel.summary.taxValue.amount | number:'1.2-2' }}
-                        {{ cartModel.summary.taxValue.currency}}
+                        {{ cartModel.summary.taxValue.currency }}
                     </span>
                 </div>
-                <hr>
-                <div class="mb-3 d-flex justify-content-between ">
-                    <p class="content-section-title fw-bold">Total Cost</p>
-                    <p class="total-cost" style="font-size: 16px;">
+
+                <div class="summary-total">
+                    <span class="open-sans-bold">Total</span>
+                    <span class="total-cost">
                         {{ cartModel.summary.totalCost.amount | number:'1.2-2' }}
-                        {{ cartModel.summary.totalCost.currency}}
-                    </p>
+                        {{ cartModel.summary.totalCost.currency }}
+                    </span>
                 </div>
-                <button class="btn w-100" [routerLink]="['/checkout']">Checkout</button>
-            </div>
+
+                <a class="btn btn-primary-action w-100" [routerLink]="['/checkout']">
+                    Checkout<i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            </aside>
         </div>
 
     </div>
     }
-
-
 </div>
 }

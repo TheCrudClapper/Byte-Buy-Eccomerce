@@ -43,7 +43,8 @@
                         <span class="subtext">{{ buyer.email }}</span>
                         <span class="subtext">
                             {{ buyer.address.city }} {{ buyer.address.street }}
-                            {{ buyer.address.houseNumber }}{{ buyer.address.flatNumber ? ` / ${buyer.address.flatNumber}` : '' }}
+                            {{ buyer.address.houseNumber }}{{ buyer.address.flatNumber ? ` /
+                            ${buyer.address.flatNumber}` : '' }}
                         </span>
                         <span class="subtext">
                             {{ buyer.address.postalCode }} {{ buyer.address.postalCity }}, {{ buyer.address.country }}
@@ -144,34 +145,38 @@
                     </div>
                 </div>
 
-                @if(canDownloadPdf()){
-                <button type="button" class="btn-ghost" (click)="downloadPdf()">
-                    <i class="fa-regular fa-file-pdf"></i>Export to PDF
-                </button>
-                }
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                    @if(canDownloadPdf()){
+                    <section>
+                        <button type="button" class="btn-ghost" (click)="downloadPdf()">
+                            <i class="fa-regular fa-file-pdf"></i>Export to PDF
+                        </button>
+                    </section>
+                    }
+                    <!-- Actions -->
+                    @if(actionButtonsVisible()){
+                    @switch (order.status)
+                    {
+                    @case(OrderStatus.AwaitingPayment){
+                    <a class="btn action-btn action-primary" [routerLink]="['/payment', `${order.paymentId}`]">
+                        <i class="fa-solid fa-credit-card"></i>Finalize payment
+                    </a>
+                    <button type="button" class="btn action-btn action-danger" (click)="cancelOrder()">
+                        <i class="fa-solid fa-ban"></i>Cancel order
+                    </button>
+                    }
+                    @case(OrderStatus.Delivered){
+                    <button type="button" class="btn action-btn action-secondary" (click)="returnOrder()">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>Return order
+                    </button>
+                    }
+                    }
+                    }
+                </div>
+
             </section>
 
-            <!-- Actions -->
-            @if(actionButtonsVisible()){
-            <section class="content-section action-section">
-                @switch (order.status)
-                {
-                @case(OrderStatus.AwaitingPayment){
-                <a class="btn action-btn action-primary" [routerLink]="['/payment', `${order.paymentId}`]">
-                    <i class="fa-solid fa-credit-card"></i>Finalize payment
-                </a>
-                <button type="button" class="btn action-btn action-danger" (click)="cancelOrder()">
-                    <i class="fa-solid fa-ban"></i>Cancel order
-                </button>
-                }
-                @case(OrderStatus.Delivered){
-                <button type="button" class="btn action-btn action-secondary" (click)="returnOrder()">
-                    <i class="fa-solid fa-arrow-rotate-left"></i>Return order
-                </button>
-                }
-                }
-            </section>
-            }
+
 
         </div>
         }

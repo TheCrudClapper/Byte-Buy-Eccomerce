@@ -1,0 +1,234 @@
+
+:host {
+  display: block;
+  --border-soft: color-mix(in srgb, var(--primary-accent) 28%, transparent);
+  --surface-raised: color-mix(in srgb, var(--text-primary) 6%, var(--card-background));
+  --danger: #f87171;
+}
+
+.cart-offer {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.cart-offer:hover {
+  border-color: var(--primary-accent);
+}
+
+.product-image {
+  flex-shrink: 0;
+  width: 150px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.offer-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* top */
+.offer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.offer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.offer-title {
+  font-size: 16px;
+  font-family: 'raleway-bold';
+  text-decoration: none;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+  transition: color 0.2s ease;
+}
+
+.offer-title:hover {
+  color: var(--primary-accent);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 12px;
+  font-family: 'open-sans-medium';
+  background: var(--surface-raised);
+  border: 1px solid var(--border-soft);
+}
+
+.price {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.offer-subtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.subtotal-label {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.subtotal-value {
+  font-size: 16px;
+  font-family: 'open-sans-bold';
+  white-space: nowrap;
+}
+
+/* controls*/
+.offer-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.stepper-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+}
+
+.stepper-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.input-labels {
+  font-size: 12px;
+  font-family: 'open-sans-medium';
+  opacity: 0.65;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-raised);
+}
+
+.qty-btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  font-size: 12px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  color: #fff;
+  background: var(--primary-accent);
+}
+
+.qty-input {
+  width: 52px;
+  height: 36px;
+  padding: 0;
+  text-align: center;
+  font-size: 14px;
+  font-family: 'open-sans-bold';
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
+  border-radius: 0;
+}
+
+.qty-input:focus {
+  outline: none;
+  background: color-mix(in srgb, var(--primary-accent) 15%, transparent);
+}
+
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-arrows {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.qty-btn:focus-visible,
+.icon-btn:focus-visible,
+.offer-title:focus-visible {
+  outline: 2px solid var(--primary-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 575.98px) {
+  .cart-offer {
+    flex-direction: column;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-offer,
+  .offer-title,
+  .qty-btn,
+  .icon-btn {
+    transition: none;
+  }
+}

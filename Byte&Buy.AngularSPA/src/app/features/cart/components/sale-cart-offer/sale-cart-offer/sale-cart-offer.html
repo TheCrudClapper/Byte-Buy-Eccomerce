@@ -1,55 +1,54 @@
-<div class="content-section">
-    <form [formGroup]="cartForm">
-        <div class="row">
-            <div class="col-3">
-                <img class="d-block img-fluid product-image" [src]="imageBaseUrl + saleCartOffer.image.imagePath"
-                    [alt]="saleCartOffer.image.altText">
+<article class="content-section cart-offer">
+    <img class="product-image" [src]="imageBaseUrl + saleCartOffer.image.imagePath"
+        [alt]="saleCartOffer.image.altText">
+
+    <form [formGroup]="cartForm" class="offer-body">
+
+        <div class="offer-top">
+            <div class="offer-info">
+                <a [routerLink]="['/offers', 'sale', 'details', saleCartOffer.offerId]" class="offer-title">
+                    {{ saleCartOffer.title }}
+                </a>
+                <span class="chip"><i class="fa-solid fa-money-bill-wave"></i>Sale</span>
+                <span class="price">
+                    Price / unit:
+                    <span class="open-sans-bold">
+                        {{ saleCartOffer.pricePerItem.amount | number:'1.2-2' }}
+                        {{ saleCartOffer.pricePerItem.currency }}
+                    </span>
+                </span>
             </div>
 
-            <div class="col-9  d-flex flex-column justify-content-between">
-                <div class="row">
-                    <div class="col-9">
-                        <a [routerLink]="['/offers', 'sale', 'details', saleCartOffer.offerId]" class="offer-title">{{ saleCartOffer.title }}</a>
-                        <br>
-                        <span class="price fw">Price /unit:
-                            <span class="open-sans-bold">
-                                {{ saleCartOffer.pricePerItem.amount | number:'1.2-2'}}
-                                {{ saleCartOffer.pricePerItem.currency}}
-                            </span>
-
-                        </span>
-                    </div>
-                    <div class="col-3 text-end ">
-                        <span class="fs-14-px">Subtotal: </span>
-                        <span class="fs-14-px open-sans-bold">
-                            {{ saleCartOffer.subtotal.amount | number:'1.2-2'}}
-                            {{ saleCartOffer.subtotal.currency}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-10">
-                        <div class="quantity-wrapper">
-                            <span class="input-labels">Quantity</span>
-                            <button class="qty-btn" (click)="decrement()">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <input type="number" class="qty-input no-arrows" formControlName="quantity" min="1" />
-                            <button class="qty-btn" (click)="increment()">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-2 justify-content-end d-flex align-items-center">
-                        <button type="button" class="icon-btn"
-                            (click)="tryRemove(saleCartOffer.id)">
-                            <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
-                        </button>
-                    </div>
-
-                </div>
-
+            <div class="offer-subtotal">
+                <span class="subtotal-label">Subtotal</span>
+                <span class="subtotal-value">
+                    {{ saleCartOffer.subtotal.amount | number:'1.2-2' }}
+                    {{ saleCartOffer.subtotal.currency }}
+                </span>
             </div>
         </div>
+
+        <div class="offer-controls">
+            <div class="stepper-group">
+                <div class="stepper-field">
+                    <span class="input-labels">Quantity</span>
+                    <div class="stepper">
+                        <button type="button" class="qty-btn" aria-label="Decrease quantity" (click)="decrement()">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <input type="number" class="qty-input no-arrows" formControlName="quantity" min="1"
+                            aria-label="Quantity" />
+                        <button type="button" class="qty-btn" aria-label="Increase quantity" (click)="increment()">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="icon-btn" aria-label="Remove from cart" title="Remove from cart"
+                (click)="tryRemove(saleCartOffer.id)">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+        </div>
     </form>
-</div>
+</article>

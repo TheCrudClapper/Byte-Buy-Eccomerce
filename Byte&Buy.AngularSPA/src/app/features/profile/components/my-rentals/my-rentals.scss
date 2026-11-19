@@ -1,12 +1,202 @@
-.page-wrapper {
-    width: 75%;
-    margin: 0 auto;
+:host {
+    --border-soft: color-mix(in srgb, var(--primary-accent) 28%, transparent);
+    --surface-raised: color-mix(in srgb, var(--text-primary) 5%, var(--card-background));
+    --success: #34d399;
+    --danger: #f87171;
 }
 
-@media (max-width: 992px) {
-    .page-wrapper {
-        width: 100%;
-    }
+.content-section {
+    padding: 1.5rem;
+    border-radius: 16px;
+}
+
+.rental-card-overdue {
+    border-color: color-mix(in srgb, var(--danger) 50%, transparent);
+}
+
+/* ---------- Header ---------- */
+.rental-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.rental-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    font-family: 'open-sans-medium';
+    opacity: 0.7;
+}
+
+/* Status */
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    font-size: 13px;
+    font-family: 'open-sans-bold';
+    border: 1px solid transparent;
+}
+
+.status-neutral {
+    background: var(--surface-raised);
+    border-color: var(--border-soft);
+}
+
+.status-active {
+    color: #fff;
+    background: var(--primary-accent);
+}
+
+.status-completed {
+    color: var(--success);
+    border-color: color-mix(in srgb, var(--success) 40%, transparent);
+    background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.status-overdue {
+    color: var(--danger);
+    border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+/* retnal info*/
+.rental-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 2.5rem;
+    margin-bottom: 1.1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-family: 'open-sans-medium';
+    opacity: 0.6;
+}
+
+.info-value {
+    font-size: 14px;
+    font-family: 'open-sans-bold';
+}
+
+.period-arrow {
+    margin: 0 0.4rem;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* Items */
+.rental-line {
+    display: flex;
+    gap: 1rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    background: var(--surface-raised);
+}
+
+.line-thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.line-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.line-title {
+    margin: 0;
+    font-family: 'open-sans-bold';
+}
+
+.line-calc {
+    opacity: 0.75;
+}
+
+/* Footer */
+.rental-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border-soft);
+}
+
+.rental-total {
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-total-label {
+    opacity: 0.65;
+}
+
+.total-cost {
+    font-size: 20px;
+    font-family: 'open-sans-bold';
+}
+
+.return-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'open-sans-bold';
+    color: #fff;
+    background: var(--primary-accent);
+    border: 1px solid var(--secondary-accent);
+    transition: 0.2s ease;
+}
+
+.return-btn:hover {
+    background: var(--hover-accent);
+    color: var(--text-primary);
+}
+
+.return-btn-urgent {
+    background: color-mix(in srgb, var(--danger) 85%, #000);
+    border-color: var(--danger);
+}
+
+.return-btn-urgent:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.return-btn:focus-visible {
+    outline: 2px solid var(--primary-accent);
+    outline-offset: 2px;
+}
+
+/* shared */
+.card {
+    background-color: var(--card-background);
+    color: var(--text-primary);
+    border-color: var(--primary-accent);
 }
 
 .link {
@@ -21,20 +211,30 @@
     color: var(--primary-accent);
 }
 
-hr {
-    border-radius: 10px;
-    color: var(--primary-accent);
-}
-.total-cost {
-    font-size: 16px;
-    font-family: 'open-sans-bold';
+/* Mobile */
+@media (max-width: 575.98px) {
+    .rental-line {
+        flex-direction: column;
+    }
+
+    .line-thumb {
+        width: 100%;
+        height: 160px;
+    }
+
+    .rental-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .return-btn {
+        justify-content: center;
+    }
 }
 
-.card{
-    background-color: var(--card-background);
-    color: var(--text-primary);
-    border-color: var(--primary-accent);
-}
-.overdue{
-    color: red;
+@media (prefers-reduced-motion: reduce) {
+    .return-btn,
+    .link {
+        transition: none;
+    }
 }

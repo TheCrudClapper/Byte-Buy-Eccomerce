@@ -1,67 +1,68 @@
-<div class="content-section">
-    <form [formGroup]="cartForm">
-        <div class="row">
-            <div class="col-3">
-                <img class="d-block img-fluid product-image" [src]="imageBaseUrl + rentCartOffer.image.imagePath"
-                    [alt]="rentCartOffer.image.altText">
+<article class="content-section cart-offer">
+    <img class="product-image" [src]="imageBaseUrl + rentCartOffer.image.imagePath"
+        [alt]="rentCartOffer.image.altText">
+
+    <form [formGroup]="cartForm" class="offer-body">
+
+        <div class="offer-top">
+            <div class="offer-info">
+                <a [routerLink]="['/offers', 'rent', 'details', rentCartOffer.offerId]" class="offer-title">
+                    {{ rentCartOffer.title }}
+                </a>
+                <span class="chip"><i class="fa-solid fa-hand-holding-heart"></i>Rent</span>
+                <span class="price">
+                    Price / day:
+                    <span class="open-sans-bold">
+                        {{ rentCartOffer.pricePerDay.amount | number:'1.2-2' }}
+                        {{ rentCartOffer.pricePerDay.currency }}
+                    </span>
+                </span>
             </div>
 
-            <div class="col-9  d-flex flex-column justify-content-between">
-                <div class="row">
-                    <div class="col-9">
-                        <a [routerLink]="['/offers', 'rent', 'details', rentCartOffer.offerId]" class="offer-title">{{ rentCartOffer.title }}</a>
-                        <br>
-                        <span class="price fw">Price /day:
-                            <span class="open-sans-bold">
-                                {{ rentCartOffer.pricePerDay.amount | number:'1.2-2'}}
-                                {{ rentCartOffer.pricePerDay.currency}}
-                            </span>
-
-                        </span>
-                    </div>
-                    <div class="col-3 text-end ">
-                        <span class="fs-14-px">Subtotal: </span>
-                        <span class="fs-14-px open-sans-bold">
-                            {{ rentCartOffer.subtotal.amount | number:'1.2-2'}}
-                            {{ rentCartOffer.subtotal.currency}}
-                        </span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="quantity-wrapper">
-                            <span class="input-labels">Quantity</span>
-                            <button class="qty-btn" (click)="decrement()">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <input type="number" class="qty-input no-arrows" formControlName="quantity" min="1" />
-                            <button class="qty-btn" (click)="increment()">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="quantity-wrapper">
-                            <span class="input-labels">Days</span>
-                            <button class="qty-btn" (click)="decrementDays()">
-                                <i class="fa-solid fa-minus"></i>
-                            </button>
-                            <input type="number" class="qty-input no-arrows" formControlName="rentalDays" min="1" />
-                            <button class="qty-btn" (click)="incrementDays()">
-                                <i class="fa-solid fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-2 justify-content-end d-flex align-items-center">
-                        <button type="button" class="icon-btn"
-                            (click)="tryRemove(rentCartOffer.id)">
-                            <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>
-                        </button>
-                    </div>
-
-                </div>
-
+            <div class="offer-subtotal">
+                <span class="subtotal-label">Subtotal</span>
+                <span class="subtotal-value">
+                    {{ rentCartOffer.subtotal.amount | number:'1.2-2' }}
+                    {{ rentCartOffer.subtotal.currency }}
+                </span>
             </div>
         </div>
+
+        <div class="offer-controls">
+            <div class="stepper-group">
+                <div class="stepper-field">
+                    <span class="input-labels">Quantity</span>
+                    <div class="stepper">
+                        <button type="button" class="qty-btn" aria-label="Decrease quantity" (click)="decrement()">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <input type="number" class="qty-input no-arrows" formControlName="quantity" min="1"
+                            aria-label="Quantity" />
+                        <button type="button" class="qty-btn" aria-label="Increase quantity" (click)="increment()">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stepper-field">
+                    <span class="input-labels">Days</span>
+                    <div class="stepper">
+                        <button type="button" class="qty-btn" aria-label="Decrease days" (click)="decrementDays()">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <input type="number" class="qty-input no-arrows" formControlName="rentalDays" min="1"
+                            aria-label="Rental days" />
+                        <button type="button" class="qty-btn" aria-label="Increase days" (click)="incrementDays()">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="icon-btn" aria-label="Remove from cart" title="Remove from cart"
+                (click)="tryRemove(rentCartOffer.id)">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+        </div>
     </form>
-</div>
+</article>
