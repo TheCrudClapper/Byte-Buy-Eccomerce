@@ -31,6 +31,7 @@ public static class OrderMappings
             OrderStatus.Delivered => "avares://ByteBuy.UI/Assets/Images/regular/truck-ramp-box-solid-full.svg",
             OrderStatus.Returned => "avares://ByteBuy.UI/Assets/Images/regular/arrow-rotate-left-solid-full.svg",
             OrderStatus.Shipped => "avares://ByteBuy.UI/Assets/Images/regular/truck-solid-full.svg",
+            OrderStatus.SystemCanceled => "avares://ByteBuy.UI/Assets/Images/regular/ban-solid-full.svg",
             _ => throw new NotSupportedException()
         };
     }
@@ -45,6 +46,7 @@ public static class OrderMappings
             OrderStatus.Delivered => "Delivered",
             OrderStatus.Canceled => "Cancelled",
             OrderStatus.Returned => "Returned",
+            OrderStatus.SystemCanceled => "System Canceled",
             _ => "Unknown"
         };
     }
